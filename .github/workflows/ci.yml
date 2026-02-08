@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: member-app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,13 +20,21 @@ jobs:
           cache: "npm"
           cache-dependency-path: member-app/package-lock.json
 
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la
+          ls -la member-app
+
       - name: Install dependencies
+        working-directory: member-app
         env:
           NODE_ENV: development
           npm_config_production: "false"
         run: npm ci
 
       - name: Build
+        working-directory: member-app
         env:
           NODE_ENV: development
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
