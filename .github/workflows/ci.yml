@@ -23,7 +23,6 @@ jobs:
         run: |
           pwd
           ls -la
-          ls -la member-app
 
       - name: Install dependencies
         working-directory: member-app
