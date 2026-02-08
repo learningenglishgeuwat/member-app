@@ -1,0 +1,830 @@
+/* ========================================
+   SCOPED PORTAL STYLES - Properly contained to prevent global interference
+   ======================================== */
+
+/* ========================================
+   FUTURISTIC CONTAINER - SCOPED
+   ======================================== */
+
+.futuristic-portal-container {
+  position: relative;
+  min-height: 100vh;
+  background: #0a0a0a;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Reset only within the portal container */
+.futuristic-portal-container * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   ADVANCED BACKGROUND SYSTEM - SCOPED
+   ======================================== */
+
+/* Dynamic Grid Background */
+.futuristic-portal-container .cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridFlow 40s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes gridFlow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 30px) scale(1.1); }
+  100% { transform: translate(60px, 60px) scale(1); }
+}
+
+/* Neural Network Particles */
+.futuristic-portal-container .cyber-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.futuristic-portal-container .cyber-particles::before,
+.futuristic-portal-container .cyber-particles::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.8), transparent);
+  border-radius: 50%;
+  animation: particleOrbit 25s linear infinite;
+}
+
+.futuristic-portal-container .cyber-particles::before {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.futuristic-portal-container .cyber-particles::after {
+  top: 60%;
+  right: 15%;
+  animation-delay: 12s;
+}
+
+@keyframes particleOrbit {
+  0% { transform: rotate(0deg) translateX(100px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity: 0; }
+}
+
+/* Holographic Overlay */
+.futuristic-portal-container .glow-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.03) 0%, transparent 70%);
+  z-index: 3;
+  pointer-events: none;
+  animation: holographicShift 8s ease-in-out infinite;
+}
+
+@keyframes holographicShift {
+  0%, 100% { 
+    opacity: 0.5;
+    filter: hue-rotate(0deg);
+  }
+  50% { 
+    opacity: 0.8;
+    filter: hue-rotate(30deg);
+  }
+}
+
+/* ========================================
+   FUTURISTIC TITLE SYSTEM - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .portal-title {
+  text-align: center;
+  padding: 3.5rem 0 2.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.futuristic-portal-container .title-text {
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    135deg,
+    #00ffff 0%,
+    #ff00ff 25%,
+    #00ffff 50%,
+    #ff00ff 75%,
+    #00ffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holographicText 4s ease-in-out infinite, titleFloat 3s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes holographicText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.futuristic-portal-container .title-underline {
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #00ffff,
+    #ff00ff,
+    #00ffff,
+    transparent
+  );
+  background-size: 200% 200%;
+  margin: 0.75rem auto 0;
+  animation: underlineFlow 3s linear infinite;
+  position: relative;
+}
+
+@keyframes underlineFlow {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+/* ========================================
+   FUTURISTIC PORTAL MAIN - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .futuristic-portal-main {
+  position: relative;
+  z-index: 10;
+  padding-top: 2rem;
+}
+
+/* ========================================
+   FUTURISTIC PORTAL GRID - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .portal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* ========================================
+   SIMPLE PORTAL CARDS - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .portal-card {
+  position: relative;
+  background: #0f0f0f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Portal Grid Lines Background */
+.futuristic-portal-container .portal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 
+    25px 25px,
+    25px 25px,
+    50px 50px,
+    50px 50px;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: cardGridFlow 12s linear infinite;
+}
+
+@keyframes cardGridFlow {
+  0% { 
+    transform: translate(0, 0);
+    opacity: 0.4;
+  }
+  50% { 
+    transform: translate(10px, 10px);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translate(0, 0);
+    opacity: 0.4;
+  }
+}
+
+.futuristic-portal-container .portal-card:hover {
+  background: #0a0a0a;
+  border-color: #00ffff;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
+}
+
+.futuristic-portal-container .portal-card:hover::before {
+  opacity: 0.8;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+.futuristic-portal-container .portal-card.active {
+  background: #050505;
+  border-color: #00ffff;
+  box-shadow: 0 12px 24px rgba(0, 255, 255, 0.3);
+}
+
+.futuristic-portal-container .portal-card.active::before {
+  opacity: 1;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(0, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(0, 255, 255, 0.15) 1px, transparent 1px);
+}
+
+/* ========================================
+   SIMPLE ICON SYSTEM - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .card-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+}
+
+.futuristic-portal-container .card-icon {
+  margin-bottom: 1.25rem;
+}
+
+.futuristic-portal-container .icon-circle {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.1));
+  border: 3px solid rgba(0, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+/* Rotating Energy Ring */
+.futuristic-portal-container .icon-circle::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(0, 255, 255, 0.8),
+    rgba(255, 0, 255, 0.6),
+    rgba(0, 255, 255, 0.8)
+  );
+  border-radius: 50%;
+  animation: energyRing 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes energyRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulsing Core */
+.futuristic-portal-container .icon-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 255, 0.4) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: corePulse 2s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+}
+
+.futuristic-portal-container .portal-card:hover .icon-circle {
+  transform: scale(1.1);
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.futuristic-portal-container .icon-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  z-index: 10;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  z-index: 5;
+}
+
+/* Spinning Animation for Icon Circle */
+.futuristic-portal-container .icon-circle.spinning {
+  animation: 
+    energyRing 3s linear,
+    superFastSpin 0.5s linear,
+    ultraFastSpin 1.5s linear 0.5s,
+    reverseSpin 1s ease-in-out 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes superFastSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(1800deg) scale(1.1); }
+}
+
+@keyframes ultraFastSpin {
+  0% { transform: rotate(1800deg) scale(1.1); }
+  100% { transform: rotate(7200deg) scale(1.3); }
+}
+
+@keyframes reverseSpin {
+  0% { transform: rotate(7200deg) scale(1.3); }
+  25% { transform: rotate(6300deg) scale(1.2); }
+  50% { transform: rotate(6750deg) scale(1.25); }
+  75% { transform: rotate(6375deg) scale(1.15); }
+  100% { transform: rotate(0deg) scale(0); opacity: 0; }
+}
+
+.futuristic-portal-container .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 1rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.futuristic-portal-container .card-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ========================================
+   FUTURISTIC SYMBOL PANEL - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .symbol-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0a0a0a;
+  border: 2px solid #333;
+  border-radius: 24px;
+  padding: 0;
+  width: 720px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  animation: panelMaterialize 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Symbol Panel Grid Lines */
+.futuristic-portal-container .symbol-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 
+    30px 30px,
+    30px 30px,
+    60px 60px,
+    60px 60px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: panelGridFlow 15s linear infinite;
+  border-radius: 24px;
+}
+
+@keyframes panelGridFlow {
+  0% { 
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translate(15px, 15px);
+    opacity: 0.5;
+  }
+  100% { 
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+}
+
+@keyframes panelMaterialize {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    visibility: visible;
+  }
+}
+
+/* Simple Panel Header */
+.futuristic-portal-container .panel-header {
+  background: #111;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 24px 24px 0 0;
+  position: relative;
+}
+
+.futuristic-portal-container .panel-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 5;
+}
+
+.futuristic-portal-container .close-panel {
+  background: #222;
+  border: 2px solid #444;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 5;
+}
+
+.futuristic-portal-container .close-panel:hover {
+  background: #333;
+  border-color: #666;
+  transform: scale(1.1);
+}
+
+/* Simple Symbol Content */
+.futuristic-portal-container .symbol-content {
+  padding: 1.5rem;
+  max-height: calc(80vh - 120px);
+  overflow-y: auto;
+  position: relative;
+  background: #0a0a0a;
+  border-radius: 0 0 22px 22px;
+}
+
+/* Symbol Content Grid Lines */
+.futuristic-portal-container .symbol-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 
+    20px 20px,
+    20px 20px,
+    40px 40px,
+    40px 40px;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: contentGridFlow 10s linear infinite;
+  border-radius: 0 0 22px 22px;
+}
+
+@keyframes contentGridFlow {
+  0% { 
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translate(10px, 10px);
+    opacity: 0.7;
+  }
+  100% { 
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+}
+
+/* ========================================
+   FUTURISTIC SYMBOL GROUPS - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .symbol-group {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.futuristic-portal-container .symbol-group:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.futuristic-portal-container .group-title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+/* ========================================
+   FUTURISTIC SYMBOL GRID - SCOPED
+   ======================================== */
+
+.futuristic-portal-container .symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 12px;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+/* Simple Symbol Buttons */
+.futuristic-portal-container .symbol-btn {
+  background: #1a1a1a;
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
+  min-width: 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Simple Button Border */
+.futuristic-portal-container .symbol-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 10px 10px;
+  opacity: 0.3;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+/* Simple Hover Effects */
+.futuristic-portal-container .symbol-btn:hover {
+  background: #222;
+  border-color: #666;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.futuristic-portal-container .symbol-btn:hover::before {
+  opacity: 0.6;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+.futuristic-portal-container .symbol-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - SCOPED
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .futuristic-portal-container .portal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+  
+  .futuristic-portal-container .symbol-panel {
+    width: 85vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .futuristic-portal-container .portal-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .futuristic-portal-container .portal-card {
+    min-height: 200px;
+    padding: 1rem;
+  }
+  
+  .futuristic-portal-container .icon-circle {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .futuristic-portal-container .icon-text {
+    font-size: 1.6rem;
+  }
+  
+  .futuristic-portal-container .card-title {
+    font-size: 1rem;
+  }
+  
+  .futuristic-portal-container .card-description {
+    font-size: 0.8rem;
+  }
+  
+  .futuristic-portal-container .symbol-panel {
+    width: 90vw;
+    max-height: 85vh;
+  }
+  
+  .futuristic-portal-container .symbol-grid {
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+    gap: 10px;
+  }
+  
+  .futuristic-portal-container .symbol-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+    min-width: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .futuristic-portal-container .portal-title {
+    padding: 3rem 0 1.5rem;
+  }
+  
+  .futuristic-portal-container .title-text {
+    font-size: 2rem;
+  }
+  
+  .futuristic-portal-container .portal-grid {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  .futuristic-portal-container .portal-card {
+    min-height: 180px;
+    padding: 0.75rem;
+  }
+  
+  .futuristic-portal-container .icon-circle {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .futuristic-portal-container .icon-text {
+    font-size: 1.4rem;
+  }
+  
+  .futuristic-portal-container .card-title {
+    font-size: 0.9rem;
+  }
+  
+  .futuristic-portal-container .card-description {
+    font-size: 0.75rem;
+  }
+  
+  .futuristic-portal-container .symbol-panel {
+    width: 95vw;
+  }
+  
+  .futuristic-portal-container .symbol-grid {
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+    gap: 8px;
+  }
+  
+  .futuristic-portal-container .symbol-btn {
+    font-size: 13px;
+    padding: 8px 10px;
+    min-width: 52px;
+  }
+}
+
+/* Simple Scrollbar - SCOPED */
+.futuristic-portal-container .symbol-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.futuristic-portal-container .symbol-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.futuristic-portal-container .symbol-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.futuristic-portal-container .symbol-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

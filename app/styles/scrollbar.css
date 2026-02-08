@@ -1,0 +1,15 @@
+/* Hidden Scrollbar Styles */
+/* Import this file only in pages that need hidden scrollbars */
+
+/* Hide scrollbar but keep functionality */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+/* Firefox scrollbar styles */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

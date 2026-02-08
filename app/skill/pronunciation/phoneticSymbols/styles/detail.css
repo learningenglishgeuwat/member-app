@@ -1,0 +1,516 @@
+/* Detail Page Styles - SCOPED */
+/* For phoneticSymbols/[symbol]/page.tsx - the symbol detail page */
+
+/* Detail Page Container - SCOPED */
+.symbol-detail-container {
+  position: relative;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: white;
+  font-family: sans-serif;
+  overflow-x: hidden;
+}
+
+/* Reset only within the detail container */
+.symbol-detail-container * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background Effects - SCOPED */
+.symbol-detail-container .cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Symbol Display Section - SCOPED */
+.symbol-detail-container .symbol-display-section {
+  position: relative;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32vh;
+}
+
+.symbol-detail-container .symbol-circle {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.1);
+  border: 2px solid #be29ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+.symbol-detail-container .symbol-circle::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #06b6d4, #be29ec, #ec4899);
+  z-index: -1;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.symbol-detail-container .symbol-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+}
+
+.symbol-detail-container .symbol-category {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid #be29ec;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  color: #be29ec;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Video Section - SCOPED */
+.symbol-detail-container .video-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.symbol-detail-container .video-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #be29ec;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.symbol-detail-container .video-header {
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.75rem;
+  border-bottom: 1px solid #be29ec;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.symbol-detail-container .video-title {
+  color: #be29ec;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.symbol-detail-container .video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.symbol-detail-container .video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Word Examples Section - SCOPED */
+.symbol-detail-container .word-examples-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.symbol-detail-container .word-examples-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #be29ec;
+}
+
+.symbol-detail-container .word-examples-title {
+  color: #be29ec;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.symbol-detail-container .word-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.75rem !important;
+  justify-items: stretch !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .symbol-detail-container .word-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .symbol-detail-container .word-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+.symbol-detail-container .word-card {
+  position: relative !important;
+  padding: 0.75rem !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid #be29ec !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  min-height: 96px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.symbol-detail-container .word-grid button.word-card {
+  width: 100% !important;
+  flex: 1 !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+/* Override any Tailwind button defaults */
+.symbol-detail-container .word-grid button {
+  all: unset !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+/* Ensure button inherits word-card styles */
+.symbol-detail-container .word-grid button.word-card {
+  position: relative !important;
+  padding: 0.75rem !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid #be29ec !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  min-height: 96px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  flex: 1 !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+.symbol-detail-container .word-card:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: #06b6d4;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.symbol-detail-container .word-card.active {
+  background: rgba(139, 92, 246, 0.4);
+  border-color: #be29ec;
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.symbol-detail-container .word-text {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.symbol-detail-container .word-card.active .word-text {
+  color: #be29ec;
+}
+
+.symbol-detail-container .word-ipa {
+  font-size: 0.7rem;
+  color: #be29ec;
+  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+}
+
+.symbol-detail-container .word-card.active .word-ipa {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Corner markers for word cards */
+.symbol-detail-container .word-card::before,
+.symbol-detail-container .word-card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #be29ec;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.symbol-detail-container .word-card::before {
+  top: 4px;
+  left: 4px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.symbol-detail-container .word-card::after {
+  bottom: 4px;
+  right: 4px;
+  border-left: none;
+  border-top: none;
+}
+
+.symbol-detail-container .word-card:hover::before,
+.symbol-detail-container .word-card:hover::after,
+.symbol-detail-container .word-card.active::before,
+.symbol-detail-container .word-card.active::after {
+  opacity: 1;
+}
+
+/* Recording Section - SCOPED */
+.symbol-detail-container .recording-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.symbol-detail-container .recording-controls {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ec4899;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.symbol-detail-container .record-button {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #ec4899;
+  background: rgba(236, 72, 153, 0.1);
+  color: #ec4899;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.symbol-detail-container .record-button:hover {
+  background: rgba(236, 72, 153, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+}
+
+.symbol-detail-container .record-button.recording {
+  background: #ec4899;
+  color: white;
+  animation: gameSelectPulse 1s infinite;
+}
+
+@keyframes gameSelectPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 0, 255, 0.6);
+  }
+}
+
+.symbol-detail-container .recording-status {
+  color: #ec4899;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tips Section - SCOPED */
+.symbol-detail-container .tips-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.symbol-detail-container .tips-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ec4899;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.symbol-detail-container .tips-header {
+  background: rgba(236, 72, 153, 0.1);
+  padding: 0.75rem;
+  border-bottom: 1px solid #ec4899;
+  color: #ec4899;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.symbol-detail-container .tips-content {
+  padding: 1rem;
+}
+
+.symbol-detail-container .tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(236, 72, 153, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid #ec4899;
+}
+
+.symbol-detail-container .tip-icon {
+  color: #ec4899;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.symbol-detail-container .tip-text {
+  color: white;
+  line-height: 1.5;
+}
+
+/* Progress Section - SCOPED */
+.symbol-detail-container .progress-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* Ensure top spacing on mobile is visible */
+@media (max-width: 640px) {
+  .symbol-detail-container .symbol-detail-main {
+    padding-top: 6.5rem !important;
+  }
+}
+
+.symbol-detail-container .progress-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #10b981;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.symbol-detail-container .progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.symbol-detail-container .progress-text {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.symbol-detail-container .save-progress-button {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.symbol-detail-container .save-progress-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Responsive Design - SCOPED */
+@media (max-width: 768px) {
+  .symbol-detail-container .symbol-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .symbol-detail-container .symbol-text {
+    font-size: 2.4rem;
+  }
+  
+  .symbol-detail-container .word-card {
+    padding: 0.75rem;
+  }
+  
+  .symbol-detail-container .word-text {
+    font-size: 0.9rem;
+  }
+  
+  .symbol-detail-container .word-ipa {
+    font-size: 0.6rem;
+  }
+  
+  .symbol-detail-container .record-button {
+    width: 52px;
+    height: 52px;
+  }
+}

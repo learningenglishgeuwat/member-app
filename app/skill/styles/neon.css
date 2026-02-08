@@ -1,0 +1,141 @@
+/* Neon Cyberpunk Theme Styles */
+
+/* Custom CSS Variables for Neon Colors */
+:root {
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #39ff14;
+  --neon-teal: #14b8a6;
+}
+
+/* Neon Color Classes */
+.text-neon-cyan { color: var(--neon-cyan); }
+.text-neon-pink { color: var(--neon-pink); }
+.text-neon-purple { color: var(--neon-purple); }
+.text-neon-green { color: var(--neon-green); }
+.text-neon-teal { color: var(--neon-teal); }
+
+.border-neon-cyan { border-color: var(--neon-cyan); }
+.border-neon-pink { border-color: var(--neon-pink); }
+.border-neon-purple { border-color: var(--neon-purple); }
+.border-neon-green { border-color: var(--neon-green); }
+.border-neon-teal { border-color: var(--neon-teal); }
+
+.bg-neon-cyan { background-color: var(--neon-cyan); }
+.bg-neon-pink { background-color: var(--neon-pink); }
+.bg-neon-purple { background-color: var(--neon-purple); }
+.bg-neon-green { background-color: var(--neon-green); }
+.bg-neon-teal { background-color: var(--neon-teal); }
+
+/* Neon Glow Effects */
+.shadow-neon-cyan { box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-cyan); }
+.shadow-neon-pink { box-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink), 0 0 60px var(--neon-pink); }
+.shadow-neon-purple { box-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-purple), 0 0 60px var(--neon-purple); }
+.shadow-neon-green { box-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green), 0 0 60px var(--neon-green); }
+.shadow-neon-teal { box-shadow: 0 0 20px var(--neon-teal), 0 0 40px var(--neon-teal), 0 0 60px var(--neon-teal); }
+
+/* Tech Grid Background */
+.bg-tech-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Tech Panel Background */
+.bg-tech-panel {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(20, 20, 20, 0.8) 50%, 
+    rgba(0, 0, 0, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scanline Effect */
+.tech-scanline {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(255, 255, 255, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  animation: scanlines 8s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 10px; }
+}
+
+/* Tech Font */
+.font-tech {
+  font-family: 'Courier New', monospace;
+}
+
+/* Neon Font */
+.font-neon {
+  font-family: 'Arial Black', sans-serif;
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* Tech Button Clip */
+.clip-tech-button {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+/* Tech Panel Clip */
+.clip-tech-panel {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
+}
+
+/* Scan Animation */
+.animate-scan {
+  animation: scan 2s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+/* Slow Spin Animation */
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Reverse Spin Animation */
+.animate-spin-reverse {
+  animation: spin-reverse 6s linear infinite;
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Perspective for 3D effects */
+.perspective-1000 {
+  perspective: 1000px;
+}

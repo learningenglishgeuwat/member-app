@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: var(--font-inter);
+    --font-space-grotesk: var(--font-space-grotesk);
+    --font-jetbrains-mono: var(--font-jetbrains-mono);
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Page Layout Base Classes - Prevent CSS Conflicts */
+.auth-layout {
+  @apply min-h-screen bg-black text-slate-200 overflow-x-hidden;
+  @apply selection:bg-purple-500/30 selection:text-purple-200;
+}
+
+.dashboard-layout {
+  @apply min-h-screen bg-slate-900 text-white overflow-x-hidden;
+  @apply selection:bg-blue-500/30 selection:text-blue-200;
+}
+
+.skill-layout {
+  @apply min-h-screen bg-slate-950 text-white overflow-x-hidden;
+  @apply selection:bg-cyan-500/30 selection:text-cyan-200;
+}
+
+.pronunciation-layout {
+  @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white;
+  @apply selection:bg-fuchsia-500 selection:text-white;
+}
+
+@supports (height: 100dvh) {
+  .auth-layout,
+  .dashboard-layout,
+  .skill-layout,
+  .pronunciation-layout {
+    min-height: 100dvh;
+  }
+}
+
+/* Layout Reset - Force Clean State */
+.layout-reset {
+  all: initial;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  position: relative;
+}

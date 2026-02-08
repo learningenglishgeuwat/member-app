@@ -1,0 +1,798 @@
+/* Enhanced Sidebar Component - Combining Best Features from All Files */
+
+/* ========================================
+   CSS VARIABLES - COMPREHENSIVE COLOR SYSTEM
+   ======================================== */
+:root {
+    /* Neon Colors (from SkillSidebar.css) */
+    --neon-purple: #ff00ff;
+    --neon-purple-glow: rgba(255, 0, 255, 0.6);
+    --neon-violet: #8b00ff;
+    --neon-violet-glow: rgba(139, 0, 255, 0.6);
+    --accent-magenta: #ff00aa;
+    --accent-magenta-glow: rgba(255, 0, 170, 0.4);
+    --cyber-cyan: #00f3ff;
+    --cyber-cyan-glow: rgba(0, 243, 255, 0.6);
+    --cyber-pink: #ff006e;
+    --cyber-pink-glow: rgba(255, 0, 110, 0.6);
+    
+    /* Pronunciation Module Colors (from pronunciation.css) */
+    --neon-cyan: #00f3ff;
+    --neon-pink: #ff00ff;
+    --neon-green: #39ff14;
+    --neon-blue: #0099ff;
+    --neon-orange: #ff6600;
+    --neon-red: #ff0040;
+    
+    /* Tech Colors */
+    --tech-blue: #0066cc;
+    --tech-green: #00cc66;
+    --tech-orange: #ff9900;
+    --tech-red: #cc0000;
+    
+    /* Base Colors */
+    --dark-bg: #000000;
+    --dark-secondary: #0a0a0a;
+    --dark-tertiary: #1a0a1a;
+    --ps-gray: #4A4A4A;
+    --ps-white: #FFFFFF;
+    --red-500: #ef4444;
+    --red-500-glow: rgba(239, 68, 68, 0.6);
+    --green-400: #4ade80;
+    --teal-400: #2dd4bf;
+    --pink-400: #f472b6;
+    
+    /* Shadows & Effects */
+    --shadow-small: 0 0 15px;
+    --shadow-medium: 0 0 25px;
+    --shadow-large: 0 0 40px;
+    --glow-intense: 0 0 60px;
+}
+
+/* ========================================
+   MAIN SIDEBAR CONTAINER
+   ======================================== */
+.sidebar-container {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    height: 100vh;
+    width: 20rem; /* w-80 */
+    background: #000000;
+    backdrop-filter: blur(25px) saturate(1.8);
+    border-left: 1px solid var(--cyber-cyan);
+    z-index: 60;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-large) rgba(190, 41, 236, 0.4);
+    overflow: hidden;
+    transform: translateX(0);
+}
+
+/* Theme Variations */
+.sidebar-theme-neon {
+    border-left-color: var(--neon-purple);
+    box-shadow: var(--shadow-large) var(--neon-purple-glow);
+}
+
+.sidebar-theme-tech {
+    border-left-color: var(--tech-blue);
+    box-shadow: var(--shadow-large) rgba(0, 102, 204, 0.4);
+}
+
+.sidebar-theme-cyber {
+    border-left-color: var(--cyber-cyan);
+    box-shadow: var(--shadow-large) rgba(0, 243, 255, 0.4);
+}
+
+/* ========================================
+   BACKGROUND EFFECTS
+   ======================================== */
+.sidebar-background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.tech-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+}
+
+.scanline-effect {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.01) 2px,
+        transparent 2px
+    );
+    background-size: 100% 10px;
+    animation: scanline 8s linear infinite;
+}
+
+.sidebar-top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--cyber-cyan), 
+        transparent);
+    animation: scan 3s linear infinite;
+}
+
+/* ========================================
+   SNAKE NEON EFFECTS
+   ======================================== */
+.snake-neon-border {
+    position: relative;
+    overflow: hidden;
+}
+
+.snake-neon-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--cyber-cyan),
+        var(--neon-purple),
+        var(--accent-magenta),
+        transparent);
+    animation: snakeNeon 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+.snake-neon-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000000;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* ========================================
+   CONTENT LAYOUT
+   ======================================== */
+.sidebar-content {
+    position: relative;
+    z-index: 10;
+    padding: 1rem 1.5rem; /* p-4 sm:p-6 */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   LOGO SECTION
+   ======================================== */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.logo-container {
+    position: relative;
+}
+
+.geuwat-logo-glow {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--cyber-cyan);
+    filter: drop-shadow(0 0 20px var(--cyber-cyan-glow)) 
+          brightness(1.1) 
+          contrast(1.2);
+    background: transparent;
+    mix-blend-mode: screen;
+    opacity: 0.9; /* ← Tambah transparansi */
+    transition: all 0.3s ease;
+}
+
+.geuwat-menu-button:hover .geuwat-logo-glow {
+    opacity: 1; /* ← Full opacity saat hover */
+    filter: drop-shadow(0 0 30px var(--cyber-cyan-glow)) 
+          brightness(1.2) 
+          contrast(1.3);
+}
+
+/* ========================================
+   LOGO RINGS
+   ======================================== */
+.logo-ring-main {
+    position: absolute;
+    border: 2px solid var(--cyber-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: color 0.3s, border-color 0.3s;
+    box-shadow: 
+        var(--shadow-medium) var(--cyber-cyan-glow),
+        inset 0 0 10px var(--neon-purple-glow);
+    animation: spin 3s linear infinite;
+}
+
+.logo-ring-secondary {
+    position: absolute;
+    border: 1px solid var(--cyber-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.5s, border-color 0.3s;
+    box-shadow: 
+        var(--shadow-small) var(--neon-purple-glow),
+        inset 0 0 5px var(--cyber-cyan-glow);
+    animation: spinReverse 2s linear infinite;
+}
+
+/* GEUWAT Menu Button */
+.geuwat-menu-button {
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 100 !important;
+}
+
+/* Hover effects for logo rings */
+.geuwat-menu-button:hover .logo-ring-main {
+    border-color: var(--neon-purple);
+    box-shadow: 
+        var(--shadow-medium) var(--neon-purple-glow),
+        inset 0 0 15px var(--cyber-cyan-glow);
+}
+
+.geuwat-menu-button:hover .logo-ring-secondary {
+    border-color: var(--cyber-pink);
+    box-shadow: 
+        var(--shadow-small) var(--cyber-pink-glow),
+        inset 0 0 8px var(--neon-purple-glow);
+}
+
+.geuwat-menu-button:hover .logo-image {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.status-indicator {
+    width: 0.5rem; /* w-2 */
+    height: 0.5rem; /* h-2 */
+    background: var(--cyber-cyan);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.sidebar-title {
+    color: var(--cyber-cyan);
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.125rem; /* text-lg */
+    line-height: 1.25rem; /* leading-tight */
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* tracking-wider */
+    flex: 1;
+}
+
+.header-accent {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        var(--cyber-cyan), 
+        transparent);
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* space-y-3 */
+}
+
+.nav-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    width: 100%;
+    padding: 0.75rem 1rem; /* px-4 py-3 */
+    background: rgba(74, 74, 74, 0.6); /* bg-cyber-slate/60 */
+    border: 1px solid var(--cyber-cyan);
+    border-radius: 0.5rem; /* rounded-lg */
+    color: var(--cyber-cyan);
+    transition: all 0.3s;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background: var(--cyber-cyan);
+    border-color: var(--cyber-cyan);
+    color: var(--ps-white);
+}
+
+.nav-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    flex: 1;
+}
+
+.button-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.button-label {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+}
+
+.button-description {
+    font-size: 0.625rem; /* text-[10px] */
+    font-family: monospace; /* font-mono */
+    color: var(--cyber-cyan);
+    transition: color 0.3s;
+}
+
+.nav-button:hover .button-description {
+    color: var(--cyber-cyan);
+}
+
+.button-indicator {
+    position: absolute;
+    top: 0.5rem; /* top-2 */
+    right: 0.5rem; /* right-2 */
+    width: 0.25rem; /* w-1 */
+    height: 0.25rem; /* h-1 */
+    background: var(--cyber-cyan);
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.nav-button:hover .button-indicator {
+    background: var(--cyber-cyan);
+}
+
+/* ========================================
+   LOGOUT BUTTON
+   ======================================== */
+.logout-button {
+    background: rgba(239, 68, 68, 0.1); /* bg-red-500/10 */
+    border: 1px solid rgba(239, 68, 68, 0.4); /* border-red-500/40 */
+    color: rgb(248, 113, 113); /* text-red-400 */
+}
+
+.logout-button:hover {
+    background: rgba(239, 68, 68, 0.2); /* bg-red-500/20 */
+    border-color: rgb(239, 68, 68); /* border-red-500 */
+    color: var(--ps-white);
+}
+
+/* ========================================
+   DIVIDER
+   ======================================== */
+.nav-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    margin: 1rem 0; /* my-4 */
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        var(--cyber-cyan), 
+        transparent);
+}
+
+.divider-icon {
+    color: var(--cyber-pink);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.sidebar-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+}
+
+.footer-right {
+    display: flex;
+    gap: 0.25rem; /* gap-1 */
+}
+
+.status-dots {
+    display: flex;
+    gap: 0.25rem; /* gap-1 */
+}
+
+.status-dot {
+    border-radius: 50%;
+}
+
+.status-low {
+    background: var(--cyber-cyan);
+}
+
+.status-medium {
+    background: var(--cyber-cyan);
+}
+
+.status-high {
+    background: var(--cyber-cyan);
+}
+
+/* ========================================
+   SNAKE NEON BUTTON EFFECT
+   ======================================== */
+.snake-neon-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.snake-neon-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--cyber-cyan),
+        var(--neon-purple),
+        var(--accent-magenta),
+        transparent);
+    animation: snakeNeon 2s ease-in-out infinite;
+    z-index: 10;
+}
+
+.snake-neon-button:hover::before {
+    height: 100%;
+    opacity: 0.3;
+}
+
+/* ========================================
+   BORDER COLOR CLASSES
+   ======================================== */
+.border-neon-purple {
+    border-color: var(--neon-purple) !important;
+}
+
+.border-neon-cyan {
+    border-color: var(--neon-cyan) !important;
+}
+
+.border-neon-pink {
+    border-color: var(--neon-pink) !important;
+}
+
+.border-neon-green {
+    border-color: var(--neon-green) !important;
+}
+
+.border-green-400 {
+    border-color: var(--green-400) !important;
+}
+
+.border-teal-400 {
+    border-color: var(--teal-400) !important;
+}
+
+.border-pink-400 {
+    border-color: var(--pink-400) !important;
+}
+
+.border-cyber-cyan {
+    border-color: var(--cyber-cyan) !important;
+}
+
+.border-tech-blue {
+    border-color: var(--tech-blue) !important;
+}
+
+.border-tech-green {
+    border-color: var(--tech-green) !important;
+}
+
+.border-tech-orange {
+    border-color: var(--tech-orange) !important;
+}
+
+.border-tech-red {
+    border-color: var(--tech-red) !important;
+}
+
+/* ========================================
+   TEXT COLOR CLASSES
+   ======================================== */
+.text-neon-purple {
+    color: var(--neon-purple) !important;
+}
+
+.text-neon-cyan {
+    color: var(--neon-cyan) !important;
+}
+
+.text-neon-pink {
+    color: var(--neon-pink) !important;
+}
+
+.text-neon-green {
+    color: var(--neon-green) !important;
+}
+
+.text-cyber-cyan {
+    color: var(--cyber-cyan) !important;
+}
+
+.text-cyber-pink {
+    color: var(--cyber-pink) !important;
+}
+
+.text-tech-blue {
+    color: var(--tech-blue) !important;
+}
+
+.text-tech-green {
+    color: var(--tech-green) !important;
+}
+
+.text-tech-orange {
+    color: var(--tech-orange) !important;
+}
+
+.text-tech-red {
+    color: var(--tech-red) !important;
+}
+
+/* ========================================
+   ENHANCED GEUWAT RING EFFECTS
+   ======================================== */
+.geuwat-ring-main {
+    box-shadow: 
+        var(--shadow-medium) var(--cyber-cyan-glow),
+        inset 0 0 10px var(--neon-purple-glow);
+}
+
+.geuwat-ring-secondary {
+    box-shadow: 
+        var(--shadow-small) var(--neon-purple-glow),
+        inset 0 0 5px var(--cyber-cyan-glow);
+}
+
+.geuwat-logo-glow {
+    filter: drop-shadow(0 0 20px var(--cyber-cyan-glow));
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes snakeNeon {
+    0% {
+        background-position: 0% 0%;
+        opacity: 0.4;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        background-position: 100% 100%;
+        opacity: 0.4;
+    }
+}
+
+@keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100px; }
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+/* Animation Classes */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-spin-slow {
+    animation: spinSlow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+    animation: spinReverse 15s linear infinite;
+}
+
+.animate-scan {
+    animation: scan 2s linear infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.ring-pulse {
+    animation: ringPulse 2s ease-in-out infinite;
+}
+
+.snake-neon-overlay {
+    animation: snakeNeon 3s ease-in-out infinite;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 640px) {
+    .sidebar-container {
+        width: 18rem; /* Slightly smaller on mobile */
+    }
+    
+    .sidebar-content {
+        padding: 1rem; /* Less padding on mobile */
+    }
+    
+    .snake-neon-overlay {
+        animation-duration: 4s; /* Slower on mobile for better performance */
+    }
+    
+    .snake-neon-border::before {
+        animation-duration: 4s;
+    }
+    
+    .snake-neon-button::before {
+        animation-duration: 3s;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar-container {
+        width: 24rem; /* w-96 on larger screens */
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY - REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    .snake-neon-overlay,
+    .snake-neon-border::before,
+    .snake-neon-button::before,
+    .ring-pulse,
+    .animate-spin,
+    .animate-spin-reverse,
+    .animate-pulse,
+    .scanline-effect {
+        animation: none;
+    }
+    
+    .logo-ring-main,
+    .logo-ring-secondary {
+        animation: none;
+    }
+}
+
+/* ========================================
+   OVERLAY
+   ======================================== */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+/* ========================================
+   TRANSITION STATES
+   ======================================== */
+.sidebar-container.translate-x-full {
+    transform: translateX(100%);
+}
+
+/* Tailwind utility classes compatibility */
+.translate-x-full {
+    transform: translateX(100%) !important;
+}
+
+.translate-x-0 {
+    transform: translateX(0) !important;
+}
+
+/* ========================================
+   THEME SPECIFIC STYLES
+   ======================================== */
+.sidebar-theme-neon .nav-button {
+    background: rgba(255, 0, 255, 0.1);
+    border-color: var(--neon-purple);
+    color: var(--neon-purple);
+}
+
+.sidebar-theme-neon .nav-button:hover {
+    background: var(--neon-purple);
+    border-color: var(--neon-purple);
+}
+
+.sidebar-theme-tech .nav-button {
+    background: rgba(0, 102, 204, 0.1);
+    border-color: var(--tech-blue);
+    color: var(--tech-blue);
+}
+
+.sidebar-theme-tech .nav-button:hover {
+    background: var(--tech-blue);
+    border-color: var(--tech-blue);
+}

@@ -1,0 +1,100 @@
+/* Login Page Specific Styles - Only Used Classes */
+
+/* Modern Futuristic Fonts - Using System Fonts */
+:root {
+  --font-futuristic: 'Segoe UI', 'Roboto', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+  --font-tech: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-modern: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-geometric: 'Trebuchet MS', 'Lucida Grande', sans-serif;
+}
+
+/* Used Classes */
+.shadow-neon-snake {
+  filter: blur(10px) brightness(2.5);
+  box-shadow: 0 0 20px rgba(217, 70, 239, 0.6);
+}
+
+.shadow-neon-snake-purple {
+  filter: blur(10px) brightness(2.5);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.btn-slanted {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 20px 100%);
+}
+
+
+/* Futuristic Font Utility Classes */
+.font-futuristic {
+  font-family: var(--font-futuristic);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.font-tech {
+  font-family: var(--font-tech);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+.font-modern {
+  font-family: var(--font-modern);
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+.font-geometric {
+  font-family: var(--font-geometric);
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+/* Heading Styles with Futuristic Fonts */
+.heading-futuristic {
+  font-family: var(--font-futuristic);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.heading-tech {
+  font-family: var(--font-geometric);
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Body Text with Futuristic Fonts */
+.text-futuristic {
+  font-family: var(--font-tech);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.text-tech {
+  font-family: var(--font-modern);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* Button Text Styles */
+.btn-text-futuristic {
+  font-family: var(--font-futuristic);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.btn-text-tech {
+  font-family: var(--font-geometric);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
