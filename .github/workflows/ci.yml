@@ -25,14 +25,12 @@ jobs:
           ls -la
 
       - name: Install dependencies
-        working-directory: member-app
         env:
           NODE_ENV: development
           npm_config_production: "false"
         run: npm ci
 
       - name: Build
-        working-directory: member-app
         env:
           NODE_ENV: development
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
