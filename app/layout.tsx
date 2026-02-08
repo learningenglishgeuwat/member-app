@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/MemberAuthContext";
-import RequireActiveWrapper from "@/app/components/RequireActiveWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,9 +44,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <AuthProvider>
-          <RequireActiveWrapper>
-            {children}
-          </RequireActiveWrapper>
+          {children}
         </AuthProvider>
       </body>
     </html>
