@@ -29,6 +29,11 @@ jobs:
           NODE_ENV: development
           npm_config_production: "false"
         run: npm ci
+      
+      - name: Debug node_modules
+        run: |
+          ls -la node_modules/.bin | grep next || true
+          npm ls next || true
 
       - name: Build
         env:
