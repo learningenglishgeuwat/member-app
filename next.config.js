@@ -6,8 +6,6 @@ const nextConfig = {
   // Nonaktifkan StrictMode untuk menghilangkan debugger pause
   reactStrictMode: false,
 
-  // Optimasi kompilasi
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
