@@ -37,10 +37,20 @@ export default function DevicePairingPage() {
         setError('Device ID tidak ditemukan.')
         return
       }
+      const {
+        data: { user: sessionUser },
+        error: userError,
+      } = await supabase.auth.getUser()
+      if (userError || !sessionUser?.id) {
+        setError('Sesi tidak valid. Silakan login ulang.')
+        router.replace('/login')
+        return
+      }
 
       const { data: existingDevice } = await supabase
         .from('devices')
         .select('id, revoked')
+        .eq('user_id', sessionUser.id)
         .eq('device_id', deviceId)
         .eq('revoked', false)
         .maybeSingle()

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getDeviceId } from '@/lib/device'
 import type { User } from '@/types/database'
@@ -28,7 +28,6 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const pathname = usePathname()
   const [user, setUser] = useState<User | null>(null)
   const [hasSession, setHasSession] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -143,6 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     activityEvents.forEach((event) => window.addEventListener(event, bumpActivity, { passive: true }))
 
     const verifyDeviceAccess = async (sessionUserId: string) => {
+      const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
       const allowedPaths = new Set([
         '/login',
         '/device-pairing',
@@ -150,7 +150,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         '/forgot-password',
         '/reset-password',
       ])
-      if (allowedPaths.has(pathname)) return
+      if (allowedPaths.has(currentPath)) return
 
       const deviceId = getDeviceId()
       if (!deviceId) {
@@ -180,7 +180,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (registerError) {
           if (registerError.message?.includes('MAX_DEVICE_REACHED')) {
-            router.replace('/device-pairing')
+            // Guard against transient race: if this device is already linked, do not redirect.
+            const { data: recheckDevice } = await (supabase as any)
+              .from('devices')
+              .select('id, revoked')
+              .eq('user_id', sessionUserId)
+              .eq('device_id', deviceId)
+              .maybeSingle()
+
+            if (!recheckDevice || recheckDevice.revoked) {
+              router.replace('/device-pairing')
+            }
           } else {
             console.warn('Device register error:', registerError.message)
           }

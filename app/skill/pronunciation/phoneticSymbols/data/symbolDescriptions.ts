@@ -12,7 +12,7 @@ export interface SymbolDescriptions {
 }
 
 // Vowel Descriptions
-export const vowelDescriptions: SymbolDescriptions = {
+const vowelDescriptions: SymbolDescriptions = {
   'i': {
     description: 'Close front unrounded vowel',
     category: 'vowel',
@@ -76,7 +76,7 @@ export const vowelDescriptions: SymbolDescriptions = {
 };
 
 // Consonant Descriptions
-export const consonantDescriptions: SymbolDescriptions = {
+const consonantDescriptions: SymbolDescriptions = {
   'p': {
     description: 'Voiceless bilabial plosive',
     category: 'consonant',
@@ -200,7 +200,7 @@ export const consonantDescriptions: SymbolDescriptions = {
 };
 
 // Diphthong Descriptions
-export const diphthongDescriptions: SymbolDescriptions = {
+const diphthongDescriptions: SymbolDescriptions = {
   'aɪ': {
     description: 'Closing diphthong ending in front close vowel',
     category: 'diphthong',
@@ -244,7 +244,7 @@ export const diphthongDescriptions: SymbolDescriptions = {
 };
 
 // Combined all descriptions
-export const allSymbolDescriptions: SymbolDescriptions = {
+const allSymbolDescriptions: SymbolDescriptions = {
   ...vowelDescriptions,
   ...consonantDescriptions,
   ...diphthongDescriptions
@@ -253,43 +253,6 @@ export const allSymbolDescriptions: SymbolDescriptions = {
 // Helper function to get symbol description
 export function getSymbolDescription(symbol: string): string {
   return allSymbolDescriptions[symbol]?.description || 'International Phonetic Alphabet Symbol';
-}
-
-// Helper function to get symbol category
-export function getSymbolCategory(symbol: string): 'vowel' | 'consonant' | 'diphthong' | undefined {
-  return allSymbolDescriptions[symbol]?.category;
-}
-
-// Helper function to get symbol subcategory
-export function getSymbolSubcategory(symbol: string): string | undefined {
-  return allSymbolDescriptions[symbol]?.subcategory;
-}
-
-// Helper function to get descriptions by category
-export function getDescriptionsByCategory(category: 'vowel' | 'consonant' | 'diphthong'): SymbolDescriptions {
-  switch (category) {
-    case 'vowel':
-      return vowelDescriptions;
-    case 'consonant':
-      return consonantDescriptions;
-    case 'diphthong':
-      return diphthongDescriptions;
-    default:
-      return {};
-  }
-}
-
-// Helper function to get all symbols by category
-export function getSymbolsByCategory(category: 'vowel' | 'consonant' | 'diphthong'): string[] {
-  const descriptions = getDescriptionsByCategory(category);
-  return Object.keys(descriptions);
-}
-
-// Helper function to get all symbols by subcategory
-export function getSymbolsBySubcategory(subcategory: string): string[] {
-  return Object.entries(allSymbolDescriptions)
-    .filter(([, desc]) => desc.subcategory === subcategory)
-    .map(([symbol]) => symbol);
 }
 
 // Helper function to get category display name
@@ -302,8 +265,8 @@ export function getCategoryDisplayName(symbol: string): string {
   // Map to specific category names based on your requirements
   if (category === 'vowel') {
     // Determine if vowel is tense or lax based on subcategory
-    const tenseVowels = ['close', 'close-mid', 'near-close'];
-    const laxVowels = ['open', 'open-mid', 'near-open', 'mid'];
+    const tenseVowels = ['close', 'close-mid'];
+    const laxVowels = ['near-close', 'open', 'open-mid', 'near-open', 'mid', 'r-colored'];
     
     if (tenseVowels.includes(subcategory || '')) {
       return 'vowel_tense';

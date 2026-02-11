@@ -14,11 +14,6 @@ export {
 export * from './symbolDescriptions';
 export {
   getSymbolDescription,
-  getSymbolCategory,
-  getSymbolSubcategory,
-  getDescriptionsByCategory,
-  getSymbolsByCategory,
-  getSymbolsBySubcategory,
   getCategoryDisplayName
 } from './symbolDescriptions';
 

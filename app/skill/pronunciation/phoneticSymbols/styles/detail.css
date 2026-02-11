@@ -11,10 +11,10 @@
   overflow-x: hidden;
 }
 
-/* Reset only within the detail container */
-.symbol-detail-container * {
-  margin: 0;
-  padding: 0;
+/* Keep sizing predictable without wiping component-level spacing */
+.symbol-detail-container *,
+.symbol-detail-container *::before,
+.symbol-detail-container *::after {
   box-sizing: border-box;
 }
 
@@ -224,8 +224,8 @@
   min-width: 0 !important;
 }
 
-/* Override any Tailwind button defaults */
-.symbol-detail-container .word-grid button {
+/* Override any Tailwind button defaults only for word cards */
+.symbol-detail-container .word-grid > button.word-card {
   all: unset !important;
   box-sizing: border-box !important;
   width: 100% !important;

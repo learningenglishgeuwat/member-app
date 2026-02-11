@@ -71,7 +71,7 @@ export async function signIn(email: string, password: string) {
     }
 
     if (data.user) {
-      return { success: true }
+      return { success: true, userId: data.user.id }
     }
 
     return { success: false, error: 'Unknown error occurred' }

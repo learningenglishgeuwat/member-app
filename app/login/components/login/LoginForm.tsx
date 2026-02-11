@@ -105,8 +105,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
         if (deviceError) {
           if (deviceError.message?.includes('MAX_DEVICE_REACHED')) {
-            router.push('/device-pairing')
-            return
+            const userId = result.userId
+            if (userId) {
+              const { data: recheckDeviceRaw } = await supabase
+                .from('devices')
+                .select('id, revoked')
+                .eq('user_id', userId)
+                .eq('device_id', deviceId)
+                .maybeSingle()
+              const recheckDevice = recheckDeviceRaw as { id: string; revoked: boolean } | null
+
+              if (!recheckDevice || recheckDevice.revoked) {
+                router.push('/device-pairing')
+                return
+              }
+            } else {
+              router.push('/device-pairing')
+              return
+            }
           }
           console.warn('Device registration error:', deviceError.message)
         }

@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { Play, Pause, Lightbulb, Database, HelpCircle, Book } from 'lucide-react';
 import '../styles/detail.css';
@@ -8,18 +9,15 @@ import '../../../../styles/scrollbar.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
-import RecordingControlsButton from '../../../components/RecordingControlsButton';
-import { 
-  getWordExamples, 
-  getSymbolDescription, 
-  getPronunciationTips,
-  getCategoryDisplayName,
-  getVideoIdBySymbol,
-  getAllCommonLetters,
-  type WordExample,
-  type CommonLetter,
-  type CommonLettersCategory
-} from '../data/index';
+import type { WordExample } from '../data/wordExamples/wordExamples';
+import type { CommonLetter } from '../data/commonLetters/CommonLetters';
+
+const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
+  ssr: false,
+});
+const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal'), {
+  ssr: false,
+});
 
 
 const SymbolDetailPage: React.FC = () => {
@@ -31,11 +29,29 @@ const SymbolDetailPage: React.FC = () => {
   const decodedSymbol = symbol ? decodeURIComponent(symbol) : '';
   
   const [activeWord, setActiveWord] = useState<string | null>(null);
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
+  const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(null);
+  const [commonLettersLoading, setCommonLettersLoading] = useState(false);
+  const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isProgressSaved, setIsProgressSaved] = useState(false); // Start with false to match server
   const [isClient, setIsClient] = useState(false);
+  const [symbolData, setSymbolData] = useState<{
+    description: string;
+    category: string;
+    examples: WordExample[];
+    tips: string[];
+    videoId?: string;
+  }>({
+    description: 'International Phonetic Alphabet Symbol',
+    category: 'Unknown',
+    examples: [],
+    tips: [],
+    videoId: undefined,
+  });
 
   // Handle hydration
   useEffect(() => {
@@ -48,23 +64,61 @@ const SymbolDetailPage: React.FC = () => {
   
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
+  const playSessionRef = useRef(0);
+  const playNextTimeoutRef = useRef<number | null>(null);
   
-  // Get YouTube video ID for current symbol
-  const videoId = getVideoIdBySymbol(decodedSymbol || '');
-
-  // Debug: Check if video ID is found
   useEffect(() => {
-    if (decodedSymbol && videoId) {
-      console.log(`Video ID found for symbol /${decodedSymbol}/: ${videoId}`);
-    } else if (decodedSymbol && !videoId) {
-      console.log(`No video ID found for symbol /${decodedSymbol}/`);
+    let active = true;
+    if (!decodedSymbol) {
+      setSymbolData({
+        description: 'International Phonetic Alphabet Symbol',
+        category: 'Unknown',
+        examples: [],
+        tips: [],
+        videoId: undefined,
+      });
+      return () => {
+        active = false;
+      };
     }
-  }, [decodedSymbol, videoId]);
 
-  // Force re-render when symbol changes
-  useEffect(() => {
-    // This will trigger when symbol changes, ensuring video updates
-    console.log('Symbol changed to:', decodedSymbol);
+    setSymbolLoading(true);
+    (async () => {
+      try {
+        const [wordExamplesModule, descriptionModule, tipsModule, videoModule] = await Promise.all([
+          import('../data/wordExamples/wordExamples'),
+          import('../data/symbolDescriptions'),
+          import('../data/pronunciationTips/PronunciationTips'),
+          import('../data/videoIds'),
+        ]);
+
+        if (!active) return;
+
+        setSymbolData({
+          description: descriptionModule.getSymbolDescription(decodedSymbol),
+          category: descriptionModule.getCategoryDisplayName(decodedSymbol),
+          examples: wordExamplesModule.getWordExamples(decodedSymbol),
+          tips: tipsModule.getPronunciationTips(decodedSymbol),
+          videoId: videoModule.getVideoIdBySymbol(decodedSymbol),
+        });
+      } catch (error) {
+        console.error('Failed to load symbol data:', error);
+        if (!active) return;
+        setSymbolData({
+          description: 'International Phonetic Alphabet Symbol',
+          category: 'Unknown',
+          examples: [],
+          tips: [],
+          videoId: undefined,
+        });
+      } finally {
+        if (active) setSymbolLoading(false);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
   }, [decodedSymbol]);
 
   // Manual scroll to word examples
@@ -75,7 +129,7 @@ const SymbolDetailPage: React.FC = () => {
         block: 'start'
       });
       // Set active word to first example to ensure first card is highlighted
-      if (symbolData?.examples?.length > 0) {
+      if (symbolData.examples.length > 0) {
         setActiveWord(symbolData.examples[0].word);
       }
     }
@@ -91,6 +145,13 @@ const SymbolDetailPage: React.FC = () => {
     
     // Cleanup
     return () => {
+      playSessionRef.current += 1;
+      if (playNextTimeoutRef.current) {
+        window.clearTimeout(playNextTimeoutRef.current);
+        playNextTimeoutRef.current = null;
+      }
+      setIsPlayingAll(false);
+      setActiveWord(null);
       window.speechSynthesis.onvoiceschanged = null;
       window.speechSynthesis.cancel();
     };
@@ -105,15 +166,6 @@ const SymbolDetailPage: React.FC = () => {
       voices.find(v => v.lang === 'en-US'); // Fallback
   };
 
-  // Symbol data using modular functions with useMemo for optimization
-  const symbolData = useMemo(() => ({
-    description: getSymbolDescription(decodedSymbol),
-    category: getCategoryDisplayName(decodedSymbol),
-    examples: getWordExamples(decodedSymbol),
-    tips: getPronunciationTips(decodedSymbol),
-    commonLetters: getAllCommonLetters()
-  }), [decodedSymbol]);
-
   // Debug: Check if data is loaded correctly
   useEffect(() => {
     console.log('Original symbol:', symbol);
@@ -124,67 +176,87 @@ const SymbolDetailPage: React.FC = () => {
   }, [symbol, decodedSymbol, symbolData]);
 
 
-  const handlePlayAllWords = () => {
-    if ('speechSynthesis' in window && symbolData.examples.length > 0) {
-      // Cancel any currently playing speech
-      window.speechSynthesis.cancel();
-      
-      const preferredVoice = getPreferredVoice();
-      let currentIndex = 0;
-      
-      const playNextWord = () => {
-        if (currentIndex >= symbolData.examples.length) {
-          setActiveWord(null);
-          return;
-        }
-        
-        const example = symbolData.examples[currentIndex];
-        setActiveWord(example.word);
-        
-        // Scroll to the current word card using ref
-        if (wordCardRefs.current[currentIndex]) {
-          wordCardRefs.current[currentIndex]?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center'
-          });
-        }
-        
-        const utterance = new SpeechSynthesisUtterance(example.word);
-        utterance.rate = 0.8; // Slightly slower for better pronunciation clarity
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-        utterance.lang = 'en-US';
-        
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
-        }
-        
-        utterance.onstart = () => {
-          setActiveWord(example.word);
-        };
-        
-        utterance.onend = () => {
-          currentIndex++;
-          // Small delay between words
-          setTimeout(playNextWord, 300);
-        };
-        
-        utterance.onerror = () => {
-          currentIndex++;
-          setTimeout(playNextWord, 300);
-        };
-        
-        window.speechSynthesis.speak(utterance);
-      };
-      
-      // Start playing the first word
-      playNextWord();
+  const stopPlayAllWords = () => {
+    playSessionRef.current += 1;
+    if (playNextTimeoutRef.current) {
+      window.clearTimeout(playNextTimeoutRef.current);
+      playNextTimeoutRef.current = null;
     }
+    window.speechSynthesis.cancel();
+    setIsPlayingAll(false);
+    setActiveWord(null);
+  };
+
+  const handlePlayAllWords = () => {
+    if (!('speechSynthesis' in window) || symbolLoading || symbolData.examples.length === 0) return;
+
+    if (isPlayingAll) {
+      stopPlayAllWords();
+      return;
+    }
+
+    stopPlayAllWords();
+    const currentSession = playSessionRef.current;
+    const preferredVoice = getPreferredVoice();
+    let currentIndex = 0;
+    setIsPlayingAll(true);
+      
+    const playNextWord = () => {
+      if (currentSession !== playSessionRef.current) return;
+
+      if (currentIndex >= symbolData.examples.length) {
+        setIsPlayingAll(false);
+        setActiveWord(null);
+        return;
+      }
+
+      const example = symbolData.examples[currentIndex];
+      setActiveWord(example.word);
+
+      if (wordCardRefs.current[currentIndex]) {
+        wordCardRefs.current[currentIndex]?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center'
+        });
+      }
+
+      const utterance = new SpeechSynthesisUtterance(example.word);
+      utterance.rate = 0.8;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+      utterance.lang = 'en-US';
+
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+
+      utterance.onstart = () => {
+        if (currentSession !== playSessionRef.current) return;
+        setActiveWord(example.word);
+      };
+
+      utterance.onend = () => {
+        if (currentSession !== playSessionRef.current) return;
+        currentIndex++;
+        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
+      };
+
+      utterance.onerror = () => {
+        if (currentSession !== playSessionRef.current) return;
+        currentIndex++;
+        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    };
+
+    playNextWord();
   };
 
   const handlePlayWord = (word: string) => {
     if ('speechSynthesis' in window) {
+      stopPlayAllWords();
       window.speechSynthesis.cancel();
       setActiveWord(word);
       
@@ -276,6 +348,26 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
+  const openCommonLettersModal = async () => {
+    setShowCommonLettersPopup(true);
+
+    if (commonLetters || commonLettersLoading) {
+      return;
+    }
+
+    setCommonLettersLoading(true);
+    setCommonLettersError(null);
+    try {
+      const commonLettersModule = await import('../data/commonLetters/CommonLetters');
+      setCommonLetters(commonLettersModule.getAllCommonLetters());
+    } catch (error) {
+      console.error('Failed to load common letters:', error);
+      setCommonLettersError('Gagal memuat data common letters. Silakan coba lagi.');
+    } finally {
+      setCommonLettersLoading(false);
+    }
+  };
+
   return (
     // Responsive container: handles safe areas and dynamic viewport heights
     <div className="pronunciation-layout symbol-detail-container supports-[height:100dvh]:h-[100dvh] font-sans flex flex-col overflow-hidden">
@@ -302,13 +394,13 @@ const SymbolDetailPage: React.FC = () => {
       <main className="symbol-detail-main relative z-10 flex-1 flex flex-col items-center pt-40 pb-24 md:pt-36 md:pb-32 overflow-y-auto w-full px-3 sm:px-4 scrollbar-hide">
         
         {/* HERO: The Reactor Core - Responsive Sizing */}
-          <div className="relative mb-6 md:mb-10 group flex-shrink-0">
+          <div className="relative mt-6 md:mt-8 lg:mt-6 mb-6 md:mb-10 group flex-shrink-0">
           
           {/* Outer Rotating Ring */}
-          <div className="absolute inset-[-20px] md:inset-[-40px] border border-cyber-cyan/20 rounded-full border-dashed animate-spin-slow pointer-events-none"></div>
+          <div className="absolute inset-[-14px] sm:inset-[-18px] md:inset-[-24px] lg:inset-[-32px] border border-cyber-cyan/20 rounded-full border-dashed animate-spin-slow pointer-events-none"></div>
           
           {/* Inner Hex/Circle Core - Scaled for Mobile/Desktop */}
-          <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+          <div className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-64 lg:h-64 flex items-center justify-center">
              {/* Glow Background */}
              <div className="absolute inset-0 bg-cyber-cyan/5 rounded-full blur-3xl animate-pulse"></div>
              
@@ -332,10 +424,11 @@ const SymbolDetailPage: React.FC = () => {
                 {/* Interactive Trigger (Main Action Button) */}
                 <button 
                   onClick={handlePlayAllWords}
+                  disabled={symbolLoading || symbolData.examples.length === 0}
                   className="absolute -bottom-5 md:-bottom-6 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(190,41,236,0.4)] z-20 group-hover:scale-110 bg-cyber-cyan text-black hover:bg-white"
-                  title="Play All Words"
+                  title={isPlayingAll ? "Stop All Words" : "Play All Words"}
                 >
-                    {activeWord ? <Pause className="md:w-5 md:h-5 fill-current" /> : <Play className="md:w-5 md:h-5 fill-current" />}
+                    {isPlayingAll ? <Pause className="md:w-5 md:h-5 fill-current" /> : <Play className="md:w-5 md:h-5 fill-current" />}
                 </button>
              </div>
           </div>
@@ -455,7 +548,7 @@ const SymbolDetailPage: React.FC = () => {
                 <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
               </div>
               <button
-                onClick={() => setShowCommonLettersPopup(true)}
+                onClick={openCommonLettersModal}
                 className="text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
                 title="Lihat huruf umum dan simbol IPA"
               >
@@ -479,7 +572,7 @@ const SymbolDetailPage: React.FC = () => {
         </div>
 
         {/* YouTube Video Section */}
-        {videoId && (
+        {symbolData.videoId && (
           <div data-video-section className="w-full max-w-4xl mx-auto mt-6">
             <div className="bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]">
                       
@@ -496,9 +589,9 @@ const SymbolDetailPage: React.FC = () => {
               <div className="p-3 md:p-5">
                 <div className="relative w-full" style={{ paddingBottom: '35%' }}>
                   <iframe
-                    key={videoId || 'no-video'}
+                    key={symbolData.videoId || 'no-video'}
                     className="absolute top-0 left-0 w-full h-full rounded-lg border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
-                    src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1&showinfo=0`}
+                    src={`https://www.youtube.com/embed/${symbolData.videoId}?rel=0&modestbranding=1&controls=1&showinfo=0`}
                     title={`Pronunciation tutorial for /${decodedSymbol}/`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -651,88 +744,14 @@ const SymbolDetailPage: React.FC = () => {
         </div>
       )}
 
-      {/* Common Letters Popup Modal */}
-      {showCommonLettersPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowCommonLettersPopup(false)}
-          />
-          
-          {/* Modal Content */}
-          <div className="relative bg-[#0a0f1c] border border-cyber-pink/40 rounded-2xl p-4 sm:p-6 max-w-[95vw] sm:max-w-4xl max-h-[85vh] overflow-y-auto w-full shadow-[0_0_50px_rgba(255,0,255,0.3)] mx-4 sm:mx-auto">
-            {/* Close Button */}
-            <button
-              onClick={() => setShowCommonLettersPopup(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white hover:bg-red-500/20 p-2 rounded-lg transition-all duration-200"
-              title="Tutup popup"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            
-            {/* Header */}
-            <div className="flex items-center mb-6">
-              <Book className="text-cyber-pink mr-3" size={24} />
-              <h3 className="text-xl font-bold text-white">Common Letters</h3>
-            </div>
-            
-            {/* Content */}
-            <div className="space-y-6">
-              {getAllCommonLetters().reduce((acc: CommonLettersCategory[], letter) => {
-                const categoryName = letter.category === 'vowel' ? 'VOWEL' : 
-                                   letter.category === 'tense_vowel' ? 'TENSE VOWEL' : 
-                                   letter.category === 'diphthong' ? 'DIPHTHONG' : 'CONSONANT';
-                let category = acc.find(cat => cat.category === categoryName);
-                if (!category) {
-                  category = { category: categoryName, letters: [] };
-                  acc.push(category);
-                }
-                category.letters.push(letter);
-                return acc;
-              }, []).map((category: CommonLettersCategory) => (
-                <div key={category.category} className="border border-cyber-pink/20 rounded-lg p-4 bg-black/40">
-                  <h4 className="text-lg font-bold text-cyber-pink mb-4 font-mono">{category.category}</h4>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    {category.letters.map((letter: CommonLetter, index: number) => (
-                      <div key={index} className="bg-cyber-slate/20 rounded-lg p-3 border border-cyber-pink/10">
-                        <div className="flex items-center mb-2">
-                          <span className="text-cyber-cyan font-bold text-lg mr-2">{letter.ipaSymbol}</span>
-                          <span className="text-white font-mono text-sm">{letter.letter}</span>
-                        </div>
-                        {letter.description && (
-                          <p className="text-gray-300 text-xs mb-2">{letter.description}</p>
-                        )}
-                        <div className="space-y-1">
-                          {letter.examples.map((example: string, exIndex: number) => (
-                            <div key={exIndex} className="text-gray-400 text-xs font-mono">
-                              {example}
-                            </div>
-                          ))}
-                        </div>
-                        {letter.pronunciationTip && (
-                          <div className="mt-2 p-2 bg-cyber-pink/10 rounded border border-cyber-pink/20">
-                            <p className="text-cyber-pink text-xs font-mono">{letter.pronunciationTip}</p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Footer */}
-            <div className="mt-6 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
-              <p className="text-sm text-cyber-cyan">
-                <strong>Inti Logi (WAJIB PAHAM):</strong> Huruf tidak menentukan bunyi • Simbol IPA = hasil pola huruf • Belajar dari simbol → huruf jauh lebih efektif untuk reading & listening
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      <CommonLettersModal
+        isOpen={showCommonLettersPopup}
+        onClose={() => setShowCommonLettersPopup(false)}
+        letters={commonLetters}
+        isLoading={commonLettersLoading}
+        error={commonLettersError}
+        onRetry={openCommonLettersModal}
+      />
 
     </div>
   );
