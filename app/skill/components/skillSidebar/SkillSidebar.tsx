@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       description: 'SYNTAX_ENGINE',
       icon: <Cpu className={`w-5 h-5 sm:w-6 sm:h-6 ${currentIconColors.green} group-hover:scale-110 transition-transform`} />,
       onClick: () => router.push('/skill/grammar'),
-      available: false
+      available: true
     },
     {
       label: 'Speaking',
@@ -190,7 +190,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <Zap className="w-4 h-4 sm:w-5 sm:h-5 divider-icon animate-pulse" />
               <div className="divider-line"></div>
             </div>
-            
+
             <button
               onClick={async () => {
                 if (isLoggingOut) return;

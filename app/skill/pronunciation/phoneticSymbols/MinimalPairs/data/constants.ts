@@ -1,0 +1,25 @@
+﻿export const V_I_SHORT_LONG = '\u026a \u2194 i';
+export const AE_E = '\u00e6 \u2194 \u025b';
+export const AE_AH = '\u00e6 \u2194 \u0251';
+export const U_SHORT_LONG = '\u028a \u2194 u';
+export const UH_AH = '\u028c \u2194 \u0251';
+export const SCHWA_E = '\u0259 \u2194 \u025b';
+export const AW_AH = '\u0254 \u2194 \u0251';
+export const AI_EI = 'a\u026a \u2194 e\u026a';
+export const AU_OU = 'a\u028a \u2194 o\u028a';
+export const I_NEAR = '\u026a \u2194 \u026a\u0259';
+export const U_NEAR = '\u028a \u2194 \u028a\u0259';
+export const E_AIR = '\u025b \u2194 e\u0259';
+export const E_EI = '\u025b \u2194 e\u026a';
+export const AW_OU = '\u0254 \u2194 o\u028a';
+export const ER_R = '\u025a \u2194 r (Indonesian trill)';
+export const F_P = 'f \u2194 p';
+export const V_F = 'v \u2194 f';
+export const TH_T = '\u03b8 \u2194 t';
+export const DH_D = '\u00f0 \u2194 d';
+export const S_SH = 's \u2194 \u0283';
+export const Z_ZH = 'z \u2194 \u0292';
+export const CH_J = '\u02a7 \u2194 \u02a4';
+export const K_G = 'k \u2194 g';
+export const NG_N = '\u014b \u2194 n';
+

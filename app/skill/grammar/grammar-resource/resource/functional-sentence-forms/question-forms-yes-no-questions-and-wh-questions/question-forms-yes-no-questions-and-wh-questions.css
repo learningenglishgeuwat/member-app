@@ -1,0 +1,187 @@
+.qf-page {
+  min-height: 100vh;
+  color: #e2e8f0;
+  background:
+    radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
+    radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
+    #020617;
+}
+
+.qf-shell {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.qf-header {
+  margin-bottom: 0.35rem;
+  max-width: 68rem;
+}
+
+.qf-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.qf-subtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.qf-block {
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 0.85rem;
+  background: rgba(2, 6, 23, 0.74);
+  padding: 1.05rem;
+}
+
+.qf-block-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a5f3fc;
+}
+
+.qf-text {
+  margin-top: 0.55rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+.qf-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.qf-grid-one-col {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.qf-card {
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 0.75rem;
+  background: rgba(2, 6, 23, 0.82);
+}
+
+.qf-card-accordion {
+  overflow: hidden;
+}
+
+.qf-card-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.qf-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.qf-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #67e8f9;
+  margin: 0;
+}
+
+.qf-card-caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #67e8f9;
+  transition: transform 150ms ease;
+}
+
+.qf-card-accordion[open] .qf-card-caret {
+  transform: rotate(180deg);
+}
+
+.qf-card-body {
+  border-top: 1px solid rgba(34, 211, 238, 0.18);
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+
+.qf-card-desc {
+  margin: 0;
+  color: #d6fbff;
+  line-height: 1.5;
+}
+
+.qf-list {
+  margin-top: 0.65rem;
+  padding-left: 1rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+.qf-highlight {
+  display: inline-block;
+  border: 1px solid rgba(251, 146, 60, 0.55);
+  border-radius: 0.5rem;
+  padding: 0.04rem 0.42rem;
+  background: rgba(251, 146, 60, 0.18);
+  color: #ffedd5;
+  font-weight: 700;
+}
+
+.qf-table-wrap {
+  margin-top: 0.8rem;
+  overflow-x: auto;
+}
+
+.qf-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 6, 23, 0.7);
+}
+
+.qf-table th,
+.qf-table td {
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+  color: #d6fbff;
+}
+
+.qf-table th {
+  color: #a5f3fc;
+  background: rgba(15, 23, 42, 0.72);
+  font-weight: 700;
+}
+
+.qf-fix-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.qf-fix-card {
+  border: 1px solid rgba(34, 211, 238, 0.24);
+  border-radius: 0.7rem;
+  background: rgba(2, 6, 23, 0.78);
+  padding: 0.75rem 0.85rem;
+}
+
+.qf-fix-wrong {
+  margin: 0;
+  color: #fda4af;
+}
+
+.qf-fix-correct {
+  margin: 0.35rem 0 0;
+  color: #86efac;
+}
+
+@media (min-width: 768px) {
+  .qf-title {
+    font-size: 2.45rem;
+  }
+}

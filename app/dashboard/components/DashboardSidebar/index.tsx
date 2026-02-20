@@ -77,6 +77,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
     { id: 'tutorial', label: 'Tutorial', icon: HelpCircle },
     { id: 'settings', label: 'Settings', icon: Settings },
     { id: 'device-approve', label: 'Approve Device', icon: CheckCircle },
+    { id: 'help-support', label: 'Help & Support', icon: HelpCircle },
   ]
 
   const handleLogout = async () => {

@@ -11,6 +11,12 @@ interface SkillData {
   description: string;
 }
 
+type DashboardTopicProgress = {
+  name: string;
+  percentage: number;
+  locked?: boolean;
+};
+
 const initialSkills: SkillData[] = [
   { id: 'pronunciation', name: 'Pronunciation', progress: 75, icon: Volume2, description: 'Speaking clarity and accent' },
   { id: 'vocabulary', name: 'Vocabulary', progress: 60, icon: BookOpen, description: 'Word knowledge and usage' },
@@ -33,7 +39,7 @@ const ProgressContent: React.FC = () => {
   };
   
   // Load pronunciation topic progress from localStorage
-  const getPronunciationTopicProgress = () => {
+  const getPronunciationTopicProgress = (): DashboardTopicProgress[] => {
     const topicProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
     const averagePhoneticProgress = calculatePhoneticAverage(topicProgress);
     
@@ -47,9 +53,10 @@ const ProgressContent: React.FC = () => {
     ];
   };
 
-  // Update initial skills with loaded progress and recalculate pronunciation average
+  // Update initial skills with loaded progress and recalculate averages
   const [skills] = useState(() => {
     const topicProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
+    const grammarProgress = JSON.parse(localStorage.getItem('grammarSpeakingProgress') || '{}') as Record<string, number>;
     
     // Get progress from each individual topic
     const alphabetProgress = topicProgress['alphabet'] || 0;
@@ -74,17 +81,25 @@ const ProgressContent: React.FC = () => {
     const pronunciationAverage = allTopicProgress.length > 0 
       ? Math.round(allTopicProgress.reduce((acc, curr) => acc + curr, 0) / allTopicProgress.length)
       : 0;
+    const grammarValues = Object.values(grammarProgress);
+    const grammarAverage = grammarValues.length > 0
+      ? Math.round(grammarValues.reduce((acc, curr) => acc + curr, 0) / grammarValues.length)
+      : 0;
     
-    return initialSkills.map(skill => 
-      skill.id === 'pronunciation' 
-        ? { ...skill, progress: pronunciationAverage }
-        : skill
-    );
+    return initialSkills.map(skill => {
+      if (skill.id === 'pronunciation') {
+        return { ...skill, progress: pronunciationAverage };
+      }
+      if (skill.id === 'grammar') {
+        return { ...skill, progress: grammarAverage };
+      }
+      return skill;
+    });
   });
 
   // All skills are displayed
   const displayedSkills = skills;
-  const lockedSkillIds = new Set(['vocabulary', 'grammar', 'speaking']);
+  const lockedSkillIds = new Set(['vocabulary', 'speaking']);
   const unlockedSkills = displayedSkills.filter(skill => !lockedSkillIds.has(skill.id));
   const fallbackSkill: SkillData = {
     id: 'none',
@@ -92,6 +107,18 @@ const ProgressContent: React.FC = () => {
     progress: 0,
     icon: BarChart3,
     description: ''
+  };
+
+  const getGrammarTrackProgress = (): DashboardTopicProgress[] => {
+    const grammarProgress = JSON.parse(localStorage.getItem('grammarSpeakingProgress') || '{}') as Record<string, number>;
+    const values = Object.values(grammarProgress);
+    const speakingAverage =
+      values.length > 0 ? Math.round(values.reduce((acc, curr) => acc + curr, 0) / values.length) : 0;
+
+    return [
+      { name: 'Grammar for Speaking', percentage: speakingAverage },
+      { name: 'Grammar for Writing', percentage: 0, locked: true },
+    ];
   };
 
   const totalProgress = unlockedSkills.reduce((acc, curr) => acc + curr.progress, 0);
@@ -218,12 +245,7 @@ const ProgressContent: React.FC = () => {
                                 { name: 'Idioms', percentage: 15 }
                               ];
                             case 'grammar':
-                              return [
-                                { name: 'Tenses', percentage: 40 },
-                                { name: 'Sentence Structure', percentage: 30 },
-                                { name: 'Prepositions', percentage: 20 },
-                                { name: 'Articles', percentage: 10 }
-                              ];
+                              return getGrammarTrackProgress();
                             case 'speaking':
                               return [
                                 { name: 'Fluency', percentage: 35 },
@@ -235,18 +257,23 @@ const ProgressContent: React.FC = () => {
                               return [];
                           }
                         })().map((topic, index) => {
-                          const isSelected = selectedTopics[skill.id]?.includes(topic.name);
+                          const isTopicLocked = topic.locked === true;
+                          const isSelected = !isTopicLocked && selectedTopics[skill.id]?.includes(topic.name);
                           const isExpanded = expandedTopics[skill.id]?.includes(topic.name);
                           return (
                             <div key={index} className="space-y-1 md:space-y-2">
                               <button
                                 onClick={() => {
+                                  if (isTopicLocked) return;
                                   handleTopicClick(skill.id, topic.name);
                                   toggleTopicExpansion(skill.id, topic.name);
                                 }}
+                                disabled={isTopicLocked}
                                 className={`
                                   relative py-1.5 md:py-2 px-2 md:px-3 rounded-lg font-display font-semibold text-[11px] sm:text-xs md:text-sm transition-all duration-200 border w-full
-                                  ${isSelected 
+                                  ${isTopicLocked
+                                    ? 'bg-slate-900/50 border-slate-700/40 text-slate-500 cursor-not-allowed opacity-70'
+                                    : isSelected 
                                     ? 'bg-cyan-600 border-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] scale-105 z-10' 
                                     : 'bg-slate-800/50 border-slate-600/50 text-slate-300 hover:border-cyan-500/50 hover:bg-slate-700/50 hover:text-cyan-200'
                                   }
@@ -254,6 +281,7 @@ const ProgressContent: React.FC = () => {
                               >
                                 <div className="flex items-center justify-between w-full">
                                   <span className="text-[10px] sm:text-xs md:text-sm">{topic.name}</span>
+                                  {isTopicLocked && <span className="text-[10px] sm:text-xs text-slate-500">(Locked)</span>}
                                 </div>
                                 {isSelected && (
                                   <div className="absolute -top-1 -right-1 w-2 h-2 md:w-2.5 md:h-2.5 bg-cyan-400 rounded-full border-2 border-slate-900 shadow-[0_0_8px_#22d3ee]">
@@ -262,7 +290,7 @@ const ProgressContent: React.FC = () => {
                               </button>
                               
                               {/* Progress bar chart below button when expanded */}
-                              {isExpanded && (
+                              {isExpanded && !isTopicLocked && (
                                 <div className="pl-2 md:pl-4 pr-1 md:pr-2 animate-fade-in">
                                   <div className="bg-slate-800/30 rounded-lg p-2 md:p-3">
                                     <div className="flex items-center gap-2 md:gap-3">

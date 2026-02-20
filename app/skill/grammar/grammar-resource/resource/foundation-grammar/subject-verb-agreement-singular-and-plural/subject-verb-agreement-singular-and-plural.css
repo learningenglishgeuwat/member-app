@@ -1,0 +1,197 @@
+.sva-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  background:
+    radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
+    radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
+    #020617;
+}
+
+.sva-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.sva-header {
+  margin-bottom: 0.35rem;
+  max-width: 54rem;
+}
+
+.sva-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.sva-subtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.sva-block {
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 0.85rem;
+  background: rgba(2, 6, 23, 0.74);
+  padding: 1.05rem;
+}
+
+.sva-block-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a5f3fc;
+}
+
+.sva-text {
+  margin-top: 0.55rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+.sva-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.sva-card {
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 0.75rem;
+  background: rgba(2, 6, 23, 0.82);
+}
+
+.sva-card-accordion {
+  overflow: hidden;
+}
+
+.sva-card-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.sva-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sva-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #67e8f9;
+  margin: 0;
+}
+
+.sva-card-caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #67e8f9;
+  transition: transform 150ms ease;
+}
+
+.sva-card-accordion[open] .sva-card-caret {
+  transform: rotate(180deg);
+}
+
+.sva-card-body {
+  border-top: 1px solid rgba(34, 211, 238, 0.18);
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+
+.sva-card-desc {
+  margin: 0;
+  color: #d6fbff;
+  line-height: 1.5;
+}
+
+.sva-list {
+  margin-top: 0.65rem;
+  padding-left: 1rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+.sva-inline-highlight {
+  color: #fff7ed;
+  background: rgba(249, 115, 22, 0.22);
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  border-radius: 0.35rem;
+  padding: 0.02rem 0.3rem;
+  margin: 0 0.05rem;
+  font-weight: 600;
+}
+
+.sva-table-wrap {
+  margin-top: 0.8rem;
+  overflow-x: auto;
+}
+
+.sva-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 6, 23, 0.7);
+}
+
+.sva-table th,
+.sva-table td {
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+  color: #d6fbff;
+}
+
+.sva-table th {
+  color: #a5f3fc;
+  background: rgba(15, 23, 42, 0.72);
+  font-weight: 700;
+}
+
+.sva-fix-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.sva-fix-card {
+  border: 1px solid rgba(34, 211, 238, 0.24);
+  border-radius: 0.7rem;
+  background: rgba(2, 6, 23, 0.78);
+  padding: 0.75rem 0.85rem;
+}
+
+.sva-fix-wrong {
+  margin: 0;
+  color: #fda4af;
+}
+
+.sva-fix-correct {
+  margin: 0.35rem 0 0;
+  color: #86efac;
+}
+
+@media (min-width: 768px) {
+  .sva-page {
+    padding: 2.5rem;
+  }
+
+  .sva-title {
+    font-size: 2.45rem;
+  }
+
+  .sva-grid,
+  .sva-fix-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+

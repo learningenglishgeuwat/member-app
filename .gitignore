@@ -15,6 +15,12 @@
 
 # next.js
 /.next/
+/.d/
+/d/
+/.next_b/
+/.x/
+/.z/
+/test_rename.tmp
 /out/
 
 # production

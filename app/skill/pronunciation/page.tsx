@@ -22,7 +22,7 @@ const Page: React.FC = () => {
   const selectedTopic = TOPICS[selectedIndex];
   
   // Check if selected topic is locked - useMemo to prevent re-renders
-  const lockedTopics = useMemo(() => ['stressing', 'final-sound', 'american-t', 'connected'], []);
+  const lockedTopics = useMemo(() => ['american-t', 'connected'], []);
   const isTopicLocked = lockedTopics.includes(selectedTopic.id);
 
   // Navigation function to open topic-specific pages
@@ -32,7 +32,7 @@ const Page: React.FC = () => {
       'alphabet': '/skill/pronunciation/alphabet',
       'phonetic': '/skill/pronunciation/phoneticSymbols',
       'stressing': '/skill/pronunciation/stressing',
-      'final-sound': '/skill/pronunciation/final-sound',
+      'final-sound': '/skill/pronunciation/final-sound-new',
       'american-t': '/skill/pronunciation/american-t',
       'connected': '/skill/pronunciation/connected-speech'
     };

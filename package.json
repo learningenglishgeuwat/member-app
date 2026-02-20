@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
+    "clean": "node -e \"const fs=require('fs');['.next','.next_dev','.next_build','.next_build_temp','.next_build_temp_20260212_1'].forEach((d)=>{try{fs.rmSync(d,{recursive:true,force:true})}catch(e){}})\"",
     "start": "next start",
     "lint": "eslint",
     "test": "jest",

@@ -25,12 +25,12 @@ const BackButton: React.FC<BackButtonProps> = ({
       // 🔥 CRITICAL: Cleanup browser state before navigation
       if (to.includes('/skill/pronunciation')) {
         // Reset any zoom/scale changes from previous page
-        document.body.style.zoom = '1';
-        document.body.style.transform = 'scale(1)';
-        document.documentElement.style.zoom = '1';
-        document.documentElement.style.transform = 'scale(1)';
+        document.body.style.removeProperty('zoom');
+        document.body.style.removeProperty('transform');
+        document.documentElement.style.removeProperty('zoom');
+        document.documentElement.style.removeProperty('transform');
       }
-      if (to === '/skill' && pathname.startsWith('/skill/pronunciation')) {
+      if (to === '/skill' && pathname.startsWith('/skill/')) {
         try {
           localStorage.removeItem('lastSkillPath');
         } catch {}
@@ -70,3 +70,4 @@ const BackButton: React.FC<BackButtonProps> = ({
 };
 
 export default BackButton;
+

@@ -27,7 +27,7 @@ interface SkillConfig {
 const SKILLS: SkillConfig[] = [
   { type: SkillType.PRONUNCIATION, label: 'PRONUNCIATION', color: 'purple', description: 'Master your accent', available: true },
   { type: SkillType.VOCABULARY, label: 'VOCABULARY', color: 'green', description: 'Expand your word bank', available: false },
-  { type: SkillType.GRAMMAR, label: 'GRAMMAR', color: 'teal', description: 'Perfect your structure', available: false },
+  { type: SkillType.GRAMMAR, label: 'GRAMMAR', color: 'teal', description: 'Perfect your structure', available: true },
   { type: SkillType.SPEAKING, label: 'SPEAKING', color: 'pink', description: 'Converse with confidence', available: false },
 ];
 
@@ -109,6 +109,9 @@ function SkillMenuContent() {
         // Simulate grammar data fetching
         await new Promise(resolve => setTimeout(resolve, 1500));
         setAccessGranted(true);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        router.push('/skill/grammar');
+        return;
       } else if (activeSkill === SkillType.PRONUNCIATION) {
         // Show access granted first, then navigate
         await new Promise(resolve => setTimeout(resolve, 1500));

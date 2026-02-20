@@ -1,0 +1,213 @@
+.grammar-resource-page {
+  min-height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  scrollbar-width: none;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
+    radial-gradient(1100px 600px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
+    #020617;
+}
+
+.grammar-resource-page::-webkit-scrollbar,
+.grammar-resource-page *::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.grammar-resource-page::-webkit-scrollbar-track,
+.grammar-resource-page *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.grammar-resource-page::-webkit-scrollbar-thumb,
+.grammar-resource-page *::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.grammar-resource-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+}
+
+.grammar-resource-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.grammar-resource-subtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.grammar-resource-tree {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  --flow-duration: 2.4s;
+  --flow-color: #67e8f9;
+  --tree-topic-gap: 0.45rem;
+  --tree-rail-x: -11px;
+  --tree-branch-y: 16px;
+  --tree-indent: 22px;
+}
+
+.grammar-resource-tree-group {
+  position: relative;
+}
+
+.tree-children {
+  position: relative;
+  padding-top: 0.25rem;
+  padding-bottom: 0.65rem;
+  overflow: hidden;
+}
+
+.tree-card {
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 0.7rem;
+  background: rgba(2, 6, 23, 0.8);
+  padding: 0.72rem 0.85rem;
+  color: #cffafe;
+  line-height: 1.35;
+}
+
+.tree-folder-card {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(15, 23, 42, 0.78);
+}
+
+.tree-folder-card::-webkit-details-marker {
+  display: none;
+}
+
+.tree-caret {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid #67e8f9;
+  transition: transform 140ms ease;
+}
+
+.grammar-resource-tree-group[open] .tree-caret {
+  transform: rotate(90deg);
+}
+
+.tree-folder-label {
+  font-weight: 700;
+  color: #a5f3fc;
+}
+
+.tree-topic-card {
+  position: relative;
+  margin-left: var(--tree-indent);
+  margin-top: var(--tree-topic-gap);
+  padding-left: 1.1rem;
+  z-index: 1;
+}
+
+.tree-topic-card:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: var(--tree-rail-x);
+  top: var(--tree-branch-y);
+  height: calc(100% + var(--tree-topic-gap) + 2px);
+  width: 1px;
+  background: rgba(103, 232, 249, 0.85);
+  box-shadow:
+    0 0 4px rgba(103, 232, 249, 0.65),
+    0 0 8px rgba(34, 211, 238, 0.4);
+  z-index: 2;
+}
+
+.tree-branch {
+  position: absolute;
+  left: var(--tree-rail-x);
+  top: var(--tree-branch-y);
+  width: 0.75rem;
+  height: 1px;
+  background: rgba(34, 211, 238, 0.35);
+  overflow: hidden;
+}
+
+.tree-branch::after {
+  content: '';
+  position: absolute;
+  left: -0.55rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0) 0%,
+    var(--flow-color) 55%,
+    rgba(34, 211, 238, 0) 100%
+  );
+  box-shadow: 0 0 8px rgba(103, 232, 249, 0.9), 0 0 14px rgba(34, 211, 238, 0.55);
+  animation: tree-flow-across var(--flow-duration) linear infinite;
+}
+
+.grammar-resource-tree-group[open] .tree-branch::after {
+  animation-play-state: running;
+}
+
+.grammar-resource-tree-group:not([open]) .tree-branch::after {
+  animation-play-state: paused;
+}
+
+.tree-topic-label {
+  color: #d6fbff;
+}
+
+.tree-topic-link {
+  display: block;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.tree-topic-link:hover {
+  border-color: rgba(103, 232, 249, 0.65);
+  box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.18);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 768px) {
+  .grammar-resource-page {
+    padding: 2.5rem;
+  }
+
+  .grammar-resource-title {
+    font-size: 2.45rem;
+  }
+}
+
+@keyframes tree-flow-across {
+  0% {
+    left: -0.55rem;
+    opacity: 0;
+  }
+  55% {
+    left: -0.55rem;
+    opacity: 0;
+  }
+  65% {
+    left: -0.55rem;
+    opacity: 1;
+  }
+  100% {
+    left: 0.75rem;
+    opacity: 1;
+  }
+}

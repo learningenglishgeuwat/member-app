@@ -14,10 +14,10 @@ export interface VideoCategory {
 export const vowelLaxVideos: VideoCategory = {
   'ʌ': 'e6rjJiOxVCs',
   'ɪ': 'rX96zUAApyo',
-  'ʊ': 'nEhnJj_bLbM',
+  'ʊ': 'uDKUXJYxLTE',
   'ɛ': 'II9KgEF3K7E',
   'ə': 'rqU4DTeQc5E',
-  'ɚ': 'UUNI1k8tNSY'
+  'ɚ': 'hXLf2zQFTro'
 };
 
 // Video IDs for vowel tense symbols
@@ -68,7 +68,7 @@ export const diphthongVideos: VideoCategory = {
   'eɪ': 'Gk_ZufNX5jQ',
   'ɔɪ': 'TL8bvCYD0dk',
   'ɪə': 'v_9rTF9MXyY',
-  'eə': '08MZWPOwiYw',
+  'eə': '0MjInT75bmU',
   'ʊə': '3zSOQ_wWdyc',
   'aʊ': 'WzlK8CnFh8c',
   'oʊ': '08MZWPOwiYw'

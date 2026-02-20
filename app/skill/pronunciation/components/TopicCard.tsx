@@ -8,7 +8,7 @@ interface TopicCardProps {
 }
 
 const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
-  const isDisabled = topic.id === 'stressing' || topic.id === 'final-sound' || topic.id === 'american-t' || topic.id === 'connected'; // Lock stressing, final sound, american t, and connected speech topics
+  const isDisabled = topic.id === 'american-t' || topic.id === 'connected'; // Lock american t and connected speech topics
   
   return (
     <div 

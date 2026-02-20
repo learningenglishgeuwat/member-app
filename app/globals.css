@@ -4,9 +4,9 @@
 
 @layer base {
   :root {
-    --font-inter: var(--font-inter);
-    --font-space-grotesk: var(--font-space-grotesk);
-    --font-jetbrains-mono: var(--font-jetbrains-mono);
+    --font-inter: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-space-grotesk: "Trebuchet MS", "Lucida Grande", "Segoe UI", sans-serif;
+    --font-jetbrains-mono: Consolas, "Courier New", monospace;
   }
 
   html,
@@ -45,7 +45,7 @@
 }
 
 .pronunciation-layout {
-  @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white;
+  @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white bg-[#0a0a0a];
   @apply selection:bg-fuchsia-500 selection:text-white;
 }
 

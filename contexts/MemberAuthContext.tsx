@@ -35,12 +35,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authIssue, setAuthIssue] = useState<string | null>(null)
   const idleTimerRef = React.useRef<number | null>(null)
   const absoluteTimerRef = React.useRef<number | null>(null)
+  const userFetchRef = React.useRef<{ userId: string; promise: Promise<User | null> } | null>(null)
   const lastActivityRef = React.useRef<number>(Date.now())
+  // Auto sign-out timer dimatikan agar sesi belajar tidak terputus.
+  const autoSessionTimeoutEnabled = false
   const idleTimeoutMs = 15 * 60 * 1000
   const absoluteTimeoutMs = 24 * 60 * 60 * 1000
   const cachedUserKey = 'auth_cached_user'
   const cachedUserAtKey = 'auth_cached_user_at'
-  const cachedUserTtlMs = 2 * 60 * 1000
+  const cachedUserTtlMs = 30 * 60 * 1000
 
   const getCachedUser = () => {
     try {
@@ -88,6 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('auth_session_start', String(sessionStart))
     localStorage.setItem('auth_last_activity', String(lastActivityRef.current))
 
+    if (!autoSessionTimeoutEnabled) {
+      return
+    }
+
     idleTimerRef.current = window.setTimeout(async () => {
       setNotice('Sesi berakhir karena tidak ada aktivitas (15 menit).')
       await signOut()
@@ -110,19 +117,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const fetchUserDataWithTimeout = async (userId: string) => {
-    const userDataPromise = supabase
+  const fetchUserData = async (userId: string): Promise<User | null> => {
+    const { data: userData, error } = await supabase
       .from('users')
       .select('id, email, fullname, whatsapp, tier, balance, referral_code, role, status, created_at, subscription_expires_at')
       .eq('id', userId)
       .single()
 
-    const { data: userData } = await Promise.race([
-      userDataPromise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error('User data timeout')), 30000)),
-    ]) as { data: User }
+    if (error || !userData) return null
+    return userData as User
+  }
 
-    return userData
+  const fetchUserDataDedup = async (userId: string) => {
+    const inFlight = userFetchRef.current
+    if (inFlight && inFlight.userId === userId) {
+      return inFlight.promise
+    }
+
+    const promise = fetchUserData(userId)
+      .then((data) => data ?? null)
+      .finally(() => {
+        if (userFetchRef.current?.userId === userId) {
+          userFetchRef.current = null
+        }
+      })
+
+    userFetchRef.current = { userId, promise }
+    return promise
   }
 
   // Check for existing session on mount
@@ -220,14 +241,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return
         }
 
-        // Add timeout to prevent infinite loading
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Auth timeout')), 30000)
-        )
-        
-        const sessionPromise = supabase.auth.getSession()
-        
-        const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]) as { data: { session: { user: { id: string } } | null } }
+        const { data: { session } } = await supabase.auth.getSession() as { data: { session: { user: { id: string } } | null } }
 
         const sessionUser = session?.user || null
         setHasSession(!!sessionUser)
@@ -245,7 +259,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (!cachedUser || cachedUser.id !== sessionUser.id || !isCachedUserFresh()) {
             ;(async () => {
               try {
-                const userData = await fetchUserDataWithTimeout(sessionUser.id)
+                const userData = await fetchUserDataDedup(sessionUser.id)
+                if (!userData) throw new Error('User data is empty')
                 setUser(userData)
                 setCachedUser(userData)
                 setAuthIssue(null)
@@ -267,15 +282,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-        if (errorMessage === 'Auth timeout') {
-          console.error('Authentication timed out. Check your network connection.')
-          console.log('Tip: This can happen with slow connections. Try refreshing the page.')
-          const message = 'Koneksi lambat atau terputus. Coba refresh halaman.'
-          setNotice(message)
-          setAuthIssue(message)
-        } else if (errorMessage === 'User data timeout') {
-          console.error('User data fetch timed out. Database may be slow.')
-        } else {
+        if (errorMessage) {
           console.error('Authentication error:', error)
           setAuthIssue('Terjadi kendala koneksi. Coba refresh halaman.')
         }
@@ -305,7 +312,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           try {
             // Fetch user data from our users table - only select needed fields
             if (!cachedUser || cachedUser.id !== sessionUser.id || !isCachedUserFresh()) {
-              const userData = await fetchUserDataWithTimeout(sessionUser.id)
+              const userData = await fetchUserDataDedup(sessionUser.id)
+              if (!userData) throw new Error('User data is empty')
               
               setUser(userData)
               setCachedUser(userData)

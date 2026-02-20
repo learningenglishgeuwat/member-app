@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import type { CommonLetter } from '../../data/commonLetters/CommonLetters'
 
 type GroupedCommonLetters = {
@@ -32,6 +32,8 @@ export default function CommonLettersModal({
   error,
   onRetry,
 }: CommonLettersModalProps) {
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
+
   const groupedLetters = useMemo(() => {
     if (!letters?.length) return []
 
@@ -46,6 +48,27 @@ export default function CommonLettersModal({
       return acc
     }, [])
   }, [letters])
+
+  useEffect(() => {
+    if (!isOpen || groupedLetters.length === 0) return
+
+    setExpandedSections((prev) => {
+      const next = { ...prev }
+      for (const group of groupedLetters) {
+        if (typeof next[group.category] === 'undefined') {
+          next[group.category] = true
+        }
+      }
+      return next
+    })
+  }, [isOpen, groupedLetters])
+
+  const toggleSection = (category: string) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [category]: !(prev[category] ?? true),
+    }))
+  }
 
   if (!isOpen) return null
 
@@ -87,30 +110,43 @@ export default function CommonLettersModal({
           <div className="space-y-6">
             {groupedLetters.map((category) => (
               <div key={category.category} className="border border-cyber-pink/20 rounded-lg p-4 bg-black/40">
-                <h4 className="text-lg font-bold text-cyber-pink mb-4 font-mono">{category.category}</h4>
-                <div className="grid gap-4 md:grid-cols-2">
-                  {category.letters.map((letter, index) => (
-                    <div key={index} className="bg-cyber-slate/20 rounded-lg p-3 border border-cyber-pink/10">
-                      <div className="flex items-center mb-2">
-                        <span className="text-cyber-cyan font-bold text-lg mr-2">{letter.ipaSymbol}</span>
-                        <span className="text-white font-mono text-sm">{letter.letter}</span>
-                      </div>
-                      {letter.description && <p className="text-gray-300 text-xs mb-2">{letter.description}</p>}
-                      <div className="space-y-1">
-                        {letter.examples.map((example, exampleIndex) => (
-                          <div key={exampleIndex} className="text-gray-400 text-xs font-mono">
-                            {example}
-                          </div>
-                        ))}
-                      </div>
-                      {letter.pronunciationTip && (
-                        <div className="mt-2 p-2 bg-cyber-pink/10 rounded border border-cyber-pink/20">
-                          <p className="text-cyber-pink text-xs font-mono">{letter.pronunciationTip}</p>
+                <button
+                  type="button"
+                  onClick={() => toggleSection(category.category)}
+                  className="w-full flex items-center justify-between text-left mb-4"
+                  aria-expanded={expandedSections[category.category] ?? true}
+                >
+                  <h4 className="text-lg font-bold text-cyber-pink font-mono">{category.category}</h4>
+                  <span className="text-cyber-cyan font-mono text-xl leading-none">
+                    {(expandedSections[category.category] ?? true) ? '−' : '+'}
+                  </span>
+                </button>
+
+                {(expandedSections[category.category] ?? true) && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {category.letters.map((letter, index) => (
+                      <div key={index} className="bg-cyber-slate/20 rounded-lg p-3 border border-cyber-pink/10">
+                        <div className="flex items-center mb-2">
+                          <span className="text-cyber-cyan font-bold text-lg mr-2">{letter.ipaSymbol}</span>
+                          <span className="text-white font-mono text-sm">{letter.letter}</span>
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                        {letter.description && <p className="text-gray-300 text-xs mb-2">{letter.description}</p>}
+                        <div className="space-y-1">
+                          {letter.examples.map((example, exampleIndex) => (
+                            <div key={exampleIndex} className="text-gray-400 text-xs font-mono">
+                              {example}
+                            </div>
+                          ))}
+                        </div>
+                        {letter.pronunciationTip && (
+                          <div className="mt-2 p-2 bg-cyber-pink/10 rounded border border-cyber-pink/20">
+                            <p className="text-cyber-pink text-xs font-mono">{letter.pronunciationTip}</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

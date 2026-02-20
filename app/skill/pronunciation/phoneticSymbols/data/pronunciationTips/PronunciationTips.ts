@@ -17,9 +17,15 @@ export const allPronunciationTips: SymbolPronunciationTips = {
   ...diphthongTips,
 }
 
+const DEFAULT_PRONUNCIATION_TIPS: PronunciationTip[] = [
+  { tip: 'Posisikan lidah sesuai target bunyi sebelum suara keluar.', category: 'tongue' },
+  { tip: 'Atur bukaan mulut dan bibir agar kualitas bunyi tetap jelas.', category: 'mouth' },
+  { tip: 'Jaga aliran udara stabil, lalu ulangi perlahan sebelum menambah kecepatan.', category: 'airflow' },
+]
+
 // Helper function to get pronunciation tips for a symbol
 export function getPronunciationTips(symbol: string): string[] {
-  const tips = allPronunciationTips[symbol] || []
+  const tips = allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
   return tips.map((tip) => tip.tip)
 }
 
@@ -28,7 +34,7 @@ export function getTipsByCategory(
   category: 'mouth' | 'tongue' | 'lips' | 'airflow' | 'voice' | 'general',
   symbol: string
 ): string[] {
-  const tips = allPronunciationTips[symbol] || []
+  const tips = allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
   return tips
     .filter((tip) => tip.category === category)
     .map((tip) => tip.tip)
@@ -36,11 +42,7 @@ export function getTipsByCategory(
 
 // Helper function to get all tips with categories
 export function getAllTipsWithCategories(symbol: string): PronunciationTip[] {
-  return allPronunciationTips[symbol] || [
-    { tip: 'Practice listening first', category: 'general' },
-    { tip: 'Repeat slowly', category: 'general' },
-    { tip: 'Record and compare', category: 'general' },
-  ]
+  return allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
 }
 
 // Helper function to get tips by symbol category

@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Play, Pause, Lightbulb, Database, HelpCircle, Book } from 'lucide-react';
 import '../styles/detail.css';
 import '../../../../styles/scrollbar.css';
@@ -19,14 +19,128 @@ const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal
   ssr: false,
 });
 
+const VOWEL_LAX_SYMBOLS = ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'] as const;
+const VOWEL_TENSE_SYMBOLS = ['\u0251', 'i', 'u', '\u00e6', '\u0254'] as const;
+const CONSONANT_VOICELESS_SYMBOLS = ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h'] as const;
+const CONSONANT_VOICED_SYMBOLS = [
+  'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y',
+] as const;
+const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
+
+function getBaseGroup(category: string): 'vowel' | 'consonant' | 'diphthong' | null {
+  if (category.startsWith('vowel')) return 'vowel';
+  if (category.startsWith('consonant')) return 'consonant';
+  if (category === 'diphthong') return 'diphthong';
+  return null;
+}
+
+function getSymbolNavGroups(category: string): Array<{ title: string; symbols: readonly string[] }> {
+  const baseGroup = getBaseGroup(category);
+  if (baseGroup === 'vowel') {
+    return [
+      { title: 'Vowel Lax', symbols: VOWEL_LAX_SYMBOLS },
+      { title: 'Vowel Tense', symbols: VOWEL_TENSE_SYMBOLS },
+    ];
+  }
+  if (baseGroup === 'consonant') {
+    return [
+      { title: 'Consonant Voiceless', symbols: CONSONANT_VOICELESS_SYMBOLS },
+      { title: 'Consonant Voiced', symbols: CONSONANT_VOICED_SYMBOLS },
+    ];
+  }
+  if (baseGroup === 'diphthong') {
+    return [{ title: 'Diphthong Symbols', symbols: DIPHTHONG_SYMBOLS }];
+  }
+  return [];
+}
+
+type BritishWordNote = {
+  word: string;
+  britishIpa: string;
+  americanIpa: string;
+};
+
+type BritishSymbolNote = {
+  description: string;
+  items: BritishWordNote[];
+};
+
+const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
+  '\u0254': {
+    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British. TTS American biasanya memakai vokal lebih ke /ɑ/.',
+    items: [
+      { word: 'hot', britishIpa: '/hɒt/', americanIpa: '/hɑt/' },
+      { word: 'not', britishIpa: '/nɒt/', americanIpa: '/nɑt/' },
+      { word: 'lot', britishIpa: '/lɒt/', americanIpa: '/lɑt/' },
+      { word: 'top', britishIpa: '/tɒp/', americanIpa: '/tɑp/' },
+      { word: 'shop', britishIpa: '/ʃɒp/', americanIpa: '/ʃɑp/' },
+      { word: 'box', britishIpa: '/bɒks/', americanIpa: '/bɑks/' },
+      { word: 'fox', britishIpa: '/fɒks/', americanIpa: '/fɑks/' },
+    ],
+  },
+  h: {
+    description: 'Untuk beberapa kata dengan huruf h + o, model American biasanya tidak memakai bunyi /ɒ/ British.',
+    items: [
+      { word: 'hot', britishIpa: '/hɒt/', americanIpa: '/hɑt/' },
+      { word: 'holiday', britishIpa: '/ˈhɒlədeɪ/', americanIpa: '/ˈhɑlədeɪ/' },
+    ],
+  },
+  w: {
+    description: 'Khusus kata tertentu, pelafalan American punya ciri tambahan seperti flap /ɾ/ dan r-colored vowel.',
+    items: [
+      { word: 'water', britishIpa: '/ˈwɔːtə/', americanIpa: '/ˈwɑɾɚ/' },
+    ],
+  },
+  '\u025a': {
+    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /ɚ/ atau /ər/.',
+    items: [
+      { word: 'teacher', britishIpa: '/ˈtiːtʃə/', americanIpa: '/ˈtiːtʃɚ/' },
+      { word: 'doctor', britishIpa: '/ˈdɒktə/', americanIpa: '/ˈdɑktɚ/' },
+      { word: 'water', britishIpa: '/ˈwɔːtə/', americanIpa: '/ˈwɑɾɚ/' },
+      { word: 'later', britishIpa: '/ˈleɪtə/', americanIpa: '/ˈleɪɾɚ/' },
+    ],
+  },
+  'e\u0259': {
+    description: 'Simbol ini sangat umum di British. Dalam American, banyak kata biasanya terdengar lebih rhotic (pakai /r/).',
+    items: [
+      { word: 'care', britishIpa: '/keə/', americanIpa: '/ker/' },
+      { word: 'share', britishIpa: '/ʃeə/', americanIpa: '/ʃer/' },
+      { word: 'fair', britishIpa: '/feə/', americanIpa: '/fer/' },
+      { word: 'bear', britishIpa: '/beə/', americanIpa: '/ber/' },
+    ],
+  },
+  '\u026A\u0259': {
+    description: 'Di British sering ditulis /ɪə/. Dalam American biasanya lebih dekat ke /ɪr/.',
+    items: [
+      { word: 'near', britishIpa: '/nɪə/', americanIpa: '/nɪr/' },
+      { word: 'clear', britishIpa: '/klɪə/', americanIpa: '/klɪr/' },
+      { word: 'fear', britishIpa: '/fɪə/', americanIpa: '/fɪr/' },
+      { word: 'year', britishIpa: '/jɪə/', americanIpa: '/jɪr/' },
+    ],
+  },
+  '\u028A\u0259': {
+    description: 'Di British sering ditulis /ʊə/. Dalam American, kata yang sama biasanya cenderung /ʊr/ (atau variasi rhotic lain).',
+    items: [
+      { word: 'tour', britishIpa: '/tʊə/', americanIpa: '/tʊr/' },
+      { word: 'poor', britishIpa: '/pʊə/', americanIpa: '/pʊr/' },
+      { word: 'sure', britishIpa: '/ʃʊə/', americanIpa: '/ʃʊr/' },
+      { word: 'your', britishIpa: '/jʊə/', americanIpa: '/jʊr/' },
+    ],
+  },
+};
 
 const SymbolDetailPage: React.FC = () => {
   const { symbol } = useParams<{
     symbol: string;
   }>();
+  const router = useRouter();
   
   // Decode URL-encoded symbol
   const decodedSymbol = symbol ? decodeURIComponent(symbol) : '';
+  const normalizedSymbol = decodedSymbol.trim().toLowerCase();
+  const shouldRedirectToSummary =
+    normalizedSymbol === 'summary of phonetic symbols' ||
+    normalizedSymbol === 'summary-of-phonetic-symbols';
   
   const [activeWord, setActiveWord] = useState<string | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
@@ -52,6 +166,21 @@ const SymbolDetailPage: React.FC = () => {
     tips: [],
     videoId: undefined,
   });
+  const symbolNavGroups = useMemo(() => getSymbolNavGroups(symbolData.category), [symbolData.category]);
+  const britishNote = useMemo(
+    () => BRITISH_NOTES_BY_SYMBOL[decodedSymbol] ?? null,
+    [decodedSymbol]
+  );
+
+  useEffect(() => {
+    if (shouldRedirectToSummary) {
+      router.replace('/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols');
+    }
+  }, [router, shouldRedirectToSummary]);
+
+  if (shouldRedirectToSummary) {
+    return null;
+  }
 
   // Handle hydration
   useEffect(() => {
@@ -164,6 +293,19 @@ const SymbolDetailPage: React.FC = () => {
       voices.find(v => v.lang === 'en-US' && v.name.includes('Samantha')) || // macOS high quality
       voices.find(v => v.lang === 'en-US' && v.name.includes('Zira')) || // Windows high quality
       voices.find(v => v.lang === 'en-US'); // Fallback
+  };
+
+  const getPreferredVoiceByAccent = (accent: 'uk' | 'us') => {
+    const voices = window.speechSynthesis.getVoices();
+
+    if (accent === 'uk') {
+      return voices.find(v => v.name === 'Google UK English Female') ||
+        voices.find(v => v.name === 'Google UK English Male') ||
+        voices.find(v => v.lang === 'en-GB' && v.name.includes('Google')) ||
+        voices.find(v => v.lang === 'en-GB');
+    }
+
+    return getPreferredVoice();
   };
 
   // Debug: Check if data is loaded correctly
@@ -281,6 +423,35 @@ const SymbolDetailPage: React.FC = () => {
       
       speechSynthesis.speak(utterance);
     }
+  };
+
+  const handlePlayBritishNoteWord = (word: string, accent: 'uk' | 'us') => {
+    if (!('speechSynthesis' in window)) return;
+
+    stopPlayAllWords();
+    window.speechSynthesis.cancel();
+    setActiveWord(word);
+
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.rate = 0.8;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    utterance.lang = accent === 'uk' ? 'en-GB' : 'en-US';
+
+    const preferredVoice = getPreferredVoiceByAccent(accent);
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    utterance.onend = () => {
+      setActiveWord(null);
+    };
+
+    utterance.onerror = () => {
+      setActiveWord(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleSaveProgress = async (percentage: number) => {
@@ -523,6 +694,48 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         </div>
 
+        {britishNote && (
+          <div className="w-full max-w-4xl mx-auto mt-2 mb-2">
+            <div className="bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]">
+              <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30">
+                <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
+              </div>
+              <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
+                <p className="mb-3">{britishNote.description}</p>
+                <div className="space-y-2">
+                  {britishNote.items.map((item) => (
+                    <div key={item.word} className="rounded-md border border-amber-300/20 bg-amber-400/5 px-3 py-2">
+                      <div className="font-semibold text-amber-200">{item.word}</div>
+                      <div className="text-gray-300">
+                        BrE <span className="font-mono text-amber-200">{item.britishIpa}</span>
+                        {' '}&rarr; AmE <span className="font-mono text-cyan-300">{item.americanIpa}</span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handlePlayBritishNoteWord(item.word, 'uk')}
+                          className="inline-flex items-center gap-1 rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[11px] text-amber-200 hover:bg-amber-400/20 transition-colors"
+                          title={`Play BrE: ${item.word}`}
+                        >
+                          <Play size={12} />
+                          <span>BrE</span>
+                        </button>
+                        <button
+                          onClick={() => handlePlayBritishNoteWord(item.word, 'us')}
+                          className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
+                          title={`Play AmE: ${item.word}`}
+                        >
+                          <Play size={12} />
+                          <span>AmE</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Save Progress Section */}
         <div className="w-full max-w-4xl mx-auto mt-6 mb-6">
           <div className="flex flex-col items-center gap-4">
@@ -614,6 +827,56 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         )}
 
+        {/* Symbol Navigation Grid (Separate Section, below video) */}
+        {symbolNavGroups.length > 0 && (
+          <div className="w-full max-w-4xl mx-auto mt-6">
+            <div className="relative border border-purple-500/25 rounded-lg bg-black/40 p-3 md:p-4">
+              <span className="absolute top-2 right-3 rounded-full border border-purple-400/50 bg-purple-900/30 px-2 py-0.5 text-[10px] md:text-xs text-purple-100 shadow-[0_0_12px_rgba(168,85,247,0.35)]">
+                /{decodedSymbol}/ selected
+              </span>
+              <div className="mb-2.5 flex flex-col items-center justify-center gap-1 text-center pt-4">
+                <h4 className="font-mono text-[10px] md:text-xs tracking-wider text-purple-300 uppercase">
+                  {getBaseGroup(symbolData.category)?.toUpperCase()} Symbols
+                </h4>
+              </div>
+              <div className="space-y-3">
+                {symbolNavGroups.map((group) => (
+                  <div key={group.title} className="text-center">
+                    {symbolNavGroups.length > 1 && (
+                      <p className="mb-1.5 text-[10px] md:text-xs text-purple-200/80 font-mono uppercase tracking-wide text-center">
+                        {group.title}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {group.symbols.map((item) => {
+                        const active = item === decodedSymbol;
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            disabled={active}
+                            onClick={() =>
+                              router.push(`/skill/pronunciation/phoneticSymbols/${encodeURIComponent(item)}`)
+                            }
+                            className={`h-10 md:h-11 min-w-[42px] px-3 rounded-lg border transition-colors text-center flex items-center justify-center font-semibold tracking-wide shadow-[0_0_10px_rgba(168,85,247,0.12)] ${
+                              active
+                                ? 'border-purple-300 bg-purple-800/35 text-white cursor-default'
+                                : 'border-purple-500/35 bg-black/45 text-purple-200 hover:bg-purple-900/30 hover:border-purple-400'
+                            }`}
+                            style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
       </main>
 
       {/* Floating Control Button */}
@@ -689,12 +952,12 @@ const SymbolDetailPage: React.FC = () => {
                   <strong>Gunakan prompt berikut:</strong>
                   <button
                     onClick={() => {
-                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'🟢 Sangat bagus 🔵Bagus\', \'🟠 Perlu Sedikit Perbaikan\', atau \'🔴 Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
+                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'ðŸŸ¢ Sangat bagus ðŸ”µBagus\', \'ðŸŸ  Perlu Sedikit Perbaikan\', atau \'ðŸ”´ Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
                       // Show toast notification
                       if (typeof window !== 'undefined') {
                         const toast = document.createElement('div');
                         toast.className = 'fixed top-4 right-4 bg-gradient-to-r from-gray-900 to-black border border-cyan-400/30 text-cyan-300 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.8),0_0_50px_rgba(190,41,236,0.4)] z-[60] transition-all duration-300 transform translate-x-full backdrop-blur-sm';
-                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">📋</span> Prompt berhasil disalin!</span>';
+                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">ðŸ“‹</span> Prompt berhasil disalin!</span>';
                         document.body.appendChild(toast);
                         
                         // Animate in
@@ -728,7 +991,7 @@ const SymbolDetailPage: React.FC = () => {
                   2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan.
                   3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom:
                      - Kolom 1: Kata yang diucapkan.
-                     - Kolom 2: Status Kualitatif (&apos;🟢 Sangat bagus 🔵Bagus&apos;, &apos;🟠 Perlu Sedikit Perbaikan&apos;, atau &apos;🔴 Perlu Perbaikan&apos;).
+                     - Kolom 2: Status Kualitatif (&apos;ðŸŸ¢ Sangat bagus ðŸ”µBagus&apos;, &apos;ðŸŸ  Perlu Sedikit Perbaikan&apos;, atau &apos;ðŸ”´ Perlu Perbaikan&apos;).
                      - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.&quot;
                 </div>
               </div>
@@ -758,3 +1021,4 @@ const SymbolDetailPage: React.FC = () => {
 };
 
 export default SymbolDetailPage;
+
