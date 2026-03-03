@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/there-is-and-there-are-singular-plural-uncountable",
+    "label":  "There Is And There Are Singular Plural Uncountable",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu there is and there are singular plural uncountable",
+                     "cara pakai there is and there are singular plural uncountable",
+                     "there is and there are singular plural uncountable",
+                     "noun and determiner system there is and there are singular plural uncountable",
+                     "grammar resource there is and there are singular plural uncountable"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-there-is-and-there-are-singular-plural-uncountable",
+                   "title":  "There Is And There Are Singular Plural Uncountable",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/there-is-and-there-are-singular-plural-uncountable",
+                   "keywords":  [
+                                    "apa itu there is and there are singular plural uncountable",
+                                    "cara pakai there is and there are singular plural uncountable",
+                                    "there is and there are singular plural uncountable",
+                                    "noun and determiner system there is and there are singular plural uncountable",
+                                    "grammar resource there is and there are singular plural uncountable"
+                                ],
+                   "shortAnswer":  "Topik ini membahas there is dan there are untuk menyatakan keberadaan pada singular, plural, dan uncountable nouns.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Sentence Forms"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

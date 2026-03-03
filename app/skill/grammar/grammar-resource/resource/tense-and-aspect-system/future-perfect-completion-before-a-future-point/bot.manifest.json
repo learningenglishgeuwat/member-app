@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-completion-before-a-future-point",
+    "label":  "Future Perfect Completion Before A Future Point",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu future perfect completion before a future point",
+                     "cara pakai future perfect completion before a future point",
+                     "future perfect completion before a future point",
+                     "tense and aspect system future perfect completion before a future point",
+                     "grammar resource future perfect completion before a future point"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-future-perfect-completion-before-a-future-point",
+                   "title":  "Future Perfect Completion Before A Future Point",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-completion-before-a-future-point",
+                   "keywords":  [
+                                    "apa itu future perfect completion before a future point",
+                                    "cara pakai future perfect completion before a future point",
+                                    "future perfect completion before a future point",
+                                    "tense and aspect system future perfect completion before a future point",
+                                    "grammar resource future perfect completion before a future point"
+                                ],
+                   "shortAnswer":  "Topik ini membahas future perfect untuk aksi yang sudah selesai sebelum titik waktu tertentu di masa depan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Common Time Markers"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

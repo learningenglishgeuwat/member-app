@@ -1,0 +1,66 @@
+{
+  "route": "/skill/pronunciation/final-sound-new/s/es",
+  "label": "Final Sound S/ES",
+  "scope": "pronunciation",
+  "keywords": [
+    "final sound s/es",
+    "plural endings",
+    "third person singular",
+    "possessive endings",
+    "s es rules"
+  ],
+  "simulation": {
+    "topicId": "final-sound-s-es",
+    "title": "Simulasi: Final Sound S/ES",
+    "commandTriggers": [
+      "simulasi final sound s/es",
+      "simulasi final sound s es"
+    ],
+    "componentKey": "SEsSimulationPlayer"
+  },
+  "qa": [
+    {
+      "topicId": "final-sound-s-es-core-rules",
+      "title": "Final Sound S/ES Rules",
+      "route": "/skill/pronunciation/final-sound-new/s/es",
+      "keywords": [
+        "aturan s es",
+        "kapan /s/ /z/ /iz/",
+        "plural s es",
+        "third person s es",
+        "possessive s es"
+      ],
+      "shortAnswer": "Final sound S/ES ditentukan oleh bunyi akhir kata dasar, bukan huruf terakhir. Voiceless non-sibilant cenderung /s/, voiced atau vowel cenderung /z/, dan sibilant memakai tambahan -es dengan bunyi /ɪz/.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Rules for -s/-es (Table)"
+        },
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Final Sound S/ES Application Process"
+        }
+      ]
+    },
+    {
+      "topicId": "final-sound-s-es-practice",
+      "title": "Final Sound S/ES Practice",
+      "route": "/skill/pronunciation/final-sound-new/s/es",
+      "keywords": [
+        "latihan final sound s es",
+        "cara latihan s es",
+        "common mistakes s es"
+      ],
+      "shortAnswer": "Latihan paling efektif adalah membaca before -> after, cek perubahan IPA, lalu ulang dalam kalimat singkat. Fokuskan telinga ke ending supaya grammar meaning tetap terdengar jelas.",
+      "sourceSections": [
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Common Mistakes"
+        }
+      ]
+    }
+  ]
+}

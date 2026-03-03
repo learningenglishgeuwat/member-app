@@ -1,7 +1,7 @@
 'use client'
 
 import { type CSSProperties, useMemo, useState } from 'react'
-import Link from 'next/link'
+import Link from '../../components/HoverPrefetchLink'
 import { ArrowUpRight, Crosshair } from 'lucide-react'
 import BackButton from '../components/BackButton'
 import './game-links.css'
@@ -27,6 +27,13 @@ const GAME_LINKS: GameItem[] = [
     name: 'Phonetic Symbol Quiz',
     description: 'Latihan tebak simbol bunyi (IPA).',
     url: 'https://geuwat-phonetic-symbol-quiz.netlify.app',
+    metric: '226 M',
+  },
+  {
+    id: 'final-sound-quiz',
+    name: 'Final Sound Quiz',
+    description: 'Latihan bunyi akhir kata untuk -s/-es dan -d/-ed.',
+    url: 'https://geuwat-final-sound-quiz-app.vercel.app/',
     metric: '226 M',
   },
   {
@@ -72,7 +79,7 @@ export default function SkillGameLinksPage() {
 
           <section className="game-hud-stage mt-6">
             <div className="game-hud-target">
-              <div className="game-hud-target-box">
+              <div className="game-hud-target-box" data-tour="game-target-box">
                 <span className="game-hud-target-line game-hud-target-line--h" />
                 <span className="game-hud-target-line game-hud-target-line--v" />
                 <span className="game-hud-frame-corner game-hud-frame-corner--tl" />
@@ -103,7 +110,7 @@ export default function SkillGameLinksPage() {
                   <h2 className="game-hud-target-title">{selectedGame.name}</h2>
                   <p className="game-hud-target-description">{selectedGame.description}</p>
                   {selectedGame.url ? (
-                    <Link
+                    <Link prefetch={false}
                       href={selectedGame.url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -132,7 +139,7 @@ export default function SkillGameLinksPage() {
               <span className="game-hud-orbit-core" />
             </div>
 
-            <div className="game-hud-choices">
+            <div className="game-hud-choices" data-tour="game-choice-orbit">
               {GAME_LINKS.map(({ id, name }, index) => {
                 const isActive = selectedGame.id === id
                 const offset = getCircularOffset(index, selectedIndex, GAME_LINKS.length)
@@ -173,4 +180,3 @@ export default function SkillGameLinksPage() {
     </div>
   )
 }
-

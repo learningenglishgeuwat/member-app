@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/modal-perfect-should-have-could-have-might-have-must-have",
+    "label":  "Modal Perfect Should Have Could Have Might Have Must Have",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu modal perfect should have could have might have must have",
+                     "cara pakai modal perfect should have could have might have must have",
+                     "modal perfect should have could have might have must have",
+                     "expansion and complex structures modal perfect should have could have might have must have",
+                     "grammar resource modal perfect should have could have might have must have"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-modal-perfect-should-have-could-have-might-have-must-have",
+                   "title":  "Modal Perfect Should Have Could Have Might Have Must Have",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/modal-perfect-should-have-could-have-might-have-must-have",
+                   "keywords":  [
+                                    "apa itu modal perfect should have could have might have must have",
+                                    "cara pakai modal perfect should have could have might have must have",
+                                    "modal perfect should have could have might have must have",
+                                    "expansion and complex structures modal perfect should have could have might have must have",
+                                    "grammar resource modal perfect should have could have might have must have"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan modal perfect seperti should have, could have, might have, dan must have untuk penyesalan, kemungkinan, dan deduksi masa lalu.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Modal Perfect"
+                                          },
+                                          {
+                                              "label":  "Perbedaan Makna Singkat"
+                                          },
+                                          {
+                                              "label":  "Kontras: could have vs might have"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

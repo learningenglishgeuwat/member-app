@@ -34,7 +34,7 @@
 }
 
 .fsn-orbit-stage {
-  --orbit-radius: clamp(7.5rem, 12vw, 11rem);
+  --orbit-radius: clamp(6.4rem, 10.5vw, 9.6rem);
   --orbit-speed: 10s;
   width: min(100%, 92rem);
   margin-inline: auto;
@@ -76,7 +76,8 @@
   z-index: 0;
   border-radius: 999px;
   filter: blur(8px);
-  opacity: 0.2;
+  opacity: 0;
+  display: none;
 }
 
 .fsn-orbit-glow-left {
@@ -316,35 +317,69 @@
 
 @media (max-width: 980px) {
   .fsn-orbit-stage {
-    min-height: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    padding: 0.9rem;
+    --orbit-radius: clamp(4.7rem, 12vw, 6.1rem);
+    min-height: clamp(14.4rem, 40vw, 18.8rem);
+    padding: clamp(0.8rem, 1.6vw, 1rem);
   }
 
-  .fsn-orbit-ring,
-  .fsn-orbit-glow {
-    display: none;
+  .fsn-card-orbit {
+    width: clamp(4.5rem, 10vw, 5.6rem);
   }
 
-  .fsn-orbiter {
-    position: static;
-    width: auto;
-    height: auto;
-    animation: none;
-    pointer-events: auto;
-  }
-
-  .fsn-orbit-counter {
-    animation: none;
-    transform: none !important;
-  }
-
-  .fsn-card-orbit,
   .fsn-card-center {
-    width: clamp(6.8rem, 35vw, 9rem);
-    margin-inline: auto;
+    width: clamp(5rem, 11.5vw, 6.2rem);
+  }
+
+  .fsn-card h2 {
+    font-size: clamp(0.72rem, 1.5vw, 0.92rem);
+  }
+}
+
+@media (max-width: 540px) {
+  .fsn-orbit-stage {
+    --orbit-radius: clamp(3.35rem, 16.5vw, 4.2rem);
+    min-height: clamp(10.8rem, 52vw, 13.2rem);
+    padding: 0.72rem;
+  }
+
+  .fsn-card {
+    padding: 0.68rem;
+  }
+
+  .fsn-card-orbit {
+    width: clamp(3rem, 13.8vw, 3.8rem);
+  }
+
+  .fsn-card-center {
+    width: clamp(3.6rem, 16.4vw, 4.4rem);
+  }
+
+  .fsn-card h2 {
+    font-size: clamp(0.52rem, 2.1vw, 0.66rem);
+  }
+}
+
+@media (max-width: 430px) {
+  .fsn-orbit-stage {
+    --orbit-radius: clamp(3.7rem, 19vw, 4.7rem);
+    min-height: clamp(10.6rem, 53vw, 12.2rem);
+    padding: 0.6rem;
+  }
+
+  .fsn-card {
+    padding: 0.5rem;
+  }
+
+  .fsn-card-orbit {
+    width: clamp(2.55rem, 12vw, 3.1rem);
+  }
+
+  .fsn-card-center {
+    width: clamp(3.05rem, 14.2vw, 3.7rem);
+  }
+
+  .fsn-card h2 {
+    font-size: clamp(0.44rem, 1.8vw, 0.54rem);
   }
 }
 

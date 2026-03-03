@@ -136,8 +136,8 @@ export default function LanguageUnitsPage() {
             </summary>
 
             <div className="lu-card-body">
-              <div className="lu-table-wrap">
-                <table className="lu-table">
+              <div className="lu-table-wrap geuwat-table-scroll">
+                <table className="lu-table geuwat-table-responsive">
                   <thead>
                     <tr>
                       <th>Aspek</th>

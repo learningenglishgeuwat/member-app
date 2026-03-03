@@ -1,11 +1,10 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Pause, Lightbulb, Database, HelpCircle, Book } from 'lucide-react';
+import { Play, Pause, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
 import '../styles/detail.css';
-import '../../../../styles/scrollbar.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
@@ -26,6 +25,13 @@ const CONSONANT_VOICED_SYMBOLS = [
   'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y',
 ] as const;
 const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
+
+const toTourToken = (value: string): string =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 function getBaseGroup(category: string): 'vowel' | 'consonant' | 'diphthong' | null {
   if (category.startsWith('vowel')) return 'vowel';
@@ -65,69 +71,78 @@ type BritishSymbolNote = {
   items: BritishWordNote[];
 };
 
+type SymbolDetailSectionState = {
+  practice?: boolean;
+  tips?: boolean;
+  video?: boolean;
+  prompt?: boolean;
+};
+
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
-    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British. TTS American biasanya memakai vokal lebih ke /ɑ/.',
+    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British. TTS American biasanya memakai vokal lebih ke /?/.',
     items: [
-      { word: 'hot', britishIpa: '/hɒt/', americanIpa: '/hɑt/' },
-      { word: 'not', britishIpa: '/nɒt/', americanIpa: '/nɑt/' },
-      { word: 'lot', britishIpa: '/lɒt/', americanIpa: '/lɑt/' },
-      { word: 'top', britishIpa: '/tɒp/', americanIpa: '/tɑp/' },
-      { word: 'shop', britishIpa: '/ʃɒp/', americanIpa: '/ʃɑp/' },
-      { word: 'box', britishIpa: '/bɒks/', americanIpa: '/bɑks/' },
-      { word: 'fox', britishIpa: '/fɒks/', americanIpa: '/fɑks/' },
+      { word: 'hot', britishIpa: '/h?t/', americanIpa: '/h?t/' },
+      { word: 'not', britishIpa: '/n?t/', americanIpa: '/n?t/' },
+      { word: 'lot', britishIpa: '/l?t/', americanIpa: '/l?t/' },
+      { word: 'top', britishIpa: '/t?p/', americanIpa: '/t?p/' },
+      { word: 'shop', britishIpa: '/??p/', americanIpa: '/??p/' },
+      { word: 'box', britishIpa: '/b?ks/', americanIpa: '/b?ks/' },
+      { word: 'fox', britishIpa: '/f?ks/', americanIpa: '/f?ks/' },
     ],
   },
   h: {
-    description: 'Untuk beberapa kata dengan huruf h + o, model American biasanya tidak memakai bunyi /ɒ/ British.',
+    description: 'Untuk beberapa kata dengan huruf h + o, model American biasanya tidak memakai bunyi /?/ British.',
     items: [
-      { word: 'hot', britishIpa: '/hɒt/', americanIpa: '/hɑt/' },
-      { word: 'holiday', britishIpa: '/ˈhɒlədeɪ/', americanIpa: '/ˈhɑlədeɪ/' },
+      { word: 'hot', britishIpa: '/h?t/', americanIpa: '/h?t/' },
+      { word: 'holiday', britishIpa: "/'h?l?de?/", americanIpa: "/'h?l?de?/" },
     ],
   },
   w: {
-    description: 'Khusus kata tertentu, pelafalan American punya ciri tambahan seperti flap /ɾ/ dan r-colored vowel.',
+    description: 'Khusus kata tertentu, pelafalan American punya ciri tambahan seperti flap /?/ dan r-colored vowel.',
     items: [
-      { word: 'water', britishIpa: '/ˈwɔːtə/', americanIpa: '/ˈwɑɾɚ/' },
+      { word: 'water', britishIpa: "/'w??t?/", americanIpa: "/'w???/" },
     ],
   },
   '\u025a': {
-    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /ɚ/ atau /ər/.',
+    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /?/ atau /?r/.',
     items: [
-      { word: 'teacher', britishIpa: '/ˈtiːtʃə/', americanIpa: '/ˈtiːtʃɚ/' },
-      { word: 'doctor', britishIpa: '/ˈdɒktə/', americanIpa: '/ˈdɑktɚ/' },
-      { word: 'water', britishIpa: '/ˈwɔːtə/', americanIpa: '/ˈwɑɾɚ/' },
-      { word: 'later', britishIpa: '/ˈleɪtə/', americanIpa: '/ˈleɪɾɚ/' },
+      { word: 'teacher', britishIpa: "/'ti?t??/", americanIpa: "/'ti?t??/" },
+      { word: 'doctor', britishIpa: "/'d?kt?/", americanIpa: "/'d?kt?/" },
+      { word: 'water', britishIpa: "/'w??t?/", americanIpa: "/'w???/" },
+      { word: 'later', britishIpa: "/'le?t?/", americanIpa: "/'le???/" },
     ],
   },
   'e\u0259': {
     description: 'Simbol ini sangat umum di British. Dalam American, banyak kata biasanya terdengar lebih rhotic (pakai /r/).',
     items: [
-      { word: 'care', britishIpa: '/keə/', americanIpa: '/ker/' },
-      { word: 'share', britishIpa: '/ʃeə/', americanIpa: '/ʃer/' },
-      { word: 'fair', britishIpa: '/feə/', americanIpa: '/fer/' },
-      { word: 'bear', britishIpa: '/beə/', americanIpa: '/ber/' },
+      { word: 'care', britishIpa: '/ke?/', americanIpa: '/ker/' },
+      { word: 'share', britishIpa: '/?e?/', americanIpa: '/?er/' },
+      { word: 'fair', britishIpa: '/fe?/', americanIpa: '/fer/' },
+      { word: 'bear', britishIpa: '/be?/', americanIpa: '/ber/' },
     ],
   },
   '\u026A\u0259': {
-    description: 'Di British sering ditulis /ɪə/. Dalam American biasanya lebih dekat ke /ɪr/.',
+    description: 'Di British sering ditulis /??/. Dalam American biasanya lebih dekat ke /?r/.',
     items: [
-      { word: 'near', britishIpa: '/nɪə/', americanIpa: '/nɪr/' },
-      { word: 'clear', britishIpa: '/klɪə/', americanIpa: '/klɪr/' },
-      { word: 'fear', britishIpa: '/fɪə/', americanIpa: '/fɪr/' },
-      { word: 'year', britishIpa: '/jɪə/', americanIpa: '/jɪr/' },
+      { word: 'near', britishIpa: '/n??/', americanIpa: '/n?r/' },
+      { word: 'clear', britishIpa: '/kl??/', americanIpa: '/kl?r/' },
+      { word: 'fear', britishIpa: '/f??/', americanIpa: '/f?r/' },
+      { word: 'year', britishIpa: '/j??/', americanIpa: '/j?r/' },
     ],
   },
   '\u028A\u0259': {
-    description: 'Di British sering ditulis /ʊə/. Dalam American, kata yang sama biasanya cenderung /ʊr/ (atau variasi rhotic lain).',
+    description: 'Di British sering ditulis /??/. Dalam American, kata yang sama biasanya cenderung /?r/ (atau variasi rhotic lain).',
     items: [
-      { word: 'tour', britishIpa: '/tʊə/', americanIpa: '/tʊr/' },
-      { word: 'poor', britishIpa: '/pʊə/', americanIpa: '/pʊr/' },
-      { word: 'sure', britishIpa: '/ʃʊə/', americanIpa: '/ʃʊr/' },
-      { word: 'your', britishIpa: '/jʊə/', americanIpa: '/jʊr/' },
+      { word: 'tour', britishIpa: '/t??/', americanIpa: '/t?r/' },
+      { word: 'poor', britishIpa: '/p??/', americanIpa: '/p?r/' },
+      { word: 'sure', britishIpa: '/???/', americanIpa: '/??r/' },
+      { word: 'your', britishIpa: '/j??/', americanIpa: '/j?r/' },
     ],
   },
 };
+
+const ACCENT_EVALUATION_PROMPT = `Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif ('?? Sangat bagus ??Bagus', '?? Perlu Sedikit Perbaikan', atau '?? Perlu Perbaikan'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.`;
 
 const SymbolDetailPage: React.FC = () => {
   const { symbol } = useParams<{
@@ -143,6 +158,7 @@ const SymbolDetailPage: React.FC = () => {
     normalizedSymbol === 'summary-of-phonetic-symbols';
   
   const [activeWord, setActiveWord] = useState<string | null>(null);
+  const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
@@ -150,6 +166,13 @@ const SymbolDetailPage: React.FC = () => {
   const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(null);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
   const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
+  const [isPromptCopied, setIsPromptCopied] = useState(false);
+  const [isPracticeOpen, setIsPracticeOpen] = useState(false);
+  const [isTipsOpen, setIsTipsOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [shouldAutoplayVideo, setShouldAutoplayVideo] = useState(false);
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const [isSectionStateHydrated, setIsSectionStateHydrated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isProgressSaved, setIsProgressSaved] = useState(false); // Start with false to match server
   const [isClient, setIsClient] = useState(false);
@@ -171,6 +194,15 @@ const SymbolDetailPage: React.FC = () => {
     () => BRITISH_NOTES_BY_SYMBOL[decodedSymbol] ?? null,
     [decodedSymbol]
   );
+  const sectionStateStorageKey = useMemo(
+    () => `phoneticSymbolSectionState:${normalizedSymbol || 'default'}`,
+    [normalizedSymbol]
+  );
+  const videoEmbedSrc = useMemo(() => {
+    if (!symbolData.videoId) return '';
+    const autoplayQuery = shouldAutoplayVideo && isVideoOpen ? '&autoplay=1' : '';
+    return `https://www.youtube.com/embed/${symbolData.videoId}?rel=0&modestbranding=1&controls=1&showinfo=0${autoplayQuery}`;
+  }, [isVideoOpen, shouldAutoplayVideo, symbolData.videoId]);
 
   useEffect(() => {
     if (shouldRedirectToSummary) {
@@ -188,13 +220,59 @@ const SymbolDetailPage: React.FC = () => {
     if (typeof window !== 'undefined') {
       const savedProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
       setIsProgressSaved(!!savedProgress[`phoneticSymbols_${decodedSymbol}`]);
+
+      const rawSectionState = localStorage.getItem(sectionStateStorageKey);
+      if (rawSectionState) {
+        try {
+          const sectionState = JSON.parse(rawSectionState) as SymbolDetailSectionState;
+          setIsPracticeOpen(!!sectionState.practice);
+          setIsTipsOpen(!!sectionState.tips);
+          setIsVideoOpen(!!sectionState.video);
+          setShouldAutoplayVideo(false);
+          setIsPromptOpen(!!sectionState.prompt);
+        } catch {
+          setIsPracticeOpen(false);
+          setIsTipsOpen(false);
+          setIsVideoOpen(false);
+          setShouldAutoplayVideo(false);
+          setIsPromptOpen(false);
+        }
+      } else {
+        setIsPracticeOpen(false);
+        setIsTipsOpen(false);
+        setIsVideoOpen(false);
+        setShouldAutoplayVideo(false);
+        setIsPromptOpen(false);
+      }
+
+      setIsSectionStateHydrated(true);
     }
-  }, [decodedSymbol]);
+  }, [decodedSymbol, sectionStateStorageKey]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isSectionStateHydrated) return;
+
+    const nextSectionState: SymbolDetailSectionState = {
+      practice: isPracticeOpen,
+      tips: isTipsOpen,
+      video: isVideoOpen,
+      prompt: isPromptOpen,
+    };
+    localStorage.setItem(sectionStateStorageKey, JSON.stringify(nextSectionState));
+  }, [
+    isPracticeOpen,
+    isTipsOpen,
+    isVideoOpen,
+    isPromptOpen,
+    isSectionStateHydrated,
+    sectionStateStorageKey,
+  ]);
   
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
   const playSessionRef = useRef(0);
   const playNextTimeoutRef = useRef<number | null>(null);
+  const promptCopyTimeoutRef = useRef<number | null>(null);
   
   useEffect(() => {
     let active = true;
@@ -260,6 +338,7 @@ const SymbolDetailPage: React.FC = () => {
       // Set active word to first example to ensure first card is highlighted
       if (symbolData.examples.length > 0) {
         setActiveWord(symbolData.examples[0].word);
+        setActiveWordIndex(0);
       }
     }
   };
@@ -281,6 +360,7 @@ const SymbolDetailPage: React.FC = () => {
       }
       setIsPlayingAll(false);
       setActiveWord(null);
+      setActiveWordIndex(null);
       window.speechSynthesis.onvoiceschanged = null;
       window.speechSynthesis.cancel();
     };
@@ -327,6 +407,7 @@ const SymbolDetailPage: React.FC = () => {
     window.speechSynthesis.cancel();
     setIsPlayingAll(false);
     setActiveWord(null);
+    setActiveWordIndex(null);
   };
 
   const handlePlayAllWords = () => {
@@ -349,11 +430,13 @@ const SymbolDetailPage: React.FC = () => {
       if (currentIndex >= symbolData.examples.length) {
         setIsPlayingAll(false);
         setActiveWord(null);
+        setActiveWordIndex(null);
         return;
       }
 
       const example = symbolData.examples[currentIndex];
       setActiveWord(example.word);
+      setActiveWordIndex(currentIndex);
 
       if (wordCardRefs.current[currentIndex]) {
         wordCardRefs.current[currentIndex]?.scrollIntoView({
@@ -376,6 +459,7 @@ const SymbolDetailPage: React.FC = () => {
       utterance.onstart = () => {
         if (currentSession !== playSessionRef.current) return;
         setActiveWord(example.word);
+        setActiveWordIndex(currentIndex);
       };
 
       utterance.onend = () => {
@@ -396,11 +480,12 @@ const SymbolDetailPage: React.FC = () => {
     playNextWord();
   };
 
-  const handlePlayWord = (word: string) => {
+  const handlePlayWord = (word: string, wordIndex?: number) => {
     if ('speechSynthesis' in window) {
       stopPlayAllWords();
       window.speechSynthesis.cancel();
       setActiveWord(word);
+      setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
       
       const utterance = new SpeechSynthesisUtterance(word);
       utterance.rate = 0.8; // Slightly slower for better pronunciation clarity
@@ -415,10 +500,12 @@ const SymbolDetailPage: React.FC = () => {
       
       utterance.onstart = () => {
         setActiveWord(word);
+        setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
       };
       
       utterance.onend = () => {
         setActiveWord(null);
+        setActiveWordIndex(null);
       };
       
       speechSynthesis.speak(utterance);
@@ -431,6 +518,7 @@ const SymbolDetailPage: React.FC = () => {
     stopPlayAllWords();
     window.speechSynthesis.cancel();
     setActiveWord(word);
+    setActiveWordIndex(null);
 
     const utterance = new SpeechSynthesisUtterance(word);
     utterance.rate = 0.8;
@@ -445,10 +533,12 @@ const SymbolDetailPage: React.FC = () => {
 
     utterance.onend = () => {
       setActiveWord(null);
+      setActiveWordIndex(null);
     };
 
     utterance.onerror = () => {
       setActiveWord(null);
+      setActiveWordIndex(null);
     };
 
     window.speechSynthesis.speak(utterance);
@@ -539,6 +629,34 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
+  const handleCopyPrompt = async () => {
+    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(ACCENT_EVALUATION_PROMPT);
+      setIsPromptCopied(true);
+      if (promptCopyTimeoutRef.current) {
+        window.clearTimeout(promptCopyTimeoutRef.current);
+      }
+      promptCopyTimeoutRef.current = window.setTimeout(() => {
+        setIsPromptCopied(false);
+      }, 1800);
+    } catch (error) {
+      console.error('Failed to copy prompt:', error);
+      setIsPromptCopied(false);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (promptCopyTimeoutRef.current) {
+        window.clearTimeout(promptCopyTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     // Responsive container: handles safe areas and dynamic viewport heights
     <div className="pronunciation-layout symbol-detail-container supports-[height:100dvh]:h-[100dvh] font-sans flex flex-col overflow-hidden">
@@ -596,6 +714,7 @@ const SymbolDetailPage: React.FC = () => {
                 <button 
                   onClick={handlePlayAllWords}
                   disabled={symbolLoading || symbolData.examples.length === 0}
+                  data-tour="symbol-detail-play-all"
                   className="absolute -bottom-5 md:-bottom-6 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(190,41,236,0.4)] z-20 group-hover:scale-110 bg-cyber-cyan text-black hover:bg-white"
                   title={isPlayingAll ? "Stop All Words" : "Play All Words"}
                 >
@@ -626,6 +745,7 @@ const SymbolDetailPage: React.FC = () => {
                     });
                   }
                 }}
+                data-tour="symbol-go-to-video"
                 className="px-2.5 py-1 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[10px] hover:bg-purple-900/20 transition-colors flex items-center gap-1"
               >
                 <Play size={12} />
@@ -636,18 +756,29 @@ const SymbolDetailPage: React.FC = () => {
             {/* Word Examples Grid - controlled by CSS */}
             <div className="word-grid w-full">
               {symbolData.examples.map((example: WordExample, index: number) => {
-                const isActive = example.word === activeWord;
+                const isActiveByIndex = activeWordIndex === index;
+                const isActiveByWord = activeWordIndex === null && example.word === activeWord;
+                const isActive = isActiveByIndex || isActiveByWord;
                 
                 return (
                   <button
                     key={index}
                     ref={el => { wordCardRefs.current[index] = el; }}
-                    onClick={() => handlePlayWord(example.word)}
-                    onMouseEnter={() => setActiveWord(example.word)}
-                    onMouseLeave={() => setActiveWord(null)}
+                    onClick={() => handlePlayWord(example.word, index)}
+                    onMouseEnter={() => {
+                      if (isPlayingAll) return;
+                      setActiveWord(example.word);
+                      setActiveWordIndex(index);
+                    }}
+                    onMouseLeave={() => {
+                      if (isPlayingAll) return;
+                      setActiveWord(null);
+                      setActiveWordIndex(null);
+                    }}
+                    data-tour={`symbol-word-${toTourToken(example.word)}`}
                     className={`word-card relative group p-3 md:p-4 rounded-lg border transition-all duration-300 overflow-hidden w-full ${
                       isActive 
-                        ? 'bg-purple-900/40 border-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.3)] scale-105 z-10' 
+                        ? 'active is-speaking bg-purple-900/40 border-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.3)] scale-105 z-10' 
                         : 'bg-black/40 border-purple-500/30 hover:bg-purple-900/30 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:scale-102'
                     } backdrop-blur-sm`}
                   >
@@ -760,27 +891,44 @@ const SymbolDetailPage: React.FC = () => {
                 <Lightbulb className="text-cyber-pink" size={16} />
                 <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
               </div>
-              <button
-                onClick={openCommonLettersModal}
-                className="text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
-                title="Lihat huruf umum dan simbol IPA"
-              >
-                <Book size={16} />
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsTipsOpen(prev => !prev)}
+                  className="symbol-detail-chevron-toggle text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
+                  aria-expanded={isTipsOpen}
+                  title={isTipsOpen ? 'Tutup Pronunciation Tips' : 'Buka Pronunciation Tips'}
+                >
+                  <ChevronDown
+                    size={14}
+                    className={`symbol-detail-chevron-icon ${isTipsOpen ? 'is-open' : ''}`}
+                  />
+                </button>
+                <button
+                  onClick={openCommonLettersModal}
+                  data-tour="symbol-common-letters-open"
+                  className="text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
+                  title="Lihat huruf umum dan simbol IPA"
+                >
+                  <Book size={16} />
+                </button>
+              </div>
             </div>
 
             {/* Content */}
-            <div className="p-3 md:p-5 font-mono text-[11px] md:text-sm text-gray-300 min-h-[130px]">
-              <div className="whitespace-pre-line leading-relaxed">
-                {symbolData.tips.map((tip: string, index: number) => (
-                  <div key={index} className="flex gap-2 mb-2">
-                    <span className="text-green-400 block">{index + 1}.</span>
-                    <span>{tip}</span>
-                  </div>
-                ))}
+            {isTipsOpen && (
+              <div className="p-3 md:p-5 font-mono text-[11px] md:text-sm text-gray-300 min-h-[130px]">
+                <div className="whitespace-pre-line leading-relaxed">
+                  {symbolData.tips.map((tip: string, index: number) => (
+                    <div key={index} className="flex gap-2 mb-2">
+                      <span className="text-green-400 block">{index + 1}.</span>
+                      <span>{tip}</span>
+                    </div>
+                  ))}
+                </div>
+                <span className="inline-block w-2 h-4 bg-cyber-pink animate-pulse mt-2 align-middle"></span>
               </div>
-              <span className="inline-block w-2 h-4 bg-cyber-pink animate-pulse mt-2 align-middle"></span>
-            </div>
+            )}
           </div>
         </div>
 
@@ -796,44 +944,141 @@ const SymbolDetailPage: React.FC = () => {
                   <span className="ml-2 font-mono text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
                   <span className="text-xs text-white/60">Symbol: /{decodedSymbol}/</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setIsVideoOpen((prev) => {
+                      const next = !prev;
+                      setShouldAutoplayVideo(next);
+                      return next;
+                    })
+                  }
+                  data-tour="symbol-video-section-toggle"
+                  className="symbol-detail-chevron-toggle text-purple-300 hover:text-purple-100 transition-colors"
+                  aria-expanded={isVideoOpen}
+                  title={isVideoOpen ? 'Tutup Video Tutorial' : 'Buka Video Tutorial'}
+                >
+                  <ChevronDown
+                    size={14}
+                    className={`symbol-detail-chevron-icon ${isVideoOpen ? 'is-open' : ''}`}
+                  />
+                </button>
               </div>
 
               {/* Video Content */}
-              <div className="p-3 md:p-5">
-                <div className="relative w-full" style={{ paddingBottom: '35%' }}>
-                  <iframe
-                    key={symbolData.videoId || 'no-video'}
-                    className="absolute top-0 left-0 w-full h-full rounded-lg border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
-                    src={`https://www.youtube.com/embed/${symbolData.videoId}?rel=0&modestbranding=1&controls=1&showinfo=0`}
-                    title={`Pronunciation tutorial for /${decodedSymbol}/`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+              {isVideoOpen && (
+                <div className="p-3 md:p-5">
+                  <div data-tour="symbol-video-embed" className="relative w-full" style={{ paddingBottom: '35%' }}>
+                    <iframe
+                      key={`${symbolData.videoId || 'no-video'}-${isVideoOpen ? 'open' : 'closed'}-${shouldAutoplayVideo ? 'autoplay' : 'manual'}`}
+                      data-tour="symbol-video-embed-frame"
+                      className="absolute top-0 left-0 w-full h-full rounded-lg border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                      src={videoEmbedSrc}
+                      title={`Pronunciation tutorial for /${decodedSymbol}/`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex justify-center mt-3">
+                    <button
+                      onClick={scrollToWordExamples}
+                      data-tour="symbol-go-to-word-examples"
+                      className="px-3 py-2 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[11px] hover:bg-purple-900/20 transition-colors flex items-center gap-2"
+                    >
+                      <Database size={14} />
+                      <span>Go to Word Examples</span>
+                    </button>
+                  </div>
                 </div>
-                
-                {/* Action Buttons */}
-                <div className="flex justify-center mt-3">
-                  <button
-                    onClick={scrollToWordExamples}
-                    className="px-3 py-2 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[11px] hover:bg-purple-900/20 transition-colors flex items-center gap-2"
-                  >
-                    <Database size={14} />
-                    <span>Go to Word Examples</span>
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}
+
+        {/* Practice Section (below VIDEO_TUTORIAL) */}
+        <div className="w-full max-w-4xl mx-auto mt-6">
+          <div className="bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]">
+            <button
+              type="button"
+              onClick={() => setIsPracticeOpen(prev => !prev)}
+              data-tour="symbol-practice-section-toggle"
+              className="w-full bg-cyber-cyan/10 px-4 py-2 border-b border-cyber-cyan/30 flex items-center justify-between gap-2 text-left hover:bg-cyber-cyan/15 transition-colors"
+              aria-expanded={isPracticeOpen}
+            >
+              <div className="flex items-center gap-2">
+                <Database className="text-cyber-cyan" size={16} />
+                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-cyan tracking-wider">PRACTICE</span>
+              </div>
+              <span className="symbol-detail-chevron-toggle text-cyber-cyan">
+                <ChevronDown
+                  size={14}
+                  className={`symbol-detail-chevron-icon ${isPracticeOpen ? 'is-open' : ''}`}
+                />
+              </span>
+            </button>
+            {isPracticeOpen && (
+              <div className="p-3 md:p-5 text-[11px] md:text-sm text-gray-200 leading-relaxed">
+                <p>
+                  <strong>Mission:</strong>
+                  <br />
+                  Baca semua kata di Word_Examples.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Prompt Section (below PRACTICE) */}
+        <div className="w-full max-w-4xl mx-auto mt-6">
+          <div className="bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]">
+            <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="text-cyber-pink" size={16} />
+                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsPromptOpen(prev => !prev)}
+                  data-tour="symbol-prompt-section-toggle"
+                  className="symbol-detail-chevron-toggle text-cyber-pink hover:bg-cyber-pink/20 transition-colors"
+                  aria-expanded={isPromptOpen}
+                  title={isPromptOpen ? 'Tutup Prompt' : 'Buka Prompt'}
+                >
+                  <ChevronDown
+                    size={13}
+                    className={`symbol-detail-chevron-icon ${isPromptOpen ? 'is-open' : ''}`}
+                  />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopyPrompt}
+                  data-tour="symbol-prompt-copy-button"
+                  className="inline-flex items-center gap-1.5 rounded border border-cyber-pink/40 bg-cyber-pink/10 px-2 py-1 text-[10px] md:text-xs font-mono text-cyber-pink hover:bg-cyber-pink/20 transition-colors"
+                  title="Salin prompt"
+                >
+                  <Copy size={13} />
+                  <span>{isPromptCopied ? 'Tersalin' : 'Salin Prompt'}</span>
+                </button>
+              </div>
+            </div>
+            {isPromptOpen && (
+              <div className="p-3 md:p-5">
+                <p className="text-[11px] md:text-sm text-gray-200 leading-relaxed whitespace-pre-line">
+                  &quot;{ACCENT_EVALUATION_PROMPT}&quot;
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Symbol Navigation Grid (Separate Section, below video) */}
         {symbolNavGroups.length > 0 && (
           <div className="w-full max-w-4xl mx-auto mt-6">
             <div className="relative border border-purple-500/25 rounded-lg bg-black/40 p-3 md:p-4">
-              <span className="absolute top-2 right-3 rounded-full border border-purple-400/50 bg-purple-900/30 px-2 py-0.5 text-[10px] md:text-xs text-purple-100 shadow-[0_0_12px_rgba(168,85,247,0.35)]">
-                /{decodedSymbol}/ selected
-              </span>
               <div className="mb-2.5 flex flex-col items-center justify-center gap-1 text-center pt-4">
                 <h4 className="font-mono text-[10px] md:text-xs tracking-wider text-purple-300 uppercase">
                   {getBaseGroup(symbolData.category)?.toUpperCase()} Symbols
@@ -919,7 +1164,7 @@ const SymbolDetailPage: React.FC = () => {
               </div>
               <div className="flex items-start">
                 <span className="text-cyber-cyan font-bold mr-3">2.</span>
-                <p>Bicara dengan jelas ke mikrofon</p>
+                <p>Bicara dengan jelas ke mikrofon dari Mission yang ada di Practice Section di halaman.</p>
               </div>
               <div className="flex items-start">
                 <span className="text-cyber-cyan font-bold mr-3">3.</span>
@@ -952,12 +1197,12 @@ const SymbolDetailPage: React.FC = () => {
                   <strong>Gunakan prompt berikut:</strong>
                   <button
                     onClick={() => {
-                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'ðŸŸ¢ Sangat bagus ðŸ”µBagus\', \'ðŸŸ  Perlu Sedikit Perbaikan\', atau \'ðŸ”´ Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
+                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'🟢 Sangat bagus 🔵Bagus\', \'🟠 Perlu Sedikit Perbaikan\', atau \'🔴 Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
                       // Show toast notification
                       if (typeof window !== 'undefined') {
                         const toast = document.createElement('div');
                         toast.className = 'fixed top-4 right-4 bg-gradient-to-r from-gray-900 to-black border border-cyan-400/30 text-cyan-300 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.8),0_0_50px_rgba(190,41,236,0.4)] z-[60] transition-all duration-300 transform translate-x-full backdrop-blur-sm';
-                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">ðŸ“‹</span> Prompt berhasil disalin!</span>';
+                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">📋</span> Prompt berhasil disalin!</span>';
                         document.body.appendChild(toast);
                         
                         // Animate in
@@ -991,7 +1236,7 @@ const SymbolDetailPage: React.FC = () => {
                   2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan.
                   3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom:
                      - Kolom 1: Kata yang diucapkan.
-                     - Kolom 2: Status Kualitatif (&apos;ðŸŸ¢ Sangat bagus ðŸ”µBagus&apos;, &apos;ðŸŸ  Perlu Sedikit Perbaikan&apos;, atau &apos;ðŸ”´ Perlu Perbaikan&apos;).
+                     - Kolom 2: Status Kualitatif (&apos;🟢 Sangat bagus 🔵Bagus&apos;, &apos;🟠 Perlu Sedikit Perbaikan&apos;, atau &apos;🔴 Perlu Perbaikan&apos;).
                      - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.&quot;
                 </div>
               </div>

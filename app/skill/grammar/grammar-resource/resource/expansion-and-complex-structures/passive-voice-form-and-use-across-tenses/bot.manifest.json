@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/passive-voice-form-and-use-across-tenses",
+    "label":  "Passive Voice Form And Use Across Tenses",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu passive voice form and use across tenses",
+                     "cara pakai passive voice form and use across tenses",
+                     "passive voice form and use across tenses",
+                     "expansion and complex structures passive voice form and use across tenses",
+                     "grammar resource passive voice form and use across tenses"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-passive-voice-form-and-use-across-tenses",
+                   "title":  "Passive Voice Form And Use Across Tenses",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/passive-voice-form-and-use-across-tenses",
+                   "keywords":  [
+                                    "apa itu passive voice form and use across tenses",
+                                    "cara pakai passive voice form and use across tenses",
+                                    "passive voice form and use across tenses",
+                                    "expansion and complex structures passive voice form and use across tenses",
+                                    "grammar resource passive voice form and use across tenses"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan pembentukan passive voice lintas tense serta kapan fokus kalimat dipindah ke aksi atau objek.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Cara Membentuk Passive"
+                                          },
+                                          {
+                                              "label":  "Passive Across Tenses"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

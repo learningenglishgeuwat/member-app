@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-vs-past-simple",
+    "label":  "Present Perfect Vs Past Simple",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu present perfect vs past simple",
+                     "cara pakai present perfect vs past simple",
+                     "present perfect vs past simple",
+                     "tense and aspect system present perfect vs past simple",
+                     "grammar resource present perfect vs past simple"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-present-perfect-vs-past-simple",
+                   "title":  "Present Perfect Vs Past Simple",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-vs-past-simple",
+                   "keywords":  [
+                                    "apa itu present perfect vs past simple",
+                                    "cara pakai present perfect vs past simple",
+                                    "present perfect vs past simple",
+                                    "tense and aspect system present perfect vs past simple",
+                                    "grammar resource present perfect vs past simple"
+                                ],
+                   "shortAnswer":  "Topik ini membandingkan present perfect dan past simple agar siswa dapat memilih bentuk yang tepat berdasarkan waktu dan relevansi hasil.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

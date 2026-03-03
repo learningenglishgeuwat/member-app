@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Loader, Zap, CheckCircle2, Play } from 'lucide-react'
+import { Loader, Zap, Play } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 interface JourneyPlan {
   title: string
@@ -10,6 +11,7 @@ interface JourneyPlan {
 }
 
 const StartJourney: React.FC = () => {
+  const router = useRouter()
   const [goal, setGoal] = useState('')
   const [loading, setLoading] = useState(false)
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
@@ -76,7 +78,7 @@ const StartJourney: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 1000))
     // Navigate to skills page
     localStorage.removeItem('lastSkillPath')
-    window.location.href = '/skill'
+    router.push('/skill')
   }
 
   const handlePhaseClick = (phaseIndex: number) => {
@@ -100,7 +102,11 @@ const StartJourney: React.FC = () => {
         <p className="text-slate-400 font-mono text-xs sm:text-sm">Define your objective. GEUWAT will construct your path.</p>
       </header>
 
-      <form onSubmit={handleGenerate} className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-2xl backdrop-blur-sm relative overflow-hidden group">
+      <form
+        onSubmit={handleGenerate}
+        className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-2xl backdrop-blur-sm relative overflow-hidden group"
+        data-tour="dashboard-mission-form"
+      >
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
         
         <div className="space-y-4">
@@ -113,12 +119,14 @@ const StartJourney: React.FC = () => {
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
               placeholder="e.g., I want to speak English fluently, Master business English, Prepare for IELTS exam..."
+              data-tour="dashboard-mission-input"
               className="flex-1 bg-black/40 border border-purple-900/50 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all text-sm sm:text-base"
             />
             <button
               type="button"
               onClick={handleGenerate}
               disabled={loading || !goal.trim()}
+              data-tour="dashboard-mission-enter"
               className="bg-purple-600 hover:bg-purple-500 disabled:bg-slate-800 disabled:cursor-not-allowed text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-display font-bold flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] text-sm sm:text-base"
             >
               {loading ? <Loader className="animate-spin w-4 h-4 sm:w-5 sm:h-5" /> : <span>ENTER</span>}
@@ -162,18 +170,24 @@ const StartJourney: React.FC = () => {
                   <h4 className="font-semibold text-purple-200 font-display text-sm sm:text-base">Phase {index + 1}</h4>
                 </div>
                 <p className="text-slate-400 leading-relaxed text-xs sm:text-sm">
-                  {index === 0 ? "Build Foundation" :
-                   index === 1 ? "Deliberate Practice" :
-                   index === 2 ? "Leverage" :
-                   "Achieve fluency in English"}
+                  {index === 0 ? "Bangun Fondasi" :
+                   index === 1 ? "Latihan Terarah" :
+                   index === 2 ? "Optimalkan Hasil" :
+                   "Capai kefasihan bahasa Inggris"}
                 </p>
-                <button 
-                  className={`mt-4 w-full text-[11px] sm:text-xs flex items-center justify-center gap-1 font-display ${
-                    activePhases.has(index) ? 'text-slate-400' : 'text-purple-400 hover:text-purple-300'
+                <button
+                  type="button"
+                  className={`mt-4 inline-flex w-full items-center justify-center rounded-full border px-3 py-1.5 text-[11px] sm:text-xs font-display transition-all ${
+                    activePhases.has(index)
+                      ? 'border-cyan-400/50 bg-cyan-500/10 text-cyan-200 shadow-[0_0_16px_rgba(34,211,238,0.28)]'
+                      : 'border-purple-500/40 bg-purple-500/10 text-purple-300 hover:border-purple-400/60 hover:bg-purple-500/20 hover:text-purple-200'
                   }`}
                   onClick={() => handlePhaseClick(index)}
+                  data-tour={`dashboard-ready-phase-${index + 1}`}
+                  data-ready-active={activePhases.has(index) ? 'true' : 'false'}
+                  aria-pressed={activePhases.has(index)}
                 >
-                  <span>Ready?</span>
+                  <span className="uppercase tracking-wide">Ready?</span>
                 </button>
               </div>
             ))}
@@ -184,6 +198,7 @@ const StartJourney: React.FC = () => {
             <button
               onClick={handleInitiate}
               disabled={initiating || activePhases.size < 3}
+              data-tour="dashboard-initiate-training"
               className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 disabled:from-slate-700 disabled:to-slate-600 disabled:cursor-not-allowed text-white px-8 sm:px-10 md:px-12 py-3 sm:py-3.5 md:py-4 rounded-xl font-display font-bold flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transform hover:scale-105 disabled:scale-100 disabled:shadow-none text-sm sm:text-base"
             >
               {initiating ? <Loader className="animate-spin w-5 h-5 sm:w-6 sm:h-6" /> : <Play className="w-5 h-5 sm:w-6 sm:h-6" />}

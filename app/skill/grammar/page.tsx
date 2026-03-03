@@ -1,8 +1,10 @@
-import Link from 'next/link';
+import Link from '../../components/HoverPrefetchLink';
 import BackButton from '../components/BackButton';
 import './grammar.css';
 
 export default function GrammarPage() {
+  const showAnalisisGrammarForSpeakingCard = false;
+
   return (
     <main className="grammar-page">
       <div className="fixed left-4 top-6 z-50">
@@ -14,9 +16,10 @@ export default function GrammarPage() {
         <p className="grammar-subtitle">Pilih jalur grammar yang ingin dipelajari.</p>
 
         <div className="grammar-triangle">
-          <Link
+          <Link prefetch={false}
             href="/skill/grammar/grammar-resource"
             className="grammar-btn grammar-btn-top"
+            data-tour="grammar-resource-button"
           >
             Grammar Resource
           </Link>
@@ -41,6 +44,15 @@ export default function GrammarPage() {
                 <span className="grammar-lock-badge">Locked</span>
               </div>
             </div>
+
+            {showAnalisisGrammarForSpeakingCard && (
+              <div className="grammar-bottom-extra">
+                <div className="grammar-btn grammar-btn-locked" aria-disabled="true">
+                  <span>Analisis Grammar for Speaking</span>
+                  <span className="grammar-lock-badge">Locked</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

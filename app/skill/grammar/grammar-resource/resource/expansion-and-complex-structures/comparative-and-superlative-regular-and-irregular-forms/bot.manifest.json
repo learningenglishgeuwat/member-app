@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/comparative-and-superlative-regular-and-irregular-forms",
+    "label":  "Comparative And Superlative Regular And Irregular Forms",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu comparative and superlative regular and irregular forms",
+                     "cara pakai comparative and superlative regular and irregular forms",
+                     "comparative and superlative regular and irregular forms",
+                     "expansion and complex structures comparative and superlative regular and irregular forms",
+                     "grammar resource comparative and superlative regular and irregular forms"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-comparative-and-superlative-regular-and-irregular-forms",
+                   "title":  "Comparative And Superlative Regular And Irregular Forms",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/comparative-and-superlative-regular-and-irregular-forms",
+                   "keywords":  [
+                                    "apa itu comparative and superlative regular and irregular forms",
+                                    "cara pakai comparative and superlative regular and irregular forms",
+                                    "comparative and superlative regular and irregular forms",
+                                    "expansion and complex structures comparative and superlative regular and irregular forms",
+                                    "grammar resource comparative and superlative regular and irregular forms"
+                                ],
+                   "shortAnswer":  "Topik ini melatih comparative dan superlative, termasuk bentuk regular dan irregular, supaya perbandingan kualitas dan tingkat bisa dipakai dengan tepat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Sentence Patterns"
+                                          },
+                                          {
+                                              "label":  "Irregular Forms"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

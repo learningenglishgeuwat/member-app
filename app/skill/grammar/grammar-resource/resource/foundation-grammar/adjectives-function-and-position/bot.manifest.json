@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/adjectives-function-and-position",
+    "label":  "Adjectives Function And Position",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu adjectives function and position",
+                     "cara pakai adjectives function and position",
+                     "adjectives function and position",
+                     "foundation grammar adjectives function and position",
+                     "grammar resource adjectives function and position"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-adjectives-function-and-position",
+                   "title":  "Adjectives Function And Position",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/adjectives-function-and-position",
+                   "keywords":  [
+                                    "apa itu adjectives function and position",
+                                    "cara pakai adjectives function and position",
+                                    "adjectives function and position",
+                                    "foundation grammar adjectives function and position",
+                                    "grammar resource adjectives function and position"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan fungsi adjectives dan posisi umumnya sebelum noun atau setelah linking verb.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Function and Position"
+                                          },
+                                          {
+                                              "label":  "Urutan Adjective (Jika lebih dari satu)"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

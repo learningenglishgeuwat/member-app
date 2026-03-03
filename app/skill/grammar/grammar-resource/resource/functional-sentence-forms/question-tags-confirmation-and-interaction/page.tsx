@@ -1,4 +1,4 @@
-﻿import BackButton from '../../../../../components/BackButton';
+import BackButton from '../../../../../components/BackButton';
 import './question-tags-confirmation-and-interaction.css';
 import '../../topic-layout.css';
 
@@ -109,8 +109,8 @@ export default function QuestionTagsPage() {
 
         <section className="qtg-block">
           <h2 className="qtg-block-title">Common Examples</h2>
-          <div className="qtg-table-wrap">
-            <table className="qtg-table">
+          <div className="qtg-table-wrap geuwat-table-scroll">
+            <table className="qtg-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Statement</th>

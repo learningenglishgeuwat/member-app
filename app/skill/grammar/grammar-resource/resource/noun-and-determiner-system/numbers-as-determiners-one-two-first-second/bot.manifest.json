@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/numbers-as-determiners-one-two-first-second",
+    "label":  "Numbers As Determiners One Two First Second",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu numbers as determiners one two first second",
+                     "cara pakai numbers as determiners one two first second",
+                     "numbers as determiners one two first second",
+                     "noun and determiner system numbers as determiners one two first second",
+                     "grammar resource numbers as determiners one two first second"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-numbers-as-determiners-one-two-first-second",
+                   "title":  "Numbers As Determiners One Two First Second",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/numbers-as-determiners-one-two-first-second",
+                   "keywords":  [
+                                    "apa itu numbers as determiners one two first second",
+                                    "cara pakai numbers as determiners one two first second",
+                                    "numbers as determiners one two first second",
+                                    "noun and determiner system numbers as determiners one two first second",
+                                    "grammar resource numbers as determiners one two first second"
+                                ],
+                   "shortAnswer":  "Topik ini membahas penggunaan numbers sebagai determiner, termasuk cardinal dan ordinal dalam noun phrase.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Number Determiners"
+                                          },
+                                          {
+                                              "label":  "Function and Pattern"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

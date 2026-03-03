@@ -106,8 +106,8 @@ export default function QuestionFormsPage() {
 
         <section className="qf-block">
           <h2 className="qf-block-title">Common WH Words</h2>
-          <div className="qf-table-wrap">
-            <table className="qf-table">
+          <div className="qf-table-wrap geuwat-table-scroll">
+            <table className="qf-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>WH Word</th>

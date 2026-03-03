@@ -28,7 +28,7 @@ export const FormBackground: React.FC<FormBackgroundProps> = ({ isFullyActive })
         )}
         
         {/* Noise Texture */}
-        <div className="absolute inset-0 rounded-2xl opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        <div className="login-card-noise absolute inset-0 rounded-2xl"></div>
         
         {/* Edge Glow */}
         <div className={`absolute inset-0 rounded-2xl transition-all duration-700 ${

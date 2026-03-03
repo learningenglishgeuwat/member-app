@@ -1,0 +1,28 @@
+{
+  "route": "/skill/grammar/grammar-for-writing",
+  "label": "Grammar for Writing",
+  "scope": "grammar",
+  "keywords": [
+    "grammar for writing",
+    "struktur grammar tulisan",
+    "materi grammar untuk writing"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-for-writing-overview",
+      "title": "Grammar for Writing Overview",
+      "route": "/skill/grammar/grammar-for-writing",
+      "keywords": [
+        "apa itu grammar for writing",
+        "fungsi grammar for writing",
+        "materi writing grammar"
+      ],
+      "shortAnswer": "Grammar for Writing menekankan ketepatan struktur, konsistensi tense, dan kejelasan hubungan ide antar kalimat supaya tulisan lebih rapi dan mudah dibaca.",
+      "sourceSections": [
+        {
+          "label": "Grammar for Writing Main Content"
+        }
+      ]
+    }
+  ]
+}

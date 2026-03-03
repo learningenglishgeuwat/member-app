@@ -14,9 +14,28 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+## Mobile Testing (Stable)
+
+Saat test dari HP, gunakan mode `dev` default (webpack + host LAN) atau mode production-like berikut:
+
+```bash
+npm run serve:mobile
+```
+
+Lalu akses `http://<ip-laptop>:3001` dari HP.
+
+Mode dev turbo tetap tersedia jika dibutuhkan:
+
+```bash
+npm run dev:turbo
+```
+
+Catatan: saat route dibuka pertama kali, terminal bisa menampilkan `Compiling ...`.
+Itu normal di mode dev (on-demand compile), bukan reload bug di konten halaman.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

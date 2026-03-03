@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/demonstratives-this-that-these-those",
+    "label":  "Demonstratives This That These Those",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu demonstratives this that these those",
+                     "cara pakai demonstratives this that these those",
+                     "demonstratives this that these those",
+                     "noun and determiner system demonstratives this that these those",
+                     "grammar resource demonstratives this that these those"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-demonstratives-this-that-these-those",
+                   "title":  "Demonstratives This That These Those",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/demonstratives-this-that-these-those",
+                   "keywords":  [
+                                    "apa itu demonstratives this that these those",
+                                    "cara pakai demonstratives this that these those",
+                                    "demonstratives this that these those",
+                                    "noun and determiner system demonstratives this that these those",
+                                    "grammar resource demonstratives this that these those"
+                                ],
+                   "shortAnswer":  "Topik ini membahas demonstratives this, that, these, those untuk kedekatan jarak dan jumlah singular plural.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Quick Map"
+                                          },
+                                          {
+                                              "label":  "Penggunaan"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

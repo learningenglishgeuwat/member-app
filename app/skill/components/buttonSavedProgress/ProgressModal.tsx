@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import './ProgressModal.css';
 
@@ -56,14 +57,32 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
   title = 'How well did you master this topic?',
   description = 'Select your current level of understanding',
 }) => {
-  if (!isOpen) return null;
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || typeof document === 'undefined') return;
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMounted, isOpen]);
+
+  if (!isOpen || !isMounted) return null;
 
   const handleSelect = (option: AssessmentOption) => {
     onSelect(option);
     onClose();
   };
 
-  return (
+  const modalNode = (
     <div className="progress-modal-overlay" onClick={onClose}>
       <div className="progress-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
@@ -110,6 +129,8 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
       </div>
     </div>
   );
+
+  return createPortal(modalNode, document.body);
 };
 
 export default ProgressModal;

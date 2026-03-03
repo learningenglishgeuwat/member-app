@@ -31,6 +31,7 @@ export const LetterCard: React.FC<LetterCardProps> = ({
     <div 
       ref={cardRef}
       onClick={onPlay}
+      data-tour={`alphabet-letter-${letter.toLowerCase()}`}
       className={`alphabet-letter-card ${isPlaying ? 'playing' : ''}`}
     >
       {/* Background Grid */}

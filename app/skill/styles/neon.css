@@ -139,3 +139,70 @@
 .perspective-1000 {
   perspective: 1000px;
 }
+
+.skill-execute-card-glow {
+  animation: skillExecuteCardPulse 1.7s ease-in-out infinite;
+}
+
+.skill-execute-outer-glow {
+  border-radius: 18px;
+  animation: skillExecuteOuterPulse 1.6s ease-in-out infinite;
+}
+
+.skill-execute-edge-line {
+  border: 1px solid transparent;
+  border-radius: inherit;
+  animation: skillExecuteEdgePulse 1.3s ease-in-out infinite;
+}
+
+.skill-status-active-glow {
+  color: #b6ffc6;
+  text-shadow: 0 0 8px rgba(182, 255, 198, 0.55);
+}
+
+.skill-execute-text-glow {
+  text-shadow: 0 0 10px currentColor, 0 0 22px currentColor;
+  animation: skillExecuteTextPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skillExecuteCardPulse {
+  0%,
+  100% {
+    filter: saturate(1);
+  }
+  50% {
+    filter: saturate(1.18);
+  }
+}
+
+@keyframes skillExecuteOuterPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes skillExecuteEdgePulse {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes skillExecuteTextPulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}

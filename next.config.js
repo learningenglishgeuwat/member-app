@@ -115,6 +115,11 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  onDemandEntries: {
+    // Keep compiled pages longer in dev to reduce recompilation while learning on mobile.
+    maxInactiveAge: 60 * 60 * 1000,
+    pagesBufferLength: 100,
+  },
   async redirects() {
     return [
       ...grammarSlugMappings.map(([destination, source]) => ({

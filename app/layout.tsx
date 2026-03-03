@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./styles/scrollbar.css";
 import { AuthProvider } from "@/contexts/MemberAuthContext";
+import { TourGuideMount } from "@/app/bot-tourguide";
 
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
@@ -27,6 +29,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <AuthProvider>
           {children}
+          <TourGuideMount />
         </AuthProvider>
       </body>
     </html>

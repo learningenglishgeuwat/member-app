@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-continuous",
+    "label":  "Past Perfect Continuous",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu past perfect continuous",
+                     "cara pakai past perfect continuous",
+                     "past perfect continuous",
+                     "tense and aspect system past perfect continuous",
+                     "grammar resource past perfect continuous"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-past-perfect-continuous",
+                   "title":  "Past Perfect Continuous",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-continuous",
+                   "keywords":  [
+                                    "apa itu past perfect continuous",
+                                    "cara pakai past perfect continuous",
+                                    "past perfect continuous",
+                                    "tense and aspect system past perfect continuous",
+                                    "grammar resource past perfect continuous"
+                                ],
+                   "shortAnswer":  "Topik ini membahas past perfect continuous untuk durasi aksi sebelum peristiwa masa lalu lainnya.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

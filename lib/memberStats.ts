@@ -1,6 +1,11 @@
 import { supabase } from './supabase';
 import type { Tier, WithdrawRequest as WithdrawRequestDB } from '@/types/database';
 
+const TIER_CONFIG_CACHE_KEY = 'member_tier_config_cache_v1';
+const TIER_CONFIG_CACHE_TTL_MS = 30 * 60 * 1000;
+
+let tierConfigMemoryCache: { data: Tier[]; cachedAt: number } | null = null;
+
 // Interface for referral statistics
 export interface ReferralStats {
   totalReferrals: number;
@@ -29,6 +34,49 @@ export interface WithdrawRequestRow {
   status: 'pending' | 'approved' | 'paid' | 'rejected';
   created_at: string;
 }
+
+const isTierConfigFresh = (cachedAt: number) =>
+  Number.isFinite(cachedAt) && Date.now() - cachedAt <= TIER_CONFIG_CACHE_TTL_MS;
+
+const readTierConfigCache = (): Tier[] | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(TIER_CONFIG_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { data?: Tier[]; cachedAt?: number };
+    if (!Array.isArray(parsed.data) || !isTierConfigFresh(Number(parsed.cachedAt))) {
+      return null;
+    }
+    return parsed.data;
+  } catch {
+    return null;
+  }
+};
+
+const writeTierConfigCache = (data: Tier[]) => {
+  const payload = { data, cachedAt: Date.now() };
+  tierConfigMemoryCache = payload;
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(TIER_CONFIG_CACHE_KEY, JSON.stringify(payload));
+  } catch {
+    // ignore storage failure
+  }
+};
+
+export const getCachedTierConfigSnapshot = (): Tier[] | null => {
+  if (tierConfigMemoryCache && isTierConfigFresh(tierConfigMemoryCache.cachedAt)) {
+    return tierConfigMemoryCache.data;
+  }
+
+  const cached = readTierConfigCache();
+  if (cached && cached.length > 0) {
+    tierConfigMemoryCache = { data: cached, cachedAt: Date.now() };
+    return cached;
+  }
+
+  return null;
+};
 
 /**
  * Get referral statistics for a user
@@ -162,7 +210,13 @@ export async function getLatestWithdrawRequest(userId: string): Promise<Withdraw
 /**
  * Get tier configuration from database
  */
-export async function getTierConfig(): Promise<Tier[] | null> {
+export async function getTierConfig(options?: { forceRefresh?: boolean }): Promise<Tier[] | null> {
+  const forceRefresh = options?.forceRefresh === true;
+  const cachedSnapshot = getCachedTierConfigSnapshot();
+  if (!forceRefresh && cachedSnapshot && cachedSnapshot.length > 0) {
+    return cachedSnapshot;
+  }
+
   try {
     const { data, error } = await supabase
       .from('tiers')
@@ -174,10 +228,14 @@ export async function getTierConfig(): Promise<Tier[] | null> {
       return null;
     }
 
-    return data as Tier[];
+    const normalized = (data ?? []) as Tier[];
+    if (normalized.length > 0) {
+      writeTierConfigCache(normalized);
+    }
+    return normalized;
   } catch (error) {
     console.error('Error in getTierConfig:', error);
-    return null;
+    return cachedSnapshot ?? null;
   }
 }
 

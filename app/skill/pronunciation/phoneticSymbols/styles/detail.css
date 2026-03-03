@@ -268,6 +268,51 @@
   box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
 }
 
+.symbol-detail-container .word-grid button.word-card.is-speaking {
+  border-color: #e9d5ff !important;
+  border-width: 1.5px !important;
+  background: linear-gradient(
+    145deg,
+    rgba(88, 28, 135, 0.62) 0%,
+    rgba(126, 34, 206, 0.46) 48%,
+    rgba(59, 7, 100, 0.72) 100%
+  ) !important;
+  box-shadow:
+    0 0 0 1px rgba(233, 213, 255, 0.45),
+    0 0 24px rgba(190, 41, 236, 0.58),
+    0 0 44px rgba(168, 85, 247, 0.36),
+    inset 0 0 18px rgba(233, 213, 255, 0.22) !important;
+  animation: symbolWordCardSpeakingPulse 0.9s ease-in-out infinite !important;
+}
+
+.symbol-detail-container .word-grid button.word-card.is-speaking .word-text {
+  color: #f5d0fe !important;
+  text-shadow: 0 0 8px rgba(245, 208, 254, 0.65);
+}
+
+.symbol-detail-container .word-grid button.word-card.is-speaking .word-ipa {
+  color: #e9d5ff !important;
+  text-shadow: 0 0 6px rgba(233, 213, 255, 0.45);
+}
+
+@keyframes symbolWordCardSpeakingPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(233, 213, 255, 0.34),
+      0 0 20px rgba(190, 41, 236, 0.5),
+      0 0 34px rgba(168, 85, 247, 0.27),
+      inset 0 0 12px rgba(233, 213, 255, 0.16);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(233, 213, 255, 0.52),
+      0 0 28px rgba(190, 41, 236, 0.7),
+      0 0 56px rgba(168, 85, 247, 0.48),
+      inset 0 0 20px rgba(233, 213, 255, 0.28);
+  }
+}
+
 .symbol-detail-container .word-text {
   font-size: 1rem;
   font-weight: bold;
@@ -484,6 +529,94 @@
 .symbol-detail-container .save-progress-button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.common-letters-chevron {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.7) 0%,
+    rgba(15, 23, 42, 0.4) 100%
+  );
+  opacity: 0.88;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.common-letters-chevron::before {
+  content: '';
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.common-letters-chevron.is-open::before {
+  transform: rotate(45deg);
+}
+
+.symbol-detail-container .common-letters-section-toggle:hover .common-letters-chevron {
+  opacity: 1;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 8px 16px rgba(0, 0, 0, 0.28);
+}
+
+.symbol-detail-container .symbol-detail-chevron-toggle {
+  width: 1.9rem;
+  height: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.72) 0%,
+    rgba(17, 24, 39, 0.45) 100%
+  );
+  opacity: 0.94;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 18px rgba(34, 211, 238, 0.18);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.symbol-detail-container .symbol-detail-chevron-toggle:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 0 22px rgba(34, 211, 238, 0.32),
+    0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.symbol-detail-container .symbol-detail-chevron-toggle:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.9);
+  outline-offset: 2px;
+}
+
+.symbol-detail-container .symbol-detail-chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.symbol-detail-container .symbol-detail-chevron-icon.is-open {
+  transform: rotate(180deg);
 }
 
 /* Responsive Design - SCOPED */

@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conjunctions-and-but-or-because-so",
+    "label":  "Conjunctions And But Or Because So",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu conjunctions and but or because so",
+                     "cara pakai conjunctions and but or because so",
+                     "conjunctions and but or because so",
+                     "expansion and complex structures conjunctions and but or because so",
+                     "grammar resource conjunctions and but or because so"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-conjunctions-and-but-or-because-so",
+                   "title":  "Conjunctions And But Or Because So",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conjunctions-and-but-or-because-so",
+                   "keywords":  [
+                                    "apa itu conjunctions and but or because so",
+                                    "cara pakai conjunctions and but or because so",
+                                    "conjunctions and but or because so",
+                                    "expansion and complex structures conjunctions and but or because so",
+                                    "grammar resource conjunctions and but or because so"
+                                ],
+                   "shortAnswer":  "Topik ini membahas conjunctions dasar seperti and, but, or, because, dan so untuk menyambung ide secara logis.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Conjunctions"
+                                          },
+                                          {
+                                              "label":  "Punctuation Rules"
+                                          },
+                                          {
+                                              "label":  "because vs so"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

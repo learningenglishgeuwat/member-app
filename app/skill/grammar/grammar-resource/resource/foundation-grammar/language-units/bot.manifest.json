@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/language-units",
+    "label":  "Language Units",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu language units",
+                     "cara pakai language units",
+                     "language units",
+                     "foundation grammar language units",
+                     "grammar resource language units"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-language-units",
+                   "title":  "Language Units",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/language-units",
+                   "keywords":  [
+                                    "apa itu language units",
+                                    "cara pakai language units",
+                                    "language units",
+                                    "foundation grammar language units",
+                                    "grammar resource language units"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan satuan bahasa dari kata, frasa, klausa, hingga kalimat sebagai fondasi analisis grammar.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Unit Bahasa (Dari kecil ke besar)"
+                                          },
+                                          {
+                                              "label":  "Clause (Klausa)"
+                                          },
+                                          {
+                                              "label":  "Perbedaan Klausa vs Kalimat"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

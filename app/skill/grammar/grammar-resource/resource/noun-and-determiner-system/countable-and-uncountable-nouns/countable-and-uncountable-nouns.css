@@ -128,6 +128,24 @@
   font-weight: 600;
 }
 
+.cu-chip-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-left: 0.45rem;
+  vertical-align: middle;
+}
+
+.cu-chip {
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #d6fbff;
+  font-size: 0.8rem;
+  line-height: 1.25;
+  padding: 0.14rem 0.5rem;
+}
+
 .cu-table-wrap {
   margin-top: 0.8rem;
   overflow-x: auto;

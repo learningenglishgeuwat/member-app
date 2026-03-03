@@ -7,6 +7,7 @@ import './summary-of-phonetic-symbols.css';
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
 type SymbolExample = { word: string; ipa: string };
 type SymbolItem = { symbol: string; examples: [SymbolExample, SymbolExample, SymbolExample] };
+type SpokenWordEntry = { key: string; word: string };
 
 const SYMBOL_DATA: Record<TabKey, string[]> = {
   vowel: ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a', '\u0251', 'i', 'u', '\u00e6', '\u0254'],
@@ -105,8 +106,28 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
 export default function SummaryOfPhoneticSymbolsPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('vowel');
   const [activePlayGroup, setActivePlayGroup] = useState<string | null>(null);
+  const [activeSpeakingExampleKey, setActiveSpeakingExampleKey] = useState<string | null>(null);
   const playGroupRef = useRef<string | null>(null);
+  const exampleCardRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const activeSymbols = useMemo(() => SYMBOL_DATA[activeTab], [activeTab]);
+
+  const buildExampleKey = (
+    tab: TabKey,
+    groupTitle: string,
+    symbol: string,
+    itemIndex: number,
+    exampleIndex: number,
+  ) => `${tab}-${groupTitle}-${symbol}-${itemIndex}-${exampleIndex}`;
+
+  const scrollToExampleCard = (exampleKey: string) => {
+    const node = exampleCardRefs.current[exampleKey];
+    if (!node) return;
+    node.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'nearest',
+    });
+  };
 
   useEffect(() => {
     const warmupVoices = () => {
@@ -117,12 +138,14 @@ export default function SummaryOfPhoneticSymbolsPage() {
     return () => {
       window.speechSynthesis.onvoiceschanged = null;
       window.speechSynthesis.cancel();
+      setActiveSpeakingExampleKey(null);
     };
   }, []);
 
   useEffect(() => {
     window.speechSynthesis.cancel();
     setActivePlayGroup(null);
+    setActiveSpeakingExampleKey(null);
     playGroupRef.current = null;
   }, [activeTab]);
 
@@ -138,10 +161,14 @@ export default function SummaryOfPhoneticSymbolsPage() {
     );
   };
 
-  const speakWord = (word: string) => {
+  const speakWord = (word: string, exampleKey?: string) => {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     setActivePlayGroup(null);
+    setActiveSpeakingExampleKey(exampleKey ?? null);
+    if (exampleKey) {
+      scrollToExampleCard(exampleKey);
+    }
     playGroupRef.current = null;
     const utterance = new SpeechSynthesisUtterance(word);
     const preferredVoice = getPreferredVoice();
@@ -152,15 +179,22 @@ export default function SummaryOfPhoneticSymbolsPage() {
     if (preferredVoice) {
       utterance.voice = preferredVoice;
     }
+    utterance.onend = () => {
+      setActiveSpeakingExampleKey(null);
+    };
+    utterance.onerror = () => {
+      setActiveSpeakingExampleKey(null);
+    };
     window.speechSynthesis.speak(utterance);
   };
 
-  const playAllWordsByGroup = (groupKey: string, words: string[]) => {
+  const playAllWordsByGroup = (groupKey: string, words: SpokenWordEntry[]) => {
     if (!('speechSynthesis' in window) || words.length === 0) return;
 
     if (activePlayGroup === groupKey) {
       window.speechSynthesis.cancel();
       setActivePlayGroup(null);
+      setActiveSpeakingExampleKey(null);
       playGroupRef.current = null;
       return;
     }
@@ -173,11 +207,13 @@ export default function SummaryOfPhoneticSymbolsPage() {
     const speakNext = () => {
       if (index >= words.length) {
         setActivePlayGroup(null);
+        setActiveSpeakingExampleKey(null);
         playGroupRef.current = null;
         return;
       }
 
-      const utterance = new SpeechSynthesisUtterance(words[index]);
+      const currentWord = words[index];
+      const utterance = new SpeechSynthesisUtterance(currentWord.word);
       const preferredVoice = getPreferredVoice();
       utterance.lang = 'en-US';
       utterance.rate = 0.82;
@@ -185,6 +221,11 @@ export default function SummaryOfPhoneticSymbolsPage() {
       utterance.volume = 1.0;
       if (preferredVoice) utterance.voice = preferredVoice;
 
+      utterance.onstart = () => {
+        if (playGroupRef.current !== groupKey) return;
+        setActiveSpeakingExampleKey(currentWord.key);
+        scrollToExampleCard(currentWord.key);
+      };
       utterance.onend = () => {
         if (playGroupRef.current !== groupKey) return;
         index += 1;
@@ -192,6 +233,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
       };
       utterance.onerror = () => {
         setActivePlayGroup(null);
+        setActiveSpeakingExampleKey(null);
         playGroupRef.current = null;
       };
 
@@ -246,12 +288,15 @@ export default function SummaryOfPhoneticSymbolsPage() {
                     <button
                       type="button"
                       className={`sps-play-all-btn ${activePlayGroup === `${activeTab}-${group.title}` ? 'is-playing' : ''}`}
-                      onClick={() =>
-                        playAllWordsByGroup(
-                          `${activeTab}-${group.title}`,
-                          group.items.flatMap((item) => item.examples.map((example) => example.word)),
-                        )
-                      }
+                      onClick={() => {
+                        const queuedWords = group.items.flatMap((item, itemIndex) =>
+                          item.examples.map((example, exampleIndex) => ({
+                            key: buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex),
+                            word: example.word,
+                          })),
+                        );
+                        playAllWordsByGroup(`${activeTab}-${group.title}`, queuedWords);
+                      }}
                       aria-label={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
                       title={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
                     >
@@ -259,7 +304,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                     </button>
                   </div>
                   <div className="sps-symbol-list">
-                    {group.items.map((item) => (
+                    {group.items.map((item, itemIndex) => (
                       <div key={item.symbol} className="sps-symbol-card sps-symbol-card-with-examples">
                         <span
                           className={`sps-symbol ${
@@ -269,19 +314,27 @@ export default function SummaryOfPhoneticSymbolsPage() {
                           {item.symbol}
                         </span>
                         <ul className="sps-example-grid">
-                          {item.examples.map((example) => (
-                            <li key={`${item.symbol}-${example.word}`}>
+                          {item.examples.map((example, exampleIndex) => {
+                            const exampleKey = buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex);
+                            const isSpeakingExample = activeSpeakingExampleKey === exampleKey;
+
+                            return (
+                            <li key={`${item.symbol}-${example.word}-${exampleIndex}`}>
                               <button
                                 type="button"
-                                className="sps-example-card"
-                                onClick={() => speakWord(example.word)}
+                                className={`sps-example-card ${isSpeakingExample ? 'is-speaking' : ''}`}
+                                onClick={() => speakWord(example.word, exampleKey)}
+                                ref={(node) => {
+                                  exampleCardRefs.current[exampleKey] = node;
+                                }}
                                 aria-label={`Play pronunciation for ${example.word}`}
                               >
                                 <span className="sps-word">{example.word}</span>
                                 <span className="sps-ipa">/{example.ipa}/</span>
                               </button>
                             </li>
-                          ))}
+                            );
+                          })}
                         </ul>
                       </div>
                     ))}

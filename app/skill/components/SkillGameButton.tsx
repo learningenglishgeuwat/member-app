@@ -1,20 +1,20 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '../../components/HoverPrefetchLink'
 import { usePathname } from 'next/navigation'
 import { Gamepad2 } from 'lucide-react'
 
 export default function SkillGameButton() {
   const pathname = usePathname()
 
-  // Hide button on the target page itself.
-  if (pathname === '/skill/game-links') {
+  // Show only on the main skill page.
+  if (pathname !== '/skill' && pathname !== '/skill/') {
     return null
   }
 
   return (
     <div className="fixed bottom-5 right-5 z-[90]">
-      <Link
+      <Link prefetch={false}
         href="/skill/game-links"
         aria-label="Open Games Links"
         title="Games Links"
@@ -25,4 +25,3 @@ export default function SkillGameButton() {
     </div>
   )
 }
-

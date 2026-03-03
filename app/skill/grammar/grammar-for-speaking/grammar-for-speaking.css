@@ -1,0 +1,360 @@
+.gfs-page {
+  min-height: 100vh;
+  padding: 5.5rem 1rem 2rem;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(0, 163, 255, 0.15), transparent 45%),
+    radial-gradient(circle at 90% 8%, rgba(0, 210, 190, 0.1), transparent 42%),
+    #06131f;
+  color: #d8f2ff;
+  overflow-x: hidden;
+}
+
+.gfs-shell {
+  width: min(1380px, 100%);
+  margin: 0 auto;
+}
+
+.gfs-header {
+  padding: 1.25rem;
+  border: 1px solid rgba(90, 180, 255, 0.35);
+  border-radius: 1rem;
+  background: linear-gradient(
+    150deg,
+    rgba(12, 43, 68, 0.82),
+    rgba(7, 25, 40, 0.9)
+  );
+  box-shadow: 0 0 24px rgba(0, 183, 255, 0.14);
+}
+
+.gfs-title {
+  margin: 0;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  letter-spacing: 0.02em;
+  color: #e7fbff;
+}
+
+.gfs-subtitle {
+  margin: 0.8rem 0 0;
+  max-width: 860px;
+  line-height: 1.65;
+  color: #b9e6f5;
+}
+
+.gfs-kpi-wrap {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gfs-summary {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  background: rgba(0, 120, 168, 0.18);
+  color: #dcf7ff;
+  font-size: 0.92rem;
+}
+
+.gfs-layout {
+  margin-top: 1.1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.gfs-phase-panel {
+  border: 1px solid rgba(88, 177, 255, 0.28);
+  border-radius: 1rem;
+  background: rgba(8, 30, 47, 0.86);
+  padding: 0.9rem;
+  box-shadow: 0 0 20px rgba(0, 170, 255, 0.08);
+}
+
+.gfs-panel-title {
+  margin: 0;
+  color: #e3fbff;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gfs-phase-list {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.gfs-phase-btn {
+  width: 100%;
+  border: 1px solid rgba(89, 182, 255, 0.25);
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.7rem;
+  text-align: left;
+  background: rgba(10, 38, 58, 0.88);
+  color: #cbefff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.gfs-phase-btn:hover {
+  border-color: rgba(136, 229, 255, 0.62);
+}
+
+.gfs-phase-btn.is-active {
+  border-color: rgba(111, 250, 230, 0.88);
+  background: rgba(11, 64, 84, 0.95);
+  box-shadow: 0 0 16px rgba(72, 220, 255, 0.22);
+}
+
+.gfs-phase-btn-title {
+  display: block;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gfs-phase-btn-meta {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.82rem;
+  color: #9dd4e8;
+}
+
+.gfs-content {
+  min-width: 0;
+}
+
+.gfs-phase-head {
+  padding: 1rem 1.05rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(89, 182, 255, 0.25);
+  background: rgba(7, 30, 47, 0.88);
+}
+
+.gfs-phase-title {
+  margin: 0;
+  color: #ebfcff;
+  font-size: clamp(1.1rem, 2.7vw, 1.5rem);
+}
+
+.gfs-phase-subtitle {
+  margin: 0.35rem 0 0;
+  color: #b4dff0;
+  line-height: 1.5;
+}
+
+.gfs-phase-target {
+  margin: 0.55rem 0 0;
+  color: #89e4f4;
+  font-size: 0.93rem;
+}
+
+.gfs-tools {
+  margin-top: 0.8rem;
+  border: 1px solid rgba(89, 182, 255, 0.24);
+  border-radius: 0.9rem;
+  background: rgba(9, 35, 54, 0.9);
+  padding: 0.8rem;
+}
+
+.gfs-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.gfs-filter-chip {
+  border: 1px solid rgba(88, 176, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.33rem 0.66rem;
+  font-size: 0.82rem;
+  color: #d4f7ff;
+  background: rgba(10, 42, 63, 0.92);
+  cursor: pointer;
+}
+
+.gfs-filter-chip.is-active {
+  border-color: rgba(128, 243, 247, 0.92);
+  color: #05202d;
+  background: #8ff0ff;
+}
+
+.gfs-search-wrap {
+  margin-top: 0.7rem;
+  display: block;
+}
+
+.gfs-search-label {
+  display: block;
+  font-size: 0.78rem;
+  color: #8ad5ea;
+  margin-bottom: 0.25rem;
+}
+
+.gfs-search-input {
+  width: 100%;
+  border: 1px solid rgba(87, 170, 241, 0.42);
+  border-radius: 0.6rem;
+  background: rgba(7, 28, 43, 0.95);
+  color: #e3fbff;
+  padding: 0.55rem 0.65rem;
+  outline: none;
+}
+
+.gfs-search-input:focus {
+  border-color: rgba(139, 238, 255, 0.9);
+  box-shadow: 0 0 0 2px rgba(92, 220, 255, 0.2);
+}
+
+.gfs-visible-note {
+  margin: 0.75rem 0 0;
+  color: #9fd7ea;
+  font-size: 0.9rem;
+}
+
+.gfs-empty {
+  margin-top: 0.8rem;
+  border: 1px dashed rgba(97, 175, 234, 0.35);
+  border-radius: 0.7rem;
+  padding: 1rem;
+  color: #a8d9ea;
+  background: rgba(8, 31, 48, 0.8);
+}
+
+.gfs-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.gfs-card {
+  height: 100%;
+  min-width: 0;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(89, 182, 255, 0.22);
+  background: linear-gradient(
+    160deg,
+    rgba(13, 45, 70, 0.9),
+    rgba(9, 29, 44, 0.95)
+  );
+  padding: 0.92rem;
+  box-shadow: 0 0 18px rgba(0, 170, 255, 0.09);
+}
+
+.gfs-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.gfs-order {
+  font-size: 0.78rem;
+  color: #8bdcf6;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(8, 45, 68, 0.72);
+  border: 1px solid rgba(99, 184, 255, 0.34);
+}
+
+.gfs-tag {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  border: 1px solid rgba(108, 198, 255, 0.36);
+  padding: 0.15rem 0.45rem;
+  color: #ccf3ff;
+}
+
+.gfs-tag-domain {
+  border-color: rgba(121, 230, 223, 0.66);
+  color: #98ffe0;
+}
+
+.gfs-priority-critical {
+  border-color: rgba(255, 121, 121, 0.75);
+  color: #ffd4d4;
+}
+
+.gfs-priority-high {
+  border-color: rgba(255, 202, 107, 0.8);
+  color: #ffecc7;
+}
+
+.gfs-priority-medium {
+  border-color: rgba(144, 214, 255, 0.62);
+  color: #ddf4ff;
+}
+
+.gfs-card-goal {
+  margin: 0.65rem 0 0;
+  color: #f1fcff;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.gfs-card-block {
+  margin-top: 0.68rem;
+  min-width: 0;
+}
+
+.gfs-card-label {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #73dfff;
+  font-weight: 700;
+}
+
+.gfs-card-text {
+  margin: 0.35rem 0 0;
+  color: #c6ebf7;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.gfs-card-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1rem;
+  color: #dcf6ff;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.gfs-card-list li + li {
+  margin-top: 0.3rem;
+}
+
+@media (min-width: 768px) {
+  .gfs-page {
+    padding: 6rem 1.25rem 2.4rem;
+  }
+
+  .gfs-layout {
+    grid-template-columns: 290px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .gfs-phase-panel {
+    position: sticky;
+    top: 6.2rem;
+    max-height: calc(100vh - 7.2rem);
+    overflow: auto;
+  }
+
+  .gfs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gfs-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

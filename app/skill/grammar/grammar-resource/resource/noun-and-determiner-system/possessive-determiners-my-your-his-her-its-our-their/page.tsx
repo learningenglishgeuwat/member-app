@@ -89,8 +89,8 @@ export default function PossessiveDeterminersPage() {
 
         <section className="pd-block">
           <h2 className="pd-block-title">Tabel Possessive Determiners</h2>
-          <div className="pd-table-wrap">
-            <table className="pd-table">
+          <div className="pd-table-wrap geuwat-table-scroll">
+            <table className="pd-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Subject</th>

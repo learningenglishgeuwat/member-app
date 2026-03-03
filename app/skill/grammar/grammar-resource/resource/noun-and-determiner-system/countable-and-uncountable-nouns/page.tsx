@@ -48,6 +48,88 @@ const COMMON_MISTAKES = [
   { wrong: 'These furnitures are expensive.', correct: 'This furniture is expensive.' },
 ] as const;
 
+const REGULAR_PLURAL_PATTERNS = [
+  {
+    rule: 'Most nouns: + -s',
+    examples: ['book -> books', 'student -> students', 'car -> cars'],
+  },
+  {
+    rule: 'Nouns ending in -s, -x, -z, -ch, -sh: + -es',
+    examples: ['class -> classes', 'box -> boxes', 'watch -> watches'],
+  },
+  {
+    rule: 'Consonant + y: y -> ies',
+    examples: ['city -> cities', 'baby -> babies', 'story -> stories'],
+  },
+  {
+    rule: 'Vowel + y: + -s',
+    examples: ['boy -> boys', 'day -> days', 'toy -> toys'],
+  },
+  {
+    rule: 'Some nouns ending in -f / -fe: -> ves',
+    examples: ['leaf -> leaves', 'wife -> wives', 'knife -> knives'],
+  },
+] as const;
+
+const IRREGULAR_PLURAL_EXAMPLES = [
+  { singular: 'man', plural: 'men', meaning: 'pria / laki-laki' },
+  { singular: 'woman', plural: 'women', meaning: 'wanita / perempuan' },
+  { singular: 'child', plural: 'children', meaning: 'anak' },
+  { singular: 'person', plural: 'people', meaning: 'orang' },
+  { singular: 'tooth', plural: 'teeth', meaning: 'gigi' },
+  { singular: 'foot', plural: 'feet', meaning: 'kaki (bagian telapak)' },
+  { singular: 'goose', plural: 'geese', meaning: 'angsa' },
+  { singular: 'mouse', plural: 'mice', meaning: 'tikus' },
+  { singular: 'louse', plural: 'lice', meaning: 'kutu' },
+  { singular: 'ox', plural: 'oxen', meaning: 'lembu jantan' },
+  { singular: 'sheep', plural: 'sheep', meaning: 'domba' },
+  { singular: 'deer', plural: 'deer', meaning: 'rusa' },
+  { singular: 'fish', plural: 'fish', meaning: 'ikan' },
+  { singular: 'species', plural: 'species', meaning: 'spesies' },
+  { singular: 'series', plural: 'series', meaning: 'seri' },
+  { singular: 'aircraft', plural: 'aircraft', meaning: 'pesawat' },
+  { singular: 'analysis', plural: 'analyses', meaning: 'analisis' },
+  { singular: 'diagnosis', plural: 'diagnoses', meaning: 'diagnosis' },
+  { singular: 'oasis', plural: 'oases', meaning: 'oasis' },
+  { singular: 'thesis', plural: 'theses', meaning: 'tesis' },
+  { singular: 'crisis', plural: 'crises', meaning: 'krisis' },
+  { singular: 'basis', plural: 'bases', meaning: 'dasar / basis' },
+  { singular: 'axis', plural: 'axes', meaning: 'sumbu' },
+  { singular: 'phenomenon', plural: 'phenomena', meaning: 'fenomena' },
+  { singular: 'criterion', plural: 'criteria', meaning: 'kriteria' },
+  { singular: 'datum', plural: 'data', meaning: 'data (satuan)' },
+  { singular: 'bacterium', plural: 'bacteria', meaning: 'bakteri (satuan)' },
+  { singular: 'medium', plural: 'media', meaning: 'media / perantara' },
+  { singular: 'curriculum', plural: 'curricula', meaning: 'kurikulum' },
+  { singular: 'memorandum', plural: 'memoranda', meaning: 'memo / nota resmi' },
+  { singular: 'stratum', plural: 'strata', meaning: 'lapisan' },
+  { singular: 'alumnus', plural: 'alumni', meaning: 'alumnus / lulusan' },
+  { singular: 'focus', plural: 'foci / focuses', meaning: 'fokus' },
+  { singular: 'fungus', plural: 'fungi', meaning: 'jamur' },
+  { singular: 'nucleus', plural: 'nuclei', meaning: 'inti' },
+  { singular: 'syllabus', plural: 'syllabi / syllabuses', meaning: 'silabus' },
+  { singular: 'cactus', plural: 'cacti / cactuses', meaning: 'kaktus' },
+  { singular: 'radius', plural: 'radii / radiuses', meaning: 'jari-jari' },
+  { singular: 'stimulus', plural: 'stimuli', meaning: 'stimulus' },
+  { singular: 'appendix', plural: 'appendices / appendixes', meaning: 'lampiran' },
+  { singular: 'index', plural: 'indices / indexes', meaning: 'indeks' },
+  { singular: 'matrix', plural: 'matrices', meaning: 'matriks' },
+  { singular: 'vertex', plural: 'vertices', meaning: 'titik sudut / puncak' },
+  { singular: 'formula', plural: 'formulae / formulas', meaning: 'rumus' },
+  { singular: 'bureau', plural: 'bureaux / bureaus', meaning: 'biro / kantor' },
+  { singular: 'elf', plural: 'elves', meaning: 'peri kecil' },
+  { singular: 'calf', plural: 'calves', meaning: 'anak sapi' },
+  { singular: 'loaf', plural: 'loaves', meaning: 'roti (satu loaf)' },
+  { singular: 'half', plural: 'halves', meaning: 'setengah bagian' },
+  { singular: 'knife', plural: 'knives', meaning: 'pisau' },
+  { singular: 'wife', plural: 'wives', meaning: 'istri' },
+  { singular: 'life', plural: 'lives', meaning: 'kehidupan' },
+  { singular: 'leaf', plural: 'leaves', meaning: 'daun' },
+  { singular: 'wolf', plural: 'wolves', meaning: 'serigala' },
+  { singular: 'shelf', plural: 'shelves', meaning: 'rak' },
+  { singular: 'scarf', plural: 'scarves / scarfs', meaning: 'syal' },
+] as const;
+
 function highlightWord(text: string, focus: string) {
   const lowerText = text.toLowerCase();
   const lowerFocus = focus.toLowerCase();
@@ -112,6 +194,88 @@ export default function CountableUncountablePage() {
                       <li key={ex.text}>{highlightWord(ex.text, ex.focus)}</li>
                     ))}
                   </ul>
+
+                  {item.title === 'Countable Nouns' ? (
+                    <div className="cu-grid cu-grid-one-col">
+                      <p className="cu-card-desc">
+                        Countable nouns punya bentuk <strong>singular</strong> (satu) dan{' '}
+                        <strong>plural</strong> (lebih dari satu). Bentuk plural ada yang mengikuti
+                        pola <strong>regular</strong> dan ada yang harus dihafal sebagai{' '}
+                        <strong>irregular</strong>.
+                      </p>
+
+                      <details className="cu-card cu-card-accordion">
+                        <summary className="cu-card-summary">
+                          <h3 className="cu-card-title">Regular Plural Patterns</h3>
+                          <span className="cu-card-caret" aria-hidden="true" />
+                        </summary>
+                        <div className="cu-card-body">
+                          <div className="cu-table-wrap geuwat-table-scroll">
+                            <table className="cu-table geuwat-table-responsive">
+                              <thead>
+                                <tr>
+                                  <th>Rule</th>
+                                  <th>Example 1</th>
+                                  <th>Example 2</th>
+                                  <th>Example 3</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {REGULAR_PLURAL_PATTERNS.map((pattern) => (
+                                  <tr key={pattern.rule}>
+                                    <td>{pattern.rule}</td>
+                                    <td>{pattern.examples[0]}</td>
+                                    <td>{pattern.examples[1]}</td>
+                                    <td>{pattern.examples[2]}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <p className="cu-card-desc">
+                            <strong>Catatan:</strong>
+                          </p>
+                          <p className="cu-card-desc">
+                            Pola <code>-f/-fe -&gt; -ves</code> sering dianggap pola khusus
+                            (semi-irregular), jadi pelajari juga daftar pengecualiannya.
+                          </p>
+                          <ul className="cu-list">
+                            <li>- Contoh pola khusus: wife -&gt; wives, knife -&gt; knives.</li>
+                            <li>- Contoh pengecualian: roof -&gt; roofs, chef -&gt; chefs.</li>
+                          </ul>
+                        </div>
+                      </details>
+
+                      <details className="cu-card cu-card-accordion">
+                        <summary className="cu-card-summary">
+                          <h3 className="cu-card-title">Irregular Noun Vocabulary (Extended)</h3>
+                          <span className="cu-card-caret" aria-hidden="true" />
+                        </summary>
+                        <div className="cu-card-body">
+                          <div className="cu-table-wrap geuwat-table-scroll">
+                            <table className="cu-table geuwat-table-responsive">
+                              <thead>
+                                <tr>
+                                  <th>Singular</th>
+                                  <th>Plural</th>
+                                  <th>Indonesian Meaning</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {IRREGULAR_PLURAL_EXAMPLES.map((item) => (
+                                  <tr key={item.singular}>
+                                    <td>{highlightWord(item.singular, item.singular)}</td>
+                                    <td>{highlightWord(item.plural, item.plural)}</td>
+                                    <td>{item.meaning}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </details>
+                    </div>
+                  ) : null}
                 </div>
               </details>
             ))}
@@ -120,8 +284,8 @@ export default function CountableUncountablePage() {
 
         <section className="cu-block">
           <h2 className="cu-block-title">Unit Expressions for Uncountable Nouns</h2>
-          <div className="cu-table-wrap">
-            <table className="cu-table">
+          <div className="cu-table-wrap geuwat-table-scroll">
+            <table className="cu-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Uncountable Noun</th>

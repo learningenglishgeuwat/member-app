@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-continuous-actions-in-progress-and-near-future-plan",
+    "label":  "Present Continuous Actions In Progress And Near Future Plan",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu present continuous actions in progress and near future plan",
+                     "cara pakai present continuous actions in progress and near future plan",
+                     "present continuous actions in progress and near future plan",
+                     "tense and aspect system present continuous actions in progress and near future plan",
+                     "grammar resource present continuous actions in progress and near future plan"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-present-continuous-actions-in-progress-and-near-future-plan",
+                   "title":  "Present Continuous Actions In Progress And Near Future Plan",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-continuous-actions-in-progress-and-near-future-plan",
+                   "keywords":  [
+                                    "apa itu present continuous actions in progress and near future plan",
+                                    "cara pakai present continuous actions in progress and near future plan",
+                                    "present continuous actions in progress and near future plan",
+                                    "tense and aspect system present continuous actions in progress and near future plan",
+                                    "grammar resource present continuous actions in progress and near future plan"
+                                ],
+                   "shortAnswer":  "Topik ini membahas present continuous untuk aksi yang sedang berlangsung dan rencana dekat di masa depan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

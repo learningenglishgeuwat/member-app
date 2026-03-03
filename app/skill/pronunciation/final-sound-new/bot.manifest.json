@@ -1,0 +1,28 @@
+{
+  "route": "/skill/pronunciation/final-sound-new",
+  "label": "Final Sound Hub",
+  "scope": "pronunciation",
+  "keywords": [
+    "final sound hub",
+    "ending sounds",
+    "s es d ed"
+  ],
+  "qa": [
+    {
+      "topicId": "final-sound-hub-overview",
+      "title": "Final Sound Learning Map",
+      "route": "/skill/pronunciation/final-sound-new",
+      "keywords": [
+        "final sound itu apa",
+        "belajar s es dan d ed",
+        "menu final sound"
+      ],
+      "shortAnswer": "Final Sound Hub membagi latihan ke dua jalur utama: S/ES untuk plural atau third person, dan D/ED untuk regular past endings. Fokus utamanya adalah bunyi akhir, bukan sekadar huruf akhir.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Hub Cards"
+        }
+      ]
+    }
+  ]
+}

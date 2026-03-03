@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/gerunds-and-infinitives-verb-patterns",
+    "label":  "Gerunds And Infinitives Verb Patterns",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu gerunds and infinitives verb patterns",
+                     "cara pakai gerunds and infinitives verb patterns",
+                     "gerunds and infinitives verb patterns",
+                     "expansion and complex structures gerunds and infinitives verb patterns",
+                     "grammar resource gerunds and infinitives verb patterns"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-gerunds-and-infinitives-verb-patterns",
+                   "title":  "Gerunds And Infinitives Verb Patterns",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/gerunds-and-infinitives-verb-patterns",
+                   "keywords":  [
+                                    "apa itu gerunds and infinitives verb patterns",
+                                    "cara pakai gerunds and infinitives verb patterns",
+                                    "gerunds and infinitives verb patterns",
+                                    "expansion and complex structures gerunds and infinitives verb patterns",
+                                    "grammar resource gerunds and infinitives verb patterns"
+                                ],
+                   "shortAnswer":  "Topik ini membahas pola verb yang diikuti gerund atau infinitive sehingga pemilihan bentuk setelah kata kerja menjadi akurat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Common Verb Lists"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

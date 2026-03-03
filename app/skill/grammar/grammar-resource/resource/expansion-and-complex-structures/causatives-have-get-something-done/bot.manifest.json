@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/causatives-have-get-something-done",
+    "label":  "Causatives Have Get Something Done",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu causatives have get something done",
+                     "cara pakai causatives have get something done",
+                     "causatives have get something done",
+                     "expansion and complex structures causatives have get something done",
+                     "grammar resource causatives have get something done"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-causatives-have-get-something-done",
+                   "title":  "Causatives Have Get Something Done",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/causatives-have-get-something-done",
+                   "keywords":  [
+                                    "apa itu causatives have get something done",
+                                    "cara pakai causatives have get something done",
+                                    "causatives have get something done",
+                                    "expansion and complex structures causatives have get something done",
+                                    "grammar resource causatives have get something done"
+                                ],
+                   "shortAnswer":  "Topik ini membahas causative have dan get untuk menyatakan bahwa suatu pekerjaan dilakukan oleh orang lain, bukan oleh subjek secara langsung.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

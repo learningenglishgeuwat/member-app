@@ -134,8 +134,8 @@ export default function ComparativeSuperlativePage() {
 
         <section className="cs-block">
           <h2 className="cs-block-title">Irregular Forms</h2>
-          <div className="cs-table-wrap">
-            <table className="cs-table">
+          <div className="cs-table-wrap geuwat-table-scroll">
+            <table className="cs-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Base</th>

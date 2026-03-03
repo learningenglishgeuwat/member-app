@@ -83,16 +83,14 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
   const handleLogout = async () => {
     if (isLoggingOut) return
     setIsLoggingOut(true)
+    setIsOpen(false)
+    router.replace('/login')
+
     try {
       await signOut()
-      setIsOpen(false)
-      router.replace('/login')
-      router.refresh()
     } catch (error) {
       console.error('Logout error:', error);
-      // Fallback: tetap redirect ke login
-      router.replace('/login')
-      router.refresh()
+      // Fallback: tetap di halaman login walau signOut network gagal.
     } finally {
       setIsLoggingOut(false)
     }
@@ -153,11 +151,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                 <li key={item.id}>
                   <button
                     onClick={() => {
-                      if (item.id === 'device-approve') {
-                        router.push('/device-approve');
-                        setIsOpen(false);
-                        return;
-                      }
                       setCurrentView(item.id);
                       setIsOpen(false);
                     }}
@@ -169,6 +162,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                         : 'text-slate-400 hover:text-white hover:bg-white/10'
                       }
                     `}
+                    data-tour={`dashboard-sidebar-item-${item.id}`}
                     aria-current={isActive(item.id) ? 'page' : undefined}
                   >
                     <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -187,6 +181,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                 onClick={handleLogout}
                 type="button"
                 disabled={isLoggingOut}
+                data-tour="dashboard-sidebar-item-logout"
                 className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base border ${
                   isLoggingOut
                     ? 'text-slate-500 cursor-not-allowed bg-slate-900/40 border-slate-800/60'

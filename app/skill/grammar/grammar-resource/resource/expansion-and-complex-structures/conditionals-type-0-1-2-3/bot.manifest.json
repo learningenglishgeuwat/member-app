@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conditionals-type-0-1-2-3",
+    "label":  "Conditionals Type 0 1 2 3",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu conditionals type 0 1 2 3",
+                     "cara pakai conditionals type 0 1 2 3",
+                     "conditionals type 0 1 2 3",
+                     "expansion and complex structures conditionals type 0 1 2 3",
+                     "grammar resource conditionals type 0 1 2 3"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-conditionals-type-0-1-2-3",
+                   "title":  "Conditionals Type 0 1 2 3",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conditionals-type-0-1-2-3",
+                   "keywords":  [
+                                    "apa itu conditionals type 0 1 2 3",
+                                    "cara pakai conditionals type 0 1 2 3",
+                                    "conditionals type 0 1 2 3",
+                                    "expansion and complex structures conditionals type 0 1 2 3",
+                                    "grammar resource conditionals type 0 1 2 3"
+                                ],
+                   "shortAnswer":  "Topik ini membedakan conditional type 0, 1, 2, dan 3 berdasarkan tingkat fakta atau hipotesis serta waktu kejadian.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Perbandingan Singkat Type"
+                                          },
+                                          {
+                                              "label":  "Type 0 / 1 / 2 / 3"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

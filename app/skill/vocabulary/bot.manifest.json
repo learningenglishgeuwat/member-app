@@ -1,0 +1,42 @@
+{
+  "route": "/skill/vocabulary",
+  "label": "Vocabulary Topics",
+  "scope": "skill",
+  "keywords": [
+    "topic vocabulary",
+    "vocabulary topic list",
+    "color vocabulary",
+    "size vocabulary",
+    "body parts vocabulary",
+    "family vocabulary",
+    "daily routines vocabulary",
+    "home vocabulary",
+    "time date vocabulary",
+    "number vocabulary",
+    "cardinal number vocabulary"
+  ],
+  "qa": [
+    {
+      "topicId": "vocabulary-topics-main",
+      "title": "Vocabulary Topics Main",
+      "route": "/skill/vocabulary",
+      "keywords": [
+        "halaman topic vocabulary",
+        "vocabulary berdasarkan topik",
+        "list kata per topik"
+      ],
+      "shortAnswer": "Halaman Vocabulary sekarang berbasis topik. Pilih topik Color, Size, Body Parts, Family, Daily Routines, Home, Time & Date, atau Cardinal Number, lalu buka detail untuk melihat daftar kata, arti Indonesia, dan contoh kalimat English.",
+      "sourceSections": [
+        {
+          "label": "Topic Cards"
+        },
+        {
+          "label": "Topic Detail List"
+        },
+        {
+          "label": "Play All Actions"
+        }
+      ]
+    }
+  ]
+}

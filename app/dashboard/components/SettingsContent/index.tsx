@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, ArrowRight, Info, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
@@ -55,7 +55,7 @@ const SettingsContent: React.FC = () => {
     }
   };
 
-  const loadLatestExtensionStatus = async () => {
+  const loadLatestExtensionStatus = useCallback(async () => {
     if (!user?.id) return;
     setExtensionStatusLoading(true);
     const latest = await getLatestExtensionRequest(user.id);
@@ -67,11 +67,11 @@ const SettingsContent: React.FC = () => {
       setExtensionRequestId(null);
     }
     setExtensionStatusLoading(false);
-  };
+  }, [user?.id]);
 
   useEffect(() => {
-    loadLatestExtensionStatus();
-  }, [user?.id]);
+    void loadLatestExtensionStatus();
+  }, [loadLatestExtensionStatus]);
 
   const handleExtensionRequest = async () => {
     if (!user) return;

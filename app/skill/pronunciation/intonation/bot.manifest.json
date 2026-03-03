@@ -1,0 +1,44 @@
+{
+  "route": "/skill/pronunciation/intonation",
+  "label": "Intonation",
+  "scope": "pronunciation",
+  "keywords": [
+    "intonation",
+    "rising tone",
+    "falling tone",
+    "fall rise",
+    "sentence melody",
+    "tone pattern"
+  ],
+  "qa": [
+    {
+      "topicId": "intonation-overview",
+      "title": "Intonation Overview",
+      "route": "/skill/pronunciation/intonation",
+      "keywords": [
+        "apa itu intonation",
+        "fungsi intonation",
+        "beda intonation dan stress",
+        "rising falling tone"
+      ],
+      "shortAnswer": "Intonation adalah pola naik-turun pitch dalam kalimat untuk menyampaikan makna, niat, dan emosi. Di materi ini kamu latihan pola falling, rising, fall-rise, list tone, emphasis, dan dialogue drills.",
+      "sourceSections": [
+        {
+          "label": "Concept"
+        },
+        {
+          "label": "Basic Intonation Patterns"
+        },
+        {
+          "label": "Statements vs Questions"
+        },
+        {
+          "label": "List and Continuation Tone"
+        },
+        {
+          "label": "Dialogue Drills"
+        }
+      ]
+    }
+  ]
+}

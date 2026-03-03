@@ -117,7 +117,7 @@ export default function TongueTwisterPage() {
             onClick={() => setDropdownOpen((prev) => !prev)}
           >
             <span className="tt-select-text">{activeTwister.label}</span>
-            <span className={`tt-caret ${dropdownOpen ? 'is-open' : ''}`}>▾</span>
+            <span className={`tt-caret ${dropdownOpen ? 'is-open' : ''}`} aria-hidden="true" />
           </button>
 
           {dropdownOpen ? (

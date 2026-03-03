@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-types",
+    "label":  "Sentence Types",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu sentence types",
+                     "cara pakai sentence types",
+                     "sentence types",
+                     "foundation grammar sentence types",
+                     "grammar resource sentence types"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-sentence-types",
+                   "title":  "Sentence Types",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-types",
+                   "keywords":  [
+                                    "apa itu sentence types",
+                                    "cara pakai sentence types",
+                                    "sentence types",
+                                    "foundation grammar sentence types",
+                                    "grammar resource sentence types"
+                                ],
+                   "shortAnswer":  "Topik ini membahas sentence types: declarative, interrogative, imperative, dan exclamative beserta fungsi komunikatifnya.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

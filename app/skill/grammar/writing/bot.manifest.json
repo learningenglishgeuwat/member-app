@@ -1,0 +1,28 @@
+{
+  "route": "/skill/grammar/writing",
+  "label": "Grammar Writing Practice",
+  "scope": "grammar",
+  "keywords": [
+    "grammar writing",
+    "latihan grammar tulisan",
+    "struktur kalimat untuk writing"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-writing-practice-direction",
+      "title": "Grammar Writing Practice Direction",
+      "route": "/skill/grammar/writing",
+      "keywords": [
+        "cara belajar grammar writing",
+        "fokus writing grammar",
+        "latihan menulis grammar"
+      ],
+      "shortAnswer": "Halaman writing dipakai untuk melatih grammar dalam konteks tulisan yang lebih terstruktur, sehingga akurasi bentuk kalimat bisa dijaga saat menulis paragraf.",
+      "sourceSections": [
+        {
+          "label": "Writing Practice Sections"
+        }
+      ]
+    }
+  ]
+}

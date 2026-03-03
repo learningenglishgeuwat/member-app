@@ -220,7 +220,7 @@ const RecordingControlsButtonGrammarForSpeaking: React.FC<RecordingControlsButto
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-cyber-cyan font-bold w-5 text-right">2.</span>
-                <p className="flex-1">Bicara dengan jelas ke mikrofon</p>
+                <p className="flex-1">Bicara dengan jelas ke mikrofon dari Mission yang ada di Practice Section di halaman.</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-cyber-cyan font-bold w-5 text-right">3.</span>
@@ -240,9 +240,12 @@ const RecordingControlsButtonGrammarForSpeaking: React.FC<RecordingControlsButto
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-cyber-cyan font-bold w-5 text-right">7.</span>
-                <p className="flex-1">Buka section <span className="text-cyber-pink font-semibold">Prompt Penilaian AI</span> di halaman topik, lalu salin prompt dari card tersebut.</p>
+                <p className="flex-1">Buka Gemini atau AI assistant lain untuk evaluasi hasil rekaman Anda.</p>
               </div>
               <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
+                <p className="text-sm text-cyber-cyan mb-2">
+                  <strong>Gunakan prompt yang ada di section prompt.</strong>
+                </p>
                 <p className="text-sm text-cyber-cyan mb-2">
                   <strong>Langkah Selanjutnya:</strong> Buka Gemini di{' '}
                   <a
@@ -253,7 +256,7 @@ const RecordingControlsButtonGrammarForSpeaking: React.FC<RecordingControlsButto
                   >
                     https://gemini.google.com/app
                   </a>{' '}
-                  atau AI assistant lain, upload rekaman, lalu tempel prompt dari section <span className="text-cyber-pink">Prompt Penilaian AI</span>.
+                  atau AI assistant lain, lalu upload rekaman Anda untuk dievaluasi.
                 </p>
                 <p className="text-sm text-cyber-cyan">
                   Setelah mendapatkan feedback AI, kembali ke halaman ini dan isi <span className="text-cyber-pink font-semibold">Saved Progress</span> sesuai hasil penilaian.

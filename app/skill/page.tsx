@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Cpu, Loader2, Lock, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import './styles/neon.css';
@@ -24,12 +24,42 @@ interface SkillConfig {
   available: boolean;
 }
 
+const ACTIVE_SKILL_STORAGE_KEY = 'skill_active_selection_v1';
+const SKILL_ROUTE_BY_TYPE: Record<SkillType, string> = {
+  [SkillType.PRONUNCIATION]: '/skill/pronunciation',
+  [SkillType.VOCABULARY]: '/skill/vocabulary',
+  [SkillType.GRAMMAR]: '/skill/grammar',
+  [SkillType.SPEAKING]: '/skill/speaking',
+};
+
 const SKILLS: SkillConfig[] = [
   { type: SkillType.PRONUNCIATION, label: 'PRONUNCIATION', color: 'purple', description: 'Master your accent', available: true },
-  { type: SkillType.VOCABULARY, label: 'VOCABULARY', color: 'green', description: 'Expand your word bank', available: false },
+  { type: SkillType.VOCABULARY, label: 'VOCABULARY', color: 'green', description: 'Expand your word bank', available: true },
   { type: SkillType.GRAMMAR, label: 'GRAMMAR', color: 'teal', description: 'Perfect your structure', available: true },
-  { type: SkillType.SPEAKING, label: 'SPEAKING', color: 'pink', description: 'Converse with confidence', available: false },
+  { type: SkillType.SPEAKING, label: 'SPEAKING', color: 'pink', description: 'Converse with confidence', available: true },
 ];
+
+const VALID_SKILL_TYPES = new Set<SkillType>(Object.values(SkillType));
+
+function readActiveSkillFromStorage(): SkillType | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(ACTIVE_SKILL_STORAGE_KEY);
+    if (!raw) return null;
+    return VALID_SKILL_TYPES.has(raw as SkillType) ? (raw as SkillType) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeActiveSkillToStorage(next: SkillType) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(ACTIVE_SKILL_STORAGE_KEY, next);
+  } catch {
+    // ignore storage errors
+  }
+}
 
 // Color configuration function - defined once
 const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal') => {
@@ -79,64 +109,80 @@ const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal') =>
 
 function SkillMenuContent() {
   const router = useRouter();
-  const [activeSkill, setActiveSkill] = useState<SkillType>(SkillType.VOCABULARY);
+  const [activeSkill, setActiveSkill] = useState<SkillType>(() => readActiveSkillFromStorage() ?? SkillType.PRONUNCIATION);
   const [loading, setLoading] = useState(false);
   const [accessDenied, setAccessDenied] = useState(false);
   const [accessGranted, setAccessGranted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const initDelayTimerRef = useRef<number | null>(null);
+  const navigateTimerRef = useRef<number | null>(null);
   const activeConfig = SKILLS.find(s => s.type === activeSkill)!;
+  const activeColor = getColorConfig(activeConfig.color);
+  const isExecuteReady = !loading && !accessDenied && !accessGranted && activeConfig.available;
 
-  const handleSkillClick = (skill: SkillConfig) => {
-    setActiveSkill(skill.type);
-    setAccessDenied(false);
-    setAccessGranted(false);
-  };
+  const clearPendingNavigationTimers = useCallback(() => {
+    if (initDelayTimerRef.current) {
+      window.clearTimeout(initDelayTimerRef.current);
+      initDelayTimerRef.current = null;
+    }
+    if (navigateTimerRef.current) {
+      window.clearTimeout(navigateTimerRef.current);
+      navigateTimerRef.current = null;
+    }
+  }, []);
 
-  const handleStartLearning = async () => {
+  const handleStartLearning = () => {
+    if (loading) return;
+
     if (!activeConfig.available) {
       setAccessDenied(true);
       return;
     }
-    
+
+    const destination = SKILL_ROUTE_BY_TYPE[activeSkill];
+    if (!destination) return;
+
+    clearPendingNavigationTimers();
+
     setLoading(true);
+    setAccessDenied(false);
     setAccessGranted(false);
-    try {
-      if (activeSkill === SkillType.VOCABULARY) {
-        // Simulate vocabulary data fetching
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setAccessGranted(true);
-      } else if (activeSkill === SkillType.GRAMMAR) {
-        // Simulate grammar data fetching
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setAccessGranted(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        router.push('/skill/grammar');
-        return;
-      } else if (activeSkill === SkillType.PRONUNCIATION) {
-        // Show access granted first, then navigate
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setAccessGranted(true);
-        // Wait a bit more to show the granted state, then navigate
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        router.push('/skill/pronunciation');
-        return;
-      } else {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setAccessGranted(true);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
+
+    // Keep UX delay 2.5s, then switch to ACCESS GRANTED and navigate immediately.
+    initDelayTimerRef.current = window.setTimeout(() => {
       setLoading(false);
-    }
+      setAccessGranted(true);
+
+      navigateTimerRef.current = window.setTimeout(() => {
+        router.push(destination);
+      }, 80);
+    }, 2500);
   };
 
-  // Reset states when skill changes
-  useEffect(() => {
+  const handleSkillClick = (skill: SkillConfig) => {
+    if (loading) return;
+
+    if (skill.type === activeSkill && !loading) {
+      handleStartLearning();
+      return;
+    }
+
+    clearPendingNavigationTimers();
+    setActiveSkill(skill.type);
     setAccessDenied(false);
     setAccessGranted(false);
     setLoading(false);
+  };
+
+  useEffect(() => {
+    writeActiveSkillToStorage(activeSkill);
   }, [activeSkill]);
+
+  useEffect(() => {
+    return () => {
+      clearPendingNavigationTimers();
+    };
+  }, [clearPendingNavigationTimers]);
 
   return (
     <div className="skill-layout overflow-x-hidden flex flex-col relative font-tech">
@@ -187,7 +233,10 @@ function SkillMenuContent() {
           <div className="inline-block border-b border-gray-800 pb-2 mb-2">
             <span className="text-xs font-mono text-gray-500 tracking-[0.5em] uppercase">Skill Selection</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white font-display tracking-tight uppercase">
+          <h1
+            className="text-3xl sm:text-4xl md:text-6xl font-black text-white font-display tracking-tight uppercase"
+            data-tour="skill-title"
+          >
             English<span className={`text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500`}>_Core</span>
           </h1>
           {/* Decorative lines under title */}
@@ -210,6 +259,15 @@ function SkillMenuContent() {
 
                 <button
                   onClick={() => handleSkillClick(skill)}
+                  data-tour={`skill-node-${
+                    skill.type === SkillType.PRONUNCIATION
+                      ? 'pronunciation'
+                      : skill.type === SkillType.VOCABULARY
+                        ? 'vocabulary'
+                        : skill.type === SkillType.GRAMMAR
+                          ? 'grammar'
+                          : 'speaking'
+                  }`}
                   className={`
                     relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24
                     flex items-center justify-center
@@ -273,21 +331,47 @@ function SkillMenuContent() {
              <div className="absolute top-[-2rem] left-1/2 -translate-x-1/2 w-px h-8 bg-gray-800"></div>
              
              {/* Content Area - Empty State */}
-             <div 
+             <div
                className="mt-8 md:mt-16 relative group cursor-pointer" 
+               data-tour="skill-execute-button"
                onClick={handleStartLearning}
              >
+               {isExecuteReady ? (
+                 <div
+                   className="pointer-events-none absolute -inset-1 skill-execute-outer-glow"
+                   style={{
+                     boxShadow: `0 0 22px ${activeColor.hex}66, 0 0 44px ${activeColor.hex}44`,
+                   }}
+                 />
+               ) : null}
                <div className={`
                  relative overflow-hidden
                  clip-tech-panel
                  bg-tech-panel border border-gray-800
                  px-10 py-6
                  transition-all duration-300
+                 ${isExecuteReady ? 'skill-execute-card-glow' : ''}
                  ${!accessDenied ? `hover:border-opacity-50 ${getColorConfig(activeConfig.color).border}` : 'border-red-900/50'}
                  flex items-center gap-4
-               `}>
+               `}
+               style={
+                 isExecuteReady
+                   ? {
+                       boxShadow: `0 0 0 1px ${activeColor.hex}66, 0 0 20px ${activeColor.hex}5a, 0 0 42px ${activeColor.hex}35`,
+                     }
+                   : undefined
+               }>
                    {/* Scanline Overlay */}
                    <div className="absolute inset-0 bg-transparent opacity-10 pointer-events-none group-hover:opacity-20 bg-[linear-gradient(0deg,transparent_24%,rgba(255,255,255,.1)_25%,rgba(255,255,255,.1)_26%,transparent_27%,transparent_74%,rgba(255,255,255,.1)_75%,rgba(255,255,255,.1)_76%,rgba(255,255,255,.1)_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(255,255,255,.1)_25%,rgba(255,255,255,.1)_26%,transparent_27%,transparent_74%,rgba(255,255,255,.1)_75%,rgba(255,255,255,.1)_76%,rgba(255,255,255,.1)_77%,transparent)] bg-[length:30px_30px]"></div>
+                   {isExecuteReady ? (
+                     <div
+                       className="pointer-events-none absolute inset-0 skill-execute-edge-line"
+                       style={{
+                         borderColor: `${activeColor.hex}b5`,
+                         boxShadow: `inset 0 0 16px ${activeColor.hex}88, inset 0 0 30px ${activeColor.hex}33`,
+                       }}
+                     />
+                   ) : null}
 
                    <div className={`p-3 rounded bg-black/50 border border-gray-700 ${!accessDenied && activeConfig.available ? `group-hover:${getColorConfig(activeConfig.color).border}` : ''} transition-colors`}>
                       {loading ? (
@@ -304,10 +388,10 @@ function SkillMenuContent() {
                    </div>
                    
                    <div className="flex flex-col">
-                       <span className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase">
+                       <span className={`text-[10px] font-mono tracking-[0.2em] uppercase ${isExecuteReady ? 'skill-status-active-glow' : 'text-gray-500'}`}>
                            Status: {!activeConfig.available ? 'LOCKED' : accessGranted ? 'ACCESS GRANTED' : 'ACTIVE'}
                        </span>
-                       <span className={`text-xl font-display tracking-wide transition-colors duration-300 ${accessDenied ? 'text-red-500' : accessGranted ? 'text-green-400' : activeConfig.available ? getColorConfig(activeConfig.color).text : 'text-gray-500'}`}>
+                       <span className={`text-xl font-display tracking-wide transition-colors duration-300 ${isExecuteReady ? 'skill-execute-text-glow' : ''} ${accessDenied ? 'text-red-500' : accessGranted ? 'text-green-400' : activeConfig.available ? getColorConfig(activeConfig.color).text : 'text-gray-500'}`}>
                            {loading ? "INITIALIZING..." : (accessDenied ? "ACCESS DENIED" : accessGranted ? "ACCESS GRANTED" : activeConfig.available ? "EXECUTE" : "UNAVAILABLE")}
                        </span>
                    </div>

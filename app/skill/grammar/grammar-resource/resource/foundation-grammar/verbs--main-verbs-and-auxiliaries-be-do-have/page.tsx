@@ -347,8 +347,8 @@ export default function VerbsBasicsPage() {
                         </article>
                       ))}
                     </div>
-                    <div className="vb-table-wrap">
-                      <table className="vb-table">
+                    <div className="vb-table-wrap geuwat-table-scroll">
+                      <table className="vb-table geuwat-table-responsive">
                         <thead>
                           <tr>
                             <th>V1</th>
@@ -390,8 +390,8 @@ export default function VerbsBasicsPage() {
                           <p className="vb-card-desc">
                             V2 dan V3 biasanya dibentuk dengan menambah <mark className="vb-inline-highlight">-ed</mark>.
                           </p>
-                          <div className="vb-table-wrap">
-                            <table className="vb-table">
+                          <div className="vb-table-wrap geuwat-table-scroll">
+                            <table className="vb-table geuwat-table-responsive">
                               <thead>
                                 <tr>
                                   <th>V1</th>
@@ -419,8 +419,8 @@ export default function VerbsBasicsPage() {
                           <p className="vb-card-desc">
                             Bentuk V2 dan V3 berubah tidak beraturan, jadi perlu diingat per kata.
                           </p>
-                          <div className="vb-table-wrap">
-                            <table className="vb-table">
+                          <div className="vb-table-wrap geuwat-table-scroll">
+                            <table className="vb-table geuwat-table-responsive">
                               <thead>
                                 <tr>
                                   <th>V1</th>
@@ -471,8 +471,8 @@ export default function VerbsBasicsPage() {
                       <li>- Pola intransitive: S + V (+ keterangan)</li>
                       <li>- Cek cepat: tanya &quot;apa/siapa yang dikenai aksi?&quot; kalau ada jawaban, biasanya transitive.</li>
                     </ul>
-                    <div className="vb-table-wrap">
-                      <table className="vb-table">
+                    <div className="vb-table-wrap geuwat-table-scroll">
+                      <table className="vb-table geuwat-table-responsive">
                         <thead>
                           <tr>
                             <th>Jenis Verb</th>
@@ -768,8 +768,8 @@ export default function VerbsBasicsPage() {
               </button>
             </div>
             <div className="vb-modal-body">
-              <div className="vb-table-wrap">
-                <table className="vb-table">
+              <div className="vb-table-wrap geuwat-table-scroll">
+                <table className="vb-table geuwat-table-responsive">
                   <thead>
                     <tr>
                       <th>V1</th>
@@ -820,8 +820,8 @@ export default function VerbsBasicsPage() {
               </button>
             </div>
             <div className="vb-modal-body">
-              <div className="vb-table-wrap">
-                <table className="vb-table">
+              <div className="vb-table-wrap geuwat-table-scroll">
+                <table className="vb-table geuwat-table-responsive">
                   <thead>
                     <tr>
                       <th>Verb</th>

@@ -19,13 +19,7 @@ export default function LoginPage() {
 
   return (
     <div className="auth-layout flex items-center justify-center relative overflow-hidden font-sans">
-      {/* Background Gradients/Effects - Nebula Style */}
-      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-nebula-900/20 rounded-full blur-[80px] pointer-events-none" />
-
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+      <div className="login-background-layer" aria-hidden="true" />
 
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-md px-4">

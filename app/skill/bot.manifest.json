@@ -1,0 +1,28 @@
+{
+  "route": "/skill",
+  "label": "Skill Hub",
+  "scope": "skill",
+  "keywords": [
+    "skill hub",
+    "menu skill",
+    "halaman skill"
+  ],
+  "qa": [
+    {
+      "topicId": "skill-hub-overview",
+      "title": "Skill Hub Overview",
+      "route": "/skill",
+      "keywords": [
+        "halaman skill utama",
+        "pilih materi skill",
+        "navigasi skill"
+      ],
+      "shortAnswer": "Skill Hub mengarahkan ke domain belajar utama seperti Grammar, Pronunciation, dan Games. Gunakan halaman ini untuk memilih fokus latihan sesuai target harian.",
+      "sourceSections": [
+        {
+          "label": "Skill Category Cards"
+        }
+      ]
+    }
+  ]
+}

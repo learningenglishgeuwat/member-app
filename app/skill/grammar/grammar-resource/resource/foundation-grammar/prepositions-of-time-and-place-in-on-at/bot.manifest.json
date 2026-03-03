@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-of-time-and-place-in-on-at",
+    "label":  "Prepositions Of Time And Place In On At",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu prepositions of time and place in on at",
+                     "cara pakai prepositions of time and place in on at",
+                     "prepositions of time and place in on at",
+                     "foundation grammar prepositions of time and place in on at",
+                     "grammar resource prepositions of time and place in on at"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-prepositions-of-time-and-place-in-on-at",
+                   "title":  "Prepositions Of Time And Place In On At",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-of-time-and-place-in-on-at",
+                   "keywords":  [
+                                    "apa itu prepositions of time and place in on at",
+                                    "cara pakai prepositions of time and place in on at",
+                                    "prepositions of time and place in on at",
+                                    "foundation grammar prepositions of time and place in on at",
+                                    "grammar resource prepositions of time and place in on at"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan prepositions of time and place, terutama pemakaian in, on, dan at dalam konteks waktu dan lokasi.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Prepositions of Time"
+                                          },
+                                          {
+                                              "label":  "Prepositions of Place"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

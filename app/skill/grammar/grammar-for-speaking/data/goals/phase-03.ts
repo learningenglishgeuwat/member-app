@@ -1,0 +1,123 @@
+import { createPhaseGoals, type GoalSeed } from './createPhaseGoals';
+
+const seeds: GoalSeed[] = [
+  {
+    goal: 'Mengurus layanan kantor pos',
+    situation: 'Saat mengirim dokumen atau paket.',
+    keySentence: "I'd like to send this package by express service.",
+    drill: 'Simulasikan pengiriman paket dari timbang sampai pembayaran.',
+    domain: 'public',
+    survivalPriority: 'high',
+  },
+  {
+    goal: 'Menanyakan layanan bank dasar',
+    situation: 'Saat membuka rekening atau cek layanan teller.',
+    keySentence: "I'd like to open a savings account.",
+    drill: 'Latih 8 pertanyaan dasar terkait layanan bank harian.',
+    domain: 'finance',
+    survivalPriority: 'high',
+  },
+  {
+    goal: 'Mengurus administrasi komunitas',
+    situation: 'Saat perlu surat keterangan atau dokumen lokal.',
+    keySentence: 'I need a letter for residence verification.',
+    drill: 'Praktikkan kebutuhan dokumen dan tujuan penggunaannya.',
+    domain: 'public',
+  },
+  {
+    goal: 'Berkomunikasi dengan customer service toko',
+    situation: 'Saat perlu bantuan produk atau transaksi.',
+    keySentence: 'Could you help me with this purchase issue?',
+    drill: 'Role-play 5 komplain ringan dan solusi cepat.',
+    domain: 'public',
+  },
+  {
+    goal: 'Menyampaikan komplain sederhana',
+    situation: 'Saat barang/jasa tidak sesuai ekspektasi dasar.',
+    keySentence: 'This item is damaged. Can I return it?',
+    drill:
+      'Latih komplain singkat dengan data: masalah, bukti, dan permintaan solusi.',
+    domain: 'public',
+    survivalPriority: 'high',
+  },
+  {
+    goal: 'Menanyakan sistem antrean',
+    situation: 'Saat berada di kantor layanan yang ramai.',
+    keySentence: 'Where should I take a queue number?',
+    drill: 'Praktikkan 6 pertanyaan antrean dan estimasi waktu tunggu.',
+    domain: 'public',
+  },
+  {
+    goal: 'Mengisi formulir secara lisan',
+    situation: 'Saat petugas meminta data personal langsung.',
+    keySentence: 'Could you guide me through this form?',
+    drill: 'Simulasikan pengisian form identitas dan kontak.',
+    domain: 'public',
+  },
+  {
+    goal: 'Mengonfirmasi identitas',
+    situation: 'Saat proses verifikasi data pribadi.',
+    keySentence: 'Yes, this is my ID number.',
+    drill: 'Latih konfirmasi nama, tanggal lahir, dan alamat tanpa salah.',
+    domain: 'public',
+    survivalPriority: 'high',
+  },
+  {
+    goal: 'Menanyakan prosedur layanan',
+    situation: 'Saat belum paham langkah proses administrasi.',
+    keySentence: 'What is the procedure for this service?',
+    drill: 'Buat 5 dialog tanya prosedur dari awal sampai selesai.',
+    domain: 'public',
+  },
+  {
+    goal: 'Menanyakan biaya layanan',
+    situation: 'Saat ingin memastikan biaya sebelum proses.',
+    keySentence: 'How much is the service fee?',
+    drill: 'Latih pertanyaan biaya termasuk biaya tambahan tersembunyi.',
+    domain: 'finance',
+  },
+  {
+    goal: 'Menanyakan jadwal layanan publik',
+    situation: 'Saat menghindari datang di jam tutup.',
+    keySentence: 'What time does this office close today?',
+    drill: 'Praktikkan pertanyaan jam layanan weekday vs weekend.',
+    domain: 'public',
+  },
+  {
+    goal: 'Memvalidasi kelengkapan dokumen',
+    situation: 'Saat khawatir dokumen belum lengkap.',
+    keySentence: 'Are these documents complete?',
+    drill: 'Latih checklist verbal dokumen utama dan cadangan.',
+    domain: 'public',
+  },
+  {
+    goal: 'Meminta cap atau tanda tangan resmi',
+    situation: 'Saat finalisasi dokumen administrasi.',
+    keySentence: 'Could you stamp and sign this document, please?',
+    drill: 'Role-play proses finalisasi dokumen resmi.',
+    domain: 'public',
+  },
+  {
+    goal: 'Menelepon layanan umum',
+    situation: 'Saat perlu bantuan cepat via call center.',
+    keySentence: "I'm calling to ask about your service hours.",
+    drill: 'Latih telepon 60 detik dengan pembukaan, inti, dan penutupan.',
+    domain: 'public',
+  },
+  {
+    goal: 'Follow-up status pengajuan',
+    situation: 'Saat menanyakan progres permintaan sebelumnya.',
+    keySentence: "I'm following up on my request from last week.",
+    drill: 'Buat 5 follow-up call dengan nomor referensi berbeda.',
+    domain: 'public',
+  },
+];
+
+export const PHASE_03_GOALS = createPhaseGoals({
+  phaseId: 'phase-03',
+  phaseTitle: 'Community & Public Services',
+  levelBand: 'functional',
+  defaultKeySentence2: 'Please let me know the required documents.',
+  defaultKeySentence3: 'Could you confirm the next process?',
+  seeds,
+});

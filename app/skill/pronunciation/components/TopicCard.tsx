@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Topic } from '../types';
+import { LOCKED_TOPIC_IDS } from '../constants';
 
 interface TopicCardProps {
   topic: Topic;
@@ -8,11 +9,12 @@ interface TopicCardProps {
 }
 
 const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
-  const isDisabled = topic.id === 'american-t' || topic.id === 'connected'; // Lock american t and connected speech topics
+  const isDisabled = LOCKED_TOPIC_IDS.includes(topic.id);
   
   return (
     <div 
       onClick={isDisabled ? undefined : onClick}
+      data-tour={`pronunciation-topic-${topic.id}`}
       className={`
         relative flex-shrink-0 transition-all duration-500 ease-out snap-center
         ${isDisabled 

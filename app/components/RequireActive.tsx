@@ -12,12 +12,12 @@ type RequireActiveProps = {
 export default function RequireActive({ children }: RequireActiveProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const { user, hasSession, loading, authIssue } = useAuth()
+  const { user, hasSession, loading, authIssue, sessionHealth } = useAuth()
   const inactiveAllowedPaths = new Set(['/dashboard', '/device-approve'])
   const isInactiveAllowed = inactiveAllowedPaths.has(pathname)
   const skeletonVariant = getAuthSkeletonVariant(pathname)
-  const isGrammarRoute = pathname.startsWith('/skill/grammar')
-  const allowSessionPassThrough = isGrammarRoute && hasSession && !loading && !authIssue
+  const allowSessionPassThrough = hasSession
+  const showNonBlockingConnectivityHint = hasSession && sessionHealth === 'degraded'
   const connectionHint = useMemo(() => {
     if (authIssue) return authIssue
     const shouldShowHint = loading || (hasSession && !user)
@@ -27,6 +27,17 @@ export default function RequireActive({ children }: RequireActiveProps) {
     }
     return 'Sedang memuat data akun...'
   }, [authIssue, loading, hasSession, user])
+
+  const withConnectivityHint = (content: React.ReactNode) => (
+    <>
+      {showNonBlockingConnectivityHint && (
+        <div className="fixed left-1/2 top-2 z-[998] -translate-x-1/2 rounded-full border border-amber-300/70 bg-amber-500/90 px-3 py-1 text-[11px] font-semibold text-slate-900 shadow-lg">
+          Koneksi tidak stabil. Belajar tetap berjalan.
+        </div>
+      )}
+      {content}
+    </>
+  )
 
   useEffect(() => {
     if (loading) return
@@ -41,6 +52,9 @@ export default function RequireActive({ children }: RequireActiveProps) {
   }, [loading, hasSession, user, router, isInactiveAllowed])
 
   if (loading) {
+    if (allowSessionPassThrough) {
+      return withConnectivityHint(children)
+    }
     return <AuthLoadingSkeleton hint={connectionHint} variant={skeletonVariant} />
   }
 
@@ -94,7 +108,7 @@ export default function RequireActive({ children }: RequireActiveProps) {
 
   if (!user) {
     if (allowSessionPassThrough) {
-      return <>{children}</>
+      return withConnectivityHint(children)
     }
 
     if (authIssue) {
@@ -118,5 +132,5 @@ export default function RequireActive({ children }: RequireActiveProps) {
     return <AuthLoadingSkeleton hint={connectionHint} variant={skeletonVariant} />
   }
 
-  return <>{children}</>
+  return withConnectivityHint(children)
 }

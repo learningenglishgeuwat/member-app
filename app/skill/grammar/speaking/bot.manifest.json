@@ -1,0 +1,29 @@
+{
+  "route": "/skill/grammar/speaking",
+  "label": "Grammar for Speaking (Alias)",
+  "scope": "grammar",
+  "keywords": [
+    "grammar speaking alias",
+    "route speaking grammar",
+    "shortcut grammar for speaking"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-speaking-alias-route",
+      "title": "Grammar for Speaking Alias Route",
+      "route": "/skill/grammar/speaking",
+      "keywords": [
+        "route speaking ke mana",
+        "alias grammar speaking",
+        "path speaking grammar"
+      ],
+      "shortAnswer": "Route ini adalah alias dan akan diarahkan ke route utama Grammar for Speaking di /skill/grammar/grammar-for-speaking.",
+      "sourceSections": [
+        {
+          "label": "Alias Redirect",
+          "route": "/skill/grammar/grammar-for-speaking"
+        }
+      ]
+    }
+  ]
+}

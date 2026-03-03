@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/short-answers-response-patterns",
+    "label":  "Short Answers Response Patterns",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu short answers response patterns",
+                     "cara pakai short answers response patterns",
+                     "short answers response patterns",
+                     "functional sentence forms short answers response patterns",
+                     "grammar resource short answers response patterns"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-short-answers-response-patterns",
+                   "title":  "Short Answers Response Patterns",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/short-answers-response-patterns",
+                   "keywords":  [
+                                    "apa itu short answers response patterns",
+                                    "cara pakai short answers response patterns",
+                                    "short answers response patterns",
+                                    "functional sentence forms short answers response patterns",
+                                    "grammar resource short answers response patterns"
+                                ],
+                   "shortAnswer":  "Topik ini melatih short answers dan response patterns agar respons lisan terdengar alami dan ringkas.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

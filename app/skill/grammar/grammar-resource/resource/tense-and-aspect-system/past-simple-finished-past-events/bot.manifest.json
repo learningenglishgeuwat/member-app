@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-simple-finished-past-events",
+    "label":  "Past Simple Finished Past Events",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu past simple finished past events",
+                     "cara pakai past simple finished past events",
+                     "past simple finished past events",
+                     "tense and aspect system past simple finished past events",
+                     "grammar resource past simple finished past events"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-past-simple-finished-past-events",
+                   "title":  "Past Simple Finished Past Events",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-simple-finished-past-events",
+                   "keywords":  [
+                                    "apa itu past simple finished past events",
+                                    "cara pakai past simple finished past events",
+                                    "past simple finished past events",
+                                    "tense and aspect system past simple finished past events",
+                                    "grammar resource past simple finished past events"
+                                ],
+                   "shortAnswer":  "Topik ini membahas past simple untuk kejadian selesai di masa lalu dengan waktu yang jelas atau tersirat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

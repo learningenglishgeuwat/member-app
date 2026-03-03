@@ -92,16 +92,43 @@
 }
 
 .tree-caret {
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 7px solid #67e8f9;
-  transition: transform 140ms ease;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, 0.28) 0%,
+    rgba(103, 232, 249, 0.12) 45%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.grammar-resource-tree-group[open] .tree-caret {
-  transform: rotate(90deg);
+.tree-caret::before {
+  content: '';
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 2px solid #d6fbff;
+  border-bottom: 2px solid #d6fbff;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.grammar-resource-tree-group[open] .tree-caret::before {
+  transform: rotate(45deg);
+}
+
+.tree-folder-card:hover .tree-caret {
+  border-color: rgba(34, 211, 238, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.25),
+    0 8px 16px rgba(6, 182, 212, 0.28);
 }
 
 .tree-folder-label {

@@ -1,0 +1,50 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/core-modals-can-could-may-might-should-must",
+    "label":  "Core Modals Can Could May Might Should Must",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu core modals can could may might should must",
+                     "cara pakai core modals can could may might should must",
+                     "core modals can could may might should must",
+                     "functional sentence forms core modals can could may might should must",
+                     "grammar resource core modals can could may might should must"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-core-modals-can-could-may-might-should-must",
+                   "title":  "Core Modals Can Could May Might Should Must",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/core-modals-can-could-may-might-should-must",
+                   "keywords":  [
+                                    "apa itu core modals can could may might should must",
+                                    "cara pakai core modals can could may might should must",
+                                    "core modals can could may might should must",
+                                    "functional sentence forms core modals can could may might should must",
+                                    "grammar resource core modals can could may might should must"
+                                ],
+                   "shortAnswer":  "Topik ini membahas modal utama can, could, may, might, should, dan must untuk kemampuan, izin, saran, dan kewajiban.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Modals"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Modal Contrasts"
+                                          },
+                                          {
+                                              "label":  "Negative \u0026 Question Snapshot"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

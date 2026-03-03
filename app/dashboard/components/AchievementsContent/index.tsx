@@ -3,7 +3,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Zap, ScanBarcode, User, Crown, Star, Trophy } from 'lucide-react';
 import { useAuth } from '@/contexts/MemberAuthContext';
-import { getReferralStats, submitWithdrawal, getTierConfig, getLatestWithdrawRequest, type ReferralStats, type WithdrawRequestRow } from '@/lib/memberStats';
+import {
+  getReferralStats,
+  submitWithdrawal,
+  getTierConfig,
+  getCachedTierConfigSnapshot,
+  getLatestWithdrawRequest,
+  type ReferralStats,
+  type WithdrawRequestRow,
+} from '@/lib/memberStats';
 import type { Tier } from '@/types/database';
 
 const AchievementsContent: React.FC = () => {
@@ -25,7 +33,9 @@ const AchievementsContent: React.FC = () => {
     totalReferrals: 0,
     totalEarnings: 0
   });
-  const [tierConfig, setTierConfig] = useState<Tier[] | null>(null);
+  const [tierConfig, setTierConfig] = useState<Tier[]>(() => getCachedTierConfigSnapshot() ?? []);
+  const [tierLoading, setTierLoading] = useState(() => (getCachedTierConfigSnapshot()?.length ?? 0) === 0);
+  const [tierLoadError, setTierLoadError] = useState<string | null>(null);
   const isMountedRef = useRef(true);
 
   useEffect(() => {
@@ -36,33 +46,65 @@ const AchievementsContent: React.FC = () => {
 
   const loadReferralStats = useCallback(async () => {
     if (!user?.id) return;
-    
     try {
-      // Load referral stats and tier config in parallel
-      const [stats, tiers] = await Promise.all([
-        getReferralStats(user.id),
-        getTierConfig()
-      ]);
-
+      const stats = await getReferralStats(user.id);
       if (!isMountedRef.current) return;
-
       setReferralStats(stats);
-      setTierConfig(tiers);
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('Error loading referral stats:', error);
+      if (!isMountedRef.current) return;
+      setReferralStats({
+        totalReferrals: 0,
+        totalEarnings: 0
+      });
     }
-  }, [user]);
+  }, [user?.id]);
+
+  const loadTierConfig = useCallback(async (options?: { silent?: boolean }) => {
+    const silent = options?.silent === true;
+    if (!silent) {
+      setTierLoading(true);
+    }
+    setTierLoadError(null);
+    try {
+      const tiers = await getTierConfig({ forceRefresh: silent });
+      if (!isMountedRef.current) return;
+      if (tiers && tiers.length > 0) {
+        setTierConfig(tiers);
+        return;
+      }
+      setTierConfig([]);
+      setTierLoadError('Tier benefits belum tersedia saat ini.');
+    } catch (error) {
+      console.error('Error loading tier config:', error);
+      if (!isMountedRef.current) return;
+      if (!silent) {
+        setTierConfig([]);
+      }
+      if (tierConfig.length === 0) {
+        setTierLoadError('Gagal memuat tier benefits. Coba lagi.');
+      }
+    } finally {
+      if (!isMountedRef.current) return;
+      if (!silent) {
+        setTierLoading(false);
+      }
+    }
+  }, [tierConfig.length]);
 
   // Load data when component mounts
   useEffect(() => {
-    console.log('🚀 AchievementsContent mounted, user:', user?.id);
-    if (user?.id) {
-      console.log('✅ User ID found, calling loadReferralStats');
-      loadReferralStats();
-    } else {
-      console.log('❌ No user ID found');
+    if (!user?.id) return;
+    loadReferralStats();
+  }, [user?.id, loadReferralStats]);
+
+  useEffect(() => {
+    if (tierConfig.length > 0) {
+      loadTierConfig({ silent: true });
+      return;
     }
-  }, [user, loadReferralStats]);
+    loadTierConfig();
+  }, [loadTierConfig, tierConfig.length]);
 
   const getTierIcon = (tier: string, isCurrentTier: boolean = false) => {
     const iconColor = isCurrentTier ? 'text-white' : 'text-slate-400';
@@ -266,7 +308,11 @@ const AchievementsContent: React.FC = () => {
       <div className="bg-slate-900/50 border border-cyan-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm">
         <h3 className="text-base sm:text-lg font-bold text-cyan-300 mb-3 sm:mb-4 md:mb-6 font-display">TIER BENEFITS</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-          {tierConfig ? (
+          {tierLoading && tierConfig.length === 0 ? (
+            <div className="col-span-full text-center text-slate-400 py-8">
+              Loading tier benefits...
+            </div>
+          ) : tierConfig.length > 0 ? (
             (['Rookie', 'Pro', 'Legend'] as const).map((tierName) => {
               const tierData = tierConfig.find(t => t.tier_name === tierName);
               
@@ -306,10 +352,28 @@ const AchievementsContent: React.FC = () => {
             );
           })
           ) : (
-            <div className="col-span-full text-center text-slate-400 py-8">
-              Loading tier benefits...
+            <div className="col-span-full text-center text-slate-400 py-8 space-y-3">
+              <p>{tierLoadError || 'Tier benefits belum tersedia.'}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  void loadTierConfig();
+                }}
+                className="inline-flex items-center justify-center rounded-full border border-cyan-500/40 px-4 py-2 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/10"
+              >
+                Coba Muat Ulang
+              </button>
             </div>
           )}
+        </div>
+
+        <div className="mt-4 sm:mt-5 md:mt-6 rounded-lg border border-amber-400/40 bg-amber-500/10 p-4">
+          <div className="flex items-center justify-between gap-2">
+            <h4 className="text-sm sm:text-base font-bold text-amber-200 font-display">Special Price</h4>
+          </div>
+          <p className="mt-2 text-xs sm:text-sm text-amber-100">
+            • 7% referral commission for all tiers
+          </p>
         </div>
       </div>
 

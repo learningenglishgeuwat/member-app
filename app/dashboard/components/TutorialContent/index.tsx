@@ -6,12 +6,35 @@ import SettingsGuideModal from './SettingsGuideModal'
 import AchievementGuideModal from './AchievementGuideModal'
 import ViewProgressGuideModal from './ViewProgressGuideModal'
 import StartJourneyGuideModal from './StartJourneyGuideModal'
+import PronunciationGuideModal from './PronunciationGuideModal'
+import VocabularyGuideModal from './VocabularyGuideModal'
+import GrammarGuideModal from './GrammarGuideModal'
+import SpeakingGuideModal from './SpeakingGuideModal'
+import PronunciationRoadmapModal from './PronunciationRoadmapModal'
+import SpeakingRoadmapModal from './SpeakingRoadmapModal'
+import VocabularyRoadmapModal from './VocabularyRoadmapModal'
+
+type LearningPathItem = {
+  step: number
+  title: string
+  status: 'completed' | 'current' | 'locked'
+  opensPronunciationRoadmap?: boolean
+  opensSpeakingRoadmap?: boolean
+  opensVocabularyRoadmap?: boolean
+}
 
 const TutorialContent: React.FC = () => {
   const [isSettingsGuideOpen, setIsSettingsGuideOpen] = useState(false)
   const [isAchievementGuideOpen, setIsAchievementGuideOpen] = useState(false)
   const [isViewProgressGuideOpen, setIsViewProgressGuideOpen] = useState(false)
   const [isStartJourneyGuideOpen, setIsStartJourneyGuideOpen] = useState(false)
+  const [isPronunciationGuideOpen, setIsPronunciationGuideOpen] = useState(false)
+  const [isVocabularyGuideOpen, setIsVocabularyGuideOpen] = useState(false)
+  const [isGrammarGuideOpen, setIsGrammarGuideOpen] = useState(false)
+  const [isSpeakingGuideOpen, setIsSpeakingGuideOpen] = useState(false)
+  const [isPronunciationRoadmapOpen, setIsPronunciationRoadmapOpen] = useState(false)
+  const [isSpeakingRoadmapOpen, setIsSpeakingRoadmapOpen] = useState(false)
+  const [isVocabularyRoadmapOpen, setIsVocabularyRoadmapOpen] = useState(false)
 
   const tutorials = [
     {
@@ -62,7 +85,7 @@ const TutorialContent: React.FC = () => {
       difficulty: "Intermediate",
       type: "audio",
       completed: false,
-      locked: true,
+      locked: false,
       icon: Volume2
     },
     {
@@ -73,41 +96,38 @@ const TutorialContent: React.FC = () => {
       difficulty: "Advanced",
       type: "article",
       completed: false,
-      locked: true,
+      locked: false,
       icon: Database
     },
     {
       id: 7,
       title: "Grammar Guide",
-      description: "Konten grammar masih dikunci",
+      description: "Panduan singkat latihan grammar di menu skill",
       duration: "20 min",
       difficulty: "Intermediate",
       type: "article",
       completed: false,
-      locked: true,
+      locked: false,
       icon: BookOpen
     },
     {
       id: 8,
       title: "Speaking Guide",
-      description: "Konten speaking masih dikunci",
+      description: "Panduan singkat latihan speaking di menu skill",
       duration: "20 min",
       difficulty: "Intermediate",
       type: "interactive",
       completed: false,
-      locked: true,
+      locked: false,
       icon: MessageCircle
     }
   ]
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Beginner": return "from-green-500 to-green-600"
-      case "Intermediate": return "from-blue-500 to-blue-600"
-      case "Advanced": return "from-red-500 to-red-600"
-      default: return "from-gray-500 to-gray-600"
-    }
-  }
+  const learningPath: LearningPathItem[] = [
+    { step: 1, title: 'Pronunciation Roadmap', status: 'current', opensPronunciationRoadmap: true },
+    { step: 2, title: 'Speaking Roadmap', status: 'current', opensSpeakingRoadmap: true },
+    { step: 3, title: 'Vocabulary Roadmap', status: 'current', opensVocabularyRoadmap: true },
+  ]
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
@@ -122,6 +142,10 @@ const TutorialContent: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
         {tutorials.map((tutorial) => {
           const Icon = tutorial.icon
+          const isPronunciationGuide = tutorial.id === 5
+          const isVocabularyGuide = tutorial.id === 6
+          const isGrammarGuide = tutorial.id === 7
+          const isSpeakingGuide = tutorial.id === 8
           return (
             <div
               key={tutorial.id}
@@ -129,9 +153,15 @@ const TutorialContent: React.FC = () => {
                 relative border p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm transition-all duration-300
                 ${tutorial.locked 
                   ? 'bg-slate-900/30 border-gray-800/50 opacity-60 cursor-not-allowed' 
-                  : tutorial.completed
-                    ? 'bg-teal-900/20 border-teal-500/30 hover:scale-105 cursor-pointer'
-                    : 'bg-teal-900/20 border-teal-500/30 hover:scale-105 cursor-pointer'
+                  : isPronunciationGuide
+                    ? 'bg-purple-900/20 border-purple-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(188,19,254,0.22)] hover:shadow-[0_0_34px_rgba(188,19,254,0.35)]'
+                    : isVocabularyGuide
+                      ? 'bg-green-900/20 border-green-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(57,255,20,0.22)] hover:shadow-[0_0_34px_rgba(57,255,20,0.35)]'
+                      : isGrammarGuide
+                        ? 'bg-teal-900/20 border-teal-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(20,184,166,0.22)] hover:shadow-[0_0_34px_rgba(20,184,166,0.35)]'
+                        : isSpeakingGuide
+                          ? 'bg-pink-900/20 border-pink-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(255,0,255,0.22)] hover:shadow-[0_0_34px_rgba(255,0,255,0.35)]'
+                          : 'bg-teal-900/20 border-teal-500/30 hover:scale-105 cursor-pointer'
                 }
               `}
             >
@@ -155,9 +185,15 @@ const TutorialContent: React.FC = () => {
                   w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center
                   ${tutorial.locked 
                     ? 'bg-gray-800' 
-                    : tutorial.completed
-                      ? 'bg-gradient-to-br from-teal-500 to-teal-600'
-                      : 'bg-gradient-to-br from-teal-500 to-teal-600'
+                    : isPronunciationGuide
+                      ? 'bg-gradient-to-br from-purple-500 to-fuchsia-600'
+                      : isVocabularyGuide
+                        ? 'bg-gradient-to-br from-green-500 to-emerald-600'
+                        : isGrammarGuide
+                          ? 'bg-gradient-to-br from-teal-500 to-cyan-600'
+                          : isSpeakingGuide
+                            ? 'bg-gradient-to-br from-pink-500 to-fuchsia-600'
+                            : 'bg-gradient-to-br from-teal-500 to-teal-600'
                   }
                 `}>
                   <Icon className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${tutorial.locked ? 'text-gray-500' : 'text-white'}`} />
@@ -187,15 +223,29 @@ const TutorialContent: React.FC = () => {
                       setIsViewProgressGuideOpen(true)
                     } else if (tutorial.id === 4) {
                       setIsStartJourneyGuideOpen(true)
+                    } else if (tutorial.id === 5) {
+                      setIsPronunciationGuideOpen(true)
+                    } else if (tutorial.id === 6) {
+                      setIsVocabularyGuideOpen(true)
+                    } else if (tutorial.id === 7) {
+                      setIsGrammarGuideOpen(true)
+                    } else if (tutorial.id === 8) {
+                      setIsSpeakingGuideOpen(true)
                     }
                   }}
                   className={`
                     w-full py-2 rounded-lg font-medium transition-all text-xs sm:text-sm
                     ${tutorial.locked
                       ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
-                      : tutorial.completed
-                        ? 'bg-teal-500/20 border border-teal-500/30 text-teal-300 hover:bg-teal-500/30'
-                        : 'bg-teal-500/20 border border-teal-500/30 text-teal-300 hover:bg-teal-500/30'
+                      : isPronunciationGuide
+                        ? 'bg-purple-500/20 border border-purple-500/40 text-purple-200 hover:bg-purple-500/30'
+                        : isVocabularyGuide
+                          ? 'bg-green-500/20 border border-green-500/40 text-green-200 hover:bg-green-500/30'
+                          : isGrammarGuide
+                            ? 'bg-teal-500/20 border border-teal-500/40 text-teal-200 hover:bg-teal-500/30'
+                            : isSpeakingGuide
+                              ? 'bg-pink-500/20 border border-pink-500/40 text-pink-200 hover:bg-pink-500/30'
+                              : 'bg-teal-500/20 border border-teal-500/30 text-teal-300 hover:bg-teal-500/30'
                     }
                   `}
                 >
@@ -209,6 +259,14 @@ const TutorialContent: React.FC = () => {
                           ? 'Open View Progress Guide'
                           : tutorial.id === 4
                             ? 'Open Start Journey Guide'
+                            : tutorial.id === 5
+                              ? 'Open Pronunciation Guide'
+                            : tutorial.id === 6
+                              ? 'Open Vocabulary Guide'
+                            : tutorial.id === 7
+                              ? 'Open Grammar Guide'
+                            : tutorial.id === 8
+                              ? 'Open Speaking Guide'
                           : tutorial.completed
                             ? 'Review'
                             : 'Start'}
@@ -235,25 +293,75 @@ const TutorialContent: React.FC = () => {
         isOpen={isStartJourneyGuideOpen}
         onClose={() => setIsStartJourneyGuideOpen(false)}
       />
+      <PronunciationGuideModal
+        isOpen={isPronunciationGuideOpen}
+        onClose={() => setIsPronunciationGuideOpen(false)}
+      />
+      <VocabularyGuideModal
+        isOpen={isVocabularyGuideOpen}
+        onClose={() => setIsVocabularyGuideOpen(false)}
+      />
+      <GrammarGuideModal
+        isOpen={isGrammarGuideOpen}
+        onClose={() => setIsGrammarGuideOpen(false)}
+      />
+      <SpeakingGuideModal
+        isOpen={isSpeakingGuideOpen}
+        onClose={() => setIsSpeakingGuideOpen(false)}
+      />
+      <PronunciationRoadmapModal
+        isOpen={isPronunciationRoadmapOpen}
+        onClose={() => setIsPronunciationRoadmapOpen(false)}
+      />
+      <SpeakingRoadmapModal
+        isOpen={isSpeakingRoadmapOpen}
+        onClose={() => setIsSpeakingRoadmapOpen(false)}
+      />
+      <VocabularyRoadmapModal
+        isOpen={isVocabularyRoadmapOpen}
+        onClose={() => setIsVocabularyRoadmapOpen(false)}
+      />
 
       {/* Learning Path */}
       <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-xl backdrop-blur-sm">
         <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 sm:mb-6 font-display">Recommended Learning Path</h3>
         <div className="space-y-3 sm:space-y-4">
-          {[
-            { step: 1, title: "Complete Getting Started", status: "locked" },
-            { step: 2, title: "Master Pronunciation Basics", status: "locked" },
-            { step: 3, title: "Build Vocabulary", status: "locked" },
-            { step: 4, title: "Practice Conversations", status: "locked" },
-            { step: 5, title: "Advanced Skills", status: "locked" }
-          ].map((item) => (
+          {learningPath.map((item) => (
             <div
               key={item.step}
+              role={item.opensPronunciationRoadmap || item.opensSpeakingRoadmap || item.opensVocabularyRoadmap ? 'button' : undefined}
+              tabIndex={item.opensPronunciationRoadmap || item.opensSpeakingRoadmap || item.opensVocabularyRoadmap ? 0 : undefined}
+              onClick={() => {
+                if (item.opensPronunciationRoadmap) {
+                  setIsPronunciationRoadmapOpen(true)
+                }
+                if (item.opensSpeakingRoadmap) {
+                  setIsSpeakingRoadmapOpen(true)
+                }
+                if (item.opensVocabularyRoadmap) {
+                  setIsVocabularyRoadmapOpen(true)
+                }
+              }}
+              onKeyDown={(event) => {
+                if (!item.opensPronunciationRoadmap && !item.opensSpeakingRoadmap && !item.opensVocabularyRoadmap) return
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  if (item.opensPronunciationRoadmap) {
+                    setIsPronunciationRoadmapOpen(true)
+                  }
+                  if (item.opensSpeakingRoadmap) {
+                    setIsSpeakingRoadmapOpen(true)
+                  }
+                  if (item.opensVocabularyRoadmap) {
+                    setIsVocabularyRoadmapOpen(true)
+                  }
+                }
+              }}
               className={`flex items-center gap-4 p-4 rounded-lg border ${
                 item.status === 'locked'
                   ? 'bg-slate-900/40 border-slate-700/40 opacity-70'
                   : item.status === 'current'
-                    ? 'bg-purple-900/30 border-purple-500/30'
+                    ? `bg-purple-900/30 border-purple-500/30 ${item.opensPronunciationRoadmap || item.opensSpeakingRoadmap || item.opensVocabularyRoadmap ? 'cursor-pointer hover:bg-purple-900/40 transition-colors' : ''}`
                     : 'bg-slate-800/50 border-slate-700/30'
               }`}
             >
@@ -272,7 +380,9 @@ const TutorialContent: React.FC = () => {
                 {item.title}
               </span>
               {item.status === 'current' && (
-                <span className="text-[11px] sm:text-xs text-purple-400 bg-purple-500/20 px-2 py-1 rounded-full">Current</span>
+                <span className="text-[11px] sm:text-xs text-purple-200 bg-purple-500/30 px-2 py-1 rounded-full">
+                  {item.opensPronunciationRoadmap || item.opensSpeakingRoadmap || item.opensVocabularyRoadmap ? 'Open' : 'Current'}
+                </span>
               )}
               {item.status === 'locked' && (
                 <span className="text-[11px] sm:text-xs text-slate-400 bg-slate-700/40 px-2 py-1 rounded-full">Locked</span>

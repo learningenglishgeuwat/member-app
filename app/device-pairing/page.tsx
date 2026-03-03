@@ -7,6 +7,10 @@ import { getDeviceId } from '@/lib/device'
 import { useAuth } from '@/contexts/MemberAuthContext'
 
 type PairingStatus = 'pending' | 'approved' | 'rejected' | 'expired'
+const PAIRING_POLL_INTERVAL_MS = 3000
+
+const isTerminalStatus = (value: PairingStatus) =>
+  value === 'approved' || value === 'rejected' || value === 'expired'
 
 export default function DevicePairingPage() {
   const router = useRouter()
@@ -16,6 +20,10 @@ export default function DevicePairingPage() {
   const [expiresAt, setExpiresAt] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const hasInitialized = useRef(false)
+  const pollTimeoutRef = useRef<number | null>(null)
+  const isPageVisibleRef = useRef(true)
+  const isPollingRequestInFlightRef = useRef(false)
+  const latestStatusRef = useRef<PairingStatus>('pending')
 
   const formattedCode = useMemo(() => {
     if (!code) return ''
@@ -60,6 +68,7 @@ export default function DevicePairingPage() {
         return
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: existingPairing } = await (supabase as any)
         .from('device_pairing')
         .select('code, status, expires_at')
@@ -78,6 +87,7 @@ export default function DevicePairingPage() {
       }
 
       const deviceLabel = /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error: rpcError } = await (supabase as any).rpc('create_pairing_code', {
         p_device_id: deviceId,
         p_label: deviceLabel,
@@ -96,22 +106,100 @@ export default function DevicePairingPage() {
   }, [hasSession, loading, router])
 
   useEffect(() => {
+    latestStatusRef.current = status
+  }, [status])
+
+  useEffect(() => {
     if (!code) return
 
-    const interval = window.setInterval(async () => {
+    let isDisposed = false
+
+    const clearPollTimeout = () => {
+      if (pollTimeoutRef.current !== null) {
+        window.clearTimeout(pollTimeoutRef.current)
+        pollTimeoutRef.current = null
+      }
+    }
+
+    const scheduleNextPoll = () => {
+      if (isDisposed || isTerminalStatus(latestStatusRef.current)) {
+        clearPollTimeout()
+        return
+      }
+      clearPollTimeout()
+      pollTimeoutRef.current = window.setTimeout(() => {
+        void pollPairingStatus(false)
+      }, PAIRING_POLL_INTERVAL_MS)
+    }
+
+    const pollPairingStatus = async (force = false) => {
+      if (isDisposed || isTerminalStatus(latestStatusRef.current)) {
+        clearPollTimeout()
+        return
+      }
+
+      if (!force && !isPageVisibleRef.current) {
+        clearPollTimeout()
+        return
+      }
+
+      if (isPollingRequestInFlightRef.current) {
+        scheduleNextPoll()
+        return
+      }
+
+      isPollingRequestInFlightRef.current = true
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error: fetchError } = await (supabase as any)
         .from('device_pairing')
         .select('status, expires_at')
         .eq('code', code)
         .single()
 
-      if (fetchError || !data) return
+      try {
+        if (fetchError || !data || isDisposed) return
 
-      setStatus(data.status as PairingStatus)
-      setExpiresAt(data.expires_at)
-    }, 3000)
+        const nextStatus = data.status as PairingStatus
+        latestStatusRef.current = nextStatus
+        setStatus(nextStatus)
+        setExpiresAt(data.expires_at)
 
-    return () => window.clearInterval(interval)
+        if (isTerminalStatus(nextStatus)) {
+          clearPollTimeout()
+          return
+        }
+      } finally {
+        isPollingRequestInFlightRef.current = false
+        if (!isDisposed && isPageVisibleRef.current) {
+          scheduleNextPoll()
+        }
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      isPageVisibleRef.current = document.visibilityState === 'visible'
+
+      if (!isPageVisibleRef.current) {
+        clearPollTimeout()
+        return
+      }
+
+      clearPollTimeout()
+      void pollPairingStatus(true)
+    }
+
+    isPageVisibleRef.current = document.visibilityState === 'visible'
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    if (isPageVisibleRef.current && !isTerminalStatus(latestStatusRef.current)) {
+      void pollPairingStatus(true)
+    }
+
+    return () => {
+      isDisposed = true
+      clearPollTimeout()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [code])
 
   useEffect(() => {

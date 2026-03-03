@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/exclamatives",
+    "label":  "Exclamatives",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu exclamatives",
+                     "cara pakai exclamatives",
+                     "exclamatives",
+                     "functional sentence forms exclamatives",
+                     "grammar resource exclamatives"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-exclamatives",
+                   "title":  "Exclamatives",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/exclamatives",
+                   "keywords":  [
+                                    "apa itu exclamatives",
+                                    "cara pakai exclamatives",
+                                    "exclamatives",
+                                    "functional sentence forms exclamatives",
+                                    "grammar resource exclamatives"
+                                ],
+                   "shortAnswer":  "Topik ini membahas exclamatives seperti What dan How untuk mengekspresikan reaksi kuat secara alami.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

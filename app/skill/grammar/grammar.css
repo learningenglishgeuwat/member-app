@@ -41,6 +41,12 @@
   gap: 1rem;
 }
 
+.grammar-page .grammar-bottom-extra {
+  width: 100%;
+  max-width: 48rem;
+  margin-top: 1rem;
+}
+
 .grammar-page .grammar-connector {
   position: relative;
   width: 100%;
@@ -206,6 +212,13 @@
   max-width: 28rem;
 }
 
+.grammar-page .grammar-btn-live {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
 .grammar-page .grammar-btn-locked {
   opacity: 0.7;
   cursor: not-allowed;
@@ -233,6 +246,18 @@
   color: #cbd5e1;
   border: 1px solid rgba(148, 163, 184, 0.5);
   background: rgba(30, 41, 59, 0.55);
+}
+
+.grammar-page .grammar-new-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  color: #082f49;
+  border: 1px solid rgba(103, 232, 249, 0.85);
+  background: rgba(165, 243, 252, 0.92);
 }
 
 @media (min-width: 768px) {

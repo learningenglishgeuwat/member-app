@@ -25,6 +25,7 @@
 
 .sps-header {
   margin-bottom: 1.25rem;
+  text-align: center;
 }
 
 .sps-title {
@@ -252,6 +253,14 @@
   border-color: rgba(233, 186, 255, 0.78);
   background: rgba(61, 22, 99, 0.58);
   transform: translateY(-1px);
+}
+
+.sps-example-card.is-speaking {
+  border-color: rgba(125, 211, 252, 0.92);
+  background: rgba(9, 64, 97, 0.58);
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.45),
+    0 0 14px rgba(56, 189, 248, 0.32);
 }
 
 .sps-example-card:active {

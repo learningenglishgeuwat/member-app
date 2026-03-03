@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/determiner-combinations",
+    "label":  "Determiner Combinations",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu determiner combinations",
+                     "cara pakai determiner combinations",
+                     "determiner combinations",
+                     "noun and determiner system determiner combinations",
+                     "grammar resource determiner combinations"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-determiner-combinations",
+                   "title":  "Determiner Combinations",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/determiner-combinations",
+                   "keywords":  [
+                                    "apa itu determiner combinations",
+                                    "cara pakai determiner combinations",
+                                    "determiner combinations",
+                                    "noun and determiner system determiner combinations",
+                                    "grammar resource determiner combinations"
+                                ],
+                   "shortAnswer":  "Topik ini membahas kombinasi determiner seperti all, both, half dengan article atau possessive dalam urutan yang benar.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

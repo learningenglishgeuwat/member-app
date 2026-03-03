@@ -110,7 +110,7 @@ export default function NumbersAsDeterminersPage() {
           <h2 className="num-block-title">Function and Pattern</h2>
           <div className="num-grid num-grid-one-col">
             {FUNCTION_RULES.map((item) => (
-              <details key={item.title} className="num-card num-card-accordion" open>
+              <details key={item.title} className="num-card num-card-accordion">
                 <summary className="num-card-summary">
                   <h3 className="num-card-title">{item.title}</h3>
                   <span className="num-card-caret" aria-hidden="true" />

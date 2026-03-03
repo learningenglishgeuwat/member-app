@@ -1,0 +1,529 @@
+.intonation-page {
+  background:
+    radial-gradient(980px 560px at 8% -10%, rgba(236, 72, 153, 0.24), transparent 58%),
+    radial-gradient(820px 520px at 100% 112%, rgba(244, 114, 182, 0.14), transparent 56%),
+    #10061d;
+}
+
+.intonation-page .intonation-recording-anchor {
+  right: max(1.5rem, env(safe-area-inset-right));
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  transform: translateZ(0);
+}
+
+.intonation-page .fs-topic-shell {
+  max-width: 78rem;
+}
+
+.intonation-page .fs-topic-block {
+  border-color: rgba(244, 114, 182, 0.42);
+  background: rgba(31, 10, 45, 0.8);
+}
+
+.intonation-roadmap-wrap {
+  margin-bottom: 1rem;
+}
+
+.intonation-roadmap-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.intonation-roadmap-card {
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  border-radius: 0.85rem;
+  background: linear-gradient(145deg, rgba(25, 9, 37, 0.96), rgba(52, 16, 66, 0.82));
+  padding: 0.82rem;
+}
+
+.intonation-roadmap-card.is-done {
+  border-color: rgba(134, 239, 172, 0.65);
+  box-shadow: inset 0 1px 0 rgba(220, 252, 231, 0.22);
+}
+
+.intonation-roadmap-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.intonation-roadmap-step {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #fbcfe8;
+  letter-spacing: 0.03em;
+}
+
+.intonation-roadmap-badge {
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.intonation-roadmap-badge.is-done {
+  background: rgba(22, 163, 74, 0.22);
+  border: 1px solid rgba(134, 239, 172, 0.55);
+  color: #bbf7d0;
+}
+
+.intonation-roadmap-badge.is-pending {
+  background: rgba(225, 29, 72, 0.2);
+  border: 1px solid rgba(251, 113, 133, 0.45);
+  color: #fecdd3;
+}
+
+.intonation-roadmap-card h3 {
+  margin: 0.42rem 0 0;
+  color: #ffe4f1;
+  font-size: 1.02rem;
+}
+
+.intonation-roadmap-card p {
+  margin: 0.42rem 0 0;
+  color: #f7deec;
+  line-height: 1.5;
+}
+
+.intonation-roadmap-check {
+  margin-top: 0.58rem;
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: #f9d4e7;
+  font-weight: 600;
+}
+
+.intonation-roadmap-check input {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.intonation-concept {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.intonation-concept p {
+  margin: 0;
+  color: #f8e8f3;
+  line-height: 1.6;
+}
+
+.intonation-tone-legend {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.intonation-progress-actions {
+  margin-top: 0.75rem;
+}
+
+.intonation-tone-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  border-radius: 999px;
+  padding: 0.18rem 0.56rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(59, 130, 246, 0.52);
+  background: rgba(30, 58, 138, 0.34);
+  color: #dbeafe;
+}
+
+.intonation-tone-chip.is-rise {
+  background: rgba(37, 99, 235, 0.3);
+}
+
+.intonation-tone-chip.is-fall {
+  background: rgba(29, 78, 216, 0.24);
+}
+
+.intonation-audio-wrap {
+  margin-top: 0.75rem;
+}
+
+.intonation-audio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.intonation-audio-btn {
+  border: 1px solid rgba(249, 168, 212, 0.42);
+  background: rgba(41, 12, 56, 0.82);
+  color: #fce7f3;
+  border-radius: 0.62rem;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.intonation-audio-btn.is-stop {
+  border-color: rgba(252, 165, 165, 0.46);
+  color: #fecaca;
+}
+
+.intonation-shadowing-prompt {
+  margin-top: 0.58rem;
+  border: 1px solid rgba(249, 168, 212, 0.38);
+  border-radius: 0.68rem;
+  background: rgba(30, 11, 43, 0.8);
+  padding: 0.55rem 0.7rem;
+}
+
+.intonation-shadowing-prompt p {
+  margin: 0;
+  color: #fce7f3;
+  line-height: 1.4;
+}
+
+.intonation-shadowing-line {
+  margin-top: 0.3rem !important;
+  color: #fde68a !important;
+  font-weight: 700;
+}
+
+.intonation-practice-mission {
+  margin-top: 0.65rem;
+}
+
+.intonation-practice-jump-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #f9a8d4;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.intonation-practice-jump-btn:hover {
+  color: #fbcfe8;
+}
+
+.intonation-prompt-card {
+  margin-top: 0.72rem;
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  border-radius: 0.75rem;
+  background: linear-gradient(145deg, rgba(20, 8, 32, 0.95), rgba(44, 12, 56, 0.82));
+  padding: 0.8rem 0.9rem;
+}
+
+.intonation-prompt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.intonation-prompt-title {
+  margin: 0;
+  color: #ffe4f1;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.intonation-prompt-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(249, 168, 212, 0.56);
+  border-radius: 999px;
+  background: rgba(131, 24, 67, 0.24);
+  color: #ffe4f1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.35rem 0.62rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.intonation-prompt-copy-btn svg {
+  color: #f9a8d4;
+}
+
+.intonation-prompt-copy-btn:hover {
+  border-color: rgba(251, 207, 232, 0.9);
+}
+
+.intonation-prompt-copy-btn:active {
+  transform: translateY(1px);
+}
+
+.intonation-prompt-quote {
+  margin-top: 0.6rem;
+  color: #fce7f3;
+  line-height: 1.55;
+  font-size: 0.88rem;
+}
+
+.intonation-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.intonation-card {
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  border-radius: 0.78rem;
+  background: linear-gradient(145deg, rgba(22, 8, 34, 0.95), rgba(45, 12, 58, 0.78));
+  padding: 0.85rem;
+  box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.12);
+}
+
+@keyframes intonation-tts-card-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(190, 242, 100, 0.24),
+      0 0 14px rgba(190, 242, 100, 0.18),
+      inset 0 1px 0 rgba(236, 252, 203, 0.16);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(190, 242, 100, 0.42),
+      0 0 24px rgba(190, 242, 100, 0.32),
+      inset 0 1px 0 rgba(236, 252, 203, 0.24);
+  }
+}
+
+.intonation-card.is-speaking {
+  border-color: rgba(190, 242, 100, 0.7);
+  animation: intonation-tts-card-pulse 1.15s ease-in-out infinite;
+}
+
+.intonation-card h3 {
+  margin: 0;
+  color: #ffe4f1;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.intonation-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.intonation-play-chip-btn {
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intonation-play-chip-icon {
+  width: 0;
+  height: 0;
+  border-top: 0.32rem solid transparent;
+  border-bottom: 0.32rem solid transparent;
+  border-left: 0.48rem solid currentColor;
+  margin-left: 0.06rem;
+}
+
+.intonation-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.intonation-line {
+  margin-top: 0.42rem;
+  color: #f2d2e6;
+  line-height: 1.5;
+}
+
+.intonation-line strong {
+  color: #fbcfe8;
+}
+
+.intonation-detail-cards {
+  margin-top: 0.45rem;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.intonation-detail-card {
+  margin-top: 0 !important;
+  border: 1px solid rgba(249, 168, 212, 0.28);
+  border-radius: 0.56rem;
+  background: rgba(34, 11, 49, 0.62);
+  padding: 0.45rem 0.55rem;
+  box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.08);
+}
+
+.intonation-detail-card-note {
+  border-color: rgba(249, 168, 212, 0.22);
+  background: rgba(45, 13, 64, 0.56);
+}
+
+.intonation-detail-card-self-check {
+  border-color: rgba(250, 204, 21, 0.34);
+  background: rgba(73, 43, 12, 0.38);
+}
+
+.intonation-example-highlight {
+  display: inline-block;
+  padding: 0.08rem 0.38rem;
+  border-radius: 0.42rem;
+  border: 1px solid rgba(250, 204, 21, 0.42);
+  background: rgba(250, 204, 21, 0.16);
+  color: #fef3c7;
+  font-weight: 700;
+}
+
+.intonation-tone-word.is-rise,
+.intonation-tone-word.is-fall {
+  border-radius: 0.28rem;
+  padding: 0 0.14rem;
+  border: 1px solid rgba(96, 165, 250, 0.62);
+  background: rgba(37, 99, 235, 0.34);
+  color: #e0f2fe;
+}
+
+.intonation-note {
+  margin-top: 0.38rem;
+  color: #e9c7dd;
+  line-height: 1.5;
+}
+
+.intonation-self-check {
+  margin-top: 0.34rem;
+  border-top: 1px dashed rgba(244, 114, 182, 0.3);
+  padding-top: 0.34rem;
+  color: #fde68a;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.intonation-pair-row {
+  margin-top: 0.38rem;
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.intonation-pair-row p {
+  margin: 0;
+  color: #f2d2e6;
+  line-height: 1.5;
+}
+
+.intonation-pair-detail-card {
+  margin-top: 0 !important;
+}
+
+.intonation-pair-detail-card .intonation-line {
+  margin-top: 0 !important;
+}
+
+.intonation-dialogue-sample {
+  margin-top: 0.45rem;
+  display: grid;
+  gap: 0.34rem;
+}
+
+.intonation-dialogue-sample p {
+  margin: 0;
+  color: #f2d2e6;
+  line-height: 1.5;
+  border: 1px solid rgba(249, 168, 212, 0.24);
+  border-radius: 0.56rem;
+  background: rgba(33, 11, 48, 0.6);
+  padding: 0.42rem 0.55rem;
+}
+
+.intonation-guide-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.58rem;
+}
+
+.intonation-guide-card {
+  border: 1px solid rgba(249, 168, 212, 0.32);
+  border-radius: 0.68rem;
+  padding: 0.55rem 0.65rem;
+  background: rgba(33, 11, 48, 0.8);
+}
+
+.intonation-guide-card h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #fce7f3;
+}
+
+.intonation-guide-card p {
+  margin: 0.35rem 0 0;
+  color: #f9d9ea;
+  line-height: 1.48;
+}
+
+.intonation-guide-card ol {
+  margin: 0.38rem 0 0;
+  padding-left: 1.05rem;
+  color: #f9d9ea;
+  line-height: 1.48;
+  display: grid;
+  gap: 0.22rem;
+}
+
+.intonation-guide-card.is-warning {
+  border-color: rgba(251, 113, 133, 0.42);
+  background: rgba(61, 12, 39, 0.72);
+}
+
+.intonation-guide-card.is-practice {
+  border-color: rgba(134, 239, 172, 0.42);
+  background: rgba(13, 44, 31, 0.48);
+}
+
+.intonation-list {
+  margin-top: 0.65rem;
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.intonation-list li {
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  border-radius: 0.62rem;
+  background: rgba(24, 8, 34, 0.72);
+  padding: 0.6rem 0.7rem;
+  color: #f3d9e9;
+  line-height: 1.5;
+}
+
+.intonation-list li::before {
+  content: '- ';
+  color: #f9a8d4;
+}
+
+@media (min-width: 900px) {
+  .intonation-grid.two-col,
+  .intonation-guide-grid,
+  .intonation-roadmap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

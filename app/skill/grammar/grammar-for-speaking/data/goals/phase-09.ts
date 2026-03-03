@@ -1,0 +1,118 @@
+import { createPhaseGoals, type GoalSeed } from './createPhaseGoals';
+
+const seeds: GoalSeed[] = [
+  {
+    goal: 'Membuka discovery call klien',
+    situation: 'Saat pertemuan awal untuk memahami kebutuhan klien.',
+    keySentence: 'Could you share your main business goals?',
+    drill: 'Latih pembukaan call dan pertanyaan kebutuhan inti.',
+    domain: 'work',
+  },
+  {
+    goal: 'Mengidentifikasi kebutuhan klien',
+    situation: 'Saat menggali masalah utama pengguna jasa.',
+    keySentence: 'What is your biggest challenge right now?',
+    drill: 'Praktikkan 10 pertanyaan eksplorasi kebutuhan klien.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menjelaskan penawaran layanan',
+    situation: 'Saat memperkenalkan solusi perusahaan.',
+    keySentence: 'Our solution helps reduce processing time by 30 percent.',
+    drill: 'Latih value proposition 3 versi: singkat, sedang, panjang.',
+    domain: 'work',
+  },
+  {
+    goal: 'Klarifikasi ekspektasi klien',
+    situation: 'Saat menyamakan target output.',
+    keySentence: "Let's align on what success looks like.",
+    drill: 'Simulasikan alignment ekspektasi dengan 5 klien berbeda.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menjelaskan timeline delivery',
+    situation: 'Saat memaparkan jadwal pengerjaan ke klien.',
+    keySentence: 'We can deliver the first draft within seven days.',
+    drill: 'Latih pemaparan timeline per fase proyek.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menjelaskan harga dan skema biaya',
+    situation: 'Saat diskusi proposal finansial dengan klien.',
+    keySentence: 'The total fee includes implementation and support.',
+    drill: 'Praktikkan breakdown harga dan ruang negosiasi.',
+    domain: 'finance',
+  },
+  {
+    goal: 'Menangani keberatan klien',
+    situation: 'Saat klien ragu pada harga atau pendekatan.',
+    keySentence: 'I understand your concern about the budget.',
+    drill: 'Latih respon objection: acknowledge, explain, offer option.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menangani komplain klien',
+    situation: 'Saat klien tidak puas terhadap hasil sementara.',
+    keySentence: "I'm sorry for the inconvenience this caused.",
+    drill: 'Role-play komplain klien dengan tone tenang dan solutif.',
+    domain: 'work',
+  },
+  {
+    goal: 'Apology profesional ke klien',
+    situation: 'Saat terjadi kesalahan yang berdampak ke klien.',
+    keySentence: 'We take full responsibility for this issue.',
+    drill: 'Latih apology script formal 45 detik.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menawarkan kompensasi',
+    situation: 'Saat perlu pemulihan kepercayaan klien.',
+    keySentence: 'We can offer an additional support period at no cost.',
+    drill: 'Praktikkan 5 opsi kompensasi sesuai tingkat masalah.',
+    domain: 'finance',
+  },
+  {
+    goal: 'Eskalasi kasus klien',
+    situation: 'Saat isu perlu ditangani level senior.',
+    keySentence: "I'll escalate this to our senior team immediately.",
+    drill: 'Latih eskalasi dengan SLA waktu respons jelas.',
+    domain: 'work',
+  },
+  {
+    goal: 'Update progres ke klien',
+    situation: 'Saat proyek sedang berjalan.',
+    keySentence: "Here's this week's progress update.",
+    drill: 'Sampaikan update mingguan dengan format konsisten.',
+    domain: 'work',
+  },
+  {
+    goal: 'Konfirmasi penerimaan hasil',
+    situation: 'Saat deliverable sudah dikirim.',
+    keySentence: 'Could you confirm receipt of the final files?',
+    drill: 'Latih handover final dengan verifikasi kelengkapan.',
+    domain: 'work',
+  },
+  {
+    goal: 'Meminta testimonial klien',
+    situation: 'Saat proyek selesai dengan hasil baik.',
+    keySentence: 'Would you be open to sharing a short testimonial?',
+    drill: 'Praktikkan request testimonial tanpa terkesan memaksa.',
+    domain: 'work',
+  },
+  {
+    goal: 'Diskusi perpanjangan kerja sama',
+    situation: 'Saat kontrak mendekati akhir periode.',
+    keySentence: 'Shall we discuss the renewal options for next quarter?',
+    drill: 'Role-play renewal discussion dengan 3 opsi paket.',
+    domain: 'finance',
+  },
+];
+
+export const PHASE_09_GOALS = createPhaseGoals({
+  phaseId: 'phase-09',
+  phaseTitle: 'Client & Service Communication',
+  levelBand: 'upper-intermediate',
+  defaultKeySentence2: 'Please share your expectations clearly.',
+  defaultKeySentence3: 'I will follow up with a written summary.',
+  seeds,
+});

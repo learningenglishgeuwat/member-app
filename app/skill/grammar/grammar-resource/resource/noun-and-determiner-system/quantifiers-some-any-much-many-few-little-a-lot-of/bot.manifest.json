@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/quantifiers-some-any-much-many-few-little-a-lot-of",
+    "label":  "Quantifiers Some Any Much Many Few Little A Lot Of",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu quantifiers some any much many few little a lot of",
+                     "cara pakai quantifiers some any much many few little a lot of",
+                     "quantifiers some any much many few little a lot of",
+                     "noun and determiner system quantifiers some any much many few little a lot of",
+                     "grammar resource quantifiers some any much many few little a lot of"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-quantifiers-some-any-much-many-few-little-a-lot-of",
+                   "title":  "Quantifiers Some Any Much Many Few Little A Lot Of",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/quantifiers-some-any-much-many-few-little-a-lot-of",
+                   "keywords":  [
+                                    "apa itu quantifiers some any much many few little a lot of",
+                                    "cara pakai quantifiers some any much many few little a lot of",
+                                    "quantifiers some any much many few little a lot of",
+                                    "noun and determiner system quantifiers some any much many few little a lot of",
+                                    "grammar resource quantifiers some any much many few little a lot of"
+                                ],
+                   "shortAnswer":  "Topik ini membahas quantifiers seperti some, any, much, many, few, little, a lot of sesuai tipe noun dan konteks kalimat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Quantifiers"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

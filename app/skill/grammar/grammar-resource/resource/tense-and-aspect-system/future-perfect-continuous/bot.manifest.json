@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-continuous",
+    "label":  "Future Perfect Continuous",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu future perfect continuous",
+                     "cara pakai future perfect continuous",
+                     "future perfect continuous",
+                     "tense and aspect system future perfect continuous",
+                     "grammar resource future perfect continuous"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-future-perfect-continuous",
+                   "title":  "Future Perfect Continuous",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-continuous",
+                   "keywords":  [
+                                    "apa itu future perfect continuous",
+                                    "cara pakai future perfect continuous",
+                                    "future perfect continuous",
+                                    "tense and aspect system future perfect continuous",
+                                    "grammar resource future perfect continuous"
+                                ],
+                   "shortAnswer":  "Topik ini membahas future perfect continuous untuk durasi aksi yang terus berlangsung hingga titik waktu masa depan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

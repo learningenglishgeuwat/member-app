@@ -114,8 +114,8 @@ export default function SubjectVerbAgreementPage() {
 
         <section className="sva-block">
           <h2 className="sva-block-title">Tabel Cepat</h2>
-          <div className="sva-table-wrap">
-            <table className="sva-table">
+          <div className="sva-table-wrap geuwat-table-scroll">
+            <table className="sva-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Subject</th>

@@ -37,9 +37,9 @@ export default function HelpSupportContent() {
           <h3 className="font-display text-lg font-semibold text-white">Common Checks</h3>
         </div>
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-300">
-          <li>Refresh the page and try again.</li>
-          <li>Check your internet connection.</li>
-          <li>Sign out and sign in again if the session seems invalid.</li>
+          <li>Muat ulang halaman lalu coba lagi.</li>
+          <li>Periksa koneksi internet kamu.</li>
+          <li>Keluar lalu masuk lagi jika sesi terlihat tidak valid.</li>
         </ul>
       </section>
 
@@ -93,7 +93,6 @@ export default function HelpSupportContent() {
             >
               Send via WhatsApp
             </a>
-            <span className="text-xs text-slate-400">WhatsApp: 085846003119</span>
           </div>
         </div>
       </section>

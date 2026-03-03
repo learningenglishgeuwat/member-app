@@ -89,13 +89,43 @@
 }
 
 .tt-caret {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  color: #d9cbf0;
+  border-radius: 999px;
+  border: 1px solid rgba(167, 139, 250, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.33) 0%,
+    rgba(167, 139, 250, 0.16) 45%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.tt-caret::before {
+  content: '';
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 2px solid #ddd6fe;
+  border-bottom: 2px solid #ddd6fe;
+  transform: rotate(45deg);
+  transform-origin: center;
   transition: transform 0.2s ease;
 }
 
-.tt-caret.is-open {
-  transform: rotate(180deg);
+.tt-caret.is-open::before {
+  transform: rotate(-135deg);
+}
+
+.tt-select:hover .tt-caret {
+  border-color: rgba(167, 139, 250, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.25),
+    0 8px 16px rgba(139, 92, 246, 0.3);
 }
 
 .tt-dropdown-list {

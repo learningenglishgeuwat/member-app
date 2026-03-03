@@ -190,8 +190,8 @@ export default function PronounsPage() {
             </li>
             <li>- Ini penting untuk agreement, terutama di present simple (he/she/it + s/es).</li>
           </ul>
-          <div className="pro-table-wrap">
-            <table className="pro-table pro-person-table">
+          <div className="pro-table-wrap geuwat-table-scroll">
+            <table className="pro-table pro-person-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Person</th>
@@ -222,8 +222,8 @@ export default function PronounsPage() {
 
         <section className="pro-block">
           <h2 className="pro-block-title">Tabel Pronoun</h2>
-          <div className="pro-table-wrap">
-            <table className="pro-table">
+          <div className="pro-table-wrap geuwat-table-scroll">
+            <table className="pro-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Indonesian Meaning</th>
@@ -266,13 +266,13 @@ export default function PronounsPage() {
           <h2 className="pro-block-title">Catatan Penting:</h2>
           <ul className="pro-notes">
             <li>- Subject pronoun untuk pelaku; object pronoun untuk penerima aksi.</li>
-            <li>- Pada penggunaan modern, tidak ada possessive pronoun bentuk "its".</li>
+            <li>- Pada penggunaan modern, tidak ada possessive pronoun bentuk &quot;its&quot;.</li>
             <li>- Bedakan possessive adjective (my book) dan possessive pronoun (the book is mine).</li>
             <li>- Reflexive dipakai saat subject = object (I taught myself).</li>
             <li>
               - Singular berarti satu (I, he, she, it); plural berarti lebih dari satu (we, they).
             </li>
-            <li>- Pronoun "you" bisa singular atau plural, tergantung konteks kalimat.</li>
+            <li>- Pronoun &quot;you&quot; bisa singular atau plural, tergantung konteks kalimat.</li>
             <li>- Pilih pronoun sesuai fungsi, bukan sekadar terjemahan kata per kata.</li>
           </ul>
         </section>

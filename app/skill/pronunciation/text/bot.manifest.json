@@ -1,0 +1,34 @@
+{
+  "route": "/skill/pronunciation/text",
+  "label": "Pronunciation Text Practice",
+  "scope": "pronunciation",
+  "keywords": [
+    "pronunciation text",
+    "origin text",
+    "phonetic transcription text"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-text-how-to-use",
+      "title": "How to Use Pronunciation Text",
+      "route": "/skill/pronunciation/text",
+      "keywords": [
+        "cara pakai tab text pronunciation",
+        "origin text dan transcription",
+        "latihan baca teks pronunciation"
+      ],
+      "shortAnswer": "Halaman Text dipakai untuk menerapkan materi pronunciation lewat bacaan utuh. Gunakan tab origin text untuk membaca natural, lalu bandingkan dengan tab phonetic transcription untuk cek detail bunyi.",
+      "sourceSections": [
+        {
+          "label": "Topic Selector"
+        },
+        {
+          "label": "Original Text Tab"
+        },
+        {
+          "label": "Phonetic Transcription Tab"
+        }
+      ]
+    }
+  ]
+}

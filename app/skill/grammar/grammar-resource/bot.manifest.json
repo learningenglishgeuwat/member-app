@@ -1,0 +1,38 @@
+{
+  "route": "/skill/grammar/grammar-resource",
+  "label": "Grammar Resource",
+  "scope": "grammar-resource",
+  "keywords": [
+    "grammar resource",
+    "materi grammar",
+    "fondasi grammar",
+    "topik grammar"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-resource-overview",
+      "title": "Grammar Resource Overview",
+      "route": "/skill/grammar/grammar-resource",
+      "keywords": [
+        "apa itu grammar resource",
+        "fungsi grammar resource",
+        "belajar grammar mulai dari mana"
+      ],
+      "shortAnswer": "Grammar Resource adalah katalog topik grammar terstruktur dari fondasi sampai advanced reference. Cara pakai paling aman: mulai dari foundation, lanjut noun-determiner dan tense-aspect, lalu masuk struktur kompleks sesuai kebutuhan speaking/writing.",
+      "sourceSections": [
+        {
+          "label": "Grammar Resource Main Index"
+        },
+        {
+          "label": "Foundation Grammar Topics"
+        },
+        {
+          "label": "Tense and Aspect System Topics"
+        },
+        {
+          "label": "Expansion and Complex Structures Topics"
+        }
+      ]
+    }
+  ]
+}

@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import './styles/minimalPairs.css';
-import '../../../../styles/scrollbar.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
@@ -19,6 +18,9 @@ const RecordingControlsButton = dynamic(() => import('../../../components/Record
 
 const MinimalPairsPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isWordPairsOpen, setIsWordPairsOpen] = useState(true);
+  const [isSentencePairsOpen, setIsSentencePairsOpen] = useState(true);
+  const [isVideoTutorialOpen, setIsVideoTutorialOpen] = useState(true);
   const router = useRouter();
   const {
     activeSpeechKey,
@@ -203,97 +205,136 @@ const MinimalPairsPage: React.FC = () => {
             </section>
 
             <section className="minimal-card">
-              <h3>10 Word Pairs</h3>
-              <div className="minimal-list minimal-list-two-col">
-                {selectedPair.words.map((item, index) => (
-                  <div className="minimal-row minimal-word-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
-                    <button
-                      ref={(el) => registerSpeechElement(`word-${index}-a`, el)}
-                      className={`minimal-example-button ${activeSpeechKey === `word-${index}-a` ? 'active' : ''}`}
-                      type="button"
-                      onClick={() => speakText(item.ttsA ?? item.a, `word-${index}-a`, item.ttsLangA ?? 'en-US')}
-                    >
-                      <div className="minimal-word-content">
-                        <strong>{item.a}</strong>
-                        <span>{item.ipaA ? `/${item.ipaA}/` : '-'}</span>
-                      </div>
-                    </button>
-
-                    <div className="minimal-vs-cell">VS</div>
-
-                    <button
-                      ref={(el) => registerSpeechElement(`word-${index}-b`, el)}
-                      className={`minimal-example-button ${activeSpeechKey === `word-${index}-b` ? 'active' : ''}`}
-                      type="button"
-                      onClick={() =>
-                        speakText(
-                          item.ttsB ?? item.b,
-                          `word-${index}-b`,
-                          item.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
-                        )
-                      }
-                    >
-                      <div className="minimal-word-content">
-                        <strong>{item.b}</strong>
-                        <span>{item.ipaB ? `/${item.ipaB}/` : '-'}</span>
-                      </div>
-                    </button>
-                  </div>
-                ))}
+              <div className="minimal-section-head">
+                <h3>10 Word Pairs</h3>
+                <button
+                  type="button"
+                  className="minimal-section-toggle"
+                  onClick={() => setIsWordPairsOpen((prev) => !prev)}
+                  aria-expanded={isWordPairsOpen}
+                  title={isWordPairsOpen ? 'Tutup 10 Word Pairs' : 'Buka 10 Word Pairs'}
+                >
+                  <ChevronDown className={`minimal-section-chevron ${isWordPairsOpen ? 'is-open' : ''}`} size={14} />
+                </button>
               </div>
-            </section>
+              {isWordPairsOpen && (
+                <div className="minimal-list minimal-list-two-col">
+                  {selectedPair.words.map((item, index) => (
+                    <div className="minimal-row minimal-word-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
+                      <button
+                        ref={(el) => registerSpeechElement(`word-${index}-a`, el)}
+                        className={`minimal-example-button ${activeSpeechKey === `word-${index}-a` ? 'active' : ''}`}
+                        type="button"
+                        onClick={() => speakText(item.ttsA ?? item.a, `word-${index}-a`, item.ttsLangA ?? 'en-US')}
+                      >
+                        <div className="minimal-word-content">
+                          <strong>{item.a}</strong>
+                          <span>{item.ipaA ? `/${item.ipaA}/` : '-'}</span>
+                        </div>
+                      </button>
 
-            <section className="minimal-card">
-              <h3>5 Sentence Pairs</h3>
-              <div className="minimal-list">
-                {selectedPair.sentences.map((item, index) => (
-                  <div className="minimal-row minimal-sentence-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
-                    <button
-                      ref={(el) => registerSpeechElement(`sentence-${index}-a`, el)}
-                      className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-a` ? 'active' : ''}`}
-                      type="button"
-                      onClick={() => {
-                        const matchedA = findMatchedWordItemInSentence(item.a, 'a', selectedPair.words);
-                        speakText(item.a, `sentence-${index}-a`, matchedA?.ttsLangA ?? 'en-US');
-                      }}
-                    >
-                      <p className="minimal-sentence-text">
-                        {renderSentenceWithHighlight(item.a, findTargetWordInSentence(item.a, 'a', selectedPair.words))}
-                      </p>
-                    </button>
+                      <div className="minimal-vs-cell">VS</div>
 
-                    <div className="minimal-vs-cell">VS</div>
-
-                    <button
-                      ref={(el) => registerSpeechElement(`sentence-${index}-b`, el)}
-                      className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-b` ? 'active' : ''}`}
-                      type="button"
-                      onClick={() => {
-                        const matchedB = findMatchedWordItemInSentence(item.b, 'b', selectedPair.words);
-                        speakText(
-                          item.b,
-                          `sentence-${index}-b`,
-                          matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
-                        );
-                      }}
-                    >
-                      <p className="minimal-sentence-text">
-                        {renderSentenceWithHighlight(item.b, findTargetWordInSentence(item.b, 'b', selectedPair.words))}
-                      </p>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="minimal-card">
-              <h3>Video Tutorial</h3>
-              <div className="minimal-video-locked">
-                <div>
-                  <p className="minimal-video-caption">Video masih dikunci untuk saat ini.</p>
+                      <button
+                        ref={(el) => registerSpeechElement(`word-${index}-b`, el)}
+                        className={`minimal-example-button ${activeSpeechKey === `word-${index}-b` ? 'active' : ''}`}
+                        type="button"
+                        onClick={() =>
+                          speakText(
+                            item.ttsB ?? item.b,
+                            `word-${index}-b`,
+                            item.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                          )
+                        }
+                      >
+                        <div className="minimal-word-content">
+                          <strong>{item.b}</strong>
+                          <span>{item.ipaB ? `/${item.ipaB}/` : '-'}</span>
+                        </div>
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <span className="minimal-video-locked-pill">Locked</span>
+              )}
+            </section>
+
+            <section className="minimal-card">
+              <div className="minimal-section-head">
+                <h3>5 Sentence Pairs</h3>
+                <button
+                  type="button"
+                  className="minimal-section-toggle"
+                  onClick={() => setIsSentencePairsOpen((prev) => !prev)}
+                  aria-expanded={isSentencePairsOpen}
+                  title={isSentencePairsOpen ? 'Tutup 5 Sentence Pairs' : 'Buka 5 Sentence Pairs'}
+                >
+                  <ChevronDown className={`minimal-section-chevron ${isSentencePairsOpen ? 'is-open' : ''}`} size={14} />
+                </button>
               </div>
+              {isSentencePairsOpen && (
+                <div className="minimal-list">
+                  {selectedPair.sentences.map((item, index) => (
+                    <div className="minimal-row minimal-sentence-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
+                      <button
+                        ref={(el) => registerSpeechElement(`sentence-${index}-a`, el)}
+                        className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-a` ? 'active' : ''}`}
+                        type="button"
+                        onClick={() => {
+                          const matchedA = findMatchedWordItemInSentence(item.a, 'a', selectedPair.words);
+                          speakText(item.a, `sentence-${index}-a`, matchedA?.ttsLangA ?? 'en-US');
+                        }}
+                      >
+                        <p className="minimal-sentence-text">
+                          {renderSentenceWithHighlight(item.a, findTargetWordInSentence(item.a, 'a', selectedPair.words))}
+                        </p>
+                      </button>
+
+                      <div className="minimal-vs-cell">VS</div>
+
+                      <button
+                        ref={(el) => registerSpeechElement(`sentence-${index}-b`, el)}
+                        className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-b` ? 'active' : ''}`}
+                        type="button"
+                        onClick={() => {
+                          const matchedB = findMatchedWordItemInSentence(item.b, 'b', selectedPair.words);
+                          speakText(
+                            item.b,
+                            `sentence-${index}-b`,
+                            matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                          );
+                        }}
+                      >
+                        <p className="minimal-sentence-text">
+                          {renderSentenceWithHighlight(item.b, findTargetWordInSentence(item.b, 'b', selectedPair.words))}
+                        </p>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section className="minimal-card">
+              <div className="minimal-section-head">
+                <h3>Video Tutorial</h3>
+                <button
+                  type="button"
+                  className="minimal-section-toggle"
+                  onClick={() => setIsVideoTutorialOpen((prev) => !prev)}
+                  aria-expanded={isVideoTutorialOpen}
+                  title={isVideoTutorialOpen ? 'Tutup Video Tutorial' : 'Buka Video Tutorial'}
+                >
+                  <ChevronDown className={`minimal-section-chevron ${isVideoTutorialOpen ? 'is-open' : ''}`} size={14} />
+                </button>
+              </div>
+              {isVideoTutorialOpen && (
+                <div className="minimal-video-locked">
+                  <div>
+                    <p className="minimal-video-caption">Video masih dikunci untuk saat ini.</p>
+                  </div>
+                  <span className="minimal-video-locked-pill">Locked</span>
+                </div>
+              )}
             </section>
           </>
         )}

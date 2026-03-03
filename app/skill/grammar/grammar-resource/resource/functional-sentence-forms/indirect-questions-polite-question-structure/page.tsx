@@ -143,8 +143,8 @@ export default function IndirectQuestionsPage() {
 
         <section className="iq-block">
           <h2 className="iq-block-title">Direct to Indirect Examples</h2>
-          <div className="iq-table-wrap">
-            <table className="iq-table">
+          <div className="iq-table-wrap geuwat-table-scroll">
+            <table className="iq-table geuwat-table-responsive">
               <thead>
                 <tr>
                   <th>Direct Question</th>
