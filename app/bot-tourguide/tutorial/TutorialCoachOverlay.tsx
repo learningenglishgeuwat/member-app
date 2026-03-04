@@ -310,7 +310,7 @@ export default function TutorialCoachOverlay({
                   onClick={() => onRunCommand('exit tutorial')}
                   aria-label="Akhiri tutorial"
                 >
-                  ×
+                  x
                 </button>
               </div>
             </div>

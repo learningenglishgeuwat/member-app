@@ -52,7 +52,8 @@ export const isDisplayableIpa = (value?: string): boolean => {
   const trimmed = value.trim();
   if (!trimmed) return false;
   if (trimmed.includes('\\u')) return false;
-  if (trimmed.includes('�')) return false;
+  if (trimmed.includes('\uFFFD')) return false;
+  if (/\u00C3|\u00C2|\u00EF\u00BF\u00BD/.test(trimmed)) return false;
   if (!trimmed.startsWith('/') || !trimmed.endsWith('/')) return false;
   return true;
 };
