@@ -210,10 +210,6 @@ const SymbolDetailPage: React.FC = () => {
     }
   }, [router, shouldRedirectToSummary]);
 
-  if (shouldRedirectToSummary) {
-    return null;
-  }
-
   // Handle hydration
   useEffect(() => {
     setIsClient(true);
@@ -656,6 +652,10 @@ const SymbolDetailPage: React.FC = () => {
       }
     };
   }, []);
+
+  if (shouldRedirectToSummary) {
+    return null;
+  }
 
   return (
     // Responsive container: handles safe areas and dynamic viewport heights

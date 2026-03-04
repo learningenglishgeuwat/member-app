@@ -109,13 +109,15 @@ const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal') =>
 
 function SkillMenuContent() {
   const router = useRouter();
-  const [activeSkill, setActiveSkill] = useState<SkillType>(() => readActiveSkillFromStorage() ?? SkillType.PRONUNCIATION);
+  const [activeSkill, setActiveSkill] = useState<SkillType>(SkillType.PRONUNCIATION);
   const [loading, setLoading] = useState(false);
   const [accessDenied, setAccessDenied] = useState(false);
   const [accessGranted, setAccessGranted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const initDelayTimerRef = useRef<number | null>(null);
   const navigateTimerRef = useRef<number | null>(null);
+  const restoreSkillTimerRef = useRef<number | null>(null);
+  const hasRestoredSkillRef = useRef(false);
   const activeConfig = SKILLS.find(s => s.type === activeSkill)!;
   const activeColor = getColorConfig(activeConfig.color);
   const isExecuteReady = !loading && !accessDenied && !accessGranted && activeConfig.available;
@@ -175,12 +177,26 @@ function SkillMenuContent() {
   };
 
   useEffect(() => {
+    if (hasRestoredSkillRef.current) return;
+    hasRestoredSkillRef.current = true;
+    const savedSkill = readActiveSkillFromStorage();
+    if (!savedSkill || savedSkill === SkillType.PRONUNCIATION) return;
+    restoreSkillTimerRef.current = window.setTimeout(() => {
+      setActiveSkill(savedSkill);
+    }, 0);
+  }, []);
+
+  useEffect(() => {
     writeActiveSkillToStorage(activeSkill);
   }, [activeSkill]);
 
   useEffect(() => {
     return () => {
       clearPendingNavigationTimers();
+      if (restoreSkillTimerRef.current) {
+        window.clearTimeout(restoreSkillTimerRef.current);
+        restoreSkillTimerRef.current = null;
+      }
     };
   }, [clearPendingNavigationTimers]);
 

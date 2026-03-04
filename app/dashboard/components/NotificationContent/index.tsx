@@ -325,8 +325,15 @@ const NotificationContent: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <label className="text-[11px] sm:text-xs text-slate-400 font-mono">Sort</label>
+          <label
+            htmlFor="notification-sort-order"
+            className="text-[11px] sm:text-xs text-slate-400 font-mono"
+          >
+            Sort
+          </label>
           <select
+            id="notification-sort-order"
+            name="notificationSortOrder"
             className="bg-slate-900/70 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}

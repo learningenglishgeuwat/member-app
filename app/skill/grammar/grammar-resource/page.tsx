@@ -1,7 +1,7 @@
 'use client';
 
 import Link from '../../../components/HoverPrefetchLink';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
 import { GRAMMAR_RESOURCE_GROUPS } from '../data/grammarResourceCatalog';
 import './grammar-resource.css';
@@ -23,20 +23,37 @@ const findGroupId = (value: string | null): string | null => {
 };
 
 export default function GrammarResourcePage() {
-  const [openGroupId, setOpenGroupId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') {
-      return null;
-    }
-    return findGroupId(sessionStorage.getItem(STORAGE_KEY));
-  });
+  const [openGroupId, setOpenGroupId] = useState<string | null>(null);
+  const [isGroupStateReady, setIsGroupStateReady] = useState(false);
+  const restoreGroupTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const savedGroupId = findGroupId(window.sessionStorage.getItem(STORAGE_KEY));
+    restoreGroupTimerRef.current = window.setTimeout(() => {
+      setOpenGroupId(savedGroupId);
+      setIsGroupStateReady(true);
+      restoreGroupTimerRef.current = null;
+    }, 0);
+
+    return () => {
+      if (restoreGroupTimerRef.current !== null) {
+        window.clearTimeout(restoreGroupTimerRef.current);
+        restoreGroupTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isGroupStateReady) return;
+
     if (openGroupId) {
-      sessionStorage.setItem(STORAGE_KEY, openGroupId);
+      window.sessionStorage.setItem(STORAGE_KEY, openGroupId);
       return;
     }
-    sessionStorage.removeItem(STORAGE_KEY);
-  }, [openGroupId]);
+    window.sessionStorage.removeItem(STORAGE_KEY);
+  }, [isGroupStateReady, openGroupId]);
 
   return (
     <main className="grammar-resource-page">
@@ -70,7 +87,7 @@ export default function GrammarResourcePage() {
 
               <div className="tree-children">
                 {group.topics.map((topic) => (
-                  <Link prefetch={false}
+                  <Link prefetch={false} prefetchOnHover={false}
                     key={topic.topicId}
                     href={topic.href}
                     className="tree-card tree-topic-card tree-topic-link"

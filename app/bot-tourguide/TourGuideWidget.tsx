@@ -1011,6 +1011,8 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
             <label className="tg-mode-select-wrap">
               <span className="tg-mode-select-label">Mode</span>
               <select
+                id="tg-mode-select"
+                name="tgMode"
                 className="tg-mode-select"
                 value={pendingMode}
                 onChange={(event) => setPendingMode(event.target.value as GuideMode)}
@@ -1037,6 +1039,8 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               <label className="tg-flashcard-picker-wrap">
                 <span className="tg-mode-select-label">Flashcard</span>
                 <select
+                  id="tg-flashcard-select"
+                  name="tgFlashcardPath"
                   className="tg-flashcard-select"
                   value={selectedFlashcardPath}
                   onChange={(event) => setSelectedFlashcardPath(event.target.value)}
@@ -1060,6 +1064,8 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
 
           <form className="tg-form" onSubmit={handleSubmit}>
             <input
+              id="tg-query-input"
+              name="tgQuery"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={

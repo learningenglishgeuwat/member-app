@@ -212,6 +212,8 @@ export default function SpeakingPracticeOverlay({
               <label className="tg-spk-picker-field is-phase">
                 <span>Phase</span>
                 <select
+                  id="tg-spk-phase-select"
+                  name="tgSpkPhase"
                   value={selectedPhaseId}
                   onChange={(event) => sendCommand(`set phase ${event.target.value}`)}
                   disabled={isRunning}
@@ -227,6 +229,8 @@ export default function SpeakingPracticeOverlay({
               <label className="tg-spk-picker-field">
                 <span>Goal</span>
                 <select
+                  id="tg-spk-goal-select"
+                  name="tgSpkGoal"
                   value={selectedGoalId}
                   onChange={(event) => sendCommand(`set goal ${event.target.value}`)}
                   disabled={isRunning}
@@ -242,6 +246,8 @@ export default function SpeakingPracticeOverlay({
               <label className="tg-spk-picker-field">
                 <span>Scenario</span>
                 <select
+                  id="tg-spk-scenario-select"
+                  name="tgSpkScenario"
                   value={selectedScenario}
                   onChange={(event) => sendCommand(`set scenario ${event.target.value}`)}
                   disabled={isRunning}

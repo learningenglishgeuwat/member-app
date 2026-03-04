@@ -16,7 +16,7 @@ export default function GrammarPage() {
         <p className="grammar-subtitle">Pilih jalur grammar yang ingin dipelajari.</p>
 
         <div className="grammar-triangle">
-          <Link prefetch={false}
+          <Link prefetch={false} prefetchOnHover={false}
             href="/skill/grammar/grammar-resource"
             className="grammar-btn grammar-btn-top"
             data-tour="grammar-resource-button"

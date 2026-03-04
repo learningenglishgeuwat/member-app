@@ -55,10 +55,15 @@ export default function HelpSupportContent() {
 
         <div className="mt-4 space-y-3">
           <div>
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wide text-slate-400">
+            <label
+              htmlFor="support-name"
+              className="mb-1 block text-xs font-mono uppercase tracking-wide text-slate-400"
+            >
               Name
             </label>
             <input
+              id="support-name"
+              name="supportName"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -68,10 +73,15 @@ export default function HelpSupportContent() {
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wide text-slate-400">
+            <label
+              htmlFor="support-issue"
+              className="mb-1 block text-xs font-mono uppercase tracking-wide text-slate-400"
+            >
               Issue Details
             </label>
             <textarea
+              id="support-issue"
+              name="supportIssue"
               value={issue}
               onChange={(e) => setIssue(e.target.value)}
               placeholder="Describe your issue..."

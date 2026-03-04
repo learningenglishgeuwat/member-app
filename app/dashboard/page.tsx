@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, lazy, Suspense, useEffect, useTransition, useRef, useCallback } from 'react'
+import React, { useState, lazy, Suspense, useEffect, useRef, useCallback } from 'react'
 import { Menu, X } from 'lucide-react'
 import DashboardSidebar from './components/DashboardSidebar'
 import './dashboard.css'
@@ -19,19 +19,19 @@ type ViewId = (typeof VIEW_IDS)[number]
 const VALID_VIEWS = new Set<ViewId>(VIEW_IDS)
 const DASHBOARD_VIEW_EVENT = 'geuwat:dashboard-view'
 
-const resolveInitialDashboardView = (): ViewId => {
-  if (typeof window === 'undefined') return 'dashboard'
+const resolveSavedDashboardView = (): ViewId | null => {
+  if (typeof window === 'undefined') return null
   const savedView = window.localStorage.getItem('dashboardCurrentView')
-  if (!savedView || !VALID_VIEWS.has(savedView as ViewId)) return 'dashboard'
+  if (!savedView || !VALID_VIEWS.has(savedView as ViewId)) return null
   return savedView as ViewId
 }
 
 function DashboardContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [currentView, setCurrentView] = useState<ViewId>(() => resolveInitialDashboardView())
-  const [mountedViews, setMountedViews] = useState<Set<string>>(() => new Set([resolveInitialDashboardView()]))
-  const [isPending, startTransition] = useTransition()
+  const [currentView, setCurrentView] = useState<ViewId>('dashboard')
+  const [mountedViews, setMountedViews] = useState<Set<string>>(() => new Set(['dashboard']))
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const hasRestoredViewRef = useRef(false)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -48,10 +48,19 @@ function DashboardContent() {
       return next
     })
 
-    startTransition(() => {
-      setCurrentView(safeView)
-    })
+    setCurrentView(safeView)
   }, [])
+
+  useEffect(() => {
+    if (hasRestoredViewRef.current) return
+    hasRestoredViewRef.current = true
+    const savedView = resolveSavedDashboardView()
+    if (!savedView) return
+    const timerId = window.setTimeout(() => {
+      handleViewChange(savedView)
+    }, 0)
+    return () => window.clearTimeout(timerId)
+  }, [handleViewChange])
 
   useEffect(() => {
     if (VALID_VIEWS.has(currentView)) {
@@ -138,7 +147,6 @@ function DashboardContent() {
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-3xl font-display font-bold text-white capitalize" data-tour="dashboard-title">
                   {currentView}
-                  {isPending ? <span className="ml-2 text-xs text-slate-400 font-mono">Loading...</span> : null}
                 </h1>
                 <p className="text-slate-400 mt-1 font-mono text-sm">Manage your learning journey</p>
               </div>

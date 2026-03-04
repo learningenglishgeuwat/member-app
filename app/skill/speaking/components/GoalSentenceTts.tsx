@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type GoalSentenceTtsProps = {
   sentences: string[];
@@ -66,14 +66,11 @@ export default function GoalSentenceTts({
   showIpa = false,
 }: GoalSentenceTtsProps) {
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
+  const [canSpeak, setCanSpeak] = useState(false);
   const playTokenRef = useRef(0);
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const supportCheckTimerRef = useRef<number | null>(null);
   const isSpeaking = speakingIndex !== null;
-
-  const canSpeak = useMemo(
-    () => typeof window !== 'undefined' && 'speechSynthesis' in window,
-    [],
-  );
 
   function stopAll() {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
@@ -126,9 +123,21 @@ export default function GoalSentenceTts({
   }
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    supportCheckTimerRef.current = window.setTimeout(() => {
+      setCanSpeak('speechSynthesis' in window);
+      supportCheckTimerRef.current = null;
+    }, 0);
+
     return () => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
+      if (supportCheckTimerRef.current) {
+        window.clearTimeout(supportCheckTimerRef.current);
+        supportCheckTimerRef.current = null;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
     };
   }, []);
 
@@ -192,7 +201,7 @@ export default function GoalSentenceTts({
               aria-label={`Play sentence ${index + 1}`}
               title="Play"
             >
-              ▶
+              {'\u25B6'}
             </button>
           </li>
         ))}

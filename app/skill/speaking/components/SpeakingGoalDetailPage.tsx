@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
 import GoalSelector from './GoalSelector';
 import GoalSentenceTts from './GoalSentenceTts';
@@ -63,22 +63,40 @@ export default function SpeakingGoalDetailPage({
   );
 
   const [completionMap, setCompletionMap] = useState<Record<string, boolean>>(
-    readSpeakingGoalCompletionMap,
+    {},
   );
-  const [showIdTranslation, setShowIdTranslation] = useState<boolean>(
-    readSpeakingShowTranslation,
-  );
+  const [showIdTranslation, setShowIdTranslation] = useState<boolean>(true);
   const [showIpa, setShowIpa] = useState<boolean>(true);
-  const [openSectionId, setOpenSectionId] = useState<string | null>(() =>
-    readSpeakingDetailOpenSection(goalId, SECTION_IDS),
-  );
+  const [openSectionId, setOpenSectionId] = useState<string | null>(null);
   const [dialogScenarioIndex, setDialogScenarioIndex] = useState(0);
+  const restoreUiStateTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     stopSpeechSynthesis();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpenSectionId(readSpeakingDetailOpenSection(goalId, SECTION_IDS));
-    setDialogScenarioIndex(0);
+
+    const nextCompletionMap = readSpeakingGoalCompletionMap();
+    const nextShowTranslation = readSpeakingShowTranslation();
+    const nextOpenSection = readSpeakingDetailOpenSection(goalId, SECTION_IDS);
+
+    if (restoreUiStateTimerRef.current) {
+      window.clearTimeout(restoreUiStateTimerRef.current);
+      restoreUiStateTimerRef.current = null;
+    }
+
+    restoreUiStateTimerRef.current = window.setTimeout(() => {
+      setCompletionMap(nextCompletionMap);
+      setShowIdTranslation(nextShowTranslation);
+      setOpenSectionId(nextOpenSection);
+      setDialogScenarioIndex(0);
+      restoreUiStateTimerRef.current = null;
+    }, 0);
+
+    return () => {
+      if (restoreUiStateTimerRef.current) {
+        window.clearTimeout(restoreUiStateTimerRef.current);
+        restoreUiStateTimerRef.current = null;
+      }
+    };
   }, [goalId]);
 
   useEffect(() => {

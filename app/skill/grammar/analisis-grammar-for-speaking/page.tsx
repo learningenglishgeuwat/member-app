@@ -1,7 +1,7 @@
 'use client';
 
 import Link from '../../../components/HoverPrefetchLink';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
 import {
   GRAMMAR_RESOURCE_TOPIC_MAP,
@@ -32,34 +32,53 @@ const formatSeverity = (severity: TopicGapSeverity): string => {
   }
 };
 
+function readCompletedGoalProgress(): string[] {
+  if (typeof window === 'undefined') return [];
+
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (!saved) return [];
+
+    const parsed = JSON.parse(saved);
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed.filter(
+      (goalId): goalId is string =>
+        typeof goalId === 'string' && SPEAKING_GOALS.some((goal) => goal.goalId === goalId),
+    );
+  } catch {
+    return [];
+  }
+}
+
 export default function GrammarSpeakingPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('workflow');
-  const [completedGoals, setCompletedGoals] = useState<string[]>(() => {
-    if (typeof window === 'undefined') {
-      return [];
-    }
-
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) {
-        return [];
-      }
-      const parsed = JSON.parse(saved);
-      if (!Array.isArray(parsed)) {
-        return [];
-      }
-      return parsed.filter(
-        (goalId): goalId is string =>
-          typeof goalId === 'string' && SPEAKING_GOALS.some((goal) => goal.goalId === goalId),
-      );
-    } catch {
-      return [];
-    }
-  });
+  const [completedGoals, setCompletedGoals] = useState<string[]>([]);
+  const [isProgressRestored, setIsProgressRestored] = useState(false);
+  const restoreProgressTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(completedGoals));
-  }, [completedGoals]);
+    if (typeof window === 'undefined') return;
+
+    const restoredGoals = readCompletedGoalProgress();
+    restoreProgressTimerRef.current = window.setTimeout(() => {
+      setCompletedGoals(restoredGoals);
+      setIsProgressRestored(true);
+      restoreProgressTimerRef.current = null;
+    }, 0);
+
+    return () => {
+      if (restoreProgressTimerRef.current !== null) {
+        window.clearTimeout(restoreProgressTimerRef.current);
+        restoreProgressTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isProgressRestored) return;
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(completedGoals));
+  }, [completedGoals, isProgressRestored]);
 
   const completedSet = useMemo(() => new Set(completedGoals), [completedGoals]);
 
@@ -190,7 +209,13 @@ export default function GrammarSpeakingPage() {
                         }
 
                         return (
-                          <Link prefetch={false} key={topic.topicId} href={topic.href} className="gfs-topic-link">
+                          <Link
+                            prefetch={false}
+                            prefetchOnHover={false}
+                            key={topic.topicId}
+                            href={topic.href}
+                            className="gfs-topic-link"
+                          >
                             {topic.topicLabel}
                           </Link>
                         );
@@ -270,7 +295,7 @@ export default function GrammarSpeakingPage() {
                     {gapReport.auditedTopics.map((topic) => (
                       <tr key={topic.topicId}>
                         <td>
-                          <Link prefetch={false} href={topic.href} className="gfs-topic-cell-link">
+                          <Link prefetch={false} prefetchOnHover={false} href={topic.href} className="gfs-topic-cell-link">
                             {topic.topicLabel}
                           </Link>
                         </td>
@@ -298,7 +323,7 @@ export default function GrammarSpeakingPage() {
                 <div className="gfs-list">
                   {gapReport.priorityGaps.map((topic) => (
                     <div key={`priority-${topic.topicId}`} className="gfs-list-item">
-                      <Link prefetch={false} href={topic.href} className="gfs-list-item-title">
+                      <Link prefetch={false} prefetchOnHover={false} href={topic.href} className="gfs-list-item-title">
                         {topic.topicLabel}
                       </Link>
                       <p className="gfs-list-item-note">
@@ -341,7 +366,7 @@ export default function GrammarSpeakingPage() {
                 <div className="gfs-list">
                   {gapReport.criticalGaps.map((topic) => (
                     <div key={`critical-${topic.topicId}`} className="gfs-list-item">
-                      <Link prefetch={false} href={topic.href} className="gfs-list-item-title">
+                      <Link prefetch={false} prefetchOnHover={false} href={topic.href} className="gfs-list-item-title">
                         {topic.topicLabel}
                       </Link>
                       <p className="gfs-list-item-note">{topic.notes}</p>
@@ -360,7 +385,13 @@ export default function GrammarSpeakingPage() {
               </p>
               <div className="gfs-chip-list">
                 {gapReport.unusedResourceTopics.map((topic) => (
-                  <Link prefetch={false} key={`unused-${topic.topicId}`} href={topic.href} className="gfs-chip-link">
+                  <Link
+                    prefetch={false}
+                    prefetchOnHover={false}
+                    key={`unused-${topic.topicId}`}
+                    href={topic.href}
+                    className="gfs-chip-link"
+                  >
                     {topic.topicLabel}
                   </Link>
                 ))}

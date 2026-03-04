@@ -131,6 +131,8 @@ const MinimalPairsPage: React.FC = () => {
           <label className="minimal-control">
             <span>Category</span>
             <select
+              id="minimal-pairs-category"
+              name="minimalPairsCategory"
               value={selectedCategory}
               onChange={(event) => handleCategoryChange(event.target.value as MinimalPairCategory)}
             >
@@ -144,7 +146,13 @@ const MinimalPairsPage: React.FC = () => {
 
           <label className="minimal-control">
             <span>Pair</span>
-            <select value={selectedPairId} onChange={(event) => handlePairChange(event.target.value)} disabled={isCategoryLoading}>
+            <select
+              id="minimal-pairs-pair"
+              name="minimalPairsPair"
+              value={selectedPairId}
+              onChange={(event) => handlePairChange(event.target.value)}
+              disabled={isCategoryLoading}
+            >
               {pairsInCategory.map((pair) => (
                 <option key={pair.id} value={pair.id}>
                   {pair.pairLabel}

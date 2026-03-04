@@ -1,8 +1,7 @@
 'use client';
 
 import Link from '../../components/HoverPrefetchLink';
-import { useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import BackButton from '../components/BackButton';
 import { assertVocabularyDatasetInDev } from './topic/data/quality';
 import { VOCABULARY_TOPICS } from './topic/data/topics';
@@ -41,8 +40,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default function VocabularyPage() {
-  const router = useRouter();
-  const prefetchedTopicPathsRef = useRef<Set<string>>(new Set());
   const topicChipLabelMap = buildTopicChipLabelMap();
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,13 +61,6 @@ export default function VocabularyPage() {
   const effectivePage = Math.min(totalTopicPages, Math.max(1, currentPage));
   const startIndex = (effectivePage - 1) * TOPICS_PER_PAGE;
   const pagedTopics = filteredTopics.slice(startIndex, startIndex + TOPICS_PER_PAGE);
-
-  const prefetchTopicPath = (topicId: string) => {
-    const path = `/skill/vocabulary/topic/pages/${topicId}`;
-    if (prefetchedTopicPathsRef.current.has(path)) return;
-    prefetchedTopicPathsRef.current.add(path);
-    router.prefetch(path);
-  };
 
   return (
     <main className="vocab-page">
@@ -146,8 +136,6 @@ export default function VocabularyPage() {
                 <article
                   key={topic.topicId}
                   className="vocab-topic-card"
-                  onMouseEnter={() => prefetchTopicPath(topic.topicId)}
-                  onFocusCapture={() => prefetchTopicPath(topic.topicId)}
                 >
                   <div className="vocab-topic-head">
                     <h2 className="vocab-topic-title">
@@ -160,7 +148,11 @@ export default function VocabularyPage() {
 
                   <div className="vocab-topic-footer">
                     <span className="vocab-topic-meta">{wordCount} kata</span>
-                    <Link href={`/skill/vocabulary/topic/pages/${topic.topicId}`} className="vocab-topic-link">
+                    <Link
+                      href={`/skill/vocabulary/topic/pages/${topic.topicId}`}
+                      className="vocab-topic-link"
+                      prefetchOnHover={false}
+                    >
                       Lihat Detail
                     </Link>
                   </div>

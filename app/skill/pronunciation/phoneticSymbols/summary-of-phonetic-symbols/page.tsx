@@ -142,12 +142,14 @@ export default function SummaryOfPhoneticSymbolsPage() {
     };
   }, []);
 
-  useEffect(() => {
+  const handleTabChange = (nextTab: TabKey) => {
+    if (nextTab === activeTab) return;
     window.speechSynthesis.cancel();
     setActivePlayGroup(null);
     setActiveSpeakingExampleKey(null);
     playGroupRef.current = null;
-  }, [activeTab]);
+    setActiveTab(nextTab);
+  };
 
   const getPreferredVoice = () => {
     const voices = window.speechSynthesis.getVoices();
@@ -266,7 +268,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                 role="tab"
                 aria-selected={active}
                 className={`sps-tab ${active ? 'is-active' : ''}`}
-                onClick={() => setActiveTab(tabKey)}
+                onClick={() => handleTabChange(tabKey)}
               >
                 {TAB_LABELS[tabKey]}
               </button>

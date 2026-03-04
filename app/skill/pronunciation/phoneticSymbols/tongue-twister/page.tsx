@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import './tongue-twister.css';
@@ -77,16 +77,22 @@ export default function TongueTwisterPage() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleStopSpeak = () => {
+  const handleStopSpeak = useCallback(() => {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
-  };
+  }, []);
 
-  useEffect(() => {
-    handleStopSpeak();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedId]);
+  const handleSelectTwister = useCallback(
+    (nextId: string) => {
+      if (nextId !== selectedId) {
+        handleStopSpeak();
+        setSelectedId(nextId);
+      }
+      setDropdownOpen(false);
+    },
+    [handleStopSpeak, selectedId],
+  );
 
   return (
     <main className="tt-page">
@@ -127,10 +133,7 @@ export default function TongueTwisterPage() {
                   <button
                     type="button"
                     className={`tt-dropdown-item ${item.id === selectedId ? 'is-active' : ''}`}
-                    onClick={() => {
-                      setSelectedId(item.id);
-                      setDropdownOpen(false);
-                    }}
+                    onClick={() => handleSelectTwister(item.id)}
                   >
                     {item.label}
                   </button>

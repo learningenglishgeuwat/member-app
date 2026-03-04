@@ -72,6 +72,8 @@ export default function DeviceApprovePage() {
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
+            id="device-approve-code"
+            name="deviceApproveCode"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="123-456"

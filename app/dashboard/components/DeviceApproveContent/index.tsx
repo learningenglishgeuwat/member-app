@@ -54,6 +54,8 @@ export default function DeviceApproveContent() {
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
+            id="device-approve-content-code"
+            name="deviceApproveContentCode"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="123-456"

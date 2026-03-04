@@ -7,6 +7,7 @@ import { getDeviceId } from '@/lib/device'
 import type { User } from '@/types/database'
 
 type SessionHealth = 'healthy' | 'degraded'
+type DegradedReason = 'network' | 'auth' | 'data'
 type SessionLossSource = 'initial-session' | 'auth-change' | 'session-recheck'
 
 interface AuthContextType {
@@ -15,6 +16,7 @@ interface AuthContextType {
   loading: boolean
   authIssue: string | null
   sessionHealth: SessionHealth
+  degradedReason: DegradedReason | null
   signUp: (email: string, password: string, userData: Partial<User>) => Promise<{ success: boolean; error?: string }>
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
   signOut: () => Promise<void>
@@ -48,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [notice, setNotice] = useState<string | null>(null)
   const [authIssue, setAuthIssue] = useState<string | null>(null)
   const [sessionHealth, setSessionHealth] = useState<SessionHealth>('healthy')
+  const [degradedReason, setDegradedReason] = useState<DegradedReason | null>(null)
 
   const userRef = React.useRef<User | null>(null)
   const hasSessionRef = React.useRef(false)
@@ -62,6 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const lastActivityRef = React.useRef<number>(Date.now())
   const lastActivityPersistedAtRef = React.useRef<number>(0)
   const sessionHealthRef = React.useRef<SessionHealth>('healthy')
+  const degradedReasonRef = React.useRef<DegradedReason | null>(null)
   const graceUntilRef = React.useRef<number | null>(null)
   const manualSignOutRef = React.useRef(false)
   const isDev = process.env.NODE_ENV === 'development'
@@ -93,9 +97,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return false
   }
 
-  const setSessionHealthSafe = (next: SessionHealth) => {
+  const setDegradedReasonSafe = (next: DegradedReason | null) => {
+    degradedReasonRef.current = next
+    setDegradedReason(next)
+  }
+
+  const setSessionHealthSafe = (next: SessionHealth, reason: DegradedReason | null = null) => {
     sessionHealthRef.current = next
     setSessionHealth(next)
+    if (next === 'healthy') {
+      setDegradedReasonSafe(null)
+      return
+    }
+    if (reason) {
+      setDegradedReasonSafe(reason)
+    }
   }
 
   const setUserSafe = (nextUser: User | null) => {
@@ -158,7 +174,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setAuthIssue('Data akun belum siap. Coba refresh halaman.')
     }
 
-    setSessionHealthSafe('degraded')
+    setSessionHealthSafe('degraded', 'data')
   }
 
   const clearSessionTimers = () => {
@@ -377,8 +393,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setHasSessionSafe(true)
     }
     setAuthIssue(null)
-    setSessionHealthSafe('degraded')
-    setNotice('Koneksi tidak stabil. Sesi belajar dipertahankan sementara.')
+    setSessionHealthSafe('degraded', 'auth')
+    setNotice('Sesi sedang dipulihkan. Belajar tetap berjalan.')
     startGraceWindow(`${source}:${reason}`)
     logAuthDebug('grace:start', {
       source,
@@ -406,7 +422,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const handleOffline = () => {
       clearOfflineDebounce()
       offlineDebounceRef.current = window.setTimeout(() => {
-        setSessionHealthSafe('degraded')
+        setSessionHealthSafe('degraded', 'network')
         setNotice('Koneksi tidak stabil. Mode belajar tetap berjalan.')
         logAuthDebug('network:offline-debounced')
       }, OFFLINE_DEBOUNCE_MS)
@@ -550,8 +566,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       setUserSafe(cachedUser)
       setHasSessionSafe(true)
-      setSessionHealthSafe('degraded')
-      setNotice('Koneksi tidak stabil. Sesi belajar dipertahankan sementara.')
+      setSessionHealthSafe('degraded', 'auth')
+      setNotice('Sesi sedang dipulihkan. Belajar tetap berjalan.')
       clearGraceTimers()
       const remaining = Math.max(1000, restoredUntil - Date.now())
       graceTimerRef.current = window.setTimeout(() => {
@@ -568,7 +584,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         applyGraceStateIfExists()
 
         if (typeof window !== 'undefined' && !navigator.onLine) {
-          setSessionHealthSafe('degraded')
+          setSessionHealthSafe('degraded', 'network')
           setNotice('Koneksi tidak stabil. Mode belajar tetap berjalan.')
           logAuthDebug('getSession:offline-start')
         }
@@ -616,7 +632,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 setUserSafe(null)
               }
               setAuthIssue('Gagal memuat data akun. Coba refresh halaman.')
-              setSessionHealthSafe('degraded')
+              setSessionHealthSafe('degraded', 'data')
             }
           })()
         }
@@ -654,6 +670,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const sessionUser = session?.user || null
       logAuthDebug('auth:event', event, { hasSession: !!sessionUser })
       setLoading(false)
+
+      if (event === 'INITIAL_SESSION' && !sessionUser) {
+        // Initial null session is already handled by getSession() on mount.
+        logAuthDebug('auth:initial-session-null:skip-duplicate-grace')
+        return
+      }
 
       if (event === 'TOKEN_REFRESHED') {
         logAuthDebug('auth:token-refreshed -> skip heavy checks')
@@ -699,7 +721,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setUserSafe(null)
         }
         setAuthIssue('Gagal memuat data akun. Coba refresh halaman.')
-        setSessionHealthSafe('degraded')
+        setSessionHealthSafe('degraded', 'data')
       }
 
       const lastActivityStored = Number(localStorage.getItem('auth_last_activity')) || Date.now()
@@ -826,6 +848,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     authIssue,
     sessionHealth,
+    degradedReason,
     signUp,
     signIn,
     signOut,

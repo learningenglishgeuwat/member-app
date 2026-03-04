@@ -12,12 +12,18 @@ type RequireActiveProps = {
 export default function RequireActive({ children }: RequireActiveProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const { user, hasSession, loading, authIssue, sessionHealth } = useAuth()
+  const { user, hasSession, loading, authIssue, sessionHealth, degradedReason } = useAuth()
   const inactiveAllowedPaths = new Set(['/dashboard', '/device-approve'])
   const isInactiveAllowed = inactiveAllowedPaths.has(pathname)
   const skeletonVariant = getAuthSkeletonVariant(pathname)
   const allowSessionPassThrough = hasSession
   const showNonBlockingConnectivityHint = hasSession && sessionHealth === 'degraded'
+  const nonBlockingHintText = useMemo(() => {
+    if (degradedReason === 'network') return 'Koneksi tidak stabil. Belajar tetap berjalan.'
+    if (degradedReason === 'data') return 'Data akun sedang sinkronisasi. Belajar tetap berjalan.'
+    if (degradedReason === 'auth') return 'Sesi sedang dipulihkan. Belajar tetap berjalan.'
+    return 'Belajar tetap berjalan.'
+  }, [degradedReason])
   const connectionHint = useMemo(() => {
     if (authIssue) return authIssue
     const shouldShowHint = loading || (hasSession && !user)
@@ -32,7 +38,7 @@ export default function RequireActive({ children }: RequireActiveProps) {
     <>
       {showNonBlockingConnectivityHint && (
         <div className="fixed left-1/2 top-2 z-[998] -translate-x-1/2 rounded-full border border-amber-300/70 bg-amber-500/90 px-3 py-1 text-[11px] font-semibold text-slate-900 shadow-lg">
-          Koneksi tidak stabil. Belajar tetap berjalan.
+          {nonBlockingHintText}
         </div>
       )}
       {content}

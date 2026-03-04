@@ -110,11 +110,16 @@ const StartJourney: React.FC = () => {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
         
         <div className="space-y-4">
-          <label className="block text-[11px] sm:text-sm font-medium text-purple-300 uppercase tracking-widest font-display">
+          <label
+            htmlFor="mission-objective"
+            className="block text-[11px] sm:text-sm font-medium text-purple-300 uppercase tracking-widest font-display"
+          >
             Mission Objective
           </label>
           <div className="flex gap-4 flex-col sm:flex-row">
             <input
+              id="mission-objective"
+              name="missionObjective"
               type="text"
               value={goal}
               onChange={(e) => setGoal(e.target.value)}

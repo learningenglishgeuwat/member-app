@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BackButton from '../components/BackButton';
 import { AUTHORED_SPEAKING_GOAL_IDS } from './data/details/authored-goals';
@@ -55,12 +55,10 @@ export default function SpeakingRoadmapPage() {
   const [activeFilter, setActiveFilter] = useState<SpeakingQuickFilter>('all');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [showIdTranslation, setShowIdTranslation] = useState<boolean>(
-    readSpeakingShowTranslation,
-  );
-  const [completionMap] = useState<Record<string, boolean>>(
-    readSpeakingGoalCompletionMap,
-  );
+  const [showIdTranslation, setShowIdTranslation] = useState<boolean>(true);
+  const [completionMap, setCompletionMap] = useState<Record<string, boolean>>({});
+  const restoreUiStateTimerRef = useRef<number | null>(null);
+  const hasRestoredUiStateRef = useRef(false);
 
   const authoredGoalSet = useMemo(
     () => new Set<string>([...AUTHORED_SPEAKING_GOAL_IDS]),
@@ -112,6 +110,27 @@ export default function SpeakingRoadmapPage() {
     const start = (safeCurrentPage - 1) * PAGE_SIZE;
     return filteredGoals.slice(start, start + PAGE_SIZE);
   }, [filteredGoals, safeCurrentPage]);
+
+  useEffect(() => {
+    if (hasRestoredUiStateRef.current) return;
+    hasRestoredUiStateRef.current = true;
+
+    const nextShowTranslation = readSpeakingShowTranslation();
+    const nextCompletionMap = readSpeakingGoalCompletionMap();
+
+    restoreUiStateTimerRef.current = window.setTimeout(() => {
+      setShowIdTranslation(nextShowTranslation);
+      setCompletionMap(nextCompletionMap);
+      restoreUiStateTimerRef.current = null;
+    }, 0);
+
+    return () => {
+      if (restoreUiStateTimerRef.current) {
+        window.clearTimeout(restoreUiStateTimerRef.current);
+        restoreUiStateTimerRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <main className="spk-page">

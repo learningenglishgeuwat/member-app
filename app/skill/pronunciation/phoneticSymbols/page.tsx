@@ -79,7 +79,7 @@ const PhoneticPortal: React.FC = () => {
   const symbolSpeakResetRef = useRef<number | null>(null);
   const playAllSymbolTimeoutRef = useRef<number | null>(null);
   const playAllSymbolSessionRef = useRef(0);
-  // Dedupe prefetch per lifecycle halaman agar hover/focus tidak spam request path yang sama.
+  // Dedupe prefetch per lifecycle halaman agar klik tidak spam request path yang sama.
   const prefetchedPathsRef = useRef<Set<string>>(new Set());
   const router = useRouter();
   const getSymbolDetailPath = useCallback(
@@ -401,8 +401,6 @@ const PhoneticPortal: React.FC = () => {
           <button
             type="button"
             onClick={handleMinimalPairsClick}
-            onMouseEnter={() => prefetchPath('/skill/pronunciation/phoneticSymbols/MinimalPairs')}
-            onFocus={() => prefetchPath('/skill/pronunciation/phoneticSymbols/MinimalPairs')}
             className="common-mistakes-btn"
           >
             COMMON MISTAKES
@@ -410,8 +408,6 @@ const PhoneticPortal: React.FC = () => {
           <button
             type="button"
             onClick={handleTongueTwisterClick}
-            onMouseEnter={() => prefetchPath('/skill/pronunciation/phoneticSymbols/tongue-twister')}
-            onFocus={() => prefetchPath('/skill/pronunciation/phoneticSymbols/tongue-twister')}
             className="common-mistakes-btn"
           >
             TONGUE TWISTER
@@ -419,8 +415,6 @@ const PhoneticPortal: React.FC = () => {
           <button
             type="button"
             onClick={handleSummaryClick}
-            onMouseEnter={() => prefetchPath('/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols')}
-            onFocus={() => prefetchPath('/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols')}
             className="common-mistakes-btn"
           >
             SUMMARY
@@ -512,8 +506,6 @@ const PhoneticPortal: React.FC = () => {
                           key={symbol.symbol}
                           className="symbol-btn"
                           onClick={() => handleSymbolClick(symbol)}
-                          onMouseEnter={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
-                          onFocus={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
                           data-tour={symbol.symbol === '\u028c' ? 'phonetic-symbol-uh' : undefined}
                         >
                           {symbol.symbol}
@@ -530,8 +522,6 @@ const PhoneticPortal: React.FC = () => {
                           key={symbol.symbol}
                           className="symbol-btn"
                           onClick={() => handleSymbolClick(symbol)}
-                          onMouseEnter={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
-                          onFocus={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
                         >
                           {symbol.symbol}
                         </button>
@@ -551,8 +541,6 @@ const PhoneticPortal: React.FC = () => {
                           key={symbol.symbol}
                           className="symbol-btn"
                           onClick={() => handleSymbolClick(symbol)}
-                          onMouseEnter={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
-                          onFocus={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
                         >
                           {symbol.symbol}
                         </button>
@@ -568,8 +556,6 @@ const PhoneticPortal: React.FC = () => {
                           key={symbol.symbol}
                           className="symbol-btn"
                           onClick={() => handleSymbolClick(symbol)}
-                          onMouseEnter={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
-                          onFocus={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
                         >
                           {symbol.symbol}
                         </button>
@@ -588,8 +574,6 @@ const PhoneticPortal: React.FC = () => {
                         key={symbol.symbol}
                         className="symbol-btn"
                         onClick={() => handleSymbolClick(symbol)}
-                        onMouseEnter={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
-                        onFocus={() => prefetchPath(getSymbolDetailPath(symbol.symbol))}
                       >
                         {symbol.symbol}
                       </button>

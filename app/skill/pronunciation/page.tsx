@@ -32,16 +32,6 @@ const Page: React.FC = () => {
     }
   }, [router]);
 
-  const prefetchTopicRoute = useCallback(
-    (topicId: string): void => {
-      const route = TOPIC_ROUTES[topicId];
-      if (route) {
-        router.prefetch(route);
-      }
-    },
-    [router],
-  );
-
   const handleNav = useCallback((direction: 'left' | 'right') => {
     setSelectedIndex(prev => {
       let newIndex = prev;
@@ -52,7 +42,7 @@ const Page: React.FC = () => {
         newIndex = prev === TOPICS.length - 1 ? prev : prev + 1;
       }
       
-      // 🔥 CRITICAL FIX: Skip locked topics during navigation
+      // Skip locked topics during navigation.
       const newTopic = TOPICS[newIndex];
       if (lockedTopics.includes(newTopic.id)) {
         // Try next available topic
@@ -102,7 +92,7 @@ const Page: React.FC = () => {
   }, [selectedIndex]);
 
   const handleStartLearning = useCallback(() => {
-    // 🔥 CRITICAL FIX: Check if topic is locked before navigation
+    // Check if topic is locked before navigation.
     if (!isTopicLocked) {
       navigateToTopic(selectedTopic.id);
     } else {
@@ -117,7 +107,7 @@ const Page: React.FC = () => {
       if (e.key === 'ArrowLeft') handleNav('left');
       if (e.key === 'ArrowRight') handleNav('right');
       if (e.key === 'Enter') {
-        // 🔥 CRITICAL FIX: Prevent Enter key on locked topics
+        // Prevent Enter key on locked topics.
         if (!isTopicLocked) {
           handleStartLearning();
         }
@@ -215,7 +205,7 @@ const Page: React.FC = () => {
             </div>
             
             <div className="absolute bottom-1 md:bottom-4 left-0 right-0 text-center text-[10px] md:text-xs text-slate-500 font-mono hidden sm:block">
-                USE <span className="text-white bg-slate-800 px-1 rounded mx-1">←</span> <span className="text-white bg-slate-800 px-1 rounded mx-1">→</span> TO NAVIGATE • <span className="text-white bg-slate-800 px-1 rounded mx-1">ENTER</span> TO ENGAGE
+                USE <span className="text-white bg-slate-800 px-1 rounded mx-1">&lt;-</span> <span className="text-white bg-slate-800 px-1 rounded mx-1">-&gt;</span> TO NAVIGATE • <span className="text-white bg-slate-800 px-1 rounded mx-1">ENTER</span> TO ENGAGE
             </div>
         </div>
 
@@ -223,16 +213,6 @@ const Page: React.FC = () => {
         <div className="mt-3 sm:mt-4 md:mt-6 flex justify-center">
             <button
               onClick={handleStartLearning}
-              onMouseEnter={() => {
-                if (!isTopicLocked) {
-                  prefetchTopicRoute(selectedTopic.id);
-                }
-              }}
-              onFocus={() => {
-                if (!isTopicLocked) {
-                  prefetchTopicRoute(selectedTopic.id);
-                }
-              }}
               disabled={isTopicLocked}
               data-tour="pronunciation-execute-button"
               className={`relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r ${selectedTopic.color} text-white rounded-lg font-semibold text-xs sm:text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${

@@ -30,12 +30,12 @@ export default function DialogScriptTts({
 }: DialogScriptTtsProps) {
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
   const [isPlayingScenario, setIsPlayingScenario] = useState(false);
+  const [canSpeak, setCanSpeak] = useState(false);
 
   const playTokenRef = useRef(0);
   const timeoutRef = useRef<number | null>(null);
+  const supportCheckTimerRef = useRef<number | null>(null);
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
-
-  const canSpeak = useMemo(() => isSpeechSynthesisSupported(), []);
 
   const parsedLines = useMemo(() => lines.map(parseDialogLine), [lines]);
   const speakableLines = useMemo(() => parsedLines.map((line) => line.content), [parsedLines]);
@@ -133,6 +133,22 @@ export default function DialogScriptTts({
     stopSpeechSynthesisPlayback();
     playAt(index, 'single', token);
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    supportCheckTimerRef.current = window.setTimeout(() => {
+      setCanSpeak(isSpeechSynthesisSupported());
+      supportCheckTimerRef.current = null;
+    }, 0);
+
+    return () => {
+      if (supportCheckTimerRef.current !== null) {
+        window.clearTimeout(supportCheckTimerRef.current);
+        supportCheckTimerRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
