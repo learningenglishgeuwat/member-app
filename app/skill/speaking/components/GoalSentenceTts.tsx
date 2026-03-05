@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import {
+  createUtterance,
+  isSpeechSynthesisSupported,
+  stopSpeech,
+} from '@/lib/tts/speech';
 
 type GoalSentenceTtsProps = {
   sentences: string[];
@@ -14,23 +19,6 @@ type PlayMode = 'single' | 'all';
 
 const SPELLING_PATTERN = /\b([A-Za-z](?:\s*-\s*[A-Za-z]){1,})\b/g;
 
-function getPreferredEnglishVoice(): SpeechSynthesisVoice | null {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
-
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
-
 function normalizeSpellingForTts(text: string): string {
   return text.replace(SPELLING_PATTERN, (match) => {
     const letters = match
@@ -42,20 +30,14 @@ function normalizeSpellingForTts(text: string): string {
   });
 }
 
-function createUtterance(text: string) {
-  const utterance = new SpeechSynthesisUtterance(normalizeSpellingForTts(text));
-  utterance.lang = 'en-US';
-  utterance.rate = 0.86;
-  utterance.pitch = 1;
-  utterance.volume = 1;
-
-  const voice = getPreferredEnglishVoice();
-  if (voice) {
-    utterance.voice = voice;
-    utterance.lang = voice.lang;
-  }
-
-  return utterance;
+function createSentenceUtterance(text: string) {
+  return createUtterance(normalizeSpellingForTts(text), {
+    preferredEnglish: 'en-US',
+    rate: 0.86,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: false,
+  });
 }
 
 export default function GoalSentenceTts({
@@ -73,19 +55,20 @@ export default function GoalSentenceTts({
   const isSpeaking = speakingIndex !== null;
 
   function stopAll() {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
     playTokenRef.current += 1;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setSpeakingIndex(null);
   }
 
   function playAt(index: number, mode: PlayMode, token: number) {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
     const synth = window.speechSynthesis;
     const sentence = sentences[index];
     if (!sentence) return;
 
-    const utterance = createUtterance(sentence);
+    const utterance = createSentenceUtterance(sentence);
+    if (!utterance) return;
     utterance.onstart = () => {
       if (playTokenRef.current !== token) return;
       setSpeakingIndex(index);
@@ -107,26 +90,25 @@ export default function GoalSentenceTts({
   }
 
   function playSingle(index: number) {
-    if (!canSpeak || typeof window === 'undefined') return;
+    if (!canSpeak) return;
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     playAt(index, 'single', token);
   }
 
   function playAll() {
-    if (!canSpeak || typeof window === 'undefined') return;
+    if (!canSpeak) return;
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     playAt(0, 'all', token);
   }
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     supportCheckTimerRef.current = window.setTimeout(() => {
-      setCanSpeak('speechSynthesis' in window);
+      setCanSpeak(isSpeechSynthesisSupported());
       supportCheckTimerRef.current = null;
     }, 0);
 
@@ -135,9 +117,7 @@ export default function GoalSentenceTts({
         window.clearTimeout(supportCheckTimerRef.current);
         supportCheckTimerRef.current = null;
       }
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      stopSpeech();
     };
   }, []);
 

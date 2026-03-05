@@ -13,7 +13,8 @@ export type GuideMode =
   | 'flashcard'
   | 'qa'
   | 'tutorial'
-  | 'speaking-practice';
+  | 'speaking-practice'
+  | 'learning-path';
 
 export type TutorialCoachPlacement = 'top' | 'bottom' | 'left' | 'right' | 'center' | 'auto';
 
@@ -174,12 +175,25 @@ export type ComposedReply = {
 };
 
 export type GuideResultMeta = {
-  source: 'qa-ai-like' | 'legacy' | 'tutorial' | 'speaking-practice' | 'navigation';
+  source:
+    | 'qa-ai-like'
+    | 'legacy'
+    | 'tutorial'
+    | 'speaking-practice'
+    | 'navigation'
+    | 'learning-path';
   confidence?: number;
   intent?: GuideAnswerIntent;
   answerType?: GuideAnswerIntent;
   wordSourceType?: WordKnowledgeSourceType;
   matchedTerm?: string;
+  learningPath?: {
+    roadmapType: 'overview' | 'pronunciation' | 'speaking' | 'vocabulary';
+    itemCount: number;
+    totalDays: number;
+    totalGoals?: number;
+    totalWords?: number;
+  };
   navigation?: {
     shouldAutoNavigate: boolean;
     confidenceBand: 'strong' | 'ambiguous' | 'weak';

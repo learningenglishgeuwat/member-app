@@ -1,6 +1,6 @@
 {
   "route": "/skill/vocabulary",
-  "label": "Vocabulary Topics",
+  "label": "Vocabulary",
   "scope": "skill",
   "keywords": [
     "topic vocabulary",
@@ -18,7 +18,7 @@
   "qa": [
     {
       "topicId": "vocabulary-topics-main",
-      "title": "Vocabulary Topics Main",
+      "title": "Vocabulary Main",
       "route": "/skill/vocabulary",
       "keywords": [
         "halaman topic vocabulary",
@@ -40,3 +40,4 @@
     }
   ]
 }
+

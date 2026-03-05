@@ -9,6 +9,7 @@ import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import '../../final-sound-topic.css';
 import './d-ed.css';
 import { primeBestEnglishVoice, speakWithBestEnglishVoice } from '../../tts-utils';
+import { isSpeechSynthesisSupported, speakText, stopSpeech } from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(
   () => import('../../../../components/RecordingControlsButton'),
@@ -382,32 +383,13 @@ export default function FinalSoundDEdPage() {
     setActivePastEndingKey(null);
     setActiveRulesTableRowKey(null);
 
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
-  }, []);
-
-  const getBestEnglishVoice = useCallback((): SpeechSynthesisVoice | null => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
-
-    const voices = window.speechSynthesis.getVoices();
-    if (!voices.length) return null;
-
-    return (
-      voices.find((voice) => voice.name === 'Google US English') ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-      voices.find((voice) => voice.lang === 'en-US') ||
-      voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-      null
-    );
+    stopSpeech();
   }, []);
 
   const speakQueuedText = useCallback(
     (text: string, runId: number, runRef: { current: number }) =>
       new Promise<void>((resolve) => {
-        if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text.trim()) {
+        if (!isSpeechSynthesisSupported() || !text.trim()) {
           resolve();
           return;
         }
@@ -417,24 +399,15 @@ export default function FinalSoundDEdPage() {
           return;
         }
 
-        const synth = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.82;
-        utterance.pitch = 1;
-        utterance.volume = 1;
-
-        const voice = getBestEnglishVoice();
-        if (voice) {
-          utterance.voice = voice;
-          utterance.lang = voice.lang;
-        }
-
-        utterance.onend = () => resolve();
-        utterance.onerror = () => resolve();
-        synth.speak(utterance);
+        void speakText(text, {
+          preferredEnglish: 'en-US',
+          rate: 0.82,
+          pitch: 1,
+          volume: 1,
+          cancelBeforeSpeak: false,
+        }).then(() => resolve());
       }),
-    [getBestEnglishVoice],
+    [],
   );
 
   const playWordBankSingle = useCallback(
@@ -459,13 +432,12 @@ export default function FinalSoundDEdPage() {
       return;
     }
 
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
 
-    const synth = window.speechSynthesis;
     const runId = playAllRunIdRef.current + 1;
     playAllRunIdRef.current = runId;
     setIsPlayingWordBankAll(true);
-    synth.cancel();
+    stopSpeech();
 
     for (const [rowIndex, item] of D_ED_BEFORE_AFTER_WORD_BANK.entries()) {
       if (runId !== playAllRunIdRef.current) break;
@@ -513,13 +485,12 @@ export default function FinalSoundDEdPage() {
       return;
     }
 
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
 
-    const synth = window.speechSynthesis;
     const runId = pastEndingsPlayAllRunIdRef.current + 1;
     pastEndingsPlayAllRunIdRef.current = runId;
     setIsPlayingPastEndingsAll(true);
-    synth.cancel();
+    stopSpeech();
 
     for (const [index, item] of PAST_ENDING_EXAMPLES_FLAT.entries()) {
       if (runId !== pastEndingsPlayAllRunIdRef.current) break;
@@ -549,13 +520,12 @@ export default function FinalSoundDEdPage() {
       return;
     }
 
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
 
-    const synth = window.speechSynthesis;
     const runId = rulesTablePlayAllRunIdRef.current + 1;
     rulesTablePlayAllRunIdRef.current = runId;
     setIsPlayingRulesTableAll(true);
-    synth.cancel();
+    stopSpeech();
 
     for (const row of FINAL_SOUND_ED_TABLE) {
       if (runId !== rulesTablePlayAllRunIdRef.current) break;

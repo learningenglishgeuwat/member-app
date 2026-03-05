@@ -7,6 +7,7 @@ import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
+import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { MATERIALS, TOPIC_HIGHLIGHTS, type TextMaterial, type TopicHighlightConfig } from './data/textData';
 import './text.css';
 
@@ -805,23 +806,6 @@ const renderPhoneticHighlightedParagraph = (
   return paragraph;
 };
 
-const getPreferredEnglishVoice = (): SpeechSynthesisVoice | null => {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
-
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-};
-
 export default function PronunciationTextPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>(VISIBLE_MATERIALS[0]?.id ?? '');
@@ -992,9 +976,7 @@ export default function PronunciationTextPage() {
 
   const stopAllSpeech = useCallback(() => {
     speechTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setActiveSpeechKey(null);
     setActiveSpeechGroup(null);
   }, []);
@@ -1010,16 +992,16 @@ export default function PronunciationTextPage() {
 
     return new Promise((resolve) => {
       const synth = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.84;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      const preferredVoice = getPreferredEnglishVoice();
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-        utterance.lang = preferredVoice.lang;
+      const utterance = createUtterance(text, {
+        preferredEnglish: 'en-US',
+        rate: 0.84,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) {
+        resolve();
+        return;
       }
 
       const finish = () => {

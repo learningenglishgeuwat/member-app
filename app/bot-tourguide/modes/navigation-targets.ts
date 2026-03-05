@@ -228,7 +228,7 @@ const buildVocabularyGenericTriggers = (
 
 export const VOCABULARY_HUB_TARGET: NavigationVocabularyTarget = {
   path: '/skill/vocabulary',
-  label: 'Vocabulary Topics',
+  label: 'Vocabulary',
   triggers: [
     'vocabulary',
     'vocab',
@@ -621,3 +621,4 @@ export const NAVIGATION_TYPO_RULES: NavigationTypoRule[] = [
 
 export const applyNavigationTypoRules = (query: string): string =>
   NAVIGATION_TYPO_RULES.reduce((acc, rule) => acc.replace(rule.pattern, rule.replacement), query);
+

@@ -8,6 +8,12 @@ import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
+import {
+  createUtterance,
+  isSpeechSynthesisSupported,
+  stopSpeech,
+  waitForVoices,
+} from '@/lib/tts/speech';
 import type { WordExample } from '../data/wordExamples/wordExamples';
 import type { CommonLetter } from '../data/commonLetters/CommonLetters';
 
@@ -339,15 +345,9 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
-  // Preload voices to ensure they are available when needed
   useEffect(() => {
-    const loadVoices = () => {
-      window.speechSynthesis.getVoices();
-    };
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    
-    // Cleanup
+    void waitForVoices();
+
     return () => {
       playSessionRef.current += 1;
       if (playNextTimeoutRef.current) {
@@ -357,32 +357,9 @@ const SymbolDetailPage: React.FC = () => {
       setIsPlayingAll(false);
       setActiveWord(null);
       setActiveWordIndex(null);
-      window.speechSynthesis.onvoiceschanged = null;
-      window.speechSynthesis.cancel();
+      stopSpeech();
     };
   }, []);
-
-  const getPreferredVoice = () => {
-    const voices = window.speechSynthesis.getVoices();
-    return voices.find(v => v.name === 'Google US English') || 
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Samantha')) || // macOS high quality
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Zira')) || // Windows high quality
-      voices.find(v => v.lang === 'en-US'); // Fallback
-  };
-
-  const getPreferredVoiceByAccent = (accent: 'uk' | 'us') => {
-    const voices = window.speechSynthesis.getVoices();
-
-    if (accent === 'uk') {
-      return voices.find(v => v.name === 'Google UK English Female') ||
-        voices.find(v => v.name === 'Google UK English Male') ||
-        voices.find(v => v.lang === 'en-GB' && v.name.includes('Google')) ||
-        voices.find(v => v.lang === 'en-GB');
-    }
-
-    return getPreferredVoice();
-  };
 
   // Debug: Check if data is loaded correctly
   useEffect(() => {
@@ -400,14 +377,14 @@ const SymbolDetailPage: React.FC = () => {
       window.clearTimeout(playNextTimeoutRef.current);
       playNextTimeoutRef.current = null;
     }
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setIsPlayingAll(false);
     setActiveWord(null);
     setActiveWordIndex(null);
   };
 
   const handlePlayAllWords = () => {
-    if (!('speechSynthesis' in window) || symbolLoading || symbolData.examples.length === 0) return;
+    if (!isSpeechSynthesisSupported() || symbolLoading || symbolData.examples.length === 0) return;
 
     if (isPlayingAll) {
       stopPlayAllWords();
@@ -416,7 +393,6 @@ const SymbolDetailPage: React.FC = () => {
 
     stopPlayAllWords();
     const currentSession = playSessionRef.current;
-    const preferredVoice = getPreferredVoice();
     let currentIndex = 0;
     setIsPlayingAll(true);
       
@@ -442,14 +418,17 @@ const SymbolDetailPage: React.FC = () => {
         });
       }
 
-      const utterance = new SpeechSynthesisUtterance(example.word);
-      utterance.rate = 0.8;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-      utterance.lang = 'en-US';
-
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+      const utterance = createUtterance(example.word, {
+        lang: 'en-US',
+        rate: 0.8,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) {
+        currentIndex++;
+        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
+        return;
       }
 
       utterance.onstart = () => {
@@ -477,22 +456,20 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const handlePlayWord = (word: string, wordIndex?: number) => {
-    if ('speechSynthesis' in window) {
+    if (isSpeechSynthesisSupported()) {
       stopPlayAllWords();
-      window.speechSynthesis.cancel();
+      stopSpeech();
       setActiveWord(word);
       setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
       
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.rate = 0.8; // Slightly slower for better pronunciation clarity
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-      utterance.lang = 'en-US';
-      
-      const preferredVoice = getPreferredVoice();
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
+      const utterance = createUtterance(word, {
+        lang: 'en-US',
+        rate: 0.8,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) return;
       
       utterance.onstart = () => {
         setActiveWord(word);
@@ -509,23 +486,21 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const handlePlayBritishNoteWord = (word: string, accent: 'uk' | 'us') => {
-    if (!('speechSynthesis' in window)) return;
+    if (!isSpeechSynthesisSupported()) return;
 
     stopPlayAllWords();
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setActiveWord(word);
     setActiveWordIndex(null);
 
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.rate = 0.8;
-    utterance.pitch = 1.0;
-    utterance.volume = 1.0;
-    utterance.lang = accent === 'uk' ? 'en-GB' : 'en-US';
-
-    const preferredVoice = getPreferredVoiceByAccent(accent);
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-    }
+    const utterance = createUtterance(word, {
+      lang: accent === 'uk' ? 'en-GB' : 'en-US',
+      rate: 0.8,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    });
+    if (!utterance) return;
 
     utterance.onend = () => {
       setActiveWord(null);

@@ -6,6 +6,7 @@ import { Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './stressing.css';
 
 const RecordingControlsButton = dynamic(() => import('../../components/RecordingControlsButton'), {
@@ -602,21 +603,6 @@ function getSectionPlaybackEntries(sectionKey: AudioPlaySectionKey): PlaybackEnt
   }
 }
 
-function getPreferredEnglishVoice(): SpeechSynthesisVoice | null {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    null
-  );
-}
-
 export default function StressingPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openSections, setOpenSections] = useState<Record<SectionKey, boolean>>(
@@ -701,37 +687,19 @@ export default function StressingPage() {
   }, []);
 
   const speakTextForQueue = useCallback((text: string): Promise<void> => {
-    return new Promise((resolve) => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text.trim()) {
-        resolve();
-        return;
-      }
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      const bestVoice = getPreferredEnglishVoice();
-
-      if (bestVoice) {
-        utterance.voice = bestVoice;
-        utterance.lang = bestVoice.lang;
-      } else {
-        utterance.lang = 'en-US';
-      }
-
-      utterance.rate = 0.82;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-      utterance.onend = () => resolve();
-      utterance.onerror = () => resolve();
-      window.speechSynthesis.speak(utterance);
+    return speakText(text, {
+      preferredEnglish: 'en-US',
+      rate: 0.82,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
     });
   }, []);
 
   const stopAllTts = useCallback(() => {
     playAllTokenRef.current += 1;
     singlePlayTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setActivePlayAllSection(null);
     setActiveTtsItemKey(null);
   }, []);
@@ -945,15 +913,11 @@ export default function StressingPage() {
   }, [openSections, sectionStateReady]);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
-    window.speechSynthesis.getVoices();
-    const onVoicesChanged = () => window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = onVoicesChanged;
+    if (typeof window === 'undefined') return;
+    void waitForVoices();
 
     return () => {
       stopAllTts();
-      window.speechSynthesis.onvoiceschanged = null;
     };
   }, [stopAllTts]);
 

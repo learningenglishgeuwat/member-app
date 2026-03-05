@@ -70,7 +70,7 @@ export default function VocabularyPage() {
 
       <div className="vocab-shell">
         <header className="vocab-header">
-          <h1 className="vocab-title">Vocabulary Topics</h1>
+          <h1 className="vocab-title">Vocabulary</h1>
           <p className="vocab-subtitle">
             Pilih topik dulu, lalu masuk ke daftar kata dan contoh kalimat.
             Fokus awal: topik dasar untuk latihan speaking harian.

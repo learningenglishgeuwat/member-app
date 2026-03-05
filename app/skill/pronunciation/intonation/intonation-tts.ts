@@ -1,3 +1,5 @@
+import { speakText, stopSpeech } from '@/lib/tts/speech';
+
 export type IntonationPlaybackMode = 'model' | 'shadowing' | null;
 export type IntonationPlaybackStatus = 'idle' | 'model' | 'listening' | 'shadowing' | 'continue';
 
@@ -23,49 +25,6 @@ const IDLE_STATE: IntonationPlaybackState = {
   countdown: null,
 };
 
-function getPreferredEnglishVoice(): SpeechSynthesisVoice | null {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
-
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
-
-function waitForVoices(timeoutMs = 1500): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return Promise.resolve();
-
-  const synth = window.speechSynthesis;
-  if (synth.getVoices().length > 0) return Promise.resolve();
-
-  return new Promise((resolve) => {
-    let done = false;
-
-    const finish = () => {
-      if (done) return;
-      done = true;
-      synth.removeEventListener('voiceschanged', onVoicesChanged);
-      resolve();
-    };
-
-    const onVoicesChanged = () => {
-      if (synth.getVoices().length > 0) finish();
-    };
-
-    synth.addEventListener('voiceschanged', onVoicesChanged);
-    synth.getVoices();
-    window.setTimeout(finish, timeoutMs);
-  });
-}
-
 export function createIntonationTtsPlayer(onStateChange: OnStateChange) {
   let runId = 0;
 
@@ -79,37 +38,20 @@ export function createIntonationTtsPlayer(onStateChange: OnStateChange) {
 
   const stop = () => {
     runId += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     toIdle();
   };
 
-  const speakText = async (text: string, expectedRunId: number) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+  const speakLine = async (text: string, expectedRunId: number) => {
     if (!text.trim()) return;
     if (expectedRunId !== runId) return;
 
-    const synth = window.speechSynthesis;
-    await waitForVoices();
-    if (expectedRunId !== runId) return;
-
-    await new Promise<void>((resolve) => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.82;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      const preferredVoice = getPreferredEnglishVoice();
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-        utterance.lang = preferredVoice.lang;
-      }
-
-      utterance.onend = () => resolve();
-      utterance.onerror = () => resolve();
-      synth.speak(utterance);
+    await speakText(text, {
+      preferredEnglish: 'en-US',
+      rate: 0.82,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
     });
   };
 
@@ -137,7 +79,7 @@ export function createIntonationTtsPlayer(onStateChange: OnStateChange) {
         currentText: cleaned[index],
         countdown: null,
       });
-      await speakText(cleaned[index], currentRunId);
+      await speakLine(cleaned[index], currentRunId);
     }
 
     if (currentRunId === runId) toIdle();
@@ -161,7 +103,7 @@ export function createIntonationTtsPlayer(onStateChange: OnStateChange) {
         currentText: cleaned[index],
         countdown: null,
       });
-      await speakText(cleaned[index], currentRunId);
+      await speakLine(cleaned[index], currentRunId);
       if (currentRunId !== runId) return;
 
       for (let second = SHADOWING_SECONDS; second >= 1; second -= 1) {

@@ -1,3 +1,10 @@
+import {
+  createUtterance,
+  isSpeechSynthesisSupported as isGlobalSpeechSynthesisSupported,
+  pickPreferredEnglishVoice,
+  stopSpeech,
+} from '@/lib/tts/speech';
+
 const SPEAKER_LINE_PATTERN = /^(Partner|You)\s*:\s*(.*)$/i;
 const HIGH_QUALITY_US_MALE_VOICE_NAMES = [
   'Microsoft Guy Online (Natural) - English (United States)',
@@ -53,7 +60,7 @@ function pickByExactNames(
 }
 
 function getAvailableVoices(): SpeechSynthesisVoice[] {
-  if (!isSpeechSynthesisSupported()) return [];
+  if (!isGlobalSpeechSynthesisSupported()) return [];
   return window.speechSynthesis.getVoices();
 }
 
@@ -71,16 +78,7 @@ function normalizeSpellingForTts(text: string): string {
 function getPreferredEnglishVoice(): SpeechSynthesisVoice | null {
   const voices = getAvailableVoices();
   if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
+  return pickPreferredEnglishVoice(voices, 'en-US');
 }
 
 function getPreferredMaleEnglishVoice(): SpeechSynthesisVoice | null {
@@ -124,23 +122,37 @@ function getPreferredVoiceForSpeaker(speaker: DialogSpeaker): SpeechSynthesisVoi
 }
 
 export function isSpeechSynthesisSupported(): boolean {
-  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+  return isGlobalSpeechSynthesisSupported();
 }
 
 export function stopSpeechSynthesisPlayback(): void {
-  if (!isSpeechSynthesisSupported()) return;
-  window.speechSynthesis.cancel();
+  stopSpeech();
 }
 
 export function createDialogUtterance(
   text: string,
   speaker: DialogSpeaker,
 ): SpeechSynthesisUtterance {
-  const utterance = new SpeechSynthesisUtterance(normalizeSpellingForTts(text));
-  utterance.lang = 'en-US';
-  utterance.rate = 0.85;
-  utterance.pitch = speaker === 'partner' ? 0.92 : 1;
-  utterance.volume = 1;
+  const normalizedText = normalizeSpellingForTts(text);
+  const utterance =
+    createUtterance(normalizedText, {
+      lang: 'en-US',
+      rate: 0.85,
+      pitch: speaker === 'partner' ? 0.92 : 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    }) ??
+    (() => {
+      if (typeof window !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined') {
+        const fallback = new window.SpeechSynthesisUtterance(normalizedText);
+        fallback.lang = 'en-US';
+        fallback.rate = 0.85;
+        fallback.pitch = speaker === 'partner' ? 0.92 : 1;
+        fallback.volume = 1;
+        return fallback;
+      }
+      throw new Error('Speech synthesis is not supported in this environment.');
+    })();
 
   const voice = getPreferredVoiceForSpeaker(speaker);
   if (voice) {

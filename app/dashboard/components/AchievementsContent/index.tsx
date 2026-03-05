@@ -12,9 +12,11 @@ import {
   type ReferralStats,
   type WithdrawRequestRow,
 } from '@/lib/memberStats';
-import type { Tier } from '@/types/database';
+import { getActiveSpecialOfferReferralCommission } from '@/lib/specialOffer';
+import type { Tier, TierEnum } from '@/types/database';
 
 const AchievementsContent: React.FC = () => {
+  const SPECIAL_OFFER_FALLBACK_REFERRAL_PCT = 7;
   const { user } = useAuth();
   const [copiedCode, setCopiedCode] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -36,6 +38,9 @@ const AchievementsContent: React.FC = () => {
   const [tierConfig, setTierConfig] = useState<Tier[]>(() => getCachedTierConfigSnapshot() ?? []);
   const [tierLoading, setTierLoading] = useState(() => (getCachedTierConfigSnapshot()?.length ?? 0) === 0);
   const [tierLoadError, setTierLoadError] = useState<string | null>(null);
+  const [specialOfferReferralPct, setSpecialOfferReferralPct] = useState<number>(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
+  const [specialOfferEligible, setSpecialOfferEligible] = useState(true);
+  const [specialOfferLoading, setSpecialOfferLoading] = useState(false);
   const isMountedRef = useRef(true);
 
   useEffect(() => {
@@ -92,6 +97,30 @@ const AchievementsContent: React.FC = () => {
     }
   }, [tierConfig.length]);
 
+  const loadSpecialOffer = useCallback(async () => {
+    if (!user?.tier) return;
+    setSpecialOfferLoading(true);
+    try {
+      const specialOffer = await getActiveSpecialOfferReferralCommission(user.tier as TierEnum);
+      if (!isMountedRef.current) return;
+
+      setSpecialOfferEligible(specialOffer.isEligible);
+      if (specialOffer.referralCommissionPct !== null) {
+        setSpecialOfferReferralPct(specialOffer.referralCommissionPct);
+      } else {
+        setSpecialOfferReferralPct(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
+      }
+    } catch (error) {
+      console.error('Error loading special offer:', error);
+      if (!isMountedRef.current) return;
+      setSpecialOfferEligible(true);
+      setSpecialOfferReferralPct(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
+    } finally {
+      if (!isMountedRef.current) return;
+      setSpecialOfferLoading(false);
+    }
+  }, [user?.tier]);
+
   // Load data when component mounts
   useEffect(() => {
     if (!user?.id) return;
@@ -105,6 +134,15 @@ const AchievementsContent: React.FC = () => {
     }
     loadTierConfig();
   }, [loadTierConfig, tierConfig.length]);
+
+  useEffect(() => {
+    void loadSpecialOffer();
+  }, [loadSpecialOffer]);
+
+  const formatPercent = (value: number) => {
+    if (Number.isInteger(value)) return `${value}`;
+    return value.toFixed(2).replace(/\.?0+$/, '');
+  };
 
   const getTierIcon = (tier: string, isCurrentTier: boolean = false) => {
     const iconColor = isCurrentTier ? 'text-white' : 'text-slate-400';
@@ -367,12 +405,16 @@ const AchievementsContent: React.FC = () => {
           )}
         </div>
 
-        <div className="mt-4 sm:mt-5 md:mt-6 rounded-lg border border-amber-400/40 bg-amber-500/10 p-4">
-          <div className="flex items-center justify-between gap-2">
-            <h4 className="text-sm sm:text-base font-bold text-amber-200 font-display">Special Price</h4>
+        <div className="mt-4 sm:mt-5 md:mt-6 rounded-lg border border-amber-400/40 bg-amber-500/10 p-4 text-center">
+          <div className="flex items-center justify-center gap-2">
+            <h4 className="text-sm sm:text-base font-bold text-amber-200 font-display">Special Offer</h4>
           </div>
-          <p className="mt-2 text-xs sm:text-sm text-amber-100">
-            • 7% referral commission for all tiers
+          <p className="mt-2 text-xs sm:text-sm text-amber-100 text-center">
+            {specialOfferLoading
+              ? 'Loading offer...'
+              : specialOfferEligible
+                ? `• ${formatPercent(specialOfferReferralPct)}% referral commission`
+                : 'Special Offer belum tersedia untuk tier kamu'}
           </p>
         </div>
       </div>

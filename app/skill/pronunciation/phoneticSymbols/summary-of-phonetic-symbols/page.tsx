@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
+import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './summary-of-phonetic-symbols.css';
 
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
@@ -130,57 +131,39 @@ export default function SummaryOfPhoneticSymbolsPage() {
   };
 
   useEffect(() => {
-    const warmupVoices = () => {
-      window.speechSynthesis.getVoices();
-    };
-    warmupVoices();
-    window.speechSynthesis.onvoiceschanged = warmupVoices;
+    void waitForVoices();
     return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-      window.speechSynthesis.cancel();
+      stopSpeech();
       setActiveSpeakingExampleKey(null);
     };
   }, []);
 
   const handleTabChange = (nextTab: TabKey) => {
     if (nextTab === activeTab) return;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setActivePlayGroup(null);
     setActiveSpeakingExampleKey(null);
     playGroupRef.current = null;
     setActiveTab(nextTab);
   };
 
-  const getPreferredVoice = () => {
-    const voices = window.speechSynthesis.getVoices();
-    return (
-      voices.find((v) => v.name === 'Google US English') ||
-      voices.find((v) => v.lang === 'en-US' && v.name.includes('Google')) ||
-      voices.find((v) => v.lang === 'en-US' && v.name.includes('Samantha')) ||
-      voices.find((v) => v.lang === 'en-US' && v.name.includes('Zira')) ||
-      voices.find((v) => v.lang === 'en-US') ||
-      voices[0]
-    );
-  };
-
   const speakWord = (word: string, exampleKey?: string) => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
+    if (!isSpeechSynthesisSupported()) return;
+    stopSpeech();
     setActivePlayGroup(null);
     setActiveSpeakingExampleKey(exampleKey ?? null);
     if (exampleKey) {
       scrollToExampleCard(exampleKey);
     }
     playGroupRef.current = null;
-    const utterance = new SpeechSynthesisUtterance(word);
-    const preferredVoice = getPreferredVoice();
-    utterance.lang = 'en-US';
-    utterance.rate = 0.82;
-    utterance.pitch = 1.0;
-    utterance.volume = 1.0;
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-    }
+    const utterance = createUtterance(word, {
+      lang: 'en-US',
+      rate: 0.82,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    });
+    if (!utterance) return;
     utterance.onend = () => {
       setActiveSpeakingExampleKey(null);
     };
@@ -191,17 +174,17 @@ export default function SummaryOfPhoneticSymbolsPage() {
   };
 
   const playAllWordsByGroup = (groupKey: string, words: SpokenWordEntry[]) => {
-    if (!('speechSynthesis' in window) || words.length === 0) return;
+    if (!isSpeechSynthesisSupported() || words.length === 0) return;
 
     if (activePlayGroup === groupKey) {
-      window.speechSynthesis.cancel();
+      stopSpeech();
       setActivePlayGroup(null);
       setActiveSpeakingExampleKey(null);
       playGroupRef.current = null;
       return;
     }
 
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setActivePlayGroup(groupKey);
     playGroupRef.current = groupKey;
     let index = 0;
@@ -215,13 +198,18 @@ export default function SummaryOfPhoneticSymbolsPage() {
       }
 
       const currentWord = words[index];
-      const utterance = new SpeechSynthesisUtterance(currentWord.word);
-      const preferredVoice = getPreferredVoice();
-      utterance.lang = 'en-US';
-      utterance.rate = 0.82;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-      if (preferredVoice) utterance.voice = preferredVoice;
+      const utterance = createUtterance(currentWord.word, {
+        lang: 'en-US',
+        rate: 0.82,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) {
+        index += 1;
+        speakNext();
+        return;
+      }
 
       utterance.onstart = () => {
         if (playGroupRef.current !== groupKey) return;

@@ -15,6 +15,7 @@ import {
   primeBestEnglishVoice,
   speakWithBestEnglishVoice,
 } from '../../../final-sound-new/tts-utils';
+import { stopSpeech } from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(
   () => import('../../../../components/RecordingControlsButton'),
@@ -36,20 +37,6 @@ const RELEASED_T_ENDING_COMMON_MISTAKES: ReadonlyArray<string> = [
   'Tidak ada pelepasan sama sekali saat kata perlu ditegaskan.',
   'Durasi final /t/ terlalu panjang sehingga terdengar kaku.',
 ];
-
-function pickPreferredVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -96,28 +83,10 @@ function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<st
 }
 
 async function speakWordForPlayAll(text: string): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text);
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const preferredVoice = pickPreferredVoice(synth.getVoices());
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-      utterance.lang = preferredVoice.lang;
-    }
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakWithBestEnglishVoice(text, {
+    rate: 0.82,
+    pitch: 1,
+    volume: 1,
   });
 }
 
@@ -213,13 +182,15 @@ export default function ClearTEndingPage() {
     sentencesPlayAllTokenRef.current += 1;
     sentenceDrillsPlayAllTokenRef.current += 1;
     singlePlayTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setIsPlayingExamplesAll(false);
     setIsPlayingSentencesAll(false);
     setIsPlayingSentenceDrillsAll(false);
     setActiveTtsCardKey(null);
+  }, []);
+
+  useEffect(() => {
+    void primeBestEnglishVoice();
   }, []);
 
   const playSingleCardTts = async (text: string, activeCardKey: string) => {

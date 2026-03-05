@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-04T10:32:16.874Z",
+  "generatedAt": "2026-03-05T00:24:57.852Z",
   "routes": [
     {
       "id": "dashboard",
@@ -2788,7 +2788,7 @@
     },
     {
       "id": "skill-vocabulary",
-      "label": "Vocabulary Topics",
+      "label": "Vocabulary",
       "path": "/skill/vocabulary",
       "scope": "skill",
       "keywords": [
@@ -5949,7 +5949,7 @@
     },
     {
       "topicId": "vocabulary-topics-main",
-      "title": "Vocabulary Topics Main",
+      "title": "Vocabulary Main",
       "route": "/skill/vocabulary",
       "keywords": [
         "halaman topic vocabulary",
@@ -5971,3 +5971,4 @@
     }
   ]
 }
+

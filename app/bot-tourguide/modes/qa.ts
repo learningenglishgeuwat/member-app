@@ -107,7 +107,7 @@ const speakingGoalEntries: GuideQaEntry[] = SPEAKING_GOALS.map((goal) => {
 
 const vocabularyHubEntry: GuideQaEntry = {
   topicId: 'vocabulary-topics-main',
-  title: 'Vocabulary Topics',
+  title: 'Vocabulary',
   route: '/skill/vocabulary',
   keywords: [
     'vocabulary',
@@ -119,8 +119,8 @@ const vocabularyHubEntry: GuideQaEntry = {
     'vocabulary roadmap',
   ],
   shortAnswer:
-    'Vocabulary Topics berisi topik kosakata bertahap dari fondasi harian sampai konteks sosial, akademik, dan digital.',
-  sourceSections: [{ label: 'Buka Vocabulary Topics', route: '/skill/vocabulary' }],
+    'Vocabulary berisi topik kosakata bertahap dari fondasi harian sampai konteks sosial, akademik, dan digital.',
+  sourceSections: [{ label: 'Buka Vocabulary', route: '/skill/vocabulary' }],
 };
 
 const vocabularyTopicEntries: GuideQaEntry[] = VOCABULARY_TOPICS.map((topic) => {
@@ -1075,3 +1075,4 @@ export const resolveQaMode = (
     },
   };
 };
+

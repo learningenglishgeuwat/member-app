@@ -195,7 +195,7 @@ export default function SEsSimulationPlayer({
       <div className="s-es-process-header">
         <h3>{activeScene.title}</h3>
         <span>
-          Scene {activeSceneIndex + 1} / {S_ES_APPLICATION_SCENES.length}
+          Pola {activeSceneIndex + 1} / {S_ES_APPLICATION_SCENES.length}
         </span>
       </div>
 
@@ -256,7 +256,7 @@ export default function SEsSimulationPlayer({
           className="s-es-process-btn"
           onClick={handleProcessPrev}
           disabled={activeSceneIndex === 0}
-          aria-label="Previous scene"
+          aria-label="Previous pattern"
         >
           Prev
         </button>
@@ -265,7 +265,7 @@ export default function SEsSimulationPlayer({
           type="button"
           className="s-es-process-btn s-es-process-btn-primary"
           onClick={handleProcessPlayPause}
-          aria-label={isPlayingProcess ? 'Pause scene playback' : 'Play scene playback'}
+          aria-label={isPlayingProcess ? 'Pause pattern playback' : 'Play pattern playback'}
         >
           {isPlayingProcess ? 'Pause' : 'Play'}
         </button>
@@ -275,7 +275,7 @@ export default function SEsSimulationPlayer({
           className="s-es-process-btn"
           onClick={handleProcessNext}
           disabled={activeSceneIndex === S_ES_APPLICATION_SCENES.length - 1}
-          aria-label="Next scene"
+          aria-label="Next pattern"
         >
           Next
         </button>
@@ -284,7 +284,7 @@ export default function SEsSimulationPlayer({
           type="button"
           className="s-es-process-btn"
           onClick={handleProcessReplay}
-          aria-label="Replay from first scene"
+          aria-label="Replay from first pattern"
         >
           Replay
         </button>
@@ -297,9 +297,9 @@ export default function SEsSimulationPlayer({
             type="button"
             className={`s-es-process-scene-card ${index === activeSceneIndex ? 'is-active' : ''}`}
             onClick={() => handleSelectScene(index)}
-            aria-label={`Go to scene ${index + 1}: ${scene.title}`}
+            aria-label={`Go to pattern ${index + 1}: ${scene.title}`}
           >
-            <span className="s-es-process-scene-index">Scene {index + 1}</span>
+            <span className="s-es-process-scene-index">Pola {index + 1}</span>
             <strong className="s-es-process-scene-title">{scene.title}</strong>
             <span className="s-es-process-scene-sound">{scene.resultSound}</span>
           </button>

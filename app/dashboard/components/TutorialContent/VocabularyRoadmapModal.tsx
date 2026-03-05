@@ -2,31 +2,25 @@
 
 import Link from 'next/link'
 import React, { useEffect, useMemo, useState } from 'react'
-import { VOCABULARY_TOPICS } from '../../../skill/vocabulary/topic/data/topics'
-import { getVocabularyWordsByTopic } from '../../../skill/vocabulary/topic/data/words'
+import {
+  VOCABULARY_ROADMAP_ITEMS,
+  VOCABULARY_ROADMAP_TOTAL_DAYS,
+  VOCABULARY_ROADMAP_TOTAL_WORDS,
+} from './roadmap-data/vocabulary-roadmap'
 
 type VocabularyRoadmapModalProps = {
   isOpen: boolean
   onClose: () => void
-}
-
-type VocabularyRoadmapItem = {
-  id: string
-  title: string
-  href: string
-  focus: string
-  wordCount: number
-  estimatedDays: number
+  zIndex?: number
 }
 
 const VOCAB_ROADMAP_CHECKLIST_KEY = 'dashboard-vocabulary-roadmap-checklist-v1'
 
-function estimateVocabularyDays(wordCount: number): number {
-  // Baseline: +/- 12 kata per hari (belajar + review) dalam 30 menit.
-  return Math.max(2, Math.ceil(wordCount / 12))
-}
-
-const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({ isOpen, onClose }) => {
+const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
+  isOpen,
+  onClose,
+  zIndex = 200,
+}) => {
   const [checkedById, setCheckedById] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {}
     try {
@@ -43,35 +37,9 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({ isOpen,
     localStorage.setItem(VOCAB_ROADMAP_CHECKLIST_KEY, JSON.stringify(checkedById))
   }, [checkedById, isOpen])
 
-  const roadmapItems = useMemo<VocabularyRoadmapItem[]>(
-    () =>
-      VOCABULARY_TOPICS.map((topic) => {
-        const wordCount = getVocabularyWordsByTopic(topic.topicId).length
-        return {
-          id: topic.topicId,
-          title: topic.title,
-          href: `/skill/vocabulary/topic/pages/${topic.topicId}`,
-          focus: topic.subtitle,
-          wordCount,
-          estimatedDays: estimateVocabularyDays(wordCount),
-        }
-      }),
-    []
-  )
-
   const completedCount = useMemo(
-    () => roadmapItems.filter((item) => checkedById[item.id]).length,
-    [checkedById, roadmapItems]
-  )
-
-  const totalDays = useMemo(
-    () => roadmapItems.reduce((sum, item) => sum + item.estimatedDays, 0),
-    [roadmapItems]
-  )
-
-  const totalWords = useMemo(
-    () => roadmapItems.reduce((sum, item) => sum + item.wordCount, 0),
-    [roadmapItems]
+    () => VOCABULARY_ROADMAP_ITEMS.filter((item) => checkedById[item.id]).length,
+    [checkedById]
   )
 
   const toggleChecked = (id: string) => {
@@ -87,6 +55,7 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({ isOpen,
     <div
       className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
       onClick={onClose}
+      style={{ zIndex }}
     >
       <div
         className="w-full max-w-[96vw] sm:max-w-6xl bg-slate-950 border border-green-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(34,197,94,0.2)]"
@@ -101,9 +70,9 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({ isOpen,
               Estimasi dibuat untuk belajar 30 menit per hari.
             </p>
             <p className="text-slate-300 text-xs sm:text-sm mt-2">
-              Progress: <span className="text-green-300 font-semibold">{completedCount}/{roadmapItems.length}</span> topik selesai
-              <span className="text-slate-500"> | Total kata: {totalWords}</span>
-              <span className="text-slate-500"> | Total estimasi: {totalDays} hari</span>
+              Progress: <span className="text-green-300 font-semibold">{completedCount}/{VOCABULARY_ROADMAP_ITEMS.length}</span> topik selesai
+              <span className="text-slate-500"> | Total kata: {VOCABULARY_ROADMAP_TOTAL_WORDS}</span>
+              <span className="text-slate-500"> | Total estimasi: {VOCABULARY_ROADMAP_TOTAL_DAYS} hari</span>
             </p>
           </div>
           <button
@@ -129,7 +98,7 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({ isOpen,
               </tr>
             </thead>
             <tbody>
-              {roadmapItems.map((item, index) => (
+              {VOCABULARY_ROADMAP_ITEMS.map((item, index) => (
                 <tr key={item.id} className="border-t border-slate-800/70 text-slate-200">
                   <td className="px-3 sm:px-4 py-3">{index + 1}</td>
                   <td className="px-3 sm:px-4 py-3">

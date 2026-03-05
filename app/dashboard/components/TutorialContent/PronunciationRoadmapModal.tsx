@@ -2,79 +2,25 @@
 
 import Link from 'next/link'
 import React, { useEffect, useMemo, useState } from 'react'
+import {
+  PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS,
+  PRONUNCIATION_ROADMAP_ITEMS,
+  PRONUNCIATION_ROADMAP_TOTAL_DAYS,
+} from './roadmap-data/pronunciation-roadmap'
 
 type PronunciationRoadmapModalProps = {
   isOpen: boolean
   onClose: () => void
-}
-
-type RoadmapItem = {
-  id: string
-  title: string
-  href: string
-  focus: string
-  estimatedDays: number
+  zIndex?: number
 }
 
 const ROADMAP_CHECKLIST_KEY = 'dashboard-pronunciation-roadmap-checklist-v1'
 
-const ROADMAP_ITEMS: RoadmapItem[] = [
-  {
-    id: 'alphabet',
-    title: 'Alphabet',
-    href: '/skill/pronunciation/alphabet',
-    focus: 'Fondasi bunyi huruf dan listening awal.',
-    estimatedDays: 4,
-  },
-  {
-    id: 'phonetic-symbols',
-    title: 'Phonetic Symbols',
-    href: '/skill/pronunciation/phoneticSymbols',
-    focus: 'Akurasi bunyi IPA dan pemetaan suara.',
-    estimatedDays: 16,
-  },
-  {
-    id: 'stressing',
-    title: 'Stressing',
-    href: '/skill/pronunciation/stressing',
-    focus: 'Tekanan kata agar ucapan lebih natural.',
-    estimatedDays: 8,
-  },
-  {
-    id: 'intonation',
-    title: 'Intonation',
-    href: '/skill/pronunciation/intonation',
-    focus: 'Naik turun nada untuk makna dan emosi.',
-    estimatedDays: 8,
-  },
-  {
-    id: 'final-sound',
-    title: 'Final Sound',
-    href: '/skill/pronunciation/final-sound-new',
-    focus: 'Akhiran bunyi penting untuk kejelasan.',
-    estimatedDays: 7,
-  },
-  {
-    id: 'american-t',
-    title: 'American /t/',
-    href: '/skill/pronunciation/american-t',
-    focus: 'Pola /t/ American untuk connected speech.',
-    estimatedDays: 10,
-  },
-  {
-    id: 'text-practice',
-    title: 'Text Practice',
-    href: '/skill/pronunciation/text',
-    focus: 'Integrasi semua pola lewat teks utuh.',
-    estimatedDays: 6,
-  },
-]
-
-const ROADMAP_CHECKLIST_ENABLED_IDS = ROADMAP_ITEMS
-  .filter((item) => item.id !== 'text-practice')
-  .map((item) => item.id)
-
-const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({ isOpen, onClose }) => {
+const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
+  isOpen,
+  onClose,
+  zIndex = 200,
+}) => {
   const [checkedById, setCheckedById] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {}
     try {
@@ -92,14 +38,11 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({ i
   }, [checkedById, isOpen])
 
   const completedCount = useMemo(
-    () => ROADMAP_CHECKLIST_ENABLED_IDS.filter((id) => checkedById[id]).length,
+    () => PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS.filter((id) => checkedById[id]).length,
     [checkedById]
   )
 
-  const totalDays = useMemo(
-    () => ROADMAP_ITEMS.reduce((sum, item) => sum + item.estimatedDays, 0),
-    []
-  )
+  const totalDays = useMemo(() => PRONUNCIATION_ROADMAP_TOTAL_DAYS, [])
 
   const toggleChecked = (id: string) => {
     setCheckedById((prev) => ({
@@ -114,6 +57,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({ i
     <div
       className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
       onClick={onClose}
+      style={{ zIndex }}
     >
       <div
         className="w-full max-w-[96vw] sm:max-w-5xl bg-slate-950 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
@@ -128,7 +72,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({ i
               Estimasi dibuat untuk belajar 30 menit per hari.
             </p>
             <p className="text-slate-300 text-xs sm:text-sm mt-2">
-              Progress: <span className="text-cyan-300 font-semibold">{completedCount}/{ROADMAP_CHECKLIST_ENABLED_IDS.length}</span> materi selesai
+              Progress: <span className="text-cyan-300 font-semibold">{completedCount}/{PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS.length}</span> materi selesai
               <span className="text-slate-500"> | Total estimasi: {totalDays} hari</span>
             </p>
           </div>
@@ -154,7 +98,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({ i
               </tr>
             </thead>
             <tbody>
-              {ROADMAP_ITEMS.map((item, index) => (
+              {PRONUNCIATION_ROADMAP_ITEMS.map((item, index) => (
                 <tr key={item.id} className="border-t border-slate-800/70 text-slate-200">
                   <td className="px-3 sm:px-4 py-3">{index + 1}</td>
                   <td className="px-3 sm:px-4 py-3">

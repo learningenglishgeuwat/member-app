@@ -6,8 +6,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 
-// Reuse singleton client for metadata/utility queries outside generated Database typing.
-const supabaseLoose = supabase as any
+// Separate untyped client for metadata/utility queries outside generated Database typing.
+const supabaseLoose = createClient(supabaseUrl, supabaseAnonKey)
 
 type InformationSchemaTable = {
   table_name: string

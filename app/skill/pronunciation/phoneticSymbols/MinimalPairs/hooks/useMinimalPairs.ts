@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { loadPairsByCategory } from '../data/index';
 import type { MinimalPairCategory, MinimalPairData, MinimalPairSpeechLang, MinimalPairWord } from '../types';
+import { createUtterance, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 
 type SpeechLang = MinimalPairSpeechLang;
 
@@ -27,29 +28,19 @@ export const useMinimalPairs = () => {
     [pairsInCategory, selectedPairId],
   );
 
-  const cancelSpeechSynthesis = () => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
-  };
-
   const stopPlayback = () => {
     playbackSessionRef.current += 1;
-    cancelSpeechSynthesis();
+    stopSpeech();
     setActiveSpeechKey(null);
     setIsPlayingWords(false);
     setIsPlayingSentences(false);
   };
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    window.speechSynthesis.getVoices();
-    const onVoicesChanged = () => window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = onVoicesChanged;
+    void waitForVoices();
 
     return () => {
-      cancelSpeechSynthesis();
-      window.speechSynthesis.onvoiceschanged = null;
+      stopSpeech();
     };
   }, []);
 
@@ -71,50 +62,21 @@ export const useMinimalPairs = () => {
     };
   }, [selectedCategory]);
 
-  const getPreferredVoice = (lang: SpeechLang) => {
-    if (typeof window === 'undefined') return null;
-    const voices = window.speechSynthesis.getVoices();
-    if (lang === 'id-ID') {
-      return (
-        voices.find((voice) => voice.name.toLowerCase().includes('indonesian')) ||
-        voices.find((voice) => voice.lang.toLowerCase().startsWith('id')) ||
-        null
-      );
-    }
-    if (lang === 'en-GB') {
-      return (
-        voices.find((voice) => voice.name === 'Google UK English Female') ||
-        voices.find((voice) => voice.name === 'Google UK English Male') ||
-        voices.find((voice) => voice.lang === 'en-GB' && voice.name.includes('Google')) ||
-        voices.find((voice) => voice.lang === 'en-GB') ||
-        null
-      );
-    }
-    return (
-      voices.find((voice) => voice.name === 'Google US English') ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-      voices.find((voice) => voice.lang === 'en-US') ||
-      null
-    );
-  };
-
   const speakText = (text: string, speechKey: string, lang: SpeechLang = 'en-US') => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text) return;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setIsPlayingWords(false);
     setIsPlayingSentences(false);
     setActiveSpeechKey(speechKey);
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.lang = lang;
-
-    const voice = getPreferredVoice(lang);
-    if (voice) utterance.voice = voice;
+    const utterance = createUtterance(text, {
+      lang,
+      rate: 0.82,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    });
+    if (!utterance) return;
 
     utterance.onend = () => setActiveSpeechKey(null);
     utterance.onerror = () => setActiveSpeechKey(null);
@@ -137,7 +99,7 @@ export const useMinimalPairs = () => {
 
   const playQueue = async (items: Array<{ text: string; key: string; lang: SpeechLang }>, done: () => void) => {
     if (typeof window === 'undefined' || !items.length) return;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     const sessionId = playbackSessionRef.current;
 
     let index = 0;
@@ -152,13 +114,18 @@ export const useMinimalPairs = () => {
       setActiveSpeechKey(current.key);
       scrollToSpeechKey(current.key);
 
-      const utterance = new SpeechSynthesisUtterance(current.text);
-      utterance.rate = 0.82;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-      utterance.lang = current.lang;
-      const voice = getPreferredVoice(current.lang);
-      if (voice) utterance.voice = voice;
+      const utterance = createUtterance(current.text, {
+        lang: current.lang,
+        rate: 0.82,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) {
+        index += 1;
+        window.setTimeout(playNext, 260);
+        return;
+      }
 
       utterance.onend = () => {
         if (sessionId !== playbackSessionRef.current) return;

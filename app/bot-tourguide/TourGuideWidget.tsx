@@ -16,10 +16,11 @@ import {
   saveTutorialOverlayPreference,
 } from './engine/tutorial-session';
 import { resetSpeakingPracticeSession } from './modes/speaking-practice';
-import { getSimulationByTopic } from './routeMap';
+import { GUIDE_SIMULATION_MAP, getSimulationByTopic } from './routeMap';
 import { isTutorialAllowedPath } from './tutorial/tutorial-allowed-paths';
 import TutorialCoachOverlay from './tutorial/TutorialCoachOverlay';
 import SpeakingPracticeOverlay from './speaking-practice/SpeakingPracticeOverlay';
+import LearningPathOverlay from './learning-path/LearningPathOverlay';
 import type {
   GuideAction,
   GuideAnswerIntent,
@@ -52,11 +53,13 @@ const MODE_LABELS: Record<GuideMode, string> = {
   qa: 'Tanya Materi',
   tutorial: 'Tutorial',
   'speaking-practice': 'Speaking Practice',
+  'learning-path': 'Learning Path',
 };
 
 const MODES: GuideMode[] = [
   'navigation',
   'tutorial',
+  'learning-path',
   'simulation',
   'flashcard',
   'qa',
@@ -112,7 +115,8 @@ const isGuideMode = (value: string | null): value is GuideMode =>
   value === 'flashcard' ||
   value === 'qa' ||
   value === 'tutorial' ||
-  value === 'speaking-practice';
+  value === 'speaking-practice' ||
+  value === 'learning-path';
 
 const parseYesNoAnswer = (input: string): boolean | null => {
   const normalized = input.trim().toLowerCase();
@@ -149,6 +153,19 @@ const FLASHCARD_QUICK_OPTIONS: FlashcardQuickOption[] = [
     path: `${FLASHCARD_DEFAULT_ROUTE}/${topic.topicId}`,
   })),
 ];
+
+const SIMULATION_DEFAULT_TOPIC: GuideSimulationTopic =
+  GUIDE_SIMULATION_MAP[0]?.topicId ?? 'final-sound-s-es';
+
+type SimulationQuickOption = {
+  label: string;
+  topicId: GuideSimulationTopic;
+};
+
+const SIMULATION_QUICK_OPTIONS: SimulationQuickOption[] = GUIDE_SIMULATION_MAP.map((entry) => ({
+  label: entry.title,
+  topicId: entry.topicId,
+}));
 
 const normalizePathname = (value: string): string => {
   const cleaned = value.split('#')[0]?.split('?')[0]?.trim() ?? '';
@@ -240,6 +257,8 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   );
   const [typedReply, setTypedReply] = useState(displayResult.reply);
   const [selectedFlashcardPath, setSelectedFlashcardPath] = useState<string>(FLASHCARD_DEFAULT_ROUTE);
+  const [selectedSimulationTopic, setSelectedSimulationTopic] =
+    useState<GuideSimulationTopic>(SIMULATION_DEFAULT_TOPIC);
 
   const startTutorialTransition = useCallback((durationMs = 320) => {
     setIsTutorialPageTransition(true);
@@ -372,6 +391,15 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
       setTutorialDeviceProfile(null);
     }
   }, [mode, tutorialDeviceProfile]);
+
+  useEffect(() => {
+    if (!SIMULATION_QUICK_OPTIONS.length) return;
+    const hasSelectedTopic = SIMULATION_QUICK_OPTIONS.some(
+      (option) => option.topicId === selectedSimulationTopic,
+    );
+    if (hasSelectedTopic) return;
+    setSelectedSimulationTopic(SIMULATION_QUICK_OPTIONS[0].topicId);
+  }, [selectedSimulationTopic]);
 
   useEffect(() => {
     setPendingMode(mode);
@@ -703,6 +731,14 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
     handleActionClick({ kind: 'route', label: 'Buka Flashcard', path: selectedFlashcardPath });
   }, [handleActionClick, selectedFlashcardPath]);
 
+  const handleSimulationDropdownOpen = useCallback(() => {
+    handleActionClick({
+      kind: 'simulation',
+      label: `Buka Simulasi: ${getSimulationTitle(selectedSimulationTopic)}`,
+      simulationTopic: selectedSimulationTopic,
+    });
+  }, [handleActionClick, selectedSimulationTopic]);
+
   useEffect(() => {
     if (mode !== 'navigation') {
       lastNavigationAutoKeyRef.current = '';
@@ -771,6 +807,14 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
 
     if (nextMode === 'speaking-practice') {
       resetSpeakingPracticeSession();
+      setMode(nextMode);
+      setCollapsed(false);
+      setQuery('');
+      setSubmittedRequest({ query: '', id: 0 });
+      return;
+    }
+
+    if (nextMode === 'learning-path') {
       setMode(nextMode);
       setCollapsed(false);
       setQuery('');
@@ -981,6 +1025,17 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
             setSubmittedRequest({ query: '', id: 0 });
           }}
         />
+      ) : mode === 'learning-path' ? (
+        <LearningPathOverlay
+          activeResult={activeResult}
+          onClose={() => {
+            lastNavigationAutoKeyRef.current = '';
+            setCollapsed(true);
+            setMode('navigation');
+            setQuery('');
+            setSubmittedRequest({ query: '', id: 0 });
+          }}
+        />
       ) : (
         <aside className="tg-panel" role="dialog" aria-label="Tour Guide Widget">
           <header className="tg-panel-header">
@@ -1056,6 +1111,36 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 type="button"
                 className="tg-flashcard-open-button"
                 onClick={handleFlashcardDropdownOpen}
+              >
+                Buka
+              </button>
+            </div>
+          ) : mode === 'simulation' ? (
+            <div className="tg-flashcard-picker" aria-label="Pilih simulasi">
+              <label className="tg-flashcard-picker-wrap">
+                <span className="tg-mode-select-label">Simulasi</span>
+                <select
+                  id="tg-simulation-select"
+                  name="tgSimulationTopic"
+                  className="tg-flashcard-select"
+                  value={selectedSimulationTopic}
+                  onChange={(event) =>
+                    setSelectedSimulationTopic(event.target.value as GuideSimulationTopic)
+                  }
+                  disabled={!SIMULATION_QUICK_OPTIONS.length}
+                >
+                  {SIMULATION_QUICK_OPTIONS.map((option) => (
+                    <option key={option.topicId} value={option.topicId}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="tg-flashcard-open-button"
+                onClick={handleSimulationDropdownOpen}
+                disabled={!SIMULATION_QUICK_OPTIONS.length}
               >
                 Buka
               </button>

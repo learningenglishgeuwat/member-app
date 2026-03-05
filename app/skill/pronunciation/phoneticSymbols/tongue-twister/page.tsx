@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
+import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
@@ -41,34 +42,26 @@ export default function TongueTwisterPage() {
 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
+    void waitForVoices();
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
-      window.speechSynthesis.cancel();
+      stopSpeech();
     };
   }, []);
 
-  const getPreferredVoice = () => {
-    const voices = window.speechSynthesis.getVoices();
-    return (
-      voices.find((voice) => voice.name === 'Google US English') ||
-      voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-      voices.find((voice) => voice.lang === 'en-US') ||
-      voices[0]
-    );
-  };
-
   const handleSpeakTwister = () => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
+    if (!isSpeechSynthesisSupported()) return;
+    stopSpeech();
 
-    const utterance = new SpeechSynthesisUtterance(activeTwister.text);
-    const preferredVoice = getPreferredVoice();
-    utterance.lang = 'en-US';
-    utterance.rate = 0.82;
-    utterance.pitch = 1.0;
-    utterance.volume = 1.0;
-    if (preferredVoice) utterance.voice = preferredVoice;
+    const utterance = createUtterance(activeTwister.text, {
+      lang: 'en-US',
+      rate: 0.82,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    });
+    if (!utterance) return;
 
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
@@ -78,8 +71,7 @@ export default function TongueTwisterPage() {
   };
 
   const handleStopSpeak = useCallback(() => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
+    stopSpeech();
     setIsSpeaking(false);
   }, []);
 

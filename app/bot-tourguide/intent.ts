@@ -4,11 +4,13 @@ import { resolveSimulationMode } from './modes/simulation';
 import { resolveFlashcardMode } from './modes/flashcard';
 import { resolveTutorialMode } from './modes/tutorial';
 import { resolveSpeakingPracticeMode } from './modes/speaking-practice';
+import { resolveLearningPathMode } from './modes/learning-path';
 import { parseGuideQuery } from './engine/nlu';
 import type { GuideMode, GuideModeResult, ParsedQuery, TutorialDeviceProfile } from './types';
 
 export const DEFAULT_SUGGESTION_PROMPTS = [
   'buka pronunciation',
+  'learning path',
   'simulasi final sound s/es',
   'flashcard kitchen',
   'start speaking practice',
@@ -53,6 +55,10 @@ const rankIntent = (
 
   if (mode === 'speaking-practice') {
     return resolveSpeakingPracticeMode(query, { pathname });
+  }
+
+  if (mode === 'learning-path') {
+    return resolveLearningPathMode(query);
   }
 
   return resolveNavigationMode(query, { pathname });

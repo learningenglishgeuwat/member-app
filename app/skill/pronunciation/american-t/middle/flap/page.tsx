@@ -17,6 +17,7 @@ import {
   primeBestEnglishVoice,
   speakWithBestEnglishVoice,
 } from '../../../final-sound-new/tts-utils';
+import { speakText, stopSpeech } from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(
   () => import('../../../../components/RecordingControlsButton'),
@@ -44,33 +45,6 @@ const FLAP_T_CONCEPT_PATTERNS: ReadonlyArray<string> = [
   'Pola umum: bunyi sebelum /t/ sonoran atau vokal, lalu lanjut ke suku kata lemah.',
   'Target bunyi: terdengar seperti d cepat (flap), bukan t letup keras.',
 ];
-
-function pickPreferredVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
-
-function pickReleasedTVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => /google uk english/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb' && /google/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb' && /serena|daniel/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb') ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-au') ||
-    null
-  );
-}
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -124,58 +98,20 @@ function deriveGeneralIpaFromNatural(naturalIpa: string): string {
 }
 
 async function speakWordForPlayAll(text: string): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text);
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const preferredVoice = pickPreferredVoice(synth.getVoices());
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-      utterance.lang = preferredVoice.lang;
-    }
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakWithBestEnglishVoice(text, {
+    rate: 0.82,
+    pitch: 1,
+    volume: 1,
   });
 }
 
 async function speakWordByVariant(text: string, variant: FlapPlaybackVariant): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text, { rate: variant === 'released' ? 0.74 : 0.82 });
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const voices = synth.getVoices();
-  const flapVoice = pickPreferredVoice(voices);
-  const releasedVoice = pickReleasedTVoice(voices) ?? flapVoice;
-  const selectedVoice = variant === 'released' ? releasedVoice : flapVoice;
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang =
-      selectedVoice?.lang ?? (variant === 'released' ? 'en-GB' : 'en-US');
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-      utterance.lang = selectedVoice.lang;
-    }
-    utterance.rate = variant === 'released' ? 0.74 : 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakText(text, {
+    lang: variant === 'released' ? 'en-GB' : 'en-US',
+    rate: variant === 'released' ? 0.74 : 0.82,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: true,
   });
 }
 
@@ -276,9 +212,7 @@ export default function FlapTPage() {
     sentencesPlayAllTokenRef.current += 1;
     sentenceDrillsPlayAllTokenRef.current += 1;
     singlePlayTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setIsPlayingExamplesAll(false);
     setIsPlayingWordBankAll(false);
     setIsPlayingSentencesAll(false);
@@ -415,6 +349,10 @@ export default function FlapTPage() {
         detail: { sectionId },
       }),
     );
+  }, []);
+
+  useEffect(() => {
+    void primeBestEnglishVoice();
   }, []);
 
   const handleCopyPrompt = useCallback(async () => {

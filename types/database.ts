@@ -220,6 +220,32 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['broadcast_messages']['Row'], 'id' | 'created_at' | 'updated_at' | 'sent_date'>
         Update: Partial<Omit<Database['public']['Tables']['broadcast_messages']['Row'], 'id' | 'created_at' | 'updated_at'>>
       }
+      special_offer_settings: {
+        Row: {
+          key: string
+          offer_name: string
+          price_amount: number
+          currency: string
+          duration_months: number
+          referral_commission_pct: string
+          cashback_commission_pct: string
+          counts_for_tier_progress: boolean
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['special_offer_settings']['Row'], 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['special_offer_settings']['Insert']>
+      }
+      special_offer_tiers: {
+        Row: {
+          settings_key: string
+          tier_name: 'Rookie' | 'Pro' | 'Legend'
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['special_offer_tiers']['Row'], 'created_at'>
+        Update: Partial<Database['public']['Tables']['special_offer_tiers']['Insert']>
+      }
     }
     Views: {
       [key: string]: never
@@ -294,6 +320,14 @@ export type GeneralUpdateUpdate = Database['public']['Tables']['general_updates'
 export type BroadcastMessage = Database['public']['Tables']['broadcast_messages']['Row']
 export type BroadcastMessageInsert = Database['public']['Tables']['broadcast_messages']['Insert']
 export type BroadcastMessageUpdate = Database['public']['Tables']['broadcast_messages']['Update']
+
+export type SpecialOfferSettings = Database['public']['Tables']['special_offer_settings']['Row']
+export type SpecialOfferSettingsInsert = Database['public']['Tables']['special_offer_settings']['Insert']
+export type SpecialOfferSettingsUpdate = Database['public']['Tables']['special_offer_settings']['Update']
+
+export type SpecialOfferTier = Database['public']['Tables']['special_offer_tiers']['Row']
+export type SpecialOfferTierInsert = Database['public']['Tables']['special_offer_tiers']['Insert']
+export type SpecialOfferTierUpdate = Database['public']['Tables']['special_offer_tiers']['Update']
 
 // Utility types
 export type UserRole = User['role']

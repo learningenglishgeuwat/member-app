@@ -1,0 +1,193 @@
+.tg-lp-layer {
+  --tg-lp-border: rgba(125, 217, 255, 0.58);
+  --tg-lp-border-strong: rgba(182, 239, 255, 0.9);
+  --tg-lp-glow-soft: 0 0 20px rgba(84, 215, 255, 0.24);
+  --tg-lp-text: #eaf9ff;
+  --tg-lp-text-muted: rgba(206, 243, 255, 0.86);
+  position: fixed;
+  inset: 0;
+  z-index: 1450;
+  pointer-events: auto;
+}
+
+.tg-lp-dim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 14%, rgba(85, 184, 255, 0.15), transparent 46%),
+    rgba(6, 10, 20, 0.64);
+  pointer-events: auto;
+}
+
+.tg-lp-coach {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(520px, calc(100vw - 24px));
+  pointer-events: none;
+}
+
+.tg-lp-shell {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tg-lp-avatar-orb {
+  width: 74px;
+  height: 74px;
+  border-radius: 999px;
+  border: 2px solid rgba(130, 225, 255, 0.9);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(8, 24, 43, 0.98), rgba(7, 15, 33, 0.96));
+  box-shadow:
+    0 0 18px rgba(101, 205, 255, 0.42),
+    inset 0 0 0 1px rgba(201, 246, 255, 0.24);
+  flex-shrink: 0;
+}
+
+.tg-lp-avatar {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.tg-lp-card {
+  flex: 1;
+  border: 1px solid var(--tg-lp-border);
+  border-radius: 14px;
+  background:
+    linear-gradient(165deg, rgba(11, 22, 46, 0.95), rgba(8, 15, 34, 0.94)),
+    radial-gradient(circle at 14% 12%, rgba(88, 198, 255, 0.16), transparent 58%);
+  padding: 12px;
+  color: var(--tg-lp-text);
+  box-shadow:
+    0 14px 26px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(191, 240, 255, 0.16),
+    var(--tg-lp-glow-soft);
+  pointer-events: auto;
+}
+
+.tg-lp-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(90, 176, 225, 0.36);
+}
+
+.tg-lp-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #effcff;
+  letter-spacing: 0.04em;
+}
+
+.tg-lp-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(145, 230, 255, 0.75);
+  background: rgba(9, 34, 55, 0.95);
+  color: #e9fbff;
+  font-size: 16px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 160ms ease,
+    background-color 140ms ease;
+}
+
+.tg-lp-close:hover {
+  transform: translateY(-1px);
+  border-color: var(--tg-lp-border-strong);
+  background: rgba(14, 47, 78, 0.98);
+  box-shadow: var(--tg-lp-glow-soft);
+}
+
+.tg-lp-chip {
+  margin: 0;
+  border: 1px solid rgba(127, 216, 255, 0.62);
+  border-radius: 10px;
+  background: rgba(8, 30, 49, 0.82);
+  color: var(--tg-lp-text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 9px 10px;
+}
+
+.tg-lp-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tg-lp-action-btn {
+  border: 1px solid rgba(126, 218, 255, 0.6);
+  border-radius: 10px;
+  background: rgba(8, 34, 55, 0.9);
+  color: #e8faff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 11px;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 160ms ease,
+    background-color 140ms ease;
+}
+
+.tg-lp-action-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--tg-lp-border-strong);
+  background: rgba(13, 49, 82, 0.94);
+  box-shadow: var(--tg-lp-glow-soft);
+}
+
+.tg-lp-action-btn--pronunciation {
+  border-color: rgba(142, 193, 255, 0.64);
+}
+
+.tg-lp-action-btn--speaking {
+  border-color: rgba(255, 166, 220, 0.64);
+}
+
+.tg-lp-action-btn--vocabulary {
+  border-color: rgba(145, 255, 183, 0.64);
+}
+
+@media (max-width: 640px) {
+  .tg-lp-coach {
+    width: calc(100vw - 16px);
+    max-width: 390px;
+  }
+
+  .tg-lp-shell {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .tg-lp-avatar-orb {
+    width: 56px;
+    height: 56px;
+    align-self: center;
+  }
+
+  .tg-lp-avatar {
+    width: 42px;
+    height: 42px;
+  }
+}

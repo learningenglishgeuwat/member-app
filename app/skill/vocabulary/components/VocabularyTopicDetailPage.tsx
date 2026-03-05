@@ -486,7 +486,7 @@ export default function VocabularyTopicDetailPage({
 
       <div className="vocab-shell vocab-topic-detail-shell">
         <header className="vocab-header vocab-topic-detail-header">
-          <p className="vocab-topic-detail-kicker">Topic Vocabulary</p>
+          <p className="vocab-topic-detail-kicker">Topic</p>
           <h1 className="vocab-title">{topic.title}</h1>
           <p className="vocab-topic-detail-subtitle">{topic.subtitle}</p>
           <p className="vocab-topic-detail-description">{topic.description}</p>

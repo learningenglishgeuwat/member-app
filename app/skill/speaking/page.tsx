@@ -197,7 +197,7 @@ export default function SpeakingRoadmapPage() {
                   className="spk-phase-link-btn"
                   onClick={() => router.push('/skill/vocabulary')}
                 >
-                  Open Vocabulary Topics
+                  Open Vocabulary
                 </button>
               </div>
             </div>
@@ -397,3 +397,4 @@ export default function SpeakingRoadmapPage() {
     </main>
   );
 }
+

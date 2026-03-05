@@ -14,9 +14,15 @@ import {
   GLOTTAL_WORD_BANK,
 } from '../../data/middle/glottal';
 import {
-  primeBestEnglishVoice,
   speakWithBestEnglishVoice,
 } from '../../../final-sound-new/tts-utils';
+import {
+  createUtterance,
+  isSpeechSynthesisSupported,
+  speakText,
+  stopSpeech,
+  waitForVoices,
+} from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(
   () => import('../../../../components/RecordingControlsButton'),
@@ -53,33 +59,6 @@ const GLOTTAL_MIDDLE_NOTES: ReadonlyArray<string> = [
   'Prioritaskan dulu latihan pola /t/ + vowel + n sebagai pola inti, lalu pakai kata lain sebagai variasi listening.',
   'Final T adalah posisi akhir kata. Di posisi akhir, /t/ bisa released, unreleased, atau glottal tergantung konteks.',
 ];
-
-function pickPreferredVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
-
-function pickReleasedTVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => /google uk english/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb' && /google/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb' && /serena|daniel/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-gb') ||
-    voices.find((voice) => voice.lang.toLowerCase() === 'en-au') ||
-    null
-  );
-}
 
 function formatIpaForDisplay(ipa: string): string {
   const trimmed = ipa.trim();
@@ -135,30 +114,6 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-async function waitForSpeechVoices(timeoutMs = 1500): Promise<SpeechSynthesisVoice[]> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return [];
-
-  const synth = window.speechSynthesis;
-  const loaded = synth.getVoices();
-  if (loaded.length > 0) return loaded;
-
-  return new Promise((resolve) => {
-    let done = false;
-    const finish = () => {
-      if (done) return;
-      done = true;
-      synth.removeEventListener('voiceschanged', onVoicesChanged);
-      resolve(synth.getVoices());
-    };
-
-    const onVoicesChanged = () => finish();
-
-    synth.addEventListener('voiceschanged', onVoicesChanged);
-    synth.getVoices();
-    window.setTimeout(finish, timeoutMs);
-  });
-}
-
 function pickGlottalNarratorVoice(voices: SpeechSynthesisVoice[], narrator: GlottalNarrator) {
   const patterns = narrator === 'guy' ? [/guy/i, /davis/i, /david/i, /google us english/i] : [];
   const usVoices = voices.filter((voice) => voice.lang.toLowerCase() === 'en-us');
@@ -180,55 +135,20 @@ function pickGlottalNarratorVoice(voices: SpeechSynthesisVoice[], narrator: Glot
 const FIXED_GLOTTAL_NARRATOR: GlottalNarrator = 'guy';
 
 async function speakWordForPlayAll(text: string): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text);
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const preferredVoice = pickPreferredVoice(synth.getVoices());
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-      utterance.lang = preferredVoice.lang;
-    }
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakWithBestEnglishVoice(text, {
+    rate: 0.82,
+    pitch: 1,
+    volume: 1,
   });
 }
 
 async function speakReleasedTWord(text: string): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text, { rate: 0.74 });
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const voices = synth.getVoices();
-  const releasedVoice = pickReleasedTVoice(voices) ?? pickPreferredVoice(voices);
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = releasedVoice?.lang ?? 'en-GB';
-    if (releasedVoice) {
-      utterance.voice = releasedVoice;
-      utterance.lang = releasedVoice.lang;
-    }
-    utterance.rate = 0.74;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakText(text, {
+    lang: 'en-GB',
+    rate: 0.74,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: true,
   });
 }
 
@@ -237,13 +157,14 @@ async function speakGlottalWithAlternateVoice(text: string) {
 
   const speechRate = 0.82;
 
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+  if (!isSpeechSynthesisSupported()) {
     await speakWithBestEnglishVoice(text, { rate: speechRate, pitch: 1, volume: 1 });
     return;
   }
 
   const synth = window.speechSynthesis;
-  const voices = await waitForSpeechVoices();
+  await waitForVoices();
+  const voices = synth.getVoices();
   const narratorVoice = pickGlottalNarratorVoice(voices, FIXED_GLOTTAL_NARRATOR);
 
   if (!narratorVoice) {
@@ -252,13 +173,20 @@ async function speakGlottalWithAlternateVoice(text: string) {
   }
 
   await new Promise<void>((resolve) => {
-    synth.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    stopSpeech();
+    const utterance = createUtterance(text, {
+      lang: narratorVoice.lang || 'en-US',
+      rate: speechRate,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak: false,
+    });
+    if (!utterance) {
+      resolve();
+      return;
+    }
     utterance.voice = narratorVoice;
     utterance.lang = narratorVoice.lang || 'en-US';
-    utterance.rate = speechRate;
-    utterance.pitch = 1;
-    utterance.volume = 1;
     utterance.onend = () => resolve();
     utterance.onerror = () => resolve();
     synth.speak(utterance);
@@ -362,9 +290,7 @@ export default function GlottalPage() {
     sentencesPlayAllTokenRef.current += 1;
     sentenceDrillsPlayAllTokenRef.current += 1;
     singlePlayTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setIsPlayingExamplesAll(false);
     setIsPlayingWordBankAll(false);
     setIsPlayingSentencesAll(false);

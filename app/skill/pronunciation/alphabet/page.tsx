@@ -13,6 +13,12 @@ import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import {
+  isSpeechSynthesisSupported,
+  speakText,
+  stopSpeech,
+  waitForVoices,
+} from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(() => import('../../components/RecordingControlsButton'), {
   ssr: false,
@@ -88,29 +94,12 @@ const AlphabetPage: React.FC = () => {
     }
   }, []);
 
-  // Preload voices to ensure they are available when needed
   useEffect(() => {
-    const loadVoices = () => {
-      window.speechSynthesis.getVoices();
-    };
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    
-    // Cleanup
+    void waitForVoices();
     return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-      window.speechSynthesis.cancel();
+      stopSpeech();
     };
   }, []);
-
-  const getPreferredVoice = () => {
-    const voices = window.speechSynthesis.getVoices();
-    return voices.find(v => v.name === 'Google US English') || 
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Samantha')) || // macOS high quality
-      voices.find(v => v.lang === 'en-US' && v.name.includes('Zira')) || // Windows high quality
-      voices.find(v => v.lang === 'en-US'); // Fallback
-  };
 
   const stopAlphabetPlayAll = () => {
     isPlayingRef.current = false;
@@ -124,6 +113,38 @@ const AlphabetPage: React.FC = () => {
     setCurrentPlayingPracticeCountry(null);
   };
 
+  const speakEnglishText = async (
+    text: string,
+    rate = 0.82,
+    cancelBeforeSpeak = true,
+    retryIfVoiceNotReady = false,
+  ) => {
+    if (!isSpeechSynthesisSupported()) return false;
+    await waitForVoices();
+    const voicesBeforeSpeak = window.speechSynthesis.getVoices().length;
+    await speakText(text, {
+      preferredEnglish: 'en-US',
+      rate,
+      pitch: 1,
+      volume: 1,
+      cancelBeforeSpeak,
+    });
+
+    if (retryIfVoiceNotReady && voicesBeforeSpeak === 0) {
+      await wait(140);
+      await waitForVoices();
+      await speakText(text, {
+        preferredEnglish: 'en-US',
+        rate,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak,
+      });
+    }
+
+    return true;
+  };
+
   const handlePlayLetter = async (letter: string) => {
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
@@ -132,30 +153,11 @@ const AlphabetPage: React.FC = () => {
     
     try {
       setCurrentPlayingLetter(letter);
-      // Simulate audio playback with text-to-speech
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(letter);
-        utterance.rate = 0.8;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-        
-        // Use preferred voice for better pronunciation
-        const preferredVoice = getPreferredVoice();
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
-        }
-        
-        speechSynthesis.cancel(); // Stop any previous speech
-        speechSynthesis.speak(utterance);
-        
-        utterance.onend = () => {
-          setCurrentPlayingLetter(null);
-        };
-      } else {
-        // Fallback: simulate with timeout
+      const didSpeak = await speakEnglishText(letter, 0.8, true, true);
+      if (!didSpeak) {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        setCurrentPlayingLetter(null);
       }
+      setCurrentPlayingLetter(null);
     } catch (error) {
       console.error("Failed to play audio", error);
       setCurrentPlayingLetter(null);
@@ -165,17 +167,13 @@ const AlphabetPage: React.FC = () => {
   const handlePlayAll = async () => {
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-      }
+      stopSpeech();
       return;
     }
 
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-      }
+      stopSpeech();
     }
 
     isPlayingRef.current = true;
@@ -186,24 +184,8 @@ const AlphabetPage: React.FC = () => {
 
       setCurrentPlayingLetter(item.letter);
       try {
-        if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(item.letter);
-          utterance.rate = 0.8;
-          utterance.pitch = 1.0;
-          utterance.volume = 1.0;
-          
-          // Use preferred voice for better pronunciation
-          const preferredVoice = getPreferredVoice();
-          if (preferredVoice) {
-            utterance.voice = preferredVoice;
-          }
-          
-          speechSynthesis.speak(utterance);
-          
-          await new Promise<void>((resolve) => {
-            utterance.onend = () => resolve();
-          });
-        } else {
+        const didSpeak = await speakEnglishText(item.letter, 0.8, false, false);
+        if (!didSpeak) {
           await new Promise(resolve => setTimeout(resolve, 1000));
         }
         
@@ -220,24 +202,17 @@ const AlphabetPage: React.FC = () => {
 
   const speakTextWithVoice = (text: string, rate = 0.82) =>
     new Promise<void>((resolve) => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      if (!isSpeechSynthesisSupported()) {
         resolve();
         return;
       }
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = rate;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-
-      const preferredVoice = getPreferredVoice();
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
-
-      utterance.onend = () => resolve();
-      utterance.onerror = () => resolve();
-      window.speechSynthesis.speak(utterance);
+      void speakText(text, {
+        preferredEnglish: 'en-US',
+        rate,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      }).then(() => resolve());
     });
 
   const speakCountryThenSpelling = async (
@@ -269,8 +244,8 @@ const AlphabetPage: React.FC = () => {
 
       setCurrentPlayingPracticeCountry(country);
 
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
+      if (isSpeechSynthesisSupported()) {
+        stopSpeech();
         await speakCountryThenSpelling(country);
         setCurrentPlayingPracticeCountry(null);
       } else {
@@ -286,17 +261,13 @@ const AlphabetPage: React.FC = () => {
   const handlePlayAllPracticeCountries = async () => {
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-      }
+      stopSpeech();
       return;
     }
 
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-      }
+      stopSpeech();
     }
 
     isPlayingPracticeRef.current = true;
@@ -404,7 +375,7 @@ const AlphabetPage: React.FC = () => {
     QUICK_SPELLING_WORDS.find((word) => isExactSpellingMatch(input, word)) ?? null;
 
   const speakWordAndSpelling = async (word: string) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    if (!isSpeechSynthesisSupported()) {
       return;
     }
 
@@ -413,21 +384,15 @@ const AlphabetPage: React.FC = () => {
       return;
     }
 
-    const speakText = (text: string) =>
+    const speakWord = (text: string) =>
       new Promise<void>((resolve) => {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.82;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-
-        const preferredVoice = getPreferredVoice();
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
-        }
-
-        utterance.onend = () => resolve();
-        utterance.onerror = () => resolve();
-        window.speechSynthesis.speak(utterance);
+        void speakText(text, {
+          preferredEnglish: 'en-US',
+          rate: 0.82,
+          pitch: 1,
+          volume: 1,
+          cancelBeforeSpeak: false,
+        }).then(() => resolve());
       });
 
     const wait = (ms: number) =>
@@ -443,13 +408,13 @@ const AlphabetPage: React.FC = () => {
       stopPracticeCountriesPlayAll();
     }
 
-    window.speechSynthesis.cancel();
-    await speakText(normalizedWord);
+    stopSpeech();
+    await speakWord(normalizedWord);
     await wait(250);
 
     const letters = normalizedWord.split('');
     for (let index = 0; index < letters.length; index += 1) {
-      await speakText(letters[index]);
+      await speakWord(letters[index]);
       if (index < letters.length - 1) {
         await wait(320);
       }

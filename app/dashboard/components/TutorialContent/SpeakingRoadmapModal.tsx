@@ -1,66 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useMemo } from 'react'
+import React from 'react'
+import {
+  SPEAKING_ROADMAP_ITEMS,
+  SPEAKING_ROADMAP_TOTAL_DAYS,
+  SPEAKING_ROADMAP_TOTAL_GOALS,
+} from './roadmap-data/speaking-roadmap'
 
 type SpeakingRoadmapModalProps = {
   isOpen: boolean
   onClose: () => void
+  zIndex?: number
 }
 
-type SpeakingRoadmapItem = {
-  id: string
-  title: string
-  href: string
-  focus: string
-  goalCount: number
-  estimatedDays: number
-}
-
-const SPEAKING_ROADMAP_ITEMS: SpeakingRoadmapItem[] = [
-  {
-    id: 'cefr-a1-1',
-    title: 'Survival Response',
-    href: '/skill/speaking?phase=cefr-a1-1',
-    focus: 'Respons cepat, minta repeat, dan konfirmasi instruksi dasar.',
-    goalCount: 12,
-    estimatedDays: 18,
-  },
-  {
-    id: 'cefr-a1-2',
-    title: 'Identity and Daily Needs',
-    href: '/skill/speaking?phase=cefr-a1-2',
-    focus: 'Perkenalan diri, kebutuhan harian, izin, dan janji sederhana.',
-    goalCount: 12,
-    estimatedDays: 18,
-  },
-  {
-    id: 'cefr-a1-3',
-    title: 'Simple Transaction and Direction',
-    href: '/skill/speaking?phase=cefr-a1-3',
-    focus: 'Transaksi dasar, arah, klarifikasi langkah, dan penutupan interaksi.',
-    goalCount: 12,
-    estimatedDays: 24,
-  },
-]
-
-const SpeakingRoadmapModal: React.FC<SpeakingRoadmapModalProps> = ({ isOpen, onClose }) => {
-  const totalDays = useMemo(
-    () => SPEAKING_ROADMAP_ITEMS.reduce((sum, item) => sum + item.estimatedDays, 0),
-    []
-  )
-
-  const totalGoals = useMemo(
-    () => SPEAKING_ROADMAP_ITEMS.reduce((sum, item) => sum + item.goalCount, 0),
-    []
-  )
-
+const SpeakingRoadmapModal: React.FC<SpeakingRoadmapModalProps> = ({
+  isOpen,
+  onClose,
+  zIndex = 200,
+}) => {
   if (!isOpen) return null
 
   return (
     <div
       className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
       onClick={onClose}
+      style={{ zIndex }}
     >
       <div
         className="w-full max-w-[96vw] sm:max-w-5xl bg-slate-950 border border-pink-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(236,72,153,0.2)]"
@@ -75,8 +40,8 @@ const SpeakingRoadmapModal: React.FC<SpeakingRoadmapModalProps> = ({ isOpen, onC
               Estimasi dibuat untuk belajar 30 menit per hari.
             </p>
             <p className="text-slate-300 text-xs sm:text-sm mt-2">
-              <span className="text-slate-500">Total goals: {totalGoals}</span>
-              <span className="text-slate-500"> | Total estimasi: {totalDays} hari</span>
+              <span className="text-slate-500">Total goals: {SPEAKING_ROADMAP_TOTAL_GOALS}</span>
+              <span className="text-slate-500"> | Total estimasi: {SPEAKING_ROADMAP_TOTAL_DAYS} hari</span>
             </p>
           </div>
           <button

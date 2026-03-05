@@ -16,6 +16,7 @@ import {
   primeBestEnglishVoice,
   speakWithBestEnglishVoice,
 } from '../../../final-sound-new/tts-utils';
+import { stopSpeech } from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(
   () => import('../../../../components/RecordingControlsButton'),
@@ -30,20 +31,6 @@ const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
 const RELEASED_T_BEGINNING_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata dan kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama kejelasan released /t/ di awal kata (word-initial /t/), akurasi konsonan awal, dan kestabilan ritme saat membaca kalimat. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/kalimat yang diucapkan. - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bagian bunyi awal /t/ mana yang perlu diperbaiki.";
-
-function pickPreferredVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  if (!voices.length) return null;
-
-  return (
-    voices.find((voice) => voice.name === 'Google US English') ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Samantha')) ||
-    voices.find((voice) => voice.lang === 'en-US' && voice.name.includes('Zira')) ||
-    voices.find((voice) => voice.lang === 'en-US') ||
-    voices.find((voice) => voice.lang.toLowerCase().startsWith('en')) ||
-    null
-  );
-}
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -90,28 +77,10 @@ function formatIpaForDisplay(ipa: string): string {
 }
 
 async function speakWordForPlayAll(text: string): Promise<void> {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-    await speakWithBestEnglishVoice(text);
-    return;
-  }
-
-  await primeBestEnglishVoice();
-  const synth = window.speechSynthesis;
-  const preferredVoice = pickPreferredVoice(synth.getVoices());
-
-  await new Promise<void>((resolve) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-      utterance.lang = preferredVoice.lang;
-    }
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-    synth.speak(utterance);
+  await speakWithBestEnglishVoice(text, {
+    rate: 0.82,
+    pitch: 1,
+    volume: 1,
   });
 }
 
@@ -211,14 +180,16 @@ export default function ClearTBeginningPage() {
     sentencesPlayAllTokenRef.current += 1;
     sentenceDrillsPlayAllTokenRef.current += 1;
     singlePlayTokenRef.current += 1;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    stopSpeech();
     setIsPlayingExamplesAll(false);
     setIsPlayingWordBankAll(false);
     setIsPlayingSentencesAll(false);
     setIsPlayingSentenceDrillsAll(false);
     setActiveTtsCardKey(null);
+  }, []);
+
+  useEffect(() => {
+    void primeBestEnglishVoice();
   }, []);
 
   const playSingleCardTts = async (text: string, activeCardKey: string) => {
