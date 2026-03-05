@@ -4,56 +4,84 @@ export const TOPICS: Topic[] = [
   {
     id: 'alphabet',
     title: 'Alphabet',
-    shortDesc: 'The Foundation',
-    description: 'Master 26 letters of English alphabet, their names, and basic sounds. The building blocks of all communication.',
+    shortDesc: 'Fondasi Dasar',
+    description:
+      'Kuasai 26 huruf English alphabet, nama tiap huruf, dan bunyi dasarnya. Ini adalah fondasi utama semua komunikasi.',
     icon: 'A',
     color: 'from-blue-500 to-cyan-500',
-    bgImage: 'https://picsum.photos/id/10/1920/1080' // Nature/Tree (Growth)
+    bgImage: 'https://picsum.photos/id/10/1920/1080',
   },
   {
     id: 'phonetic',
     title: 'Phonetic Symbols',
-    shortDesc: 'IPA Mastery',
-    description: 'Dive into International Phonetic Alphabet (IPA). Learn to read pronunciation keys and produce exact sounds.',
-    icon: 'æ',
+    shortDesc: 'Penguasaan IPA',
+    description:
+      'Pelajari International Phonetic Alphabet (IPA). Latih membaca pronunciation key dan menghasilkan bunyi dengan lebih tepat.',
+    icon: 'IPA',
     color: 'from-purple-500 to-fuchsia-500',
-    bgImage: 'https://picsum.photos/id/20/1920/1080', // Abstract/Tools
-    cssClass: 'font-extended-linguistic'
+    bgImage: 'https://picsum.photos/id/20/1920/1080',
+    cssClass: 'font-extended-linguistic',
   },
   {
     id: 'stressing',
     title: 'Stressing',
-    shortDesc: 'Rhythm & Beat',
-    description: 'English is a stress-timed language. Learn which syllables to emphasize to sound natural and confident.',
-    icon: '⚡',
+    shortDesc: 'Ritme & Tekanan',
+    description:
+      'English adalah stress-timed language. Pelajari suku kata mana yang perlu ditekan agar terdengar natural dan percaya diri.',
+    icon: 'STR',
     color: 'from-yellow-400 to-orange-500',
-    bgImage: 'https://picsum.photos/id/30/1920/1080' // Light/Energy
+    bgImage: 'https://picsum.photos/id/30/1920/1080',
+  },
+  {
+    id: 'intonation',
+    title: 'Intonation',
+    shortDesc: 'Melodi & Makna',
+    description:
+      'Pelajari pola pitch rising, falling, dan fall-rise untuk menyampaikan makna, emosi, dan intent dengan lebih jelas.',
+    icon: '~',
+    color: 'from-pink-500 to-rose-600',
+    bgImage: 'https://picsum.photos/id/35/1920/1080',
   },
   {
     id: 'final-sound',
     title: 'Final Sound',
-    shortDesc: 'Ending Precision',
-    description: 'Clear endings are crucial for grammar (past tense -ed, plurals -s). Don\'t swallow your words!',
+    shortDesc: 'Presisi Akhiran',
+    description:
+      'Bunyi akhir yang jelas sangat penting untuk grammar (past tense -ed, plural -s). Jangan menelan bunyi akhir kata.',
     icon: 'END',
     color: 'from-red-500 to-rose-600',
-    bgImage: 'https://picsum.photos/id/40/1920/1080' // Detail/Macro
+    bgImage: 'https://picsum.photos/id/40/1920/1080',
   },
   {
     id: 'american-t',
     title: 'American /t/',
-    shortDesc: 'Flap & Glottal',
-    description: 'Unlock secrets of American accent. Master Flap T (butter) and Glottal Stop (button).',
+    shortDesc: 'Flap & Glottal Stop',
+    description:
+      'Pelajari kunci American accent. Kuasai Flap T (butter) dan Glottal Stop (button).',
     icon: '/t/',
     color: 'from-emerald-400 to-green-600',
-    bgImage: 'https://picsum.photos/id/50/1920/1080' // City/Urban
+    bgImage: 'https://picsum.photos/id/50/1920/1080',
   },
   {
-    id: 'connected',
-    title: 'Connected Speech',
-    shortDesc: 'Flow & Link',
-    description: 'Learn how native speakers link words together. Catenation, intrusion, and elision for smooth fluency.',
-    icon: '∞',
-    color: 'from-indigo-400 to-violet-600',
-    bgImage: 'https://picsum.photos/id/60/1920/1080' // Flowing water/Abstract
-  }
+    id: 'text',
+    title: 'TEXT',
+    shortDesc: 'Baca & Ucapkan',
+    description:
+      'Latih pronunciation lewat membaca teks pendek dengan fokus pada rhythm, stress, dan clarity.',
+    icon: 'TXT',
+    color: 'from-cyan-400 to-sky-600',
+    bgImage: 'https://picsum.photos/id/70/1920/1080',
+  },
 ];
+
+export const LOCKED_TOPIC_IDS: string[] = [];
+
+export const TOPIC_ROUTES: Record<string, string> = {
+  alphabet: '/skill/pronunciation/alphabet',
+  phonetic: '/skill/pronunciation/phoneticSymbols',
+  stressing: '/skill/pronunciation/stressing',
+  intonation: '/skill/pronunciation/intonation',
+  'final-sound': '/skill/pronunciation/final-sound-new',
+  'american-t': '/skill/pronunciation/american-t',
+  text: '/skill/pronunciation/text',
+};

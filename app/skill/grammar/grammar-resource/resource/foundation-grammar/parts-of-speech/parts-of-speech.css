@@ -1,0 +1,176 @@
+.pos-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  background:
+    radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
+    radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
+    #020617;
+}
+
+.pos-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.pos-header {
+  margin-bottom: 0.5rem;
+}
+
+.pos-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.pos-subtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.pos-block {
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 0.85rem;
+  background: rgba(2, 6, 23, 0.74);
+  padding: 1rem;
+}
+
+.pos-block-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a5f3fc;
+}
+
+.pos-text {
+  margin-top: 0.55rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+.pos-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pos-card {
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 0.75rem;
+  background: rgba(2, 6, 23, 0.82);
+  padding: 0.85rem;
+}
+
+.pos-card-accordion {
+  padding: 0;
+  overflow: hidden;
+}
+
+.pos-card-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pos-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.pos-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #67e8f9;
+  margin: 0;
+}
+
+.pos-card-caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #67e8f9;
+  transition: transform 150ms ease;
+}
+
+.pos-card-accordion[open] .pos-card-caret {
+  transform: rotate(180deg);
+}
+
+.pos-card-body {
+  border-top: 1px solid rgba(34, 211, 238, 0.18);
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+.pos-card-desc {
+  margin-top: 0;
+  color: #d6fbff;
+  line-height: 1.5;
+}
+
+.pos-card-examples {
+  margin-top: 0.45rem;
+  color: #94a3b8;
+}
+
+.pos-card-sentence {
+  margin-top: 0.45rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.pos-inline-sentence {
+  color: #e2e8f0;
+  font-style: italic;
+}
+
+.pos-inline-highlight {
+  color: #fff7ed;
+  background: rgba(249, 115, 22, 0.22);
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  border-radius: 0.35rem;
+  padding: 0.05rem 0.25rem;
+  font-style: normal;
+}
+
+.pos-example-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-left: 0.45rem;
+}
+
+.pos-example-chip {
+  color: #fff7ed;
+  background: rgba(249, 115, 22, 0.22);
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  border-radius: 0.45rem;
+  padding: 0.15rem 0.4rem;
+}
+
+.pos-notes {
+  margin-top: 0.65rem;
+  padding-left: 1rem;
+  color: #d6fbff;
+  line-height: 1.55;
+}
+
+@media (min-width: 768px) {
+  .pos-page {
+    padding: 2.5rem;
+  }
+
+  .pos-title {
+    font-size: 2.45rem;
+  }
+
+  .pos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+

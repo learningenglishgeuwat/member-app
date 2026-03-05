@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/distributive-determiners-each-every-either-neither",
+    "label":  "Distributive Determiners Each Every Either Neither",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu distributive determiners each every either neither",
+                     "cara pakai distributive determiners each every either neither",
+                     "distributive determiners each every either neither",
+                     "noun and determiner system distributive determiners each every either neither",
+                     "grammar resource distributive determiners each every either neither"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-distributive-determiners-each-every-either-neither",
+                   "title":  "Distributive Determiners Each Every Either Neither",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/distributive-determiners-each-every-either-neither",
+                   "keywords":  [
+                                    "apa itu distributive determiners each every either neither",
+                                    "cara pakai distributive determiners each every either neither",
+                                    "distributive determiners each every either neither",
+                                    "noun and determiner system distributive determiners each every either neither",
+                                    "grammar resource distributive determiners each every either neither"
+                                ],
+                   "shortAnswer":  "Topik ini membahas distributive determiners each, every, either, neither beserta perbedaan makna dan agreement.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

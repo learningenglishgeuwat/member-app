@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/subjunctive-structures",
+    "label":  "Subjunctive Structures",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu subjunctive structures",
+                     "cara pakai subjunctive structures",
+                     "subjunctive structures",
+                     "optional advanced reference subjunctive structures",
+                     "grammar resource subjunctive structures"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-optional-advanced-reference-subjunctive-structures",
+                   "title":  "Subjunctive Structures",
+                   "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/subjunctive-structures",
+                   "keywords":  [
+                                    "apa itu subjunctive structures",
+                                    "cara pakai subjunctive structures",
+                                    "subjunctive structures",
+                                    "optional advanced reference subjunctive structures",
+                                    "grammar resource subjunctive structures"
+                                ],
+                   "shortAnswer":  "Topik ini membahas subjunctive structures untuk saran formal, tuntutan, atau situasi hipotetik tertentu.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

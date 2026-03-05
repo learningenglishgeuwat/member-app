@@ -5,6 +5,10 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/MemberAuthContext'
 
+type ApprovePairingRpcResponse = {
+  error: { message: string } | null
+}
+
 export default function DeviceApprovePage() {
   const router = useRouter()
   const { hasSession, loading } = useAuth()
@@ -24,7 +28,13 @@ export default function DeviceApprovePage() {
     setError(null)
 
     const cleaned = code.replace(/[^0-9]/g, '')
-    const { error: rpcError } = await (supabase as any).rpc('approve_pairing', {
+    const rpcClient = supabase as unknown as {
+      rpc: (
+        fn: 'approve_pairing',
+        args: { p_code: string },
+      ) => Promise<ApprovePairingRpcResponse>
+    }
+    const { error: rpcError } = await rpcClient.rpc('approve_pairing', {
       p_code: cleaned,
     })
 
@@ -41,7 +51,10 @@ export default function DeviceApprovePage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6">
-      <div className="w-full max-w-xl bg-slate-900/40 border border-slate-800 rounded-2xl p-8 relative">
+      <div
+        className="w-full max-w-xl bg-slate-900/40 border border-slate-800 rounded-2xl p-8 relative"
+        data-tour="device-approve-form"
+      >
         <button
           type="button"
           onClick={() => router.push('/dashboard')}
@@ -50,13 +63,17 @@ export default function DeviceApprovePage() {
         >
           ✕
         </button>
-        <h1 className="text-2xl font-bold">Setujui Device Baru</h1>
+        <h1 className="text-2xl font-bold" data-tour="device-approve-title">
+          Setujui Device Baru
+        </h1>
         <p className="mt-2 text-slate-400">
           Masukkan kode pairing yang muncul di device baru.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
+            id="device-approve-code"
+            name="deviceApproveCode"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="123-456"
@@ -65,6 +82,7 @@ export default function DeviceApprovePage() {
           <button
             type="submit"
             disabled={status === 'loading' || code.trim().length === 0}
+            data-tour="device-approve-submit"
             className="w-full rounded-lg bg-emerald-500/90 hover:bg-emerald-400 text-black font-semibold py-3 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {status === 'loading' ? 'Memproses...' : 'Approve'}

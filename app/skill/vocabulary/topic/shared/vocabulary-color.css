@@ -1,0 +1,244 @@
+.vocab-page-color-topic {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(57, 255, 20, 0.2), transparent 36%),
+    radial-gradient(circle at 84% 7%, rgba(0, 204, 102, 0.18), transparent 34%),
+    radial-gradient(circle at 48% 100%, rgba(24, 95, 53, 0.26), transparent 56%),
+    #06110b;
+}
+
+.vocab-color-card {
+  --card-top: rgba(36, 58, 78, 0.96);
+  --card-bottom: rgba(14, 20, 34, 0.94);
+  --card-border: rgba(168, 235, 255, 0.45);
+  --word-color: #ffffff;
+  --ipa-color: #f2fff6;
+  --meaning-color: #f8fff9;
+  --text-color: #ecfff0;
+  --chip-border: rgba(225, 248, 255, 0.48);
+  --chip-bg: rgba(255, 255, 255, 0.12);
+  --chip-text: #f7fff9;
+  --btn-border: rgba(206, 244, 255, 0.74);
+  --btn-bg: rgba(255, 255, 255, 0.18);
+  --btn-text: #f8fff9;
+  border-color: var(--card-border);
+  background: linear-gradient(158deg, var(--card-top), var(--card-bottom));
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--card-border), transparent 58%);
+}
+
+.vocab-color-card .vocab-word {
+  color: var(--word-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.vocab-color-card .vocab-ipa {
+  color: var(--ipa-color);
+}
+
+.vocab-color-card .vocab-meaning {
+  color: var(--meaning-color);
+}
+
+.vocab-color-card .vocab-example {
+  color: var(--text-color);
+}
+
+.vocab-color-card .vocab-example-ipa {
+  color: var(--ipa-color);
+}
+
+.vocab-color-card .vocab-example-translation {
+  color: var(--meaning-color);
+}
+
+.vocab-color-card .vocab-play-btn {
+  border-color: var(--btn-border);
+  background: color-mix(in srgb, var(--btn-bg), transparent 28%);
+  color: var(--btn-text);
+}
+
+.vocab-color-card.is-speaking {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 18px color-mix(in srgb, var(--card-border), transparent 50%);
+}
+
+.vocab-color-card--red {
+  --card-top: rgba(173, 28, 42, 0.95);
+  --card-bottom: rgba(103, 15, 24, 0.95);
+  --card-border: rgba(255, 155, 162, 0.86);
+}
+
+.vocab-color-card--blue {
+  --card-top: rgba(28, 74, 176, 0.95);
+  --card-bottom: rgba(16, 43, 112, 0.95);
+  --card-border: rgba(156, 199, 255, 0.82);
+}
+
+.vocab-color-card--green {
+  --card-top: rgba(22, 123, 66, 0.95);
+  --card-bottom: rgba(11, 79, 40, 0.95);
+  --card-border: rgba(156, 255, 190, 0.84);
+}
+
+.vocab-color-card--yellow {
+  --card-top: rgba(251, 231, 124, 0.96);
+  --card-bottom: rgba(207, 170, 57, 0.95);
+  --card-border: rgba(255, 240, 162, 0.95);
+  --word-color: #2c2607;
+  --ipa-color: #342d12;
+  --meaning-color: #312c12;
+  --text-color: #373423;
+  --chip-border: rgba(131, 109, 28, 0.6);
+  --chip-bg: rgba(255, 255, 255, 0.36);
+  --chip-text: #2b250b;
+  --btn-border: rgba(123, 96, 16, 0.66);
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-text: #342a08;
+}
+
+.vocab-color-card--black {
+  --card-top: rgba(30, 33, 40, 0.97);
+  --card-bottom: rgba(6, 8, 13, 0.98);
+  --card-border: rgba(170, 180, 201, 0.55);
+}
+
+.vocab-color-card--white {
+  --card-top: rgba(244, 251, 255, 0.97);
+  --card-bottom: rgba(205, 225, 239, 0.96);
+  --card-border: rgba(196, 224, 244, 0.94);
+  --word-color: #10263b;
+  --ipa-color: #18344f;
+  --meaning-color: #13314d;
+  --text-color: #193b58;
+  --chip-border: rgba(89, 133, 166, 0.58);
+  --chip-bg: rgba(255, 255, 255, 0.58);
+  --chip-text: #143350;
+  --btn-border: rgba(88, 131, 161, 0.72);
+  --btn-bg: rgba(255, 255, 255, 0.7);
+  --btn-text: #14324c;
+}
+
+.vocab-color-card--brown {
+  --card-top: rgba(127, 74, 41, 0.95);
+  --card-bottom: rgba(81, 45, 24, 0.95);
+  --card-border: rgba(236, 192, 160, 0.8);
+}
+
+.vocab-color-card--gray {
+  --card-top: rgba(123, 131, 144, 0.95);
+  --card-bottom: rgba(74, 83, 96, 0.96);
+  --card-border: rgba(209, 220, 235, 0.84);
+}
+
+.vocab-color-card--orange {
+  --card-top: rgba(236, 126, 30, 0.95);
+  --card-bottom: rgba(176, 83, 14, 0.95);
+  --card-border: rgba(255, 205, 158, 0.86);
+}
+
+.vocab-color-card--pink {
+  --card-top: rgba(239, 120, 175, 0.95);
+  --card-bottom: rgba(177, 66, 122, 0.95);
+  --card-border: rgba(255, 197, 224, 0.88);
+}
+
+.vocab-color-card--purple {
+  --card-top: rgba(119, 80, 214, 0.95);
+  --card-bottom: rgba(74, 43, 152, 0.95);
+  --card-border: rgba(215, 190, 255, 0.86);
+}
+
+.vocab-color-card--gold {
+  --card-top: rgba(227, 188, 58, 0.95);
+  --card-bottom: rgba(156, 122, 22, 0.95);
+  --card-border: rgba(255, 230, 152, 0.9);
+  --word-color: #2d2304;
+  --ipa-color: #3a300f;
+  --meaning-color: #382e0f;
+  --text-color: #3f3517;
+  --chip-border: rgba(134, 101, 17, 0.56);
+  --chip-bg: rgba(255, 255, 255, 0.35);
+  --chip-text: #322605;
+  --btn-border: rgba(123, 92, 12, 0.7);
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-text: #362806;
+}
+
+.vocab-color-card--silver {
+  --card-top: rgba(214, 224, 232, 0.96);
+  --card-bottom: rgba(162, 179, 194, 0.95);
+  --card-border: rgba(231, 241, 255, 0.9);
+  --word-color: #13283f;
+  --ipa-color: #1e3955;
+  --meaning-color: #1a3552;
+  --text-color: #214064;
+  --chip-border: rgba(95, 128, 154, 0.62);
+  --chip-bg: rgba(255, 255, 255, 0.55);
+  --chip-text: #193650;
+  --btn-border: rgba(96, 128, 156, 0.72);
+  --btn-bg: rgba(255, 255, 255, 0.68);
+  --btn-text: #1a3550;
+}
+
+.vocab-color-card--navy {
+  --card-top: rgba(20, 40, 113, 0.96);
+  --card-bottom: rgba(10, 20, 68, 0.97);
+  --card-border: rgba(169, 188, 255, 0.84);
+}
+
+.vocab-color-card--beige {
+  --card-top: rgba(231, 213, 176, 0.96);
+  --card-bottom: rgba(187, 166, 128, 0.95);
+  --card-border: rgba(249, 235, 205, 0.92);
+  --word-color: #2a220f;
+  --ipa-color: #392f18;
+  --meaning-color: #372d17;
+  --text-color: #413721;
+  --chip-border: rgba(124, 100, 51, 0.58);
+  --chip-bg: rgba(255, 255, 255, 0.38);
+  --chip-text: #312712;
+  --btn-border: rgba(118, 94, 45, 0.68);
+  --btn-bg: rgba(255, 255, 255, 0.52);
+  --btn-text: #302511;
+}
+
+.vocab-color-card--maroon {
+  --card-top: rgba(128, 30, 56, 0.95);
+  --card-bottom: rgba(80, 12, 31, 0.96);
+  --card-border: rgba(243, 161, 187, 0.84);
+}
+
+.vocab-color-card--turquoise {
+  --card-top: rgba(44, 168, 164, 0.95);
+  --card-bottom: rgba(22, 111, 110, 0.96);
+  --card-border: rgba(169, 249, 241, 0.86);
+}
+
+.vocab-color-card--violet {
+  --card-top: rgba(142, 97, 230, 0.95);
+  --card-bottom: rgba(91, 56, 172, 0.96);
+  --card-border: rgba(220, 194, 255, 0.86);
+}
+
+.vocab-color-card--cream {
+  --card-top: rgba(255, 248, 214, 0.96);
+  --card-bottom: rgba(230, 212, 163, 0.95);
+  --card-border: rgba(255, 244, 192, 0.92);
+  --word-color: #2e240c;
+  --ipa-color: #3c3115;
+  --meaning-color: #3a2f14;
+  --text-color: #463a1b;
+  --chip-border: rgba(134, 108, 42, 0.58);
+  --chip-bg: rgba(255, 255, 255, 0.42);
+  --chip-text: #33280e;
+  --btn-border: rgba(122, 96, 30, 0.68);
+  --btn-bg: rgba(255, 255, 255, 0.56);
+  --btn-text: #35290e;
+}
+
+.vocab-color-card--olive {
+  --card-top: rgba(116, 133, 52, 0.95);
+  --card-bottom: rgba(74, 86, 28, 0.96);
+  --card-border: rgba(205, 226, 127, 0.85);
+}

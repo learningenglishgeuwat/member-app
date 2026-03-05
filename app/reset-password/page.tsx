@@ -16,22 +16,20 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     const hash = typeof window !== 'undefined' ? window.location.hash : ''
-    if (!hash) {
-      setStatus('error')
-      setMessage('Link reset tidak valid atau sudah kedaluwarsa.')
-      setReady(true)
-      return
-    }
+    const search = typeof window !== 'undefined' ? window.location.search : ''
+    const hashParams = new URLSearchParams(hash.replace('#', ''))
+    const searchParams = new URLSearchParams(search.replace('?', ''))
 
-    const params = new URLSearchParams(hash.replace('#', ''))
-    const accessToken = params.get('access_token')
-    const refreshToken = params.get('refresh_token')
+    const accessToken = hashParams.get('access_token') ?? searchParams.get('access_token')
+    const refreshToken = hashParams.get('refresh_token') ?? searchParams.get('refresh_token')
 
     if (!accessToken || !refreshToken) {
-      setStatus('error')
-      setMessage('Link reset tidak valid atau sudah kedaluwarsa.')
-      setReady(true)
-      return
+      const timer = window.setTimeout(() => {
+        setStatus('error')
+        setMessage('Link reset tidak valid atau sudah kedaluwarsa.')
+        setReady(true)
+      }, 0)
+      return () => window.clearTimeout(timer)
     }
 
     supabase.auth
@@ -44,6 +42,23 @@ export default function ResetPasswordPage() {
       })
       .finally(() => setReady(true))
   }, [])
+
+  useEffect(() => {
+    if (!ready) return
+    // Mitigate aggressive browser/password-manager autofill on recovery forms.
+    const immediate = window.setTimeout(() => {
+      setPassword('')
+      setConfirm('')
+    }, 0)
+    const delayed = window.setTimeout(() => {
+      setPassword('')
+      setConfirm('')
+    }, 250)
+    return () => {
+      window.clearTimeout(immediate)
+      window.clearTimeout(delayed)
+    }
+  }, [ready])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -69,6 +84,13 @@ export default function ResetPasswordPage() {
     const { error } = await supabase.auth.updateUser({ password })
     if (error) {
       setStatus('error')
+      const messageLower = error.message.toLowerCase()
+      if (messageLower.includes('different from the old password')) {
+        setMessage(
+          'Password baru tidak boleh sama dengan password lama. Jika kolom terisi otomatis, hapus dulu lalu ketik password baru.',
+        )
+        return
+      }
       setMessage(`Gagal reset password: ${error.message}`)
       return
     }
@@ -86,10 +108,23 @@ export default function ResetPasswordPage() {
           Masukkan password baru untuk akun Anda.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
+          <input
+            type="text"
+            name="username"
+            autoComplete="username"
+            tabIndex={-1}
+            className="sr-only"
+            aria-hidden="true"
+            readOnly
+          />
           <div className="relative">
             <input
               type={showPassword ? 'text' : 'password'}
+              name="new-password"
+              autoComplete="new-password"
+              data-lpignore="true"
+              data-1p-ignore="true"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password Baru"
@@ -108,6 +143,10 @@ export default function ResetPasswordPage() {
           <div className="relative">
             <input
               type={showConfirm ? 'text' : 'password'}
+              name="confirm-new-password"
+              autoComplete="new-password"
+              data-lpignore="true"
+              data-1p-ignore="true"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               placeholder="Konfirmasi Password"

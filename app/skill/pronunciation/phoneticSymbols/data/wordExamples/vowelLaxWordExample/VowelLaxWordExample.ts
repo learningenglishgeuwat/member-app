@@ -100,7 +100,7 @@ export const vowelLaxExamples: SymbolWordExamples = {
     { word: 'bush', ipa: '/bʊʃ/' },
     { word: 'butcher', ipa: '/ˈbʊʧɚ/' },
     { word: 'pudding', ipa: '/ˈpʊdɪŋ/' },
-    { word: 'putty', ipa: '/ˈpʊti/' },
+    { word: 'wooden', ipa: '/ˈwʊdən/' },
     { word: 'pulling', ipa: '/ˈpʊlɪŋ/' },
     { word: 'hoodie', ipa: '/ˈhʊdi/' },
     { word: 'stood', ipa: '/stʊd/' },
@@ -116,7 +116,7 @@ export const vowelLaxExamples: SymbolWordExamples = {
     { word: 'Love', ipa: '/lʌv/' },
     { word: 'Come', ipa: '/kʌm/' },
     { word: 'Bus', ipa: '/bʌs/' },
-    { word: 'Sunday', ipa: '/sʌn/' },
+    { word: 'Sunday', ipa: '/ˈsʌndeɪ/' },
     { word: 'Cut', ipa: '/kʌt/' },
     { word: 'Much', ipa: '/mʌʧ/' },
     { word: 'Us', ipa: '/ʌs/' },
@@ -169,7 +169,7 @@ export const vowelLaxExamples: SymbolWordExamples = {
     { word: 'order', ipa: '/ˈɔrdɚ/' },
     { word: 'corner', ipa: '/ˈkɔrnɚ/' },
     { word: 'later', ipa: '/ˈleɪtɚ/' },
-    { word: 'teacher', ipa: '/ˈtiʧɚ/' }
+    { word: 'gamer', ipa: '/ˈgeɪmɚ/' }
   ],
   'ɪ': [
     { word: 'sit', ipa: '/sɪt/' },

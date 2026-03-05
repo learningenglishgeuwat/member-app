@@ -1,0 +1,106 @@
+.gr-topic-page {
+  min-height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem;
+  scrollbar-width: none;
+}
+
+.gr-topic-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.gr-topic-header {
+  margin-bottom: 0.35rem;
+}
+
+.gr-topic-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.gr-topic-subtitle {
+  margin-top: 0.5rem;
+}
+
+.gr-topic-block {
+  border-radius: 0.85rem;
+  padding: 1.05rem;
+}
+
+.gr-topic-block-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.gr-topic-page::-webkit-scrollbar,
+.gr-topic-page *::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.gr-topic-page::-webkit-scrollbar-track,
+.gr-topic-page *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gr-topic-page::-webkit-scrollbar-thumb,
+.gr-topic-page *::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.gr-topic-page [class$='-card-caret'] {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, 0.28) 0%,
+    rgba(103, 232, 249, 0.12) 45%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gr-topic-page [class$='-card-caret']::before {
+  content: '';
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 2px solid #d6fbff;
+  border-bottom: 2px solid #d6fbff;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.gr-topic-page details[open] [class$='-card-caret']::before {
+  transform: rotate(45deg);
+}
+
+.gr-topic-page [class$='-card-summary']:hover [class$='-card-caret'] {
+  border-color: rgba(34, 211, 238, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.25),
+    0 8px 16px rgba(6, 182, 212, 0.28);
+}
+
+@media (min-width: 768px) {
+  .gr-topic-page {
+    padding: 2.5rem;
+  }
+
+  .gr-topic-title {
+    font-size: 2.45rem;
+  }
+}

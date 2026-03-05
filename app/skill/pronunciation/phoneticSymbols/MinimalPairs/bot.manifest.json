@@ -1,0 +1,28 @@
+{
+  "route": "/skill/pronunciation/phoneticSymbols/MinimalPairs",
+  "label": "Minimal Pairs",
+  "scope": "pronunciation",
+  "keywords": [
+    "minimal pairs",
+    "beda bunyi mirip",
+    "latihan kontras bunyi"
+  ],
+  "qa": [
+    {
+      "topicId": "minimal-pairs-purpose",
+      "title": "Why Minimal Pairs Matter",
+      "route": "/skill/pronunciation/phoneticSymbols/MinimalPairs",
+      "keywords": [
+        "fungsi minimal pairs",
+        "latihan pair bunyi",
+        "membedakan suara mirip"
+      ],
+      "shortAnswer": "Minimal pairs melatih telinga dan mulut untuk membedakan dua bunyi yang hampir sama, sehingga kesalahan makna saat berbicara bisa dikurangi.",
+      "sourceSections": [
+        {
+          "label": "Minimal Pair Practice"
+        }
+      ]
+    }
+  ]
+}

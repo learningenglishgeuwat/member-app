@@ -1,0 +1,28 @@
+{
+  "route": "/skill/pronunciation/alphabet",
+  "label": "Pronunciation Alphabet",
+  "scope": "pronunciation",
+  "keywords": [
+    "alphabet pronunciation",
+    "huruf english",
+    "cara baca alphabet"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-alphabet-core",
+      "title": "Alphabet Pronunciation Basics",
+      "route": "/skill/pronunciation/alphabet",
+      "keywords": [
+        "cara baca huruf",
+        "pengucapan alphabet",
+        "alphabet amerika"
+      ],
+      "shortAnswer": "Materi alphabet membantu membangun dasar bunyi huruf agar siswa bisa melafalkan kata dengan lebih stabil sebelum masuk topik yang lebih kompleks.",
+      "sourceSections": [
+        {
+          "label": "Alphabet Practice"
+        }
+      ]
+    }
+  ]
+}

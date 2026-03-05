@@ -1,0 +1,62 @@
+{
+  "route": "/skill/pronunciation/american-t",
+  "label": "American T",
+  "scope": "pronunciation",
+  "keywords": [
+    "american t",
+    "flap t",
+    "glottal stop",
+    "final t before consonant",
+    "silent t"
+  ],
+  "qa": [
+    {
+      "topicId": "american-t-flap-vs-glottal",
+      "title": "American T: Flap vs Glottal",
+      "route": "/skill/pronunciation/american-t",
+      "keywords": [
+        "beda flap dan glottal",
+        "flap t itu r atau d",
+        "kapan glottal dipakai"
+      ],
+      "shortAnswer": "Dalam American T, flap ditulis /ɾ/ dan terdengar mirip soft d, bukan /r/ Inggris. Glottal stop ditulis /ʔ/ dan dipakai saat aliran udara dihentikan sejenak, terutama pada pola tertentu di speech casual.",
+      "sourceSections": [
+        {
+          "label": "Middle - Flap",
+          "route": "/skill/pronunciation/american-t/middle/flap"
+        },
+        {
+          "label": "Middle - Glottal",
+          "route": "/skill/pronunciation/american-t/middle/glottal"
+        }
+      ]
+    },
+    {
+      "topicId": "american-t-ending-patterns",
+      "title": "American T Ending Patterns",
+      "route": "/skill/pronunciation/american-t",
+      "keywords": [
+        "final t before consonant",
+        "released /t/ ending",
+        "silent t casual speech"
+      ],
+      "shortAnswer": "Di posisi akhir, /t/ bisa tetap released, bisa unreleased sebelum konsonan, atau terdengar sangat ringan pada speech casual. Jadi evaluasi selalu berdasarkan konteks kata dan frasa, bukan satu rule tunggal.",
+      "sourceSections": [
+        {
+          "label": "Ending - Released /t/ Ending",
+          "route": "/skill/pronunciation/american-t/ending/clear-t-ending"
+        },
+        {
+          "label": "Ending - Final T Before Consonant",
+          "route": "/skill/pronunciation/american-t/ending/final-t"
+        },
+        {
+          "label": "Middle - Silent T",
+          "route": "/skill/pronunciation/american-t/middle/silent-t"
+        }
+      ]
+    }
+  ]
+}
+
+

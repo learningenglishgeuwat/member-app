@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/defining-vs-non-defining-relative-clauses",
+    "label":  "Defining Vs Non Defining Relative Clauses",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu defining vs non defining relative clauses",
+                     "cara pakai defining vs non defining relative clauses",
+                     "defining vs non defining relative clauses",
+                     "expansion and complex structures defining vs non defining relative clauses",
+                     "grammar resource defining vs non defining relative clauses"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-defining-vs-non-defining-relative-clauses",
+                   "title":  "Defining Vs Non Defining Relative Clauses",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/defining-vs-non-defining-relative-clauses",
+                   "keywords":  [
+                                    "apa itu defining vs non defining relative clauses",
+                                    "cara pakai defining vs non defining relative clauses",
+                                    "defining vs non defining relative clauses",
+                                    "expansion and complex structures defining vs non defining relative clauses",
+                                    "grammar resource defining vs non defining relative clauses"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan perbedaan defining dan non-defining relative clauses, termasuk dampaknya pada makna inti dan penggunaan koma.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

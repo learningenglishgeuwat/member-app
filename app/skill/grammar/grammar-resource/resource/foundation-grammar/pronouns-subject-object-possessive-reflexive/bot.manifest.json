@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/pronouns-subject-object-possessive-reflexive",
+    "label":  "Pronouns Subject Object Possessive Reflexive",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu pronouns subject object possessive reflexive",
+                     "cara pakai pronouns subject object possessive reflexive",
+                     "pronouns subject object possessive reflexive",
+                     "foundation grammar pronouns subject object possessive reflexive",
+                     "grammar resource pronouns subject object possessive reflexive"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-pronouns-subject-object-possessive-reflexive",
+                   "title":  "Pronouns Subject Object Possessive Reflexive",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/pronouns-subject-object-possessive-reflexive",
+                   "keywords":  [
+                                    "apa itu pronouns subject object possessive reflexive",
+                                    "cara pakai pronouns subject object possessive reflexive",
+                                    "pronouns subject object possessive reflexive",
+                                    "foundation grammar pronouns subject object possessive reflexive",
+                                    "grammar resource pronouns subject object possessive reflexive"
+                                ],
+                   "shortAnswer":  "Topik ini membahas pronouns jenis subject, object, possessive, dan reflexive agar rujukan kata ganti konsisten.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Pronoun"
+                                          },
+                                          {
+                                              "label":  "Person (First, Second, Third)"
+                                          },
+                                          {
+                                              "label":  "Tabel Pronoun"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

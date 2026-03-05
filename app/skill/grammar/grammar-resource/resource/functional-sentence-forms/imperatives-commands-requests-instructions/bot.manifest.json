@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/imperatives-commands-requests-instructions",
+    "label":  "Imperatives Commands Requests Instructions",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu imperatives commands requests instructions",
+                     "cara pakai imperatives commands requests instructions",
+                     "imperatives commands requests instructions",
+                     "functional sentence forms imperatives commands requests instructions",
+                     "grammar resource imperatives commands requests instructions"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-imperatives-commands-requests-instructions",
+                   "title":  "Imperatives Commands Requests Instructions",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/imperatives-commands-requests-instructions",
+                   "keywords":  [
+                                    "apa itu imperatives commands requests instructions",
+                                    "cara pakai imperatives commands requests instructions",
+                                    "imperatives commands requests instructions",
+                                    "functional sentence forms imperatives commands requests instructions",
+                                    "grammar resource imperatives commands requests instructions"
+                                ],
+                   "shortAnswer":  "Topik ini membahas imperative forms untuk commands, requests, dan instructions dengan tingkat kesopanan yang tepat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Types of Imperatives"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

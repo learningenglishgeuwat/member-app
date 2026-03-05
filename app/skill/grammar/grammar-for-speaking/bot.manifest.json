@@ -1,0 +1,43 @@
+{
+  "route": "/skill/grammar/grammar-for-speaking",
+  "label": "Grammar for Speaking",
+  "scope": "grammar",
+  "keywords": [
+    "grammar for speaking",
+    "speaking goals",
+    "200 speaking goals",
+    "roadmap speaking",
+    "phase speaking",
+    "kalimat kunci speaking",
+    "drill speaking",
+    "latihan speaking grammar",
+    "grammar speaking praktis"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-speaking-practical-goals",
+      "title": "Grammar for Speaking Practical Goals",
+      "route": "/skill/grammar/grammar-for-speaking",
+      "keywords": [
+        "apa isi grammar for speaking",
+        "speaking goals grammar",
+        "kalimat kunci speaking",
+        "drill speaking di mana",
+        "roadmap speaking dari nol",
+        "phase speaking profesional"
+      ],
+      "shortAnswer": "Halaman ini berisi roadmap 200 speaking goals dari level nol sampai profesional. Materi dibagi per fase dan fokus pada daily, work, public service, emergency, legal, dan finance.",
+      "sourceSections": [
+        {
+          "label": "Phase 0 - Zero-to-Speech Starter"
+        },
+        {
+          "label": "Phase 7 - Work Basics"
+        },
+        {
+          "label": "Phase 13 - Legal, Compliance, Finance Professional"
+        }
+      ]
+    }
+  ]
+}

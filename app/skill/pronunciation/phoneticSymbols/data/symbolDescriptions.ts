@@ -257,8 +257,51 @@ export function getSymbolDescription(symbol: string): string {
 
 // Helper function to get category display name
 export function getCategoryDisplayName(symbol: string): string {
-  const symbolData = allSymbolDescriptions[symbol];
+  const normalizedSymbol = symbol
+    .replace('Ã¦', '\u00e6')
+    .replace('Ã°', '\u00f0')
+    .replace('Å‹', '\u014b')
+    .replace('É‘', '\u0251')
+    .replace('É”', '\u0254')
+    .replace('ÊŒ', '\u028c')
+    .replace('Éª', '\u026a')
+    .replace('ÊŠ', '\u028a')
+    .replace('É›', '\u025b')
+    .replace('É™', '\u0259')
+    .replace('Éš', '\u025a')
+    .replace('Î¸', '\u03b8')
+    .replace('Êƒ', '\u0283')
+    .replace('Ê§', '\u02a7')
+    .replace('Ê’', '\u0292')
+    .replace('Ê¤', '\u02a4');
+
+  const symbolData = allSymbolDescriptions[normalizedSymbol] || allSymbolDescriptions[symbol];
   if (!symbolData) return 'Unknown';
+
+  // Explicit category mapping (must match symbol portal grouping)
+  const vowelTense = new Set(['\u0251', 'i', 'u', '\u00e6', '\u0254']);
+  const vowelLax = new Set(['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a']);
+  const consonantVoiceless = new Set(['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h']);
+  const consonantVoiced = new Set([
+    'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y', 'j',
+  ]);
+  const diphthong = new Set(['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a']);
+
+  if (vowelTense.has(normalizedSymbol)) {
+    return 'vowel_tense';
+  }
+  if (vowelLax.has(normalizedSymbol)) {
+    return 'vowel_lax';
+  }
+  if (consonantVoiceless.has(normalizedSymbol)) {
+    return 'consonant_voiceless';
+  }
+  if (consonantVoiced.has(normalizedSymbol)) {
+    return 'consonant_voiced';
+  }
+  if (diphthong.has(normalizedSymbol)) {
+    return 'diphthong';
+  }
   
   const { category, subcategory } = symbolData;
   

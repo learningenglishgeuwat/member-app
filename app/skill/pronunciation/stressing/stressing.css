@@ -1,0 +1,722 @@
+.stress-page {
+  min-height: 100vh;
+  color: #f1e9ff;
+  background:
+    radial-gradient(1200px 620px at 12% -10%, rgba(168, 85, 247, 0.34), transparent 58%),
+    radial-gradient(1000px 520px at 100% 120%, rgba(192, 132, 252, 0.22), transparent 55%),
+    #11071e;
+  padding: 1.5rem;
+}
+
+.stress-page .stress-recording-anchor {
+  right: max(1.5rem, env(safe-area-inset-right));
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  transform: translateZ(0);
+}
+
+.stress-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.stress-header {
+  max-width: 56rem;
+}
+
+.stress-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.stress-subtitle {
+  margin-top: 0.5rem;
+  color: #d8c8f8;
+}
+
+.stress-progress-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.stress-block {
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  border-radius: 0.85rem;
+  background: rgba(30, 12, 53, 0.72);
+  padding: 1rem;
+  box-shadow: inset 0 1px 0 rgba(216, 180, 254, 0.12);
+}
+
+.stress-block-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e9d5ff;
+}
+
+.stress-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stress-section-indicator {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(167, 139, 250, 0.62);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.33) 0%,
+    rgba(167, 139, 250, 0.16) 45%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.stress-section-indicator::before {
+  content: '';
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 2px solid #ddd6fe;
+  border-bottom: 2px solid #ddd6fe;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.stress-section-indicator.is-open::before {
+  transform: rotate(45deg);
+}
+
+.stress-section-toggle:hover .stress-section-indicator {
+  border-color: rgba(167, 139, 250, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.25),
+    0 8px 16px rgba(139, 92, 246, 0.3);
+}
+
+.stress-text {
+  margin-top: 0.55rem;
+  color: #e9defe;
+  line-height: 1.55;
+}
+
+.stress-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stress-syllable-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stress-syllable-card {
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  border-radius: 0.75rem;
+  background: rgba(20, 9, 38, 0.84);
+  padding: 0.85rem;
+}
+
+.stress-card {
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  border-radius: 0.75rem;
+  background: rgba(20, 9, 38, 0.84);
+  padding: 0.85rem;
+}
+
+.stress-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.stress-word-wrap {
+  min-width: 0;
+}
+
+.stress-word {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e9d5ff;
+  letter-spacing: 0.02em;
+}
+
+.stress-example-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  max-width: 100%;
+  border: 1px solid rgba(216, 180, 254, 0.52);
+  border-radius: 999px;
+  background: rgba(64, 24, 96, 0.56);
+  color: #f7ecff;
+  padding: 0.08rem 0.52rem;
+  line-height: 1.35;
+}
+
+.stress-example-chip-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  flex-wrap: wrap;
+}
+
+.stress-example-chip-label {
+  color: #d8c8f8;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.stress-example-chip .stress-inline-highlight {
+  background: rgba(216, 180, 254, 0.28);
+}
+
+.stress-inline-highlight {
+  background: rgba(168, 85, 247, 0.34);
+  border-radius: 0.3rem;
+  padding: 0 0.12rem;
+  color: #fff7ff;
+}
+
+.stress-ipa {
+  margin-top: 0.2rem;
+  color: #c4b5fd;
+  font-size: 0.84rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+
+.stress-card-type {
+  margin-top: 0.35rem;
+  color: #c4b5fd;
+  font-size: 0.86rem;
+}
+
+.stress-card-note {
+  margin-top: 0.35rem;
+  color: #d8c8f8;
+  line-height: 1.5;
+}
+
+.stress-syllable-meta {
+  margin-top: 0.28rem;
+  color: #cbb8ff;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.stress-list-wrap {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.stress-list-item {
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: 0.7rem;
+  background: rgba(20, 9, 38, 0.84);
+  padding: 0.85rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.stress-list-item-main {
+  min-width: 0;
+  display: grid;
+  gap: 0.34rem;
+}
+
+.stress-sentence {
+  color: #f4edff;
+  line-height: 1.5;
+}
+
+.stress-token {
+  display: inline-block;
+  margin-right: 0.32rem;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.stress-token-strong {
+  color: #fff7ff;
+  background: rgba(168, 85, 247, 0.32);
+  border: 1px solid rgba(216, 180, 254, 0.62);
+  border-radius: 0.35rem;
+  padding: 0.02rem 0.28rem;
+  font-weight: 700;
+}
+
+.stress-token-weak {
+  color: #b6a6d1;
+}
+
+.stress-note {
+  margin-top: 0.3rem;
+  color: #d8c8f8;
+  line-height: 1.45;
+}
+
+.stress-list-item .stress-sentence {
+  margin: 0;
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  border-radius: 0.55rem;
+  background: rgba(26, 10, 44, 0.76);
+  padding: 0.38rem 0.52rem;
+}
+
+.stress-list-item .stress-note {
+  margin: 0;
+  border: 1px solid rgba(167, 139, 250, 0.24);
+  border-radius: 0.5rem;
+  background: rgba(21, 8, 35, 0.64);
+  padding: 0.3rem 0.5rem;
+}
+
+.stress-list-item-play-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-self: center;
+}
+
+.stress-toolbar {
+  margin-top: 0.55rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+}
+
+.stress-toolbar--split {
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.stress-toolbar-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.stress-ipa-toggle-btn {
+  border: 1px solid rgba(196, 181, 253, 0.5);
+  color: #ddd6fe;
+  border-radius: 0.62rem;
+  padding: 0.28rem 0.68rem;
+  background: rgba(24, 10, 44, 0.82);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.stress-ipa-toggle-btn:hover {
+  border-color: rgba(216, 180, 254, 0.92);
+  color: #f3e8ff;
+  background: rgba(40, 16, 72, 0.9);
+}
+
+.stress-ipa-toggle-btn.is-active {
+  border-color: rgba(216, 180, 254, 0.92);
+  color: #fff7ff;
+  background: rgba(76, 29, 149, 0.45);
+  box-shadow: 0 0 0 1px rgba(216, 180, 254, 0.2);
+}
+
+.stress-playall-btn {
+  border: 1px solid rgba(216, 180, 254, 0.6);
+  color: #f4e8ff;
+  border-radius: 0.62rem;
+  padding: 0.28rem 0.68rem;
+  background: rgba(29, 11, 54, 0.9);
+  font-size: 0.79rem;
+  font-weight: 700;
+  line-height: 1.25;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.stress-playall-btn:hover {
+  border-color: rgba(233, 213, 255, 0.95);
+  color: #fff7ff;
+  background: rgba(44, 18, 74, 0.94);
+}
+
+.stress-play-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(216, 180, 254, 0.58);
+  background: rgba(29, 11, 54, 0.92);
+  color: #f4e8ff;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.stress-play-chip-btn:hover {
+  border-color: rgba(233, 213, 255, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(216, 180, 254, 0.25),
+    0 8px 18px rgba(140, 90, 245, 0.3);
+  transform: translateY(-1px);
+}
+
+.stress-play-chip-btn:active {
+  transform: translateY(0);
+}
+
+.stress-play-chip-icon {
+  width: 0;
+  height: 0;
+  border-top: 0.34rem solid transparent;
+  border-bottom: 0.34rem solid transparent;
+  border-left: 0.54rem solid currentColor;
+  margin-left: 0.08rem;
+}
+
+.stress-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes stress-tts-card-pulse {
+  0% {
+    box-shadow:
+      inset 0 1px 0 rgba(216, 180, 254, 0.14),
+      0 0 0 1px rgba(216, 180, 254, 0.24),
+      0 0 0 0 rgba(168, 85, 247, 0.42);
+  }
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(216, 180, 254, 0.14),
+      0 0 0 1px rgba(216, 180, 254, 0.35),
+      0 0 0 8px rgba(168, 85, 247, 0);
+  }
+}
+
+.stress-card.is-speaking,
+.stress-syllable-card.is-speaking,
+.stress-list-item.is-speaking,
+.stress-rule-card.is-speaking,
+.stress-bank-card.is-speaking {
+  border-color: rgba(216, 180, 254, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(216, 180, 254, 0.14),
+    0 0 0 1px rgba(216, 180, 254, 0.28),
+    0 12px 28px rgba(139, 92, 246, 0.28);
+  animation: stress-tts-card-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.stress-rule-example-item.is-speaking,
+.stress-bank-item-row.is-speaking {
+  border-color: rgba(216, 180, 254, 0.75);
+  background: rgba(168, 85, 247, 0.2);
+  box-shadow: 0 0 0 1px rgba(216, 180, 254, 0.2);
+}
+
+.stress-fix-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.stress-fix-card {
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  border-radius: 0.7rem;
+  background: rgba(20, 9, 38, 0.8);
+  padding: 0.75rem 0.8rem;
+}
+
+.stress-fix-wrong {
+  color: #fecaca;
+}
+
+.stress-fix-correct {
+  margin-top: 0.35rem;
+  color: #bbf7d0;
+}
+
+.stress-bullets {
+  margin-top: 0.7rem;
+  padding-left: 1rem;
+  line-height: 1.6;
+  color: #e9defe;
+}
+
+.stress-mark-grid,
+.stress-rule-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.stress-bank-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.stress-mark-card,
+.stress-rule-card {
+  border: 1px solid rgba(167, 139, 250, 0.34);
+  border-radius: 0.7rem;
+  background: rgba(20, 9, 38, 0.84);
+  padding: 0.75rem 0.85rem;
+}
+
+.stress-bank-card {
+  border: 1px solid rgba(167, 139, 250, 0.36);
+  border-radius: 0.7rem;
+  background: rgba(20, 9, 38, 0.84);
+  padding: 0.8rem 0.9rem;
+}
+
+.stress-bank-title {
+  color: #e9d5ff;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.stress-bank-list {
+  color: #e9defe;
+  line-height: 1.55;
+  padding-left: 1rem;
+}
+
+.stress-bank-item-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.stress-bank-item-main {
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.stress-bank-item-word {
+  display: inline-block;
+}
+
+.stress-mark-card {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.stress-mark {
+  color: #f7edff;
+  background: rgba(168, 85, 247, 0.24);
+  border: 1px solid rgba(216, 180, 254, 0.55);
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.stress-mark-label {
+  color: #e9d5ff;
+  font-weight: 700;
+}
+
+.stress-mark-note {
+  margin-top: 0.2rem;
+  color: #d8c8f8;
+  line-height: 1.45;
+}
+
+.stress-rule-title {
+  color: #e9d5ff;
+  font-weight: 700;
+}
+
+.stress-rule-note {
+  margin-top: 0.3rem;
+  color: #d8c8f8;
+  line-height: 1.45;
+}
+
+.stress-rule-examples {
+  margin-top: 0.3rem;
+  color: #d8b4fe;
+  font-weight: 600;
+  display: grid;
+  gap: 0.38rem;
+}
+
+.stress-rule-example-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  border: 1px solid rgba(167, 139, 250, 0.34);
+  border-radius: 0.58rem;
+  background: rgba(28, 11, 49, 0.7);
+  padding: 0.45rem 0.5rem;
+}
+
+.stress-rule-example-text {
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.stress-rule-example-sentence {
+  margin: 0.1rem 0 0;
+  color: #e9defe;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  font-weight: 500;
+  border: 1px solid rgba(196, 181, 253, 0.26);
+  border-radius: 0.5rem;
+  background: rgba(24, 9, 42, 0.72);
+  padding: 0.28rem 0.5rem;
+}
+
+.stress-rule-example-translation {
+  margin: 0.02rem 0 0;
+  color: #c4b5fd;
+  font-size: 0.79rem;
+  line-height: 1.4;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 0.5rem;
+  background: rgba(22, 9, 38, 0.62);
+  padding: 0.24rem 0.48rem;
+}
+
+.stress-ipa--inline {
+  margin-top: 0;
+}
+
+.stress-bank-item-row {
+  border: 1px solid rgba(167, 139, 250, 0.34);
+  border-radius: 0.58rem;
+  background: rgba(28, 11, 49, 0.66);
+  padding: 0.34rem 0.4rem;
+}
+
+.stress-rule-example-item .stress-sentence {
+  margin: 0;
+  border: 1px solid rgba(196, 181, 253, 0.26);
+  border-radius: 0.5rem;
+  background: rgba(24, 9, 42, 0.72);
+  padding: 0.28rem 0.5rem;
+}
+
+.stress-prompt-card {
+  margin-top: 0.7rem;
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  border-radius: 0.72rem;
+  background: rgba(20, 9, 38, 0.86);
+  padding: 0.8rem 0.9rem;
+}
+
+.stress-prompt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.stress-prompt-title {
+  color: #e9d5ff;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.stress-prompt-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(167, 139, 250, 0.58);
+  border-radius: 999px;
+  background: rgba(76, 29, 149, 0.28);
+  color: #f5e9ff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.35rem 0.62rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.stress-prompt-copy-btn svg {
+  color: #f9a8d4;
+}
+
+.stress-prompt-copy-btn:hover {
+  border-color: rgba(216, 180, 254, 0.9);
+}
+
+.stress-prompt-copy-btn:active {
+  transform: translateY(1px);
+}
+
+.stress-prompt-quote {
+  margin-top: 0.6rem;
+  color: #e9defe;
+  line-height: 1.55;
+  font-size: 0.88rem;
+}
+
+@media (min-width: 768px) {
+  .stress-page {
+    padding: 2.5rem;
+  }
+
+  .stress-title {
+    font-size: 2.5rem;
+  }
+
+  .stress-grid,
+  .stress-syllable-grid,
+  .stress-fix-grid,
+  .stress-mark-grid,
+  .stress-rule-grid,
+  .stress-bank-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stress-bank-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/wish-and-if-only",
+    "label":  "Wish And If Only",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu wish and if only",
+                     "cara pakai wish and if only",
+                     "wish and if only",
+                     "expansion and complex structures wish and if only",
+                     "grammar resource wish and if only"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-wish-and-if-only",
+                   "title":  "Wish And If Only",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/wish-and-if-only",
+                   "keywords":  [
+                                    "apa itu wish and if only",
+                                    "cara pakai wish and if only",
+                                    "wish and if only",
+                                    "expansion and complex structures wish and if only",
+                                    "grammar resource wish and if only"
+                                ],
+                   "shortAnswer":  "Topik ini membahas wish dan if only untuk menyatakan penyesalan, keinginan, atau kondisi yang berlawanan dengan kenyataan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

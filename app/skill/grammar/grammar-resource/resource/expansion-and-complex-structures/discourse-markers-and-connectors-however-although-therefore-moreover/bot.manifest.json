@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/discourse-markers-and-connectors-however-although-therefore-moreover",
+    "label":  "Discourse Markers And Connectors However Although Therefore Moreover",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu discourse markers and connectors however although therefore moreover",
+                     "cara pakai discourse markers and connectors however although therefore moreover",
+                     "discourse markers and connectors however although therefore moreover",
+                     "expansion and complex structures discourse markers and connectors however although therefore moreover",
+                     "grammar resource discourse markers and connectors however although therefore moreover"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-discourse-markers-and-connectors-however-although-therefore-moreover",
+                   "title":  "Discourse Markers And Connectors However Although Therefore Moreover",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/discourse-markers-and-connectors-however-although-therefore-moreover",
+                   "keywords":  [
+                                    "apa itu discourse markers and connectors however although therefore moreover",
+                                    "cara pakai discourse markers and connectors however although therefore moreover",
+                                    "discourse markers and connectors however although therefore moreover",
+                                    "expansion and complex structures discourse markers and connectors however although therefore moreover",
+                                    "grammar resource discourse markers and connectors however although therefore moreover"
+                                ],
+                   "shortAnswer":  "Topik ini fokus pada discourse markers dan connectors seperti however, although, therefore, moreover agar alur argumen lebih rapi.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Markers"
+                                          },
+                                          {
+                                              "label":  "Position and Punctuation"
+                                          },
+                                          {
+                                              "label":  "although vs however"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/hedging-and-stance-grammar",
+    "label":  "Hedging And Stance Grammar",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu hedging and stance grammar",
+                     "cara pakai hedging and stance grammar",
+                     "hedging and stance grammar",
+                     "optional advanced reference hedging and stance grammar",
+                     "grammar resource hedging and stance grammar"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-optional-advanced-reference-hedging-and-stance-grammar",
+                   "title":  "Hedging And Stance Grammar",
+                   "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/hedging-and-stance-grammar",
+                   "keywords":  [
+                                    "apa itu hedging and stance grammar",
+                                    "cara pakai hedging and stance grammar",
+                                    "hedging and stance grammar",
+                                    "optional advanced reference hedging and stance grammar",
+                                    "grammar resource hedging and stance grammar"
+                                ],
+                   "shortAnswer":  "Topik ini membahas hedging dan stance grammar untuk menyatakan sikap secara hati hati, seperti seems to atau likely to.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

@@ -2,6 +2,13 @@
 
 import React, { useState } from 'react';
 import { BookOpen, Mic, Volume2, MessageCircle, BarChart3, Lock } from 'lucide-react';
+import { VOCABULARY_TOPICS } from '../../../skill/vocabulary/topic/data/topics';
+import { SPEAKING_GOALS } from '../../../skill/speaking/data/goals';
+import { SPEAKING_PHASES } from '../../../skill/speaking/data/phases';
+import {
+  SPEAKING_GOAL_COMPLETION_KEY,
+  SPEAKING_PRACTICE_WITH_GEUWAT_PREFIX,
+} from '../../../skill/speaking/data/progress';
 
 interface SkillData {
   id: string;
@@ -10,6 +17,19 @@ interface SkillData {
   icon: React.ElementType;
   description: string;
 }
+
+type DashboardTopicProgress = {
+  id?: string;
+  name: string;
+  percentage: number;
+  practicePercentage?: number;
+  lessonPercentage?: number;
+  locked?: boolean;
+};
+
+const PRONUNCIATION_ROADMAP_CHECKLIST_KEY = 'dashboard-pronunciation-roadmap-checklist-v1';
+const VOCABULARY_PROGRESS_KEY = 'vocabularyProgress';
+const VOCABULARY_ROADMAP_CHECKLIST_KEY = 'dashboard-vocabulary-roadmap-checklist-v1';
 
 const initialSkills: SkillData[] = [
   { id: 'pronunciation', name: 'Pronunciation', progress: 75, icon: Volume2, description: 'Speaking clarity and accent' },
@@ -22,6 +42,16 @@ const ProgressContent: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedTopics, setSelectedTopics] = useState<{[key: string]: string[]}>({});
   const [expandedTopics, setExpandedTopics] = useState<{[key: string]: string[]}>({});
+
+  const readLocalStorageObject = <T,>(key: string, fallback: T): T => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      return JSON.parse(raw) as T;
+    } catch {
+      return fallback;
+    }
+  };
   
   // Helper function to calculate phonetic symbols average
   const calculatePhoneticAverage = (topicProgress: Record<string, number>) => {
@@ -33,30 +63,119 @@ const ProgressContent: React.FC = () => {
   };
   
   // Load pronunciation topic progress from localStorage
-  const getPronunciationTopicProgress = () => {
-    const topicProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
+  const getPronunciationTopicProgress = (): DashboardTopicProgress[] => {
+    const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {});
+    const lessonChecklist = readLocalStorageObject<Record<string, boolean>>(
+      PRONUNCIATION_ROADMAP_CHECKLIST_KEY,
+      {}
+    );
     const averagePhoneticProgress = calculatePhoneticAverage(topicProgress);
-    
-    return [
-      { name: 'Alphabet', percentage: topicProgress['alphabet'] || 0 },
-      { name: 'Phonetic Symbols', percentage: averagePhoneticProgress },
-      { name: 'Stressing', percentage: topicProgress['stressing'] || 0 },
-      { name: 'Final sound', percentage: topicProgress['finalSound'] || 0 },
-      { name: 'American /t/', percentage: topicProgress['americanT'] || 0 },
-      { name: 'Connected Speech', percentage: topicProgress['connectedSpeech'] || 0 }
+    const practiceByRoadmapId: Record<string, number> = {
+      alphabet: topicProgress['alphabet'] || 0,
+      'phonetic-symbols': averagePhoneticProgress,
+      stressing: topicProgress['stressing'] || 0,
+      intonation: topicProgress['intonation'] || 0,
+      'final-sound': topicProgress['finalSound'] || 0,
+      'american-t': topicProgress['americanT'] || 0,
+      'text-practice': topicProgress['textPractice'] || 0,
+    };
+
+    const roadmapTopics: Array<{ id: string; name: string }> = [
+      { id: 'alphabet', name: 'Alphabet' },
+      { id: 'phonetic-symbols', name: 'Phonetic Symbols' },
+      { id: 'stressing', name: 'Stressing' },
+      { id: 'intonation', name: 'Intonation' },
+      { id: 'final-sound', name: 'Final Sound' },
+      { id: 'american-t', name: 'American /t/' },
+      { id: 'text-practice', name: 'Text Practice' },
     ];
+
+    return roadmapTopics.map((topic) => {
+      const practicePercentage = practiceByRoadmapId[topic.id] ?? 0;
+      const lessonPercentage = lessonChecklist[topic.id] ? 100 : 0;
+      return {
+        id: topic.id,
+        name: topic.name,
+        percentage: practicePercentage,
+        practicePercentage,
+        lessonPercentage,
+      };
+    });
   };
 
-  // Update initial skills with loaded progress and recalculate pronunciation average
+  const getVocabularyTopicProgress = (): DashboardTopicProgress[] => {
+    const vocabularyProgress = readLocalStorageObject<Record<string, number>>(VOCABULARY_PROGRESS_KEY, {});
+    const vocabularyRoadmapChecklist = readLocalStorageObject<Record<string, boolean>>(
+      VOCABULARY_ROADMAP_CHECKLIST_KEY,
+      {}
+    );
+
+    return VOCABULARY_TOPICS.map((topic) => {
+      const practicePercentage = vocabularyProgress[topic.topicId];
+      const learningPercentage = vocabularyRoadmapChecklist[topic.topicId] ? 100 : 0;
+      const safePracticePercentage =
+        typeof practicePercentage === 'number' && Number.isFinite(practicePercentage)
+          ? practicePercentage
+          : 0;
+
+      return {
+        id: topic.topicId,
+        name: topic.title,
+        percentage: safePracticePercentage,
+        practicePercentage: safePracticePercentage,
+        lessonPercentage: learningPercentage,
+      };
+    });
+  };
+
+  const getSpeakingTopicProgress = (): DashboardTopicProgress[] => {
+    const speakingCompletionMap = readLocalStorageObject<Record<string, boolean>>(
+      SPEAKING_GOAL_COMPLETION_KEY,
+      {},
+    );
+
+    return SPEAKING_PHASES.map((phase) => {
+      const phaseGoals = SPEAKING_GOALS.filter((goal) => goal.phaseId === phase.id);
+      const totalGoals = phaseGoals.length;
+
+      const learningDone = phaseGoals.filter((goal) => speakingCompletionMap[goal.id] === true).length;
+      const practiceDone = phaseGoals.filter(
+        (goal) =>
+          speakingCompletionMap[`${SPEAKING_PRACTICE_WITH_GEUWAT_PREFIX}${goal.id}`] === true,
+      ).length;
+
+      const lessonPercentage =
+        totalGoals > 0 ? Math.round((learningDone / totalGoals) * 100) : 0;
+      const practicePercentage =
+        totalGoals > 0 ? Math.round((practiceDone / totalGoals) * 100) : 0;
+
+      return {
+        id: phase.id,
+        name: phase.title,
+        percentage: Math.round((lessonPercentage + practicePercentage) / 2),
+        lessonPercentage,
+        practicePercentage,
+      };
+    });
+  };
+
+  // Update initial skills with loaded progress and recalculate averages
   const [skills] = useState(() => {
-    const topicProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
+    const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {});
+    const grammarProgress = readLocalStorageObject<Record<string, number>>('grammarSpeakingProgress', {});
+    const vocabularyProgress = readLocalStorageObject<Record<string, number>>(VOCABULARY_PROGRESS_KEY, {});
+    const speakingCompletionMap = readLocalStorageObject<Record<string, boolean>>(
+      SPEAKING_GOAL_COMPLETION_KEY,
+      {},
+    );
     
     // Get progress from each individual topic
     const alphabetProgress = topicProgress['alphabet'] || 0;
     const stressingProgress = topicProgress['stressing'] || 0;
+    const intonationProgress = topicProgress['intonation'] || 0;
     const finalSoundProgress = topicProgress['finalSound'] || 0;
     const americanTProgress = topicProgress['americanT'] || 0;
-    const connectedSpeechProgress = topicProgress['connectedSpeech'] || 0;
+    const textPracticeProgress = topicProgress['textPractice'] || 0;
     
     // Calculate phonetic symbols average using helper function
     const averagePhoneticProgress = calculatePhoneticAverage(topicProgress);
@@ -65,26 +184,62 @@ const ProgressContent: React.FC = () => {
     const allTopicProgress = [
       alphabetProgress,
       stressingProgress, 
+      intonationProgress,
       finalSoundProgress,
       americanTProgress,
-      connectedSpeechProgress,
+      textPracticeProgress,
       averagePhoneticProgress
     ].filter(val => val > 0);
     
     const pronunciationAverage = allTopicProgress.length > 0 
       ? Math.round(allTopicProgress.reduce((acc, curr) => acc + curr, 0) / allTopicProgress.length)
       : 0;
-    
-    return initialSkills.map(skill => 
-      skill.id === 'pronunciation' 
-        ? { ...skill, progress: pronunciationAverage }
-        : skill
+    const grammarValues = Object.values(grammarProgress);
+    const grammarAverage = grammarValues.length > 0
+      ? Math.round(grammarValues.reduce((acc, curr) => acc + curr, 0) / grammarValues.length)
+      : 0;
+    const vocabularyValues = Object.values(vocabularyProgress).filter(
+      (value): value is number => typeof value === 'number' && Number.isFinite(value) && value > 0,
     );
+    const vocabularyAverage = vocabularyValues.length > 0
+      ? Math.round(vocabularyValues.reduce((acc, curr) => acc + curr, 0) / vocabularyValues.length)
+      : 0;
+    const totalSpeakingGoals = SPEAKING_GOALS.length;
+    const learningDoneGlobal = SPEAKING_GOALS.filter(
+      (goal) => speakingCompletionMap[goal.id] === true,
+    ).length;
+    const practiceDoneGlobal = SPEAKING_GOALS.filter(
+      (goal) =>
+        speakingCompletionMap[`${SPEAKING_PRACTICE_WITH_GEUWAT_PREFIX}${goal.id}`] === true,
+    ).length;
+    const speakingLearningAverage = totalSpeakingGoals > 0
+      ? Math.round((learningDoneGlobal / totalSpeakingGoals) * 100)
+      : 0;
+    const speakingPracticeAverage = totalSpeakingGoals > 0
+      ? Math.round((practiceDoneGlobal / totalSpeakingGoals) * 100)
+      : 0;
+    const speakingAverage = Math.round((speakingLearningAverage + speakingPracticeAverage) / 2);
+    
+    return initialSkills.map(skill => {
+      if (skill.id === 'pronunciation') {
+        return { ...skill, progress: pronunciationAverage };
+      }
+      if (skill.id === 'grammar') {
+        return { ...skill, progress: grammarAverage };
+      }
+      if (skill.id === 'vocabulary') {
+        return { ...skill, progress: vocabularyAverage };
+      }
+      if (skill.id === 'speaking') {
+        return { ...skill, progress: speakingAverage };
+      }
+      return skill;
+    });
   });
 
   // All skills are displayed
   const displayedSkills = skills;
-  const lockedSkillIds = new Set(['vocabulary', 'grammar', 'speaking']);
+  const lockedSkillIds = new Set<string>([]);
   const unlockedSkills = displayedSkills.filter(skill => !lockedSkillIds.has(skill.id));
   const fallbackSkill: SkillData = {
     id: 'none',
@@ -92,6 +247,18 @@ const ProgressContent: React.FC = () => {
     progress: 0,
     icon: BarChart3,
     description: ''
+  };
+
+  const getGrammarTrackProgress = (): DashboardTopicProgress[] => {
+    const grammarProgress = JSON.parse(localStorage.getItem('grammarSpeakingProgress') || '{}') as Record<string, number>;
+    const values = Object.values(grammarProgress);
+    const speakingAverage =
+      values.length > 0 ? Math.round(values.reduce((acc, curr) => acc + curr, 0) / values.length) : 0;
+
+    return [
+      { name: 'Grammar for Speaking', percentage: speakingAverage },
+      { name: 'Grammar for Writing', percentage: 0, locked: true },
+    ];
   };
 
   const totalProgress = unlockedSkills.reduce((acc, curr) => acc + curr.progress, 0);
@@ -165,7 +332,7 @@ const ProgressContent: React.FC = () => {
               {displayedSkills.map((skill) => {
                 const percentage = skill.progress;
                 const isSelected = selectedSkill === skill.id;
-                const isDisabled = lockedSkillIds.has(skill.id); // Lock vocabulary, grammar, and speaking
+                const isDisabled = lockedSkillIds.has(skill.id); // Lock selected skills only.
                 const displayPercentage = isDisabled ? null : percentage;
                 
                 return (
@@ -211,42 +378,32 @@ const ProgressContent: React.FC = () => {
                             case 'pronunciation':
                               return getPronunciationTopicProgress();
                             case 'vocabulary':
-                              return [
-                                { name: 'Common Words', percentage: 35 },
-                                { name: 'Academic', percentage: 30 },
-                                { name: 'Business', percentage: 20 },
-                                { name: 'Idioms', percentage: 15 }
-                              ];
+                              return getVocabularyTopicProgress();
                             case 'grammar':
-                              return [
-                                { name: 'Tenses', percentage: 40 },
-                                { name: 'Sentence Structure', percentage: 30 },
-                                { name: 'Prepositions', percentage: 20 },
-                                { name: 'Articles', percentage: 10 }
-                              ];
+                              return getGrammarTrackProgress();
                             case 'speaking':
-                              return [
-                                { name: 'Fluency', percentage: 35 },
-                                { name: 'Pronunciation', percentage: 30 },
-                                { name: 'Conversation', percentage: 25 },
-                                { name: 'Presentation', percentage: 10 }
-                              ];
+                              return getSpeakingTopicProgress();
                             default:
                               return [];
                           }
                         })().map((topic, index) => {
-                          const isSelected = selectedTopics[skill.id]?.includes(topic.name);
+                          const isTopicLocked = topic.locked === true;
+                          const isSelected = !isTopicLocked && selectedTopics[skill.id]?.includes(topic.name);
                           const isExpanded = expandedTopics[skill.id]?.includes(topic.name);
                           return (
                             <div key={index} className="space-y-1 md:space-y-2">
                               <button
                                 onClick={() => {
+                                  if (isTopicLocked) return;
                                   handleTopicClick(skill.id, topic.name);
                                   toggleTopicExpansion(skill.id, topic.name);
                                 }}
+                                disabled={isTopicLocked}
                                 className={`
                                   relative py-1.5 md:py-2 px-2 md:px-3 rounded-lg font-display font-semibold text-[11px] sm:text-xs md:text-sm transition-all duration-200 border w-full
-                                  ${isSelected 
+                                  ${isTopicLocked
+                                    ? 'bg-slate-900/50 border-slate-700/40 text-slate-500 cursor-not-allowed opacity-70'
+                                    : isSelected 
                                     ? 'bg-cyan-600 border-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] scale-105 z-10' 
                                     : 'bg-slate-800/50 border-slate-600/50 text-slate-300 hover:border-cyan-500/50 hover:bg-slate-700/50 hover:text-cyan-200'
                                   }
@@ -254,6 +411,7 @@ const ProgressContent: React.FC = () => {
                               >
                                 <div className="flex items-center justify-between w-full">
                                   <span className="text-[10px] sm:text-xs md:text-sm">{topic.name}</span>
+                                  {isTopicLocked && <span className="text-[10px] sm:text-xs text-slate-500">(Locked)</span>}
                                 </div>
                                 {isSelected && (
                                   <div className="absolute -top-1 -right-1 w-2 h-2 md:w-2.5 md:h-2.5 bg-cyan-400 rounded-full border-2 border-slate-900 shadow-[0_0_8px_#22d3ee]">
@@ -262,19 +420,116 @@ const ProgressContent: React.FC = () => {
                               </button>
                               
                               {/* Progress bar chart below button when expanded */}
-                              {isExpanded && (
+                              {isExpanded && !isTopicLocked && (
                                 <div className="pl-2 md:pl-4 pr-1 md:pr-2 animate-fade-in">
                                   <div className="bg-slate-800/30 rounded-lg p-2 md:p-3">
-                                    <div className="flex items-center gap-2 md:gap-3">
-                                      <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider">Progress</div>
-                                      <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
-                                        <div 
-                                          className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
-                                          style={{ width: `${topic.percentage}%` }}
-                                        />
+                                    {skill.id === 'pronunciation' ? (
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                          <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                            Practice Progress
+                                          </div>
+                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                            <div
+                                              className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
+                                              style={{ width: `${topic.practicePercentage ?? topic.percentage}%` }}
+                                            />
+                                          </div>
+                                          <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">
+                                            {topic.practicePercentage ?? topic.percentage}%
+                                          </div>
+                                        </div>
+                                        {topic.id !== 'text-practice' && (
+                                          <div className="flex items-center gap-2 md:gap-3">
+                                            <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                              Lesson Progress
+                                            </div>
+                                            <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                              <div
+                                                className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all duration-700"
+                                                style={{ width: `${topic.lessonPercentage ?? 0}%` }}
+                                              />
+                                            </div>
+                                            <div className="text-[10px] sm:text-xs text-emerald-300 font-bold">
+                                              {topic.lessonPercentage ?? 0}%
+                                            </div>
+                                          </div>
+                                        )}
                                       </div>
-                                      <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">{topic.percentage}%</div>
-                                    </div>
+                                    ) : skill.id === 'vocabulary' ? (
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                          <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                            Practice Progress
+                                          </div>
+                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                            <div
+                                              className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
+                                              style={{ width: `${topic.practicePercentage ?? topic.percentage}%` }}
+                                            />
+                                          </div>
+                                          <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">
+                                            {topic.practicePercentage ?? topic.percentage}%
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                          <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                            Learning Progress
+                                          </div>
+                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                            <div
+                                              className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all duration-700"
+                                              style={{ width: `${topic.lessonPercentage ?? 0}%` }}
+                                            />
+                                          </div>
+                                          <div className="text-[10px] sm:text-xs text-emerald-300 font-bold">
+                                            {topic.lessonPercentage ?? 0}%
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ) : skill.id === 'speaking' ? (
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                          <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                            Learning Progress
+                                          </div>
+                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                            <div
+                                              className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all duration-700"
+                                              style={{ width: `${topic.lessonPercentage ?? 0}%` }}
+                                            />
+                                          </div>
+                                          <div className="text-[10px] sm:text-xs text-emerald-300 font-bold">
+                                            {topic.lessonPercentage ?? 0}%
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                          <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                            Practice Progress
+                                          </div>
+                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                            <div
+                                              className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
+                                              style={{ width: `${topic.practicePercentage ?? 0}%` }}
+                                            />
+                                          </div>
+                                          <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">
+                                            {topic.practicePercentage ?? 0}%
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider">Progress</div>
+                                        <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                          <div
+                                            className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
+                                            style={{ width: `${topic.percentage}%` }}
+                                          />
+                                        </div>
+                                        <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">{topic.percentage}%</div>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               )}

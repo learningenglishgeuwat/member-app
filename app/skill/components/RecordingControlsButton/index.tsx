@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Circle, Mic, MicOff, Play, HelpCircle, Download, ChevronUp } from 'lucide-react';
+import { Circle, Mic, MicOff, Play, Pause, HelpCircle, Download, ChevronUp } from 'lucide-react';
 
 interface RecordingControlsButtonProps {
   downloadFileName?: string;
@@ -18,15 +18,21 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState<string | null>(null);
+  const [isPlayingRecording, setIsPlayingRecording] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     return () => {
       if (mediaRecorderRef.current?.stream) {
         mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+      }
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
       }
     };
   }, []);
@@ -52,9 +58,18 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
       };
 
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        setRecordedAudio(audioUrl);
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current = null;
+        }
+        setIsPlayingRecording(false);
+        setRecordedAudio((prev) => {
+          if (prev) {
+            URL.revokeObjectURL(prev);
+          }
+          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+          return URL.createObjectURL(audioBlob);
+        });
       };
 
       mediaRecorder.start();
@@ -74,9 +89,31 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
   };
 
   const handlePlayRecording = () => {
-    if (recordedAudio) {
+    if (!recordedAudio) return;
+
+    if (!audioRef.current || audioRef.current.src !== recordedAudio) {
       const audio = new Audio(recordedAudio);
-      audio.play();
+      audio.onended = () => setIsPlayingRecording(false);
+      audio.onpause = () => setIsPlayingRecording(false);
+      audioRef.current = audio;
+    }
+
+    if (isPlayingRecording) {
+      audioRef.current.pause();
+      setIsPlayingRecording(false);
+      return;
+    }
+
+    const playPromise = audioRef.current.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise
+        .then(() => setIsPlayingRecording(true))
+        .catch(() => {
+          setIsPlayingRecording(false);
+          setErrorMessage('Playback gagal. Coba rekam ulang.');
+        });
+    } else {
+      setIsPlayingRecording(true);
     }
   };
 
@@ -96,6 +133,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
       {!showControlDeck && (
         <button
           onClick={() => setShowControlDeck(true)}
+          data-tour="recording-open-panel"
           className={`fixed bottom-6 right-6 z-40 w-14 h-14 md:w-16 md:h-16 bg-cyber-cyan/90 backdrop-blur-sm border-2 border-cyber-cyan rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(190,41,236,0.4)] hover:bg-cyber-cyan hover:shadow-[0_0_40px_rgba(190,41,236,0.6)] transition-all duration-300 group ${className}`}
           title="Open Recording Controls"
         >
@@ -108,6 +146,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
           <div className="relative bg-[#050a10]/95 backdrop-blur-xl border border-cyber-cyan/40 rounded-3xl p-4 md:p-6 shadow-[0_0_50px_rgba(190,41,236,0.2)] overflow-hidden">
             <button
               onClick={() => setShowControlDeck(false)}
+              data-tour="recording-close-panel"
               className="absolute top-2 right-2 z-10 w-8 h-8 bg-cyber-pink/20 border border-cyber-pink/50 rounded-full flex items-center justify-center hover:bg-cyber-pink/30 transition-colors"
               title="Close Control Panel"
             >
@@ -120,6 +159,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               <div className="flex flex-col items-center gap-2 flex-shrink-0">
                 <button
                   onClick={isRecording ? handleStopRecording : handleStartRecording}
+                  data-tour="recording-mic-toggle"
                   className={`relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full border-2 transition-all duration-300 group ${
                     isRecording 
                       ? 'border-red-500 bg-red-500/20 shadow-[0_0_25px_rgba(239,68,68,0.6)] animate-pulse' 
@@ -146,15 +186,21 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               <div className="flex items-center gap-2 md:gap-3 flex-1 justify-center">
                 <button 
                   onClick={handlePlayRecording}
-                  disabled={!recordedAudio}
+                  disabled={!recordedAudio || isRecording}
+                  data-tour="recording-play"
                   className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl border bg-cyber-slate/50 backdrop-blur-sm transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-800 disabled:text-gray-600 disabled:shadow-none disabled:bg-transparent border-cyber-cyan/30 text-cyber-cyan hover:bg-cyber-cyan/10 hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(190,41,236,0.2)]"
                 >
-                  <Play size={18} className="ml-0.5 md:w-5 md:h-5" />
+                  {isPlayingRecording ? (
+                    <Pause size={18} className="md:w-5 md:h-5" />
+                  ) : (
+                    <Play size={18} className="ml-0.5 md:w-5 md:h-5" />
+                  )}
                 </button>
 
                 {showHelp && (
                   <button 
                     onClick={() => setShowHelpPopup(true)}
+                    data-tour="recording-help-open"
                     className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl border bg-cyber-slate/50 backdrop-blur-sm transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-800 disabled:text-gray-600 disabled:shadow-none disabled:bg-transparent border-cyber-pink/30 text-cyber-pink hover:bg-cyber-pink/10 hover:border-cyber-pink hover:shadow-[0_0_15px_rgba(255,0,255,0.2)]"
                   >
                     <HelpCircle size={18} className="md:w-5 md:h-5" />
@@ -164,13 +210,26 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
                 <button 
                   onClick={handleDownload}
                   disabled={!recordedAudio}
+                  data-tour="recording-download"
                   className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl border bg-cyber-slate/50 backdrop-blur-sm transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-800 disabled:text-gray-600 disabled:shadow-none disabled:bg-transparent border-cyber-pink/30 text-cyber-pink hover:bg-cyber-pink/10 hover:border-cyber-pink hover:shadow-[0_0_15px_rgba(255,0,255,0.2)]"
                 >
                   <Download size={16} className="md:w-5 md:h-5" />
                 </button>
 
                 <button 
-                  onClick={() => setRecordedAudio(null)}
+                  onClick={() => {
+                    if (audioRef.current) {
+                      audioRef.current.pause();
+                      audioRef.current = null;
+                    }
+                    setIsPlayingRecording(false);
+                    setRecordedAudio((prev) => {
+                      if (prev) {
+                        URL.revokeObjectURL(prev);
+                      }
+                      return null;
+                    });
+                  }}
                   disabled={!recordedAudio}
                   className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl border bg-cyber-slate/50 backdrop-blur-sm transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-800 disabled:text-gray-600 disabled:shadow-none disabled:bg-transparent border-cyber-pink/30 text-cyber-pink hover:bg-cyber-pink/10 hover:border-cyber-pink hover:shadow-[0_0_15px_rgba(255,0,255,0.2)]"
                 >
@@ -195,9 +254,13 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
             onClick={() => setShowHelpPopup(false)}
           />
           
-          <div className="relative bg-[#0a0f1c] border border-cyber-cyan/40 rounded-2xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md max-h-[80vh] overflow-y-auto w-full shadow-[0_0_50px_rgba(190,41,236,0.3)] mx-4 sm:mx-auto text-sm sm:text-[15px] leading-6 sm:leading-7">
+          <div
+            data-tour="recording-help-popup"
+            className="relative bg-[#0a0f1c] border border-cyber-cyan/40 rounded-2xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md max-h-[80vh] overflow-y-auto w-full shadow-[0_0_50px_rgba(190,41,236,0.3)] mx-4 sm:mx-auto text-sm sm:text-[15px] leading-6 sm:leading-7"
+          >
             <button
               onClick={() => setShowHelpPopup(false)}
+              data-tour="recording-help-close"
               className="absolute top-4 right-4 text-gray-400 hover:text-white hover:bg-red-500/20 p-2 rounded-lg transition-all duration-200"
               title="Tutup popup"
             >
@@ -218,7 +281,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-cyber-cyan font-bold w-5 text-right">2.</span>
-                <p className="flex-1">Bicara dengan jelas ke mikrofon</p>
+                <p className="flex-1">Bicara dengan jelas ke mikrofon dari Mission yang ada di Practice Section di halaman.</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-cyber-cyan font-bold w-5 text-right">3.</span>
@@ -242,54 +305,14 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               </div>
               <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
                 <p className="text-sm text-cyber-cyan mb-2">
-                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">https://gemini.google.com/app</a> atau AI assistant lainnya
+                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a data-tour="recording-gemini-link" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">Gemini</a> atau AI assistant lainnya
                 </p>
                 <p className="text-sm text-cyber-cyan mb-2">
                   Upload rekaman audio Anda
                 </p>
-                <div className="text-sm text-cyber-cyan flex items-center gap-2">
-                  <strong className="flex-1">Gunakan prompt berikut:</strong>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'🟢 Sangat bagus 🔵Bagus\', \'🟡 Perlu Sedikit Perbaikan\', atau \'🔴 Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
-                      if (typeof window !== 'undefined') {
-                        const toast = document.createElement('div');
-                        toast.className = 'fixed top-4 right-4 bg-gradient-to-r from-gray-900 to-black border border-cyan-400/30 text-cyan-300 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.8),0_0_50px_rgba(190,41,236,0.4)] z-[60] transition-all duration-300 transform translate-x-full backdrop-blur-sm';
-                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">📋</span> Prompt berhasil disalin!</span>';
-                        document.body.appendChild(toast);
-                        
-                        setTimeout(() => {
-                          toast.classList.remove('translate-x-full');
-                        }, 100);
-                        
-                        setTimeout(() => {
-                          toast.classList.add('translate-x-full');
-                          setTimeout(() => {
-                            if (document.body.contains(toast)) {
-                              document.body.removeChild(toast);
-                            }
-                          }, 300);
-                        }, 3000);
-                      }
-                    }}
-                    className="p-1 bg-cyber-pink/20 hover:bg-cyber-pink/30 rounded transition-colors group ml-auto"
-                    title="Salin prompt"
-                  >
-                    <svg className="w-4 h-4 text-cyber-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2zm-2-6h12v8H6V6z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3H9v6h6V3z" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="mt-2 p-2 bg-black/30 rounded text-xs text-gray-300 font-mono max-h-32 overflow-y-auto relative">
-                  &quot;Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 
-                  1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini.
-                  2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan.
-                  3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom:
-                     - Kolom 1: Kata yang diucapkan.
-                     - Kolom 2: Status Kualitatif (&apos;🟢 Sangat bagus 🔵Bagus&apos;, &apos;🟡 Perlu Sedikit Perbaikan&apos;, atau &apos;🔴 Perlu Perbaikan&apos;).
-                     - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.&quot;
-                </div>
+                <p className="text-sm text-cyber-cyan">
+                  <strong>Gunakan prompt yang ada di section prompt.</strong>
+                </p>
               </div>
             </div>
             

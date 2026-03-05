@@ -54,17 +54,10 @@ export async function signUp(email: string, password: string, userData: Partial<
 // Sign in function
 export async function signIn(email: string, password: string) {
   try {
-    const timeoutMs = 12000
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Sign in timeout')), timeoutMs)
-    )
-
-    const signInPromise = supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-
-    const { data, error } = await Promise.race([signInPromise, timeoutPromise]) as Awaited<typeof signInPromise>
 
     if (error) {
       return { success: false, error: error.message }
@@ -76,9 +69,6 @@ export async function signIn(email: string, password: string) {
 
     return { success: false, error: 'Unknown error occurred' }
   } catch (error) {
-    if (error instanceof Error && error.message === 'Sign in timeout') {
-      return { success: false, error: 'Koneksi lambat. Silakan coba lagi.' }
-    }
     console.error('Sign in error:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }

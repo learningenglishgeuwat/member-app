@@ -1,0 +1,343 @@
+.grammar-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  background:
+    radial-gradient(900px 500px at 10% -20%, rgba(34, 211, 238, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
+    #020617;
+}
+
+.grammar-page .grammar-shell {
+  width: 100%;
+  max-width: 48rem;
+  margin: 4rem auto 0;
+}
+
+.grammar-page .grammar-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.grammar-page .grammar-subtitle {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+.grammar-page .grammar-triangle {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.grammar-page .grammar-bottom {
+  width: 100%;
+  max-width: 48rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.grammar-page .grammar-bottom-extra {
+  width: 100%;
+  max-width: 48rem;
+  margin-top: 1rem;
+}
+
+.grammar-page .grammar-connector {
+  position: relative;
+  width: 100%;
+  max-width: 48rem;
+  padding-top: 3.3rem;
+}
+
+.grammar-page .grammar-snake {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2.9rem;
+}
+
+.grammar-page .snake-line {
+  position: absolute;
+  border-radius: 999px;
+  box-shadow:
+    0 0 8px rgba(34, 211, 238, 0.9),
+    0 0 20px rgba(34, 211, 238, 0.55);
+  animation-duration: 2.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: background-position;
+}
+
+.grammar-page .snake-trunk {
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 1.45rem;
+  transform: translateX(-50%);
+  background-size: 100% 220%;
+  background-image: linear-gradient(180deg, transparent 0%, #22d3ee 45%, #67e8f9 60%, transparent 100%);
+  animation-name: snake-flow-down;
+  animation-direction: reverse;
+}
+
+.grammar-page .snake-node {
+  position: absolute;
+  top: 1.4rem;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: #67e8f9;
+  box-shadow: 0 0 10px rgba(103, 232, 249, 0.95), 0 0 20px rgba(34, 211, 238, 0.6);
+}
+
+.grammar-page .snake-left,
+.grammar-page .snake-right {
+  display: none;
+}
+
+.grammar-page .snake-branch-left,
+.grammar-page .snake-branch-right {
+  display: none;
+  overflow: hidden;
+}
+
+.grammar-page .snake-branch-left {
+  top: 1.4rem;
+  left: 50%;
+  width: 25%;
+  height: 2px;
+  transform: translateX(-100%);
+  background: rgba(34, 211, 238, 0.45);
+  animation: none;
+}
+
+.grammar-page .snake-branch-right {
+  top: 1.4rem;
+  left: 50%;
+  width: 25%;
+  height: 2px;
+  background: rgba(34, 211, 238, 0.45);
+  animation: none;
+}
+
+.grammar-page .snake-branch-left::after,
+.grammar-page .snake-branch-right::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 1.35rem;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0) 0%, #67e8f9 45%, rgba(34, 211, 238, 0) 100%);
+  box-shadow: 0 0 10px rgba(103, 232, 249, 0.95), 0 0 20px rgba(34, 211, 238, 0.6);
+}
+
+.grammar-page .snake-branch-right::after {
+  left: 0;
+  animation: snake-head-right 2.2s linear infinite;
+  animation-direction: normal;
+}
+
+.grammar-page .snake-branch-left::after {
+  left: calc(100% - 1.35rem);
+  animation: snake-head-left 2.2s linear infinite;
+  animation-direction: normal;
+}
+
+.grammar-page .snake-left {
+  top: 1.4rem;
+  left: 25%;
+  width: 2px;
+  height: 1.25rem;
+  transform: translateX(-50%);
+  background: rgba(34, 211, 238, 0.55);
+  overflow: hidden;
+}
+
+.grammar-page .snake-right {
+  top: 1.4rem;
+  left: 75%;
+  width: 2px;
+  height: 1.25rem;
+  transform: translateX(-50%);
+  background: rgba(34, 211, 238, 0.55);
+  overflow: hidden;
+}
+
+.grammar-page .snake-left::after,
+.grammar-page .snake-right::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 0.65rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(34, 211, 238, 0) 0%, #67e8f9 55%, rgba(34, 211, 238, 0) 100%);
+  box-shadow: 0 0 10px rgba(103, 232, 249, 0.95), 0 0 20px rgba(34, 211, 238, 0.6);
+  animation: snake-head-down 2.2s linear infinite;
+}
+
+.grammar-page .grammar-btn {
+  display: block;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  background: rgba(15, 23, 42, 0.7);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
+}
+
+.grammar-page .grammar-btn:hover {
+  border-color: rgba(103, 232, 249, 0.95);
+  background: rgba(15, 23, 42, 0.9);
+  transform: translateY(-1px);
+}
+
+.grammar-page .grammar-btn-top {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.grammar-page .grammar-btn-live {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.grammar-page .grammar-btn-locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.grammar-page .grammar-btn-locked:hover {
+  transform: none;
+  border-color: rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.grammar-page .grammar-lock-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: rgba(30, 41, 59, 0.55);
+}
+
+.grammar-page .grammar-new-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  color: #082f49;
+  border: 1px solid rgba(103, 232, 249, 0.85);
+  background: rgba(165, 243, 252, 0.92);
+}
+
+@media (min-width: 768px) {
+  .grammar-page {
+    padding: 2.5rem;
+  }
+
+  .grammar-page .grammar-title {
+    font-size: 2.5rem;
+  }
+
+  .grammar-page .grammar-bottom {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grammar-page .snake-left,
+  .grammar-page .snake-right,
+  .grammar-page .snake-branch-left,
+  .grammar-page .snake-branch-right {
+    display: block;
+  }
+}
+
+@keyframes snake-flow-down {
+  0% {
+    background-position: 0 -120%;
+  }
+  100% {
+    background-position: 0 120%;
+  }
+}
+
+@keyframes snake-flow-right {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes snake-head-right {
+  0% {
+    left: 0;
+  }
+  68% {
+    left: calc(100% - 1.35rem);
+  }
+  100% {
+    left: calc(100% - 1.35rem);
+  }
+}
+
+@keyframes snake-head-left {
+  0% {
+    left: calc(100% - 1.35rem);
+  }
+  68% {
+    left: 0;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes snake-head-down {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  65% {
+    top: 0;
+    opacity: 0;
+  }
+  68% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 0.65rem);
+    opacity: 1;
+  }
+}

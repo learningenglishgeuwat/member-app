@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/time-clauses-when-while-before-after-as-soon-as",
+    "label":  "Time Clauses When While Before After As Soon As",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu time clauses when while before after as soon as",
+                     "cara pakai time clauses when while before after as soon as",
+                     "time clauses when while before after as soon as",
+                     "expansion and complex structures time clauses when while before after as soon as",
+                     "grammar resource time clauses when while before after as soon as"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-time-clauses-when-while-before-after-as-soon-as",
+                   "title":  "Time Clauses When While Before After As Soon As",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/time-clauses-when-while-before-after-as-soon-as",
+                   "keywords":  [
+                                    "apa itu time clauses when while before after as soon as",
+                                    "cara pakai time clauses when while before after as soon as",
+                                    "time clauses when while before after as soon as",
+                                    "expansion and complex structures time clauses when while before after as soon as",
+                                    "grammar resource time clauses when while before after as soon as"
+                                ],
+                   "shortAnswer":  "Topik ini membahas time clauses dengan when, while, before, after, dan as soon as untuk menyusun urutan kejadian dengan tepat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Time Connectors"
+                                          },
+                                          {
+                                              "label":  "Pola Kalimat"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

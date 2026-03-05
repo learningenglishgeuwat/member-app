@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-simple-habits-and-facts",
+    "label":  "Present Simple Habits And Facts",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu present simple habits and facts",
+                     "cara pakai present simple habits and facts",
+                     "present simple habits and facts",
+                     "tense and aspect system present simple habits and facts",
+                     "grammar resource present simple habits and facts"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-present-simple-habits-and-facts",
+                   "title":  "Present Simple Habits And Facts",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-simple-habits-and-facts",
+                   "keywords":  [
+                                    "apa itu present simple habits and facts",
+                                    "cara pakai present simple habits and facts",
+                                    "present simple habits and facts",
+                                    "tense and aspect system present simple habits and facts",
+                                    "grammar resource present simple habits and facts"
+                                ],
+                   "shortAnswer":  "Topik ini membahas present simple untuk kebiasaan, fakta umum, dan jadwal yang bersifat tetap.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

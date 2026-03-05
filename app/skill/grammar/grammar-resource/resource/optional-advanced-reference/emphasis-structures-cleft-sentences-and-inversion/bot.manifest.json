@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/emphasis-structures-cleft-sentences-and-inversion",
+    "label":  "Emphasis Structures Cleft Sentences And Inversion",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu emphasis structures cleft sentences and inversion",
+                     "cara pakai emphasis structures cleft sentences and inversion",
+                     "emphasis structures cleft sentences and inversion",
+                     "optional advanced reference emphasis structures cleft sentences and inversion",
+                     "grammar resource emphasis structures cleft sentences and inversion"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-optional-advanced-reference-emphasis-structures-cleft-sentences-and-inversion",
+                   "title":  "Emphasis Structures Cleft Sentences And Inversion",
+                   "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/emphasis-structures-cleft-sentences-and-inversion",
+                   "keywords":  [
+                                    "apa itu emphasis structures cleft sentences and inversion",
+                                    "cara pakai emphasis structures cleft sentences and inversion",
+                                    "emphasis structures cleft sentences and inversion",
+                                    "optional advanced reference emphasis structures cleft sentences and inversion",
+                                    "grammar resource emphasis structures cleft sentences and inversion"
+                                ],
+                   "shortAnswer":  "Topik ini membahas emphasis structures melalui cleft sentences dan inversion untuk menonjolkan informasi tertentu.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Emphasis Structures"
+                                          },
+                                          {
+                                              "label":  "Kapan Dipakai"
+                                          },
+                                          {
+                                              "label":  "Trigger Inversion yang Umum"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

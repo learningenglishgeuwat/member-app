@@ -1,0 +1,118 @@
+import { createPhaseGoals, type GoalSeed } from './createPhaseGoals';
+
+const seeds: GoalSeed[] = [
+  {
+    goal: 'Membuka presentasi dengan percaya diri',
+    situation: 'Saat memulai presentasi internal atau eksternal.',
+    keySentence: 'Good morning everyone, thank you for joining.',
+    drill: 'Latih opening 30 detik dengan pace yang stabil.',
+    domain: 'work',
+  },
+  {
+    goal: 'Signposting alur presentasi',
+    situation: 'Saat menjaga audiens mengikuti struktur materi.',
+    keySentence: 'First, I will cover the market context.',
+    drill: 'Praktikkan transisi antarbagian presentasi.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menjelaskan data tren',
+    situation: 'Saat mempresentasikan grafik periodik.',
+    keySentence: 'Sales have increased steadily over the last quarter.',
+    drill: 'Latih deskripsi tren naik, turun, dan stabil.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menjelaskan insight utama',
+    situation: 'Saat menyimpulkan makna dari data.',
+    keySentence: 'The key insight is that response speed drives retention.',
+    drill: 'Ucapkan insight dalam format data plus makna bisnis.',
+    domain: 'work',
+  },
+  {
+    goal: 'Membandingkan opsi',
+    situation: 'Saat memilih strategi terbaik dari beberapa alternatif.',
+    keySentence: 'Option A is faster, while option B is more scalable.',
+    drill: 'Bandingkan 3 opsi dengan 2 kriteria utama.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menyampaikan rekomendasi final',
+    situation: 'Saat menutup analisis dengan keputusan.',
+    keySentence: 'Based on this analysis, I recommend option B.',
+    drill: 'Latih rekomendasi final dalam 20 detik tegas.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menangani sesi Q&A',
+    situation: 'Saat audiens memberikan pertanyaan kritis.',
+    keySentence: 'Great question. Let me clarify that point.',
+    drill: 'Role-play 10 pertanyaan sulit dengan jawaban singkat.',
+    domain: 'work',
+  },
+  {
+    goal: 'Bridging saat lupa poin',
+    situation: 'Saat kehilangan alur sesaat di tengah presentasi.',
+    keySentence: 'Let me restate the main point clearly.',
+    drill: 'Latih kalimat jembatan untuk recovery alur bicara.',
+    domain: 'work',
+  },
+  {
+    goal: 'Menutup presentasi efektif',
+    situation: 'Saat akhir paparan sebelum tanya jawab atau keputusan.',
+    keySentence: 'Thank you for your attention. I am ready for questions.',
+    drill: 'Latih closing presentasi 3 versi: formal, semi-formal, singkat.',
+    domain: 'work',
+  },
+  {
+    goal: 'Executive summary 60 detik',
+    situation: 'Saat pimpinan butuh ringkasan cepat.',
+    keySentence: 'In one minute, here are the three key points.',
+    drill: 'Latih ringkasan 60 detik dengan timer.',
+    domain: 'work',
+  },
+  {
+    goal: 'Storytelling profesional',
+    situation: 'Saat menjelaskan konteks agar audiens mudah memahami.',
+    keySentence: 'Let me walk you through a real user case.',
+    drill: 'Buat mini-story berbasis masalah, aksi, dan hasil.',
+    domain: 'work',
+  },
+  {
+    goal: 'Pitch ide baru',
+    situation: 'Saat mengusulkan inisiatif ke tim manajemen.',
+    keySentence: 'I would like to propose a new onboarding flow.',
+    drill: 'Pitch ide dalam 90 detik: problem, solution, expected impact.',
+    domain: 'work',
+  },
+  {
+    goal: 'Persuasi berbasis data',
+    situation: 'Saat perlu meyakinkan pihak pengambil keputusan.',
+    keySentence: 'The data strongly supports this direction.',
+    drill: 'Latih argumen persuasif dengan 2 bukti data.',
+    domain: 'work',
+  },
+  {
+    goal: 'Call to action yang jelas',
+    situation: 'Saat butuh komitmen langkah setelah presentasi.',
+    keySentence: 'I need your approval to start implementation this week.',
+    drill: 'Latih CTA dengan tenggat dan PIC yang jelas.',
+    domain: 'work',
+  },
+  {
+    goal: 'Follow-up pasca presentasi',
+    situation: 'Saat menindaklanjuti keputusan rapat presentasi.',
+    keySentence: "I'll share the slide deck and action list today.",
+    drill: 'Buat follow-up statement untuk 5 skenario rapat.',
+    domain: 'work',
+  },
+];
+
+export const PHASE_11_GOALS = createPhaseGoals({
+  phaseId: 'phase-11',
+  phaseTitle: 'Presentation & Reporting',
+  levelBand: 'advanced',
+  defaultKeySentence2: 'Please let me know if you need more detail.',
+  defaultKeySentence3: 'I will send the full report after this session.',
+  seeds,
+});

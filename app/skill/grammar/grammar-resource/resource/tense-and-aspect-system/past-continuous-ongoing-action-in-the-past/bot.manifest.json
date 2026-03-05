@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-continuous-ongoing-action-in-the-past",
+    "label":  "Past Continuous Ongoing Action In The Past",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu past continuous ongoing action in the past",
+                     "cara pakai past continuous ongoing action in the past",
+                     "past continuous ongoing action in the past",
+                     "tense and aspect system past continuous ongoing action in the past",
+                     "grammar resource past continuous ongoing action in the past"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-past-continuous-ongoing-action-in-the-past",
+                   "title":  "Past Continuous Ongoing Action In The Past",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-continuous-ongoing-action-in-the-past",
+                   "keywords":  [
+                                    "apa itu past continuous ongoing action in the past",
+                                    "cara pakai past continuous ongoing action in the past",
+                                    "past continuous ongoing action in the past",
+                                    "tense and aspect system past continuous ongoing action in the past",
+                                    "grammar resource past continuous ongoing action in the past"
+                                ],
+                   "shortAnswer":  "Topik ini membahas past continuous untuk aksi yang sedang berlangsung pada momen tertentu di masa lalu.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

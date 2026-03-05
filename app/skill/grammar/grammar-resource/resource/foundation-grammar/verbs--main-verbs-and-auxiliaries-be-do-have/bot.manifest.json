@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/verbs--main-verbs-and-auxiliaries-be-do-have",
+    "label":  "Verbs Main Verbs And Auxiliaries Be Do Have",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu verbs main verbs and auxiliaries be do have",
+                     "cara pakai verbs main verbs and auxiliaries be do have",
+                     "verbs main verbs and auxiliaries be do have",
+                     "foundation grammar verbs main verbs and auxiliaries be do have",
+                     "grammar resource verbs main verbs and auxiliaries be do have"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-verbs--main-verbs-and-auxiliaries-be-do-have",
+                   "title":  "Verbs Main Verbs And Auxiliaries Be Do Have",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/verbs--main-verbs-and-auxiliaries-be-do-have",
+                   "keywords":  [
+                                    "apa itu verbs main verbs and auxiliaries be do have",
+                                    "cara pakai verbs main verbs and auxiliaries be do have",
+                                    "verbs main verbs and auxiliaries be do have",
+                                    "foundation grammar verbs main verbs and auxiliaries be do have",
+                                    "grammar resource verbs main verbs and auxiliaries be do have"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan main verbs dan auxiliary be do have sebagai fondasi pembentukan tense, negation, dan question.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Verb Types"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          },
+                                          {
+                                              "label":  "Irregular Vocabulary"
+                                          },
+                                          {
+                                              "label":  "Ditransitive Vocabulary"
+                                          }
+                                      ]
+               }
+           ]
+}

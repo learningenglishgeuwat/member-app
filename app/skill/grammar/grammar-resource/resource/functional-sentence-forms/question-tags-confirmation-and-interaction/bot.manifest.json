@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-tags-confirmation-and-interaction",
+    "label":  "Question Tags Confirmation And Interaction",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu question tags confirmation and interaction",
+                     "cara pakai question tags confirmation and interaction",
+                     "question tags confirmation and interaction",
+                     "functional sentence forms question tags confirmation and interaction",
+                     "grammar resource question tags confirmation and interaction"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-question-tags-confirmation-and-interaction",
+                   "title":  "Question Tags Confirmation And Interaction",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-tags-confirmation-and-interaction",
+                   "keywords":  [
+                                    "apa itu question tags confirmation and interaction",
+                                    "cara pakai question tags confirmation and interaction",
+                                    "question tags confirmation and interaction",
+                                    "functional sentence forms question tags confirmation and interaction",
+                                    "grammar resource question tags confirmation and interaction"
+                                ],
+                   "shortAnswer":  "Topik ini melatih question tags untuk konfirmasi, menjaga interaksi, dan menyesuaikan polaritas kalimat utama.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Common Examples"
+                                          },
+                                          {
+                                              "label":  "Special Cases"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

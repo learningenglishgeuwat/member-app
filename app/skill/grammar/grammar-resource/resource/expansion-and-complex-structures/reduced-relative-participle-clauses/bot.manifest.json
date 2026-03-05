@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reduced-relative-participle-clauses",
+    "label":  "Reduced Relative Participle Clauses",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu reduced relative participle clauses",
+                     "cara pakai reduced relative participle clauses",
+                     "reduced relative participle clauses",
+                     "expansion and complex structures reduced relative participle clauses",
+                     "grammar resource reduced relative participle clauses"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-reduced-relative-participle-clauses",
+                   "title":  "Reduced Relative Participle Clauses",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reduced-relative-participle-clauses",
+                   "keywords":  [
+                                    "apa itu reduced relative participle clauses",
+                                    "cara pakai reduced relative participle clauses",
+                                    "reduced relative participle clauses",
+                                    "expansion and complex structures reduced relative participle clauses",
+                                    "grammar resource reduced relative participle clauses"
+                                ],
+                   "shortAnswer":  "Topik ini membahas reduced relative clauses dengan participle untuk memadatkan kalimat tanpa mengubah inti makna.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

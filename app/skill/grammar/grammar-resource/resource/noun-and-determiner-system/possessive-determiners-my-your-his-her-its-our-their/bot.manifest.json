@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-determiners-my-your-his-her-its-our-their",
+    "label":  "Possessive Determiners My Your His Her Its Our Their",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu possessive determiners my your his her its our their",
+                     "cara pakai possessive determiners my your his her its our their",
+                     "possessive determiners my your his her its our their",
+                     "noun and determiner system possessive determiners my your his her its our their",
+                     "grammar resource possessive determiners my your his her its our their"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-possessive-determiners-my-your-his-her-its-our-their",
+                   "title":  "Possessive Determiners My Your His Her Its Our Their",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-determiners-my-your-his-her-its-our-their",
+                   "keywords":  [
+                                    "apa itu possessive determiners my your his her its our their",
+                                    "cara pakai possessive determiners my your his her its our their",
+                                    "possessive determiners my your his her its our their",
+                                    "noun and determiner system possessive determiners my your his her its our their",
+                                    "grammar resource possessive determiners my your his her its our their"
+                                ],
+                   "shortAnswer":  "Topik ini membahas possessive determiners my, your, his, her, its, our, their untuk menunjukkan kepemilikan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Tabel Possessive Determiners"
+                                          },
+                                          {
+                                              "label":  "Function and Pattern"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

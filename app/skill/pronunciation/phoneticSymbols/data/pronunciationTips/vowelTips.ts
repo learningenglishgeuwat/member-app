@@ -1,78 +1,78 @@
-// Vowel pronunciation tips dataset
+﻿// Vowel pronunciation tips dataset
 
 import type { SymbolPronunciationTips } from './types';
 
 export const vowelTips: SymbolPronunciationTips = {
-  'i': [
-    { tip: 'Tongue high and forward', category: 'tongue' },
-    { tip: 'Lips spread wide', category: 'lips' },
-    { tip: 'Long vowel sound', category: 'general' },
-    { tip: 'Front of tongue touches hard palate', category: 'tongue' }
+  i: [
+    { tip: 'Angkat lidah bagian depan setinggi mungkin mendekati langit-langit keras, tanpa menyentuh.', category: 'tongue' },
+    { tip: 'Tarik bibir sedikit melebar seperti senyum tipis; rahang tetap relatif tertutup.', category: 'lips' },
+    { tip: 'Nyalakan suara (voiced) dan tahan bunyi sedikit lebih panjang.', category: 'voice' },
+    { tip: 'Cek cepat: bandingkan dengan /\u026A/, bunyi /i/ harus lebih tegang dan lebih panjang.', category: 'general' },
   ],
-  'ɪ': [
-    { tip: 'Tongue slightly lower than for /iː/', category: 'tongue' },
-    { tip: 'Lips relaxed, not spread', category: 'lips' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Tongue position is near-close', category: 'tongue' }
+  '\u026A': [
+    { tip: 'Posisikan lidah di depan-tinggi, tetapi lebih rendah dan lebih santai daripada /i/.', category: 'tongue' },
+    { tip: 'Bibir netral, tidak perlu melebar kuat; rahang sedikit lebih terbuka daripada /i/.', category: 'mouth' },
+    { tip: 'Nyalakan suara (voiced), tetapi ucapkan singkat dan ringan.', category: 'voice' },
+    { tip: 'Cek cepat: /\u026A/ terdengar pendek, jangan dipanjangkan seperti /i/.', category: 'general' },
   ],
-  'e': [
-    { tip: 'Tongue mid-high position', category: 'tongue' },
-    { tip: 'Lips slightly spread', category: 'lips' },
-    { tip: 'Long vowel sound', category: 'general' },
-    { tip: 'Front of tongue is raised', category: 'tongue' }
+  e: [
+    { tip: 'Tempatkan lidah di depan pada posisi menengah-tinggi.', category: 'tongue' },
+    { tip: 'Bukaan rahang sedang dan bibir sedikit melebar.', category: 'mouth' },
+    { tip: 'Alirkan suara voiced dengan stabil dalam satu kualitas vokal.', category: 'airflow' },
+    { tip: 'Cek cepat: jangan meluncur ke /e\u026A/, tetap bunyi tunggal /e/.', category: 'general' },
   ],
-  'ɛ': [
-    { tip: 'Tongue mid-low position', category: 'tongue' },
-    { tip: 'Lips neutral', category: 'lips' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Mouth moderately open', category: 'mouth' }
+  '\u025B': [
+    { tip: 'Turunkan lidah depan ke posisi menengah-rendah.', category: 'tongue' },
+    { tip: 'Rahang dibuka sedikit lebih lebar daripada /e/, bibir tetap netral.', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced dengan durasi pendek.', category: 'voice' },
+    { tip: 'Cek cepat: /\u025B/ harus lebih terbuka daripada /e/.', category: 'general' },
   ],
-  'æ': [
-    { tip: 'Tongue low front position', category: 'tongue' },
-    { tip: 'Lips wide open', category: 'mouth' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Jaw dropped significantly', category: 'mouth' }
+  '\u00E6': [
+    { tip: 'Turunkan lidah ke depan-bawah (lebih rendah dari /\u025B/).', category: 'tongue' },
+    { tip: 'Buka rahang cukup lebar; bibir cenderung datar/melebar.', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced dengan energi jelas.', category: 'voice' },
+    { tip: 'Cek cepat: jangan sempitkan bunyi menjadi /e/.', category: 'general' },
   ],
-  'ɑ': [
-    { tip: 'Tongue low back position', category: 'tongue' },
-    { tip: 'Mouth wide open', category: 'mouth' },
-    { tip: 'Long vowel sound', category: 'general' },
-    { tip: 'Jaw completely relaxed', category: 'mouth' }
+  '\u0251': [
+    { tip: 'Geser lidah ke belakang dan turunkan ke posisi rendah.', category: 'tongue' },
+    { tip: 'Buka rahang lebar, bibir tetap netral (tidak membulat).', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced dan jaga resonansi tetap penuh.', category: 'voice' },
+    { tip: 'Cek cepat: hindari pembulatan bibir agar tidak bergeser ke bunyi /\u0254/.', category: 'general' },
   ],
-  'ɔ': [
-    { tip: 'Tongue mid-back position', category: 'tongue' },
-    { tip: 'Lips rounded', category: 'lips' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Mouth moderately open', category: 'mouth' }
+  '\u0254': [
+    { tip: 'Posisi lidah di belakang-menengah, tidak serendah /\u0251/.', category: 'tongue' },
+    { tip: 'Bulatkan bibir ringan; rahang membuka sedang.', category: 'lips' },
+    { tip: 'Nyalakan suara voiced dan pertahankan stabil.', category: 'voice' },
+    { tip: 'Cek cepat: bunyi tetap tunggal, jangan meluncur ke /o\u028A/.', category: 'general' },
   ],
-  'ʊ': [
-    { tip: 'Tongue high back position', category: 'tongue' },
-    { tip: 'Lips slightly rounded', category: 'lips' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Tongue is near-close', category: 'tongue' }
+  '\u028A': [
+    { tip: 'Lidah berada di belakang-tinggi, tetapi lebih santai daripada /u/.', category: 'tongue' },
+    { tip: 'Bibir membulat ringan, tidak serapat /u/.', category: 'lips' },
+    { tip: 'Nyalakan suara voiced dengan durasi pendek.', category: 'voice' },
+    { tip: 'Cek cepat: /\u028A/ pendek dan santai, jangan ditahan lama.', category: 'general' },
   ],
-  'ʌ': [
-    { tip: 'Tongue mid-back position', category: 'tongue' },
-    { tip: 'Lips neutral', category: 'lips' },
-    { tip: 'Short vowel sound', category: 'general' },
-    { tip: 'Mouth moderately open', category: 'mouth' }
+  '\u028C': [
+    { tip: 'Pusatkan lidah di tengah cenderung ke belakang.', category: 'tongue' },
+    { tip: 'Bibir netral dan rahang buka sedang.', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced, dorong udara stabil tanpa tekanan berlebih.', category: 'airflow' },
+    { tip: 'Cek cepat: jaga bunyi tetap netral, tidak berubah menjadi /\u0251/.', category: 'general' },
   ],
-  'ə': [
-    { tip: 'Tongue mid-central position', category: 'tongue' },
-    { tip: 'Lips completely relaxed', category: 'lips' },
-    { tip: 'Weak unstressed vowel', category: 'general' },
-    { tip: 'Most common sound in English', category: 'general' }
+  '\u0259': [
+    { tip: 'Rilekskan lidah di posisi tengah-netral (schwa).', category: 'tongue' },
+    { tip: 'Gerakan bibir dan rahang dibuat minimal.', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced secara ringan dan sangat singkat.', category: 'voice' },
+    { tip: 'Cek cepat: schwa biasanya muncul pada suku kata lemah/tak bertekanan.', category: 'general' },
   ],
-  'ɚ': [
-    { tip: 'Tongue mid-central position', category: 'tongue' },
-    { tip: 'Lips neutral', category: 'lips' },
-    { tip: 'R-colored vowel', category: 'voice' },
-    { tip: 'Tongue slightly retracted', category: 'tongue' }
+  '\u025A': [
+    { tip: 'Mulai dari posisi schwa, lalu beri warna /r/ (r-colored vowel).', category: 'tongue' },
+    { tip: 'Ujung lidah mendekat ke langit-langit tanpa menyentuh; bibir netral.', category: 'mouth' },
+    { tip: 'Nyalakan suara voiced dengan aliran stabil.', category: 'voice' },
+    { tip: 'Cek cepat: bunyi harus terasa satu unit, bukan dua suku kata terpisah.', category: 'general' },
   ],
-  'u': [
-    { tip: 'Tongue high back position', category: 'tongue' },
-    { tip: 'Lips fully rounded', category: 'lips' },
-    { tip: 'Long vowel sound', category: 'general' },
-    { tip: 'Back of tongue raised', category: 'tongue' }
-  ]
+  u: [
+    { tip: 'Naikkan lidah belakang setinggi mungkin untuk bunyi /u/.', category: 'tongue' },
+    { tip: 'Bibir dibulatkan lebih rapat daripada /\u028A/; rahang relatif tertutup.', category: 'lips' },
+    { tip: 'Nyalakan suara voiced dan tahan sedikit lebih panjang.', category: 'voice' },
+    { tip: 'Cek cepat: /u/ harus terdengar tegang dan panjang, bukan pendek seperti /\u028A/.', category: 'general' },
+  ],
 };

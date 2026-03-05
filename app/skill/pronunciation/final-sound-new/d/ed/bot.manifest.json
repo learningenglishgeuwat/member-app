@@ -1,0 +1,46 @@
+{
+  "route": "/skill/pronunciation/final-sound-new/d/ed",
+  "label": "Final Sound D/ED",
+  "scope": "pronunciation",
+  "keywords": [
+    "final sound d ed",
+    "past ending ed",
+    "t d id rules"
+  ],
+  "simulation": {
+    "topicId": "final-sound-d-ed",
+    "title": "Simulasi Final Sound D/ED",
+    "commandTriggers": [
+      "simulasi final sound d/ed",
+      "simulasi final sound d ed"
+    ],
+    "componentKey": "DEdSimulationPlayer"
+  },
+  "qa": [
+    {
+      "topicId": "final-sound-d-ed-rules",
+      "title": "Final Sound D/ED Rules",
+      "route": "/skill/pronunciation/final-sound-new/d/ed",
+      "keywords": [
+        "aturan ed",
+        "kapan t d id",
+        "past tense ending pronunciation"
+      ],
+      "shortAnswer": "Akhiran -ed pada regular verbs bisa berbunyi /t/, /d/, atau /id/ sesuai bunyi akhir kata dasar. Rule ini dipakai agar past tense terdengar natural dan tetap mudah dipahami.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Rules for -ed"
+        },
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Final Sound D/ED Application Process"
+        },
+        {
+          "label": "Common Mistakes"
+        }
+      ]
+    }
+  ]
+}

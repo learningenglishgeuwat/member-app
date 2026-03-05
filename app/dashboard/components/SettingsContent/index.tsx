@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, ArrowRight, Info, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
@@ -55,7 +55,7 @@ const SettingsContent: React.FC = () => {
     }
   };
 
-  const loadLatestExtensionStatus = async () => {
+  const loadLatestExtensionStatus = useCallback(async () => {
     if (!user?.id) return;
     setExtensionStatusLoading(true);
     const latest = await getLatestExtensionRequest(user.id);
@@ -67,11 +67,11 @@ const SettingsContent: React.FC = () => {
       setExtensionRequestId(null);
     }
     setExtensionStatusLoading(false);
-  };
+  }, [user?.id]);
 
   useEffect(() => {
-    loadLatestExtensionStatus();
-  }, [user?.id]);
+    void loadLatestExtensionStatus();
+  }, [loadLatestExtensionStatus]);
 
   const handleExtensionRequest = async () => {
     if (!user) return;
@@ -246,9 +246,16 @@ const SettingsContent: React.FC = () => {
         <h2 className="text-base sm:text-xl font-semibold text-white mb-3 sm:mb-4 font-display">Change Password</h2>
         <div className="space-y-3 sm:space-y-4">
           <div>
-            <label className="text-white text-xs sm:text-sm mb-1 block">Current Password</label>
+            <label
+              htmlFor="current-password"
+              className="text-white text-xs sm:text-sm mb-1 block"
+            >
+              Current Password
+            </label>
             <div className="relative">
               <input
+                id="current-password"
+                name="currentPassword"
                 type={showCurrentPassword ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
@@ -265,9 +272,16 @@ const SettingsContent: React.FC = () => {
             </div>
           </div>
           <div>
-            <label className="text-white text-xs sm:text-sm mb-1 block">New Password</label>
+            <label
+              htmlFor="new-password"
+              className="text-white text-xs sm:text-sm mb-1 block"
+            >
+              New Password
+            </label>
             <div className="relative">
               <input
+                id="new-password"
+                name="newPassword"
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -284,9 +298,16 @@ const SettingsContent: React.FC = () => {
             </div>
           </div>
           <div>
-            <label className="text-white text-xs sm:text-sm mb-1 block">Confirm New Password</label>
+            <label
+              htmlFor="confirm-new-password"
+              className="text-white text-xs sm:text-sm mb-1 block"
+            >
+              Confirm New Password
+            </label>
             <div className="relative">
               <input
+                id="confirm-new-password"
+                name="confirmNewPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

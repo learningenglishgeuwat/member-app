@@ -13,3 +13,37 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+/* Shared responsive table utilities */
+.geuwat-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(216, 180, 254, 0.68) rgba(255, 255, 255, 0.06);
+}
+
+.geuwat-table-scroll::-webkit-scrollbar {
+  height: 6px !important;
+}
+
+.geuwat-table-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+
+.geuwat-table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(216, 180, 254, 0.68);
+  border-radius: 999px;
+}
+
+.geuwat-table-responsive {
+  width: 100%;
+  min-width: var(--table-min-width, 720px);
+  border-collapse: collapse;
+}

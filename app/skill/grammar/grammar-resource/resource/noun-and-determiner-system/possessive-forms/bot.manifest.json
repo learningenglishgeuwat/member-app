@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-forms",
+    "label":  "Possessive Forms",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu possessive forms",
+                     "cara pakai possessive forms",
+                     "possessive forms",
+                     "noun and determiner system possessive forms",
+                     "grammar resource possessive forms"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-possessive-forms",
+                   "title":  "Possessive Forms",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-forms",
+                   "keywords":  [
+                                    "apa itu possessive forms",
+                                    "cara pakai possessive forms",
+                                    "possessive forms",
+                                    "noun and determiner system possessive forms",
+                                    "grammar resource possessive forms"
+                                ],
+                   "shortAnswer":  "Topik ini membahas possessive forms dengan apostrophe s, of phrase, dan variasi bentuk kepemilikan lain.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

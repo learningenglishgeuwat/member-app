@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-elements-and-word-order",
+    "label":  "Sentence Elements And Word Order",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu sentence elements and word order",
+                     "cara pakai sentence elements and word order",
+                     "sentence elements and word order",
+                     "foundation grammar sentence elements and word order",
+                     "grammar resource sentence elements and word order"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-sentence-elements-and-word-order",
+                   "title":  "Sentence Elements And Word Order",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-elements-and-word-order",
+                   "keywords":  [
+                                    "apa itu sentence elements and word order",
+                                    "cara pakai sentence elements and word order",
+                                    "sentence elements and word order",
+                                    "foundation grammar sentence elements and word order",
+                                    "grammar resource sentence elements and word order"
+                                ],
+                   "shortAnswer":  "Topik ini membahas elemen kalimat dan urutan kata dasar agar struktur English sentence tetap natural dan benar.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Elemen Kalimat"
+                                          },
+                                          {
+                                              "label":  "Pola Word Order Dasar"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/subject-verb-agreement-singular-and-plural",
+    "label":  "Subject Verb Agreement Singular And Plural",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu subject verb agreement singular and plural",
+                     "cara pakai subject verb agreement singular and plural",
+                     "subject verb agreement singular and plural",
+                     "foundation grammar subject verb agreement singular and plural",
+                     "grammar resource subject verb agreement singular and plural"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-subject-verb-agreement-singular-and-plural",
+                   "title":  "Subject Verb Agreement Singular And Plural",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/subject-verb-agreement-singular-and-plural",
+                   "keywords":  [
+                                    "apa itu subject verb agreement singular and plural",
+                                    "cara pakai subject verb agreement singular and plural",
+                                    "subject verb agreement singular and plural",
+                                    "foundation grammar subject verb agreement singular and plural",
+                                    "grammar resource subject verb agreement singular and plural"
+                                ],
+                   "shortAnswer":  "Topik ini melatih subject verb agreement antara bentuk singular dan plural supaya verb sesuai dengan subjek.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Aturan Inti"
+                                          },
+                                          {
+                                              "label":  "Tabel Cepat"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

@@ -8,6 +8,47 @@
   --font-geometric: 'Trebuchet MS', 'Lucida Grande', sans-serif;
 }
 
+.login-background-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 40% at 86% 10%, rgba(147, 51, 234, 0.24), transparent 72%),
+    radial-gradient(44% 38% at 12% 88%, rgba(79, 70, 229, 0.2), transparent 74%),
+    radial-gradient(34% 30% at 48% 46%, rgba(14, 165, 233, 0.1), transparent 70%),
+    linear-gradient(180deg, #060914 0%, #050812 42%, #04060f 100%);
+}
+
+.login-background-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.014) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0 1px, transparent 1px 3px);
+  mix-blend-mode: soft-light;
+  opacity: 0.34;
+}
+
+.login-background-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 0.6px, transparent 0.8px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+}
+
+.login-card-noise {
+  pointer-events: none;
+  opacity: 0.08;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 4px);
+}
+
 /* Used Classes */
 .shadow-neon-snake {
   filter: blur(10px) brightness(2.5);
@@ -97,4 +138,22 @@
   font-size: 1rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .login-background-layer {
+    background:
+      radial-gradient(44% 36% at 84% 12%, rgba(147, 51, 234, 0.2), transparent 72%),
+      radial-gradient(42% 36% at 14% 86%, rgba(79, 70, 229, 0.16), transparent 74%),
+      radial-gradient(30% 26% at 48% 46%, rgba(14, 165, 233, 0.08), transparent 70%),
+      linear-gradient(180deg, #060812 0%, #050710 45%, #04060e 100%);
+  }
+
+  .login-background-layer::before {
+    opacity: 0.26;
+  }
+
+  .login-background-layer::after {
+    opacity: 0.06;
+  }
 }

@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/negation-basics",
+    "label":  "Negation Basics",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu negation basics",
+                     "cara pakai negation basics",
+                     "negation basics",
+                     "foundation grammar negation basics",
+                     "grammar resource negation basics"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-negation-basics",
+                   "title":  "Negation Basics",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/negation-basics",
+                   "keywords":  [
+                                    "apa itu negation basics",
+                                    "cara pakai negation basics",
+                                    "negation basics",
+                                    "foundation grammar negation basics",
+                                    "grammar resource negation basics"
+                                ],
+                   "shortAnswer":  "Topik ini membahas negation dasar seperti not, no, dan never termasuk do support untuk kalimat negatif.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

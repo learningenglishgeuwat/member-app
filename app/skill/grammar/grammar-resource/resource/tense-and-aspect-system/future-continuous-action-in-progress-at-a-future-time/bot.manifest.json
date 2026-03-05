@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-continuous-action-in-progress-at-a-future-time",
+    "label":  "Future Continuous Action In Progress At A Future Time",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu future continuous action in progress at a future time",
+                     "cara pakai future continuous action in progress at a future time",
+                     "future continuous action in progress at a future time",
+                     "tense and aspect system future continuous action in progress at a future time",
+                     "grammar resource future continuous action in progress at a future time"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-future-continuous-action-in-progress-at-a-future-time",
+                   "title":  "Future Continuous Action In Progress At A Future Time",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-continuous-action-in-progress-at-a-future-time",
+                   "keywords":  [
+                                    "apa itu future continuous action in progress at a future time",
+                                    "cara pakai future continuous action in progress at a future time",
+                                    "future continuous action in progress at a future time",
+                                    "tense and aspect system future continuous action in progress at a future time",
+                                    "grammar resource future continuous action in progress at a future time"
+                                ],
+                   "shortAnswer":  "Topik ini membahas future continuous untuk aksi yang sedang berlangsung pada titik waktu tertentu di masa depan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Common Time Markers"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

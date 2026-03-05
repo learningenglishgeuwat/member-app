@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/countable-and-uncountable-nouns",
+    "label":  "Countable And Uncountable Nouns",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu countable and uncountable nouns",
+                     "cara pakai countable and uncountable nouns",
+                     "countable and uncountable nouns",
+                     "noun and determiner system countable and uncountable nouns",
+                     "grammar resource countable and uncountable nouns"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-countable-and-uncountable-nouns",
+                   "title":  "Countable And Uncountable Nouns",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/countable-and-uncountable-nouns",
+                   "keywords":  [
+                                    "apa itu countable and uncountable nouns",
+                                    "cara pakai countable and uncountable nouns",
+                                    "countable and uncountable nouns",
+                                    "noun and determiner system countable and uncountable nouns",
+                                    "grammar resource countable and uncountable nouns"
+                                ],
+                   "shortAnswer":  "Topik ini membedakan countable dan uncountable nouns termasuk quantifier yang sesuai untuk masing masing tipe.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Rules"
+                                          },
+                                          {
+                                              "label":  "Unit Expressions for Uncountable Nouns"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

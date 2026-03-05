@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/noun-modifiers-compound-nouns",
+    "label":  "Noun Modifiers Compound Nouns",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu noun modifiers compound nouns",
+                     "cara pakai noun modifiers compound nouns",
+                     "noun modifiers compound nouns",
+                     "noun and determiner system noun modifiers compound nouns",
+                     "grammar resource noun modifiers compound nouns"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-noun-modifiers-compound-nouns",
+                   "title":  "Noun Modifiers Compound Nouns",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/noun-modifiers-compound-nouns",
+                   "keywords":  [
+                                    "apa itu noun modifiers compound nouns",
+                                    "cara pakai noun modifiers compound nouns",
+                                    "noun modifiers compound nouns",
+                                    "noun and determiner system noun modifiers compound nouns",
+                                    "grammar resource noun modifiers compound nouns"
+                                ],
+                   "shortAnswer":  "Topik ini membahas noun modifiers dan compound nouns untuk membentuk frasa benda yang padat dan natural.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

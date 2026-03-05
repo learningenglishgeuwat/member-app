@@ -1,0 +1,53 @@
+{
+  "route": "/skill/grammar/analisis-grammar-for-speaking",
+  "label": "Analisis Grammar for Speaking",
+  "scope": "grammar",
+  "keywords": [
+    "analisis grammar for speaking",
+    "workflow grammar speaking",
+    "audit gap grammar speaking"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-speaking-analysis-workflow",
+      "title": "Grammar for Speaking Workflow",
+      "route": "/skill/grammar/analisis-grammar-for-speaking",
+      "keywords": [
+        "workflow grammar speaking",
+        "speaking goals grammar",
+        "roadmap grammar speaking"
+      ],
+      "shortAnswer": "Halaman Analisis Grammar for Speaking adalah jalur analisis terpisah untuk memetakan speaking goals ke topik grammar yang relevan agar belajar jadi terarah.",
+      "sourceSections": [
+        {
+          "label": "Workflow Belajar Tab"
+        },
+        {
+          "label": "Speaking Goals Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-speaking-audit-gap",
+      "title": "Grammar for Speaking Audit Gap",
+      "route": "/skill/grammar/analisis-grammar-for-speaking",
+      "keywords": [
+        "audit gap grammar speaking",
+        "rubrik ketat grammar speaking",
+        "materi grammar belum lengkap"
+      ],
+      "shortAnswer": "Audit Gap di halaman analisis menunjukkan topik mana yang masih lemah berdasarkan rubrik ketat, termasuk area critical gap dan unassessed untuk prioritas perbaikan konten.",
+      "sourceSections": [
+        {
+          "label": "Audit Gap Tab"
+        },
+        {
+          "label": "Severity Distribution"
+        },
+        {
+          "label": "Priority Gaps List"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "route": "/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols",
+  "label": "Summary of Phonetic Symbols",
+  "scope": "pronunciation",
+  "keywords": [
+    "ringkasan simbol fonetik",
+    "summary ipa",
+    "rekap phonetic symbols"
+  ],
+  "qa": [
+    {
+      "topicId": "phonetic-summary-fast-review",
+      "title": "Phonetic Symbols Quick Summary",
+      "route": "/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols",
+      "keywords": [
+        "ringkasan ipa",
+        "review simbol bunyi",
+        "rekap pronunciation symbols"
+      ],
+      "shortAnswer": "Halaman summary dipakai untuk review cepat semua simbol penting setelah latihan detail. Ini membantu siswa mengulang pola bunyi tanpa harus membuka setiap simbol satu per satu.",
+      "sourceSections": [
+        {
+          "label": "Summary Table"
+        }
+      ]
+    }
+  ]
+}

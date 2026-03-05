@@ -1,0 +1,28 @@
+{
+  "route": "/skill/grammar",
+  "label": "Grammar Hub",
+  "scope": "grammar",
+  "keywords": [
+    "grammar menu",
+    "pilihan grammar",
+    "hub grammar"
+  ],
+  "qa": [
+    {
+      "topicId": "grammar-hub-navigation",
+      "title": "Grammar Menu Navigation",
+      "route": "/skill/grammar",
+      "keywords": [
+        "menu grammar",
+        "halaman grammar utama",
+        "navigasi grammar"
+      ],
+      "shortAnswer": "Halaman Grammar adalah titik masuk untuk memilih jalur belajar, termasuk Grammar Resource, Grammar for Speaking, dan Grammar for Writing.",
+      "sourceSections": [
+        {
+          "label": "Grammar Cards"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-forms-yes-no-questions-and-wh-questions",
+    "label":  "Question Forms Yes No Questions And Wh Questions",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu question forms yes no questions and wh questions",
+                     "cara pakai question forms yes no questions and wh questions",
+                     "question forms yes no questions and wh questions",
+                     "functional sentence forms question forms yes no questions and wh questions",
+                     "grammar resource question forms yes no questions and wh questions"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-question-forms-yes-no-questions-and-wh-questions",
+                   "title":  "Question Forms Yes No Questions And Wh Questions",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-forms-yes-no-questions-and-wh-questions",
+                   "keywords":  [
+                                    "apa itu question forms yes no questions and wh questions",
+                                    "cara pakai question forms yes no questions and wh questions",
+                                    "question forms yes no questions and wh questions",
+                                    "functional sentence forms question forms yes no questions and wh questions",
+                                    "grammar resource question forms yes no questions and wh questions"
+                                ],
+                   "shortAnswer":  "Topik ini membahas pembentukan yes no questions dan wh questions termasuk inversion dan auxiliary usage.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Question Types"
+                                          },
+                                          {
+                                              "label":  "Common WH Words"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

@@ -1,0 +1,31 @@
+{
+  "route": "/skill/pronunciation/phoneticSymbols",
+  "label": "Phonetic Symbols",
+  "scope": "pronunciation",
+  "keywords": [
+    "phonetic symbols",
+    "ipa symbols",
+    "simbol bunyi"
+  ],
+  "qa": [
+    {
+      "topicId": "phonetic-symbols-basics",
+      "title": "IPA Symbols Basics",
+      "route": "/skill/pronunciation/phoneticSymbols",
+      "keywords": [
+        "ipa itu apa",
+        "simbol fonetik",
+        "cara baca simbol pronunciation"
+      ],
+      "shortAnswer": "Phonetic Symbols menjelaskan representasi bunyi dalam IPA agar siswa bisa membaca kamus pelafalan dengan lebih akurat. Fokus utama ada pada hubungan simbol, contoh bunyi, dan produksi suara.",
+      "sourceSections": [
+        {
+          "label": "Symbols List"
+        },
+        {
+          "label": "Symbol Details"
+        }
+      ]
+    }
+  ]
+}

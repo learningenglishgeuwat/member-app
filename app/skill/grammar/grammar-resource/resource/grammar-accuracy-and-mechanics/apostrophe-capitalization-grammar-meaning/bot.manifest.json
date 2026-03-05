@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/apostrophe-capitalization-grammar-meaning",
+    "label":  "Apostrophe Capitalization Grammar Meaning",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu apostrophe capitalization grammar meaning",
+                     "cara pakai apostrophe capitalization grammar meaning",
+                     "apostrophe capitalization grammar meaning",
+                     "grammar accuracy and mechanics apostrophe capitalization grammar meaning",
+                     "grammar resource apostrophe capitalization grammar meaning"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-grammar-accuracy-and-mechanics-apostrophe-capitalization-grammar-meaning",
+                   "title":  "Apostrophe Capitalization Grammar Meaning",
+                   "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/apostrophe-capitalization-grammar-meaning",
+                   "keywords":  [
+                                    "apa itu apostrophe capitalization grammar meaning",
+                                    "cara pakai apostrophe capitalization grammar meaning",
+                                    "apostrophe capitalization grammar meaning",
+                                    "grammar accuracy and mechanics apostrophe capitalization grammar meaning",
+                                    "grammar resource apostrophe capitalization grammar meaning"
+                                ],
+                   "shortAnswer":  "Topik ini membahas apostrophe dan capitalization yang mempengaruhi makna grammar, terutama pada possessive dan nama diri.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

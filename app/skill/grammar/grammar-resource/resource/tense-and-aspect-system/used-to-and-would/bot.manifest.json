@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/used-to-and-would",
+    "label":  "Used To And Would",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu used to and would",
+                     "cara pakai used to and would",
+                     "used to and would",
+                     "tense and aspect system used to and would",
+                     "grammar resource used to and would"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-used-to-and-would",
+                   "title":  "Used To And Would",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/used-to-and-would",
+                   "keywords":  [
+                                    "apa itu used to and would",
+                                    "cara pakai used to and would",
+                                    "used to and would",
+                                    "tense and aspect system used to and would",
+                                    "grammar resource used to and would"
+                                ],
+                   "shortAnswer":  "Topik ini membahas used to dan would untuk kebiasaan masa lalu, serta perbedaan penggunaannya pada states dan repeated actions.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

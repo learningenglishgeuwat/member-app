@@ -1,0 +1,301 @@
+.tg-tutorial-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1350;
+  pointer-events: none;
+}
+
+.tg-tutorial-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 20, 0.34);
+}
+
+.tg-tutorial-highlight {
+  position: fixed;
+  border-radius: 14px;
+  border: 1px solid rgba(129, 231, 255, 0.95);
+  box-shadow:
+    0 0 0 9999px rgba(2, 6, 20, 0.34),
+    0 0 0 2px rgba(122, 240, 255, 0.45),
+    0 0 26px rgba(73, 208, 255, 0.6);
+  pointer-events: none;
+  transition: top 180ms ease, left 180ms ease, width 180ms ease, height 180ms ease;
+}
+
+.tg-tutorial-highlight.is-clickable {
+  animation: tg-target-blink 0.85s steps(2, end) infinite;
+}
+
+.tg-tutorial-coach {
+  position: fixed;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+  color: #e8f7ff;
+  padding: 0;
+  z-index: 2;
+}
+
+.tg-tutorial-close-button {
+  position: static;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(160, 228, 255, 0.75);
+  background: rgba(10, 36, 63, 0.95);
+  color: #e8f7ff;
+  font-size: 20px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    0 0 12px rgba(69, 198, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.tg-tutorial-close-button:hover {
+  border-color: rgba(201, 244, 255, 0.95);
+  background: rgba(12, 46, 80, 0.98);
+}
+
+.tg-tutorial-coach-shell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tg-tutorial-coach-avatar-orb {
+  width: 74px;
+  height: 74px;
+  border-radius: 999px;
+  border: 2px solid rgba(130, 227, 255, 0.86);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(11, 21, 49, 0.98), rgba(6, 14, 36, 0.96));
+  box-shadow:
+    0 0 18px rgba(56, 194, 255, 0.42),
+    inset 0 0 0 1px rgba(170, 238, 255, 0.2);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.tg-tutorial-coach-avatar {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.tg-tutorial-oval {
+  margin-left: 0;
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  min-height: auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tg-tutorial-step-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f4fdff;
+}
+
+.tg-tutorial-step-body {
+  margin: 7px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #d3edf8;
+}
+
+.tg-tutorial-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.tg-tutorial-chip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.tg-tutorial-chip {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(124, 230, 255, 0.52);
+  border-radius: 999px;
+  background: rgba(8, 36, 63, 0.86);
+  color: #e6f9ff;
+  font-size: 11px;
+  line-height: 1.35;
+  padding: 6px 10px;
+}
+
+.tg-tutorial-chip--progress {
+  border-color: rgba(118, 221, 255, 0.75);
+  background: rgba(7, 44, 74, 0.92);
+  color: #ddf7ff;
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--title {
+  border-color: rgba(148, 236, 255, 0.82);
+  background: rgba(8, 42, 70, 0.95);
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--tag {
+  border-color: rgba(122, 240, 255, 0.72);
+  background: rgba(6, 32, 58, 0.88);
+  color: #93eaff;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.tg-tutorial-chip--clickhint {
+  border-color: rgba(133, 255, 209, 0.78);
+  background: rgba(12, 58, 48, 0.9);
+  color: #dcfff4;
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--body {
+  border-color: rgba(141, 231, 255, 0.62);
+  background: rgba(10, 41, 69, 0.92);
+  flex: 1;
+}
+
+.tg-tutorial-chip--target {
+  border-color: rgba(97, 211, 255, 0.82);
+  background: rgba(10, 49, 77, 0.94);
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--action {
+  border-color: rgba(139, 255, 215, 0.72);
+  background: rgba(14, 56, 49, 0.9);
+  color: #ddfff2;
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--status {
+  border-color: rgba(132, 225, 255, 0.6);
+  font-weight: 700;
+}
+
+.tg-tutorial-chip--status.is-ready {
+  color: #d9f6ff;
+  border-color: rgba(132, 225, 255, 0.5);
+  background: rgba(13, 44, 73, 0.72);
+}
+
+.tg-tutorial-chip--status.is-clicked {
+  color: #d7ffe8;
+  border-color: rgba(112, 255, 184, 0.55);
+  background: rgba(13, 55, 39, 0.72);
+}
+
+.tg-tutorial-chip--status.is-missing {
+  color: #ffeccf;
+  border-color: rgba(255, 194, 128, 0.58);
+  background: rgba(69, 36, 8, 0.72);
+}
+
+.tg-tutorial-chip--status.is-wrong-click {
+  color: #ffd8d8;
+  border-color: rgba(255, 145, 145, 0.58);
+  background: rgba(67, 21, 27, 0.72);
+}
+
+.tg-tutorial-chip--hint {
+  border-color: rgba(120, 222, 255, 0.52);
+  background: rgba(9, 45, 67, 0.82);
+  color: #99e4ff;
+}
+
+.tg-tutorial-chip--note {
+  border-color: rgba(255, 188, 120, 0.62);
+  background: rgba(72, 39, 11, 0.78);
+  color: #ffd5a0;
+}
+
+.tg-tutorial-completion-card {
+  border: 1px solid rgba(129, 255, 192, 0.45);
+  border-radius: 10px;
+  background: rgba(10, 45, 32, 0.72);
+  padding: 10px;
+}
+
+@media (max-width: 640px) {
+  .tg-tutorial-coach {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%);
+    width: min(calc(100vw - 24px), 360px) !important;
+    border-radius: 14px;
+    max-height: min(56vh, 420px);
+    overflow: auto;
+  }
+
+  .tg-tutorial-coach-shell {
+    align-items: flex-start;
+  }
+
+  .tg-tutorial-coach-avatar-orb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .tg-tutorial-coach-avatar {
+    width: 46px;
+    height: 46px;
+  }
+
+  .tg-tutorial-oval {
+    margin-left: 0;
+    border-radius: 0;
+    min-height: auto;
+    padding: 0;
+  }
+
+}
+
+@keyframes tg-target-blink {
+  0% {
+    border-color: rgba(129, 231, 255, 0.98);
+    box-shadow:
+      0 0 0 9999px rgba(2, 6, 20, 0.34),
+      0 0 0 2px rgba(122, 240, 255, 0.9),
+      0 0 24px rgba(73, 208, 255, 0.88);
+  }
+  100% {
+    border-color: rgba(62, 185, 235, 0.35);
+    box-shadow:
+      0 0 0 9999px rgba(2, 6, 20, 0.34),
+      0 0 0 2px rgba(122, 240, 255, 0.28),
+      0 0 8px rgba(73, 208, 255, 0.2);
+  }
+}

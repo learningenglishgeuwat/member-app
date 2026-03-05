@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/interjections-function-and-punctuation",
+    "label":  "Interjections Function And Punctuation",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu interjections function and punctuation",
+                     "cara pakai interjections function and punctuation",
+                     "interjections function and punctuation",
+                     "foundation grammar interjections function and punctuation",
+                     "grammar resource interjections function and punctuation"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-interjections-function-and-punctuation",
+                   "title":  "Interjections Function And Punctuation",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/interjections-function-and-punctuation",
+                   "keywords":  [
+                                    "apa itu interjections function and punctuation",
+                                    "cara pakai interjections function and punctuation",
+                                    "interjections function and punctuation",
+                                    "foundation grammar interjections function and punctuation",
+                                    "grammar resource interjections function and punctuation"
+                                ],
+                   "shortAnswer":  "Topik ini membahas interjections, fungsi ekspresifnya, dan tanda baca yang tepat agar nuansa emosi tersampaikan jelas.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

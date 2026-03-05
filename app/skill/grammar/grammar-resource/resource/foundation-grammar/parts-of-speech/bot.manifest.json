@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/parts-of-speech",
+    "label":  "Parts Of Speech",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu parts of speech",
+                     "cara pakai parts of speech",
+                     "parts of speech",
+                     "foundation grammar parts of speech",
+                     "grammar resource parts of speech"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-parts-of-speech",
+                   "title":  "Parts Of Speech",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/parts-of-speech",
+                   "keywords":  [
+                                    "apa itu parts of speech",
+                                    "cara pakai parts of speech",
+                                    "parts of speech",
+                                    "foundation grammar parts of speech",
+                                    "grammar resource parts of speech"
+                                ],
+                   "shortAnswer":  "Topik ini memperkenalkan parts of speech sebagai kategori utama kata dan peran tiap kategori dalam struktur kalimat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Komponen Utama"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

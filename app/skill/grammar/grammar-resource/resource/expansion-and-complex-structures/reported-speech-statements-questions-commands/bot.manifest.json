@@ -1,0 +1,53 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reported-speech-statements-questions-commands",
+    "label":  "Reported Speech Statements Questions Commands",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu reported speech statements questions commands",
+                     "cara pakai reported speech statements questions commands",
+                     "reported speech statements questions commands",
+                     "expansion and complex structures reported speech statements questions commands",
+                     "grammar resource reported speech statements questions commands"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-reported-speech-statements-questions-commands",
+                   "title":  "Reported Speech Statements Questions Commands",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reported-speech-statements-questions-commands",
+                   "keywords":  [
+                                    "apa itu reported speech statements questions commands",
+                                    "cara pakai reported speech statements questions commands",
+                                    "reported speech statements questions commands",
+                                    "expansion and complex structures reported speech statements questions commands",
+                                    "grammar resource reported speech statements questions commands"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan reported speech untuk statements, questions, dan commands termasuk perubahan tense, pronoun, dan time expression.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Reported Speech"
+                                          },
+                                          {
+                                              "label":  "Backshift Umum"
+                                          },
+                                          {
+                                              "label":  "Perubahan Referensi (Pronoun \u0026 Time Expression)"
+                                          },
+                                          {
+                                              "label":  "Pola Reported Questions"
+                                          },
+                                          {
+                                              "label":  "Kapan Backshift Tidak Wajib"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

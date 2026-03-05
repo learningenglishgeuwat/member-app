@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/adverbs-function-and-position",
+    "label":  "Adverbs Function And Position",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu adverbs function and position",
+                     "cara pakai adverbs function and position",
+                     "adverbs function and position",
+                     "foundation grammar adverbs function and position",
+                     "grammar resource adverbs function and position"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-adverbs-function-and-position",
+                   "title":  "Adverbs Function And Position",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/adverbs-function-and-position",
+                   "keywords":  [
+                                    "apa itu adverbs function and position",
+                                    "cara pakai adverbs function and position",
+                                    "adverbs function and position",
+                                    "foundation grammar adverbs function and position",
+                                    "grammar resource adverbs function and position"
+                                ],
+                   "shortAnswer":  "Topik ini membahas fungsi adverbs dan posisi dalam kalimat agar keterangan frekuensi, cara, waktu, dan derajat tidak salah tempat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Function"
+                                          },
+                                          {
+                                              "label":  "Position"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

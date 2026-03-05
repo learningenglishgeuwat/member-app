@@ -1,0 +1,53 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/indirect-questions-polite-question-structure",
+    "label":  "Indirect Questions Polite Question Structure",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu indirect questions polite question structure",
+                     "cara pakai indirect questions polite question structure",
+                     "indirect questions polite question structure",
+                     "functional sentence forms indirect questions polite question structure",
+                     "grammar resource indirect questions polite question structure"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-indirect-questions-polite-question-structure",
+                   "title":  "Indirect Questions Polite Question Structure",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/indirect-questions-polite-question-structure",
+                   "keywords":  [
+                                    "apa itu indirect questions polite question structure",
+                                    "cara pakai indirect questions polite question structure",
+                                    "indirect questions polite question structure",
+                                    "functional sentence forms indirect questions polite question structure",
+                                    "grammar resource indirect questions polite question structure"
+                                ],
+                   "shortAnswer":  "Topik ini melatih indirect questions agar pertanyaan terdengar lebih sopan dan struktur kalimat tetap benar.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Common Intro Phrases"
+                                          },
+                                          {
+                                              "label":  "Direct to Indirect Examples"
+                                          },
+                                          {
+                                              "label":  "Punctuation Rule"
+                                          },
+                                          {
+                                              "label":  "if vs whether"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

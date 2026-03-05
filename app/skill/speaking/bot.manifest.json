@@ -1,0 +1,37 @@
+{
+  "route": "/skill/speaking",
+  "label": "Speaking Roadmap",
+  "scope": "skill",
+  "keywords": [
+    "speaking roadmap",
+    "cefr a1 speaking",
+    "latihan speaking a1",
+    "speaking untuk penutur indonesia",
+    "survival response speaking",
+    "36 speaking goals"
+  ],
+  "qa": [
+    {
+      "topicId": "speaking-roadmap-main",
+      "title": "Speaking Roadmap Main",
+      "route": "/skill/speaking",
+      "keywords": [
+        "halaman speaking isi apa",
+        "speaking a1",
+        "speaking roadmap baru"
+      ],
+      "shortAnswer": "Halaman ini adalah roadmap speaking CEFR A1 dengan 36 goals praktis untuk penutur Indonesia, dibagi ke A1.1, A1.2, dan A1.3.",
+      "sourceSections": [
+        {
+          "label": "CEFR A1.1 - Survival Response"
+        },
+        {
+          "label": "CEFR A1.2 - Identity and Daily Needs"
+        },
+        {
+          "label": "CEFR A1.3 - Simple Transaction and Direction"
+        }
+      ]
+    }
+  ]
+}

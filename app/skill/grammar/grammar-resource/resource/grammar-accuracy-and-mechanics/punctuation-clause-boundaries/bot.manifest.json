@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/punctuation-clause-boundaries",
+    "label":  "Punctuation Clause Boundaries",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu punctuation clause boundaries",
+                     "cara pakai punctuation clause boundaries",
+                     "punctuation clause boundaries",
+                     "grammar accuracy and mechanics punctuation clause boundaries",
+                     "grammar resource punctuation clause boundaries"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-grammar-accuracy-and-mechanics-punctuation-clause-boundaries",
+                   "title":  "Punctuation Clause Boundaries",
+                   "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/punctuation-clause-boundaries",
+                   "keywords":  [
+                                    "apa itu punctuation clause boundaries",
+                                    "cara pakai punctuation clause boundaries",
+                                    "punctuation clause boundaries",
+                                    "grammar accuracy and mechanics punctuation clause boundaries",
+                                    "grammar resource punctuation clause boundaries"
+                                ],
+                   "shortAnswer":  "Topik ini membahas punctuation untuk batas klausa agar terhindar dari run on sentence dan comma splice.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

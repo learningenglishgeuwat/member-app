@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/requests-offers-suggestions",
+    "label":  "Requests Offers Suggestions",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu requests offers suggestions",
+                     "cara pakai requests offers suggestions",
+                     "requests offers suggestions",
+                     "functional sentence forms requests offers suggestions",
+                     "grammar resource requests offers suggestions"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-functional-sentence-forms-requests-offers-suggestions",
+                   "title":  "Requests Offers Suggestions",
+                   "route":  "/skill/grammar/grammar-resource/resource/functional-sentence-forms/requests-offers-suggestions",
+                   "keywords":  [
+                                    "apa itu requests offers suggestions",
+                                    "cara pakai requests offers suggestions",
+                                    "requests offers suggestions",
+                                    "functional sentence forms requests offers suggestions",
+                                    "grammar resource requests offers suggestions"
+                                ],
+                   "shortAnswer":  "Topik ini membahas pola language functions untuk requests, offers, dan suggestions yang umum dalam percakapan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

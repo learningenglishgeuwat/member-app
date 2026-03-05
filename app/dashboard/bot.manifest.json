@@ -1,0 +1,28 @@
+{
+  "route": "/dashboard",
+  "label": "Dashboard",
+  "scope": "dashboard",
+  "keywords": [
+    "dashboard",
+    "beranda",
+    "home private"
+  ],
+  "qa": [
+    {
+      "topicId": "dashboard-main-function",
+      "title": "Dashboard Main Function",
+      "route": "/dashboard",
+      "keywords": [
+        "fungsi dashboard",
+        "halaman awal setelah login",
+        "mulai belajar dari dashboard"
+      ],
+      "shortAnswer": "Dashboard adalah halaman awal setelah login untuk melihat akses cepat ke fitur belajar utama dan melanjutkan progress.",
+      "sourceSections": [
+        {
+          "label": "Dashboard Main Panel"
+        }
+      ]
+    }
+  ]
+}

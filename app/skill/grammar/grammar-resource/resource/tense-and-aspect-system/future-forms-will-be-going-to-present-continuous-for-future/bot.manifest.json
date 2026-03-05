@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-forms-will-be-going-to-present-continuous-for-future",
+    "label":  "Future Forms Will Be Going To Present Continuous For Future",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu future forms will be going to present continuous for future",
+                     "cara pakai future forms will be going to present continuous for future",
+                     "future forms will be going to present continuous for future",
+                     "tense and aspect system future forms will be going to present continuous for future",
+                     "grammar resource future forms will be going to present continuous for future"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-future-forms-will-be-going-to-present-continuous-for-future",
+                   "title":  "Future Forms Will Be Going To Present Continuous For Future",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-forms-will-be-going-to-present-continuous-for-future",
+                   "keywords":  [
+                                    "apa itu future forms will be going to present continuous for future",
+                                    "cara pakai future forms will be going to present continuous for future",
+                                    "future forms will be going to present continuous for future",
+                                    "tense and aspect system future forms will be going to present continuous for future",
+                                    "grammar resource future forms will be going to present continuous for future"
+                                ],
+                   "shortAnswer":  "Topik ini membandingkan future forms: will, be going to, dan present continuous untuk rencana, prediksi, atau keputusan spontan.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Future Forms Overview"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

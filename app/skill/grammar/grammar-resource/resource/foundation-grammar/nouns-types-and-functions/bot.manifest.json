@@ -1,0 +1,44 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/nouns-types-and-functions",
+    "label":  "Nouns Types And Functions",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu nouns types and functions",
+                     "cara pakai nouns types and functions",
+                     "nouns types and functions",
+                     "foundation grammar nouns types and functions",
+                     "grammar resource nouns types and functions"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-foundation-grammar-nouns-types-and-functions",
+                   "title":  "Nouns Types And Functions",
+                   "route":  "/skill/grammar/grammar-resource/resource/foundation-grammar/nouns-types-and-functions",
+                   "keywords":  [
+                                    "apa itu nouns types and functions",
+                                    "cara pakai nouns types and functions",
+                                    "nouns types and functions",
+                                    "foundation grammar nouns types and functions",
+                                    "grammar resource nouns types and functions"
+                                ],
+                   "shortAnswer":  "Topik ini membahas jenis noun dan fungsinya sebagai subjek, objek, pelengkap, atau objek preposisi dalam kalimat.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Nouns"
+                                          },
+                                          {
+                                              "label":  "Fungsi Nouns dalam Kalimat"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

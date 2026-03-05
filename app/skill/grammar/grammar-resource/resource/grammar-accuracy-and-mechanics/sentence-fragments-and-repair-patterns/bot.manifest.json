@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/sentence-fragments-and-repair-patterns",
+    "label":  "Sentence Fragments And Repair Patterns",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu sentence fragments and repair patterns",
+                     "cara pakai sentence fragments and repair patterns",
+                     "sentence fragments and repair patterns",
+                     "grammar accuracy and mechanics sentence fragments and repair patterns",
+                     "grammar resource sentence fragments and repair patterns"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-grammar-accuracy-and-mechanics-sentence-fragments-and-repair-patterns",
+                   "title":  "Sentence Fragments And Repair Patterns",
+                   "route":  "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/sentence-fragments-and-repair-patterns",
+                   "keywords":  [
+                                    "apa itu sentence fragments and repair patterns",
+                                    "cara pakai sentence fragments and repair patterns",
+                                    "sentence fragments and repair patterns",
+                                    "grammar accuracy and mechanics sentence fragments and repair patterns",
+                                    "grammar resource sentence fragments and repair patterns"
+                                ],
+                   "shortAnswer":  "Topik ini mengidentifikasi sentence fragments dan cara memperbaikinya menjadi kalimat lengkap.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

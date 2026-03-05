@@ -1,0 +1,29 @@
+{
+  "route": "/skill/pronunciation",
+  "label": "Pronunciation Hub",
+  "scope": "pronunciation",
+  "keywords": [
+    "pronunciation menu",
+    "belajar pronunciation",
+    "materi pronunciation"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-hub-overview",
+      "title": "Pronunciation Menu Overview",
+      "route": "/skill/pronunciation",
+      "keywords": [
+        "menu pronunciation",
+        "mulai pronunciation dari mana",
+        "halaman pronunciation",
+        "intonation"
+      ],
+      "shortAnswer": "Halaman Pronunciation adalah hub untuk memilih topik latihan, seperti phonetic symbols, stressing, intonation, final sound, american t, dan text practice.",
+      "sourceSections": [
+        {
+          "label": "Pronunciation Topic Cards"
+        }
+      ]
+    }
+  ]
+}

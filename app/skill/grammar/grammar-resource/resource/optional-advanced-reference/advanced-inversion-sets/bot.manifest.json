@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/advanced-inversion-sets",
+    "label":  "Advanced Inversion Sets",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu advanced inversion sets",
+                     "cara pakai advanced inversion sets",
+                     "advanced inversion sets",
+                     "optional advanced reference advanced inversion sets",
+                     "grammar resource advanced inversion sets"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-optional-advanced-reference-advanced-inversion-sets",
+                   "title":  "Advanced Inversion Sets",
+                   "route":  "/skill/grammar/grammar-resource/resource/optional-advanced-reference/advanced-inversion-sets",
+                   "keywords":  [
+                                    "apa itu advanced inversion sets",
+                                    "cara pakai advanced inversion sets",
+                                    "advanced inversion sets",
+                                    "optional advanced reference advanced inversion sets",
+                                    "grammar resource advanced inversion sets"
+                                ],
+                   "shortAnswer":  "Topik ini membahas advanced inversion patterns untuk penekanan formal seperti not only, never, atau little.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

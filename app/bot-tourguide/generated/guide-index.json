@@ -1,0 +1,5972 @@
+{
+  "generatedAt": "2026-03-05T08:59:20.320Z",
+  "routes": [
+    {
+      "id": "dashboard",
+      "label": "Dashboard",
+      "path": "/dashboard",
+      "scope": "dashboard",
+      "keywords": [
+        "dashboard",
+        "/dashboard",
+        "beranda",
+        "home",
+        "private"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill",
+      "label": "Skill Hub",
+      "path": "/skill",
+      "scope": "skill",
+      "keywords": [
+        "skill",
+        "hub",
+        "/skill",
+        "menu",
+        "halaman"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-game-links",
+      "label": "Skill Games",
+      "path": "/skill/game-links",
+      "scope": "game-links",
+      "keywords": [
+        "skill",
+        "games",
+        "/skill/game-links",
+        "game",
+        "links",
+        "quiz",
+        "eksternal"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar",
+      "label": "Grammar Hub",
+      "path": "/skill/grammar",
+      "scope": "grammar",
+      "keywords": [
+        "grammar",
+        "hub",
+        "/skill/grammar",
+        "menu",
+        "pilihan"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-analisis-grammar-for-speaking",
+      "label": "Analisis Grammar for Speaking",
+      "path": "/skill/grammar/analisis-grammar-for-speaking",
+      "scope": "grammar",
+      "keywords": [
+        "analisis",
+        "grammar",
+        "for",
+        "speaking",
+        "/skill/grammar/analisis-grammar-for-speaking",
+        "workflow",
+        "audit",
+        "gap"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-for-speaking",
+      "label": "Grammar for Speaking",
+      "path": "/skill/grammar/grammar-for-speaking",
+      "scope": "grammar",
+      "keywords": [
+        "grammar",
+        "for",
+        "speaking",
+        "/skill/grammar/grammar-for-speaking",
+        "goals",
+        "200",
+        "roadmap",
+        "phase",
+        "kalimat",
+        "kunci",
+        "drill",
+        "latihan",
+        "praktis"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-for-writing",
+      "label": "Grammar for Writing",
+      "path": "/skill/grammar/grammar-for-writing",
+      "scope": "grammar",
+      "keywords": [
+        "grammar",
+        "for",
+        "writing",
+        "/skill/grammar/grammar-for-writing",
+        "struktur",
+        "tulisan",
+        "materi",
+        "untuk"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource",
+      "label": "Grammar Resource",
+      "path": "/skill/grammar/grammar-resource",
+      "scope": "grammar-resource",
+      "keywords": [
+        "grammar",
+        "resource",
+        "/skill/grammar/grammar-resource",
+        "materi",
+        "fondasi",
+        "topik"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-adverbial-clauses",
+      "label": "Adverbial Clauses",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/adverbial-clauses",
+      "scope": "grammar-resource",
+      "keywords": [
+        "adverbial",
+        "clauses",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/adverbial-clauses",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-causatives-have-get-something-done",
+      "label": "Causatives Have Get Something Done",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/causatives-have-get-something-done",
+      "scope": "grammar-resource",
+      "keywords": [
+        "causatives",
+        "have",
+        "get",
+        "something",
+        "done",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/causatives-have-get-something-done",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-comparative-and-superlative-regular-and-irregular-forms",
+      "label": "Comparative And Superlative Regular And Irregular Forms",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/comparative-and-superlative-regular-and-irregular-forms",
+      "scope": "grammar-resource",
+      "keywords": [
+        "comparative",
+        "and",
+        "superlative",
+        "regular",
+        "irregular",
+        "forms",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/comparative-and-superlative-regular-and-irregular-forms",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-conditionals-type-0-1-2-3",
+      "label": "Conditionals Type 0 1 2 3",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conditionals-type-0-1-2-3",
+      "scope": "grammar-resource",
+      "keywords": [
+        "conditionals",
+        "type",
+        "0",
+        "1",
+        "2",
+        "3",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conditionals-type-0-1-2-3",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-conjunctions-and-but-or-because-so",
+      "label": "Conjunctions And But Or Because So",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conjunctions-and-but-or-because-so",
+      "scope": "grammar-resource",
+      "keywords": [
+        "conjunctions",
+        "and",
+        "but",
+        "or",
+        "because",
+        "so",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conjunctions-and-but-or-because-so",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-defining-vs-non-defining-relative-clauses",
+      "label": "Defining Vs Non Defining Relative Clauses",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/defining-vs-non-defining-relative-clauses",
+      "scope": "grammar-resource",
+      "keywords": [
+        "defining",
+        "vs",
+        "non",
+        "relative",
+        "clauses",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/defining-vs-non-defining-relative-clauses",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-discourse-markers-and-connectors-however-although-therefore-moreover",
+      "label": "Discourse Markers And Connectors However Although Therefore Moreover",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/discourse-markers-and-connectors-however-although-therefore-moreover",
+      "scope": "grammar-resource",
+      "keywords": [
+        "discourse",
+        "markers",
+        "and",
+        "connectors",
+        "however",
+        "although",
+        "therefore",
+        "moreover",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/discourse-markers-and-connectors-however-although-therefore-moreover",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-gerunds-and-infinitives-verb-patterns",
+      "label": "Gerunds And Infinitives Verb Patterns",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/gerunds-and-infinitives-verb-patterns",
+      "scope": "grammar-resource",
+      "keywords": [
+        "gerunds",
+        "and",
+        "infinitives",
+        "verb",
+        "patterns",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/gerunds-and-infinitives-verb-patterns",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-mixed-conditionals-past-present-and-present-past",
+      "label": "Mixed Conditionals Past Present And Present Past",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/mixed-conditionals-past-present-and-present-past",
+      "scope": "grammar-resource",
+      "keywords": [
+        "mixed",
+        "conditionals",
+        "past",
+        "present",
+        "and",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/mixed-conditionals-past-present-and-present-past",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-modal-perfect-should-have-could-have-might-have-must-have",
+      "label": "Modal Perfect Should Have Could Have Might Have Must Have",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/modal-perfect-should-have-could-have-might-have-must-have",
+      "scope": "grammar-resource",
+      "keywords": [
+        "modal",
+        "perfect",
+        "should",
+        "have",
+        "could",
+        "might",
+        "must",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/modal-perfect-should-have-could-have-might-have-must-have",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-noun-clauses-that-clauses-whether-if-clauses-wh-clauses",
+      "label": "Noun Clauses That Clauses Whether If Clauses Wh Clauses",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/noun-clauses-that-clauses-whether-if-clauses-wh-clauses",
+      "scope": "grammar-resource",
+      "keywords": [
+        "noun",
+        "clauses",
+        "that",
+        "whether",
+        "if",
+        "wh",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/noun-clauses-that-clauses-whether-if-clauses-wh-clauses",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-passive-voice-form-and-use-across-tenses",
+      "label": "Passive Voice Form And Use Across Tenses",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/passive-voice-form-and-use-across-tenses",
+      "scope": "grammar-resource",
+      "keywords": [
+        "passive",
+        "voice",
+        "form",
+        "and",
+        "use",
+        "across",
+        "tenses",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/passive-voice-form-and-use-across-tenses",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-reduced-relative-participle-clauses",
+      "label": "Reduced Relative Participle Clauses",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reduced-relative-participle-clauses",
+      "scope": "grammar-resource",
+      "keywords": [
+        "reduced",
+        "relative",
+        "participle",
+        "clauses",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reduced-relative-participle-clauses",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-relative-clauses-who-which-that-where-whose",
+      "label": "Relative Clauses Who Which That Where Whose",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/relative-clauses-who-which-that-where-whose",
+      "scope": "grammar-resource",
+      "keywords": [
+        "relative",
+        "clauses",
+        "who",
+        "which",
+        "that",
+        "where",
+        "whose",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/relative-clauses-who-which-that-where-whose",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-reported-speech-statements-questions-commands",
+      "label": "Reported Speech Statements Questions Commands",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reported-speech-statements-questions-commands",
+      "scope": "grammar-resource",
+      "keywords": [
+        "reported",
+        "speech",
+        "statements",
+        "questions",
+        "commands",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reported-speech-statements-questions-commands",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-stative-vs-dynamic-verbs-simple-vs-continuous-meaning",
+      "label": "Stative Vs Dynamic Verbs Simple Vs Continuous Meaning",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/stative-vs-dynamic-verbs-simple-vs-continuous-meaning",
+      "scope": "grammar-resource",
+      "keywords": [
+        "stative",
+        "vs",
+        "dynamic",
+        "verbs",
+        "simple",
+        "continuous",
+        "meaning",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/stative-vs-dynamic-verbs-simple-vs-continuous-meaning",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-time-clauses-when-while-before-after-as-soon-as",
+      "label": "Time Clauses When While Before After As Soon As",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/time-clauses-when-while-before-after-as-soon-as",
+      "scope": "grammar-resource",
+      "keywords": [
+        "time",
+        "clauses",
+        "when",
+        "while",
+        "before",
+        "after",
+        "as",
+        "soon",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/time-clauses-when-while-before-after-as-soon-as",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "and",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-expansion-and-complex-structures-wish-and-if-only",
+      "label": "Wish And If Only",
+      "path": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/wish-and-if-only",
+      "scope": "grammar-resource",
+      "keywords": [
+        "wish",
+        "and",
+        "if",
+        "only",
+        "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/wish-and-if-only",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "expansion",
+        "complex",
+        "structures",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-adjectives-function-and-position",
+      "label": "Adjectives Function And Position",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/adjectives-function-and-position",
+      "scope": "grammar-resource",
+      "keywords": [
+        "adjectives",
+        "function",
+        "and",
+        "position",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/adjectives-function-and-position",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-adverbs-function-and-position",
+      "label": "Adverbs Function And Position",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/adverbs-function-and-position",
+      "scope": "grammar-resource",
+      "keywords": [
+        "adverbs",
+        "function",
+        "and",
+        "position",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/adverbs-function-and-position",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-interjections-function-and-punctuation",
+      "label": "Interjections Function And Punctuation",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/interjections-function-and-punctuation",
+      "scope": "grammar-resource",
+      "keywords": [
+        "interjections",
+        "function",
+        "and",
+        "punctuation",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/interjections-function-and-punctuation",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-language-units",
+      "label": "Language Units",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/language-units",
+      "scope": "grammar-resource",
+      "keywords": [
+        "language",
+        "units",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/language-units",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-negation-basics",
+      "label": "Negation Basics",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/negation-basics",
+      "scope": "grammar-resource",
+      "keywords": [
+        "negation",
+        "basics",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/negation-basics",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-nouns-types-and-functions",
+      "label": "Nouns Types And Functions",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/nouns-types-and-functions",
+      "scope": "grammar-resource",
+      "keywords": [
+        "nouns",
+        "types",
+        "and",
+        "functions",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/nouns-types-and-functions",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-parts-of-speech",
+      "label": "Parts Of Speech",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/parts-of-speech",
+      "scope": "grammar-resource",
+      "keywords": [
+        "parts",
+        "of",
+        "speech",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/parts-of-speech",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-prepositions-after-verbs-and-adjectives-depend-on-interested-in-good-at",
+      "label": "Prepositions After Verbs And Adjectives Depend On Interested In Good At",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-after-verbs-and-adjectives-depend-on-interested-in-good-at",
+      "scope": "grammar-resource",
+      "keywords": [
+        "prepositions",
+        "after",
+        "verbs",
+        "and",
+        "adjectives",
+        "depend",
+        "on",
+        "interested",
+        "in",
+        "good",
+        "at",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-after-verbs-and-adjectives-depend-on-interested-in-good-at",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-prepositions-of-time-and-place-in-on-at",
+      "label": "Prepositions Of Time And Place In On At",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-of-time-and-place-in-on-at",
+      "scope": "grammar-resource",
+      "keywords": [
+        "prepositions",
+        "of",
+        "time",
+        "and",
+        "place",
+        "in",
+        "on",
+        "at",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-of-time-and-place-in-on-at",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-pronouns-subject-object-possessive-reflexive",
+      "label": "Pronouns Subject Object Possessive Reflexive",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/pronouns-subject-object-possessive-reflexive",
+      "scope": "grammar-resource",
+      "keywords": [
+        "pronouns",
+        "subject",
+        "object",
+        "possessive",
+        "reflexive",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/pronouns-subject-object-possessive-reflexive",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-sentence-elements-and-word-order",
+      "label": "Sentence Elements And Word Order",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-elements-and-word-order",
+      "scope": "grammar-resource",
+      "keywords": [
+        "sentence",
+        "elements",
+        "and",
+        "word",
+        "order",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-elements-and-word-order",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-sentence-types",
+      "label": "Sentence Types",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-types",
+      "scope": "grammar-resource",
+      "keywords": [
+        "sentence",
+        "types",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-types",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-subject-verb-agreement-singular-and-plural",
+      "label": "Subject Verb Agreement Singular And Plural",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/subject-verb-agreement-singular-and-plural",
+      "scope": "grammar-resource",
+      "keywords": [
+        "subject",
+        "verb",
+        "agreement",
+        "singular",
+        "and",
+        "plural",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/subject-verb-agreement-singular-and-plural",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-foundation-grammar-verbs-main-verbs-and-auxiliaries-be-do-have",
+      "label": "Verbs Main Verbs And Auxiliaries Be Do Have",
+      "path": "/skill/grammar/grammar-resource/resource/foundation-grammar/verbs--main-verbs-and-auxiliaries-be-do-have",
+      "scope": "grammar-resource",
+      "keywords": [
+        "verbs",
+        "main",
+        "and",
+        "auxiliaries",
+        "be",
+        "do",
+        "have",
+        "/skill/grammar/grammar-resource/resource/foundation-grammar/verbs--main-verbs-and-auxiliaries-be-do-have",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "foundation",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-core-modals-can-could-may-might-should-must",
+      "label": "Core Modals Can Could May Might Should Must",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/core-modals-can-could-may-might-should-must",
+      "scope": "grammar-resource",
+      "keywords": [
+        "core",
+        "modals",
+        "can",
+        "could",
+        "may",
+        "might",
+        "should",
+        "must",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/core-modals-can-could-may-might-should-must",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-exclamatives",
+      "label": "Exclamatives",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/exclamatives",
+      "scope": "grammar-resource",
+      "keywords": [
+        "exclamatives",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/exclamatives",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-imperatives-commands-requests-instructions",
+      "label": "Imperatives Commands Requests Instructions",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/imperatives-commands-requests-instructions",
+      "scope": "grammar-resource",
+      "keywords": [
+        "imperatives",
+        "commands",
+        "requests",
+        "instructions",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/imperatives-commands-requests-instructions",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-indirect-questions-polite-question-structure",
+      "label": "Indirect Questions Polite Question Structure",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/indirect-questions-polite-question-structure",
+      "scope": "grammar-resource",
+      "keywords": [
+        "indirect",
+        "questions",
+        "polite",
+        "question",
+        "structure",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/indirect-questions-polite-question-structure",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-question-forms-yes-no-questions-and-wh-questions",
+      "label": "Question Forms Yes No Questions And Wh Questions",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-forms-yes-no-questions-and-wh-questions",
+      "scope": "grammar-resource",
+      "keywords": [
+        "question",
+        "forms",
+        "yes",
+        "no",
+        "questions",
+        "and",
+        "wh",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-forms-yes-no-questions-and-wh-questions",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-question-tags-confirmation-and-interaction",
+      "label": "Question Tags Confirmation And Interaction",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-tags-confirmation-and-interaction",
+      "scope": "grammar-resource",
+      "keywords": [
+        "question",
+        "tags",
+        "confirmation",
+        "and",
+        "interaction",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-tags-confirmation-and-interaction",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-requests-offers-suggestions",
+      "label": "Requests Offers Suggestions",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/requests-offers-suggestions",
+      "scope": "grammar-resource",
+      "keywords": [
+        "requests",
+        "offers",
+        "suggestions",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/requests-offers-suggestions",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-functional-sentence-forms-short-answers-response-patterns",
+      "label": "Short Answers Response Patterns",
+      "path": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/short-answers-response-patterns",
+      "scope": "grammar-resource",
+      "keywords": [
+        "short",
+        "answers",
+        "response",
+        "patterns",
+        "/skill/grammar/grammar-resource/resource/functional-sentence-forms/short-answers-response-patterns",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "functional",
+        "sentence",
+        "forms",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-grammar-accuracy-and-mechanics-apostrophe-capitalization-grammar-meaning",
+      "label": "Apostrophe Capitalization Grammar Meaning",
+      "path": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/apostrophe-capitalization-grammar-meaning",
+      "scope": "grammar-resource",
+      "keywords": [
+        "apostrophe",
+        "capitalization",
+        "grammar",
+        "meaning",
+        "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/apostrophe-capitalization-grammar-meaning",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "accuracy",
+        "and",
+        "mechanics",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-grammar-accuracy-and-mechanics-punctuation-clause-boundaries",
+      "label": "Punctuation Clause Boundaries",
+      "path": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/punctuation-clause-boundaries",
+      "scope": "grammar-resource",
+      "keywords": [
+        "punctuation",
+        "clause",
+        "boundaries",
+        "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/punctuation-clause-boundaries",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "grammar",
+        "accuracy",
+        "and",
+        "mechanics",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-grammar-accuracy-and-mechanics-sentence-fragments-and-repair-patterns",
+      "label": "Sentence Fragments And Repair Patterns",
+      "path": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/sentence-fragments-and-repair-patterns",
+      "scope": "grammar-resource",
+      "keywords": [
+        "sentence",
+        "fragments",
+        "and",
+        "repair",
+        "patterns",
+        "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/sentence-fragments-and-repair-patterns",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "grammar",
+        "accuracy",
+        "mechanics",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-articles-a-an-the-zero-article",
+      "label": "Articles A An The Zero Article",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/articles-a-an-the-zero-article",
+      "scope": "grammar-resource",
+      "keywords": [
+        "articles",
+        "a",
+        "an",
+        "the",
+        "zero",
+        "article",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/articles-a-an-the-zero-article",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-countable-and-uncountable-nouns",
+      "label": "Countable And Uncountable Nouns",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/countable-and-uncountable-nouns",
+      "scope": "grammar-resource",
+      "keywords": [
+        "countable",
+        "and",
+        "uncountable",
+        "nouns",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/countable-and-uncountable-nouns",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-demonstratives-this-that-these-those",
+      "label": "Demonstratives This That These Those",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/demonstratives-this-that-these-those",
+      "scope": "grammar-resource",
+      "keywords": [
+        "demonstratives",
+        "this",
+        "that",
+        "these",
+        "those",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/demonstratives-this-that-these-those",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-determiner-combinations",
+      "label": "Determiner Combinations",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/determiner-combinations",
+      "scope": "grammar-resource",
+      "keywords": [
+        "determiner",
+        "combinations",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/determiner-combinations",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-distributive-determiners-each-every-either-neither",
+      "label": "Distributive Determiners Each Every Either Neither",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/distributive-determiners-each-every-either-neither",
+      "scope": "grammar-resource",
+      "keywords": [
+        "distributive",
+        "determiners",
+        "each",
+        "every",
+        "either",
+        "neither",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/distributive-determiners-each-every-either-neither",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-noun-modifiers-compound-nouns",
+      "label": "Noun Modifiers Compound Nouns",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/noun-modifiers-compound-nouns",
+      "scope": "grammar-resource",
+      "keywords": [
+        "noun",
+        "modifiers",
+        "compound",
+        "nouns",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/noun-modifiers-compound-nouns",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-numbers-as-determiners-one-two-first-second",
+      "label": "Numbers As Determiners One Two First Second",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/numbers-as-determiners-one-two-first-second",
+      "scope": "grammar-resource",
+      "keywords": [
+        "numbers",
+        "as",
+        "determiners",
+        "one",
+        "two",
+        "first",
+        "second",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/numbers-as-determiners-one-two-first-second",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-possessive-determiners-my-your-his-her-its-our-their",
+      "label": "Possessive Determiners My Your His Her Its Our Their",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-determiners-my-your-his-her-its-our-their",
+      "scope": "grammar-resource",
+      "keywords": [
+        "possessive",
+        "determiners",
+        "my",
+        "your",
+        "his",
+        "her",
+        "its",
+        "our",
+        "their",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-determiners-my-your-his-her-its-our-their",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-possessive-forms",
+      "label": "Possessive Forms",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-forms",
+      "scope": "grammar-resource",
+      "keywords": [
+        "possessive",
+        "forms",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-forms",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-quantifiers-some-any-much-many-few-little-a-lot-of",
+      "label": "Quantifiers Some Any Much Many Few Little A Lot Of",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/quantifiers-some-any-much-many-few-little-a-lot-of",
+      "scope": "grammar-resource",
+      "keywords": [
+        "quantifiers",
+        "some",
+        "any",
+        "much",
+        "many",
+        "few",
+        "little",
+        "a",
+        "lot",
+        "of",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/quantifiers-some-any-much-many-few-little-a-lot-of",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "and",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-noun-and-determiner-system-there-is-and-there-are-singular-plural-uncountable",
+      "label": "There Is And There Are Singular Plural Uncountable",
+      "path": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/there-is-and-there-are-singular-plural-uncountable",
+      "scope": "grammar-resource",
+      "keywords": [
+        "there",
+        "is",
+        "and",
+        "are",
+        "singular",
+        "plural",
+        "uncountable",
+        "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/there-is-and-there-are-singular-plural-uncountable",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "noun",
+        "determiner",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-optional-advanced-reference-advanced-inversion-sets",
+      "label": "Advanced Inversion Sets",
+      "path": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/advanced-inversion-sets",
+      "scope": "grammar-resource",
+      "keywords": [
+        "advanced",
+        "inversion",
+        "sets",
+        "/skill/grammar/grammar-resource/resource/optional-advanced-reference/advanced-inversion-sets",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "optional",
+        "reference",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-optional-advanced-reference-emphasis-structures-cleft-sentences-and-inversion",
+      "label": "Emphasis Structures Cleft Sentences And Inversion",
+      "path": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/emphasis-structures-cleft-sentences-and-inversion",
+      "scope": "grammar-resource",
+      "keywords": [
+        "emphasis",
+        "structures",
+        "cleft",
+        "sentences",
+        "and",
+        "inversion",
+        "/skill/grammar/grammar-resource/resource/optional-advanced-reference/emphasis-structures-cleft-sentences-and-inversion",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "optional",
+        "advanced",
+        "reference",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-optional-advanced-reference-fixed-expressions-and-collocations-make-a-decision-take-responsibility-pay-attention",
+      "label": "Fixed Expressions And Collocations Make A Decision Take Responsibility Pay Attention",
+      "path": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/fixed-expressions-and-collocations-make-a-decision-take-responsibility-pay-attention",
+      "scope": "grammar-resource",
+      "keywords": [
+        "fixed",
+        "expressions",
+        "and",
+        "collocations",
+        "make",
+        "a",
+        "decision",
+        "take",
+        "responsibility",
+        "pay",
+        "attention",
+        "/skill/grammar/grammar-resource/resource/optional-advanced-reference/fixed-expressions-and-collocations-make-a-decision-take-responsibility-pay-attention",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "optional",
+        "advanced",
+        "reference",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-optional-advanced-reference-hedging-and-stance-grammar",
+      "label": "Hedging And Stance Grammar",
+      "path": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/hedging-and-stance-grammar",
+      "scope": "grammar-resource",
+      "keywords": [
+        "hedging",
+        "and",
+        "stance",
+        "grammar",
+        "/skill/grammar/grammar-resource/resource/optional-advanced-reference/hedging-and-stance-grammar",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "optional",
+        "advanced",
+        "reference",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-optional-advanced-reference-subjunctive-structures",
+      "label": "Subjunctive Structures",
+      "path": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/subjunctive-structures",
+      "scope": "grammar-resource",
+      "keywords": [
+        "subjunctive",
+        "structures",
+        "/skill/grammar/grammar-resource/resource/optional-advanced-reference/subjunctive-structures",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "optional",
+        "advanced",
+        "reference",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-future-continuous-action-in-progress-at-a-future-time",
+      "label": "Future Continuous Action In Progress At A Future Time",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-continuous-action-in-progress-at-a-future-time",
+      "scope": "grammar-resource",
+      "keywords": [
+        "future",
+        "continuous",
+        "action",
+        "in",
+        "progress",
+        "at",
+        "a",
+        "time",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-continuous-action-in-progress-at-a-future-time",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-future-forms-will-be-going-to-present-continuous-for-future",
+      "label": "Future Forms Will Be Going To Present Continuous For Future",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-forms-will-be-going-to-present-continuous-for-future",
+      "scope": "grammar-resource",
+      "keywords": [
+        "future",
+        "forms",
+        "will",
+        "be",
+        "going",
+        "to",
+        "present",
+        "continuous",
+        "for",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-forms-will-be-going-to-present-continuous-for-future",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-future-perfect-completion-before-a-future-point",
+      "label": "Future Perfect Completion Before A Future Point",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-completion-before-a-future-point",
+      "scope": "grammar-resource",
+      "keywords": [
+        "future",
+        "perfect",
+        "completion",
+        "before",
+        "a",
+        "point",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-completion-before-a-future-point",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-future-perfect-continuous",
+      "label": "Future Perfect Continuous",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-continuous",
+      "scope": "grammar-resource",
+      "keywords": [
+        "future",
+        "perfect",
+        "continuous",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-continuous",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-past-continuous-ongoing-action-in-the-past",
+      "label": "Past Continuous Ongoing Action In The Past",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-continuous-ongoing-action-in-the-past",
+      "scope": "grammar-resource",
+      "keywords": [
+        "past",
+        "continuous",
+        "ongoing",
+        "action",
+        "in",
+        "the",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-continuous-ongoing-action-in-the-past",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-past-perfect-continuous",
+      "label": "Past Perfect Continuous",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-continuous",
+      "scope": "grammar-resource",
+      "keywords": [
+        "past",
+        "perfect",
+        "continuous",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-continuous",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-past-perfect-earlier-past-event",
+      "label": "Past Perfect Earlier Past Event",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-earlier-past-event",
+      "scope": "grammar-resource",
+      "keywords": [
+        "past",
+        "perfect",
+        "earlier",
+        "event",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-earlier-past-event",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-past-simple-finished-past-events",
+      "label": "Past Simple Finished Past Events",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-simple-finished-past-events",
+      "scope": "grammar-resource",
+      "keywords": [
+        "past",
+        "simple",
+        "finished",
+        "events",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-simple-finished-past-events",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-present-continuous-actions-in-progress-and-near-future-plan",
+      "label": "Present Continuous Actions In Progress And Near Future Plan",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-continuous-actions-in-progress-and-near-future-plan",
+      "scope": "grammar-resource",
+      "keywords": [
+        "present",
+        "continuous",
+        "actions",
+        "in",
+        "progress",
+        "and",
+        "near",
+        "future",
+        "plan",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-continuous-actions-in-progress-and-near-future-plan",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-present-perfect-continuous-duration-from-past-to-present",
+      "label": "Present Perfect Continuous Duration From Past To Present",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-continuous-duration-from-past-to-present",
+      "scope": "grammar-resource",
+      "keywords": [
+        "present",
+        "perfect",
+        "continuous",
+        "duration",
+        "from",
+        "past",
+        "to",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-continuous-duration-from-past-to-present",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-present-perfect-experience-result-and-recent-change",
+      "label": "Present Perfect Experience Result And Recent Change",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-experience-result-and-recent-change",
+      "scope": "grammar-resource",
+      "keywords": [
+        "present",
+        "perfect",
+        "experience",
+        "result",
+        "and",
+        "recent",
+        "change",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-experience-result-and-recent-change",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-present-perfect-vs-past-simple",
+      "label": "Present Perfect Vs Past Simple",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-vs-past-simple",
+      "scope": "grammar-resource",
+      "keywords": [
+        "present",
+        "perfect",
+        "vs",
+        "past",
+        "simple",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-vs-past-simple",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "and",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-present-simple-habits-and-facts",
+      "label": "Present Simple Habits And Facts",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-simple-habits-and-facts",
+      "scope": "grammar-resource",
+      "keywords": [
+        "present",
+        "simple",
+        "habits",
+        "and",
+        "facts",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-simple-habits-and-facts",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-grammar-resource-resource-tense-and-aspect-system-used-to-and-would",
+      "label": "Used To And Would",
+      "path": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/used-to-and-would",
+      "scope": "grammar-resource",
+      "keywords": [
+        "used",
+        "to",
+        "and",
+        "would",
+        "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/used-to-and-would",
+        "apa",
+        "itu",
+        "cara",
+        "pakai",
+        "tense",
+        "aspect",
+        "system",
+        "grammar",
+        "resource"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-speaking",
+      "label": "Grammar for Speaking (Alias)",
+      "path": "/skill/grammar/speaking",
+      "scope": "grammar",
+      "keywords": [
+        "grammar",
+        "for",
+        "speaking",
+        "alias",
+        "/skill/grammar/speaking",
+        "route",
+        "shortcut"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-grammar-writing",
+      "label": "Grammar Writing Practice",
+      "path": "/skill/grammar/writing",
+      "scope": "grammar",
+      "keywords": [
+        "grammar",
+        "writing",
+        "practice",
+        "/skill/grammar/writing",
+        "latihan",
+        "tulisan",
+        "struktur",
+        "kalimat",
+        "untuk"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation",
+      "label": "Pronunciation Hub",
+      "path": "/skill/pronunciation",
+      "scope": "pronunciation",
+      "keywords": [
+        "pronunciation",
+        "hub",
+        "/skill/pronunciation",
+        "menu",
+        "belajar",
+        "materi"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-alphabet",
+      "label": "Pronunciation Alphabet",
+      "path": "/skill/pronunciation/alphabet",
+      "scope": "pronunciation",
+      "keywords": [
+        "pronunciation",
+        "alphabet",
+        "/skill/pronunciation/alphabet",
+        "huruf",
+        "english",
+        "cara",
+        "baca"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-american-t",
+      "label": "American T",
+      "path": "/skill/pronunciation/american-t",
+      "scope": "pronunciation",
+      "keywords": [
+        "american",
+        "t",
+        "/skill/pronunciation/american-t",
+        "flap",
+        "glottal",
+        "stop",
+        "final",
+        "before",
+        "consonant",
+        "silent"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-american-t-beginning-clear-t",
+      "label": "Released T",
+      "path": "/skill/pronunciation/american-t/beginning/clear-t",
+      "scope": "pronunciation",
+      "keywords": [
+        "released",
+        "t",
+        "/skill/pronunciation/american-t/beginning/clear-t"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-american-t-ending-clear-t-ending",
+      "label": "Released T Ending",
+      "path": "/skill/pronunciation/american-t/ending/clear-t-ending",
+      "scope": "pronunciation",
+      "keywords": [
+        "released",
+        "t",
+        "ending",
+        "/skill/pronunciation/american-t/ending/clear-t-ending"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-american-t-ending-final-t",
+      "label": "Final T",
+      "path": "/skill/pronunciation/american-t/ending/final-t",
+      "scope": "pronunciation",
+      "keywords": [
+        "final",
+        "t",
+        "/skill/pronunciation/american-t/ending/final-t"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-american-t-middle-flap",
+      "label": "Flap",
+      "path": "/skill/pronunciation/american-t/middle/flap",
+      "scope": "pronunciation",
+      "keywords": [
+        "flap",
+        "/skill/pronunciation/american-t/middle/flap"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-american-t-middle-glottal",
+      "label": "Glottal",
+      "path": "/skill/pronunciation/american-t/middle/glottal",
+      "scope": "pronunciation",
+      "keywords": [
+        "glottal",
+        "/skill/pronunciation/american-t/middle/glottal"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-american-t-middle-silent-t",
+      "label": "Silent T",
+      "path": "/skill/pronunciation/american-t/middle/silent-t",
+      "scope": "pronunciation",
+      "keywords": [
+        "silent",
+        "t",
+        "/skill/pronunciation/american-t/middle/silent-t"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-final-sound-new",
+      "label": "Final Sound Hub",
+      "path": "/skill/pronunciation/final-sound-new",
+      "scope": "pronunciation",
+      "keywords": [
+        "final",
+        "sound",
+        "hub",
+        "/skill/pronunciation/final-sound-new",
+        "new",
+        "ending",
+        "sounds",
+        "s",
+        "es",
+        "d",
+        "ed"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-final-sound-new-d-ed",
+      "label": "Final Sound D/ED",
+      "path": "/skill/pronunciation/final-sound-new/d/ed",
+      "scope": "pronunciation",
+      "keywords": [
+        "final",
+        "sound",
+        "d/ed",
+        "/skill/pronunciation/final-sound-new/d/ed",
+        "ed",
+        "d",
+        "past",
+        "ending",
+        "t",
+        "id",
+        "rules"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-final-sound-new-s-es",
+      "label": "Final Sound S/ES",
+      "path": "/skill/pronunciation/final-sound-new/s/es",
+      "scope": "pronunciation",
+      "keywords": [
+        "final",
+        "sound",
+        "s/es",
+        "/skill/pronunciation/final-sound-new/s/es",
+        "es",
+        "plural",
+        "endings",
+        "third",
+        "person",
+        "singular",
+        "possessive",
+        "s",
+        "rules"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-flashcard-alphabet",
+      "label": "Alphabet",
+      "path": "/skill/pronunciation/flashcard/alphabet",
+      "scope": "pronunciation",
+      "keywords": [
+        "alphabet",
+        "/skill/pronunciation/flashcard/alphabet"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-flashcard-phonetic-symbols",
+      "label": "Phonetic Symbols",
+      "path": "/skill/pronunciation/flashcard/phonetic-symbols",
+      "scope": "pronunciation",
+      "keywords": [
+        "phonetic",
+        "symbols",
+        "/skill/pronunciation/flashcard/phonetic-symbols"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-pronunciation-intonation",
+      "label": "Intonation",
+      "path": "/skill/pronunciation/intonation",
+      "scope": "pronunciation",
+      "keywords": [
+        "intonation",
+        "/skill/pronunciation/intonation",
+        "rising",
+        "tone",
+        "falling",
+        "fall",
+        "rise",
+        "sentence",
+        "melody",
+        "pattern"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-phoneticSymbols",
+      "label": "Phonetic Symbols",
+      "path": "/skill/pronunciation/phoneticSymbols",
+      "scope": "pronunciation",
+      "keywords": [
+        "phonetic",
+        "symbols",
+        "/skill/pronunciation/phoneticsymbols",
+        "phoneticsymbols",
+        "ipa",
+        "simbol",
+        "bunyi"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-phoneticSymbols-MinimalPairs",
+      "label": "Minimal Pairs",
+      "path": "/skill/pronunciation/phoneticSymbols/MinimalPairs",
+      "scope": "pronunciation",
+      "keywords": [
+        "minimal",
+        "pairs",
+        "/skill/pronunciation/phoneticsymbols/minimalpairs",
+        "minimalpairs",
+        "beda",
+        "bunyi",
+        "mirip",
+        "latihan",
+        "kontras"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-phoneticSymbols-summary-of-phonetic-symbols",
+      "label": "Summary of Phonetic Symbols",
+      "path": "/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols",
+      "scope": "pronunciation",
+      "keywords": [
+        "summary",
+        "of",
+        "phonetic",
+        "symbols",
+        "/skill/pronunciation/phoneticsymbols/summary-of-phonetic-symbols",
+        "ringkasan",
+        "simbol",
+        "fonetik",
+        "ipa",
+        "rekap"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-phoneticSymbols-tongue-twister",
+      "label": "Tongue Twister",
+      "path": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+      "scope": "pronunciation",
+      "keywords": [
+        "tongue",
+        "twister",
+        "/skill/pronunciation/phoneticsymbols/tongue-twister",
+        "latihan",
+        "kelincahan",
+        "ucapan",
+        "pronunciation",
+        "challenge"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-stressing",
+      "label": "Word Stressing",
+      "path": "/skill/pronunciation/stressing",
+      "scope": "pronunciation",
+      "keywords": [
+        "word",
+        "stressing",
+        "/skill/pronunciation/stressing",
+        "stress",
+        "tekanan",
+        "suku",
+        "kata"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-text",
+      "label": "Pronunciation Text Practice",
+      "path": "/skill/pronunciation/text",
+      "scope": "pronunciation",
+      "keywords": [
+        "pronunciation",
+        "text",
+        "practice",
+        "/skill/pronunciation/text",
+        "origin",
+        "phonetic",
+        "transcription"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-speaking",
+      "label": "Speaking Roadmap",
+      "path": "/skill/speaking",
+      "scope": "skill",
+      "keywords": [
+        "speaking",
+        "roadmap",
+        "/skill/speaking",
+        "cefr",
+        "a1",
+        "latihan",
+        "untuk",
+        "penutur",
+        "indonesia",
+        "survival",
+        "response",
+        "36",
+        "goals"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g01",
+      "label": "Cefr A1 1 G01",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g01",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g01",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g01"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g02",
+      "label": "Cefr A1 1 G02",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g02",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g02",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g02"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g03",
+      "label": "Cefr A1 1 G03",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g03",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g03",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g03"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g04",
+      "label": "Cefr A1 1 G04",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g04",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g04",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g04"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g05",
+      "label": "Cefr A1 1 G05",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g05",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g05",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g05"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g06",
+      "label": "Cefr A1 1 G06",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g06",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g06",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g06"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g07",
+      "label": "Cefr A1 1 G07",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g07",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g07",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g07"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g08",
+      "label": "Cefr A1 1 G08",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g08",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g08",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g08"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g09",
+      "label": "Cefr A1 1 G09",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g09",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g09",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g09"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g10",
+      "label": "Cefr A1 1 G10",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g10",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g10",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g10"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g11",
+      "label": "Cefr A1 1 G11",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g11",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g11",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g11"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-1-g12",
+      "label": "Cefr A1 1 G12",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-1-g12",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "1",
+        "g12",
+        "/skill/speaking/cefr-a1/cefr-a1-1-g12"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g01",
+      "label": "Cefr A1 2 G01",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g01",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g01",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g01"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g02",
+      "label": "Cefr A1 2 G02",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g02",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g02",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g02"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g03",
+      "label": "Cefr A1 2 G03",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g03",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g03",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g03"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g04",
+      "label": "Cefr A1 2 G04",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g04",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g04",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g04"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g05",
+      "label": "Cefr A1 2 G05",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g05",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g05",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g05"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g06",
+      "label": "Cefr A1 2 G06",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g06",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g06",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g06"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g07",
+      "label": "Cefr A1 2 G07",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g07",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g07",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g07"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g08",
+      "label": "Cefr A1 2 G08",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g08",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g08",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g08"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g09",
+      "label": "Cefr A1 2 G09",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g09",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g09",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g09"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g10",
+      "label": "Cefr A1 2 G10",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g10",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g10",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g10"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g11",
+      "label": "Cefr A1 2 G11",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g11",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g11",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g11"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-2-g12",
+      "label": "Cefr A1 2 G12",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-2-g12",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "2",
+        "g12",
+        "/skill/speaking/cefr-a1/cefr-a1-2-g12"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g01",
+      "label": "Cefr A1 3 G01",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g01",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g01",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g01"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g02",
+      "label": "Cefr A1 3 G02",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g02",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g02",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g02"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g03",
+      "label": "Cefr A1 3 G03",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g03",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g03",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g03"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g04",
+      "label": "Cefr A1 3 G04",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g04",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g04",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g04"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g05",
+      "label": "Cefr A1 3 G05",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g05",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g05",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g05"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g06",
+      "label": "Cefr A1 3 G06",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g06",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g06",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g06"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g07",
+      "label": "Cefr A1 3 G07",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g07",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g07",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g07"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g08",
+      "label": "Cefr A1 3 G08",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g08",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g08",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g08"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g09",
+      "label": "Cefr A1 3 G09",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g09",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g09",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g09"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g10",
+      "label": "Cefr A1 3 G10",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g10",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g10",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g10"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g11",
+      "label": "Cefr A1 3 G11",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g11",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g11",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g11"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-speaking-cefr-a1-cefr-a1-3-g12",
+      "label": "Cefr A1 3 G12",
+      "path": "/skill/speaking/cefr-a1/cefr-a1-3-g12",
+      "scope": "skill",
+      "keywords": [
+        "cefr",
+        "a1",
+        "3",
+        "g12",
+        "/skill/speaking/cefr-a1/cefr-a1-3-g12"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary",
+      "label": "Vocabulary",
+      "path": "/skill/vocabulary",
+      "scope": "skill",
+      "keywords": [
+        "vocabulary",
+        "/skill/vocabulary",
+        "topic",
+        "list",
+        "color",
+        "size",
+        "body",
+        "parts",
+        "family",
+        "daily",
+        "routines",
+        "home",
+        "time",
+        "date",
+        "number",
+        "cardinal"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-vocabulary-flashcard",
+      "label": "Flashcard",
+      "path": "/skill/vocabulary/flashcard",
+      "scope": "skill",
+      "keywords": [
+        "flashcard",
+        "/skill/vocabulary/flashcard"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-flashcard-body-parts",
+      "label": "Body Parts",
+      "path": "/skill/vocabulary/flashcard/body-parts",
+      "scope": "skill",
+      "keywords": [
+        "body",
+        "parts",
+        "/skill/vocabulary/flashcard/body-parts"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-bathroom",
+      "label": "Bathroom",
+      "path": "/skill/vocabulary/topic/pages/bathroom",
+      "scope": "skill",
+      "keywords": [
+        "bathroom",
+        "/skill/vocabulary/topic/pages/bathroom"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-body-parts",
+      "label": "Body Parts",
+      "path": "/skill/vocabulary/topic/pages/body-parts",
+      "scope": "skill",
+      "keywords": [
+        "body",
+        "parts",
+        "/skill/vocabulary/topic/pages/body-parts"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-clothes",
+      "label": "Clothes",
+      "path": "/skill/vocabulary/topic/pages/clothes",
+      "scope": "skill",
+      "keywords": [
+        "clothes",
+        "/skill/vocabulary/topic/pages/clothes"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-color",
+      "label": "Color",
+      "path": "/skill/vocabulary/topic/pages/color",
+      "scope": "skill",
+      "keywords": [
+        "color",
+        "/skill/vocabulary/topic/pages/color"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-daily-routines",
+      "label": "Daily Routines",
+      "path": "/skill/vocabulary/topic/pages/daily-routines",
+      "scope": "skill",
+      "keywords": [
+        "daily",
+        "routines",
+        "/skill/vocabulary/topic/pages/daily-routines"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-drinks",
+      "label": "Drinks",
+      "path": "/skill/vocabulary/topic/pages/drinks",
+      "scope": "skill",
+      "keywords": [
+        "drinks",
+        "/skill/vocabulary/topic/pages/drinks"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-education",
+      "label": "Education",
+      "path": "/skill/vocabulary/topic/pages/education",
+      "scope": "skill",
+      "keywords": [
+        "education",
+        "/skill/vocabulary/topic/pages/education"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-electronics",
+      "label": "Electronics",
+      "path": "/skill/vocabulary/topic/pages/electronics",
+      "scope": "skill",
+      "keywords": [
+        "electronics",
+        "/skill/vocabulary/topic/pages/electronics"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-entertainment-media",
+      "label": "Entertainment Media",
+      "path": "/skill/vocabulary/topic/pages/entertainment-media",
+      "scope": "skill",
+      "keywords": [
+        "entertainment",
+        "media",
+        "/skill/vocabulary/topic/pages/entertainment-media"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-family",
+      "label": "Family",
+      "path": "/skill/vocabulary/topic/pages/family",
+      "scope": "skill",
+      "keywords": [
+        "family",
+        "/skill/vocabulary/topic/pages/family"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-feelings",
+      "label": "Feelings",
+      "path": "/skill/vocabulary/topic/pages/feelings",
+      "scope": "skill",
+      "keywords": [
+        "feelings",
+        "/skill/vocabulary/topic/pages/feelings"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-food",
+      "label": "Food",
+      "path": "/skill/vocabulary/topic/pages/food",
+      "scope": "skill",
+      "keywords": [
+        "food",
+        "/skill/vocabulary/topic/pages/food"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-fruit",
+      "label": "Fruit",
+      "path": "/skill/vocabulary/topic/pages/fruit",
+      "scope": "skill",
+      "keywords": [
+        "fruit",
+        "/skill/vocabulary/topic/pages/fruit"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-games",
+      "label": "Games",
+      "path": "/skill/vocabulary/topic/pages/games",
+      "scope": "skill",
+      "keywords": [
+        "games",
+        "/skill/vocabulary/topic/pages/games"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-hobbies-interests",
+      "label": "Hobbies Interests",
+      "path": "/skill/vocabulary/topic/pages/hobbies-interests",
+      "scope": "skill",
+      "keywords": [
+        "hobbies",
+        "interests",
+        "/skill/vocabulary/topic/pages/hobbies-interests"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-home",
+      "label": "Home",
+      "path": "/skill/vocabulary/topic/pages/home",
+      "scope": "skill",
+      "keywords": [
+        "home",
+        "/skill/vocabulary/topic/pages/home"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-kitchen",
+      "label": "Kitchen",
+      "path": "/skill/vocabulary/topic/pages/kitchen",
+      "scope": "skill",
+      "keywords": [
+        "kitchen",
+        "/skill/vocabulary/topic/pages/kitchen"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-number",
+      "label": "Number",
+      "path": "/skill/vocabulary/topic/pages/number",
+      "scope": "skill",
+      "keywords": [
+        "number",
+        "/skill/vocabulary/topic/pages/number"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-ordinal-number",
+      "label": "Ordinal Number",
+      "path": "/skill/vocabulary/topic/pages/ordinal-number",
+      "scope": "skill",
+      "keywords": [
+        "ordinal",
+        "number",
+        "/skill/vocabulary/topic/pages/ordinal-number"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-personal-information",
+      "label": "Personal Information",
+      "path": "/skill/vocabulary/topic/pages/personal-information",
+      "scope": "skill",
+      "keywords": [
+        "personal",
+        "information",
+        "/skill/vocabulary/topic/pages/personal-information"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-physical-appearance",
+      "label": "Physical Appearance",
+      "path": "/skill/vocabulary/topic/pages/physical-appearance",
+      "scope": "skill",
+      "keywords": [
+        "physical",
+        "appearance",
+        "/skill/vocabulary/topic/pages/physical-appearance"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-places",
+      "label": "Places",
+      "path": "/skill/vocabulary/topic/pages/places",
+      "scope": "skill",
+      "keywords": [
+        "places",
+        "/skill/vocabulary/topic/pages/places"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-school",
+      "label": "School",
+      "path": "/skill/vocabulary/topic/pages/school",
+      "scope": "skill",
+      "keywords": [
+        "school",
+        "/skill/vocabulary/topic/pages/school"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-shapes",
+      "label": "Shapes",
+      "path": "/skill/vocabulary/topic/pages/shapes",
+      "scope": "skill",
+      "keywords": [
+        "shapes",
+        "/skill/vocabulary/topic/pages/shapes"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-shopping",
+      "label": "Shopping",
+      "path": "/skill/vocabulary/topic/pages/shopping",
+      "scope": "skill",
+      "keywords": [
+        "shopping",
+        "/skill/vocabulary/topic/pages/shopping"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-size",
+      "label": "Size",
+      "path": "/skill/vocabulary/topic/pages/size",
+      "scope": "skill",
+      "keywords": [
+        "size",
+        "/skill/vocabulary/topic/pages/size"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-social-media",
+      "label": "Social Media",
+      "path": "/skill/vocabulary/topic/pages/social-media",
+      "scope": "skill",
+      "keywords": [
+        "social",
+        "media",
+        "/skill/vocabulary/topic/pages/social-media"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-sports",
+      "label": "Sports",
+      "path": "/skill/vocabulary/topic/pages/sports",
+      "scope": "skill",
+      "keywords": [
+        "sports",
+        "/skill/vocabulary/topic/pages/sports"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-taste",
+      "label": "Taste",
+      "path": "/skill/vocabulary/topic/pages/taste",
+      "scope": "skill",
+      "keywords": [
+        "taste",
+        "/skill/vocabulary/topic/pages/taste"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-time-date",
+      "label": "Time Date",
+      "path": "/skill/vocabulary/topic/pages/time-date",
+      "scope": "skill",
+      "keywords": [
+        "time",
+        "date",
+        "/skill/vocabulary/topic/pages/time-date"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-transport",
+      "label": "Transport",
+      "path": "/skill/vocabulary/topic/pages/transport",
+      "scope": "skill",
+      "keywords": [
+        "transport",
+        "/skill/vocabulary/topic/pages/transport"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-vegetables",
+      "label": "Vegetables",
+      "path": "/skill/vocabulary/topic/pages/vegetables",
+      "scope": "skill",
+      "keywords": [
+        "vegetables",
+        "/skill/vocabulary/topic/pages/vegetables"
+      ],
+      "source": "route-scan"
+    },
+    {
+      "id": "skill-vocabulary-topic-pages-weather",
+      "label": "Weather",
+      "path": "/skill/vocabulary/topic/pages/weather",
+      "scope": "skill",
+      "keywords": [
+        "weather",
+        "/skill/vocabulary/topic/pages/weather"
+      ],
+      "source": "route-scan"
+    }
+  ],
+  "simulations": [
+    {
+      "topicId": "final-sound-d-ed",
+      "title": "Simulasi Final Sound D/ED",
+      "commandTriggers": [
+        "simulasi final sound d/ed",
+        "simulasi final sound d ed"
+      ],
+      "componentKey": "DEdSimulationPlayer",
+      "route": "/skill/pronunciation/final-sound-new/d/ed"
+    },
+    {
+      "topicId": "final-sound-s-es",
+      "title": "Simulasi: Final Sound S/ES",
+      "commandTriggers": [
+        "simulasi final sound s/es",
+        "simulasi final sound s es"
+      ],
+      "componentKey": "SEsSimulationPlayer",
+      "route": "/skill/pronunciation/final-sound-new/s/es"
+    }
+  ],
+  "qaEntries": [
+    {
+      "topicId": "dashboard-main-function",
+      "title": "Dashboard Main Function",
+      "route": "/dashboard",
+      "keywords": [
+        "fungsi dashboard",
+        "halaman awal setelah login",
+        "mulai belajar dari dashboard"
+      ],
+      "shortAnswer": "Dashboard adalah halaman awal setelah login untuk melihat akses cepat ke fitur belajar utama dan melanjutkan progress.",
+      "sourceSections": [
+        {
+          "label": "Dashboard Main Panel"
+        }
+      ]
+    },
+    {
+      "topicId": "skill-hub-overview",
+      "title": "Skill Hub Overview",
+      "route": "/skill",
+      "keywords": [
+        "halaman skill utama",
+        "pilih materi skill",
+        "navigasi skill"
+      ],
+      "shortAnswer": "Skill Hub mengarahkan ke domain belajar utama seperti Grammar, Pronunciation, dan Games. Gunakan halaman ini untuk memilih fokus latihan sesuai target harian.",
+      "sourceSections": [
+        {
+          "label": "Skill Category Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "skill-games-overview",
+      "title": "Skill Games Overview",
+      "route": "/skill/game-links",
+      "keywords": [
+        "halaman game",
+        "fungsi skill games",
+        "pilihan game latihan"
+      ],
+      "shortAnswer": "Halaman Skill Games berisi shortcut ke game latihan eksternal untuk mempercepat practice listening dan pronunciation secara interaktif.",
+      "sourceSections": [
+        {
+          "label": "Game Selector"
+        },
+        {
+          "label": "Active Game Description"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-speaking-analysis-workflow",
+      "title": "Grammar for Speaking Workflow",
+      "route": "/skill/grammar/analisis-grammar-for-speaking",
+      "keywords": [
+        "workflow grammar speaking",
+        "speaking goals grammar",
+        "roadmap grammar speaking"
+      ],
+      "shortAnswer": "Halaman Analisis Grammar for Speaking adalah jalur analisis terpisah untuk memetakan speaking goals ke topik grammar yang relevan agar belajar jadi terarah.",
+      "sourceSections": [
+        {
+          "label": "Workflow Belajar Tab"
+        },
+        {
+          "label": "Speaking Goals Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-speaking-audit-gap",
+      "title": "Grammar for Speaking Audit Gap",
+      "route": "/skill/grammar/analisis-grammar-for-speaking",
+      "keywords": [
+        "audit gap grammar speaking",
+        "rubrik ketat grammar speaking",
+        "materi grammar belum lengkap"
+      ],
+      "shortAnswer": "Audit Gap di halaman analisis menunjukkan topik mana yang masih lemah berdasarkan rubrik ketat, termasuk area critical gap dan unassessed untuk prioritas perbaikan konten.",
+      "sourceSections": [
+        {
+          "label": "Audit Gap Tab"
+        },
+        {
+          "label": "Severity Distribution"
+        },
+        {
+          "label": "Priority Gaps List"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-hub-navigation",
+      "title": "Grammar Menu Navigation",
+      "route": "/skill/grammar",
+      "keywords": [
+        "menu grammar",
+        "halaman grammar utama",
+        "navigasi grammar"
+      ],
+      "shortAnswer": "Halaman Grammar adalah titik masuk untuk memilih jalur belajar, termasuk Grammar Resource, Grammar for Speaking, dan Grammar for Writing.",
+      "sourceSections": [
+        {
+          "label": "Grammar Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-speaking-practical-goals",
+      "title": "Grammar for Speaking Practical Goals",
+      "route": "/skill/grammar/grammar-for-speaking",
+      "keywords": [
+        "apa isi grammar for speaking",
+        "speaking goals grammar",
+        "kalimat kunci speaking",
+        "drill speaking di mana",
+        "roadmap speaking dari nol",
+        "phase speaking profesional"
+      ],
+      "shortAnswer": "Halaman ini berisi roadmap 200 speaking goals dari level nol sampai profesional. Materi dibagi per fase dan fokus pada daily, work, public service, emergency, legal, dan finance.",
+      "sourceSections": [
+        {
+          "label": "Phase 0 - Zero-to-Speech Starter"
+        },
+        {
+          "label": "Phase 7 - Work Basics"
+        },
+        {
+          "label": "Phase 13 - Legal, Compliance, Finance Professional"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-for-writing-overview",
+      "title": "Grammar for Writing Overview",
+      "route": "/skill/grammar/grammar-for-writing",
+      "keywords": [
+        "apa itu grammar for writing",
+        "fungsi grammar for writing",
+        "materi writing grammar"
+      ],
+      "shortAnswer": "Grammar for Writing menekankan ketepatan struktur, konsistensi tense, dan kejelasan hubungan ide antar kalimat supaya tulisan lebih rapi dan mudah dibaca.",
+      "sourceSections": [
+        {
+          "label": "Grammar for Writing Main Content"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-overview",
+      "title": "Grammar Resource Overview",
+      "route": "/skill/grammar/grammar-resource",
+      "keywords": [
+        "apa itu grammar resource",
+        "fungsi grammar resource",
+        "belajar grammar mulai dari mana"
+      ],
+      "shortAnswer": "Grammar Resource adalah katalog topik grammar terstruktur dari fondasi sampai advanced reference. Cara pakai paling aman: mulai dari foundation, lanjut noun-determiner dan tense-aspect, lalu masuk struktur kompleks sesuai kebutuhan speaking/writing.",
+      "sourceSections": [
+        {
+          "label": "Grammar Resource Main Index"
+        },
+        {
+          "label": "Foundation Grammar Topics"
+        },
+        {
+          "label": "Tense and Aspect System Topics"
+        },
+        {
+          "label": "Expansion and Complex Structures Topics"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-adverbial-clauses",
+      "title": "Adverbial Clauses",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/adverbial-clauses",
+      "keywords": [
+        "apa itu adverbial clauses",
+        "cara pakai adverbial clauses",
+        "adverbial clauses",
+        "expansion and complex structures adverbial clauses",
+        "grammar resource adverbial clauses"
+      ],
+      "shortAnswer": "Topik ini menjelaskan adverbial clauses untuk menyatakan alasan, tujuan, hasil, dan konsesi agar hubungan antar ide dalam kalimat menjadi jelas.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-causatives-have-get-something-done",
+      "title": "Causatives Have Get Something Done",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/causatives-have-get-something-done",
+      "keywords": [
+        "apa itu causatives have get something done",
+        "cara pakai causatives have get something done",
+        "causatives have get something done",
+        "expansion and complex structures causatives have get something done",
+        "grammar resource causatives have get something done"
+      ],
+      "shortAnswer": "Topik ini membahas causative have dan get untuk menyatakan bahwa suatu pekerjaan dilakukan oleh orang lain, bukan oleh subjek secara langsung.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-comparative-and-superlative-regular-and-irregular-forms",
+      "title": "Comparative And Superlative Regular And Irregular Forms",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/comparative-and-superlative-regular-and-irregular-forms",
+      "keywords": [
+        "apa itu comparative and superlative regular and irregular forms",
+        "cara pakai comparative and superlative regular and irregular forms",
+        "comparative and superlative regular and irregular forms",
+        "expansion and complex structures comparative and superlative regular and irregular forms",
+        "grammar resource comparative and superlative regular and irregular forms"
+      ],
+      "shortAnswer": "Topik ini melatih comparative dan superlative, termasuk bentuk regular dan irregular, supaya perbandingan kualitas dan tingkat bisa dipakai dengan tepat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Sentence Patterns"
+        },
+        {
+          "label": "Irregular Forms"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-conditionals-type-0-1-2-3",
+      "title": "Conditionals Type 0 1 2 3",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conditionals-type-0-1-2-3",
+      "keywords": [
+        "apa itu conditionals type 0 1 2 3",
+        "cara pakai conditionals type 0 1 2 3",
+        "conditionals type 0 1 2 3",
+        "expansion and complex structures conditionals type 0 1 2 3",
+        "grammar resource conditionals type 0 1 2 3"
+      ],
+      "shortAnswer": "Topik ini membedakan conditional type 0, 1, 2, dan 3 berdasarkan tingkat fakta atau hipotesis serta waktu kejadian.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Perbandingan Singkat Type"
+        },
+        {
+          "label": "Type 0 / 1 / 2 / 3"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-conjunctions-and-but-or-because-so",
+      "title": "Conjunctions And But Or Because So",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/conjunctions-and-but-or-because-so",
+      "keywords": [
+        "apa itu conjunctions and but or because so",
+        "cara pakai conjunctions and but or because so",
+        "conjunctions and but or because so",
+        "expansion and complex structures conjunctions and but or because so",
+        "grammar resource conjunctions and but or because so"
+      ],
+      "shortAnswer": "Topik ini membahas conjunctions dasar seperti and, but, or, because, dan so untuk menyambung ide secara logis.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Conjunctions"
+        },
+        {
+          "label": "Punctuation Rules"
+        },
+        {
+          "label": "because vs so"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-defining-vs-non-defining-relative-clauses",
+      "title": "Defining Vs Non Defining Relative Clauses",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/defining-vs-non-defining-relative-clauses",
+      "keywords": [
+        "apa itu defining vs non defining relative clauses",
+        "cara pakai defining vs non defining relative clauses",
+        "defining vs non defining relative clauses",
+        "expansion and complex structures defining vs non defining relative clauses",
+        "grammar resource defining vs non defining relative clauses"
+      ],
+      "shortAnswer": "Topik ini menjelaskan perbedaan defining dan non-defining relative clauses, termasuk dampaknya pada makna inti dan penggunaan koma.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-discourse-markers-and-connectors-however-although-therefore-moreover",
+      "title": "Discourse Markers And Connectors However Although Therefore Moreover",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/discourse-markers-and-connectors-however-although-therefore-moreover",
+      "keywords": [
+        "apa itu discourse markers and connectors however although therefore moreover",
+        "cara pakai discourse markers and connectors however although therefore moreover",
+        "discourse markers and connectors however although therefore moreover",
+        "expansion and complex structures discourse markers and connectors however although therefore moreover",
+        "grammar resource discourse markers and connectors however although therefore moreover"
+      ],
+      "shortAnswer": "Topik ini fokus pada discourse markers dan connectors seperti however, although, therefore, moreover agar alur argumen lebih rapi.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Markers"
+        },
+        {
+          "label": "Position and Punctuation"
+        },
+        {
+          "label": "although vs however"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-gerunds-and-infinitives-verb-patterns",
+      "title": "Gerunds And Infinitives Verb Patterns",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/gerunds-and-infinitives-verb-patterns",
+      "keywords": [
+        "apa itu gerunds and infinitives verb patterns",
+        "cara pakai gerunds and infinitives verb patterns",
+        "gerunds and infinitives verb patterns",
+        "expansion and complex structures gerunds and infinitives verb patterns",
+        "grammar resource gerunds and infinitives verb patterns"
+      ],
+      "shortAnswer": "Topik ini membahas pola verb yang diikuti gerund atau infinitive sehingga pemilihan bentuk setelah kata kerja menjadi akurat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Verb Lists"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-mixed-conditionals-past-present-and-present-past",
+      "title": "Mixed Conditionals Past Present And Present Past",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/mixed-conditionals-past-present-and-present-past",
+      "keywords": [
+        "apa itu mixed conditionals past present and present past",
+        "cara pakai mixed conditionals past present and present past",
+        "mixed conditionals past present and present past",
+        "expansion and complex structures mixed conditionals past present and present past",
+        "grammar resource mixed conditionals past present and present past"
+      ],
+      "shortAnswer": "Topik ini membahas mixed conditionals untuk menghubungkan kondisi masa lalu dengan hasil masa kini, atau sebaliknya.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Tipe Mixed Conditional"
+        },
+        {
+          "label": "Kapan Dipakai"
+        },
+        {
+          "label": "Mixed vs Conditional Biasa"
+        },
+        {
+          "label": "Inversion (Formal, Opsional)"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-modal-perfect-should-have-could-have-might-have-must-have",
+      "title": "Modal Perfect Should Have Could Have Might Have Must Have",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/modal-perfect-should-have-could-have-might-have-must-have",
+      "keywords": [
+        "apa itu modal perfect should have could have might have must have",
+        "cara pakai modal perfect should have could have might have must have",
+        "modal perfect should have could have might have must have",
+        "expansion and complex structures modal perfect should have could have might have must have",
+        "grammar resource modal perfect should have could have might have must have"
+      ],
+      "shortAnswer": "Topik ini menjelaskan modal perfect seperti should have, could have, might have, dan must have untuk penyesalan, kemungkinan, dan deduksi masa lalu.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Modal Perfect"
+        },
+        {
+          "label": "Perbedaan Makna Singkat"
+        },
+        {
+          "label": "Kontras: could have vs might have"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-noun-clauses-that-clauses-whether-if-clauses-wh-clauses",
+      "title": "Noun Clauses That Clauses Whether If Clauses Wh Clauses",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/noun-clauses-that-clauses-whether-if-clauses-wh-clauses",
+      "keywords": [
+        "apa itu noun clauses that clauses whether if clauses wh clauses",
+        "cara pakai noun clauses that clauses whether if clauses wh clauses",
+        "noun clauses that clauses whether if clauses wh clauses",
+        "expansion and complex structures noun clauses that clauses whether if clauses wh clauses",
+        "grammar resource noun clauses that clauses whether if clauses wh clauses"
+      ],
+      "shortAnswer": "Topik ini membahas noun clauses dalam bentuk that clauses, whether or if clauses, dan wh clauses sebagai bagian kalimat nominal.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Noun Clause"
+        },
+        {
+          "label": "Fungsi di Kalimat"
+        },
+        {
+          "label": "if vs whether"
+        },
+        {
+          "label": "Punctuation Notes"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-passive-voice-form-and-use-across-tenses",
+      "title": "Passive Voice Form And Use Across Tenses",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/passive-voice-form-and-use-across-tenses",
+      "keywords": [
+        "apa itu passive voice form and use across tenses",
+        "cara pakai passive voice form and use across tenses",
+        "passive voice form and use across tenses",
+        "expansion and complex structures passive voice form and use across tenses",
+        "grammar resource passive voice form and use across tenses"
+      ],
+      "shortAnswer": "Topik ini menjelaskan pembentukan passive voice lintas tense serta kapan fokus kalimat dipindah ke aksi atau objek.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Cara Membentuk Passive"
+        },
+        {
+          "label": "Passive Across Tenses"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-reduced-relative-participle-clauses",
+      "title": "Reduced Relative Participle Clauses",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reduced-relative-participle-clauses",
+      "keywords": [
+        "apa itu reduced relative participle clauses",
+        "cara pakai reduced relative participle clauses",
+        "reduced relative participle clauses",
+        "expansion and complex structures reduced relative participle clauses",
+        "grammar resource reduced relative participle clauses"
+      ],
+      "shortAnswer": "Topik ini membahas reduced relative clauses dengan participle untuk memadatkan kalimat tanpa mengubah inti makna.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-relative-clauses-who-which-that-where-whose",
+      "title": "Relative Clauses Who Which That Where Whose",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/relative-clauses-who-which-that-where-whose",
+      "keywords": [
+        "apa itu relative clauses who which that where whose",
+        "cara pakai relative clauses who which that where whose",
+        "relative clauses who which that where whose",
+        "expansion and complex structures relative clauses who which that where whose",
+        "grammar resource relative clauses who which that where whose"
+      ],
+      "shortAnswer": "Topik ini melatih penggunaan relative clauses dengan who, which, that, where, dan whose untuk menambah informasi pada noun.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Relative Clauses"
+        },
+        {
+          "label": "Restrictive vs Non-restrictive"
+        },
+        {
+          "label": "Notes on that"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-reported-speech-statements-questions-commands",
+      "title": "Reported Speech Statements Questions Commands",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/reported-speech-statements-questions-commands",
+      "keywords": [
+        "apa itu reported speech statements questions commands",
+        "cara pakai reported speech statements questions commands",
+        "reported speech statements questions commands",
+        "expansion and complex structures reported speech statements questions commands",
+        "grammar resource reported speech statements questions commands"
+      ],
+      "shortAnswer": "Topik ini menjelaskan reported speech untuk statements, questions, dan commands termasuk perubahan tense, pronoun, dan time expression.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Reported Speech"
+        },
+        {
+          "label": "Backshift Umum"
+        },
+        {
+          "label": "Perubahan Referensi (Pronoun & Time Expression)"
+        },
+        {
+          "label": "Pola Reported Questions"
+        },
+        {
+          "label": "Kapan Backshift Tidak Wajib"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-stative-vs-dynamic-verbs-simple-vs-continuous-meaning",
+      "title": "Stative Vs Dynamic Verbs Simple Vs Continuous Meaning",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/stative-vs-dynamic-verbs-simple-vs-continuous-meaning",
+      "keywords": [
+        "apa itu stative vs dynamic verbs simple vs continuous meaning",
+        "cara pakai stative vs dynamic verbs simple vs continuous meaning",
+        "stative vs dynamic verbs simple vs continuous meaning",
+        "expansion and complex structures stative vs dynamic verbs simple vs continuous meaning",
+        "grammar resource stative vs dynamic verbs simple vs continuous meaning"
+      ],
+      "shortAnswer": "Topik ini membedakan stative dan dynamic verbs serta efek makna saat dipakai dalam simple atau continuous forms.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Stative vs Dynamic"
+        },
+        {
+          "label": "Verb yang Maknanya Bisa Berubah"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-time-clauses-when-while-before-after-as-soon-as",
+      "title": "Time Clauses When While Before After As Soon As",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/time-clauses-when-while-before-after-as-soon-as",
+      "keywords": [
+        "apa itu time clauses when while before after as soon as",
+        "cara pakai time clauses when while before after as soon as",
+        "time clauses when while before after as soon as",
+        "expansion and complex structures time clauses when while before after as soon as",
+        "grammar resource time clauses when while before after as soon as"
+      ],
+      "shortAnswer": "Topik ini membahas time clauses dengan when, while, before, after, dan as soon as untuk menyusun urutan kejadian dengan tepat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Time Connectors"
+        },
+        {
+          "label": "Pola Kalimat"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-expansion-and-complex-structures-wish-and-if-only",
+      "title": "Wish And If Only",
+      "route": "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/wish-and-if-only",
+      "keywords": [
+        "apa itu wish and if only",
+        "cara pakai wish and if only",
+        "wish and if only",
+        "expansion and complex structures wish and if only",
+        "grammar resource wish and if only"
+      ],
+      "shortAnswer": "Topik ini membahas wish dan if only untuk menyatakan penyesalan, keinginan, atau kondisi yang berlawanan dengan kenyataan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-adjectives-function-and-position",
+      "title": "Adjectives Function And Position",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/adjectives-function-and-position",
+      "keywords": [
+        "apa itu adjectives function and position",
+        "cara pakai adjectives function and position",
+        "adjectives function and position",
+        "foundation grammar adjectives function and position",
+        "grammar resource adjectives function and position"
+      ],
+      "shortAnswer": "Topik ini menjelaskan fungsi adjectives dan posisi umumnya sebelum noun atau setelah linking verb.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Function and Position"
+        },
+        {
+          "label": "Urutan Adjective (Jika lebih dari satu)"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-adverbs-function-and-position",
+      "title": "Adverbs Function And Position",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/adverbs-function-and-position",
+      "keywords": [
+        "apa itu adverbs function and position",
+        "cara pakai adverbs function and position",
+        "adverbs function and position",
+        "foundation grammar adverbs function and position",
+        "grammar resource adverbs function and position"
+      ],
+      "shortAnswer": "Topik ini membahas fungsi adverbs dan posisi dalam kalimat agar keterangan frekuensi, cara, waktu, dan derajat tidak salah tempat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Function"
+        },
+        {
+          "label": "Position"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-interjections-function-and-punctuation",
+      "title": "Interjections Function And Punctuation",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/interjections-function-and-punctuation",
+      "keywords": [
+        "apa itu interjections function and punctuation",
+        "cara pakai interjections function and punctuation",
+        "interjections function and punctuation",
+        "foundation grammar interjections function and punctuation",
+        "grammar resource interjections function and punctuation"
+      ],
+      "shortAnswer": "Topik ini membahas interjections, fungsi ekspresifnya, dan tanda baca yang tepat agar nuansa emosi tersampaikan jelas.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-language-units",
+      "title": "Language Units",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/language-units",
+      "keywords": [
+        "apa itu language units",
+        "cara pakai language units",
+        "language units",
+        "foundation grammar language units",
+        "grammar resource language units"
+      ],
+      "shortAnswer": "Topik ini menjelaskan satuan bahasa dari kata, frasa, klausa, hingga kalimat sebagai fondasi analisis grammar.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Unit Bahasa (Dari kecil ke besar)"
+        },
+        {
+          "label": "Clause (Klausa)"
+        },
+        {
+          "label": "Perbedaan Klausa vs Kalimat"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-negation-basics",
+      "title": "Negation Basics",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/negation-basics",
+      "keywords": [
+        "apa itu negation basics",
+        "cara pakai negation basics",
+        "negation basics",
+        "foundation grammar negation basics",
+        "grammar resource negation basics"
+      ],
+      "shortAnswer": "Topik ini membahas negation dasar seperti not, no, dan never termasuk do support untuk kalimat negatif.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-nouns-types-and-functions",
+      "title": "Nouns Types And Functions",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/nouns-types-and-functions",
+      "keywords": [
+        "apa itu nouns types and functions",
+        "cara pakai nouns types and functions",
+        "nouns types and functions",
+        "foundation grammar nouns types and functions",
+        "grammar resource nouns types and functions"
+      ],
+      "shortAnswer": "Topik ini membahas jenis noun dan fungsinya sebagai subjek, objek, pelengkap, atau objek preposisi dalam kalimat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Nouns"
+        },
+        {
+          "label": "Fungsi Nouns dalam Kalimat"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-parts-of-speech",
+      "title": "Parts Of Speech",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/parts-of-speech",
+      "keywords": [
+        "apa itu parts of speech",
+        "cara pakai parts of speech",
+        "parts of speech",
+        "foundation grammar parts of speech",
+        "grammar resource parts of speech"
+      ],
+      "shortAnswer": "Topik ini memperkenalkan parts of speech sebagai kategori utama kata dan peran tiap kategori dalam struktur kalimat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Komponen Utama"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-prepositions-after-verbs-and-adjectives-depend-on-interested-in-good-at",
+      "title": "Prepositions After Verbs And Adjectives Depend On Interested In Good At",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-after-verbs-and-adjectives-depend-on-interested-in-good-at",
+      "keywords": [
+        "apa itu prepositions after verbs and adjectives depend on interested in good at",
+        "cara pakai prepositions after verbs and adjectives depend on interested in good at",
+        "prepositions after verbs and adjectives depend on interested in good at",
+        "foundation grammar prepositions after verbs and adjectives depend on interested in good at",
+        "grammar resource prepositions after verbs and adjectives depend on interested in good at"
+      ],
+      "shortAnswer": "Topik ini melatih preposition yang mengikuti verb dan adjective tertentu, misalnya depend on, interested in, dan good at.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Pairs"
+        },
+        {
+          "label": "Contoh Kalimat"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-prepositions-of-time-and-place-in-on-at",
+      "title": "Prepositions Of Time And Place In On At",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/prepositions-of-time-and-place-in-on-at",
+      "keywords": [
+        "apa itu prepositions of time and place in on at",
+        "cara pakai prepositions of time and place in on at",
+        "prepositions of time and place in on at",
+        "foundation grammar prepositions of time and place in on at",
+        "grammar resource prepositions of time and place in on at"
+      ],
+      "shortAnswer": "Topik ini menjelaskan prepositions of time and place, terutama pemakaian in, on, dan at dalam konteks waktu dan lokasi.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Prepositions of Time"
+        },
+        {
+          "label": "Prepositions of Place"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-pronouns-subject-object-possessive-reflexive",
+      "title": "Pronouns Subject Object Possessive Reflexive",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/pronouns-subject-object-possessive-reflexive",
+      "keywords": [
+        "apa itu pronouns subject object possessive reflexive",
+        "cara pakai pronouns subject object possessive reflexive",
+        "pronouns subject object possessive reflexive",
+        "foundation grammar pronouns subject object possessive reflexive",
+        "grammar resource pronouns subject object possessive reflexive"
+      ],
+      "shortAnswer": "Topik ini membahas pronouns jenis subject, object, possessive, dan reflexive agar rujukan kata ganti konsisten.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Pronoun"
+        },
+        {
+          "label": "Person (First, Second, Third)"
+        },
+        {
+          "label": "Tabel Pronoun"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-sentence-elements-and-word-order",
+      "title": "Sentence Elements And Word Order",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-elements-and-word-order",
+      "keywords": [
+        "apa itu sentence elements and word order",
+        "cara pakai sentence elements and word order",
+        "sentence elements and word order",
+        "foundation grammar sentence elements and word order",
+        "grammar resource sentence elements and word order"
+      ],
+      "shortAnswer": "Topik ini membahas elemen kalimat dan urutan kata dasar agar struktur English sentence tetap natural dan benar.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Elemen Kalimat"
+        },
+        {
+          "label": "Pola Word Order Dasar"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-sentence-types",
+      "title": "Sentence Types",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/sentence-types",
+      "keywords": [
+        "apa itu sentence types",
+        "cara pakai sentence types",
+        "sentence types",
+        "foundation grammar sentence types",
+        "grammar resource sentence types"
+      ],
+      "shortAnswer": "Topik ini membahas sentence types: declarative, interrogative, imperative, dan exclamative beserta fungsi komunikatifnya.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-subject-verb-agreement-singular-and-plural",
+      "title": "Subject Verb Agreement Singular And Plural",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/subject-verb-agreement-singular-and-plural",
+      "keywords": [
+        "apa itu subject verb agreement singular and plural",
+        "cara pakai subject verb agreement singular and plural",
+        "subject verb agreement singular and plural",
+        "foundation grammar subject verb agreement singular and plural",
+        "grammar resource subject verb agreement singular and plural"
+      ],
+      "shortAnswer": "Topik ini melatih subject verb agreement antara bentuk singular dan plural supaya verb sesuai dengan subjek.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Aturan Inti"
+        },
+        {
+          "label": "Tabel Cepat"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-foundation-grammar-verbs--main-verbs-and-auxiliaries-be-do-have",
+      "title": "Verbs Main Verbs And Auxiliaries Be Do Have",
+      "route": "/skill/grammar/grammar-resource/resource/foundation-grammar/verbs--main-verbs-and-auxiliaries-be-do-have",
+      "keywords": [
+        "apa itu verbs main verbs and auxiliaries be do have",
+        "cara pakai verbs main verbs and auxiliaries be do have",
+        "verbs main verbs and auxiliaries be do have",
+        "foundation grammar verbs main verbs and auxiliaries be do have",
+        "grammar resource verbs main verbs and auxiliaries be do have"
+      ],
+      "shortAnswer": "Topik ini menjelaskan main verbs dan auxiliary be do have sebagai fondasi pembentukan tense, negation, dan question.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Verb Types"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        },
+        {
+          "label": "Irregular Vocabulary"
+        },
+        {
+          "label": "Ditransitive Vocabulary"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-core-modals-can-could-may-might-should-must",
+      "title": "Core Modals Can Could May Might Should Must",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/core-modals-can-could-may-might-should-must",
+      "keywords": [
+        "apa itu core modals can could may might should must",
+        "cara pakai core modals can could may might should must",
+        "core modals can could may might should must",
+        "functional sentence forms core modals can could may might should must",
+        "grammar resource core modals can could may might should must"
+      ],
+      "shortAnswer": "Topik ini membahas modal utama can, could, may, might, should, dan must untuk kemampuan, izin, saran, dan kewajiban.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Modals"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Modal Contrasts"
+        },
+        {
+          "label": "Negative & Question Snapshot"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-exclamatives",
+      "title": "Exclamatives",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/exclamatives",
+      "keywords": [
+        "apa itu exclamatives",
+        "cara pakai exclamatives",
+        "exclamatives",
+        "functional sentence forms exclamatives",
+        "grammar resource exclamatives"
+      ],
+      "shortAnswer": "Topik ini membahas exclamatives seperti What dan How untuk mengekspresikan reaksi kuat secara alami.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-imperatives-commands-requests-instructions",
+      "title": "Imperatives Commands Requests Instructions",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/imperatives-commands-requests-instructions",
+      "keywords": [
+        "apa itu imperatives commands requests instructions",
+        "cara pakai imperatives commands requests instructions",
+        "imperatives commands requests instructions",
+        "functional sentence forms imperatives commands requests instructions",
+        "grammar resource imperatives commands requests instructions"
+      ],
+      "shortAnswer": "Topik ini membahas imperative forms untuk commands, requests, dan instructions dengan tingkat kesopanan yang tepat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Types of Imperatives"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-indirect-questions-polite-question-structure",
+      "title": "Indirect Questions Polite Question Structure",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/indirect-questions-polite-question-structure",
+      "keywords": [
+        "apa itu indirect questions polite question structure",
+        "cara pakai indirect questions polite question structure",
+        "indirect questions polite question structure",
+        "functional sentence forms indirect questions polite question structure",
+        "grammar resource indirect questions polite question structure"
+      ],
+      "shortAnswer": "Topik ini melatih indirect questions agar pertanyaan terdengar lebih sopan dan struktur kalimat tetap benar.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Intro Phrases"
+        },
+        {
+          "label": "Direct to Indirect Examples"
+        },
+        {
+          "label": "Punctuation Rule"
+        },
+        {
+          "label": "if vs whether"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-question-forms-yes-no-questions-and-wh-questions",
+      "title": "Question Forms Yes No Questions And Wh Questions",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-forms-yes-no-questions-and-wh-questions",
+      "keywords": [
+        "apa itu question forms yes no questions and wh questions",
+        "cara pakai question forms yes no questions and wh questions",
+        "question forms yes no questions and wh questions",
+        "functional sentence forms question forms yes no questions and wh questions",
+        "grammar resource question forms yes no questions and wh questions"
+      ],
+      "shortAnswer": "Topik ini membahas pembentukan yes no questions dan wh questions termasuk inversion dan auxiliary usage.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Question Types"
+        },
+        {
+          "label": "Common WH Words"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-question-tags-confirmation-and-interaction",
+      "title": "Question Tags Confirmation And Interaction",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/question-tags-confirmation-and-interaction",
+      "keywords": [
+        "apa itu question tags confirmation and interaction",
+        "cara pakai question tags confirmation and interaction",
+        "question tags confirmation and interaction",
+        "functional sentence forms question tags confirmation and interaction",
+        "grammar resource question tags confirmation and interaction"
+      ],
+      "shortAnswer": "Topik ini melatih question tags untuk konfirmasi, menjaga interaksi, dan menyesuaikan polaritas kalimat utama.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Common Examples"
+        },
+        {
+          "label": "Special Cases"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-requests-offers-suggestions",
+      "title": "Requests Offers Suggestions",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/requests-offers-suggestions",
+      "keywords": [
+        "apa itu requests offers suggestions",
+        "cara pakai requests offers suggestions",
+        "requests offers suggestions",
+        "functional sentence forms requests offers suggestions",
+        "grammar resource requests offers suggestions"
+      ],
+      "shortAnswer": "Topik ini membahas pola language functions untuk requests, offers, dan suggestions yang umum dalam percakapan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-functional-sentence-forms-short-answers-response-patterns",
+      "title": "Short Answers Response Patterns",
+      "route": "/skill/grammar/grammar-resource/resource/functional-sentence-forms/short-answers-response-patterns",
+      "keywords": [
+        "apa itu short answers response patterns",
+        "cara pakai short answers response patterns",
+        "short answers response patterns",
+        "functional sentence forms short answers response patterns",
+        "grammar resource short answers response patterns"
+      ],
+      "shortAnswer": "Topik ini melatih short answers dan response patterns agar respons lisan terdengar alami dan ringkas.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-grammar-accuracy-and-mechanics-apostrophe-capitalization-grammar-meaning",
+      "title": "Apostrophe Capitalization Grammar Meaning",
+      "route": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/apostrophe-capitalization-grammar-meaning",
+      "keywords": [
+        "apa itu apostrophe capitalization grammar meaning",
+        "cara pakai apostrophe capitalization grammar meaning",
+        "apostrophe capitalization grammar meaning",
+        "grammar accuracy and mechanics apostrophe capitalization grammar meaning",
+        "grammar resource apostrophe capitalization grammar meaning"
+      ],
+      "shortAnswer": "Topik ini membahas apostrophe dan capitalization yang mempengaruhi makna grammar, terutama pada possessive dan nama diri.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-grammar-accuracy-and-mechanics-punctuation-clause-boundaries",
+      "title": "Punctuation Clause Boundaries",
+      "route": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/punctuation-clause-boundaries",
+      "keywords": [
+        "apa itu punctuation clause boundaries",
+        "cara pakai punctuation clause boundaries",
+        "punctuation clause boundaries",
+        "grammar accuracy and mechanics punctuation clause boundaries",
+        "grammar resource punctuation clause boundaries"
+      ],
+      "shortAnswer": "Topik ini membahas punctuation untuk batas klausa agar terhindar dari run on sentence dan comma splice.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-grammar-accuracy-and-mechanics-sentence-fragments-and-repair-patterns",
+      "title": "Sentence Fragments And Repair Patterns",
+      "route": "/skill/grammar/grammar-resource/resource/grammar-accuracy-and-mechanics/sentence-fragments-and-repair-patterns",
+      "keywords": [
+        "apa itu sentence fragments and repair patterns",
+        "cara pakai sentence fragments and repair patterns",
+        "sentence fragments and repair patterns",
+        "grammar accuracy and mechanics sentence fragments and repair patterns",
+        "grammar resource sentence fragments and repair patterns"
+      ],
+      "shortAnswer": "Topik ini mengidentifikasi sentence fragments dan cara memperbaikinya menjadi kalimat lengkap.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-articles-a-an-the-zero-article",
+      "title": "Articles A An The Zero Article",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/articles-a-an-the-zero-article",
+      "keywords": [
+        "apa itu articles a an the zero article",
+        "cara pakai articles a an the zero article",
+        "articles a an the zero article",
+        "noun and determiner system articles a an the zero article",
+        "grammar resource articles a an the zero article"
+      ],
+      "shortAnswer": "Topik ini membahas article a, an, the, dan zero article berdasarkan spesifisitas dan jenis noun.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Article"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-countable-and-uncountable-nouns",
+      "title": "Countable And Uncountable Nouns",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/countable-and-uncountable-nouns",
+      "keywords": [
+        "apa itu countable and uncountable nouns",
+        "cara pakai countable and uncountable nouns",
+        "countable and uncountable nouns",
+        "noun and determiner system countable and uncountable nouns",
+        "grammar resource countable and uncountable nouns"
+      ],
+      "shortAnswer": "Topik ini membedakan countable dan uncountable nouns termasuk quantifier yang sesuai untuk masing masing tipe.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Unit Expressions for Uncountable Nouns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-demonstratives-this-that-these-those",
+      "title": "Demonstratives This That These Those",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/demonstratives-this-that-these-those",
+      "keywords": [
+        "apa itu demonstratives this that these those",
+        "cara pakai demonstratives this that these those",
+        "demonstratives this that these those",
+        "noun and determiner system demonstratives this that these those",
+        "grammar resource demonstratives this that these those"
+      ],
+      "shortAnswer": "Topik ini membahas demonstratives this, that, these, those untuk kedekatan jarak dan jumlah singular plural.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Quick Map"
+        },
+        {
+          "label": "Penggunaan"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-determiner-combinations",
+      "title": "Determiner Combinations",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/determiner-combinations",
+      "keywords": [
+        "apa itu determiner combinations",
+        "cara pakai determiner combinations",
+        "determiner combinations",
+        "noun and determiner system determiner combinations",
+        "grammar resource determiner combinations"
+      ],
+      "shortAnswer": "Topik ini membahas kombinasi determiner seperti all, both, half dengan article atau possessive dalam urutan yang benar.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-distributive-determiners-each-every-either-neither",
+      "title": "Distributive Determiners Each Every Either Neither",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/distributive-determiners-each-every-either-neither",
+      "keywords": [
+        "apa itu distributive determiners each every either neither",
+        "cara pakai distributive determiners each every either neither",
+        "distributive determiners each every either neither",
+        "noun and determiner system distributive determiners each every either neither",
+        "grammar resource distributive determiners each every either neither"
+      ],
+      "shortAnswer": "Topik ini membahas distributive determiners each, every, either, neither beserta perbedaan makna dan agreement.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-noun-modifiers-compound-nouns",
+      "title": "Noun Modifiers Compound Nouns",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/noun-modifiers-compound-nouns",
+      "keywords": [
+        "apa itu noun modifiers compound nouns",
+        "cara pakai noun modifiers compound nouns",
+        "noun modifiers compound nouns",
+        "noun and determiner system noun modifiers compound nouns",
+        "grammar resource noun modifiers compound nouns"
+      ],
+      "shortAnswer": "Topik ini membahas noun modifiers dan compound nouns untuk membentuk frasa benda yang padat dan natural.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-numbers-as-determiners-one-two-first-second",
+      "title": "Numbers As Determiners One Two First Second",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/numbers-as-determiners-one-two-first-second",
+      "keywords": [
+        "apa itu numbers as determiners one two first second",
+        "cara pakai numbers as determiners one two first second",
+        "numbers as determiners one two first second",
+        "noun and determiner system numbers as determiners one two first second",
+        "grammar resource numbers as determiners one two first second"
+      ],
+      "shortAnswer": "Topik ini membahas penggunaan numbers sebagai determiner, termasuk cardinal dan ordinal dalam noun phrase.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Number Determiners"
+        },
+        {
+          "label": "Function and Pattern"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-possessive-determiners-my-your-his-her-its-our-their",
+      "title": "Possessive Determiners My Your His Her Its Our Their",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-determiners-my-your-his-her-its-our-their",
+      "keywords": [
+        "apa itu possessive determiners my your his her its our their",
+        "cara pakai possessive determiners my your his her its our their",
+        "possessive determiners my your his her its our their",
+        "noun and determiner system possessive determiners my your his her its our their",
+        "grammar resource possessive determiners my your his her its our their"
+      ],
+      "shortAnswer": "Topik ini membahas possessive determiners my, your, his, her, its, our, their untuk menunjukkan kepemilikan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Tabel Possessive Determiners"
+        },
+        {
+          "label": "Function and Pattern"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-possessive-forms",
+      "title": "Possessive Forms",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/possessive-forms",
+      "keywords": [
+        "apa itu possessive forms",
+        "cara pakai possessive forms",
+        "possessive forms",
+        "noun and determiner system possessive forms",
+        "grammar resource possessive forms"
+      ],
+      "shortAnswer": "Topik ini membahas possessive forms dengan apostrophe s, of phrase, dan variasi bentuk kepemilikan lain.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-quantifiers-some-any-much-many-few-little-a-lot-of",
+      "title": "Quantifiers Some Any Much Many Few Little A Lot Of",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/quantifiers-some-any-much-many-few-little-a-lot-of",
+      "keywords": [
+        "apa itu quantifiers some any much many few little a lot of",
+        "cara pakai quantifiers some any much many few little a lot of",
+        "quantifiers some any much many few little a lot of",
+        "noun and determiner system quantifiers some any much many few little a lot of",
+        "grammar resource quantifiers some any much many few little a lot of"
+      ],
+      "shortAnswer": "Topik ini membahas quantifiers seperti some, any, much, many, few, little, a lot of sesuai tipe noun dan konteks kalimat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Quantifiers"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-noun-and-determiner-system-there-is-and-there-are-singular-plural-uncountable",
+      "title": "There Is And There Are Singular Plural Uncountable",
+      "route": "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/there-is-and-there-are-singular-plural-uncountable",
+      "keywords": [
+        "apa itu there is and there are singular plural uncountable",
+        "cara pakai there is and there are singular plural uncountable",
+        "there is and there are singular plural uncountable",
+        "noun and determiner system there is and there are singular plural uncountable",
+        "grammar resource there is and there are singular plural uncountable"
+      ],
+      "shortAnswer": "Topik ini membahas there is dan there are untuk menyatakan keberadaan pada singular, plural, dan uncountable nouns.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Rules"
+        },
+        {
+          "label": "Sentence Forms"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-optional-advanced-reference-advanced-inversion-sets",
+      "title": "Advanced Inversion Sets",
+      "route": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/advanced-inversion-sets",
+      "keywords": [
+        "apa itu advanced inversion sets",
+        "cara pakai advanced inversion sets",
+        "advanced inversion sets",
+        "optional advanced reference advanced inversion sets",
+        "grammar resource advanced inversion sets"
+      ],
+      "shortAnswer": "Topik ini membahas advanced inversion patterns untuk penekanan formal seperti not only, never, atau little.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-optional-advanced-reference-emphasis-structures-cleft-sentences-and-inversion",
+      "title": "Emphasis Structures Cleft Sentences And Inversion",
+      "route": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/emphasis-structures-cleft-sentences-and-inversion",
+      "keywords": [
+        "apa itu emphasis structures cleft sentences and inversion",
+        "cara pakai emphasis structures cleft sentences and inversion",
+        "emphasis structures cleft sentences and inversion",
+        "optional advanced reference emphasis structures cleft sentences and inversion",
+        "grammar resource emphasis structures cleft sentences and inversion"
+      ],
+      "shortAnswer": "Topik ini membahas emphasis structures melalui cleft sentences dan inversion untuk menonjolkan informasi tertentu.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Jenis Emphasis Structures"
+        },
+        {
+          "label": "Kapan Dipakai"
+        },
+        {
+          "label": "Trigger Inversion yang Umum"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-optional-advanced-reference-fixed-expressions-and-collocations-make-a-decision-take-responsibility-pay-attention",
+      "title": "Fixed Expressions And Collocations Make A Decision Take Responsibility Pay Attention",
+      "route": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/fixed-expressions-and-collocations-make-a-decision-take-responsibility-pay-attention",
+      "keywords": [
+        "apa itu fixed expressions and collocations make a decision take responsibility pay attention",
+        "cara pakai fixed expressions and collocations make a decision take responsibility pay attention",
+        "fixed expressions and collocations make a decision take responsibility pay attention",
+        "optional advanced reference fixed expressions and collocations make a decision take responsibility pay attention",
+        "grammar resource fixed expressions and collocations make a decision take responsibility pay attention"
+      ],
+      "shortAnswer": "Topik ini membahas fixed expressions dan collocations umum agar pilihan kata terdengar natural, misalnya make a decision dan pay attention.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Core Collocations"
+        },
+        {
+          "label": "Fixed Expressions"
+        },
+        {
+          "label": "Kenapa Penting"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-optional-advanced-reference-hedging-and-stance-grammar",
+      "title": "Hedging And Stance Grammar",
+      "route": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/hedging-and-stance-grammar",
+      "keywords": [
+        "apa itu hedging and stance grammar",
+        "cara pakai hedging and stance grammar",
+        "hedging and stance grammar",
+        "optional advanced reference hedging and stance grammar",
+        "grammar resource hedging and stance grammar"
+      ],
+      "shortAnswer": "Topik ini membahas hedging dan stance grammar untuk menyatakan sikap secara hati hati, seperti seems to atau likely to.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-optional-advanced-reference-subjunctive-structures",
+      "title": "Subjunctive Structures",
+      "route": "/skill/grammar/grammar-resource/resource/optional-advanced-reference/subjunctive-structures",
+      "keywords": [
+        "apa itu subjunctive structures",
+        "cara pakai subjunctive structures",
+        "subjunctive structures",
+        "optional advanced reference subjunctive structures",
+        "grammar resource subjunctive structures"
+      ],
+      "shortAnswer": "Topik ini membahas subjunctive structures untuk saran formal, tuntutan, atau situasi hipotetik tertentu.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-future-continuous-action-in-progress-at-a-future-time",
+      "title": "Future Continuous Action In Progress At A Future Time",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-continuous-action-in-progress-at-a-future-time",
+      "keywords": [
+        "apa itu future continuous action in progress at a future time",
+        "cara pakai future continuous action in progress at a future time",
+        "future continuous action in progress at a future time",
+        "tense and aspect system future continuous action in progress at a future time",
+        "grammar resource future continuous action in progress at a future time"
+      ],
+      "shortAnswer": "Topik ini membahas future continuous untuk aksi yang sedang berlangsung pada titik waktu tertentu di masa depan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Time Markers"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-future-forms-will-be-going-to-present-continuous-for-future",
+      "title": "Future Forms Will Be Going To Present Continuous For Future",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-forms-will-be-going-to-present-continuous-for-future",
+      "keywords": [
+        "apa itu future forms will be going to present continuous for future",
+        "cara pakai future forms will be going to present continuous for future",
+        "future forms will be going to present continuous for future",
+        "tense and aspect system future forms will be going to present continuous for future",
+        "grammar resource future forms will be going to present continuous for future"
+      ],
+      "shortAnswer": "Topik ini membandingkan future forms: will, be going to, dan present continuous untuk rencana, prediksi, atau keputusan spontan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Future Forms Overview"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-future-perfect-completion-before-a-future-point",
+      "title": "Future Perfect Completion Before A Future Point",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-completion-before-a-future-point",
+      "keywords": [
+        "apa itu future perfect completion before a future point",
+        "cara pakai future perfect completion before a future point",
+        "future perfect completion before a future point",
+        "tense and aspect system future perfect completion before a future point",
+        "grammar resource future perfect completion before a future point"
+      ],
+      "shortAnswer": "Topik ini membahas future perfect untuk aksi yang sudah selesai sebelum titik waktu tertentu di masa depan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Time Markers"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-future-perfect-continuous",
+      "title": "Future Perfect Continuous",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/future-perfect-continuous",
+      "keywords": [
+        "apa itu future perfect continuous",
+        "cara pakai future perfect continuous",
+        "future perfect continuous",
+        "tense and aspect system future perfect continuous",
+        "grammar resource future perfect continuous"
+      ],
+      "shortAnswer": "Topik ini membahas future perfect continuous untuk durasi aksi yang terus berlangsung hingga titik waktu masa depan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-past-continuous-ongoing-action-in-the-past",
+      "title": "Past Continuous Ongoing Action In The Past",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-continuous-ongoing-action-in-the-past",
+      "keywords": [
+        "apa itu past continuous ongoing action in the past",
+        "cara pakai past continuous ongoing action in the past",
+        "past continuous ongoing action in the past",
+        "tense and aspect system past continuous ongoing action in the past",
+        "grammar resource past continuous ongoing action in the past"
+      ],
+      "shortAnswer": "Topik ini membahas past continuous untuk aksi yang sedang berlangsung pada momen tertentu di masa lalu.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-past-perfect-continuous",
+      "title": "Past Perfect Continuous",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-continuous",
+      "keywords": [
+        "apa itu past perfect continuous",
+        "cara pakai past perfect continuous",
+        "past perfect continuous",
+        "tense and aspect system past perfect continuous",
+        "grammar resource past perfect continuous"
+      ],
+      "shortAnswer": "Topik ini membahas past perfect continuous untuk durasi aksi sebelum peristiwa masa lalu lainnya.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-past-perfect-earlier-past-event",
+      "title": "Past Perfect Earlier Past Event",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-earlier-past-event",
+      "keywords": [
+        "apa itu past perfect earlier past event",
+        "cara pakai past perfect earlier past event",
+        "past perfect earlier past event",
+        "tense and aspect system past perfect earlier past event",
+        "grammar resource past perfect earlier past event"
+      ],
+      "shortAnswer": "Topik ini membahas past perfect untuk menandai kejadian yang terjadi lebih dulu dibanding kejadian masa lalu lain.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Signal Words"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-past-simple-finished-past-events",
+      "title": "Past Simple Finished Past Events",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-simple-finished-past-events",
+      "keywords": [
+        "apa itu past simple finished past events",
+        "cara pakai past simple finished past events",
+        "past simple finished past events",
+        "tense and aspect system past simple finished past events",
+        "grammar resource past simple finished past events"
+      ],
+      "shortAnswer": "Topik ini membahas past simple untuk kejadian selesai di masa lalu dengan waktu yang jelas atau tersirat.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-present-continuous-actions-in-progress-and-near-future-plan",
+      "title": "Present Continuous Actions In Progress And Near Future Plan",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-continuous-actions-in-progress-and-near-future-plan",
+      "keywords": [
+        "apa itu present continuous actions in progress and near future plan",
+        "cara pakai present continuous actions in progress and near future plan",
+        "present continuous actions in progress and near future plan",
+        "tense and aspect system present continuous actions in progress and near future plan",
+        "grammar resource present continuous actions in progress and near future plan"
+      ],
+      "shortAnswer": "Topik ini membahas present continuous untuk aksi yang sedang berlangsung dan rencana dekat di masa depan.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-present-perfect-continuous-duration-from-past-to-present",
+      "title": "Present Perfect Continuous Duration From Past To Present",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-continuous-duration-from-past-to-present",
+      "keywords": [
+        "apa itu present perfect continuous duration from past to present",
+        "cara pakai present perfect continuous duration from past to present",
+        "present perfect continuous duration from past to present",
+        "tense and aspect system present perfect continuous duration from past to present",
+        "grammar resource present perfect continuous duration from past to present"
+      ],
+      "shortAnswer": "Topik ini membahas present perfect continuous untuk durasi aktivitas dari masa lalu sampai sekarang.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Time Markers"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-present-perfect-experience-result-and-recent-change",
+      "title": "Present Perfect Experience Result And Recent Change",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-experience-result-and-recent-change",
+      "keywords": [
+        "apa itu present perfect experience result and recent change",
+        "cara pakai present perfect experience result and recent change",
+        "present perfect experience result and recent change",
+        "tense and aspect system present perfect experience result and recent change",
+        "grammar resource present perfect experience result and recent change"
+      ],
+      "shortAnswer": "Topik ini membahas present perfect untuk pengalaman, hasil saat ini, dan perubahan terbaru.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Common Time Markers"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-present-perfect-vs-past-simple",
+      "title": "Present Perfect Vs Past Simple",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-perfect-vs-past-simple",
+      "keywords": [
+        "apa itu present perfect vs past simple",
+        "cara pakai present perfect vs past simple",
+        "present perfect vs past simple",
+        "tense and aspect system present perfect vs past simple",
+        "grammar resource present perfect vs past simple"
+      ],
+      "shortAnswer": "Topik ini membandingkan present perfect dan past simple agar siswa dapat memilih bentuk yang tepat berdasarkan waktu dan relevansi hasil.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-present-simple-habits-and-facts",
+      "title": "Present Simple Habits And Facts",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/present-simple-habits-and-facts",
+      "keywords": [
+        "apa itu present simple habits and facts",
+        "cara pakai present simple habits and facts",
+        "present simple habits and facts",
+        "tense and aspect system present simple habits and facts",
+        "grammar resource present simple habits and facts"
+      ],
+      "shortAnswer": "Topik ini membahas present simple untuk kebiasaan, fakta umum, dan jadwal yang bersifat tetap.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "When to Use"
+        },
+        {
+          "label": "Core Patterns"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting:"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-resource-tense-and-aspect-system-used-to-and-would",
+      "title": "Used To And Would",
+      "route": "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/used-to-and-would",
+      "keywords": [
+        "apa itu used to and would",
+        "cara pakai used to and would",
+        "used to and would",
+        "tense and aspect system used to and would",
+        "grammar resource used to and would"
+      ],
+      "shortAnswer": "Topik ini membahas used to dan would untuk kebiasaan masa lalu, serta perbedaan penggunaannya pada states dan repeated actions.",
+      "sourceSections": [
+        {
+          "label": "Konsep"
+        },
+        {
+          "label": "Inti Materi"
+        },
+        {
+          "label": "Kesalahan Umum"
+        },
+        {
+          "label": "Catatan Penting"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-speaking-alias-route",
+      "title": "Grammar for Speaking Alias Route",
+      "route": "/skill/grammar/speaking",
+      "keywords": [
+        "route speaking ke mana",
+        "alias grammar speaking",
+        "path speaking grammar"
+      ],
+      "shortAnswer": "Route ini adalah alias dan akan diarahkan ke route utama Grammar for Speaking di /skill/grammar/grammar-for-speaking.",
+      "sourceSections": [
+        {
+          "label": "Alias Redirect",
+          "route": "/skill/grammar/grammar-for-speaking"
+        }
+      ]
+    },
+    {
+      "topicId": "grammar-writing-practice-direction",
+      "title": "Grammar Writing Practice Direction",
+      "route": "/skill/grammar/writing",
+      "keywords": [
+        "cara belajar grammar writing",
+        "fokus writing grammar",
+        "latihan menulis grammar"
+      ],
+      "shortAnswer": "Halaman writing dipakai untuk melatih grammar dalam konteks tulisan yang lebih terstruktur, sehingga akurasi bentuk kalimat bisa dijaga saat menulis paragraf.",
+      "sourceSections": [
+        {
+          "label": "Writing Practice Sections"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-alphabet-core",
+      "title": "Alphabet Pronunciation Basics",
+      "route": "/skill/pronunciation/alphabet",
+      "keywords": [
+        "cara baca huruf",
+        "pengucapan alphabet",
+        "alphabet amerika"
+      ],
+      "shortAnswer": "Materi alphabet membantu membangun dasar bunyi huruf agar siswa bisa melafalkan kata dengan lebih stabil sebelum masuk topik yang lebih kompleks.",
+      "sourceSections": [
+        {
+          "label": "Alphabet Practice"
+        }
+      ]
+    },
+    {
+      "topicId": "american-t-flap-vs-glottal",
+      "title": "American T: Flap vs Glottal",
+      "route": "/skill/pronunciation/american-t",
+      "keywords": [
+        "beda flap dan glottal",
+        "flap t itu r atau d",
+        "kapan glottal dipakai"
+      ],
+      "shortAnswer": "Dalam American T, flap ditulis /ɾ/ dan terdengar mirip soft d, bukan /r/ Inggris. Glottal stop ditulis /ʔ/ dan dipakai saat aliran udara dihentikan sejenak, terutama pada pola tertentu di speech casual.",
+      "sourceSections": [
+        {
+          "label": "Middle - Flap",
+          "route": "/skill/pronunciation/american-t/middle/flap"
+        },
+        {
+          "label": "Middle - Glottal",
+          "route": "/skill/pronunciation/american-t/middle/glottal"
+        }
+      ]
+    },
+    {
+      "topicId": "american-t-ending-patterns",
+      "title": "American T Ending Patterns",
+      "route": "/skill/pronunciation/american-t",
+      "keywords": [
+        "final t before consonant",
+        "released /t/ ending",
+        "silent t casual speech"
+      ],
+      "shortAnswer": "Di posisi akhir, /t/ bisa tetap released, bisa unreleased sebelum konsonan, atau terdengar sangat ringan pada speech casual. Jadi evaluasi selalu berdasarkan konteks kata dan frasa, bukan satu rule tunggal.",
+      "sourceSections": [
+        {
+          "label": "Ending - Released /t/ Ending",
+          "route": "/skill/pronunciation/american-t/ending/clear-t-ending"
+        },
+        {
+          "label": "Ending - Final T Before Consonant",
+          "route": "/skill/pronunciation/american-t/ending/final-t"
+        },
+        {
+          "label": "Middle - Silent T",
+          "route": "/skill/pronunciation/american-t/middle/silent-t"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-hub-overview",
+      "title": "Pronunciation Menu Overview",
+      "route": "/skill/pronunciation",
+      "keywords": [
+        "menu pronunciation",
+        "mulai pronunciation dari mana",
+        "halaman pronunciation",
+        "intonation"
+      ],
+      "shortAnswer": "Halaman Pronunciation adalah hub untuk memilih topik latihan, seperti phonetic symbols, stressing, intonation, final sound, american t, dan text practice.",
+      "sourceSections": [
+        {
+          "label": "Pronunciation Topic Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "final-sound-hub-overview",
+      "title": "Final Sound Learning Map",
+      "route": "/skill/pronunciation/final-sound-new",
+      "keywords": [
+        "final sound itu apa",
+        "belajar s es dan d ed",
+        "menu final sound"
+      ],
+      "shortAnswer": "Final Sound Hub membagi latihan ke dua jalur utama: S/ES untuk plural atau third person, dan D/ED untuk regular past endings. Fokus utamanya adalah bunyi akhir, bukan sekadar huruf akhir.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Hub Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "final-sound-d-ed-rules",
+      "title": "Final Sound D/ED Rules",
+      "route": "/skill/pronunciation/final-sound-new/d/ed",
+      "keywords": [
+        "aturan ed",
+        "kapan t d id",
+        "past tense ending pronunciation"
+      ],
+      "shortAnswer": "Akhiran -ed pada regular verbs bisa berbunyi /t/, /d/, atau /id/ sesuai bunyi akhir kata dasar. Rule ini dipakai agar past tense terdengar natural dan tetap mudah dipahami.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Rules for -ed"
+        },
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Final Sound D/ED Application Process"
+        },
+        {
+          "label": "Common Mistakes"
+        }
+      ]
+    },
+    {
+      "topicId": "final-sound-s-es-core-rules",
+      "title": "Final Sound S/ES Rules",
+      "route": "/skill/pronunciation/final-sound-new/s/es",
+      "keywords": [
+        "aturan s es",
+        "kapan /s/ /z/ /iz/",
+        "plural s es",
+        "third person s es",
+        "possessive s es"
+      ],
+      "shortAnswer": "Final sound S/ES ditentukan oleh bunyi akhir kata dasar, bukan huruf terakhir. Voiceless non-sibilant cenderung /s/, voiced atau vowel cenderung /z/, dan sibilant memakai tambahan -es dengan bunyi /ɪz/.",
+      "sourceSections": [
+        {
+          "label": "Final Sound Rules for -s/-es (Table)"
+        },
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Final Sound S/ES Application Process"
+        }
+      ]
+    },
+    {
+      "topicId": "final-sound-s-es-practice",
+      "title": "Final Sound S/ES Practice",
+      "route": "/skill/pronunciation/final-sound-new/s/es",
+      "keywords": [
+        "latihan final sound s es",
+        "cara latihan s es",
+        "common mistakes s es"
+      ],
+      "shortAnswer": "Latihan paling efektif adalah membaca before -> after, cek perubahan IPA, lalu ulang dalam kalimat singkat. Fokuskan telinga ke ending supaya grammar meaning tetap terdengar jelas.",
+      "sourceSections": [
+        {
+          "label": "Before & After Word Bank"
+        },
+        {
+          "label": "Common Mistakes"
+        }
+      ]
+    },
+    {
+      "topicId": "intonation-overview",
+      "title": "Intonation Overview",
+      "route": "/skill/pronunciation/intonation",
+      "keywords": [
+        "apa itu intonation",
+        "fungsi intonation",
+        "beda intonation dan stress",
+        "rising falling tone"
+      ],
+      "shortAnswer": "Intonation adalah pola naik-turun pitch dalam kalimat untuk menyampaikan makna, niat, dan emosi. Di materi ini kamu latihan pola falling, rising, fall-rise, list tone, emphasis, dan dialogue drills.",
+      "sourceSections": [
+        {
+          "label": "Concept"
+        },
+        {
+          "label": "Basic Intonation Patterns"
+        },
+        {
+          "label": "Statements vs Questions"
+        },
+        {
+          "label": "List and Continuation Tone"
+        },
+        {
+          "label": "Dialogue Drills"
+        }
+      ]
+    },
+    {
+      "topicId": "phonetic-symbols-basics",
+      "title": "IPA Symbols Basics",
+      "route": "/skill/pronunciation/phoneticSymbols",
+      "keywords": [
+        "ipa itu apa",
+        "simbol fonetik",
+        "cara baca simbol pronunciation"
+      ],
+      "shortAnswer": "Phonetic Symbols menjelaskan representasi bunyi dalam IPA agar siswa bisa membaca kamus pelafalan dengan lebih akurat. Fokus utama ada pada hubungan simbol, contoh bunyi, dan produksi suara.",
+      "sourceSections": [
+        {
+          "label": "Symbols List"
+        },
+        {
+          "label": "Symbol Details"
+        }
+      ]
+    },
+    {
+      "topicId": "minimal-pairs-purpose",
+      "title": "Why Minimal Pairs Matter",
+      "route": "/skill/pronunciation/phoneticSymbols/MinimalPairs",
+      "keywords": [
+        "fungsi minimal pairs",
+        "latihan pair bunyi",
+        "membedakan suara mirip"
+      ],
+      "shortAnswer": "Minimal pairs melatih telinga dan mulut untuk membedakan dua bunyi yang hampir sama, sehingga kesalahan makna saat berbicara bisa dikurangi.",
+      "sourceSections": [
+        {
+          "label": "Minimal Pair Practice"
+        }
+      ]
+    },
+    {
+      "topicId": "phonetic-summary-fast-review",
+      "title": "Phonetic Symbols Quick Summary",
+      "route": "/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols",
+      "keywords": [
+        "ringkasan ipa",
+        "review simbol bunyi",
+        "rekap pronunciation symbols"
+      ],
+      "shortAnswer": "Halaman summary dipakai untuk review cepat semua simbol penting setelah latihan detail. Ini membantu siswa mengulang pola bunyi tanpa harus membuka setiap simbol satu per satu.",
+      "sourceSections": [
+        {
+          "label": "Summary Table"
+        }
+      ]
+    },
+    {
+      "topicId": "tongue-twister-practice-goal",
+      "title": "Tongue Twister Practice Goal",
+      "route": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+      "keywords": [
+        "fungsi tongue twister",
+        "latihan lidah pronunciation",
+        "cara latihan tongue twister"
+      ],
+      "shortAnswer": "Tongue twister dipakai untuk melatih kejelasan artikulasi saat kecepatan bicara naik. Latihan terbaik adalah mulai pelan, jaga akurasi bunyi, lalu tingkatkan tempo bertahap.",
+      "sourceSections": [
+        {
+          "label": "Tongue Twister Drills"
+        }
+      ]
+    },
+    {
+      "topicId": "stressing-word-stress-rules",
+      "title": "Word Stress in English",
+      "route": "/skill/pronunciation/stressing",
+      "keywords": [
+        "apa itu word stress",
+        "stress syllable",
+        "tekanan kata english"
+      ],
+      "shortAnswer": "Word stress menentukan suku kata mana yang paling kuat saat kata diucapkan. Dengan stress yang tepat, ucapan lebih jelas dan makna kata tidak mudah salah tangkap.",
+      "sourceSections": [
+        {
+          "label": "Word Stress Explanation"
+        },
+        {
+          "label": "Word Stress Examples"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-text-how-to-use",
+      "title": "How to Use Pronunciation Text",
+      "route": "/skill/pronunciation/text",
+      "keywords": [
+        "cara pakai tab text pronunciation",
+        "origin text dan transcription",
+        "latihan baca teks pronunciation"
+      ],
+      "shortAnswer": "Halaman Text dipakai untuk menerapkan materi pronunciation lewat bacaan utuh. Gunakan tab origin text untuk membaca natural, lalu bandingkan dengan tab phonetic transcription untuk cek detail bunyi.",
+      "sourceSections": [
+        {
+          "label": "Topic Selector"
+        },
+        {
+          "label": "Original Text Tab"
+        },
+        {
+          "label": "Phonetic Transcription Tab"
+        }
+      ]
+    },
+    {
+      "topicId": "speaking-roadmap-main",
+      "title": "Speaking Roadmap Main",
+      "route": "/skill/speaking",
+      "keywords": [
+        "halaman speaking isi apa",
+        "speaking a1",
+        "speaking roadmap baru"
+      ],
+      "shortAnswer": "Halaman ini adalah roadmap speaking CEFR A1 dengan 36 goals praktis untuk penutur Indonesia, dibagi ke A1.1, A1.2, dan A1.3.",
+      "sourceSections": [
+        {
+          "label": "CEFR A1.1 - Survival Response"
+        },
+        {
+          "label": "CEFR A1.2 - Identity and Daily Needs"
+        },
+        {
+          "label": "CEFR A1.3 - Simple Transaction and Direction"
+        }
+      ]
+    },
+    {
+      "topicId": "vocabulary-topics-main",
+      "title": "Vocabulary Main",
+      "route": "/skill/vocabulary",
+      "keywords": [
+        "halaman topic vocabulary",
+        "vocabulary berdasarkan topik",
+        "list kata per topik"
+      ],
+      "shortAnswer": "Halaman Vocabulary sekarang berbasis topik. Pilih topik Color, Size, Body Parts, Family, Daily Routines, Home, Time & Date, atau Cardinal Number, lalu buka detail untuk melihat daftar kata, arti Indonesia, dan contoh kalimat English.",
+      "sourceSections": [
+        {
+          "label": "Topic Cards"
+        },
+        {
+          "label": "Topic Detail List"
+        },
+        {
+          "label": "Play All Actions"
+        }
+      ]
+    }
+  ]
+}

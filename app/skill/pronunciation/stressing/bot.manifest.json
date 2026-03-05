@@ -1,0 +1,31 @@
+{
+  "route": "/skill/pronunciation/stressing",
+  "label": "Word Stressing",
+  "scope": "pronunciation",
+  "keywords": [
+    "word stress",
+    "stressing",
+    "tekanan suku kata"
+  ],
+  "qa": [
+    {
+      "topicId": "stressing-word-stress-rules",
+      "title": "Word Stress in English",
+      "route": "/skill/pronunciation/stressing",
+      "keywords": [
+        "apa itu word stress",
+        "stress syllable",
+        "tekanan kata english"
+      ],
+      "shortAnswer": "Word stress menentukan suku kata mana yang paling kuat saat kata diucapkan. Dengan stress yang tepat, ucapan lebih jelas dan makna kata tidak mudah salah tangkap.",
+      "sourceSections": [
+        {
+          "label": "Word Stress Explanation"
+        },
+        {
+          "label": "Word Stress Examples"
+        }
+      ]
+    }
+  ]
+}

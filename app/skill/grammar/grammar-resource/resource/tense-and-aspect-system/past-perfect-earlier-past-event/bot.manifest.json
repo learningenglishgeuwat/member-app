@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-earlier-past-event",
+    "label":  "Past Perfect Earlier Past Event",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu past perfect earlier past event",
+                     "cara pakai past perfect earlier past event",
+                     "past perfect earlier past event",
+                     "tense and aspect system past perfect earlier past event",
+                     "grammar resource past perfect earlier past event"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-tense-and-aspect-system-past-perfect-earlier-past-event",
+                   "title":  "Past Perfect Earlier Past Event",
+                   "route":  "/skill/grammar/grammar-resource/resource/tense-and-aspect-system/past-perfect-earlier-past-event",
+                   "keywords":  [
+                                    "apa itu past perfect earlier past event",
+                                    "cara pakai past perfect earlier past event",
+                                    "past perfect earlier past event",
+                                    "tense and aspect system past perfect earlier past event",
+                                    "grammar resource past perfect earlier past event"
+                                ],
+                   "shortAnswer":  "Topik ini membahas past perfect untuk menandai kejadian yang terjadi lebih dulu dibanding kejadian masa lalu lain.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "When to Use"
+                                          },
+                                          {
+                                              "label":  "Core Patterns"
+                                          },
+                                          {
+                                              "label":  "Signal Words"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

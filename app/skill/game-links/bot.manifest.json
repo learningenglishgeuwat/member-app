@@ -1,0 +1,31 @@
+{
+  "route": "/skill/game-links",
+  "label": "Skill Games",
+  "scope": "game-links",
+  "keywords": [
+    "skill games",
+    "game links",
+    "quiz eksternal"
+  ],
+  "qa": [
+    {
+      "topicId": "skill-games-overview",
+      "title": "Skill Games Overview",
+      "route": "/skill/game-links",
+      "keywords": [
+        "halaman game",
+        "fungsi skill games",
+        "pilihan game latihan"
+      ],
+      "shortAnswer": "Halaman Skill Games berisi shortcut ke game latihan eksternal untuk mempercepat practice listening dan pronunciation secara interaktif.",
+      "sourceSections": [
+        {
+          "label": "Game Selector"
+        },
+        {
+          "label": "Active Game Description"
+        }
+      ]
+    }
+  ]
+}

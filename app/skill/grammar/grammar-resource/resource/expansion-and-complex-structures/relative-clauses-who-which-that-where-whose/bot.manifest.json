@@ -1,0 +1,47 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/relative-clauses-who-which-that-where-whose",
+    "label":  "Relative Clauses Who Which That Where Whose",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu relative clauses who which that where whose",
+                     "cara pakai relative clauses who which that where whose",
+                     "relative clauses who which that where whose",
+                     "expansion and complex structures relative clauses who which that where whose",
+                     "grammar resource relative clauses who which that where whose"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-relative-clauses-who-which-that-where-whose",
+                   "title":  "Relative Clauses Who Which That Where Whose",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/relative-clauses-who-which-that-where-whose",
+                   "keywords":  [
+                                    "apa itu relative clauses who which that where whose",
+                                    "cara pakai relative clauses who which that where whose",
+                                    "relative clauses who which that where whose",
+                                    "expansion and complex structures relative clauses who which that where whose",
+                                    "grammar resource relative clauses who which that where whose"
+                                ],
+                   "shortAnswer":  "Topik ini melatih penggunaan relative clauses dengan who, which, that, where, dan whose untuk menambah informasi pada noun.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Relative Clauses"
+                                          },
+                                          {
+                                              "label":  "Restrictive vs Non-restrictive"
+                                          },
+                                          {
+                                              "label":  "Notes on that"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}

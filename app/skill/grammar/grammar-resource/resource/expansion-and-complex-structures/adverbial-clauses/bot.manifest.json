@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/adverbial-clauses",
+    "label":  "Adverbial Clauses",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu adverbial clauses",
+                     "cara pakai adverbial clauses",
+                     "adverbial clauses",
+                     "expansion and complex structures adverbial clauses",
+                     "grammar resource adverbial clauses"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-expansion-and-complex-structures-adverbial-clauses",
+                   "title":  "Adverbial Clauses",
+                   "route":  "/skill/grammar/grammar-resource/resource/expansion-and-complex-structures/adverbial-clauses",
+                   "keywords":  [
+                                    "apa itu adverbial clauses",
+                                    "cara pakai adverbial clauses",
+                                    "adverbial clauses",
+                                    "expansion and complex structures adverbial clauses",
+                                    "grammar resource adverbial clauses"
+                                ],
+                   "shortAnswer":  "Topik ini menjelaskan adverbial clauses untuk menyatakan alasan, tujuan, hasil, dan konsesi agar hubungan antar ide dalam kalimat menjadi jelas.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Inti Materi"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting"
+                                          }
+                                      ]
+               }
+           ]
+}

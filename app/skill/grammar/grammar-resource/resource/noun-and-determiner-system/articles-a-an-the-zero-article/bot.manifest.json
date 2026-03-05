@@ -1,0 +1,41 @@
+{
+    "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/articles-a-an-the-zero-article",
+    "label":  "Articles A An The Zero Article",
+    "scope":  "grammar-resource",
+    "keywords":  [
+                     "apa itu articles a an the zero article",
+                     "cara pakai articles a an the zero article",
+                     "articles a an the zero article",
+                     "noun and determiner system articles a an the zero article",
+                     "grammar resource articles a an the zero article"
+                 ],
+    "qa":  [
+               {
+                   "topicId":  "grammar-resource-noun-and-determiner-system-articles-a-an-the-zero-article",
+                   "title":  "Articles A An The Zero Article",
+                   "route":  "/skill/grammar/grammar-resource/resource/noun-and-determiner-system/articles-a-an-the-zero-article",
+                   "keywords":  [
+                                    "apa itu articles a an the zero article",
+                                    "cara pakai articles a an the zero article",
+                                    "articles a an the zero article",
+                                    "noun and determiner system articles a an the zero article",
+                                    "grammar resource articles a an the zero article"
+                                ],
+                   "shortAnswer":  "Topik ini membahas article a, an, the, dan zero article berdasarkan spesifisitas dan jenis noun.",
+                   "sourceSections":  [
+                                          {
+                                              "label":  "Konsep"
+                                          },
+                                          {
+                                              "label":  "Jenis Article"
+                                          },
+                                          {
+                                              "label":  "Kesalahan Umum"
+                                          },
+                                          {
+                                              "label":  "Catatan Penting:"
+                                          }
+                                      ]
+               }
+           ]
+}
