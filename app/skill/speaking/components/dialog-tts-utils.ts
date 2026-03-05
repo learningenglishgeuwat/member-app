@@ -3,6 +3,7 @@ import {
   isSpeechSynthesisSupported as isGlobalSpeechSynthesisSupported,
   pickPreferredEnglishVoice,
   stopSpeech,
+  waitForVoices,
 } from '@/lib/tts/speech';
 
 const SPEAKER_LINE_PATTERN = /^(Partner|You)\s*:\s*(.*)$/i;
@@ -146,6 +147,10 @@ export function isSpeechSynthesisSupported(): boolean {
 
 export function stopSpeechSynthesisPlayback(): void {
   stopSpeech();
+}
+
+export async function prepareDialogVoices(): Promise<void> {
+  await waitForVoices();
 }
 
 export function createDialogUtterance(

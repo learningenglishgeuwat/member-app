@@ -2,7 +2,12 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createDialogUtterance, isSpeechSynthesisSupported, stopSpeechSynthesisPlayback } from '../../skill/speaking/components/dialog-tts-utils';
+import {
+  createDialogUtterance,
+  isSpeechSynthesisSupported,
+  prepareDialogVoices,
+  stopSpeechSynthesisPlayback,
+} from '../../skill/speaking/components/dialog-tts-utils';
 import type { GuideModeResult } from '../types';
 import './speaking-practice-overlay.css';
 
@@ -63,6 +68,10 @@ export default function SpeakingPracticeOverlay({
   }, [clearRuntime]);
 
   useEffect(() => {
+    void prepareDialogVoices();
+  }, []);
+
+  useEffect(() => {
     clearRuntime();
 
     if (!meta) return;
@@ -79,18 +88,23 @@ export default function SpeakingPracticeOverlay({
       const token = speechTokenRef.current + 1;
       speechTokenRef.current = token;
 
-      const utterance = createDialogUtterance(meta.line, 'partner');
-      utterance.onend = () => {
+      void (async () => {
+        await prepareDialogVoices();
         if (speechTokenRef.current !== token) return;
-        sendCommand('next');
-      };
-      utterance.onerror = () => {
-        if (speechTokenRef.current !== token) return;
-        sendCommand('next');
-      };
 
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utterance);
+        const utterance = createDialogUtterance(meta.line, 'partner');
+        utterance.onend = () => {
+          if (speechTokenRef.current !== token) return;
+          sendCommand('next');
+        };
+        utterance.onerror = () => {
+          if (speechTokenRef.current !== token) return;
+          sendCommand('next');
+        };
+
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      })();
       return;
     }
 

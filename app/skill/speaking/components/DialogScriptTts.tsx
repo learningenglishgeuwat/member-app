@@ -6,6 +6,7 @@ import {
   createDialogUtterance,
   isSpeechSynthesisSupported,
   parseDialogLine,
+  prepareDialogVoices,
   stopSpeechSynthesisPlayback,
 } from './dialog-tts-utils';
 
@@ -68,47 +69,52 @@ export default function DialogScriptTts({
       return;
     }
 
-    const utterance = createDialogUtterance(line, parsedLines[index]?.speaker ?? 'unknown');
-    utterance.onstart = () => {
-      if (playTokenRef.current !== token) return;
-      setSpeakingIndex(index);
-      setIsPlayingScenario(mode === 'scenario');
-    };
-
-    utterance.onend = () => {
+    void (async () => {
+      await prepareDialogVoices();
       if (playTokenRef.current !== token) return;
 
-      if (mode === 'scenario') {
-        let nextIndex = index + 1;
-        while (nextIndex < speakableLines.length && !speakableLines[nextIndex]) {
-          nextIndex += 1;
-        }
+      const utterance = createDialogUtterance(line, parsedLines[index]?.speaker ?? 'unknown');
+      utterance.onstart = () => {
+        if (playTokenRef.current !== token) return;
+        setSpeakingIndex(index);
+        setIsPlayingScenario(mode === 'scenario');
+      };
 
-        if (nextIndex >= speakableLines.length) {
-          setSpeakingIndex(null);
-          setIsPlayingScenario(false);
+      utterance.onend = () => {
+        if (playTokenRef.current !== token) return;
+
+        if (mode === 'scenario') {
+          let nextIndex = index + 1;
+          while (nextIndex < speakableLines.length && !speakableLines[nextIndex]) {
+            nextIndex += 1;
+          }
+
+          if (nextIndex >= speakableLines.length) {
+            setSpeakingIndex(null);
+            setIsPlayingScenario(false);
+            return;
+          }
+
+          clearScenarioTimeout();
+          timeoutRef.current = window.setTimeout(() => {
+            if (playTokenRef.current !== token) return;
+            playAt(nextIndex, mode, token);
+          }, SCENARIO_LINE_GAP_MS);
           return;
         }
 
-        clearScenarioTimeout();
-        timeoutRef.current = window.setTimeout(() => {
-          if (playTokenRef.current !== token) return;
-          playAt(nextIndex, mode, token);
-        }, SCENARIO_LINE_GAP_MS);
-        return;
-      }
+        setSpeakingIndex(null);
+        setIsPlayingScenario(false);
+      };
 
-      setSpeakingIndex(null);
-      setIsPlayingScenario(false);
-    };
+      utterance.onerror = () => {
+        if (playTokenRef.current !== token) return;
+        setSpeakingIndex(null);
+        setIsPlayingScenario(false);
+      };
 
-    utterance.onerror = () => {
-      if (playTokenRef.current !== token) return;
-      setSpeakingIndex(null);
-      setIsPlayingScenario(false);
-    };
-
-    window.speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(utterance);
+    })();
   };
 
   const playScenario = () => {
@@ -141,6 +147,7 @@ export default function DialogScriptTts({
       setCanSpeak(isSpeechSynthesisSupported());
       supportCheckTimerRef.current = null;
     }, 0);
+    void prepareDialogVoices();
 
     return () => {
       if (supportCheckTimerRef.current !== null) {

@@ -5,6 +5,7 @@ import {
   createDialogUtterance,
   isSpeechSynthesisSupported,
   parseDialogLine,
+  prepareDialogVoices,
   stopSpeechSynthesisPlayback,
   type DialogSpeaker,
 } from './dialog-tts-utils';
@@ -171,25 +172,31 @@ export default function DialogTurnTakingPractice({
 
       clearTimers();
       setStatus('partner-speaking');
-      const utterance = createDialogUtterance(content, normalizeSpeakerForPlayback(line.speaker));
-
-      utterance.onend = () => {
+      void (async () => {
+        await prepareDialogVoices();
         if (runTokenRef.current !== token) return;
-        runTurn(index + 1);
-      };
 
-      utterance.onerror = () => {
-        if (runTokenRef.current !== token) return;
-        runTurn(index + 1);
-      };
+        const utterance = createDialogUtterance(content, normalizeSpeakerForPlayback(line.speaker));
 
-      window.speechSynthesis.speak(utterance);
+        utterance.onend = () => {
+          if (runTokenRef.current !== token) return;
+          runTurn(index + 1);
+        };
+
+        utterance.onerror = () => {
+          if (runTokenRef.current !== token) return;
+          runTurn(index + 1);
+        };
+
+        window.speechSynthesis.speak(utterance);
+      })();
     };
 
     runTurn(Math.min(turnIndex, maxTurnIndex));
   };
 
   useEffect(() => {
+    void prepareDialogVoices();
     return () => {
       stopRuntime();
     };
