@@ -216,6 +216,7 @@ const COMMON_MISTAKES = [
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const S_ES_COMMON_MISTAKES_OPEN_KEY = 'final-sound-s-es-common-mistakes-open-v1';
 const S_ES_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata atau kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi final sound S/ES: /s/, /z/, dan /ɪz/, serta kejelasan transisi bunyi akhir kata. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/frasa yang diucapkan (khusus ending -s/-es). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bunyi akhir mana yang perlu diperbaiki.";
 
@@ -299,14 +300,26 @@ export default function FinalSoundSEsPage() {
   const pluralExampleRefs = useRef<Array<HTMLLIElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
-  const [openSections, setOpenSections] = useState({
-    concept: false,
-    pluralEndings: false,
-    rulesTable: false,
-    wordBank: false,
-    commonMistakes: false,
-    practice: false,
-    prompt: false,
+  const [openSections, setOpenSections] = useState(() => {
+    const initialState = {
+      concept: false,
+      pluralEndings: false,
+      rulesTable: false,
+      wordBank: false,
+      commonMistakes: false,
+      practice: false,
+      prompt: false,
+    };
+    if (typeof window === 'undefined') return initialState;
+    try {
+      const saved = window.localStorage.getItem(S_ES_COMMON_MISTAKES_OPEN_KEY);
+      if (saved === '1' || saved === '0') {
+        return { ...initialState, commonMistakes: saved === '1' };
+      }
+    } catch {
+      // ignore corrupted cache and keep default collapsed state
+    }
+    return initialState;
   });
 
   const calcPronunciationAverage = useCallback((progress: Record<string, number>) => {
@@ -614,6 +627,18 @@ export default function FinalSoundSEsPage() {
     },
     [],
   );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(
+        S_ES_COMMON_MISTAKES_OPEN_KEY,
+        openSections.commonMistakes ? '1' : '0',
+      );
+    } catch {
+      // ignore storage write failures
+    }
+  }, [openSections.commonMistakes]);
 
   useEffect(() => () => stopWordBankPlayAll(), [stopWordBankPlayAll]);
 

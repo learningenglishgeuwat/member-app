@@ -80,6 +80,7 @@ const AUDIO_ITEM_IDS: Record<IntonationAudioSectionKey, string[]> = {
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const INTONATION_COMMON_MISTAKES_OPEN_KEY = 'intonation-common-mistakes-open-v1';
 const INTONATION_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama arah nada (rising/falling/fall-rise), penekanan kata penting, dan naturalitas intonation dalam konteks kalimat. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kalimat/frasa yang diucapkan. - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bagian intonation mana yang perlu diperbaiki.";
 
@@ -688,8 +689,19 @@ function DialogueGrid({
 
 export default function IntonationPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [openSections, setOpenSections] =
-    useState<Record<IntonationSectionKey, boolean>>(DEFAULT_OPEN_STATE);
+  const [openSections, setOpenSections] = useState<Record<IntonationSectionKey, boolean>>(() => {
+    const initialState = { ...DEFAULT_OPEN_STATE };
+    if (typeof window === 'undefined') return initialState;
+    try {
+      const saved = window.localStorage.getItem(INTONATION_COMMON_MISTAKES_OPEN_KEY);
+      if (saved === '1' || saved === '0') {
+        return { ...initialState, commonMistakes: saved === '1' };
+      }
+    } catch {
+      // ignore corrupted cache and keep default collapsed state
+    }
+    return initialState;
+  });
   const [isProgressSaved, setIsProgressSaved] = useState(() => {
     if (typeof window === 'undefined') return false;
     try {
@@ -856,6 +868,18 @@ export default function IntonationPage() {
     },
     [],
   );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(
+        INTONATION_COMMON_MISTAKES_OPEN_KEY,
+        openSections.commonMistakes ? '1' : '0',
+      );
+    } catch {
+      // ignore storage write failures
+    }
+  }, [openSections.commonMistakes]);
 
   const playbackActiveCardKey =
     activeAudioSection && playbackState.isPlaying && playbackState.activeIndex !== null

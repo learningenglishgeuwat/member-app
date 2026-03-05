@@ -6,14 +6,23 @@ import {
 } from '@/lib/tts/speech';
 
 const SPEAKER_LINE_PATTERN = /^(Partner|You)\s*:\s*(.*)$/i;
-const HIGH_QUALITY_US_MALE_VOICE_NAMES = [
-  'Microsoft Guy Online (Natural) - English (United States)',
-  'Microsoft David Desktop',
-  'Google US English Male',
-  'Alex',
+const HIGH_QUALITY_UK_MALE_VOICE_NAMES = [
+  'Google UK English Male',
+  'Microsoft Ryan Online (Natural) - English (United Kingdom)',
+  'Microsoft George Online (Natural) - English (United Kingdom)',
+  'Daniel',
+  'Thomas',
 ] as const;
 
 const MALE_VOICE_HINTS = [
+  /google uk english male/i,
+  /microsoft ryan/i,
+  /microsoft george/i,
+  /thomas/i,
+  /uk male/i,
+  /british male/i,
+  /english united kingdom.*male/i,
+  /great britain.*male/i,
   /google us english male/i,
   /microsoft guy/i,
   /microsoft david/i,
@@ -37,6 +46,7 @@ const FEMALE_VOICE_HINTS = [
   /female/i,
   /woman/i,
 ];
+const UK_LANG_HINTS = [/united kingdom/i, /great britain/i, /british/i, /\buk\b/i];
 const SPELLING_PATTERN = /\b([A-Za-z](?:\s*-\s*[A-Za-z]){1,})\b/g;
 
 export type DialogSpeaker = 'partner' | 'you' | 'unknown';
@@ -75,39 +85,48 @@ function normalizeSpellingForTts(text: string): string {
   });
 }
 
-function getPreferredEnglishVoice(): SpeechSynthesisVoice | null {
+function getPreferredEnglishVoice(preferred: 'en-US' | 'en-GB' = 'en-US'): SpeechSynthesisVoice | null {
   const voices = getAvailableVoices();
   if (!voices.length) return null;
-  return pickPreferredEnglishVoice(voices, 'en-US');
+  return pickPreferredEnglishVoice(voices, preferred);
 }
 
-function getPreferredMaleEnglishVoice(): SpeechSynthesisVoice | null {
+function isFemaleVoice(voice: SpeechSynthesisVoice): boolean {
+  return FEMALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name));
+}
+
+function isUkVoice(voice: SpeechSynthesisVoice): boolean {
+  const normalizedLang = voice.lang.toLowerCase();
+  return normalizedLang === 'en-gb' || UK_LANG_HINTS.some((pattern) => pattern.test(voice.name));
+}
+
+function getPreferredMaleUkEnglishVoice(): SpeechSynthesisVoice | null {
   const voices = getAvailableVoices();
   if (!voices.length) return null;
 
-  const usVoices = voices.filter((voice) => voice.lang.toLowerCase() === 'en-us');
+  const ukVoices = voices.filter((voice) => isUkVoice(voice));
   const englishVoices = voices.filter((voice) => voice.lang.toLowerCase().startsWith('en'));
 
-  const exactMaleUs = pickByExactNames(usVoices, HIGH_QUALITY_US_MALE_VOICE_NAMES);
-  if (exactMaleUs) return exactMaleUs;
+  const exactMaleUk = pickByExactNames(ukVoices, HIGH_QUALITY_UK_MALE_VOICE_NAMES);
+  if (exactMaleUk) return exactMaleUk;
 
-  const likelyMaleUs = usVoices.find((voice) =>
-    MALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)),
+  const likelyMaleUk = ukVoices.find((voice) =>
+    MALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)) && !isFemaleVoice(voice),
   );
-  if (likelyMaleUs) return likelyMaleUs;
+  if (likelyMaleUk) return likelyMaleUk;
 
-  const neutralNonFemaleUs = usVoices.find(
-    (voice) => !FEMALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)),
+  const neutralNonFemaleUk = ukVoices.find(
+    (voice) => !isFemaleVoice(voice),
   );
-  if (neutralNonFemaleUs) return neutralNonFemaleUs;
+  if (neutralNonFemaleUk) return neutralNonFemaleUk;
 
   const likelyMaleEnglish = englishVoices.find((voice) =>
-    MALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)),
+    MALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)) && !isFemaleVoice(voice),
   );
   if (likelyMaleEnglish) return likelyMaleEnglish;
 
   const neutralNonFemaleEnglish = englishVoices.find(
-    (voice) => !FEMALE_VOICE_HINTS.some((pattern) => pattern.test(voice.name)),
+    (voice) => !isFemaleVoice(voice),
   );
   if (neutralNonFemaleEnglish) return neutralNonFemaleEnglish;
 
@@ -116,9 +135,9 @@ function getPreferredMaleEnglishVoice(): SpeechSynthesisVoice | null {
 
 function getPreferredVoiceForSpeaker(speaker: DialogSpeaker): SpeechSynthesisVoice | null {
   if (speaker === 'partner') {
-    return getPreferredMaleEnglishVoice() ?? getPreferredEnglishVoice();
+    return getPreferredMaleUkEnglishVoice() ?? getPreferredEnglishVoice('en-GB') ?? getPreferredEnglishVoice('en-US');
   }
-  return getPreferredEnglishVoice();
+  return getPreferredEnglishVoice('en-US');
 }
 
 export function isSpeechSynthesisSupported(): boolean {
@@ -134,9 +153,11 @@ export function createDialogUtterance(
   speaker: DialogSpeaker,
 ): SpeechSynthesisUtterance {
   const normalizedText = normalizeSpellingForTts(text);
+  const preferredEnglish = speaker === 'partner' ? 'en-GB' : 'en-US';
   const utterance =
     createUtterance(normalizedText, {
-      lang: 'en-US',
+      lang: preferredEnglish,
+      preferredEnglish,
       rate: 0.85,
       pitch: speaker === 'partner' ? 0.92 : 1,
       volume: 1,
@@ -145,7 +166,7 @@ export function createDialogUtterance(
     (() => {
       if (typeof window !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined') {
         const fallback = new window.SpeechSynthesisUtterance(normalizedText);
-        fallback.lang = 'en-US';
+        fallback.lang = preferredEnglish;
         fallback.rate = 0.85;
         fallback.pitch = speaker === 'partner' ? 0.92 : 1;
         fallback.volume = 1;

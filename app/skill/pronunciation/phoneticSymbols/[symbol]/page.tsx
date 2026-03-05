@@ -9,8 +9,8 @@ import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
 import {
-  createUtterance,
   isSpeechSynthesisSupported,
+  speakText,
   stopSpeech,
   waitForVoices,
 } from '@/lib/tts/speech';
@@ -393,99 +393,68 @@ const SymbolDetailPage: React.FC = () => {
 
     stopPlayAllWords();
     const currentSession = playSessionRef.current;
-    let currentIndex = 0;
     setIsPlayingAll(true);
-      
-    const playNextWord = () => {
-      if (currentSession !== playSessionRef.current) return;
 
-      if (currentIndex >= symbolData.examples.length) {
+    void (async () => {
+      for (let currentIndex = 0; currentIndex < symbolData.examples.length; currentIndex++) {
+        if (currentSession !== playSessionRef.current) return;
+
+        const example = symbolData.examples[currentIndex];
+        setActiveWord(example.word);
+        setActiveWordIndex(currentIndex);
+
+        if (wordCardRefs.current[currentIndex]) {
+          wordCardRefs.current[currentIndex]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+
+        await speakText(example.word, {
+          lang: 'en-US',
+          rate: 0.8,
+          pitch: 1,
+          volume: 1,
+          cancelBeforeSpeak: false,
+        });
+
+        if (currentSession !== playSessionRef.current) return;
+      }
+
+      if (currentSession === playSessionRef.current) {
         setIsPlayingAll(false);
         setActiveWord(null);
         setActiveWordIndex(null);
-        return;
       }
-
-      const example = symbolData.examples[currentIndex];
-      setActiveWord(example.word);
-      setActiveWordIndex(currentIndex);
-
-      if (wordCardRefs.current[currentIndex]) {
-        wordCardRefs.current[currentIndex]?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center'
-        });
-      }
-
-      const utterance = createUtterance(example.word, {
-        lang: 'en-US',
-        rate: 0.8,
-        pitch: 1,
-        volume: 1,
-        cancelBeforeSpeak: false,
-      });
-      if (!utterance) {
-        currentIndex++;
-        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
-        return;
-      }
-
-      utterance.onstart = () => {
-        if (currentSession !== playSessionRef.current) return;
-        setActiveWord(example.word);
-        setActiveWordIndex(currentIndex);
-      };
-
-      utterance.onend = () => {
-        if (currentSession !== playSessionRef.current) return;
-        currentIndex++;
-        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
-      };
-
-      utterance.onerror = () => {
-        if (currentSession !== playSessionRef.current) return;
-        currentIndex++;
-        playNextTimeoutRef.current = window.setTimeout(playNextWord, 300);
-      };
-
-      window.speechSynthesis.speak(utterance);
-    };
-
-    playNextWord();
+    })();
   };
 
   const handlePlayWord = (word: string, wordIndex?: number) => {
-    if (isSpeechSynthesisSupported()) {
-      stopPlayAllWords();
-      stopSpeech();
-      setActiveWord(word);
-      setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
-      
-      const utterance = createUtterance(word, {
+    if (!isSpeechSynthesisSupported()) return;
+
+    stopPlayAllWords();
+    const currentSession = playSessionRef.current;
+    stopSpeech();
+    setActiveWord(word);
+    setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
+
+    void (async () => {
+      await speakText(word, {
         lang: 'en-US',
         rate: 0.8,
         pitch: 1,
         volume: 1,
         cancelBeforeSpeak: false,
       });
-      if (!utterance) return;
-      
-      utterance.onstart = () => {
-        setActiveWord(word);
-        setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
-      };
-      
-      utterance.onend = () => {
-        setActiveWord(null);
-        setActiveWordIndex(null);
-      };
-      
-      speechSynthesis.speak(utterance);
-    }
+
+      if (currentSession !== playSessionRef.current) return;
+      setActiveWord(null);
+      setActiveWordIndex(null);
+    })();
   };
 
-  const handlePlayBritishNoteWord = (word: string, accent: 'uk' | 'us') => {
+  const handlePlayBritishNoteWord = (word: string) => {
     if (!isSpeechSynthesisSupported()) return;
 
     stopPlayAllWords();
@@ -493,26 +462,21 @@ const SymbolDetailPage: React.FC = () => {
     setActiveWord(word);
     setActiveWordIndex(null);
 
-    const utterance = createUtterance(word, {
-      lang: accent === 'uk' ? 'en-GB' : 'en-US',
-      rate: 0.8,
-      pitch: 1,
-      volume: 1,
-      cancelBeforeSpeak: false,
-    });
-    if (!utterance) return;
+    const currentSession = playSessionRef.current;
+    void (async () => {
+      await speakText(word, {
+        lang: 'en-US',
+        preferredEnglish: 'en-US',
+        rate: 0.8,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
 
-    utterance.onend = () => {
+      if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);
       setActiveWordIndex(null);
-    };
-
-    utterance.onerror = () => {
-      setActiveWord(null);
-      setActiveWordIndex(null);
-    };
-
-    window.speechSynthesis.speak(utterance);
+    })();
   };
 
   const handleSaveProgress = async (percentage: number) => {
@@ -818,7 +782,7 @@ const SymbolDetailPage: React.FC = () => {
                       </div>
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
-                          onClick={() => handlePlayBritishNoteWord(item.word, 'uk')}
+                          onClick={() => handlePlayBritishNoteWord(item.word)}
                           className="inline-flex items-center gap-1 rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[11px] text-amber-200 hover:bg-amber-400/20 transition-colors"
                           title={`Play BrE: ${item.word}`}
                         >
@@ -826,7 +790,7 @@ const SymbolDetailPage: React.FC = () => {
                           <span>BrE</span>
                         </button>
                         <button
-                          onClick={() => handlePlayBritishNoteWord(item.word, 'us')}
+                          onClick={() => handlePlayBritishNoteWord(item.word)}
                           className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
                           title={`Play AmE: ${item.word}`}
                         >
@@ -1163,7 +1127,7 @@ const SymbolDetailPage: React.FC = () => {
               </div>
               <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
                 <p className="text-sm text-cyber-cyan mb-2">
-                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">https://gemini.google.com/app</a> atau AI assistant lainnya
+                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">Gemini</a> atau AI assistant lainnya
                 </p>
                 <p className="text-sm text-cyber-cyan mb-2">
                   Upload rekaman audio Anda

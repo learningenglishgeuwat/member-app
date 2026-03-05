@@ -232,6 +232,16 @@
   box-shadow: var(--tg-glow-soft);
 }
 
+.tg-mode-switch-button.is-pending {
+  border-color: rgba(214, 195, 255, 0.95);
+  background: linear-gradient(180deg, rgba(137, 88, 236, 0.95), rgba(81, 45, 164, 0.95));
+  box-shadow:
+    0 0 0 1px rgba(208, 183, 255, 0.22),
+    0 0 14px rgba(180, 119, 255, 0.34),
+    0 0 24px rgba(136, 71, 226, 0.24);
+  animation: tg-switch-ready-pulse 1.1s ease-in-out infinite;
+}
+
 .tg-mode-switch-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -722,6 +732,22 @@
       0 0 0 1px rgba(219, 161, 255, 0.76),
       0 0 16px rgba(196, 126, 255, 0.62),
       0 0 28px rgba(170, 96, 255, 0.34);
+  }
+}
+
+@keyframes tg-switch-ready-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(208, 183, 255, 0.22),
+      0 0 14px rgba(180, 119, 255, 0.34),
+      0 0 24px rgba(136, 71, 226, 0.24);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(225, 205, 255, 0.3),
+      0 0 20px rgba(197, 140, 255, 0.44),
+      0 0 30px rgba(148, 89, 230, 0.3);
   }
 }
 

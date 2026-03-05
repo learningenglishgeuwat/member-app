@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
-import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
+import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './summary-of-phonetic-symbols.css';
 
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
@@ -147,7 +147,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
     setActiveTab(nextTab);
   };
 
-  const speakWord = (word: string, exampleKey?: string) => {
+  const speakWord = async (word: string, exampleKey?: string) => {
     if (!isSpeechSynthesisSupported()) return;
     stopSpeech();
     setActivePlayGroup(null);
@@ -156,24 +156,17 @@ export default function SummaryOfPhoneticSymbolsPage() {
       scrollToExampleCard(exampleKey);
     }
     playGroupRef.current = null;
-    const utterance = createUtterance(word, {
+    await speakText(word, {
       lang: 'en-US',
       rate: 0.82,
       pitch: 1,
       volume: 1,
       cancelBeforeSpeak: false,
     });
-    if (!utterance) return;
-    utterance.onend = () => {
-      setActiveSpeakingExampleKey(null);
-    };
-    utterance.onerror = () => {
-      setActiveSpeakingExampleKey(null);
-    };
-    window.speechSynthesis.speak(utterance);
+    setActiveSpeakingExampleKey(null);
   };
 
-  const playAllWordsByGroup = (groupKey: string, words: SpokenWordEntry[]) => {
+  const playAllWordsByGroup = async (groupKey: string, words: SpokenWordEntry[]) => {
     if (!isSpeechSynthesisSupported() || words.length === 0) return;
 
     if (activePlayGroup === groupKey) {
@@ -187,50 +180,25 @@ export default function SummaryOfPhoneticSymbolsPage() {
     stopSpeech();
     setActivePlayGroup(groupKey);
     playGroupRef.current = groupKey;
-    let index = 0;
 
-    const speakNext = () => {
-      if (index >= words.length) {
-        setActivePlayGroup(null);
-        setActiveSpeakingExampleKey(null);
-        playGroupRef.current = null;
-        return;
-      }
-
-      const currentWord = words[index];
-      const utterance = createUtterance(currentWord.word, {
+    for (const currentWord of words) {
+      if (playGroupRef.current !== groupKey) break;
+      setActiveSpeakingExampleKey(currentWord.key);
+      scrollToExampleCard(currentWord.key);
+      await speakText(currentWord.word, {
         lang: 'en-US',
         rate: 0.82,
         pitch: 1,
         volume: 1,
         cancelBeforeSpeak: false,
       });
-      if (!utterance) {
-        index += 1;
-        speakNext();
-        return;
-      }
+    }
 
-      utterance.onstart = () => {
-        if (playGroupRef.current !== groupKey) return;
-        setActiveSpeakingExampleKey(currentWord.key);
-        scrollToExampleCard(currentWord.key);
-      };
-      utterance.onend = () => {
-        if (playGroupRef.current !== groupKey) return;
-        index += 1;
-        speakNext();
-      };
-      utterance.onerror = () => {
-        setActivePlayGroup(null);
-        setActiveSpeakingExampleKey(null);
-        playGroupRef.current = null;
-      };
-
-      window.speechSynthesis.speak(utterance);
-    };
-
-    speakNext();
+    if (playGroupRef.current === groupKey) {
+      setActivePlayGroup(null);
+      setActiveSpeakingExampleKey(null);
+      playGroupRef.current = null;
+    }
   };
 
   return (
@@ -285,7 +253,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                             word: example.word,
                           })),
                         );
-                        playAllWordsByGroup(`${activeTab}-${group.title}`, queuedWords);
+                        void playAllWordsByGroup(`${activeTab}-${group.title}`, queuedWords);
                       }}
                       aria-label={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
                       title={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
@@ -313,7 +281,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                               <button
                                 type="button"
                                 className={`sps-example-card ${isSpeakingExample ? 'is-speaking' : ''}`}
-                                onClick={() => speakWord(example.word, exampleKey)}
+                                onClick={() => void speakWord(example.word, exampleKey)}
                                 ref={(node) => {
                                   exampleCardRefs.current[exampleKey] = node;
                                 }}

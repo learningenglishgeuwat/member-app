@@ -941,6 +941,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
       : DEFAULT_SUGGESTION_PROMPTS;
   const hasInteractiveActions = !isThinking && activeResult.actions.length > 0;
   const hasInteractiveSources = !isThinking && Boolean(activeResult.sources?.length);
+  const hasPendingModeChange = pendingMode !== mode;
   const shouldShowSuggestions =
     !isThinking &&
     !activeResult.confirmation &&
@@ -1081,9 +1082,9 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
             </label>
             <button
               type="button"
-              className="tg-mode-switch-button"
+              className={`tg-mode-switch-button ${hasPendingModeChange ? 'is-pending' : ''}`}
               onClick={() => handleModeChange(pendingMode)}
-              disabled={pendingMode === mode}
+              disabled={!hasPendingModeChange}
             >
               Switch
             </button>

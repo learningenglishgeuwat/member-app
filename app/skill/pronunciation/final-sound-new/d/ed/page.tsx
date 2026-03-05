@@ -145,6 +145,7 @@ const COMMON_MISTAKES = [
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const D_ED_COMMON_MISTAKES_OPEN_KEY = 'final-sound-d-ed-common-mistakes-open-v1';
 const D_ED_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata atau kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi final sound D/ED: /t/, /d/, dan /ɪd/, serta kejelasan bunyi akhir pada bentuk past tense. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/frasa yang diucapkan (khusus ending -d/-ed). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bunyi akhir mana yang perlu diperbaiki.";
 
@@ -250,14 +251,26 @@ export default function FinalSoundDEdPage() {
   const pastEndingItemRefs = useRef<Array<HTMLLIElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
-  const [openSections, setOpenSections] = useState({
-    concept: false,
-    wordBank: false,
-    pastEndings: false,
-    rulesTable: false,
-    commonMistakes: false,
-    practice: false,
-    prompt: false,
+  const [openSections, setOpenSections] = useState(() => {
+    const initialState = {
+      concept: false,
+      wordBank: false,
+      pastEndings: false,
+      rulesTable: false,
+      commonMistakes: false,
+      practice: false,
+      prompt: false,
+    };
+    if (typeof window === 'undefined') return initialState;
+    try {
+      const saved = window.localStorage.getItem(D_ED_COMMON_MISTAKES_OPEN_KEY);
+      if (saved === '1' || saved === '0') {
+        return { ...initialState, commonMistakes: saved === '1' };
+      }
+    } catch {
+      // ignore corrupted cache and keep default collapsed state
+    }
+    return initialState;
   });
 
   const calcPronunciationAverage = useCallback((progress: Record<string, number>) => {
@@ -580,6 +593,18 @@ export default function FinalSoundDEdPage() {
     },
     [],
   );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(
+        D_ED_COMMON_MISTAKES_OPEN_KEY,
+        openSections.commonMistakes ? '1' : '0',
+      );
+    } catch {
+      // ignore storage write failures
+    }
+  }, [openSections.commonMistakes]);
 
   useEffect(() => () => stopWordBankPlayAll(), [stopWordBankPlayAll]);
 

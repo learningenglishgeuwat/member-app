@@ -247,14 +247,14 @@ const RecordingControlsButtonGrammarForSpeaking: React.FC<RecordingControlsButto
                   <strong>Gunakan prompt yang ada di section prompt.</strong>
                 </p>
                 <p className="text-sm text-cyber-cyan mb-2">
-                  <strong>Langkah Selanjutnya:</strong> Buka Gemini di{' '}
+                  <strong>Langkah Selanjutnya:</strong> Buka{' '}
                   <a
                     href="https://gemini.google.com/app"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors"
                   >
-                    https://gemini.google.com/app
+                    Gemini
                   </a>{' '}
                   atau AI assistant lain, lalu upload rekaman Anda untuk dievaluasi.
                 </p>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-05T00:24:57.852Z",
+  "generatedAt": "2026-03-05T08:59:20.320Z",
   "routes": [
     {
       "id": "dashboard",
@@ -2793,7 +2793,6 @@
       "scope": "skill",
       "keywords": [
         "vocabulary",
-        "topics",
         "/skill/vocabulary",
         "topic",
         "list",
@@ -5971,4 +5970,3 @@
     }
   ]
 }
-

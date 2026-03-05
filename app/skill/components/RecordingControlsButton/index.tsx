@@ -305,7 +305,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               </div>
               <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
                 <p className="text-sm text-cyber-cyan mb-2">
-                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a data-tour="recording-gemini-link" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">https://gemini.google.com/app</a> atau AI assistant lainnya
+                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a data-tour="recording-gemini-link" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">Gemini</a> atau AI assistant lainnya
                 </p>
                 <p className="text-sm text-cyber-cyan mb-2">
                   Upload rekaman audio Anda
