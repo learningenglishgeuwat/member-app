@@ -150,7 +150,7 @@ export function stopSpeechSynthesisPlayback(): void {
 }
 
 export async function prepareDialogVoices(): Promise<void> {
-  await waitForVoices();
+  await waitForVoices(3000);
 }
 
 export function createDialogUtterance(
@@ -159,11 +159,23 @@ export function createDialogUtterance(
 ): SpeechSynthesisUtterance {
   const normalizedText = normalizeSpellingForTts(text);
   const preferredEnglish = speaker === 'partner' ? 'en-GB' : 'en-US';
+  const safeLang = 'en-US';
+  let voice = getPreferredVoiceForSpeaker(speaker);
+
+  // Harden against device fallback to non-English voices.
+  if (!voice || !voice.lang.toLowerCase().startsWith('en')) {
+    voice = getPreferredEnglishVoice('en-US');
+  }
+
+  const resolvedLang = voice?.lang?.toLowerCase().startsWith('en')
+    ? voice.lang
+    : safeLang;
+
   const utterance =
     createUtterance(normalizedText, {
-      lang: preferredEnglish,
+      lang: resolvedLang,
       preferredEnglish,
-      rate: 0.85,
+      rate: speaker === 'partner' ? 0.95 : 0.9,
       pitch: speaker === 'partner' ? 0.92 : 1,
       volume: 1,
       cancelBeforeSpeak: false,
@@ -171,8 +183,8 @@ export function createDialogUtterance(
     (() => {
       if (typeof window !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined') {
         const fallback = new window.SpeechSynthesisUtterance(normalizedText);
-        fallback.lang = preferredEnglish;
-        fallback.rate = 0.85;
+        fallback.lang = resolvedLang;
+        fallback.rate = speaker === 'partner' ? 0.95 : 0.9;
         fallback.pitch = speaker === 'partner' ? 0.92 : 1;
         fallback.volume = 1;
         return fallback;
@@ -180,10 +192,11 @@ export function createDialogUtterance(
       throw new Error('Speech synthesis is not supported in this environment.');
     })();
 
-  const voice = getPreferredVoiceForSpeaker(speaker);
   if (voice) {
     utterance.voice = voice;
     utterance.lang = voice.lang;
+  } else {
+    utterance.lang = resolvedLang;
   }
 
   return utterance;
