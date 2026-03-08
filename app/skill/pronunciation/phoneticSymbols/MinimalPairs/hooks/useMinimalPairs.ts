@@ -11,6 +11,42 @@ const readSavedState = (pairId: string): boolean => {
   return Boolean(progress[`minimalPairs_${pairId}`]);
 };
 
+const isWordSpeechKey = (speechKey: string): boolean => speechKey.startsWith('word-');
+
+const getUtteranceOptions = (
+  speechKey: string,
+  lang: SpeechLang,
+): {
+  lang?: string;
+  preferredEnglish?: 'en-US' | 'en-GB';
+  rate: number;
+  pitch: number;
+  volume: number;
+  cancelBeforeSpeak: boolean;
+} => {
+  const isWordKey = isWordSpeechKey(speechKey);
+  const base = {
+    rate: isWordKey ? 0.86 : 0.82,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: false,
+  };
+
+  // Keep explicit non-default language behavior (e.g. en-GB/id-ID),
+  // but let default en-US words follow global best-English voice selection.
+  if (isWordKey && lang === 'en-US') {
+    return {
+      ...base,
+      preferredEnglish: 'en-US',
+    };
+  }
+
+  return {
+    ...base,
+    lang,
+  };
+};
+
 export const useMinimalPairs = () => {
   const [selectedCategory, setSelectedCategory] = useState<MinimalPairCategory>('vowel');
   const [pairsInCategory, setPairsInCategory] = useState<MinimalPairData[]>([]);
@@ -22,14 +58,23 @@ export const useMinimalPairs = () => {
   const [isCategoryLoading, setIsCategoryLoading] = useState(false);
   const speechElementRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   const playbackSessionRef = useRef(0);
+  const queueTimeoutRef = useRef<number | null>(null);
 
   const selectedPair = useMemo(
     () => pairsInCategory.find((pair) => pair.id === selectedPairId),
     [pairsInCategory, selectedPairId],
   );
 
+  const clearQueueTimeout = () => {
+    if (queueTimeoutRef.current) {
+      window.clearTimeout(queueTimeoutRef.current);
+      queueTimeoutRef.current = null;
+    }
+  };
+
   const stopPlayback = () => {
     playbackSessionRef.current += 1;
+    clearQueueTimeout();
     stopSpeech();
     setActiveSpeechKey(null);
     setIsPlayingWords(false);
@@ -64,17 +109,11 @@ export const useMinimalPairs = () => {
 
   const speakText = (text: string, speechKey: string, lang: SpeechLang = 'en-US') => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text) return;
-    stopSpeech();
-    setIsPlayingWords(false);
-    setIsPlayingSentences(false);
+    stopPlayback();
     setActiveSpeechKey(speechKey);
 
     const utterance = createUtterance(text, {
-      lang,
-      rate: 0.82,
-      pitch: 1,
-      volume: 1,
-      cancelBeforeSpeak: false,
+      ...getUtteranceOptions(speechKey, lang),
     });
     if (!utterance) return;
 
@@ -99,6 +138,7 @@ export const useMinimalPairs = () => {
 
   const playQueue = async (items: Array<{ text: string; key: string; lang: SpeechLang }>, done: () => void) => {
     if (typeof window === 'undefined' || !items.length) return;
+    clearQueueTimeout();
     stopSpeech();
     const sessionId = playbackSessionRef.current;
 
@@ -115,27 +155,23 @@ export const useMinimalPairs = () => {
       scrollToSpeechKey(current.key);
 
       const utterance = createUtterance(current.text, {
-        lang: current.lang,
-        rate: 0.82,
-        pitch: 1,
-        volume: 1,
-        cancelBeforeSpeak: false,
+        ...getUtteranceOptions(current.key, current.lang),
       });
       if (!utterance) {
         index += 1;
-        window.setTimeout(playNext, 260);
+        queueTimeoutRef.current = window.setTimeout(playNext, 260);
         return;
       }
 
       utterance.onend = () => {
         if (sessionId !== playbackSessionRef.current) return;
         index += 1;
-        window.setTimeout(playNext, 260);
+        queueTimeoutRef.current = window.setTimeout(playNext, 260);
       };
       utterance.onerror = () => {
         if (sessionId !== playbackSessionRef.current) return;
         index += 1;
-        window.setTimeout(playNext, 260);
+        queueTimeoutRef.current = window.setTimeout(playNext, 260);
       };
 
       window.speechSynthesis.speak(utterance);

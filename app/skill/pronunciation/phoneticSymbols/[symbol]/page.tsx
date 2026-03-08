@@ -150,6 +150,27 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
 
 const ACCENT_EVALUATION_PROMPT = `Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif ('?? Sangat bagus ??Bagus', '?? Perlu Sedikit Perbaikan', atau '?? Perlu Perbaikan'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.`;
 
+const BETWEEN_PLAY_ALL_WORDS_MS = 220;
+
+function addWordPauseForSpeech(text: string): string {
+  const normalizedText = text.trim().replace(/\s+/g, ' ');
+  if (!normalizedText.includes(' ')) return normalizedText;
+  return normalizedText.split(' ').join(', ');
+}
+
+async function speakWithSymbolDetailVoice(text: string): Promise<void> {
+  if (!isSpeechSynthesisSupported() || !text.trim()) return;
+  const speechText = addWordPauseForSpeech(text);
+
+  await speakText(speechText, {
+    preferredEnglish: 'en-US',
+    rate: 0.86,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: false,
+  });
+}
+
 const SymbolDetailPage: React.FC = () => {
   const { symbol } = useParams<{
     symbol: string;
@@ -411,15 +432,14 @@ const SymbolDetailPage: React.FC = () => {
           });
         }
 
-        await speakText(example.word, {
-          lang: 'en-US',
-          rate: 0.8,
-          pitch: 1,
-          volume: 1,
-          cancelBeforeSpeak: false,
-        });
+        await speakWithSymbolDetailVoice(example.word);
 
         if (currentSession !== playSessionRef.current) return;
+        if (currentIndex < symbolData.examples.length - 1) {
+          await new Promise((resolve) => {
+            window.setTimeout(resolve, BETWEEN_PLAY_ALL_WORDS_MS);
+          });
+        }
       }
 
       if (currentSession === playSessionRef.current) {
@@ -440,13 +460,7 @@ const SymbolDetailPage: React.FC = () => {
     setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
 
     void (async () => {
-      await speakText(word, {
-        lang: 'en-US',
-        rate: 0.8,
-        pitch: 1,
-        volume: 1,
-        cancelBeforeSpeak: false,
-      });
+      await speakWithSymbolDetailVoice(word);
 
       if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);
@@ -464,14 +478,7 @@ const SymbolDetailPage: React.FC = () => {
 
     const currentSession = playSessionRef.current;
     void (async () => {
-      await speakText(word, {
-        lang: 'en-US',
-        preferredEnglish: 'en-US',
-        rate: 0.8,
-        pitch: 1,
-        volume: 1,
-        cancelBeforeSpeak: false,
-      });
+      await speakWithSymbolDetailVoice(word);
 
       if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);

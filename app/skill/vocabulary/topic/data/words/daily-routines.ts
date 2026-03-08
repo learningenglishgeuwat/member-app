@@ -43,7 +43,7 @@ export const VOCAB_TOPIC_DAILY_ROUTINES_WORDS: VocabularyItem[] = [
   { id: 'daily-routines-w40', topicId: 'daily-routines', word: 'shop for groceries', ipa: '/ʃɑp fər ˈɡroʊsəriz/', meaningId: 'belanja bahan makanan', exampleEn: 'We shop for groceries on Friday.' },
   { id: 'daily-routines-w41', topicId: 'daily-routines', word: 'return home', ipa: '/rɪˈtɜrn hoʊm/', meaningId: 'pulang ke rumah', exampleEn: 'I return home at five.' },
   { id: 'daily-routines-w42', topicId: 'daily-routines', word: 'spend time with family', ipa: '/spend taɪm wɪð ˈfæməli/', meaningId: 'menghabiskan waktu dengan keluarga', exampleEn: 'We spend time with family on weekends.' },
-  { id: 'daily-routines-w43', topicId: 'daily-routines', word: 'help my parents', ipa: '/help maɪ ˈperənts/', meaningId: 'membantu orang tua', exampleEn: 'I help my parents at home.' },
+  { id: 'daily-routines-w43', topicId: 'daily-routines', word: 'help my parents', ipa: '/help maɪ ˈpɛrənts/', meaningId: 'membantu orang tua', exampleEn: 'I help my parents at home.' },
   { id: 'daily-routines-w44', topicId: 'daily-routines', word: 'set an alarm', ipa: '/set ən əˈlɑrm/', meaningId: 'memasang alarm', exampleEn: 'I set an alarm before sleeping.' },
   { id: 'daily-routines-w45', topicId: 'daily-routines', word: 'get ready for bed', ipa: '/ɡet ˈredi fər bed/', meaningId: 'bersiap tidur', exampleEn: 'The kids get ready for bed at nine.' },
   { id: 'daily-routines-w46', topicId: 'daily-routines', word: 'go to bed', ipa: '/ɡoʊ tə bed/', meaningId: 'tidur', exampleEn: 'I go to bed at ten.' },

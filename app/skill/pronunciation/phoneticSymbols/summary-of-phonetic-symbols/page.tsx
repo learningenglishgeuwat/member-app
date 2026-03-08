@@ -109,6 +109,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
   const [activePlayGroup, setActivePlayGroup] = useState<string | null>(null);
   const [activeSpeakingExampleKey, setActiveSpeakingExampleKey] = useState<string | null>(null);
   const playGroupRef = useRef<string | null>(null);
+  const playSessionRef = useRef(0);
   const exampleCardRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const activeSymbols = useMemo(() => SYMBOL_DATA[activeTab], [activeTab]);
 
@@ -133,6 +134,8 @@ export default function SummaryOfPhoneticSymbolsPage() {
   useEffect(() => {
     void waitForVoices();
     return () => {
+      playSessionRef.current += 1;
+      playGroupRef.current = null;
       stopSpeech();
       setActiveSpeakingExampleKey(null);
     };
@@ -140,6 +143,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
 
   const handleTabChange = (nextTab: TabKey) => {
     if (nextTab === activeTab) return;
+    playSessionRef.current += 1;
     stopSpeech();
     setActivePlayGroup(null);
     setActiveSpeakingExampleKey(null);
@@ -149,6 +153,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
 
   const speakWord = async (word: string, exampleKey?: string) => {
     if (!isSpeechSynthesisSupported()) return;
+    playSessionRef.current += 1;
     stopSpeech();
     setActivePlayGroup(null);
     setActiveSpeakingExampleKey(exampleKey ?? null);
@@ -157,8 +162,8 @@ export default function SummaryOfPhoneticSymbolsPage() {
     }
     playGroupRef.current = null;
     await speakText(word, {
-      lang: 'en-US',
-      rate: 0.82,
+      preferredEnglish: 'en-US',
+      rate: 0.86,
       pitch: 1,
       volume: 1,
       cancelBeforeSpeak: false,
@@ -170,6 +175,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
     if (!isSpeechSynthesisSupported() || words.length === 0) return;
 
     if (activePlayGroup === groupKey) {
+      playSessionRef.current += 1;
       stopSpeech();
       setActivePlayGroup(null);
       setActiveSpeakingExampleKey(null);
@@ -177,24 +183,27 @@ export default function SummaryOfPhoneticSymbolsPage() {
       return;
     }
 
+    playSessionRef.current += 1;
+    const sessionId = playSessionRef.current;
     stopSpeech();
     setActivePlayGroup(groupKey);
     playGroupRef.current = groupKey;
 
     for (const currentWord of words) {
-      if (playGroupRef.current !== groupKey) break;
+      if (playSessionRef.current !== sessionId || playGroupRef.current !== groupKey) break;
       setActiveSpeakingExampleKey(currentWord.key);
       scrollToExampleCard(currentWord.key);
       await speakText(currentWord.word, {
-        lang: 'en-US',
-        rate: 0.82,
+        preferredEnglish: 'en-US',
+        rate: 0.86,
         pitch: 1,
         volume: 1,
         cancelBeforeSpeak: false,
       });
+      if (playSessionRef.current !== sessionId || playGroupRef.current !== groupKey) break;
     }
 
-    if (playGroupRef.current === groupKey) {
+    if (playSessionRef.current === sessionId && playGroupRef.current === groupKey) {
       setActivePlayGroup(null);
       setActiveSpeakingExampleKey(null);
       playGroupRef.current = null;
