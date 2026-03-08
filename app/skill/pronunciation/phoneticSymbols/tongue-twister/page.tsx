@@ -11,6 +11,8 @@ export default function TongueTwisterPage() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const speakSessionRef = useRef(0);
+  const lockedPeterVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
   const activeTwister = useMemo(
     () => TONGUE_TWISTERS.find((item) => item.id === selectedId) ?? TONGUE_TWISTERS[0],
@@ -23,6 +25,10 @@ export default function TongueTwisterPage() {
         .split(/(?<=[.!?])\s+/)
         .map((line) => line.trim())
         .filter(Boolean),
+    [activeTwister.text],
+  );
+  const peterPiperText = useMemo(
+    () => TONGUE_TWISTERS.find((item) => item.id === 'peter-piper')?.text ?? activeTwister.text,
     [activeTwister.text],
   );
 
@@ -50,27 +56,66 @@ export default function TongueTwisterPage() {
     };
   }, []);
 
-  const handleSpeakTwister = () => {
+  const handleSpeakTwister = useCallback(() => {
     if (!isSpeechSynthesisSupported()) return;
+    speakSessionRef.current += 1;
+    const sessionId = speakSessionRef.current;
     stopSpeech();
+    setIsSpeaking(true);
 
-    const utterance = createUtterance(activeTwister.text, {
-      lang: 'en-US',
-      rate: 0.82,
-      pitch: 1,
-      volume: 1,
-      cancelBeforeSpeak: false,
-    });
-    if (!utterance) return;
+    void (async () => {
+      await waitForVoices();
+      if (sessionId !== speakSessionRef.current) return;
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+      if (!lockedPeterVoiceRef.current) {
+        const peterProbe = createUtterance(peterPiperText, {
+          lang: 'en-US',
+          rate: 0.82,
+          pitch: 1,
+          volume: 1,
+          cancelBeforeSpeak: false,
+        });
+        if (peterProbe?.voice) {
+          lockedPeterVoiceRef.current = peterProbe.voice;
+        }
+      }
 
-    window.speechSynthesis.speak(utterance);
-  };
+      const utterance = createUtterance(activeTwister.text, {
+        lang: 'en-US',
+        rate: 0.82,
+        pitch: 1,
+        volume: 1,
+        cancelBeforeSpeak: false,
+      });
+      if (!utterance) {
+        if (sessionId === speakSessionRef.current) setIsSpeaking(false);
+        return;
+      }
+
+      if (lockedPeterVoiceRef.current) {
+        utterance.voice = lockedPeterVoiceRef.current;
+        utterance.lang = lockedPeterVoiceRef.current.lang;
+      }
+
+      utterance.onstart = () => {
+        if (sessionId !== speakSessionRef.current) return;
+        setIsSpeaking(true);
+      };
+      utterance.onend = () => {
+        if (sessionId !== speakSessionRef.current) return;
+        setIsSpeaking(false);
+      };
+      utterance.onerror = () => {
+        if (sessionId !== speakSessionRef.current) return;
+        setIsSpeaking(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    })();
+  }, [activeTwister.text, peterPiperText]);
 
   const handleStopSpeak = useCallback(() => {
+    speakSessionRef.current += 1;
     stopSpeech();
     setIsSpeaking(false);
   }, []);
