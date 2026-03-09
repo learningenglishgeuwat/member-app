@@ -3,7 +3,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from '@/lib/auth'
-import { supabase } from '@/lib/supabase'
+import { supabaseLoose } from '@/lib/supabase'
 import { getDeviceId } from '@/lib/device'
 import { FormBackground } from './ui/FormBackground'
 import { LoginHeader } from './ui/LoginHeader'
@@ -96,7 +96,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       const deviceId = getDeviceId()
       if (deviceId) {
         const deviceLabel = /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
-        const { error: deviceError } = await (supabase as any).rpc('register_device', {
+        const { error: deviceError } = await supabaseLoose.rpc('register_device', {
           p_device_id: deviceId,
           p_label: deviceLabel,
           p_user_agent: navigator.userAgent,
@@ -107,7 +107,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           if (deviceError.message?.includes('MAX_DEVICE_REACHED')) {
             const userId = result.userId
             if (userId) {
-              const { data: recheckDeviceRaw } = await supabase
+              const { data: recheckDeviceRaw } = await supabaseLoose
                 .from('devices')
                 .select('id, revoked')
                 .eq('user_id', userId)

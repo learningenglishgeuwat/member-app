@@ -17,13 +17,16 @@ const DeviceApproveContent = lazy(() => import('./components/DeviceApproveConten
 const VIEW_IDS = ['dashboard', 'progress', 'achievements', 'notifications', 'tutorial', 'settings', 'device-approve', 'help-support'] as const
 type ViewId = (typeof VIEW_IDS)[number]
 const VALID_VIEWS = new Set<ViewId>(VIEW_IDS)
+const LOCKED_VIEWS = new Set<ViewId>(['achievements'])
 const DASHBOARD_VIEW_EVENT = 'geuwat:dashboard-view'
 
 const resolveSavedDashboardView = (): ViewId | null => {
   if (typeof window === 'undefined') return null
   const savedView = window.localStorage.getItem('dashboardCurrentView')
   if (!savedView || !VALID_VIEWS.has(savedView as ViewId)) return null
-  return savedView as ViewId
+  const resolvedView = savedView as ViewId
+  if (LOCKED_VIEWS.has(resolvedView)) return null
+  return resolvedView
 }
 
 function DashboardContent() {
@@ -40,6 +43,7 @@ function DashboardContent() {
   const handleViewChange = useCallback((nextView: string) => {
     if (!VALID_VIEWS.has(nextView as ViewId)) return
     const safeView = nextView as ViewId
+    if (LOCKED_VIEWS.has(safeView)) return
 
     setMountedViews(prev => {
       if (prev.has(safeView)) return prev

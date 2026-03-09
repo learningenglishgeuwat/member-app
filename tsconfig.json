@@ -38,12 +38,6 @@
     ".next_build/dev/types/**/*.ts",
     ".next_dev/types/**/*.ts",
     ".next_dev/dev/types/**/*.ts",
-    ".x/types/**/*.ts",
-    ".x/dev/types/**/*.ts",
-    ".d/types/**/*.ts",
-    ".d/dev/types/**/*.ts",
-    "d/types/**/*.ts",
-    "d/dev/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
@@ -51,6 +45,12 @@
     ".next",
     ".next_build",
     ".next_dev",
+    ".x",
+    ".x/**",
+    ".d",
+    ".d/**",
+    "d",
+    "d/**",
     "backups",
     "backups/**/*"
   ]

@@ -1,5 +1,5 @@
-import { supabase } from './supabase';
-import type { Tier, WithdrawRequest as WithdrawRequestDB } from '@/types/database';
+import { supabase, supabaseLoose } from './supabase';
+import type { Tier } from '@/types/database';
 
 const TIER_CONFIG_CACHE_KEY = 'member_tier_config_cache_v1';
 const TIER_CONFIG_CACHE_TTL_MS = 30 * 60 * 1000;
@@ -122,11 +122,11 @@ export async function submitWithdrawal(
 ): Promise<WithdrawalResult> {
   try {
     // Check user balance
-    const { data: userData, error: userError } = await supabase
+    const { data: userData, error: userError } = await supabaseLoose
       .from('users')
       .select('balance')
       .eq('id', userId)
-      .single() as any;
+      .single();
 
     if (userError || !userData) {
       return {
@@ -149,15 +149,15 @@ export async function submitWithdrawal(
     }
 
     // Create withdrawal record
-    const { error: withdrawalError } = await (supabase as any)
+    const { error: withdrawalError } = await supabaseLoose
       .from('withdraw_requests')
       .insert({
         user_id: userId,
-        amount: withdrawalAmount,
+        amount: String(withdrawalAmount),
         wallet_type: withdrawalData.walletType || null,
         status: 'pending',
         created_at: new Date().toISOString()
-      }) as any;
+      });
 
     if (withdrawalError) {
       console.error('Error creating withdrawal record:', withdrawalError);
@@ -186,7 +186,7 @@ export async function submitWithdrawal(
  */
 export async function getLatestWithdrawRequest(userId: string): Promise<WithdrawRequestRow | null> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseLoose
       .from('withdraw_requests')
       .select('id, user_id, amount, wallet_type, status, created_at')
       .eq('user_id', userId)
@@ -200,7 +200,10 @@ export async function getLatestWithdrawRequest(userId: string): Promise<Withdraw
     }
 
     if (!data) return null;
-    return data as WithdrawRequestRow;
+    return {
+      ...data,
+      amount: Number((data as { amount?: string }).amount ?? 0),
+    } as WithdrawRequestRow;
   } catch (error) {
     console.error('Error in getLatestWithdrawRequest:', error);
     return null;
@@ -244,11 +247,11 @@ export async function getTierConfig(options?: { forceRefresh?: boolean }): Promi
  */
 export async function getUserBalance(userId: string): Promise<number> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseLoose
       .from('users')
       .select('balance')
       .eq('id', userId)
-      .single() as any;
+      .single();
 
     if (error || !data) {
       console.error('Error fetching user balance:', error);

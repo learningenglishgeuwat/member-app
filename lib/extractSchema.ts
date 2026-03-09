@@ -1,4 +1,4 @@
-import { supabase, extractDatabaseSchema, testConnection } from './supabase'
+import { extractDatabaseSchema, testConnection } from './supabase'
 
 // Test connection and extract schema
 async function main() {
