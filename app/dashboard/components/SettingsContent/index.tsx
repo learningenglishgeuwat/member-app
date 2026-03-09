@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, ArrowRight, Info, MessageCircle } from 'lucide-react';
+import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, ArrowRight, Info, MessageCircle, Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
 import { createExtensionRequest, getLatestExtensionRequest, type ExtensionRequestStatus } from '@/lib/extensionRequests';
+
+const EXTENSION_REQUEST_LOCKED = true;
 
 const SettingsContent: React.FC = () => {
   const { user } = useAuth();
@@ -56,7 +58,7 @@ const SettingsContent: React.FC = () => {
   };
 
   const loadLatestExtensionStatus = useCallback(async () => {
-    if (!user?.id) return;
+    if (EXTENSION_REQUEST_LOCKED || !user?.id) return;
     setExtensionStatusLoading(true);
     const latest = await getLatestExtensionRequest(user.id);
     if (latest) {
@@ -74,7 +76,7 @@ const SettingsContent: React.FC = () => {
   }, [loadLatestExtensionStatus]);
 
   const handleExtensionRequest = async () => {
-    if (!user) return;
+    if (EXTENSION_REQUEST_LOCKED || !user) return;
     
     setExtensionLoading(true);
     try {
@@ -111,6 +113,9 @@ const SettingsContent: React.FC = () => {
   };
 
   const getExtensionStatusColor = () => {
+    if (EXTENSION_REQUEST_LOCKED) {
+      return 'text-slate-300 bg-slate-800/50 border-slate-700/50';
+    }
     switch (extensionStatus) {
       case 'pending':
         return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
@@ -124,6 +129,7 @@ const SettingsContent: React.FC = () => {
   };
 
   const getExtensionStatusText = () => {
+    if (EXTENSION_REQUEST_LOCKED) return 'Locked';
     switch (extensionStatus) {
       case 'pending':
         return 'Pending';
@@ -194,7 +200,7 @@ const SettingsContent: React.FC = () => {
                 <span className={`px-2 py-1 rounded-full text-[8px] sm:text-[9px] font-medium border ${getExtensionStatusColor()}`}>
                   {getExtensionStatusText()}
                 </span>
-                {extensionRequestId && (
+                {!EXTENSION_REQUEST_LOCKED && extensionRequestId && (
                   <span className="text-[10px] text-slate-500 font-mono">#{extensionRequestId.slice(0, 8)}</span>
                 )}
               </div>
@@ -226,17 +232,29 @@ const SettingsContent: React.FC = () => {
           {/* Extension Button */}
           <div className="mt-5 sm:mt-6">
             <button
-              onClick={() => setShowExtensionModal(true)}
-              disabled={extensionStatus === 'pending'}
+              onClick={() => {
+                if (EXTENSION_REQUEST_LOCKED) return;
+                setShowExtensionModal(true);
+              }}
+              disabled={EXTENSION_REQUEST_LOCKED || extensionStatus === 'pending'}
               className={`w-full px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-colors flex items-center justify-center gap-2 ${
-                extensionStatus === 'pending'
+                EXTENSION_REQUEST_LOCKED || extensionStatus === 'pending'
                   ? 'bg-slate-700 text-slate-400 cursor-not-allowed'
                   : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-500 hover:to-pink-500'
               }`}
             >
-              <Calendar className="w-4 h-4" />
-              {extensionStatus === 'pending' ? 'Extension Request Pending' : 'Request Extension'}
+              {EXTENSION_REQUEST_LOCKED ? <Lock className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
+              {EXTENSION_REQUEST_LOCKED
+                ? 'Extension Request Locked'
+                : extensionStatus === 'pending'
+                ? 'Extension Request Pending'
+                : 'Request Extension'}
             </button>
+            {EXTENSION_REQUEST_LOCKED && (
+              <p className="mt-2 text-center text-[11px] sm:text-xs text-slate-400">
+                Fitur extension request sedang dikunci sementara.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -338,7 +356,7 @@ const SettingsContent: React.FC = () => {
       </div>
       
       {/* Extension Modal */}
-      {showExtensionModal && (
+      {!EXTENSION_REQUEST_LOCKED && showExtensionModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4">
           <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md w-full">
             <div className="flex justify-between items-center mb-4">

@@ -7,12 +7,12 @@ import {
 import { getVocabularyWordsByTopic } from '../../topic/data/words';
 
 type FlashcardTopicParams = { topicId: string };
-type FlashcardTopicPageProps = { params: FlashcardTopicParams | Promise<FlashcardTopicParams> };
+type FlashcardTopicPageProps = { params: Promise<FlashcardTopicParams> };
 
 export default async function VocabularyTopicFlashcardPage({
   params,
 }: FlashcardTopicPageProps) {
-  const resolvedParams = await Promise.resolve(params);
+  const resolvedParams = await params;
   const topicParam = resolvedParams.topicId;
 
   if (!isVocabularyTopicId(topicParam)) {

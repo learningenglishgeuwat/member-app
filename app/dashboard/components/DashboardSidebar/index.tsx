@@ -8,6 +8,7 @@ import {
   BarChart2, 
   Settings, 
   LogOut, 
+  Lock,
   CheckCircle,
   HelpCircle,
   Bell,
@@ -70,14 +71,14 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
   const TierIcon = currentTierInfo.icon
   
   const menuItems = [
-    { id: 'dashboard', label: 'Start Journey', icon: Compass },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'progress', label: 'Progress', icon: BarChart2 },
-    { id: 'achievements', label: 'Achievements', icon: Trophy },
-    { id: 'tutorial', label: 'Tutorial', icon: HelpCircle },
-    { id: 'settings', label: 'Settings', icon: Settings },
-    { id: 'device-approve', label: 'Approve Device', icon: CheckCircle },
-    { id: 'help-support', label: 'Help & Support', icon: HelpCircle },
+    { id: 'dashboard', label: 'Start Journey', icon: Compass, locked: false },
+    { id: 'notifications', label: 'Notifications', icon: Bell, locked: false },
+    { id: 'progress', label: 'Progress', icon: BarChart2, locked: false },
+    { id: 'achievements', label: 'Achievements', icon: Trophy, locked: true },
+    { id: 'tutorial', label: 'Tutorial', icon: HelpCircle, locked: false },
+    { id: 'settings', label: 'Settings', icon: Settings, locked: false },
+    { id: 'device-approve', label: 'Approve Device', icon: CheckCircle, locked: false },
+    { id: 'help-support', label: 'Help & Support', icon: HelpCircle, locked: false },
   ]
 
   const handleLogout = async () => {
@@ -147,27 +148,38 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
           <ul className="space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
+              const isLocked = item.locked;
               return (
                 <li key={item.id}>
                   <button
                     onClick={() => {
+                      if (isLocked) return;
                       setCurrentView(item.id);
                       setIsOpen(false);
                     }}
+                    disabled={isLocked}
                     className={`
                       w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/60 focus-visible:ring-offset-0
-                      ${isActive(item.id)
+                      ${isLocked
+                        ? 'text-slate-500 bg-slate-900/40 border border-slate-800/60 cursor-not-allowed'
+                        : isActive(item.id)
                         ? 'bg-purple-500/25 text-purple-200 border border-purple-500/40'
                         : 'text-slate-400 hover:text-white hover:bg-white/10'
                       }
                     `}
                     data-tour={`dashboard-sidebar-item-${item.id}`}
+                    aria-disabled={isLocked}
                     aria-current={isActive(item.id) ? 'page' : undefined}
                   >
                     <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="font-medium">{item.label}</span>
-                    {isActive(item.id) && (
+                    {isLocked ? (
+                      <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-slate-700/70 bg-slate-800/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-slate-300">
+                        <Lock className="h-3 w-3" />
+                        Locked
+                      </span>
+                    ) : isActive(item.id) && (
                       <div className="w-2 h-2 bg-purple-400 rounded-full ml-auto"></div>
                     )}
                   </button>

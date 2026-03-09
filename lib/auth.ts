@@ -1,5 +1,5 @@
-import { supabase } from './supabase'
-import type { User, UserInsert } from '@/types/database'
+import { supabase, supabaseLoose } from './supabase'
+import type { User } from '@/types/database'
 
 // Sign up function
 export async function signUp(email: string, password: string, userData: Partial<User>) {
@@ -16,7 +16,7 @@ export async function signUp(email: string, password: string, userData: Partial<
 
     if (authData.user) {
       // Create user record in our users table
-      const { error: userError } = await supabase
+      const { error: userError } = await supabaseLoose
         .from('users')
         .insert({
           email: userData.email || email,
@@ -34,7 +34,7 @@ export async function signUp(email: string, password: string, userData: Partial<
           membership_start: null,
           subscription_expires_at: null,
           updated_at: null,
-        } as any)
+        })
 
       if (userError) {
         console.error('Error creating user record:', userError)

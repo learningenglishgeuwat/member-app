@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase, supabaseLoose } from './supabase'
 import type { User, UserUpdate } from '@/types/database'
 
 // Get user profile
@@ -25,7 +25,7 @@ export async function getUserProfile(userId: string): Promise<{ user: User | nul
 // Update user profile
 export async function updateUserProfile(userId: string, updates: UserUpdate): Promise<{ user: User | null; error: string | null }> {
   try {
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabaseLoose
       .from('users')
       .update(updates)
       .eq('id', userId)

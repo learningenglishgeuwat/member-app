@@ -55,6 +55,7 @@ const TutorialContent: React.FC = () => {
       difficulty: "Beginner",
       type: "interactive",
       completed: true,
+      locked: true,
       icon: Trophy
     },
     {

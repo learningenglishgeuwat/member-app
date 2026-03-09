@@ -54,6 +54,7 @@ const ALPHABET_EVALUATION_PROMPT =
 
 const AlphabetPage: React.FC = () => {
   const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [isLoopAlphabetEnabled, setIsLoopAlphabetEnabled] = useState(false);
   const [isPlayingPracticeAll, setIsPlayingPracticeAll] = useState(false);
   const [currentPlayingLetter, setCurrentPlayingLetter] = useState<string | null>(null);
   const [currentPlayingPracticeCountry, setCurrentPlayingPracticeCountry] = useState<string | null>(null);
@@ -74,8 +75,13 @@ const AlphabetPage: React.FC = () => {
   const [spellingStatus, setSpellingStatus] = useState<'idle' | 'correct' | 'wrong' | 'empty'>('idle');
   
   const isPlayingRef = useRef(false);
+  const isLoopAlphabetEnabledRef = useRef(false);
   const isPlayingPracticeRef = useRef(false);
   const promptCopyTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    isLoopAlphabetEnabledRef.current = isLoopAlphabetEnabled;
+  }, [isLoopAlphabetEnabled]);
 
   // Handle hydration
   useLayoutEffect(() => {
@@ -178,24 +184,30 @@ const AlphabetPage: React.FC = () => {
 
     isPlayingRef.current = true;
     setIsPlayingAll(true);
-    
-    for (const item of ALPHABET_DATA) {
-      if (!isPlayingRef.current) break;
 
-      setCurrentPlayingLetter(item.letter);
-      try {
-        const didSpeak = await speakEnglishText(item.letter, 0.8, false, false);
-        if (!didSpeak) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+    do {
+      for (const item of ALPHABET_DATA) {
+        if (!isPlayingRef.current) break;
+
+        setCurrentPlayingLetter(item.letter);
+        try {
+          const didSpeak = await speakEnglishText(item.letter, 0.8, false, false);
+          if (!didSpeak) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+
+          if (isPlayingRef.current) {
+            await new Promise(resolve => setTimeout(resolve, 300));
+          }
+        } catch (e) {
+          console.error(e);
         }
-        
-        if (isPlayingRef.current) {
-          await new Promise(resolve => setTimeout(resolve, 300));
-        }
-      } catch (e) {
-        console.error(e);
       }
-    }
+
+      if (isPlayingRef.current && isLoopAlphabetEnabledRef.current) {
+        await new Promise(resolve => setTimeout(resolve, 450));
+      }
+    } while (isPlayingRef.current && isLoopAlphabetEnabledRef.current);
     
     stopAlphabetPlayAll();
   };
@@ -506,6 +518,16 @@ const AlphabetPage: React.FC = () => {
         
         {/* Play All Button */}
         <div className="flex justify-center mb-6 sm:mb-8 md:mb-12">
+          <div className="alphabet-play-controls">
+            <button
+              type="button"
+              className={`alphabet-loop-toggle-btn ${isLoopAlphabetEnabled ? 'active' : ''}`}
+              aria-pressed={isLoopAlphabetEnabled}
+              onClick={() => setIsLoopAlphabetEnabled((prev) => !prev)}
+            >
+              {isLoopAlphabetEnabled ? 'Loop: On' : 'Loop: Off'}
+            </button>
+
           <button 
             onClick={handlePlayAll}
             data-tour="alphabet-play-all"
@@ -525,6 +547,7 @@ const AlphabetPage: React.FC = () => {
               </>
             )}
           </button>
+          </div>
         </div>
 
         {/* Save Progress Button */}

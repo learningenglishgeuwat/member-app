@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { supabase, supabaseLoose } from './supabase';
 
 export type ExtensionRequestStatus = 'pending' | 'approved' | 'rejected';
 
@@ -40,7 +40,7 @@ export async function getLatestExtensionRequest(userId: string): Promise<Extensi
 
 export async function createExtensionRequest(input: CreateExtensionRequestInput): Promise<ExtensionRequest | null> {
   const { userId, paymentMethod = 'gopay', proofUrl = null, note = null } = input;
-  const { data, error } = await (supabase as any)
+  const { data, error } = await supabaseLoose
     .from('extension_requests')
     .insert({
       user_id: userId,

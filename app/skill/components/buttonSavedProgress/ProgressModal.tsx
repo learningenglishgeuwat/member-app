@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import './ProgressModal.css';
@@ -57,14 +57,8 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
   title = 'How well did you master this topic?',
   description = 'Select your current level of understanding',
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted || typeof document === 'undefined') return;
+    if (typeof document === 'undefined') return;
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -73,9 +67,9 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [isMounted, isOpen]);
+  }, [isOpen]);
 
-  if (!isOpen || !isMounted) return null;
+  if (!isOpen || typeof document === 'undefined') return null;
 
   const handleSelect = (option: AssessmentOption) => {
     onSelect(option);
