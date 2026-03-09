@@ -235,6 +235,40 @@
 }
 
 /* Play All Button */
+.alphabet-play-controls {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.alphabet-loop-toggle-btn {
+  background: rgba(30, 41, 59, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  color: #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.alphabet-loop-toggle-btn:hover {
+  border-color: rgba(167, 139, 250, 0.8);
+  color: #f1f5f9;
+  background: rgba(51, 65, 85, 0.85);
+}
+
+.alphabet-loop-toggle-btn.active {
+  border-color: rgba(34, 197, 94, 0.9);
+  color: #dcfce7;
+  background: rgba(22, 101, 52, 0.45);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.2);
+}
+
 .alphabet-play-all-btn {
   background: linear-gradient(135deg, 
     rgba(139, 92, 246, 0.2) 0%, 
@@ -1230,6 +1264,21 @@
 }
 
 @media (max-width: 480px) {
+  .alphabet-play-controls {
+    width: 100%;
+  }
+
+  .alphabet-loop-toggle-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .alphabet-play-all-btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
   .alphabet-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.6rem;
