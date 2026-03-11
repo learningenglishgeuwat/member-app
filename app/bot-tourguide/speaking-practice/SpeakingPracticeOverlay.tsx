@@ -190,7 +190,13 @@ export default function SpeakingPracticeOverlay({
             {meta ? (
               <>
                 <div className={`tg-spk-turn ${meta.speaker === 'Partner' ? 'is-partner' : 'is-you'}`}>
-                  <p className="tg-spk-speaker">{meta.speaker}</p>
+                  <div className="tg-spk-speaker-row">
+                    <span
+                      className={`tg-spk-speaker-chip ${meta.speaker === 'Partner' ? 'is-partner' : 'is-you'}`}
+                    >
+                      {meta.speaker}
+                    </span>
+                  </div>
                   <p className="tg-spk-line">
                     <span className="tg-spk-line-chip">{meta.line}</span>
                   </p>
