@@ -2,9 +2,48 @@
 
 import Link from '../../components/HoverPrefetchLink';
 import { useMemo, useState } from 'react';
+import {
+  Activity,
+  Apple,
+  Bath,
+  BookOpen,
+  Calendar,
+  Calculator,
+  Car,
+  Carrot,
+  ChefHat,
+  Clock,
+  Cloud,
+  Coffee,
+  Compass,
+  Film,
+  Gamepad2,
+  GraduationCap,
+  Hand,
+  Heart,
+  Home,
+  ListOrdered,
+  MapPin,
+  Monitor,
+  Palette,
+  Ruler,
+  School,
+  Shirt,
+  ShoppingBag,
+  Smile,
+  Smartphone,
+  Trophy,
+  User,
+  UserCircle,
+  Users,
+  Shapes,
+  Utensils,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import BackButton from '../components/BackButton';
 import { assertVocabularyDatasetInDev } from './topic/data/quality';
 import { VOCABULARY_TOPICS } from './topic/data/topics';
+import type { VocabularyTopicId } from './topic/data/types';
 import { TOTAL_VOCABULARY_WORDS, getVocabularyWordsByTopic } from './topic/data/words';
 import './topic/shared/vocabulary.css';
 
@@ -12,6 +51,42 @@ const TOPICS_PER_PAGE = 6;
 
 const TOPIC_CHIP_LABEL_OVERRIDES: Record<string, string> = {
   number: 'Cardinal Number',
+};
+
+const TOPIC_ICON_MAP: Record<VocabularyTopicId, LucideIcon> = {
+  'personal-information': User,
+  family: Users,
+  'body-parts': Hand,
+  'physical-appearance': UserCircle,
+  feelings: Heart,
+  'daily-routines': Calendar,
+  'time-date': Clock,
+  number: Calculator,
+  'ordinal-number': ListOrdered,
+  home: Home,
+  bathroom: Bath,
+  kitchen: ChefHat,
+  food: Utensils,
+  drinks: Coffee,
+  taste: Smile,
+  fruit: Apple,
+  vegetables: Carrot,
+  clothes: Shirt,
+  color: Palette,
+  size: Ruler,
+  shapes: Shapes,
+  places: MapPin,
+  transport: Car,
+  weather: Cloud,
+  school: School,
+  education: GraduationCap,
+  'hobbies-interests': Compass,
+  sports: Trophy,
+  games: Gamepad2,
+  'entertainment-media': Film,
+  'social-media': Smartphone,
+  shopping: ShoppingBag,
+  electronics: Monitor,
 };
 
 function buildTopicChipLabelMap() {
@@ -132,13 +207,21 @@ export default function VocabularyPage() {
               const wordCount = getVocabularyWordsByTopic(topic.topicId).length;
               const topicChip = topicChipLabelMap.get(topic.topicId) ?? topic.title;
 
+              const TopicIcon = TOPIC_ICON_MAP[topic.topicId] ?? BookOpen;
+
               return (
-                <article
+                <Link
                   key={topic.topicId}
+                  href={`/skill/vocabulary/topic/pages/${topic.topicId}`}
                   className="vocab-topic-card"
+                  prefetchOnHover={false}
+                  aria-label={`Buka topik ${topicChip}`}
                 >
                   <div className="vocab-topic-head">
                     <h2 className="vocab-topic-title">
+                      <span className="vocab-topic-icon" aria-hidden="true">
+                        <TopicIcon className="vocab-topic-icon-svg" />
+                      </span>
                       <span className="vocab-topic-chip vocab-topic-chip--title">{topicChip}</span>
                     </h2>
                     <p className="vocab-topic-subtitle">{topic.subtitle}</p>
@@ -148,15 +231,9 @@ export default function VocabularyPage() {
 
                   <div className="vocab-topic-footer">
                     <span className="vocab-topic-meta">{wordCount} kata</span>
-                    <Link
-                      href={`/skill/vocabulary/topic/pages/${topic.topicId}`}
-                      className="vocab-topic-link"
-                      prefetchOnHover={false}
-                    >
-                      Lihat Detail
-                    </Link>
+                    <span className="vocab-topic-link">Lihat Detail</span>
                   </div>
-                </article>
+                </Link>
               );
             })}
           </section>

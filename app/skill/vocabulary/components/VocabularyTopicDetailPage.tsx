@@ -453,6 +453,7 @@ export default function VocabularyTopicDetailPage({
         </h2>
         {showIpa ? <p className="vocab-ipa">{wordIpa}</p> : null}
         {showTranslation ? <p className="vocab-meaning">{item.meaningId}</p> : null}
+        <span className="vocab-example-divider" aria-hidden="true" />
         <p className="vocab-example">{item.exampleEn}</p>
         {showIpa && exampleIpa ? <p className="vocab-example-ipa">{exampleIpa}</p> : null}
         {showTranslation && exampleTranslation ? (
@@ -511,28 +512,28 @@ export default function VocabularyTopicDetailPage({
             />
             <button
               type="button"
-              className="vocab-action-btn"
+              className="vocab-action-btn vocab-action-btn--primary"
               onClick={() => setIsPracticeModalOpen(true)}
             >
               Practice
             </button>
             <button
               type="button"
-              className="vocab-action-btn"
+              className="vocab-action-btn vocab-action-btn--secondary"
               onClick={() => setShowIpa((prev) => !prev)}
             >
               {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
             </button>
             <button
               type="button"
-              className="vocab-action-btn"
+              className="vocab-action-btn vocab-action-btn--secondary"
               onClick={() => setShowTranslation((prev) => !prev)}
             >
               {showTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
             </button>
             <button
               type="button"
-              className="vocab-action-btn"
+              className="vocab-action-btn vocab-action-btn--primary"
               onClick={() => void playAllWords()}
               disabled={!pagedWords.length || isPlayAllRunning}
             >
@@ -540,7 +541,7 @@ export default function VocabularyTopicDetailPage({
             </button>
             <button
               type="button"
-              className="vocab-action-btn"
+              className="vocab-action-btn vocab-action-btn--secondary"
               onClick={() => void playAllWordThenExample()}
               disabled={!pagedWords.length || isPlayAllRunning}
             >
@@ -581,10 +582,18 @@ export default function VocabularyTopicDetailPage({
             </div>
 
             {isPromptOpen ? (
-              <p id="vocab-evaluation-prompt-body" className="vocab-prompt-body">
-                &quot;{VOCABULARY_EVALUATION_PROMPT}&quot;
-              </p>
-            ) : null}
+              <div className="vocab-prompt-body-card">
+                <p id="vocab-evaluation-prompt-body" className="vocab-prompt-body">
+                  &quot;{VOCABULARY_EVALUATION_PROMPT}&quot;
+                </p>
+              </div>
+            ) : (
+              <div className="vocab-prompt-body-card">
+                <p className="vocab-prompt-placeholder">
+                  Buka Prompt untuk melihat format penilaian dan contoh feedback.
+                </p>
+              </div>
+            )}
           </section>
 
           {isPlayAllRunning ? (
