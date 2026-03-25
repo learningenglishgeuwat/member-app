@@ -226,6 +226,9 @@ export default function VocabularyPage() {
                     <p className="vocab-topic-subtitle">{topic.subtitle}</p>
                   </div>
 
+                  {topic.subtitle && topic.description ? (
+                    <span className="vocab-topic-divider" aria-hidden="true" />
+                  ) : null}
                   <p className="vocab-topic-description">{topic.description}</p>
 
                   <div className="vocab-topic-footer">
