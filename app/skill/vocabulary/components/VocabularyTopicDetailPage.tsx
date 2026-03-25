@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import { Check, Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
@@ -155,6 +155,72 @@ function decodeEscapedUnicode(value: string): string {
   return value.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex: string) =>
     String.fromCharCode(parseInt(hex, 16)),
   );
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildHighlightRegex(phrase: string): RegExp | null {
+  const trimmed = phrase.trim();
+  if (!trimmed) return null;
+
+  const escaped = escapeRegExp(trimmed);
+  const firstChar = trimmed[0] ?? '';
+  const lastChar = trimmed[trimmed.length - 1] ?? '';
+  const startsWithWord = /[A-Za-z0-9_]/.test(firstChar);
+  const endsWithWord = /[A-Za-z0-9_]/.test(lastChar);
+  const pattern = `${startsWithWord ? '\\b' : ''}${escaped}${endsWithWord ? '\\b' : ''}`;
+
+  try {
+    return new RegExp(pattern, 'gi');
+  } catch {
+    try {
+      return new RegExp(escaped, 'gi');
+    } catch {
+      return null;
+    }
+  }
+}
+
+function renderHighlightedText(text: string, phrase: string): ReactNode {
+  const regex = buildHighlightRegex(phrase);
+  if (!regex) return text;
+
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let matchKey = 0;
+
+  while ((match = regex.exec(text)) !== null) {
+    const start = match.index;
+    const matched = match[0] ?? '';
+    if (!matched) break;
+
+    if (start > lastIndex) {
+      nodes.push(text.slice(lastIndex, start));
+    }
+
+    nodes.push(
+      <span key={`hl-${matchKey}-${start}`} className="vocab-highlight">
+        {text.slice(start, start + matched.length)}
+      </span>,
+    );
+
+    lastIndex = start + matched.length;
+    matchKey += 1;
+
+    // Avoid zero-length match infinite loops (paranoia).
+    if (regex.lastIndex === start) {
+      regex.lastIndex += 1;
+    }
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes.length ? nodes : text;
 }
 
 function readVocabularyProgress(): Record<string, number> {
@@ -449,12 +515,14 @@ export default function VocabularyTopicDetailPage({
           <p className="vocab-cardinal-number">{cardinalNumberValue.toLocaleString('en-US')}</p>
         ) : null}
         <h2 className="vocab-word">
-          <span className="vocab-word-chip">{item.word}</span>
+          <span className="vocab-word-chip">
+            <span className="vocab-highlight">{item.word}</span>
+          </span>
         </h2>
         {showIpa ? <p className="vocab-ipa">{wordIpa}</p> : null}
         {showTranslation ? <p className="vocab-meaning">{item.meaningId}</p> : null}
         <span className="vocab-example-divider" aria-hidden="true" />
-        <p className="vocab-example">{item.exampleEn}</p>
+        <p className="vocab-example">{renderHighlightedText(item.exampleEn, item.word)}</p>
         {showIpa && exampleIpa ? <p className="vocab-example-ipa">{exampleIpa}</p> : null}
         {showTranslation && exampleTranslation ? (
           <p className="vocab-example-translation">{exampleTranslation}</p>

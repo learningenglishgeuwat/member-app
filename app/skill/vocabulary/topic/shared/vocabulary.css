@@ -369,6 +369,25 @@
   word-break: break-word;
 }
 
+.vocab-highlight {
+  color: #ffb020;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(255, 176, 32, 0.24);
+}
+
+.vocab-example .vocab-highlight {
+  border-radius: 0.35em;
+  background: rgba(255, 176, 32, 0.16);
+  box-shadow: 0 0 0 1px rgba(255, 176, 32, 0.22);
+  padding: 0.05em 0.18em;
+}
+
+.vocab-word-chip .vocab-highlight {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
 .vocab-cardinal-number {
   margin: 0.45rem 0 0;
   color: #f2fff4;
