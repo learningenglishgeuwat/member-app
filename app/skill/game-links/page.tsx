@@ -16,10 +16,24 @@ type GameItem = {
 
 const GAME_LINKS: GameItem[] = [
   {
-    id: 'spelling-bee',
-    name: 'Spelling Bee',
+    id: 'spelling-bee-exercise',
+    name: 'Spelling Bee Exercise',
     description: 'Latihan mengeja kata dalam bahasa Inggris.',
+    url: 'https://geuwat-spellingbeeexercise.netlify.app/',
+    metric: '226 M',
+  },
+  {
+    id: 'spelling-bee-competition',
+    name: 'Spelling Bee Competition',
+    description: 'Mode kompetisi untuk latihan spelling bee.',
     url: 'https://spelling-bee-olive.vercel.app',
+    metric: '226 M',
+  },
+  {
+    id: 'cat-slave-vocab',
+    name: 'Cat\'s Slave Vocabulary',
+    description: 'Latihan vocabulary dengan gameplay Cat\'s Slave.',
+    url: 'https://cat-slave-vocab.netlify.app/',
     metric: '226 M',
   },
   {

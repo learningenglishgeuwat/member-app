@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
   description: "Personalized English learning dashboard for GEUWAT members",
   icons: {
-    icon: '/favicon.ico',
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
   },
 };
 

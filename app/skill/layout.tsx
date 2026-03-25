@@ -1,16 +1,6 @@
-'use client'
-
-import React from 'react'
-import RequireActive from '@/app/components/RequireActive'
-import SkillRoutePersistence from './components/SkillRoutePersistence'
-import SkillGameButton from './components/SkillGameButton'
+import RequireActive from '../components/RequireActive'
 
 export default function SkillLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <RequireActive>
-      <SkillRoutePersistence />
-      {children}
-      <SkillGameButton />
-    </RequireActive>
-  )
+  return <RequireActive>{children}</RequireActive>
 }
+

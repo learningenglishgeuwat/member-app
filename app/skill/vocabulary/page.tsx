@@ -3,7 +3,6 @@
 import Link from '../../components/HoverPrefetchLink';
 import { useMemo, useState } from 'react';
 import {
-  Activity,
   Apple,
   Bath,
   BookOpen,
