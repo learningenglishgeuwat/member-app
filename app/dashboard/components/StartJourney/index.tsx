@@ -99,7 +99,7 @@ const StartJourney: React.FC = () => {
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
           INITIATE <span className="text-purple-500">PROTOCOL</span>
         </h2>
-        <p className="text-slate-400 font-mono text-xs sm:text-sm">Define your objective. GEUWAT will construct your path.</p>
+        <p className="text-slate-400 font-mono text-xs sm:text-sm">Ketikkan keinginanmu dalam belajar bahasa Inggris.</p>
       </header>
 
       <form

@@ -24,13 +24,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-const SESSION_GRACE_MS = 3 * 60 * 60 * 1000
-const SESSION_RECHECK_MS = 15_000
 const ACTIVITY_PERSIST_INTERVAL_MS = 15_000
 const OFFLINE_DEBOUNCE_MS = 3000
 const CACHED_USER_TTL_MS = 30 * 60 * 1000
-const AUTH_GRACE_UNTIL_KEY = 'auth_grace_until'
-const AUTH_GRACE_REASON_KEY = 'auth_grace_reason'
 const CACHED_USER_KEY = 'auth_cached_user'
 const CACHED_USER_AT_KEY = 'auth_cached_user_at'
 
@@ -57,8 +53,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const idleTimerRef = React.useRef<number | null>(null)
   const absoluteTimerRef = React.useRef<number | null>(null)
   const offlineDebounceRef = React.useRef<number | null>(null)
-  const graceTimerRef = React.useRef<number | null>(null)
-  const recheckTimerRef = React.useRef<number | null>(null)
   const userFetchRef = React.useRef<{ userId: string; promise: Promise<User | null> } | null>(null)
   const deviceCheckInFlightRef = React.useRef<Promise<void> | null>(null)
   const lastVerifiedSessionUserIdRef = React.useRef<string | null>(null)
@@ -66,7 +60,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const lastActivityPersistedAtRef = React.useRef<number>(0)
   const sessionHealthRef = React.useRef<SessionHealth>('healthy')
   const degradedReasonRef = React.useRef<DegradedReason | null>(null)
-  const graceUntilRef = React.useRef<number | null>(null)
   const manualSignOutRef = React.useRef(false)
   const isDev = process.env.NODE_ENV === 'development'
 
@@ -195,23 +188,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const clearGraceTimers = () => {
-    if (graceTimerRef.current) {
-      window.clearTimeout(graceTimerRef.current)
-      graceTimerRef.current = null
-    }
-    if (recheckTimerRef.current) {
-      window.clearInterval(recheckTimerRef.current)
-      recheckTimerRef.current = null
-    }
-  }
-
-  const clearGraceState = () => {
-    graceUntilRef.current = null
-    localStorage.removeItem(AUTH_GRACE_UNTIL_KEY)
-    localStorage.removeItem(AUTH_GRACE_REASON_KEY)
-  }
-
   const persistActivityIfDue = (force = false) => {
     const now = Date.now()
     if (!force && now - lastActivityPersistedAtRef.current < ACTIVITY_PERSIST_INTERVAL_MS) {
@@ -276,23 +252,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return promise
   }
 
-  const restoreGraceStateFromStorage = () => {
-    const rawGraceUntil = localStorage.getItem(AUTH_GRACE_UNTIL_KEY)
-    if (!rawGraceUntil) return null
-    const graceUntil = Number(rawGraceUntil)
-    if (!Number.isFinite(graceUntil) || graceUntil <= Date.now()) {
-      localStorage.removeItem(AUTH_GRACE_UNTIL_KEY)
-      localStorage.removeItem(AUTH_GRACE_REASON_KEY)
-      return null
-    }
-    graceUntilRef.current = graceUntil
-    return graceUntil
-  }
-
   const finalizeLogout = (reason: string) => {
     logAuthDebug('session:final-logout', { reason })
-    clearGraceTimers()
-    clearGraceState()
     setHasSessionSafe(false)
     setUserSafe(null)
     setSessionHealthSafe('healthy')
@@ -305,66 +266,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const handleSessionRecovered = (sessionUser: { id: string }) => {
-    clearGraceTimers()
-    clearGraceState()
     setHasSessionSafe(true)
     setSessionHealthSafe('healthy')
     setNotice(null)
     setAuthIssue(null)
-    logAuthDebug('grace:recovered', { userId: sessionUser.id })
-  }
-
-  const runGraceRecheck = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession() as {
-        data: { session: { user: { id: string } } | null }
-      }
-      const sessionUser = session?.user || null
-      const now = Date.now()
-      const graceUntil = graceUntilRef.current
-      logAuthDebug('grace:recheck', {
-        hasSessionUser: !!sessionUser,
-        graceUntil,
-        remainingMs: graceUntil ? Math.max(0, graceUntil - now) : null,
-      })
-
-      if (sessionUser) {
-        handleSessionRecovered(sessionUser)
-        return
-      }
-
-      if (graceUntil && now >= graceUntil) {
-        logAuthDebug('grace:expired')
-        finalizeLogout('grace-expired')
-      }
-    } catch (error) {
-      if (isAbortLikeError(error)) {
-        logAuthDebug('grace:recheck-aborted')
-        return
-      }
-      const message = error instanceof Error ? error.message : 'unknown'
-      logAuthDebug('grace:recheck-failed', { message })
-    }
-  }
-
-  const startGraceWindow = (reason: string) => {
-    const now = Date.now()
-    const existingGraceUntil = graceUntilRef.current
-    const graceUntil = existingGraceUntil && existingGraceUntil > now
-      ? existingGraceUntil
-      : now + SESSION_GRACE_MS
-    graceUntilRef.current = graceUntil
-    localStorage.setItem(AUTH_GRACE_UNTIL_KEY, String(graceUntil))
-    localStorage.setItem(AUTH_GRACE_REASON_KEY, reason)
-
-    clearGraceTimers()
-    graceTimerRef.current = window.setTimeout(() => {
-      logAuthDebug('grace:expired-timeout')
-      void runGraceRecheck()
-    }, Math.max(1000, graceUntil - now))
-    recheckTimerRef.current = window.setInterval(() => {
-      void runGraceRecheck()
-    }, SESSION_RECHECK_MS)
+    logAuthDebug('session:recovered', { userId: sessionUser.id })
   }
 
   const handleSessionLoss = (params: {
@@ -378,45 +284,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false
     }
 
+    // Security: never treat cached profile/localStorage as an authenticated session.
+    // If Supabase session is missing, we log out and require a fresh login.
     const cachedUser = getCachedUser()
     const currentUser = userRef.current
-    const holdUser = cachedUser ?? currentUser
-    const isGraceActive = !!graceUntilRef.current && graceUntilRef.current > Date.now()
-    const canHold = !!holdUser || isGraceActive
-    if (!canHold) {
-      finalizeLogout(`no-cached-user:${source}:${reason}`)
-      return false
+    const hadUser = !!cachedUser || !!currentUser
+
+    finalizeLogout(`session-lost:${source}:${reason}`)
+
+    if (hadUser) {
+      setAuthIssue('Sesi berakhir. Silakan login ulang.')
+      setNotice('Sesi berakhir. Silakan login ulang.')
     }
 
-    if (holdUser) {
-      setUserSafe(holdUser)
-      setHasSessionSafe(true)
-    }
-    setAuthIssue(null)
-    setSessionHealthSafe('degraded', 'auth')
-    setNotice('Sesi sedang dipulihkan. Belajar tetap berjalan.')
-    startGraceWindow(`${source}:${reason}`)
-    logAuthDebug('grace:start', {
-      source,
-      reason,
-      hasCachedUser: !!cachedUser,
-      graceUntil: graceUntilRef.current,
-    })
-    return true
+    return false
   }
 
   // This effect intentionally runs once to wire auth listeners and timers.
   useEffect(() => {
     const handleOnline = () => {
       clearOfflineDebounce()
-      if (graceUntilRef.current) {
-        setNotice('Koneksi kembali normal. Sinkronisasi sesi...')
-      } else {
-        setNotice(null)
-      }
+      setSessionHealthSafe('healthy')
+      setNotice(null)
       setAuthIssue(null)
       logAuthDebug('network:online')
-      void runGraceRecheck()
     }
 
     const handleOffline = () => {
@@ -556,33 +447,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return checkPromise
     }
 
-    const applyGraceStateIfExists = () => {
-      const restoredUntil = restoreGraceStateFromStorage()
-      if (!restoredUntil) return
-      const cachedUser = getCachedUser()
-      if (!cachedUser) {
-        clearGraceState()
-        return
-      }
-      setUserSafe(cachedUser)
-      setHasSessionSafe(true)
-      setSessionHealthSafe('degraded', 'auth')
-      setNotice('Sesi sedang dipulihkan. Belajar tetap berjalan.')
-      clearGraceTimers()
-      const remaining = Math.max(1000, restoredUntil - Date.now())
-      graceTimerRef.current = window.setTimeout(() => {
-        void runGraceRecheck()
-      }, remaining)
-      recheckTimerRef.current = window.setInterval(() => {
-        void runGraceRecheck()
-      }, SESSION_RECHECK_MS)
-      logAuthDebug('grace:restored', { restoredUntil })
-    }
-
     const getSession = async () => {
       try {
-        applyGraceStateIfExists()
-
         if (typeof window !== 'undefined' && !navigator.onLine) {
           setSessionHealthSafe('degraded', 'network')
           setNotice('Koneksi tidak stabil. Mode belajar tetap berjalan.')
@@ -651,14 +517,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           console.error('Authentication error:', error)
           logAuthDebug('getSession:error', { errorMessage })
         }
-        const held = handleSessionLoss({
+        handleSessionLoss({
           source: 'initial-session',
           reason: 'exception',
           sessionUser: null,
         })
-        if (!held) {
-          setAuthIssue('Terjadi kendala koneksi. Coba refresh halaman.')
-        }
+        setAuthIssue((prev) => prev ?? 'Terjadi kendala koneksi. Coba refresh halaman.')
       } finally {
         setLoading(false)
       }
@@ -673,7 +537,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (event === 'INITIAL_SESSION' && !sessionUser) {
         // Initial null session is already handled by getSession() on mount.
-        logAuthDebug('auth:initial-session-null:skip-duplicate-grace')
+        logAuthDebug('auth:initial-session-null:skip-duplicate')
         return
       }
 
@@ -739,7 +603,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('beforeunload', handleLifecycleFlush)
       clearSessionTimers()
       clearOfflineDebounce()
-      clearGraceTimers()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -823,8 +686,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logAuthDebug('session:manual-signout')
       clearSessionTimers()
       clearOfflineDebounce()
-      clearGraceTimers()
-      clearGraceState()
       setUserSafe(null)
       setHasSessionSafe(false)
       setSessionHealthSafe('healthy')

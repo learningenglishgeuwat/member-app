@@ -16,7 +16,6 @@ export default function RequireActive({ children }: RequireActiveProps) {
   const inactiveAllowedPaths = new Set(['/dashboard', '/device-approve'])
   const isInactiveAllowed = inactiveAllowedPaths.has(pathname)
   const skeletonVariant = getAuthSkeletonVariant(pathname)
-  const allowSessionPassThrough = hasSession
   const showNonBlockingConnectivityHint = hasSession && sessionHealth === 'degraded'
   const nonBlockingHintText = useMemo(() => {
     if (degradedReason === 'network') return 'Koneksi tidak stabil. Belajar tetap berjalan.'
@@ -58,9 +57,6 @@ export default function RequireActive({ children }: RequireActiveProps) {
   }, [loading, hasSession, user, router, isInactiveAllowed])
 
   if (loading) {
-    if (allowSessionPassThrough) {
-      return withConnectivityHint(children)
-    }
     return <AuthLoadingSkeleton hint={connectionHint} variant={skeletonVariant} />
   }
 
@@ -113,10 +109,6 @@ export default function RequireActive({ children }: RequireActiveProps) {
   }
 
   if (!user) {
-    if (allowSessionPassThrough) {
-      return withConnectivityHint(children)
-    }
-
     if (authIssue) {
       return (
         <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-300">

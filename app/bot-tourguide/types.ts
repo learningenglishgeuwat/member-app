@@ -92,7 +92,6 @@ export type GuideQaEntry = {
 };
 
 export type GuideIndex = {
-  generatedAt: string;
   routes: GuideIndexedRoute[];
   simulations: GuideSimulationEntry[];
   qaEntries: GuideQaEntry[];

@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useState, lazy, Suspense, useEffect, useRef, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
+import { useAuth } from '@/contexts/MemberAuthContext'
 import DashboardSidebar from './components/DashboardSidebar'
 import './dashboard.css'
 
@@ -30,11 +32,19 @@ const resolveSavedDashboardView = (): ViewId | null => {
 }
 
 function DashboardContent() {
+  const router = useRouter()
+  const { hasSession, loading } = useAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [currentView, setCurrentView] = useState<ViewId>('dashboard')
   const [mountedViews, setMountedViews] = useState<Set<string>>(() => new Set(['dashboard']))
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const hasRestoredViewRef = useRef(false)
+
+  useEffect(() => {
+    if (loading) return
+    if (hasSession) return
+    router.replace('/login')
+  }, [loading, hasSession, router])
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -109,6 +119,19 @@ function DashboardContent() {
         </Suspense>
       </section>
     )
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-300 flex items-center justify-center">
+        <div className="text-sm">Memuat dashboard...</div>
+      </div>
+    )
+  }
+
+  if (!hasSession) {
+    // Redirect is handled by the effect above.
+    return null
   }
 
   return (

@@ -381,7 +381,6 @@ const run = async () => {
   const merged = await applyManifestMerges(routeScanEntries);
 
   const payload = {
-    generatedAt: new Date().toISOString(),
     routes: merged.routes,
     simulations: merged.simulations,
     qaEntries: merged.qaEntries,
