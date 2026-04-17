@@ -136,6 +136,56 @@ const D_ED_BEFORE_AFTER_WORD_BANK = [
   { before: 'guard', after: 'guarded', sound: '/ɪd/' },
 ] as const;
 
+const D_ED_WORD_BANK_IPA: Record<string, { before: string; after: string }> = {
+  'work|worked': { before: '/w\u025C\u02D0rk/', after: '/w\u025C\u02D0rkt/' },
+  'wash|washed': { before: '/w\u0252\u0283/', after: '/w\u0252\u0283t/' },
+  'stop|stopped': { before: '/st\u0252p/', after: '/st\u0252pt/' },
+  'laugh|laughed': { before: '/l\u00E6f/', after: '/l\u00E6ft/' },
+  'miss|missed': { before: '/m\u026As/', after: '/m\u026Ast/' },
+  'watch|watched': { before: '/w\u0251t\u0283/', after: '/w\u0251t\u0283t/' },
+  'kiss|kissed': { before: '/k\u026As/', after: '/k\u026Ast/' },
+  'dance|danced': { before: '/d\u00E6ns/', after: '/d\u00E6nst/' },
+  'pass|passed': { before: '/p\u00E6s/', after: '/p\u00E6st/' },
+  'talk|talked': { before: '/t\u0254k/', after: '/t\u0254kt/' },
+  'walk|walked': { before: '/w\u0254k/', after: '/w\u0254kt/' },
+  'jump|jumped': { before: '/d\u0292\u028Cp/', after: '/d\u0292\u028Cmpt/' },
+  'help|helped': { before: '/h\u025Blp/', after: '/h\u025Blpt/' },
+  'push|pushed': { before: '/p\u028A\u0283/', after: '/p\u028A\u0283t/' },
+  'cough|coughed': { before: '/k\u0254f/', after: '/k\u0254ft/' },
+
+  'play|played': { before: '/ple\u026A/', after: '/ple\u026Ad/' },
+  'clean|cleaned': { before: '/kli\u02D0n/', after: '/kli\u02D0nd/' },
+  'call|called': { before: '/k\u0254l/', after: '/k\u0254ld/' },
+  'open|opened': { before: '/\u02C8o\u028Ap\u0259n/', after: '/\u02C8o\u028Ap\u0259nd/' },
+  'answer|answered': { before: '/\u02C8\u00E6ns\u0259r/', after: '/\u02C8\u00E6ns\u0259rd/' },
+  'live|lived': { before: '/l\u026Av/', after: '/l\u026Avd/' },
+  'rain|rained': { before: '/re\u026An/', after: '/re\u026And/' },
+  'snow|snowed': { before: '/sno\u028A/', after: '/sno\u028Ad/' },
+  'enjoy|enjoyed': { before: '/\u026An\u02C8d\u0292\u0254\u026A/', after: '/\u026An\u02C8d\u0292\u0254\u026Ad/' },
+  'plan|planned': { before: '/pl\u00E6n/', after: '/pl\u00E6nd/' },
+  'allow|allowed': { before: '/\u0259\u02C8la\u028A/', after: '/\u0259\u02C8la\u028Ad/' },
+  'love|loved': { before: '/l\u028Cv/', after: '/l\u028Cvd/' },
+  'move|moved': { before: '/mu\u02D0v/', after: '/mu\u02D0vd/' },
+  'close|closed': { before: '/klo\u028Az/', after: '/klo\u028Azd/' },
+  'carry|carried': { before: '/\u02C8k\u00E6ri/', after: '/\u02C8k\u00E6rid/' },
+
+  'want|wanted': { before: '/w\u0252nt/', after: '/\u02C8w\u0252nt\u026Ad/' },
+  'need|needed': { before: '/ni\u02D0d/', after: '/\u02C8ni\u02D0d\u026Ad/' },
+  'decide|decided': { before: '/d\u026A\u02C8sa\u026Ad/', after: '/d\u026A\u02C8sa\u026Ad\u026Ad/' },
+  'visit|visited': { before: '/\u02C8v\u026Az\u026At/', after: '/\u02C8v\u026Az\u026At\u026Ad/' },
+  'wait|waited': { before: '/we\u026At/', after: '/\u02C8we\u026At\u026Ad/' },
+  'start|started': { before: '/st\u0251rt/', after: '/\u02C8st\u0251rt\u026Ad/' },
+  'end|ended': { before: '/\u025Bnd/', after: '/\u02C8\u025Bnd\u026Ad/' },
+  'paint|painted': { before: '/pe\u026Ant/', after: '/\u02C8pe\u026Ant\u026Ad/' },
+  'invite|invited': { before: '/\u026An\u02C8va\u026At/', after: '/\u026An\u02C8va\u026At\u026Ad/' },
+  'collect|collected': { before: '/k\u0259\u02C8l\u025Bkt/', after: '/k\u0259\u02C8l\u025Bkt\u026Ad/' },
+  'repeat|repeated': { before: '/r\u026A\u02C8pi\u02D0t/', after: '/r\u026A\u02C8pi\u02D0t\u026Ad/' },
+  'count|counted': { before: '/ka\u028Ant/', after: '/\u02C8ka\u028Ant\u026Ad/' },
+  'add|added': { before: '/\u00E6d/', after: '/\u02C8\u00E6d\u026Ad/' },
+  'edit|edited': { before: '/\u02C8\u025Bd\u026At/', after: '/\u02C8\u025Bd\u026At\u026Ad/' },
+  'guard|guarded': { before: '/\u0261\u0251rd/', after: '/\u02C8\u0261\u0251rd\u026Ad/' },
+};
+
 const COMMON_MISTAKES = [
   'Membaca semua akhiran -ed sebagai /ed/ dalam semua kata.',
   'Menghilangkan bunyi akhir pada past tense saat bicara cepat.',
@@ -145,6 +195,7 @@ const COMMON_MISTAKES = [
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const FINAL_SOUND_D_ED_PROGRESS_ID = 'finalSoundDEd';
 const D_ED_COMMON_MISTAKES_OPEN_KEY = 'final-sound-d-ed-common-mistakes-open-v1';
 const D_ED_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata atau kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi final sound D/ED: /t/, /d/, dan /ɪd/, serta kejelasan bunyi akhir pada bentuk past tense. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/frasa yang diucapkan (khusus ending -d/-ed). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bunyi akhir mana yang perlu diperbaiki.";
@@ -228,7 +279,21 @@ export default function FinalSoundDEdPage() {
       const currentProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      return typeof currentProgress.finalSound === 'number' && currentProgress.finalSound > 0;
+      const savedAssessments = JSON.parse(
+        window.localStorage.getItem('savedAssessments') || '{}',
+      ) as Record<string, { percentage?: unknown }>;
+      const assessmentKey = 'Final Sound D/ED'.toLowerCase().replace(/\s+/g, '_');
+      const savedAssessmentPercent = savedAssessments[assessmentKey]?.percentage;
+      const hasSavedAssessment =
+        typeof savedAssessmentPercent === 'number' &&
+        Number.isFinite(savedAssessmentPercent) &&
+        savedAssessmentPercent > 0;
+
+      return (
+        (typeof currentProgress[FINAL_SOUND_D_ED_PROGRESS_ID] === 'number' &&
+          currentProgress[FINAL_SOUND_D_ED_PROGRESS_ID] > 0) ||
+        hasSavedAssessment
+      );
     } catch {
       return false;
     }
@@ -290,7 +355,8 @@ export default function FinalSoundDEdPage() {
       const pronunciationProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      pronunciationProgress.finalSound = percentage;
+      delete pronunciationProgress.finalSound;
+      pronunciationProgress[FINAL_SOUND_D_ED_PROGRESS_ID] = percentage;
       window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
       const dashboardProgress = JSON.parse(
@@ -310,6 +376,7 @@ export default function FinalSoundDEdPage() {
       window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
     ) as Record<string, number>;
     delete pronunciationProgress.finalSound;
+    delete pronunciationProgress[FINAL_SOUND_D_ED_PROGRESS_ID];
     window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
     const dashboardProgress = JSON.parse(
@@ -423,6 +490,12 @@ export default function FinalSoundDEdPage() {
     [],
   );
 
+  const toWordBankTtsText = useCallback((text: string) => {
+    const normalized = text.trim().toLowerCase();
+    if (normalized === 'live') return 'to live';
+    return text;
+  }, []);
+
   const playWordBankSingle = useCallback(
     async (text: string, rowKey?: string) => {
       stopWordBankPlayAll();
@@ -431,12 +504,12 @@ export default function FinalSoundDEdPage() {
       if (rowKey) {
         setActiveWordBankRowKey(rowKey);
       }
-      await speakQueuedText(text, runId, singlePlayRunIdRef);
+      await speakQueuedText(toWordBankTtsText(text), runId, singlePlayRunIdRef);
       if (singlePlayRunIdRef.current === runId) {
         setActiveWordBankRowKey(null);
       }
     },
-    [speakQueuedText, stopWordBankPlayAll],
+    [speakQueuedText, stopWordBankPlayAll, toWordBankTtsText],
   );
 
   const handleWordBankPlayAll = useCallback(async () => {
@@ -463,7 +536,7 @@ export default function FinalSoundDEdPage() {
       });
       await sleep(120);
       if (runId !== playAllRunIdRef.current) break;
-      await speakQueuedText(item.before, runId, playAllRunIdRef);
+      await speakQueuedText(toWordBankTtsText(item.before), runId, playAllRunIdRef);
       if (runId !== playAllRunIdRef.current) break;
       await sleep(120);
       if (runId !== playAllRunIdRef.current) break;
@@ -476,7 +549,7 @@ export default function FinalSoundDEdPage() {
       setIsPlayingWordBankAll(false);
       setActiveWordBankRowKey(null);
     }
-  }, [isPlayingWordBankAll, speakQueuedText, stopWordBankPlayAll]);
+  }, [isPlayingWordBankAll, speakQueuedText, stopWordBankPlayAll, toWordBankTtsText]);
 
   const playPastEndingSingle = useCallback(
     async (text: string, exampleKey: string) => {
@@ -849,66 +922,75 @@ export default function FinalSoundDEdPage() {
                       <th>No.</th>
                       <th>Before</th>
                       <th>After</th>
-                      {showWordBankIpa ? <th>IPA</th> : null}
+                      {showWordBankIpa ? <th>Sound</th> : null}
                     </tr>
                   </thead>
                   <tbody>
-                    {D_ED_BEFORE_AFTER_WORD_BANK.map((item, index) => (
-                      <tr
-                        key={`${item.before}-${item.after}`}
-                        className={activeWordBankRowKey === `${item.before}-${item.after}` ? 'is-speaking' : ''}
-                        ref={(node) => {
-                          wordBankRowRefs.current[index] = node;
-                        }}
-                      >
-                        <td>{index + 1}</td>
-                        <td>
-                          <div className="fs-topic-table-example-row">
-                            <span>
-                              <span className="fs-topic-table-example-word">{item.before}</span>
-                              {showWordBankIpa ? (
-                                <span className="fs-topic-table-example-ipa"> {item.sound}</span>
-                              ) : null}
-                            </span>
-                            <button
-                              type="button"
-                              className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                              aria-label={`Putar ${item.before}`}
-                              title="Putar"
-                              onClick={() => void playWordBankSingle(item.before, `${item.before}-${item.after}`)}
-                            >
-                              <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                              <span className="fs-topic-visually-hidden">Putar</span>
-                            </button>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="fs-topic-table-example-row">
-                            <span>
-                              <span className="fs-topic-table-example-word">{item.after}</span>
-                              {showWordBankIpa ? (
-                                <span className="fs-topic-table-example-ipa"> {item.sound}</span>
-                              ) : null}
-                            </span>
-                            <button
-                              type="button"
-                              className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                              aria-label={`Putar ${item.after}`}
-                              title="Putar"
-                              onClick={() => void playWordBankSingle(item.after, `${item.before}-${item.after}`)}
-                            >
-                              <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                              <span className="fs-topic-visually-hidden">Putar</span>
-                            </button>
-                          </div>
-                        </td>
-                        {showWordBankIpa ? (
+                    {D_ED_BEFORE_AFTER_WORD_BANK.map((item, index) => {
+                      const ipaPair = D_ED_WORD_BANK_IPA[`${item.before}|${item.after}`];
+                      return (
+                        <tr
+                          key={`${item.before}-${item.after}`}
+                          className={activeWordBankRowKey === `${item.before}-${item.after}` ? 'is-speaking' : ''}
+                          ref={(node) => {
+                            wordBankRowRefs.current[index] = node;
+                          }}
+                        >
+                          <td>{index + 1}</td>
                           <td>
-                            <span className="fs-topic-table-example-ipa">{item.sound}</span>
+                            <div className="fs-topic-table-example-row">
+                              <span>
+                                <span className="fs-topic-table-example-word">{item.before}</span>
+                                {showWordBankIpa ? (
+                                  <span className="fs-topic-table-example-ipa">
+                                    {' '}
+                                    {ipaPair?.before ?? item.sound}
+                                  </span>
+                                ) : null}
+                              </span>
+                              <button
+                                type="button"
+                                className="fs-topic-mini-btn fs-topic-play-chip-btn"
+                                aria-label={`Putar ${item.before}`}
+                                title="Putar"
+                                onClick={() => void playWordBankSingle(item.before, `${item.before}-${item.after}`)}
+                              >
+                                <span className="fs-topic-play-chip-icon" aria-hidden="true" />
+                                <span className="fs-topic-visually-hidden">Putar</span>
+                              </button>
+                            </div>
                           </td>
-                        ) : null}
-                      </tr>
-                    ))}
+                          <td>
+                            <div className="fs-topic-table-example-row">
+                              <span>
+                                <span className="fs-topic-table-example-word">{item.after}</span>
+                                {showWordBankIpa ? (
+                                  <span className="fs-topic-table-example-ipa">
+                                    {' '}
+                                    {ipaPair?.after ?? item.sound}
+                                  </span>
+                                ) : null}
+                              </span>
+                              <button
+                                type="button"
+                                className="fs-topic-mini-btn fs-topic-play-chip-btn"
+                                aria-label={`Putar ${item.after}`}
+                                title="Putar"
+                                onClick={() => void playWordBankSingle(item.after, `${item.before}-${item.after}`)}
+                              >
+                                <span className="fs-topic-play-chip-icon" aria-hidden="true" />
+                                <span className="fs-topic-visually-hidden">Putar</span>
+                              </button>
+                            </div>
+                          </td>
+                          {showWordBankIpa ? (
+                            <td>
+                              <span className="fs-topic-table-example-ipa">{item.sound}</span>
+                            </td>
+                          ) : null}
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

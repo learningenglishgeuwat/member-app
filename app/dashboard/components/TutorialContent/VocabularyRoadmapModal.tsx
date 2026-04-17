@@ -70,7 +70,11 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
               Estimasi dibuat untuk belajar 30 menit per hari.
             </p>
             <p className="text-slate-300 text-xs sm:text-sm mt-2">
-              Progress: <span className="text-green-300 font-semibold">{completedCount}/{VOCABULARY_ROADMAP_ITEMS.length}</span> topik selesai
+              Progress:{' '}
+              <span className="text-green-300 font-semibold">
+                {completedCount}/{VOCABULARY_ROADMAP_ITEMS.length}
+              </span>{' '}
+              topik selesai
               <span className="text-slate-500"> | Total kata: {VOCABULARY_ROADMAP_TOTAL_WORDS}</span>
               <span className="text-slate-500"> | Total estimasi: {VOCABULARY_ROADMAP_TOTAL_DAYS} hari</span>
             </p>
@@ -85,7 +89,10 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
           </button>
         </div>
 
-        <div className="overflow-x-auto geuwat-table-scroll border border-slate-700/60 rounded-xl max-h-[56vh]">
+        <div
+          className="geuwat-table-scroll border border-slate-700/60 rounded-xl max-h-[56vh]"
+          style={{ overflowY: 'auto' }}
+        >
           <table className="min-w-full geuwat-table-responsive text-xs sm:text-sm">
             <thead className="bg-slate-900/70 text-slate-200 sticky top-0">
               <tr>

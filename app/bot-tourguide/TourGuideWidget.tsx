@@ -1148,28 +1148,6 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
             </div>
           ) : null}
 
-          <form className="tg-form" onSubmit={handleSubmit}>
-            <input
-              id="tg-query-input"
-              name="tgQuery"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder={
-                mode === 'navigation'
-                  ? 'Contoh: "buka pronunciation"'
-                  : mode === 'simulation'
-                    ? 'Contoh: "simulasi final sound s/es" atau "simulasi final sound d/ed"'
-                    : mode === 'flashcard'
-                      ? 'Contoh: "flashcard kitchen"'
-                      : 'Contoh: "apa itu american t?"'
-              }
-              className="tg-input"
-            />
-            <button type="submit" className="tg-send-button">
-              Kirim
-            </button>
-          </form>
-
           <div className={`tg-reply ${isThinking ? 'is-thinking' : ''}`}>{activeReply}</div>
 
           {activeChips.length ? (
@@ -1277,6 +1255,28 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               </button>
             ))}
           </div>
+
+          <form className="tg-form" onSubmit={handleSubmit}>
+            <input
+              id="tg-query-input"
+              name="tgQuery"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={
+                mode === 'navigation'
+                  ? 'Contoh: "buka pronunciation"'
+                  : mode === 'simulation'
+                    ? 'Contoh: "simulasi final sound s/es" atau "simulasi final sound d/ed"'
+                    : mode === 'flashcard'
+                      ? 'Contoh: "flashcard kitchen"'
+                      : 'Contoh: "apa itu american t?"'
+              }
+              className="tg-input"
+            />
+            <button type="submit" className="tg-send-button">
+              Kirim
+            </button>
+          </form>
         </aside>
       )}
 

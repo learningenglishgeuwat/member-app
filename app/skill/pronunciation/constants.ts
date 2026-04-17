@@ -57,7 +57,7 @@ export const TOPICS: Topic[] = [
     title: 'American /t/',
     shortDesc: 'Flap & Glottal Stop',
     description:
-      'Pelajari kunci American accent. Kuasai Flap T (butter) dan Glottal Stop (button).',
+      "Kuasai pola American /t/: Flap T ditulis /\u027E/ dan terdengar seperti 'd' lembut (butter), bukan /r/. Glottal stop ditulis /\u0294/ saat aliran udara dihentikan sejenak, sering muncul di speech casual (button).",
     icon: '/t/',
     color: 'from-emerald-400 to-green-600',
     bgImage: 'https://picsum.photos/id/50/1920/1080',
