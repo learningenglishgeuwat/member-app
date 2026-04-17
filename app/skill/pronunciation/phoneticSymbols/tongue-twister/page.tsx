@@ -7,16 +7,39 @@ import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices 
 import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
+  const [selectedFocus, setSelectedFocus] = useState<string>('all');
   const [selectedId, setSelectedId] = useState<string>(TONGUE_TWISTERS[0].id);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [focusDropdownOpen, setFocusDropdownOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const speakSessionRef = useRef(0);
   const lockedPeterVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
+  const focusOptions = useMemo(() => {
+    const unique = new Set<string>(TONGUE_TWISTERS.map((item) => item.focus).filter(Boolean));
+    return Array.from(unique).sort((a, b) => a.localeCompare(b));
+  }, []);
+
+  const filteredTwisters = useMemo(() => {
+    if (selectedFocus === 'all') return TONGUE_TWISTERS;
+    return TONGUE_TWISTERS.filter((item) => item.focus === selectedFocus);
+  }, [selectedFocus]);
+
+  useEffect(() => {
+    if (filteredTwisters.some((item) => item.id === selectedId)) return;
+    const next = filteredTwisters[0]?.id ?? TONGUE_TWISTERS[0]?.id;
+    if (next) {
+      handleStopSpeak();
+      setSelectedId(next);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredTwisters, selectedId]);
+
   const activeTwister = useMemo(
-    () => TONGUE_TWISTERS.find((item) => item.id === selectedId) ?? TONGUE_TWISTERS[0],
-    [selectedId],
+    () => filteredTwisters.find((item) => item.id === selectedId) ?? filteredTwisters[0] ?? TONGUE_TWISTERS[0],
+    [filteredTwisters, selectedId],
   );
 
   const twisterLines = useMemo(
@@ -34,15 +57,21 @@ export default function TongueTwisterPage() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!dropdownRef.current) return;
-      if (!dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const outsideTwister = dropdownRef.current ? !dropdownRef.current.contains(target) : true;
+      const outsideFocus = focusDropdownRef.current ? !focusDropdownRef.current.contains(target) : true;
+      if (outsideTwister) {
         setDropdownOpen(false);
+      }
+      if (outsideFocus) {
+        setFocusDropdownOpen(false);
       }
     };
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setDropdownOpen(false);
+        setFocusDropdownOpen(false);
       }
     };
 
@@ -131,6 +160,17 @@ export default function TongueTwisterPage() {
     [handleStopSpeak, selectedId],
   );
 
+  const handleSelectFocus = useCallback(
+    (nextFocus: string) => {
+      if (nextFocus !== selectedFocus) {
+        handleStopSpeak();
+        setSelectedFocus(nextFocus);
+      }
+      setFocusDropdownOpen(false);
+    },
+    [handleStopSpeak, selectedFocus],
+  );
+
   return (
     <main className="tt-page">
       <div className="tt-back">
@@ -146,6 +186,53 @@ export default function TongueTwisterPage() {
             kontrol lidah, dan konsistensi pelafalan.
           </p>
         </header>
+
+        <label className="tt-label" htmlFor="tt-focus-select">
+          Focus Sound
+        </label>
+        <div className="tt-dropdown" ref={focusDropdownRef}>
+          <button
+            id="tt-focus-select"
+            type="button"
+            className="tt-select"
+            aria-haspopup="listbox"
+            aria-expanded={focusDropdownOpen}
+            onClick={() => {
+              setFocusDropdownOpen((prev) => !prev);
+              setDropdownOpen(false);
+            }}
+          >
+            <span className="tt-select-text">
+              {selectedFocus === 'all' ? 'All Focus Sounds' : selectedFocus}
+            </span>
+            <span className={`tt-caret ${focusDropdownOpen ? 'is-open' : ''}`} aria-hidden="true" />
+          </button>
+
+          {focusDropdownOpen ? (
+            <ul className="tt-dropdown-list" role="listbox" aria-labelledby="tt-focus-select">
+              <li role="option" aria-selected={selectedFocus === 'all'}>
+                <button
+                  type="button"
+                  className={`tt-dropdown-item ${selectedFocus === 'all' ? 'is-active' : ''}`}
+                  onClick={() => handleSelectFocus('all')}
+                >
+                  All Focus Sounds
+                </button>
+              </li>
+              {focusOptions.map((focus) => (
+                <li key={focus} role="option" aria-selected={focus === selectedFocus}>
+                  <button
+                    type="button"
+                    className={`tt-dropdown-item ${focus === selectedFocus ? 'is-active' : ''}`}
+                    onClick={() => handleSelectFocus(focus)}
+                  >
+                    {focus}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
 
         <label className="tt-label" htmlFor="tt-select">
           Pilih Tongue Twister
@@ -165,7 +252,7 @@ export default function TongueTwisterPage() {
 
           {dropdownOpen ? (
             <ul className="tt-dropdown-list" role="listbox" aria-labelledby="tt-select">
-              {TONGUE_TWISTERS.map((item) => (
+              {filteredTwisters.map((item) => (
                 <li key={item.id} role="option" aria-selected={item.id === selectedId}>
                   <button
                     type="button"

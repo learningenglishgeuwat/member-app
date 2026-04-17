@@ -122,28 +122,28 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   'e\u0259': {
     description: 'Simbol ini sangat umum di British. Dalam American, banyak kata biasanya terdengar lebih rhotic (pakai /r/).',
     items: [
-      { word: 'care', britishIpa: '/ke?/', americanIpa: '/ker/' },
-      { word: 'share', britishIpa: '/?e?/', americanIpa: '/?er/' },
-      { word: 'fair', britishIpa: '/fe?/', americanIpa: '/fer/' },
-      { word: 'bear', britishIpa: '/be?/', americanIpa: '/ber/' },
+      { word: 'care', britishIpa: '/ke\u0259/', americanIpa: '/k\u025Br/' },
+      { word: 'share', britishIpa: '/\u0283e\u0259/', americanIpa: '/\u0283\u025Br/' },
+      { word: 'fair', britishIpa: '/fe\u0259/', americanIpa: '/f\u025Br/' },
+      { word: 'bear', britishIpa: '/be\u0259/', americanIpa: '/b\u025Br/' },
     ],
   },
   '\u026A\u0259': {
-    description: 'Di British sering ditulis /??/. Dalam American biasanya lebih dekat ke /?r/.',
+    description: 'Di British sering ditulis /\u026A\u0259/. Dalam American biasanya lebih dekat ke /\u026Ar/.',
     items: [
-      { word: 'near', britishIpa: '/n??/', americanIpa: '/n?r/' },
-      { word: 'clear', britishIpa: '/kl??/', americanIpa: '/kl?r/' },
-      { word: 'fear', britishIpa: '/f??/', americanIpa: '/f?r/' },
-      { word: 'year', britishIpa: '/j??/', americanIpa: '/j?r/' },
+      { word: 'near', britishIpa: '/n\u026A\u0259/', americanIpa: '/n\u026Ar/' },
+      { word: 'clear', britishIpa: '/kl\u026A\u0259/', americanIpa: '/kl\u026Ar/' },
+      { word: 'fear', britishIpa: '/f\u026A\u0259/', americanIpa: '/f\u026Ar/' },
+      { word: 'year', britishIpa: '/j\u026A\u0259/', americanIpa: '/j\u026Ar/' },
     ],
   },
   '\u028A\u0259': {
-    description: 'Di British sering ditulis /??/. Dalam American, kata yang sama biasanya cenderung /?r/ (atau variasi rhotic lain).',
+    description: 'Di British sering ditulis /\u028A\u0259/. Dalam American, kata yang sama biasanya cenderung /\u028Ar/ (atau variasi rhotic lain).',
     items: [
-      { word: 'tour', britishIpa: '/t??/', americanIpa: '/t?r/' },
-      { word: 'poor', britishIpa: '/p??/', americanIpa: '/p?r/' },
-      { word: 'sure', britishIpa: '/???/', americanIpa: '/??r/' },
-      { word: 'your', britishIpa: '/j??/', americanIpa: '/j?r/' },
+      { word: 'tour', britishIpa: '/t\u028A\u0259/', americanIpa: '/t\u028Ar/' },
+      { word: 'poor', britishIpa: '/p\u028A\u0259/', americanIpa: '/p\u028Ar/' },
+      { word: 'sure', britishIpa: '/\u0283\u028A\u0259/', americanIpa: '/\u0283\u028Ar/' },
+      { word: 'your', britishIpa: '/j\u028A\u0259/', americanIpa: '/j\u028Ar/' },
     ],
   },
 };
@@ -164,6 +164,19 @@ async function speakWithSymbolDetailVoice(text: string): Promise<void> {
 
   await speakText(speechText, {
     preferredEnglish: 'en-US',
+    rate: 0.86,
+    pitch: 1,
+    volume: 1,
+    cancelBeforeSpeak: false,
+  });
+}
+
+async function speakWithBritishSymbolDetailVoice(text: string): Promise<void> {
+  if (!isSpeechSynthesisSupported() || !text.trim()) return;
+  const speechText = addWordPauseForSpeech(text);
+
+  await speakText(speechText, {
+    preferredEnglish: 'en-GB',
     rate: 0.86,
     pitch: 1,
     volume: 1,
@@ -194,6 +207,7 @@ const SymbolDetailPage: React.FC = () => {
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
   const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
+  const [isWordExamplesCopied, setIsWordExamplesCopied] = useState(false);
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isTipsOpen, setIsTipsOpen] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -296,6 +310,7 @@ const SymbolDetailPage: React.FC = () => {
   const playSessionRef = useRef(0);
   const playNextTimeoutRef = useRef<number | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
+  const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
   
   useEffect(() => {
     let active = true;
@@ -478,7 +493,8 @@ const SymbolDetailPage: React.FC = () => {
 
     const currentSession = playSessionRef.current;
     void (async () => {
-      await speakWithSymbolDetailVoice(word);
+      // BrE button should use British voice to match the UK IPA note.
+      await speakWithBritishSymbolDetailVoice(word);
 
       if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);
@@ -591,10 +607,42 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
+  const handleCopyWordExamples = async () => {
+    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
+      return;
+    }
+
+    const words = symbolData.examples
+      .map(example => example.word?.trim())
+      .filter((word): word is string => !!word);
+
+    if (words.length === 0) {
+      return;
+    }
+
+    try {
+      // Copy plain words only (no IPA), for the currently opened sound.
+      await navigator.clipboard.writeText(words.join(', '));
+      setIsWordExamplesCopied(true);
+      if (wordExamplesCopyTimeoutRef.current) {
+        window.clearTimeout(wordExamplesCopyTimeoutRef.current);
+      }
+      wordExamplesCopyTimeoutRef.current = window.setTimeout(() => {
+        setIsWordExamplesCopied(false);
+      }, 1800);
+    } catch (error) {
+      console.error('Failed to copy word examples:', error);
+      setIsWordExamplesCopied(false);
+    }
+  };
+
   useEffect(() => {
     return () => {
       if (promptCopyTimeoutRef.current) {
         window.clearTimeout(promptCopyTimeoutRef.current);
+      }
+      if (wordExamplesCopyTimeoutRef.current) {
+        window.clearTimeout(wordExamplesCopyTimeoutRef.current);
       }
     };
   }, []);
@@ -673,16 +721,28 @@ const SymbolDetailPage: React.FC = () => {
         {/* Word Grid Module */}
         <div ref={wordExamplesRef} className="w-full scroll-mt-24 mt-12 md:mt-14">
           <div className="word-examples-section w-full max-w-6xl mx-auto p-2 md:p-4 z-10 relative">
-            <div className="word-examples-header flex items-center justify-between mb-3 md:mb-5 border-b border-purple-500/30 pb-2">
-              <div className="flex items-center gap-2">
-                <Database className="text-purple-400" size={16} />
-                <h3 className="text-xs md:text-lg font-display font-bold text-purple-400 tracking-widest uppercase">
-                  Word_Examples
-                </h3>
-              </div>
-              <button
-                onClick={() => {
-                  // Scroll to video section
+             <div className="word-examples-header flex items-center justify-between mb-3 md:mb-5 border-b border-purple-500/30 pb-2">
+               <div className="flex items-center gap-2">
+                 <Database className="text-purple-400" size={16} />
+                 <h3 className="text-xs md:text-lg font-display font-bold text-purple-400 tracking-widest uppercase">
+                   <button
+                     type="button"
+                     onClick={handleCopyWordExamples}
+                     data-tour="symbol-word-examples-copy"
+                     className="inline-flex items-center gap-2 hover:text-purple-300 transition-colors"
+                     title="Salin semua Word Examples (tanpa IPA)"
+                   >
+                     <span>Word_Examples</span>
+                     <Copy size={14} className="opacity-70" />
+                     <span className="font-mono text-[10px] md:text-xs normal-case tracking-normal opacity-70">
+                       {isWordExamplesCopied ? 'Tersalin' : 'Salin'}
+                     </span>
+                   </button>
+                 </h3>
+               </div>
+               <button
+                 onClick={() => {
+                   // Scroll to video section
                   const videoSection = document.querySelector('[data-video-section]');
                   if (videoSection) {
                     videoSection.scrollIntoView({
@@ -797,7 +857,7 @@ const SymbolDetailPage: React.FC = () => {
                           <span>BrE</span>
                         </button>
                         <button
-                          onClick={() => handlePlayBritishNoteWord(item.word)}
+                          onClick={() => handlePlayWord(item.word)}
                           className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
                           title={`Play AmE: ${item.word}`}
                         >
@@ -965,17 +1025,50 @@ const SymbolDetailPage: React.FC = () => {
                 />
               </span>
             </button>
-            {isPracticeOpen && (
-              <div className="p-3 md:p-5 text-[11px] md:text-sm text-gray-200 leading-relaxed">
-                <p>
-                  <strong>Mission:</strong>
-                  <br />
-                  Baca semua kata di Word_Examples.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+             {isPracticeOpen && (
+               <div className="p-3 md:p-5 text-[11px] md:text-sm text-gray-200 leading-relaxed">
+                 <p>
+                   <strong>Mission:</strong>
+                   <br />
+                   Baca semua kata di{' '}
+                   <button
+                     type="button"
+                     onClick={handleCopyWordExamples}
+                     className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
+                     title="Salin semua Word Examples (tanpa IPA)"
+                   >
+                     Word_Examples
+                   </button>
+                   .
+                 </p>
+                 <div className="mt-2 flex flex-wrap items-center gap-2">
+                   <span className="font-mono text-[10px] md:text-xs text-cyber-cyan/80 tracking-wider uppercase">
+                     Salin:
+                   </span>
+                   <button
+                     type="button"
+                     onClick={handleCopyWordExamples}
+                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
+                     title="Salin semua Word Examples (tanpa IPA)"
+                   >
+                     <Copy size={12} />
+                     <span>{isWordExamplesCopied ? 'Word Examples (Tersalin)' : 'Word Examples'}</span>
+                   </button>
+                   <span className="text-gray-400/80">dan</span>
+                   <button
+                     type="button"
+                     onClick={handleCopyPrompt}
+                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-pink hover:text-white underline decoration-cyber-pink/50 underline-offset-2 transition-colors"
+                     title="Salin prompt"
+                   >
+                     <Copy size={12} />
+                     <span>{isPromptCopied ? 'Prompt (Tersalin)' : 'Prompt'}</span>
+                   </button>
+                 </div>
+               </div>
+             )}
+           </div>
+         </div>
 
         {/* Prompt Section (below PRACTICE) */}
         <div className="w-full max-w-4xl mx-auto mt-6">

@@ -29,6 +29,7 @@ type JumpSectionId = 'examples' | 'sentence-drills-examples';
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const AMERICAN_T_RELEASED_ENDING_PROGRESS_ID = 'americanTReleasedEnding';
 const RELEASED_T_ENDING_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata dan kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama kejelasan released /t/ di akhir kata, akurasi pelepasan bunyi final /t/ sesuai konteks, dan kestabilan ritme kalimat. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/kalimat yang diucapkan (pola final released /t/). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bagian final /t/ mana yang perlu diperbaiki.";
 
@@ -97,7 +98,21 @@ export default function ClearTEndingPage() {
       const currentProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      return typeof currentProgress.americanT === 'number' && currentProgress.americanT > 0;
+      const savedAssessments = JSON.parse(
+        window.localStorage.getItem('savedAssessments') || '{}',
+      ) as Record<string, { percentage?: unknown }>;
+      const assessmentKey = 'Released /t/ Ending'.toLowerCase().replace(/\s+/g, '_');
+      const savedAssessmentPercent = savedAssessments[assessmentKey]?.percentage;
+      const hasSavedAssessment =
+        typeof savedAssessmentPercent === 'number' &&
+        Number.isFinite(savedAssessmentPercent) &&
+        savedAssessmentPercent > 0;
+
+      return (
+        (typeof currentProgress[AMERICAN_T_RELEASED_ENDING_PROGRESS_ID] === 'number' &&
+          currentProgress[AMERICAN_T_RELEASED_ENDING_PROGRESS_ID] > 0) ||
+        hasSavedAssessment
+      );
     } catch {
       return false;
     }
@@ -139,7 +154,8 @@ export default function ClearTEndingPage() {
       const pronunciationProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      pronunciationProgress.americanT = percentage;
+      delete pronunciationProgress.americanT;
+      pronunciationProgress[AMERICAN_T_RELEASED_ENDING_PROGRESS_ID] = percentage;
       window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
       const dashboardProgress = JSON.parse(
@@ -159,6 +175,7 @@ export default function ClearTEndingPage() {
       window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
     ) as Record<string, number>;
     delete pronunciationProgress.americanT;
+    delete pronunciationProgress[AMERICAN_T_RELEASED_ENDING_PROGRESS_ID];
     window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
     const dashboardProgress = JSON.parse(

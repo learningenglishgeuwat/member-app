@@ -312,10 +312,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 10px;
   padding: 10px;
   border: 1px solid rgba(120, 95, 200, 0.36);
   border-radius: var(--tg-radius-md);
   background: var(--tg-bg-soft);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
 }
 
 .tg-input {

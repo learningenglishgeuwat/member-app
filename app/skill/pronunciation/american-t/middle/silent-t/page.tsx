@@ -31,6 +31,7 @@ type JumpSectionId = 'wordBank' | 'sentence-drills-examples';
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const AMERICAN_T_SILENT_PROGRESS_ID = 'americanTSilent';
 const SILENT_T_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata dan kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi pola silent /t/ pada speech kasual, perbedaan careful speech vs natural speech, dan kejelasan kata meski /t/ direduksi. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/kalimat yang diucapkan (pola silent /t/). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bagian silent /t/ mana yang perlu diperbaiki.";
 
@@ -138,7 +139,21 @@ export default function SilentTMiddlePage() {
       const currentProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      return typeof currentProgress.americanT === 'number' && currentProgress.americanT > 0;
+      const savedAssessments = JSON.parse(
+        window.localStorage.getItem('savedAssessments') || '{}',
+      ) as Record<string, { percentage?: unknown }>;
+      const assessmentKey = 'Silent /t/'.toLowerCase().replace(/\s+/g, '_');
+      const savedAssessmentPercent = savedAssessments[assessmentKey]?.percentage;
+      const hasSavedAssessment =
+        typeof savedAssessmentPercent === 'number' &&
+        Number.isFinite(savedAssessmentPercent) &&
+        savedAssessmentPercent > 0;
+
+      return (
+        (typeof currentProgress[AMERICAN_T_SILENT_PROGRESS_ID] === 'number' &&
+          currentProgress[AMERICAN_T_SILENT_PROGRESS_ID] > 0) ||
+        hasSavedAssessment
+      );
     } catch {
       return false;
     }
@@ -184,7 +199,8 @@ export default function SilentTMiddlePage() {
       const pronunciationProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      pronunciationProgress.americanT = percentage;
+      delete pronunciationProgress.americanT;
+      pronunciationProgress[AMERICAN_T_SILENT_PROGRESS_ID] = percentage;
       window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
       const dashboardProgress = JSON.parse(
@@ -204,6 +220,7 @@ export default function SilentTMiddlePage() {
       window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
     ) as Record<string, number>;
     delete pronunciationProgress.americanT;
+    delete pronunciationProgress[AMERICAN_T_SILENT_PROGRESS_ID];
     window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
     const dashboardProgress = JSON.parse(

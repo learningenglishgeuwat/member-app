@@ -216,6 +216,7 @@ const COMMON_MISTAKES = [
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
+const FINAL_SOUND_S_ES_PROGRESS_ID = 'finalSoundSEs';
 const S_ES_COMMON_MISTAKES_OPEN_KEY = 'final-sound-s-es-common-mistakes-open-v1';
 const S_ES_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata atau kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi final sound S/ES: /s/, /z/, dan /ɪz/, serta kejelasan transisi bunyi akhir kata. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/frasa yang diucapkan (khusus ending -s/-es). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bunyi akhir mana yang perlu diperbaiki.";
@@ -277,7 +278,21 @@ export default function FinalSoundSEsPage() {
       const currentProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      return typeof currentProgress.finalSound === 'number' && currentProgress.finalSound > 0;
+      const savedAssessments = JSON.parse(
+        window.localStorage.getItem('savedAssessments') || '{}',
+      ) as Record<string, { percentage?: unknown }>;
+      const assessmentKey = 'Final Sound S/ES'.toLowerCase().replace(/\s+/g, '_');
+      const savedAssessmentPercent = savedAssessments[assessmentKey]?.percentage;
+      const hasSavedAssessment =
+        typeof savedAssessmentPercent === 'number' &&
+        Number.isFinite(savedAssessmentPercent) &&
+        savedAssessmentPercent > 0;
+
+      return (
+        (typeof currentProgress[FINAL_SOUND_S_ES_PROGRESS_ID] === 'number' &&
+          currentProgress[FINAL_SOUND_S_ES_PROGRESS_ID] > 0) ||
+        hasSavedAssessment
+      );
     } catch {
       return false;
     }
@@ -339,7 +354,8 @@ export default function FinalSoundSEsPage() {
       const pronunciationProgress = JSON.parse(
         window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
       ) as Record<string, number>;
-      pronunciationProgress.finalSound = percentage;
+      delete pronunciationProgress.finalSound;
+      pronunciationProgress[FINAL_SOUND_S_ES_PROGRESS_ID] = percentage;
       window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
       const dashboardProgress = JSON.parse(
@@ -359,6 +375,7 @@ export default function FinalSoundSEsPage() {
       window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
     ) as Record<string, number>;
     delete pronunciationProgress.finalSound;
+    delete pronunciationProgress[FINAL_SOUND_S_ES_PROGRESS_ID];
     window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
 
     const dashboardProgress = JSON.parse(

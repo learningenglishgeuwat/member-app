@@ -1,12 +1,36 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, ArrowRight, Info, MessageCircle, Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
 import { createExtensionRequest, getLatestExtensionRequest, type ExtensionRequestStatus } from '@/lib/extensionRequests';
 
 const EXTENSION_REQUEST_LOCKED = true;
+
+const PHONETIC_SYMBOL_GROUPS: Array<{ id: string; symbols: string[] }> = [
+  { id: 'vowel-lax', symbols: ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'] },
+  { id: 'vowel-tense', symbols: ['\u0251', 'i', 'u', '\u00e6', '\u0254'] },
+  { id: 'diphthong', symbols: ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'] },
+  { id: 'consonant-voiceless', symbols: ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h'] },
+  { id: 'consonant-voiced', symbols: ['b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y'] },
+];
+
+const toPercent = (value: unknown): number => {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return 0;
+  return Math.min(100, Math.max(0, Math.round(value)));
+};
+
+const readLocalStorageObject = <T,>(key: string, fallback: T): T => {
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+};
 
 const SettingsContent: React.FC = () => {
   const { user } = useAuth();
@@ -25,6 +49,36 @@ const SettingsContent: React.FC = () => {
   const [extensionStatus, setExtensionStatus] = useState<ExtensionRequestStatus | null>(null);
   const [extensionRequestId, setExtensionRequestId] = useState<string | null>(null);
   const [extensionStatusLoading, setExtensionStatusLoading] = useState(false);
+
+  const [phoneticSymbolsProgress, setPhoneticSymbolsProgress] = useState(0);
+  const [showHeroHelpModal, setShowHeroHelpModal] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const calculate = () => {
+      const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {});
+      const allSymbols = PHONETIC_SYMBOL_GROUPS.flatMap((group) => group.symbols);
+      const values = allSymbols.map((symbol) => toPercent(topicProgress[`phoneticSymbols_${symbol}`]));
+      const avg = values.length > 0 ? Math.round(values.reduce((acc, curr) => acc + curr, 0) / values.length) : 0;
+      setPhoneticSymbolsProgress(avg);
+    };
+
+    calculate();
+
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === 'pronunciationProgress') {
+        calculate();
+      }
+    };
+
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('focus', calculate);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('focus', calculate);
+    };
+  }, []);
 
   const handlePasswordChange = async () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -207,6 +261,78 @@ const SettingsContent: React.FC = () => {
             </div>
           </div>
           
+          {/* GEUWAT Tower Hero */}
+          <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-slate-900/40 border border-purple-500/20 rounded-lg">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-3 text-center font-display leading-snug">
+              <span className="block">Hidupkan Hero</span>
+              <span className="block text-purple-200">Untuk Mengikuti GEUWAT Tower</span>
+            </h3>
+
+            {(() => {
+              const tier =
+                phoneticSymbolsProgress >= 70 ? 'active' : phoneticSymbolsProgress >= 26 ? 'shadow' : 'locked';
+              const isShadow = tier !== 'active';
+              const showLock = tier === 'locked';
+              const imageClassName = isShadow
+                ? 'object-contain w-full h-full opacity-90 [filter:brightness(0)_contrast(1.05)_drop-shadow(0_18px_20px_rgba(0,0,0,0.75))]'
+                : 'object-contain w-full h-full drop-shadow-[0_18px_20px_rgba(0,0,0,0.35)]';
+
+              return (
+                <div className="rounded-xl border border-slate-700/40 bg-slate-950/30 overflow-hidden">
+                  <div className="relative w-full aspect-[16/9] flex items-center justify-center p-4">
+                    <Image
+                      src="/ChibiLogin.webp"
+                      alt="GEUWAT Tower Hero"
+                      width={720}
+                      height={405}
+                      className={imageClassName}
+                    />
+                    {isShadow ? (
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35" />
+                    ) : null}
+                    {showLock ? (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-2 rounded-2xl border border-slate-700/60 bg-slate-950/70 px-4 py-3">
+                          <Lock className="w-6 h-6 text-slate-200" />
+                          <div className="text-[11px] sm:text-xs text-slate-200 font-semibold text-center">
+                            Locked
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })()}
+
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-slate-800/45 border border-slate-700/40 rounded-lg p-3 text-center">
+                <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400">
+                  Phonetic Symbols
+                </div>
+                <div className="mt-1 text-sm sm:text-base font-mono font-bold text-cyan-300">
+                  {phoneticSymbolsProgress}%
+                </div>
+              </div>
+              <div className="bg-slate-800/45 border border-slate-700/40 rounded-lg p-3 text-center">
+                <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400">
+                  Target
+                </div>
+                <div className="mt-1 text-sm sm:text-base font-mono font-bold text-purple-200">
+                  70%
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowHeroHelpModal(true)}
+              className="mt-3 text-xs sm:text-sm text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors block mx-auto"
+            >
+              How to activate?
+            </button>
+          </div>
+
           {/* Admin Contact Section */}
           <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-blue-900/20 border border-blue-500/20 rounded-lg">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3 flex items-center gap-2">
@@ -455,6 +581,64 @@ const SettingsContent: React.FC = () => {
                   )}
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Hero Help Modal */}
+      {showHeroHelpModal && (
+        <div className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4">
+          <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[92vw] sm:max-w-md w-full">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-white font-display">
+                How to activate?
+              </h3>
+              <button
+                onClick={() => setShowHeroHelpModal(false)}
+                className="text-slate-400 hover:text-white transition-colors"
+                type="button"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs sm:text-sm text-slate-300">
+              <div className="text-center space-y-1.5">
+                <p className="text-slate-200 font-semibold leading-snug">
+                  Hidupkan Hero Untuk Mengikuti GEUWAT Tower
+                </p>
+                <p className="leading-snug">
+                  Hero akan aktif kalau bar{' '}
+                  <span className="text-cyan-300 font-semibold">Phonetic Symbols</span>{' '}
+                  mencapai <span className="text-cyan-300 font-semibold">70%</span>.
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-700/50 bg-slate-950/30 p-3 space-y-2">
+                <p>1. Buka menu <span className="text-white font-semibold">Pronunciation</span>.</p>
+                <p>2. Masuk ke <span className="text-white font-semibold">Phonetic Symbols</span>.</p>
+                <p>3. Latih symbol-symbol sampai progress rata-rata naik.</p>
+                <p>4. Cek lagi di View Progress &gt; Pronunciation &gt; Phonetic Symbols.</p>
+              </div>
+              <div className="text-slate-400">
+                <div className="font-semibold text-slate-300">Status hero</div>
+                <div className="mt-1 grid grid-cols-1 gap-1">
+                  <div>0-25%: locked</div>
+                  <div>26-69%: shadow</div>
+                  <div>70%+: active</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowHeroHelpModal(false)}
+                className="px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-200 hover:bg-purple-500/30 transition-colors text-xs sm:text-sm"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
