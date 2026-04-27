@@ -1,7 +1,7 @@
 'use client';
 
 import Link from '../../components/HoverPrefetchLink';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Apple,
   Bath,
@@ -44,9 +44,12 @@ import { assertVocabularyDatasetInDev } from './topic/data/quality';
 import { VOCABULARY_TOPICS } from './topic/data/topics';
 import type { VocabularyTopicId } from './topic/data/types';
 import { TOTAL_VOCABULARY_WORDS, getVocabularyWordsByTopic } from './topic/data/words';
+import TopicCarousel from './components/TopicCarousel';
+import { useKpiValueColumn } from './components/useKpiValueColumn';
 import './topic/shared/vocabulary.css';
 
 const TOPICS_PER_PAGE = 6;
+const VOCAB_LAST_TOPIC_ID_KEY = 'vocab:lastTopicId';
 
 const TOPIC_CHIP_LABEL_OVERRIDES: Record<string, string> = {
   number: 'Cardinal Number',
@@ -115,14 +118,34 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default function VocabularyPage() {
   const topicChipLabelMap = buildTopicChipLabelMap();
+  const kpiRef = useRef<HTMLDListElement | null>(null);
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(max-width: 767px)').matches;
+  });
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [restoredTopicId] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      return window.localStorage.getItem(VOCAB_LAST_TOPIC_ID_KEY);
+    } catch {
+      return null;
+    }
+  });
   const searchQuery = searchInput.trim();
   const normalizedSearchQuery = searchQuery.toLowerCase();
   const filteredTopics = useMemo(
     () =>
       normalizedSearchQuery
         ? VOCABULARY_TOPICS.filter((topic) => {
+            if (/^\d+$/.test(normalizedSearchQuery)) {
+              const requestedIndex = Number(normalizedSearchQuery);
+              if (!Number.isFinite(requestedIndex) || requestedIndex <= 0) return false;
+              return VOCABULARY_TOPICS[requestedIndex - 1]?.topicId === topic.topicId;
+            }
+
             const topicChip = topicChipLabelMap.get(topic.topicId) ?? topic.title;
             const haystack = `${topicChip} ${topic.title} ${topic.subtitle} ${topic.description} ${topic.topicId}`.toLowerCase();
             return haystack.includes(normalizedSearchQuery);
@@ -136,6 +159,36 @@ export default function VocabularyPage() {
   const startIndex = (effectivePage - 1) * TOPICS_PER_PAGE;
   const pagedTopics = filteredTopics.slice(startIndex, startIndex + TOPICS_PER_PAGE);
 
+  useKpiValueColumn(kpiRef);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = (event: MediaQueryListEvent) => setIsMobile(event.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
+  const carouselItems = useMemo(
+    () =>
+      filteredTopics.map((topic) => {
+        const wordCount = getVocabularyWordsByTopic(topic.topicId).length;
+        const topicChip = topicChipLabelMap.get(topic.topicId) ?? topic.title;
+        const TopicIcon = TOPIC_ICON_MAP[topic.topicId] ?? BookOpen;
+
+        return {
+          id: topic.topicId,
+          href: `/skill/vocabulary/topic/pages/${topic.topicId}`,
+          chipLabel: topicChip,
+          subtitle: topic.subtitle,
+          description: topic.description,
+          wordCount,
+          Icon: TopicIcon,
+        };
+      }),
+    [filteredTopics, topicChipLabelMap],
+  );
+
   return (
     <main className="vocab-page">
       <div className="fixed left-4 top-6 z-50">
@@ -143,23 +196,26 @@ export default function VocabularyPage() {
       </div>
 
       <div className="vocab-shell">
-        <header className="vocab-header">
+        <header className="vocab-header vocab-header--center">
           <h1 className="vocab-title">Vocabulary</h1>
           <p className="vocab-subtitle">
             Pilih topik dulu, lalu masuk ke daftar kata dan contoh kalimat.
             Fokus awal: topik dasar untuk latihan speaking harian.
           </p>
-          <div className="vocab-kpis">
-            <p className="vocab-kpi">
-              Total topics: <strong>{VOCABULARY_TOPICS.length}</strong>
-            </p>
-            <p className="vocab-kpi">
-              Di halaman ini: <strong>{pagedTopics.length}</strong>
-            </p>
-            <p className="vocab-kpi">
-              Total words: <strong>{TOTAL_VOCABULARY_WORDS}</strong>
-            </p>
-          </div>
+          <dl ref={kpiRef} className="vocab-kpi-table" aria-label="Vocabulary summary">
+            <dt>Total topics</dt>
+            <dd>
+              <span className="vocab-kpi-value">{VOCABULARY_TOPICS.length}</span>
+            </dd>
+            <dt>Di halaman ini</dt>
+            <dd>
+              <span className="vocab-kpi-value">{pagedTopics.length}</span>
+            </dd>
+            <dt>Total words</dt>
+            <dd>
+              <span className="vocab-kpi-value">{TOTAL_VOCABULARY_WORDS}</span>
+            </dd>
+          </dl>
         </header>
 
         <section className="vocab-tools" aria-label="Topic vocabulary search" data-tour="vocab-search">
@@ -171,6 +227,7 @@ export default function VocabularyPage() {
               onChange={(event) => {
                 setSearchInput(event.target.value);
                 setCurrentPage(1);
+                setCarouselIndex(0);
               }}
               className="vocab-search-input"
               placeholder="Cari topic, subtitle, atau deskripsi..."
@@ -184,6 +241,7 @@ export default function VocabularyPage() {
                 onClick={() => {
                   setSearchInput('');
                   setCurrentPage(1);
+                  setCarouselIndex(0);
                 }}
               >
                 Reset
@@ -193,7 +251,16 @@ export default function VocabularyPage() {
         </section>
 
         <p className="vocab-visible-note">
-          Showing <strong>{pagedTopics.length}</strong> of <strong>{filteredTopics.length}</strong> topics.
+          {isMobile ? (
+            <>
+              Showing <strong>{Math.min(filteredTopics.length, carouselIndex + 1)}</strong> of{' '}
+              <strong>{filteredTopics.length}</strong> topics.
+            </>
+          ) : (
+            <>
+              Showing <strong>{pagedTopics.length}</strong> of <strong>{filteredTopics.length}</strong> topics.
+            </>
+          )}
         </p>
 
         {filteredTopics.length === 0 ? (
@@ -201,47 +268,78 @@ export default function VocabularyPage() {
             Tidak ada topic yang cocok dengan kata kunci <strong>{searchQuery}</strong>.
           </div>
         ) : (
-          <section className="vocab-topic-grid" aria-label="Vocabulary topic list" data-tour="vocab-topic-grid">
-            {pagedTopics.map((topic) => {
-              const wordCount = getVocabularyWordsByTopic(topic.topicId).length;
-              const topicChip = topicChipLabelMap.get(topic.topicId) ?? topic.title;
+          <>
+            <TopicCarousel
+              items={carouselItems}
+              initialItemId={searchInput ? null : restoredTopicId}
+              onIndexChange={(index) => {
+                setCarouselIndex(index);
+                const topicId = carouselItems[index]?.id;
+                if (!topicId) return;
+                try {
+                  window.localStorage.setItem(VOCAB_LAST_TOPIC_ID_KEY, topicId);
+                } catch {
+                  // ignore storage errors
+                }
+              }}
+            />
+            <section
+              className="vocab-topic-grid vocab-topic-grid--desktop"
+              aria-label="Vocabulary topic list"
+              data-tour="vocab-topic-grid"
+            >
+              {pagedTopics.map((topic) => {
+                const wordCount = getVocabularyWordsByTopic(topic.topicId).length;
+                const topicChip = topicChipLabelMap.get(topic.topicId) ?? topic.title;
 
-              const TopicIcon = TOPIC_ICON_MAP[topic.topicId] ?? BookOpen;
+                const TopicIcon = TOPIC_ICON_MAP[topic.topicId] ?? BookOpen;
 
-              return (
-                <Link
-                  key={topic.topicId}
-                  href={`/skill/vocabulary/topic/pages/${topic.topicId}`}
-                  className="vocab-topic-card"
-                  prefetchOnHover={false}
-                  aria-label={`Buka topik ${topicChip}`}
-                >
-                  <div className="vocab-topic-head">
-                    <h2 className="vocab-topic-title">
-                      <span className="vocab-topic-icon" aria-hidden="true">
-                        <TopicIcon className="vocab-topic-icon-svg" />
-                      </span>
-                      <span className="vocab-topic-chip vocab-topic-chip--title">{topicChip}</span>
-                    </h2>
-                    <p className="vocab-topic-subtitle">{topic.subtitle}</p>
-                  </div>
+                return (
+                  <Link
+                    key={topic.topicId}
+                    href={`/skill/vocabulary/topic/pages/${topic.topicId}`}
+                    className="vocab-topic-card"
+                    prefetchOnHover={false}
+                    aria-label={`Buka topik ${topicChip}`}
+                    onClick={() => {
+                      try {
+                        window.localStorage.setItem(VOCAB_LAST_TOPIC_ID_KEY, topic.topicId);
+                      } catch {
+                        // ignore storage errors
+                      }
+                    }}
+                  >
+                    <div className="vocab-topic-head">
+                      <h2 className="vocab-topic-title">
+                        <span className="vocab-topic-icon" aria-hidden="true">
+                          <TopicIcon className="vocab-topic-icon-svg" />
+                        </span>
+                        <span className="vocab-topic-chip vocab-topic-chip--title">{topicChip}</span>
+                      </h2>
+                      <p className="vocab-topic-subtitle">{topic.subtitle}</p>
+                    </div>
 
-                  {topic.subtitle && topic.description ? (
-                    <span className="vocab-topic-divider" aria-hidden="true" />
-                  ) : null}
-                  <p className="vocab-topic-description">{topic.description}</p>
+                    {topic.subtitle && topic.description ? (
+                      <span className="vocab-topic-divider" aria-hidden="true" />
+                    ) : null}
+                    <p className="vocab-topic-description">{topic.description}</p>
 
-                  <div className="vocab-topic-footer">
-                    <span className="vocab-topic-meta">{wordCount} kata</span>
-                    <span className="vocab-topic-link">Lihat Detail</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </section>
+                    <div className="vocab-topic-footer">
+                      <span className="vocab-topic-meta">{wordCount} kata</span>
+                      <span className="vocab-topic-link">Lihat Detail</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </section>
+          </>
         )}
 
-        <nav className="vocab-pagination" aria-label="Vocabulary topic pagination" data-tour="vocab-pagination">
+        <nav
+          className="vocab-pagination vocab-pagination--desktop"
+          aria-label="Vocabulary topic pagination"
+          data-tour="vocab-pagination"
+        >
           <button
             type="button"
             className="vocab-action-btn vocab-topic-page-link"

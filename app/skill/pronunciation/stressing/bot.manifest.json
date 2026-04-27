@@ -1,29 +1,28 @@
 {
   "route": "/skill/pronunciation/stressing",
-  "label": "Word Stressing",
+  "label": "Stressing Hub",
   "scope": "pronunciation",
   "keywords": [
-    "word stress",
     "stressing",
-    "tekanan suku kata"
+    "word stress",
+    "sentence stress",
+    "tekanan suku kata",
+    "tekanan kalimat"
   ],
   "qa": [
     {
-      "topicId": "stressing-word-stress-rules",
-      "title": "Word Stress in English",
+      "topicId": "stressing-hub-overview",
+      "title": "Stressing Learning Map",
       "route": "/skill/pronunciation/stressing",
       "keywords": [
-        "apa itu word stress",
-        "stress syllable",
-        "tekanan kata english"
+        "menu stressing",
+        "belajar stressing",
+        "word stress dan sentence stress"
       ],
-      "shortAnswer": "Word stress menentukan suku kata mana yang paling kuat saat kata diucapkan. Dengan stress yang tepat, ucapan lebih jelas dan makna kata tidak mudah salah tangkap.",
+      "shortAnswer": "Stressing Hub membagi latihan ke dua jalur: Word Stress (tekanan suku kata di dalam kata) dan Sentence Stress (tekanan kata di dalam kalimat). Pilih jalur dulu, lalu lanjut ke materi dan latihan.",
       "sourceSections": [
         {
-          "label": "Word Stress Explanation"
-        },
-        {
-          "label": "Word Stress Examples"
+          "label": "Stressing Hub Cards"
         }
       ]
     }

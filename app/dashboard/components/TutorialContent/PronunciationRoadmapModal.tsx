@@ -196,15 +196,12 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
     return next ?? snapshot
   }
 
-  useEffect(() => {
-    if (!isOpen) return
-    localStorage.setItem(ROADMAP_CHECKLIST_KEY, JSON.stringify(checkedById))
-  }, [checkedById, isOpen])
+  const syncedCheckedById = isOpen ? syncTopicWithLessonDetails(checkedById) : checkedById
 
   useEffect(() => {
     if (!isOpen) return
-    setCheckedById((prev) => syncTopicWithLessonDetails(prev))
-  }, [isOpen])
+    localStorage.setItem(ROADMAP_CHECKLIST_KEY, JSON.stringify(syncedCheckedById))
+  }, [syncedCheckedById, isOpen])
 
   useEffect(() => {
     if (!lessonDetailPopup) return
@@ -220,17 +217,20 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
   }, [lessonDetailPopup])
 
   const completedCount = useMemo(
-    () => PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS.filter((id) => checkedById[id]).length,
-    [checkedById]
+    () => PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS.filter((id) => syncedCheckedById[id]).length,
+    [syncedCheckedById]
   )
 
   const totalDays = useMemo(() => PRONUNCIATION_ROADMAP_TOTAL_DAYS, [])
 
   const toggleChecked = (id: string) => {
-    setCheckedById((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
+    setCheckedById((prev) => {
+      const synced = syncTopicWithLessonDetails(prev)
+      return {
+        ...synced,
+        [id]: !synced[id],
+      }
+    })
   }
 
   const toggleTopicChecked = (topicId: string) => {
@@ -379,7 +379,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                       <div className="max-h-[55vh] overflow-y-auto space-y-3 pr-1 flex flex-col items-center">
                         {group.items.map((item) => {
                           const checkboxId = `${lessonDetailPopup.config.topicId}-${item.id}`
-                          const checked = Boolean(checkedById[toLessonDetailKey(item.id)])
+                          const checked = Boolean(syncedCheckedById[toLessonDetailKey(item.id)])
                           const labelClassName =
                             (group.labelVariant === 'symbol'
                               ? 'text-base sm:text-lg font-mono'
@@ -476,7 +476,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                         <label className="inline-flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
-                            checked={Boolean(checkedById[item.id])}
+                            checked={Boolean(syncedCheckedById[item.id])}
                             onChange={() => toggleTopicChecked(item.id)}
                             className="h-4 w-4 accent-cyan-400"
                           />

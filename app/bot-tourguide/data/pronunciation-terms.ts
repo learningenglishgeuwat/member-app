@@ -82,7 +82,7 @@ export const PRONUNCIATION_TERM_SEEDS: PronunciationTermSeed[] = [
     definitionId:
       'tekanan utama pada satu suku kata dalam sebuah kata, misalnya RE-cord vs re-CORD.',
     coachingTipId: 'Cek suku kata yang paling kuat lalu tirukan dengan ketukan tangan.',
-    route: '/skill/pronunciation/stressing',
+    route: '/skill/pronunciation/stressing/word-stress',
   },
   {
     id: 'sentence-stress',
@@ -92,7 +92,7 @@ export const PRONUNCIATION_TERM_SEEDS: PronunciationTermSeed[] = [
       'pola kata mana yang diberi tekanan dalam kalimat untuk membawa informasi utama.',
     coachingTipId:
       'Utamakan content words (kata isi) lalu ringankan function words untuk ritme natural.',
-    route: '/skill/pronunciation/intonation',
+    route: '/skill/pronunciation/stressing/sentence-stress',
   },
   {
     id: 'intonation',

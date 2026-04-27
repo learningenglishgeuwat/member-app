@@ -221,21 +221,8 @@ export default function SpeakingRoadmapPage() {
                   >
                     {filter.label}
                   </button>
-                ))}
+                  ))}
               </div>
-
-              <label className="spk-translation-toggle">
-                <input
-                  type="checkbox"
-                  checked={showIdTranslation}
-                  onChange={(event) => {
-                    const next = event.target.checked;
-                    setShowIdTranslation(next);
-                    writeSpeakingShowTranslation(next);
-                  }}
-                />
-                <span>Tampilkan terjemahan Indonesia</span>
-              </label>
 
               <label className="spk-search-wrap">
                 <span className="spk-search-label">Search in active phase</span>
@@ -250,6 +237,49 @@ export default function SpeakingRoadmapPage() {
                   placeholder="Cari goal, situasi, atau kalimat kunci..."
                 />
               </label>
+
+              <div className="spk-roadmap-controls" aria-label="Roadmap controls">
+                <button
+                  type="button"
+                  className={`spk-control-btn spk-control-btn--secondary ${showIdTranslation ? 'is-active' : ''}`}
+                  onClick={() => {
+                    const next = !showIdTranslation;
+                    setShowIdTranslation(next);
+                    writeSpeakingShowTranslation(next);
+                  }}
+                  aria-pressed={showIdTranslation}
+                >
+                  {showIdTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
+                </button>
+                {search.trim() ? (
+                  <button
+                    type="button"
+                    className="spk-control-btn spk-control-btn--secondary spk-control-btn--full"
+                    onClick={() => {
+                      setSearch('');
+                      setCurrentPage(1);
+                    }}
+                  >
+                    Reset pencarian
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  className="spk-control-btn spk-control-btn--secondary"
+                  onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                  disabled={safeCurrentPage <= 1}
+                >
+                  Prev
+                </button>
+                <button
+                  type="button"
+                  className="spk-control-btn spk-control-btn--secondary"
+                  onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                  disabled={safeCurrentPage >= totalPages}
+                >
+                  Next
+                </button>
+              </div>
             </div>
 
             <p className="spk-visible-note">

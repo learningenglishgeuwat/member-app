@@ -70,6 +70,7 @@ export default function SpeakingGoalDetailPage({
   const [openSectionId, setOpenSectionId] = useState<string | null>(null);
   const [dialogScenarioIndex, setDialogScenarioIndex] = useState(0);
   const restoreUiStateTimerRef = useRef<number | null>(null);
+  const openPracticeScrollTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     stopSpeechSynthesis();
@@ -102,8 +103,31 @@ export default function SpeakingGoalDetailPage({
   useEffect(() => {
     return () => {
       stopSpeechSynthesis();
+      if (openPracticeScrollTimerRef.current) {
+        window.clearTimeout(openPracticeScrollTimerRef.current);
+        openPracticeScrollTimerRef.current = null;
+      }
     };
   }, []);
+
+  const openPracticeSection = () => {
+    stopSpeechSynthesis();
+    if (openSectionId !== 'practice-with-geuwat') {
+      setOpenSectionId('practice-with-geuwat');
+      writeSpeakingDetailOpenSection(goalId, 'practice-with-geuwat');
+    }
+
+    if (typeof window === 'undefined') return;
+    if (openPracticeScrollTimerRef.current) {
+      window.clearTimeout(openPracticeScrollTimerRef.current);
+      openPracticeScrollTimerRef.current = null;
+    }
+    openPracticeScrollTimerRef.current = window.setTimeout(() => {
+      const target = document.getElementById(`spk-section-body-${goalId}-practice-with-geuwat`);
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      openPracticeScrollTimerRef.current = null;
+    }, 0);
+  };
 
   if (!baseGoal) {
     return (
@@ -213,45 +237,50 @@ export default function SpeakingGoalDetailPage({
               {isCompleted ? 'Completed' : 'Not Completed'}
             </span>
           </div>
-          <div className="spk-detail-header-controls">
-            <div className="spk-detail-global-toggles">
-              <label className="spk-translation-toggle spk-translation-toggle-detail">
-                <input
-                  type="checkbox"
-                  checked={showIpa}
-                  onChange={(event) => setShowIpa(event.target.checked)}
-                />
-                <span>Tampilkan IPA</span>
-              </label>
-              <label className="spk-translation-toggle spk-translation-toggle-detail">
-                <input
-                  type="checkbox"
-                  checked={showIdTranslation}
-                  onChange={(event) => {
-                    const next = event.target.checked;
-                    setShowIdTranslation(next);
-                    writeSpeakingShowTranslation(next);
-                  }}
-                />
-                <span>Tampilkan terjemahan Indonesia</span>
-              </label>
-            </div>
-            <label className="spk-detail-complete-toggle">
-              <input
-                type="checkbox"
-                checked={isCompleted}
-                onChange={(event) => handleCompletionToggle(event.target.checked)}
-              />
-              <span>Sudah dipelajari</span>
-            </label>
-            <label className="spk-detail-complete-toggle">
-              <input
-                type="checkbox"
-                checked={isPracticeWithGeuwatCompleted}
-                onChange={(event) => handlePracticeWithGeuwatToggle(event.target.checked)}
-              />
-              <span>Practice with GEUWAT</span>
-            </label>
+          <div className="spk-control-panel" aria-label="Speaking controls">
+            <button
+              type="button"
+              className="spk-control-btn spk-control-btn--primary"
+              onClick={() => handleCompletionToggle(!isCompleted)}
+              aria-pressed={isCompleted}
+            >
+              {isCompleted ? 'Saved Progress' : 'Save Progress'}
+            </button>
+            <button
+              type="button"
+              className="spk-control-btn spk-control-btn--primary"
+              onClick={openPracticeSection}
+            >
+              Practice
+            </button>
+            <button
+              type="button"
+              className={`spk-control-btn spk-control-btn--secondary ${showIpa ? 'is-active' : ''}`}
+              onClick={() => setShowIpa((prev) => !prev)}
+              aria-pressed={showIpa}
+            >
+              {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
+            </button>
+            <button
+              type="button"
+              className={`spk-control-btn spk-control-btn--secondary ${showIdTranslation ? 'is-active' : ''}`}
+              onClick={() => {
+                const next = !showIdTranslation;
+                setShowIdTranslation(next);
+                writeSpeakingShowTranslation(next);
+              }}
+              aria-pressed={showIdTranslation}
+            >
+              {showIdTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
+            </button>
+            <button
+              type="button"
+              className={`spk-control-btn spk-control-btn--secondary spk-control-btn--full ${isPracticeWithGeuwatCompleted ? 'is-active' : ''}`}
+              onClick={() => handlePracticeWithGeuwatToggle(!isPracticeWithGeuwatCompleted)}
+              aria-pressed={isPracticeWithGeuwatCompleted}
+            >
+              {isPracticeWithGeuwatCompleted ? 'Practice with GEUWAT: Done' : 'Practice with GEUWAT: Not yet'}
+            </button>
           </div>
         </header>
 

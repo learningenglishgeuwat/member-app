@@ -172,7 +172,7 @@ export default function AmericanTHubPage() {
     Math.max(...NODE_LESSONS[nodeId].map((item) => item.title.length)) + 2;
 
   return (
-    <div className="pronunciation-layout at-hub-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--american-t at-hub-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation" />
       </div>

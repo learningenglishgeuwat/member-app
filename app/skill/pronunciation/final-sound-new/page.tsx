@@ -10,7 +10,7 @@ export default function FinalSoundNewPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="pronunciation-layout fsn-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--final-sound fsn-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation" />
       </div>

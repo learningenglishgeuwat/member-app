@@ -25,7 +25,7 @@ export default function AmericanTGroupPage({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="pronunciation-layout at-hub-page at-group-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--american-t at-hub-page at-group-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to={backTo} />
       </div>

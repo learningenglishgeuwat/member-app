@@ -3,6 +3,8 @@ import "./globals.css";
 import "./styles/scrollbar.css";
 import { AuthProvider } from "@/contexts/MemberAuthContext";
 import { TourGuideMount } from "@/app/bot-tourguide";
+import MobileBottomNav from "@/app/components/MobileBottomNav";
+import SkillThemeSync from "@/app/components/SkillThemeSync";
 
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
@@ -30,6 +32,8 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <AuthProvider>
           {children}
+          <SkillThemeSync />
+          <MobileBottomNav />
           <TourGuideMount />
         </AuthProvider>
       </body>

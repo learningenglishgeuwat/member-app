@@ -38,6 +38,8 @@ type TourGuideWidgetProps = {
 const COLLAPSED_STORAGE_KEY = 'tourguide_collapsed';
 const MODE_STORAGE_KEY = 'tourguide_mode';
 const DASHBOARD_VIEW_STORAGE_KEY = 'dashboardCurrentView';
+const TOURGUIDE_OPEN_EVENT = 'geuwat:tourguide-open';
+const TOURGUIDE_COLLAPSED_EVENT = 'geuwat:tourguide-collapsed';
 const ALPHABET_PAGE_PATH = '/skill/pronunciation/alphabet';
 const PHONETIC_SYMBOLS_ROOT_PATH = '/skill/pronunciation/phoneticsymbols';
 const PHONETIC_SYMBOLS_EXCLUDED_SUBROUTES = new Set([
@@ -379,12 +381,28 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   useEffect(() => {
     if (!hasRestoredStateRef.current) return;
     window.localStorage.setItem(COLLAPSED_STORAGE_KEY, collapsed ? '1' : '0');
+
+    try {
+      window.dispatchEvent(
+        new CustomEvent(TOURGUIDE_COLLAPSED_EVENT, {
+          detail: { collapsed },
+        }),
+      );
+    } catch (error) {
+      console.error('TourGuide collapsed event error:', error);
+    }
   }, [collapsed]);
 
   useEffect(() => {
     if (!hasRestoredStateRef.current) return;
     window.localStorage.setItem(MODE_STORAGE_KEY, mode);
   }, [mode]);
+
+  useEffect(() => {
+    const onOpen = () => setCollapsed(false);
+    window.addEventListener(TOURGUIDE_OPEN_EVENT, onOpen as EventListener);
+    return () => window.removeEventListener(TOURGUIDE_OPEN_EVENT, onOpen as EventListener);
+  }, []);
 
   useEffect(() => {
     if (mode !== 'tutorial' && tutorialDeviceProfile !== null) {
@@ -1058,7 +1076,12 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               <h3 className="tg-panel-title">GEUWAT</h3>
               <p className="tg-panel-subtitle">Mode: {modeTitle}</p>
             </div>
-            <button type="button" className="tg-hide-button" onClick={() => setCollapsed(true)}>
+            <button
+              type="button"
+              className="tg-hide-button"
+              onClick={() => setCollapsed(true)}
+              aria-label="Hide"
+            >
               Hide
             </button>
           </header>
@@ -1273,7 +1296,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               }
               className="tg-input"
             />
-            <button type="submit" className="tg-send-button">
+            <button type="submit" className="tg-send-button" aria-label="Kirim">
               Kirim
             </button>
           </form>

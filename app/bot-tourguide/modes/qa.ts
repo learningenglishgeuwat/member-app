@@ -268,12 +268,15 @@ const PRONUNCIATION_COACHING_FOCUS: Record<string, string> = {
   'final-sound-d-ed-rules': 'memilih bunyi /t/, /d/, /ɪd/ secara konsisten',
   'final-sound-s-es-core-rules': 'memilih bunyi /s/, /z/, /ɪz/ berdasarkan bunyi akhir dasar',
   'final-sound-s-es-practice': 'menjaga konsistensi bunyi akhir saat tempo bicara naik',
+  'reading-text-practice-overview': 'melatih flow dan clarity saat membaca teks',
   'intonation-overview': 'mengatur naik-turun nada supaya maksud kalimat jelas',
   'phonetic-symbols-basics': 'membaca IPA sebagai peta bunyi, bukan hafalan simbol semata',
   'minimal-pairs-purpose': 'melatih telinga membedakan bunyi mirip',
   'phonetic-summary-fast-review': 'review cepat simbol yang paling sering dipakai',
   'tongue-twister-practice-goal': 'kelincahan artikulasi tanpa mengorbankan kejelasan bunyi',
+  'stressing-hub-overview': 'memilih jalur word stress vs sentence stress',
   'stressing-word-stress-rules': 'menentukan suku kata yang harus ditekan',
+  'stressing-sentence-stress-overview': 'menentukan kata yang harus ditekan dalam kalimat',
   'pronunciation-text-how-to-use': 'menerapkan teori bunyi ke bacaan utuh',
 };
 
@@ -294,6 +297,8 @@ const PRONUNCIATION_COACHING_STEPS: Record<string, string> = {
     'Cek bunyi akhir kata dasar, tentukan rule, lalu ulangi 8-10 contoh sampai otomatis.',
   'final-sound-s-es-practice':
     'Pakai drill pendek harian: dengar, tirukan, rekam, dan koreksi bunyi akhir secara spesifik.',
+  'reading-text-practice-overview':
+    'Baca perlahan dulu untuk flow, lalu ulangi dengan fokus ke kata kunci (stress/clear vowels) tanpa terburu-buru.',
   'intonation-overview':
     'Latih perbedaan rising vs falling di kalimat yang sama agar kontrol nadanya lebih terasa.',
   'phonetic-symbols-basics':
@@ -304,8 +309,12 @@ const PRONUNCIATION_COACHING_STEPS: Record<string, string> = {
     'Gunakan ringkasan ini sebagai warm-up 3 menit sebelum latihan speaking utama.',
   'tongue-twister-practice-goal':
     'Mulai lambat dengan artikulasi bersih, lalu naikkan kecepatan bertahap.',
+  'stressing-hub-overview':
+    'Mulai dari Word Stress dulu (supaya kata jelas), lalu lanjut ke Sentence Stress untuk ritme kalimat.',
   'stressing-word-stress-rules':
     'Tepuk per suku kata, tandai stress utama, lalu ulangi kata dalam kalimat.',
+  'stressing-sentence-stress-overview':
+    'Tandai content words di kalimat, ucapkan lebih kuat dan lebih panjang, lalu ringankan function words.',
   'pronunciation-text-how-to-use':
     'Baca origin text dulu untuk flow, lalu cek tab transcription untuk koreksi detail bunyi.',
 };

@@ -267,6 +267,43 @@ const ProgressContent: React.FC = () => {
       readSavedAssessmentPercent(savedAssessments, 'Final Sound D/ED');
     const finalSoundPracticeAverage = Math.round((finalSoundSEsProgress + finalSoundDEdProgress) / 2);
 
+    const textPracticeProgress = toPercent(topicProgress['textPractice'] ?? topicProgress['text']);
+    const readingTextProgress =
+      toPercent(topicProgress['readingTextPractice']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Reading Text for Practice');
+
+    const stressingWordProgress =
+      toPercent(topicProgress['stressingWord']) || readSavedAssessmentPercent(savedAssessments, 'Word Stress');
+    const stressingSentenceProgress =
+      toPercent(topicProgress['stressingSentence']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Sentence Stress');
+    const stressingPracticeAverage = Math.round((stressingWordProgress + stressingSentenceProgress) / 2);
+
+    const stressingPracticePopup: PracticePopupData = {
+      title: 'Stressing',
+      average: stressingPracticeAverage,
+      groups: [
+        {
+          id: 'stressing-groups',
+          title: 'Stressing',
+          items: [
+            {
+              id: 'stressing-word',
+              label: 'Word Stress',
+              percentage: stressingWordProgress,
+              href: '/skill/pronunciation/stressing/word-stress',
+            },
+            {
+              id: 'stressing-sentence',
+              label: 'Sentence Stress',
+              percentage: stressingSentenceProgress,
+              href: '/skill/pronunciation/stressing/sentence-stress',
+            },
+          ],
+        },
+      ],
+    };
+
     const phoneticSymbolsPracticePopup: PracticePopupData = {
       title: 'Phonetic Symbols',
       average: averagePhoneticProgress,
@@ -430,11 +467,12 @@ const ProgressContent: React.FC = () => {
     const practiceByRoadmapId: Record<string, number> = {
       alphabet: topicProgress['alphabet'] || 0,
       'phonetic-symbols': averagePhoneticProgress,
-      stressing: topicProgress['stressing'] || 0,
+      stressing: stressingPracticeAverage,
       intonation: topicProgress['intonation'] || 0,
       'final-sound': finalSoundPracticeAverage,
       'american-t': americanTPracticeAverage,
-      'text-practice': topicProgress['textPractice'] || 0,
+      'text-practice': textPracticeProgress,
+      'reading-text': readingTextProgress,
     };
 
     const lessonByRoadmapId: Record<string, { percentage: number; popup?: PracticePopupData }> = {
@@ -445,6 +483,7 @@ const ProgressContent: React.FC = () => {
       'final-sound': { percentage: finalSoundLessonPercentage, popup: finalSoundLessonPopup },
       'american-t': { percentage: americanTLessonPercentage, popup: americanTLessonPopup },
       'text-practice': { percentage: 0 },
+      'reading-text': { percentage: 0 },
     };
 
     const roadmapTopics: Array<{ id: string; name: string }> = [
@@ -455,6 +494,7 @@ const ProgressContent: React.FC = () => {
       { id: 'final-sound', name: 'Final Sound' },
       { id: 'american-t', name: 'American /t/' },
       { id: 'text-practice', name: 'Text Practice' },
+      { id: 'reading-text', name: 'Reading Text' },
     ];
 
     const practiceHrefByRoadmapId: Record<string, string> = {
@@ -465,13 +505,14 @@ const ProgressContent: React.FC = () => {
       'final-sound': '/skill/pronunciation/final-sound-new',
       'american-t': '/skill/pronunciation/american-t',
       'text-practice': '/skill/pronunciation/text',
+      'reading-text': '/skill/pronunciation/reading-text',
     };
 
     return roadmapTopics.map((topic) => {
       const practicePercentage = practiceByRoadmapId[topic.id] ?? 0;
       const lessonPercentage = lessonByRoadmapId[topic.id]?.percentage ?? 0;
       const combinedPercentage =
-        topic.id === 'text-practice'
+        topic.id === 'text-practice' || topic.id === 'reading-text'
           ? practicePercentage
           : Math.round((practicePercentage + lessonPercentage) / 2);
       return {
@@ -483,13 +524,15 @@ const ProgressContent: React.FC = () => {
         practiceHref: practiceHrefByRoadmapId[topic.id],
         lessonPopup: lessonByRoadmapId[topic.id]?.popup,
         practicePopup:
-          topic.id === 'final-sound'
-            ? finalSoundPracticePopup
-            : topic.id === 'phonetic-symbols'
-              ? phoneticSymbolsPracticePopup
-              : topic.id === 'american-t'
-                ? americanTPracticePopup
-                : undefined,
+          topic.id === 'stressing'
+            ? stressingPracticePopup
+            : topic.id === 'final-sound'
+              ? finalSoundPracticePopup
+              : topic.id === 'phonetic-symbols'
+                ? phoneticSymbolsPracticePopup
+                : topic.id === 'american-t'
+                  ? americanTPracticePopup
+                  : undefined,
       };
     });
   };
@@ -629,7 +672,12 @@ const ProgressContent: React.FC = () => {
     
     // Get progress from each individual topic
     const alphabetProgress = topicProgress['alphabet'] || 0;
-    const stressingProgress = topicProgress['stressing'] || 0;
+    const stressingWordProgress =
+      toPercent(topicProgress['stressingWord']) || readSavedAssessmentPercent(savedAssessments, 'Word Stress');
+    const stressingSentenceProgress =
+      toPercent(topicProgress['stressingSentence']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Sentence Stress');
+    const stressingProgress = Math.round((stressingWordProgress + stressingSentenceProgress) / 2);
     const intonationProgress = topicProgress['intonation'] || 0;
     const finalSoundSEsProgress =
       toPercent(topicProgress['finalSoundSEs']) ||
@@ -649,7 +697,10 @@ const ProgressContent: React.FC = () => {
       americanTItemProgress.length > 0
         ? Math.round(americanTItemProgress.reduce((sum, entry) => sum + entry.percentage, 0) / americanTItemProgress.length)
         : 0;
-    const textPracticeProgress = topicProgress['textPractice'] || 0;
+    const textPracticeProgress = toPercent(topicProgress['textPractice'] ?? topicProgress['text']);
+    const readingTextProgress =
+      toPercent(topicProgress['readingTextPractice']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Reading Text for Practice');
     
     // Calculate phonetic symbols average using helper function
     const averagePhoneticProgress = calculatePhoneticAverage(topicProgress);
@@ -663,6 +714,7 @@ const ProgressContent: React.FC = () => {
       finalSoundProgress,
       americanTProgress,
       textPracticeProgress,
+      readingTextProgress,
       averagePhoneticProgress
     ];
     
@@ -998,7 +1050,7 @@ const ProgressContent: React.FC = () => {
                                             {topic.practicePercentage ?? topic.percentage}%
                                           </div>
                                         </div>
-                                        {topic.id !== 'text-practice' && (
+                                        {topic.id !== 'text-practice' && topic.id !== 'reading-text' && (
                                           <div className="flex items-center gap-2 md:gap-3">
                                             {topic.lessonPopup &&
                                             getPracticePopupItemCount(topic.lessonPopup) > 1 ? (

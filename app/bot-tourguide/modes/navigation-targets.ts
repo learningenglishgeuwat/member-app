@@ -494,8 +494,18 @@ export const PRONUNCIATION_ROUTE_TARGETS: NavigationPronunciationTarget[] = [
   },
   {
     path: '/skill/pronunciation/stressing',
-    label: 'Word Stressing',
-    triggers: ['stressing', 'stress', 'word stress', 'penekanan kata', 'tekanan kata'],
+    label: 'Stressing Hub',
+    triggers: ['stressing', 'stress', 'stressing hub', 'menu stressing', 'stress bahasa inggris'],
+  },
+  {
+    path: '/skill/pronunciation/stressing/word-stress',
+    label: 'Word Stress',
+    triggers: ['word stress', 'word stressing', 'penekanan kata', 'tekanan kata', 'stress kata'],
+  },
+  {
+    path: '/skill/pronunciation/stressing/sentence-stress',
+    label: 'Sentence Stress',
+    triggers: ['sentence stress', 'sentence stressing', 'stress kalimat', 'tekanan kalimat'],
   },
   {
     path: '/skill/pronunciation/intonation',
@@ -516,6 +526,17 @@ export const PRONUNCIATION_ROUTE_TARGETS: NavigationPronunciationTarget[] = [
     path: '/skill/pronunciation/final-sound-new/d/ed',
     label: 'Final Sound D/ED',
     triggers: ['final sound d/ed', 'final sound d ed', 'd/ed', 'd ed', 'ending d ed'],
+  },
+  {
+    path: '/skill/pronunciation/reading-text',
+    label: 'Reading Text for Practice',
+    triggers: [
+      'reading text',
+      'reading practice',
+      'latihan membaca',
+      'baca text',
+      'reading text for practice',
+    ],
   },
   {
     path: '/skill/pronunciation/american-t',

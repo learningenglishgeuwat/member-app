@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Circle, Mic, MicOff, Play, Pause, HelpCircle, Download, ChevronUp } from 'lucide-react';
 
 interface RecordingControlsButtonProps {
@@ -20,10 +21,15 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
   const [recordedAudio, setRecordedAudio] = useState<string | null>(null);
   const [isPlayingRecording, setIsPlayingRecording] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -128,13 +134,13 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
     }
   };
 
-  return (
+  const ui = (
     <>
       {!showControlDeck && (
         <button
           onClick={() => setShowControlDeck(true)}
           data-tour="recording-open-panel"
-          className={`fixed bottom-6 right-6 z-40 w-14 h-14 md:w-16 md:h-16 bg-cyber-cyan/90 backdrop-blur-sm border-2 border-cyber-cyan rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(190,41,236,0.4)] hover:bg-cyber-cyan hover:shadow-[0_0_40px_rgba(190,41,236,0.6)] transition-all duration-300 group ${className}`}
+          className={`fixed bottom-[calc(env(safe-area-inset-bottom,0px)+104px)] md:bottom-6 right-6 z-[85] w-12 h-12 md:w-14 md:h-14 bg-cyber-cyan/90 backdrop-blur-sm border-2 border-cyber-cyan rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(190,41,236,0.4)] hover:bg-cyber-cyan hover:shadow-[0_0_40px_rgba(190,41,236,0.6)] transition-all duration-300 group ${className}`}
           title="Open Recording Controls"
         >
           <Circle className="text-white group-hover:scale-110 transition-transform" size={24} />
@@ -142,8 +148,8 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
       )}
 
       {showControlDeck && (
-        <div className="fixed bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-2xl px-4">
-          <div className="relative bg-[#050a10]/95 backdrop-blur-xl border border-cyber-cyan/40 rounded-3xl p-4 md:p-6 shadow-[0_0_50px_rgba(190,41,236,0.2)] overflow-hidden">
+        <div className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+104px)] md:bottom-10 left-1/2 transform -translate-x-1/2 z-[86] w-full max-w-lg px-3">
+          <div className="relative bg-[#050a10]/95 backdrop-blur-xl border border-cyber-cyan/40 rounded-2xl p-3 md:p-4 shadow-[0_0_50px_rgba(190,41,236,0.2)] overflow-hidden">
             <button
               onClick={() => setShowControlDeck(false)}
               data-tour="recording-close-panel"
@@ -160,7 +166,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
                 <button
                   onClick={isRecording ? handleStopRecording : handleStartRecording}
                   data-tour="recording-mic-toggle"
-                  className={`relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full border-2 transition-all duration-300 group ${
+                  className={`relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 transition-all duration-300 group ${
                     isRecording 
                       ? 'border-red-500 bg-red-500/20 shadow-[0_0_25px_rgba(239,68,68,0.6)] animate-pulse' 
                       : 'border-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 hover:shadow-[0_0_20px_rgba(190,41,236,0.3)]'
@@ -248,7 +254,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
       )}
 
       {showHelp && showHelpPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
           <div 
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setShowHelpPopup(false)}
@@ -326,6 +332,9 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
       )}
     </>
   );
+
+  if (!mounted) return null;
+  return createPortal(ui, document.body);
 };
 
 export default RecordingControlsButton;

@@ -1,0 +1,126 @@
+.sh-page {
+  min-height: 100vh;
+  color: #fff7ed;
+  background:
+    radial-gradient(900px 420px at 8% -12%, rgba(251, 191, 36, 0.26), transparent 55%),
+    radial-gradient(860px 420px at 92% 112%, rgba(249, 115, 22, 0.18), transparent 57%),
+    #120a06;
+  padding: 1.5rem;
+}
+
+.sh-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.sh-header {
+  max-width: 54rem;
+}
+
+.sh-title {
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.sh-subtitle {
+  margin-top: 0.45rem;
+  color: rgba(255, 237, 213, 0.9);
+  line-height: 1.5;
+}
+
+.sh-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 740px) {
+  .sh-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sh-card {
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem 1.25rem 1.05rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(253, 186, 116, 0.35);
+  background: rgba(24, 12, 8, 0.68);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 237, 213, 0.08),
+    0 14px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.sh-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(420px 240px at 18% 20%, rgba(251, 191, 36, 0.18), transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.sh-card-sentence::before {
+  background: radial-gradient(420px 240px at 18% 20%, rgba(249, 115, 22, 0.18), transparent 60%);
+}
+
+.sh-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(253, 186, 116, 0.65);
+  background: rgba(30, 14, 8, 0.78);
+}
+
+.sh-card-top {
+  position: relative;
+  z-index: 1;
+}
+
+.sh-card-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.sh-card-desc {
+  margin-top: 0.3rem;
+  color: rgba(255, 237, 213, 0.85);
+  line-height: 1.5;
+}
+
+.sh-card-bullets {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: rgba(255, 237, 213, 0.88);
+  line-height: 1.5;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.sh-card-cta {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(253, 186, 116, 0.5);
+  background: rgba(17, 10, 7, 0.55);
+}
+
