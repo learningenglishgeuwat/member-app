@@ -1296,7 +1296,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               }
               className="tg-input"
             />
-            <button type="submit" className="tg-send-button">
+            <button type="submit" className="tg-send-button" aria-label="Kirim">
               Kirim
             </button>
           </form>
