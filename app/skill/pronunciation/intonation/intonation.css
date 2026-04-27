@@ -1,8 +1,5 @@
 .intonation-page {
-  background:
-    radial-gradient(980px 560px at 8% -10%, rgba(236, 72, 153, 0.24), transparent 58%),
-    radial-gradient(820px 520px at 100% 112%, rgba(244, 114, 182, 0.14), transparent 56%),
-    #10061d;
+  background: var(--pronun-page-bg);
 }
 
 .intonation-page .intonation-recording-anchor {
@@ -16,8 +13,8 @@
 }
 
 .intonation-page .fs-topic-block {
-  border-color: rgba(244, 114, 182, 0.42);
-  background: rgba(31, 10, 45, 0.8);
+  border-color: rgb(var(--pronun-accent-1-rgb) / 0.42);
+  background: rgb(var(--pronun-panel-rgb) / 0.8);
 }
 
 .intonation-roadmap-wrap {
@@ -132,17 +129,17 @@
   padding: 0.18rem 0.56rem;
   font-size: 0.78rem;
   font-weight: 700;
-  border: 1px solid rgba(59, 130, 246, 0.52);
-  background: rgba(30, 58, 138, 0.34);
-  color: #dbeafe;
+  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.52);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.14);
+  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
 }
 
 .intonation-tone-chip.is-rise {
-  background: rgba(37, 99, 235, 0.3);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.18);
 }
 
 .intonation-tone-chip.is-fall {
-  background: rgba(29, 78, 216, 0.24);
+  background: rgb(var(--pronun-accent-2-rgb) / 0.16);
 }
 
 .intonation-audio-wrap {
@@ -396,9 +393,9 @@
 .intonation-tone-word.is-fall {
   border-radius: 0.28rem;
   padding: 0 0.14rem;
-  border: 1px solid rgba(96, 165, 250, 0.62);
-  background: rgba(37, 99, 235, 0.34);
-  color: #e0f2fe;
+  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.62);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.16);
+  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
 }
 
 .intonation-note {

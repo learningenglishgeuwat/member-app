@@ -903,7 +903,7 @@ export default function IntonationPage() {
   }, [activeCardKey]);
 
   return (
-    <div className="pronunciation-layout fs-topic-page intonation-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--intonation fs-topic-page intonation-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation" />
       </div>

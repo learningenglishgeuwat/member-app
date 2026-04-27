@@ -1,0 +1,34 @@
+{
+  "route": "/skill/pronunciation/stressing/sentence-stress",
+  "label": "Sentence Stress",
+  "scope": "pronunciation",
+  "keywords": [
+    "sentence stress",
+    "stress kalimat",
+    "tekanan kalimat",
+    "content words",
+    "function words"
+  ],
+  "qa": [
+    {
+      "topicId": "stressing-sentence-stress-overview",
+      "title": "Sentence Stress in English",
+      "route": "/skill/pronunciation/stressing/sentence-stress",
+      "keywords": [
+        "apa itu sentence stress",
+        "stress kalimat",
+        "content vs function words"
+      ],
+      "shortAnswer": "Sentence stress membantu kamu menonjolkan informasi utama dalam kalimat. Fokuskan tekanan pada content words, ringankan function words, dan jaga ritme stress-timed agar terdengar natural.",
+      "sourceSections": [
+        {
+          "label": "Sentence Stress and Meaning Focus"
+        },
+        {
+          "label": "Content vs Function Words"
+        }
+      ]
+    }
+  ]
+}
+

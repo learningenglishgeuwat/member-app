@@ -660,7 +660,7 @@ export default function FinalSoundSEsPage() {
   useEffect(() => () => stopWordBankPlayAll(), [stopWordBankPlayAll]);
 
   return (
-    <div className="pronunciation-layout fs-topic-page s-es-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--final-sound fs-topic-page s-es-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation/final-sound-new" />
       </div>

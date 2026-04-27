@@ -110,7 +110,9 @@ export default function AmericanTLessonScaffold({
   }, [sections]);
 
   return (
-    <div className={`pronunciation-layout fs-topic-page at-topic-page ${pageClassName ?? ''}`}>
+    <div
+      className={`pronunciation-layout pronunciation-theme pronunciation-theme--american-t fs-topic-page at-topic-page ${pageClassName ?? ''}`}
+    >
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to={backTo} />
       </div>

@@ -478,7 +478,7 @@ const AlphabetPage: React.FC = () => {
   );
 
   return (
-    <div className="pronunciation-layout alphabet-container">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--alphabet alphabet-container">
       {/* Back Button */}
       <div className="back-button-fixed">
         <BackButton to="/skill/pronunciation" />

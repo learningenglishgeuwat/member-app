@@ -1,0 +1,31 @@
+{
+  "route": "/skill/pronunciation/reading-text",
+  "label": "Reading Text for Practice",
+  "scope": "pronunciation",
+  "keywords": [
+    "reading text",
+    "reading practice",
+    "baca text",
+    "latihan membaca",
+    "pronunciation reading"
+  ],
+  "qa": [
+    {
+      "topicId": "reading-text-practice-overview",
+      "title": "Reading Text for Pronunciation Practice",
+      "route": "/skill/pronunciation/reading-text",
+      "keywords": [
+        "reading text pronunciation",
+        "latihan baca pronunciation",
+        "reading untuk practice"
+      ],
+      "shortAnswer": "Reading Text for Practice berisi bacaan pendek untuk melatih flow, clarity, dan konsistensi bunyi saat membaca paragraf utuh. Pilih judul teks, lalu baca perlahan sambil fokus pada ritme dan kejelasan bunyi.",
+      "sourceSections": [
+        {
+          "label": "Reading Text Dropdown"
+        }
+      ]
+    }
+  ]
+}
+

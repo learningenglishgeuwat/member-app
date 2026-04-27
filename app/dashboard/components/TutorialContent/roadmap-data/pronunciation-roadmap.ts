@@ -56,10 +56,17 @@ export const PRONUNCIATION_ROADMAP_ITEMS: ReadonlyArray<PronunciationRoadmapItem
     focus: 'Integrasi semua pola lewat teks utuh.',
     estimatedDays: 6,
   },
+  {
+    id: 'reading-text',
+    title: 'Reading Text',
+    href: '/skill/pronunciation/reading-text',
+    focus: 'Latihan membaca paragraf untuk flow dan clarity.',
+    estimatedDays: 4,
+  },
 ];
 
 export const PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS = PRONUNCIATION_ROADMAP_ITEMS.filter(
-  (item) => item.id !== 'text-practice',
+  (item) => item.id !== 'text-practice' && item.id !== 'reading-text',
 ).map((item) => item.id);
 
 export const PRONUNCIATION_ROADMAP_TOTAL_DAYS = PRONUNCIATION_ROADMAP_ITEMS.reduce(

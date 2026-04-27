@@ -682,7 +682,7 @@ export default function FinalSoundDEdPage() {
   useEffect(() => () => stopWordBankPlayAll(), [stopWordBankPlayAll]);
 
   return (
-    <div className="pronunciation-layout fs-topic-page d-ed-page">
+    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--final-sound fs-topic-page d-ed-page">
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation/final-sound-new" />
       </div>

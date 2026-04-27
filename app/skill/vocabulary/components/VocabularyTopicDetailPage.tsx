@@ -17,6 +17,8 @@ import {
   stopVocabularySpeech,
 } from '../tts';
 import VocabularyPracticeMissionModal from './VocabularyPracticeMissionModal';
+import VocabularyWordCarousel from './VocabularyWordCarousel';
+import { useKpiValueColumn } from './useKpiValueColumn';
 
 type DetailPlayMode = 'words' | 'word-example' | null;
 
@@ -30,6 +32,8 @@ const VOCABULARY_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Bertindaklah sebagai evaluator bahasa Inggris level dasar (A1-A2). Nilai performa saya berdasarkan 3 aspek: 1) Pelafalan benar/tidaknya: apakah kata diucapkan jelas dan sesuai kata target. 2) Kecocokan bentuk kata: apakah bentuk kata sudah tepat (verb form, singular/plural, article, preposition dasar). 3) Ketepatan makna: apakah kalimat yang saya buat sesuai arti kata target dan konteksnya masuk akal. Aturan penilaian: - Gunakan status: 🟢 Sangat bagus / 🔵 Bagus / 🟡 Perlu sedikit perbaikan / 🔴 Perlu perbaikan. - Fokus pada koreksi praktis, jangan teori panjang. - Jika ada kesalahan, berikan versi perbaikan kalimat yang natural dan sederhana. Format output (wajib tabel): - Kolom 1: Kata target - Kolom 2: Kalimat saya - Kolom 3: Pelafalan - Kolom 4: Kecocokan bentuk kata - Kolom 5: Ketepatan makna - Kolom 6: Saran perbaikan singkat.";
 
 const WORDS_PER_PAGE = 10;
+const VOCAB_LAST_TOPIC_ID_KEY = 'vocab:lastTopicId';
+const VOCAB_LAST_WORD_ID_PREFIX = 'vocab:lastWordId:';
 
 const COLOR_CARD_CLASS_BY_WORD: Record<string, string> = {
   red: 'vocab-color-card--red',
@@ -264,6 +268,7 @@ export default function VocabularyTopicDetailPage({
   showBodyPartIcon = false,
   showCardinalNumber = false,
 }: VocabularyTopicDetailPageProps) {
+  const kpiRef = useRef<HTMLDListElement | null>(null);
   const [search, setSearch] = useState('');
   const [isPracticeModalOpen, setIsPracticeModalOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
@@ -274,13 +279,62 @@ export default function VocabularyTopicDetailPage({
   const [playingItemId, setPlayingItemId] = useState<string | null>(null);
   const [isPlayAllRunning, setIsPlayAllRunning] = useState(false);
   const [playMode, setPlayMode] = useState<DetailPlayMode>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+
+  useKpiValueColumn(kpiRef);
+
+  const initialIsMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+  const initialStoredWordId = (() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      return window.localStorage.getItem(`${VOCAB_LAST_WORD_ID_PREFIX}${topic.topicId}`);
+    } catch {
+      return null;
+    }
+  })();
+  const initialStoredWordIndex = initialStoredWordId
+    ? topicWords.findIndex((item) => item.id === initialStoredWordId)
+    : -1;
+  const initialPage =
+    initialStoredWordIndex >= 0 && !initialIsMobile
+      ? Math.floor(initialStoredWordIndex / WORDS_PER_PAGE) + 1
+      : 1;
+
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [isMobile, setIsMobile] = useState(initialIsMobile);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [restoredWordId] = useState<string | null>(
+    initialStoredWordIndex >= 0 ? initialStoredWordId : null,
+  );
   const playTokenRef = useRef(0);
   const cardRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = (event: MediaQueryListEvent) => setIsMobile(event.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(VOCAB_LAST_TOPIC_ID_KEY, topic.topicId);
+    } catch {
+      // ignore storage errors
+    }
+  }, [topic.topicId]);
 
   const visibleWords = useMemo(() => {
     const normalized = search.trim().toLowerCase();
     if (!normalized) return topicWords;
+
+    if (/^\d+$/.test(normalized)) {
+      const requestedIndex = Number(normalized);
+      if (!Number.isFinite(requestedIndex) || requestedIndex <= 0) return [];
+      const target = topicWords[requestedIndex - 1];
+      return target ? [target] : [];
+    }
 
     return topicWords.filter((item) => {
       const exampleTranslation = getVocabularyExampleTranslation(item.exampleEn) ?? '';
@@ -291,16 +345,18 @@ export default function VocabularyTopicDetailPage({
 
   const totalPages = useMemo(() => {
     if (!visibleWords.length) return 1;
-    return Math.ceil(visibleWords.length / WORDS_PER_PAGE);
-  }, [visibleWords.length]);
+    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
+    return Math.ceil(visibleWords.length / perPage);
+  }, [isMobile, visibleWords.length]);
 
   const effectivePage = Math.min(currentPage, totalPages);
 
   const pagedWords = useMemo(() => {
-    const start = (effectivePage - 1) * WORDS_PER_PAGE;
-    const end = start + WORDS_PER_PAGE;
+    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
+    const start = (effectivePage - 1) * perPage;
+    const end = start + perPage;
     return visibleWords.slice(start, end);
-  }, [effectivePage, visibleWords]);
+  }, [effectivePage, isMobile, visibleWords]);
 
   const practiceExample = useMemo(() => {
     const firstItem = topicWords[0];
@@ -340,6 +396,7 @@ export default function VocabularyTopicDetailPage({
       if (safePage === effectivePage) return;
       stopPlayback();
       setCurrentPage(safePage);
+      setCarouselIndex(0);
     },
     [effectivePage, stopPlayback, totalPages],
   );
@@ -473,7 +530,7 @@ export default function VocabularyTopicDetailPage({
   }, []);
 
   useEffect(() => {
-    if (!playingItemId) return;
+    if (!playingItemId || isMobile) return;
     const target = cardRefs.current[playingItemId];
     if (!target) return;
     target.scrollIntoView({
@@ -481,7 +538,7 @@ export default function VocabularyTopicDetailPage({
       block: 'center',
       inline: 'nearest',
     });
-  }, [playingItemId]);
+  }, [isMobile, playingItemId]);
 
   const renderWordCard = (item: VocabularyItem) => {
     const exampleIpa = getVocabularyExampleIpa(item.exampleEn);
@@ -554,20 +611,22 @@ export default function VocabularyTopicDetailPage({
       </div>
 
       <div className="vocab-shell vocab-topic-detail-shell">
-        <header className="vocab-header vocab-topic-detail-header">
+        <header className="vocab-header vocab-header--center vocab-topic-detail-header">
           <p className="vocab-topic-detail-kicker">Topic</p>
           <h1 className="vocab-title">{topic.title}</h1>
           <p className="vocab-topic-detail-subtitle">{topic.subtitle}</p>
           <p className="vocab-topic-detail-description">{topic.description}</p>
 
-          <div className="vocab-kpis">
-            <p className="vocab-kpi">
-              Total kata topik: <strong>{topicWords.length}</strong>
-            </p>
-            <p className="vocab-kpi">
-              Ditampilkan: <strong>{visibleWords.length}</strong>
-            </p>
-          </div>
+          <dl ref={kpiRef} className="vocab-kpi-table" aria-label="Topic summary">
+            <dt>Total kata topik</dt>
+            <dd>
+              <span className="vocab-kpi-value">{topicWords.length}</span>
+            </dd>
+            <dt>Ditampilkan</dt>
+            <dd>
+              <span className="vocab-kpi-value">{visibleWords.length}</span>
+            </dd>
+          </dl>
 
           <div className="vocab-topic-detail-actions">
             <ButtonSavedProgress
@@ -575,33 +634,36 @@ export default function VocabularyTopicDetailPage({
               onSave={handleSaveProgress}
               onUnsave={handleUnsaveProgress}
               size="small"
-              variant="primary"
+              variant="outline"
+              className="vocab-control-saved-progress"
               topicName={topic.title}
             />
             <button
               type="button"
-              className="vocab-action-btn vocab-action-btn--primary"
+              className={`vocab-action-btn vocab-action-btn--secondary vocab-control-btn ${showTranslation ? 'is-active' : ''}`}
+              onClick={() => setShowTranslation((prev) => !prev)}
+              aria-pressed={showTranslation}
+            >
+              {showTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
+            </button>
+            <button
+              type="button"
+              className={`vocab-action-btn vocab-action-btn--secondary vocab-control-btn ${showIpa ? 'is-active' : ''}`}
+              onClick={() => setShowIpa((prev) => !prev)}
+              aria-pressed={showIpa}
+            >
+              {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
+            </button>
+            <button
+              type="button"
+              className="vocab-action-btn vocab-action-btn--primary vocab-control-btn vocab-control-btn--full"
               onClick={() => setIsPracticeModalOpen(true)}
             >
               Practice
             </button>
             <button
               type="button"
-              className="vocab-action-btn vocab-action-btn--secondary"
-              onClick={() => setShowIpa((prev) => !prev)}
-            >
-              {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-            </button>
-            <button
-              type="button"
-              className="vocab-action-btn vocab-action-btn--secondary"
-              onClick={() => setShowTranslation((prev) => !prev)}
-            >
-              {showTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
-            </button>
-            <button
-              type="button"
-              className="vocab-action-btn vocab-action-btn--primary"
+              className="vocab-action-btn vocab-action-btn--primary vocab-control-btn vocab-control-btn--full"
               onClick={() => void playAllWords()}
               disabled={!pagedWords.length || isPlayAllRunning}
             >
@@ -609,13 +671,18 @@ export default function VocabularyTopicDetailPage({
             </button>
             <button
               type="button"
-              className="vocab-action-btn vocab-action-btn--secondary"
+              className="vocab-action-btn vocab-action-btn--secondary vocab-control-btn vocab-control-btn--full"
               onClick={() => void playAllWordThenExample()}
               disabled={!pagedWords.length || isPlayAllRunning}
             >
               Play All Word -&gt; Example
             </button>
-            <button type="button" className="vocab-action-btn vocab-action-stop" onClick={stopPlayback}>
+            <button
+              type="button"
+              className="vocab-action-btn vocab-action-stop vocab-control-btn vocab-control-btn--full"
+              onClick={stopPlayback}
+              disabled={!isPlayAllRunning && !playingItemId}
+            >
               Stop
             </button>
           </div>
@@ -682,6 +749,7 @@ export default function VocabularyTopicDetailPage({
                 stopPlayback();
                 setSearch(event.target.value);
                 setCurrentPage(1);
+                setCarouselIndex(0);
               }}
               className="vocab-search-input"
               placeholder="Cari word, arti Indonesia, atau example..."
@@ -690,19 +758,49 @@ export default function VocabularyTopicDetailPage({
         </section>
 
         <p className="vocab-visible-note">
-          Showing <strong>{pagedWords.length}</strong> of <strong>{visibleWords.length}</strong> words in this topic.
-          {' '}Halaman <strong>{effectivePage}</strong>/<strong>{totalPages}</strong>.
+          {isMobile ? (
+            <>
+              Showing <strong>{Math.min(visibleWords.length, carouselIndex + 1)}</strong> of{' '}
+              <strong>{visibleWords.length}</strong> words in this topic.
+            </>
+          ) : (
+            <>
+              Showing <strong>{pagedWords.length}</strong> of <strong>{visibleWords.length}</strong> words in this topic.
+              {' '}Halaman <strong>{effectivePage}</strong>/<strong>{totalPages}</strong>.
+            </>
+          )}
         </p>
 
         {visibleWords.length === 0 ? (
           <div className="vocab-empty">Tidak ada vocabulary yang cocok dengan kata kunci saat ini.</div>
         ) : (
           <>
-            <section className="vocab-grid" aria-label={`Vocabulary list for ${topic.title}`}>
+            <VocabularyWordCarousel
+              ariaLabel={`Vocabulary carousel for ${topic.title}`}
+              hint="Swipe untuk pindah kata, atau tap tombol untuk play / detail."
+              initialItemId={restoredWordId}
+              activeItemId={playingItemId}
+              onIndexChange={(index) => {
+                setCarouselIndex(index);
+                const currentItemId = pagedWords[index]?.id;
+                if (!currentItemId) return;
+                try {
+                  window.localStorage.setItem(
+                    `${VOCAB_LAST_WORD_ID_PREFIX}${topic.topicId}`,
+                    currentItemId,
+                  );
+                } catch {
+                  // ignore storage errors
+                }
+              }}
+              items={pagedWords.map((item) => ({ id: item.id, node: renderWordCard(item) }))}
+            />
+
+            <section className="vocab-grid vocab-grid--desktop" aria-label={`Vocabulary list for ${topic.title}`}>
               {pagedWords.map((item) => renderWordCard(item))}
             </section>
 
-            <nav className="vocab-pagination" aria-label="Vocabulary pagination">
+            <nav className="vocab-pagination vocab-pagination--desktop" aria-label="Vocabulary pagination">
               <button
                 type="button"
                 className="vocab-action-btn"

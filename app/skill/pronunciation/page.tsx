@@ -10,6 +10,85 @@ import Sidebar from '../components/skillSidebar/SkillSidebar';
 import { Info, ChevronLeft, ChevronRight, Cpu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+type TopicDetailTheme = {
+  detailBorderLeft: string;
+  detailBorder: string;
+  hintBg: string;
+  hintBorder: string;
+  hintIcon: string;
+  hintKicker: string;
+};
+
+// NOTE: Keep these as explicit strings so Tailwind can pick them up.
+// "phonetic" intentionally falls back to fuchsia (ignore per request).
+const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
+  alphabet: {
+    detailBorderLeft: 'border-l-blue-500',
+    detailBorder: 'border-blue-500/30',
+    hintBg: 'bg-blue-900/35',
+    hintBorder: 'border-blue-500/30',
+    hintIcon: 'text-blue-400',
+    hintKicker: 'text-blue-300',
+  },
+  stressing: {
+    detailBorderLeft: 'border-l-orange-500',
+    detailBorder: 'border-orange-500/30',
+    hintBg: 'bg-orange-900/30',
+    hintBorder: 'border-orange-500/30',
+    hintIcon: 'text-orange-400',
+    hintKicker: 'text-orange-300',
+  },
+  intonation: {
+    detailBorderLeft: 'border-l-pink-500',
+    detailBorder: 'border-pink-500/30',
+    hintBg: 'bg-pink-900/30',
+    hintBorder: 'border-pink-500/30',
+    hintIcon: 'text-pink-400',
+    hintKicker: 'text-pink-300',
+  },
+  'final-sound': {
+    detailBorderLeft: 'border-l-cyan-400',
+    detailBorder: 'border-cyan-400/30',
+    hintBg: 'bg-cyan-950/35',
+    hintBorder: 'border-cyan-400/30',
+    hintIcon: 'text-cyan-300',
+    hintKicker: 'text-cyan-200',
+  },
+  'american-t': {
+    detailBorderLeft: 'border-l-[#0b4aa6]',
+    detailBorder: 'border-[#0b4aa6]/30',
+    hintBg: 'bg-[#002868]/25',
+    hintBorder: 'border-[#0b4aa6]/30',
+    hintIcon: 'text-[#6fb7ff]',
+    hintKicker: 'text-[#9bd2ff]',
+  },
+  text: {
+    detailBorderLeft: 'border-l-emerald-400',
+    detailBorder: 'border-emerald-400/30',
+    hintBg: 'bg-emerald-950/35',
+    hintBorder: 'border-emerald-400/30',
+    hintIcon: 'text-emerald-300',
+    hintKicker: 'text-emerald-200',
+  },
+  'reading-text': {
+    detailBorderLeft: 'border-l-indigo-400',
+    detailBorder: 'border-indigo-400/30',
+    hintBg: 'bg-indigo-950/35',
+    hintBorder: 'border-indigo-400/30',
+    hintIcon: 'text-indigo-300',
+    hintKicker: 'text-indigo-200',
+  },
+};
+
+const DEFAULT_DETAIL_THEME: TopicDetailTheme = {
+  detailBorderLeft: 'border-l-fuchsia-500',
+  detailBorder: 'border-fuchsia-500/30',
+  hintBg: 'bg-fuchsia-900/40',
+  hintBorder: 'border-fuchsia-500/30',
+  hintIcon: 'text-fuchsia-400',
+  hintKicker: 'text-fuchsia-300',
+};
+
 const Page: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,6 +98,7 @@ const Page: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const selectedTopic = TOPICS[selectedIndex];
+  const detailTheme = TOPIC_DETAIL_THEMES[selectedTopic?.id] ?? DEFAULT_DETAIL_THEME;
   
   // Check if selected topic is locked - useMemo to prevent re-renders
   const lockedTopics = useMemo(() => LOCKED_TOPIC_IDS, []);
@@ -149,18 +229,22 @@ const Page: React.FC = () => {
             {selectedTopic.title}
           </h1>
 
-          <div className="glass-panel p-2.5 sm:p-4 md:p-5 rounded-xl max-w-full md:max-w-2xl border-l-4 border-fuchsia-500 mb-3 sm:mb-4 md:mb-6 animate-fade-in-up">
+          <div
+            className={`glass-panel p-2.5 sm:p-4 md:p-5 rounded-xl max-w-full md:max-w-2xl border border-transparent border-l-4 ${detailTheme.detailBorderLeft} ${detailTheme.detailBorder} mb-3 sm:mb-4 md:mb-6 animate-fade-in-up`}
+          >
              <p className="text-[11px] sm:text-sm md:text-base text-slate-200 font-light leading-relaxed">
                {selectedTopic.description}
              </p>
           </div>
 
           {/* Learning Instructions Area */}
-          <div className="mt-2 sm:mt-3 md:mt-4 p-2.5 sm:p-4 bg-fuchsia-900/40 border border-fuchsia-500/30 rounded-lg max-w-full md:max-w-xl">
+          <div
+            className={`mt-2 sm:mt-3 md:mt-4 p-2.5 sm:p-4 ${detailTheme.hintBg} border ${detailTheme.hintBorder} rounded-lg max-w-full md:max-w-xl`}
+          >
                 <div className="flex items-start gap-2 sm:gap-3">
-                    <Info className="text-fuchsia-400 flex-shrink-0 mt-0.5 sm:mt-1" size={16} />
+                    <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
                     <div>
-                        <h4 className="font-display text-[8px] sm:text-[10px] md:text-xs text-fuchsia-300 uppercase tracking-widest mb-1">GEUWAT Protocol</h4>
+                        <h4 className={`font-display text-[8px] sm:text-[10px] md:text-xs ${detailTheme.hintKicker} uppercase tracking-widest mb-1`}>GEUWAT Protocol</h4>
                         <p className="text-[11px] sm:text-sm md:text-base text-white/90">
                           {isTopicLocked 
                             ? `${selectedTopic.title} module is currently locked. Please complete available modules first.`

@@ -2228,18 +2228,74 @@
       "source": "manifest"
     },
     {
+      "id": "skill-pronunciation-reading-text",
+      "label": "Reading Text for Practice",
+      "path": "/skill/pronunciation/reading-text",
+      "scope": "pronunciation",
+      "keywords": [
+        "reading",
+        "text",
+        "for",
+        "practice",
+        "/skill/pronunciation/reading-text",
+        "baca",
+        "latihan",
+        "membaca",
+        "pronunciation"
+      ],
+      "source": "manifest"
+    },
+    {
       "id": "skill-pronunciation-stressing",
-      "label": "Word Stressing",
+      "label": "Stressing Hub",
       "path": "/skill/pronunciation/stressing",
       "scope": "pronunciation",
       "keywords": [
-        "word",
         "stressing",
+        "hub",
         "/skill/pronunciation/stressing",
+        "word",
         "stress",
+        "sentence",
         "tekanan",
         "suku",
-        "kata"
+        "kata",
+        "kalimat"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-stressing-sentence-stress",
+      "label": "Sentence Stress",
+      "path": "/skill/pronunciation/stressing/sentence-stress",
+      "scope": "pronunciation",
+      "keywords": [
+        "sentence",
+        "stress",
+        "/skill/pronunciation/stressing/sentence-stress",
+        "kalimat",
+        "tekanan",
+        "content",
+        "words",
+        "function"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-stressing-word-stress",
+      "label": "Word Stress",
+      "path": "/skill/pronunciation/stressing/word-stress",
+      "scope": "pronunciation",
+      "keywords": [
+        "word",
+        "stress",
+        "/skill/pronunciation/stressing/word-stress",
+        "syllable",
+        "tekanan",
+        "kata",
+        "suku",
+        "noun",
+        "verb"
       ],
       "source": "manifest"
     },
@@ -5695,7 +5751,7 @@
         "halaman pronunciation",
         "intonation"
       ],
-      "shortAnswer": "Halaman Pronunciation adalah hub untuk memilih topik latihan, seperti phonetic symbols, stressing, intonation, final sound, american t, dan text practice.",
+      "shortAnswer": "Halaman Pronunciation adalah hub untuk memilih topik latihan, seperti phonetic symbols, stressing, intonation, final sound, american t, text practice, dan reading text for practice.",
       "sourceSections": [
         {
           "label": "Pronunciation Topic Cards"
@@ -5883,9 +5939,60 @@
       ]
     },
     {
+      "topicId": "reading-text-practice-overview",
+      "title": "Reading Text for Pronunciation Practice",
+      "route": "/skill/pronunciation/reading-text",
+      "keywords": [
+        "reading text pronunciation",
+        "latihan baca pronunciation",
+        "reading untuk practice"
+      ],
+      "shortAnswer": "Reading Text for Practice berisi bacaan pendek untuk melatih flow, clarity, dan konsistensi bunyi saat membaca paragraf utuh. Pilih judul teks, lalu baca perlahan sambil fokus pada ritme dan kejelasan bunyi.",
+      "sourceSections": [
+        {
+          "label": "Reading Text Dropdown"
+        }
+      ]
+    },
+    {
+      "topicId": "stressing-hub-overview",
+      "title": "Stressing Learning Map",
+      "route": "/skill/pronunciation/stressing",
+      "keywords": [
+        "menu stressing",
+        "belajar stressing",
+        "word stress dan sentence stress"
+      ],
+      "shortAnswer": "Stressing Hub membagi latihan ke dua jalur: Word Stress (tekanan suku kata di dalam kata) dan Sentence Stress (tekanan kata di dalam kalimat). Pilih jalur dulu, lalu lanjut ke materi dan latihan.",
+      "sourceSections": [
+        {
+          "label": "Stressing Hub Cards"
+        }
+      ]
+    },
+    {
+      "topicId": "stressing-sentence-stress-overview",
+      "title": "Sentence Stress in English",
+      "route": "/skill/pronunciation/stressing/sentence-stress",
+      "keywords": [
+        "apa itu sentence stress",
+        "stress kalimat",
+        "content vs function words"
+      ],
+      "shortAnswer": "Sentence stress membantu kamu menonjolkan informasi utama dalam kalimat. Fokuskan tekanan pada content words, ringankan function words, dan jaga ritme stress-timed agar terdengar natural.",
+      "sourceSections": [
+        {
+          "label": "Sentence Stress and Meaning Focus"
+        },
+        {
+          "label": "Content vs Function Words"
+        }
+      ]
+    },
+    {
       "topicId": "stressing-word-stress-rules",
       "title": "Word Stress in English",
-      "route": "/skill/pronunciation/stressing",
+      "route": "/skill/pronunciation/stressing/word-stress",
       "keywords": [
         "apa itu word stress",
         "stress syllable",
@@ -5894,7 +6001,7 @@
       "shortAnswer": "Word stress menentukan suku kata mana yang paling kuat saat kata diucapkan. Dengan stress yang tepat, ucapan lebih jelas dan makna kata tidak mudah salah tangkap.",
       "sourceSections": [
         {
-          "label": "Word Stress Explanation"
+          "label": "Word Stress Rules"
         },
         {
           "label": "Word Stress Examples"

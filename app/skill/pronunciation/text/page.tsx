@@ -1173,7 +1173,7 @@ export default function PronunciationTextPage() {
   }, [isPracticeOpen, isPromptOpen]);
 
   return (
-    <div className='pronunciation-layout text-pronunciation-layout'>
+    <div className='pronunciation-layout pronunciation-theme pronunciation-theme--text text-pronunciation-layout'>
       <div className='back-button-fixed'>
         <BackButton to='/skill/pronunciation' />
       </div>
