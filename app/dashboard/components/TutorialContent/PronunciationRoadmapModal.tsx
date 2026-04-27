@@ -196,12 +196,28 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
     return next ?? snapshot
   }
 
-  const syncedCheckedById = isOpen ? syncTopicWithLessonDetails(checkedById) : checkedById
-
   useEffect(() => {
     if (!isOpen) return
     localStorage.setItem(ROADMAP_CHECKLIST_KEY, JSON.stringify(syncedCheckedById))
   }, [syncedCheckedById, isOpen])
+
+  useEffect(() => {
+    if (!lessonDetailPopup) return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setLessonDetailPopup(null)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [lessonDetailPopup])
+
+  useEffect(() => {
+    if (!isOpen) return
+    setCheckedById((prev) => syncTopicWithLessonDetails(prev))
+  }, [isOpen])
 
   useEffect(() => {
     if (!lessonDetailPopup) return
@@ -230,6 +246,69 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
         ...synced,
         [id]: !synced[id],
       }
+    })
+  }
+
+  const toggleTopicChecked = (topicId: string) => {
+    const config = PRONUNCIATION_LESSON_DETAIL_CONFIGS[topicId]
+    if (!config) {
+      toggleChecked(topicId)
+      return
+    }
+
+    const detailKeys = getLessonDetailKeysForTopic(topicId, config)
+    setCheckedById((prev) => {
+      const next = { ...prev }
+      const allDone = detailKeys.length > 0 && detailKeys.every((key) => next[key] === true)
+      const nextValue = !allDone
+      detailKeys.forEach((key) => {
+        next[key] = nextValue
+      })
+      next[topicId] = nextValue
+      return next
+    })
+  }
+
+  const toggleLessonDetailChecked = (topicId: string, detailItemId: string) => {
+    const config = PRONUNCIATION_LESSON_DETAIL_CONFIGS[topicId]
+    if (!config) return
+    const detailKeys = getLessonDetailKeysForTopic(topicId, config)
+
+    setCheckedById((prev) => {
+      const next = { ...prev }
+
+      // Migration safety: topic-level checked implies all details checked.
+      if (next[topicId] === true) {
+        detailKeys.forEach((key) => {
+          next[key] = true
+        })
+      }
+
+      const key = toLessonDetailKey(detailItemId)
+      next[key] = !Boolean(next[key])
+
+      const allDone = detailKeys.length > 0 && detailKeys.every((detailKey) => next[detailKey] === true)
+      next[topicId] = allDone
+      return next
+    })
+  }
+
+  const openLessonDetailPopup = (topicId: string) => {
+    const config = PRONUNCIATION_LESSON_DETAIL_CONFIGS[topicId]
+    if (!config) return
+    if (getLessonDetailItemCount(config) <= 1) return
+    setLessonDetailPopup({ config, activeGroupIndex: 0 })
+  }
+
+  const closeLessonDetailPopup = () => setLessonDetailPopup(null)
+
+  const navigateLessonDetailPopup = (direction: -1 | 1) => {
+    setLessonDetailPopup((prev) => {
+      if (!prev) return prev
+      const totalGroups = prev.config.groups.length
+      if (totalGroups <= 1) return prev
+      const nextIndex = (prev.activeGroupIndex + direction + totalGroups) % totalGroups
+      return { ...prev, activeGroupIndex: nextIndex }
     })
   }
 
@@ -379,7 +458,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                       <div className="max-h-[55vh] overflow-y-auto space-y-3 pr-1 flex flex-col items-center">
                         {group.items.map((item) => {
                           const checkboxId = `${lessonDetailPopup.config.topicId}-${item.id}`
-                          const checked = Boolean(syncedCheckedById[toLessonDetailKey(item.id)])
+                          const checked = Boolean(checkedById[toLessonDetailKey(item.id)])
                           const labelClassName =
                             (group.labelVariant === 'symbol'
                               ? 'text-base sm:text-lg font-mono'
@@ -476,7 +555,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                         <label className="inline-flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
-                            checked={Boolean(syncedCheckedById[item.id])}
+                            checked={Boolean(checkedById[item.id])}
                             onChange={() => toggleTopicChecked(item.id)}
                             className="h-4 w-4 accent-cyan-400"
                           />

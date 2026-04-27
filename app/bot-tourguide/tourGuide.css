@@ -387,7 +387,7 @@
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--tg-radius-md);
-  background: rgba(0, 0, 0, 0.18);
+  background: var(--tg-bg-soft);
   position: sticky;
   bottom: 0;
   z-index: 10;
