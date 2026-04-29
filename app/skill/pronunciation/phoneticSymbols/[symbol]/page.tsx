@@ -148,7 +148,16 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   },
 };
 
-const ACCENT_EVALUATION_PROMPT = `Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif ('?? Sangat bagus ??Bagus', '?? Perlu Sedikit Perbaikan', atau '?? Perlu Perbaikan'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.`;
+function formatIpaSymbolForPrompt(symbol: string): string {
+  const trimmed = symbol.trim();
+  if (!trimmed) return '/?/';
+  const core = trimmed.replace(/^\/+|\/+$/g, '');
+  return `/${core}/`;
+}
+
+function buildAccentEvaluationPrompt(focusIpaSymbol: string): string {
+  return `Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional yang sangat kritis. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American) terutama simbol ${focusIpaSymbol}. Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif ('🟢 Sangat Bagus', '🔵 Bagus', '🟠 Perlu sedikit perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki. Berikan skor keseluruhan dari 1-100 berdasarkan akurasi fonetik American Accent. Sebutkan secara terpisah daftar kata yang ada di teks namun tidak ditemukan dalam rekaman audio. Berikan status kualitatif pada hasil keseluruhan dari seluruh daftar kata baik itu dari kata yang disebutkan audio atau tidak. Berikan penilaian yang jujur. Jika jumlah kata yang diucapkan kurang dari 100% dari daftar yang diberikan, berikan penalti skor secara proporsional. (Contoh: Hanya 50% kata yang diucapkan = Skor maksimal adalah 50). Ini bobotnya:🟢 Sangat Bagus = 100%, 🔵 Bagus = 80%, 🟠 Perlu sedikit perbaikan = 65%, 🔴 Perlu Perbaikan = 50%`;
+}
 
 const BETWEEN_PLAY_ALL_WORDS_MS = 220;
 
@@ -234,6 +243,11 @@ const SymbolDetailPage: React.FC = () => {
   const britishNote = useMemo(
     () => BRITISH_NOTES_BY_SYMBOL[decodedSymbol] ?? null,
     [decodedSymbol]
+  );
+  const promptFocusSymbol = useMemo(() => formatIpaSymbolForPrompt(decodedSymbol), [decodedSymbol]);
+  const accentEvaluationPrompt = useMemo(
+    () => buildAccentEvaluationPrompt(promptFocusSymbol),
+    [promptFocusSymbol],
   );
   const sectionStateStorageKey = useMemo(
     () => `phoneticSymbolSectionState:${normalizedSymbol || 'default'}`,
@@ -593,7 +607,7 @@ const SymbolDetailPage: React.FC = () => {
     }
 
     try {
-      await navigator.clipboard.writeText(ACCENT_EVALUATION_PROMPT);
+      await navigator.clipboard.writeText(accentEvaluationPrompt);
       setIsPromptCopied(true);
       if (promptCopyTimeoutRef.current) {
         window.clearTimeout(promptCopyTimeoutRef.current);
@@ -1107,7 +1121,7 @@ const SymbolDetailPage: React.FC = () => {
             {isPromptOpen && (
               <div className="p-3 md:p-5">
                 <p className="text-[11px] md:text-sm text-gray-200 leading-relaxed whitespace-pre-line">
-                  &quot;{ACCENT_EVALUATION_PROMPT}&quot;
+                  &quot;{accentEvaluationPrompt}&quot;
                 </p>
               </div>
             )}
