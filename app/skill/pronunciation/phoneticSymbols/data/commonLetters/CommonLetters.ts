@@ -59,7 +59,6 @@ export const commonLettersData: CommonLettersCategory[] = [
           'u -> put, full, pull',
           'o -> woman, wolf',
           'ou -> could, would, should',
-          'ui (some words) -> built, guilty',
         ],
         category: 'vowel_lax',
         pronunciationTip: 'Bibir sedikit bulat, bunyi pendek. Jaga supaya tidak jadi /u/.',

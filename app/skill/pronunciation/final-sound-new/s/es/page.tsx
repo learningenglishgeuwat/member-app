@@ -489,6 +489,12 @@ export default function FinalSoundSEsPage() {
     [],
   );
 
+  const toWordBankTtsText = useCallback((text: string) => {
+    const normalized = text.trim().toLowerCase();
+    if (normalized === 'live') return 'to live';
+    return text;
+  }, []);
+
   const playWordBankSingle = useCallback(
     async (text: string, rowKey?: string) => {
       stopWordBankPlayAll();
@@ -497,12 +503,12 @@ export default function FinalSoundSEsPage() {
       if (rowKey) {
         setActiveWordBankRowKey(rowKey);
       }
-      await speakQueuedText(text, runId, singlePlayRunIdRef);
+      await speakQueuedText(toWordBankTtsText(text), runId, singlePlayRunIdRef);
       if (singlePlayRunIdRef.current === runId) {
         setActiveWordBankRowKey(null);
       }
     },
-    [speakQueuedText, stopWordBankPlayAll],
+    [speakQueuedText, stopWordBankPlayAll, toWordBankTtsText],
   );
 
   const handleWordBankPlayAll = useCallback(async () => {
@@ -529,11 +535,11 @@ export default function FinalSoundSEsPage() {
       });
       await sleep(120);
       if (runId !== playAllRunIdRef.current) break;
-      await speakQueuedText(item.before, runId, playAllRunIdRef);
+      await speakQueuedText(toWordBankTtsText(item.before), runId, playAllRunIdRef);
       if (runId !== playAllRunIdRef.current) break;
       await sleep(120);
       if (runId !== playAllRunIdRef.current) break;
-      await speakQueuedText(item.after, runId, playAllRunIdRef);
+      await speakQueuedText(toWordBankTtsText(item.after), runId, playAllRunIdRef);
       if (runId !== playAllRunIdRef.current) break;
       await sleep(160);
     }

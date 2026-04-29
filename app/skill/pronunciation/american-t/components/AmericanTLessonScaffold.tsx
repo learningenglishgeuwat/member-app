@@ -16,8 +16,8 @@ type LessonSection = {
 };
 
 type AmericanTLessonScaffoldProps = {
-  title: string;
-  subtitle: string;
+  title: ReactNode;
+  subtitle: ReactNode;
   backTo: string;
   sections: ReadonlyArray<LessonSection>;
   pageClassName?: string;

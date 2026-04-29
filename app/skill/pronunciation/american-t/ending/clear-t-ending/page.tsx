@@ -354,8 +354,17 @@ export default function ClearTEndingPage() {
   return (
     <>
       <AmericanTLessonScaffold
-      title="Released /t/ Ending"
-      subtitle="Latihan /t/ yang tetap jelas saat berada di akhir kata atau sebelum vokal."
+      title={
+        <>
+          Released <span className="at-ipa">/t/</span> Ending
+        </>
+      }
+      subtitle={
+        <>
+          Latihan <span className="at-ipa">/t/</span> yang tetap jelas saat berada di akhir kata
+          atau sebelum vokal.
+        </>
+      }
       backTo="/skill/pronunciation/american-t"
       headerActions={
         <ButtonSavedProgress
