@@ -6,6 +6,8 @@ import { Eye, EyeOff, Calendar, Clock, AlertCircle, CheckCircle, X, Smartphone, 
 import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
 import { createExtensionRequest, getLatestExtensionRequest, type ExtensionRequestStatus } from '@/lib/extensionRequests';
+import { HapticSettings } from './HapticSettings';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 
 const EXTENSION_REQUEST_LOCKED = true;
 
@@ -34,6 +36,7 @@ const readLocalStorageObject = <T,>(key: string, fallback: T): T => {
 
 const SettingsContent: React.FC = () => {
   const { user } = useAuth();
+  const { triggerHaptic } = useHaptic();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -384,6 +387,9 @@ const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Haptic Settings */}
+      <HapticSettings />
 
       {/* Change Password */}
       <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">

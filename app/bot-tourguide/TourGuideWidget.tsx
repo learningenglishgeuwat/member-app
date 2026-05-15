@@ -29,6 +29,7 @@ import type {
   GuideSimulationTopic,
   TutorialDeviceProfile,
 } from './types';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 import './tourGuide.css';
 
 type TourGuideWidgetProps = {
@@ -261,6 +262,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   const [selectedFlashcardPath, setSelectedFlashcardPath] = useState<string>(FLASHCARD_DEFAULT_ROUTE);
   const [selectedSimulationTopic, setSelectedSimulationTopic] =
     useState<GuideSimulationTopic>(SIMULATION_DEFAULT_TOPIC);
+  const { triggerHaptic } = useHaptic();
 
   const startTutorialTransition = useCallback((durationMs = 320) => {
     setIsTutorialPageTransition(true);

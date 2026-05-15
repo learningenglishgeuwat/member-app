@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 
 interface LetterCardProps {
   letter: string;
@@ -16,6 +17,11 @@ export const LetterCard: React.FC<LetterCardProps> = ({
   onPlay 
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const { triggerHaptic } = useHaptic();
+
+  const handleClick = () => {
+    onPlay();
+  };
 
   useEffect(() => {
     if (isPlaying && cardRef.current) {
@@ -30,7 +36,7 @@ export const LetterCard: React.FC<LetterCardProps> = ({
   return (
     <div 
       ref={cardRef}
-      onClick={onPlay}
+      onClick={handleClick}
       data-tour={`alphabet-letter-${letter.toLowerCase()}`}
       className={`alphabet-letter-card ${isPlaying ? 'playing' : ''}`}
     >

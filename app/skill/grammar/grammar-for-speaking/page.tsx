@@ -6,6 +6,7 @@ import './grammar-for-speaking.css';
 import { SPEAKING_GOALS, TOTAL_SPEAKING_GOALS } from './data/goals';
 import { SPEAKING_PHASES } from './data/phases';
 import type { SpeakingDomain, SpeakingQuickFilter } from './data/types';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 
 const QUICK_FILTERS: Array<{ id: SpeakingQuickFilter; label: string }> = [
   { id: 'all', label: 'All' },
@@ -30,6 +31,7 @@ export default function GrammarForSpeakingPage() {
   const [activePhaseId, setActivePhaseId] = useState(SPEAKING_PHASES[0].id);
   const [activeFilter, setActiveFilter] = useState<SpeakingQuickFilter>('all');
   const [search, setSearch] = useState('');
+  const { triggerHaptic } = useHaptic();
 
   const activePhase = useMemo(
     () => SPEAKING_PHASES.find((phase) => phase.id === activePhaseId) ?? SPEAKING_PHASES[0],

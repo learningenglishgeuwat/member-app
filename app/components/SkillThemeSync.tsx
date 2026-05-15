@@ -15,7 +15,9 @@ const SKILL_TYPE_BY_PATH_PREFIX: Array<{ prefix: string; skillType: string }> = 
 
 const DEFAULT_PAGE_BG = '#000000'
 const DASHBOARD_PAGE_BG = 'rgb(15 23 42)' // slate-900
+const DASHBOARD_PATH = '/dashboard'
 const SKILL_MENU_BG = 'rgb(2 6 23)' // slate-950
+const SKILL_GAME_LINKS_PATH = '/skill/game-links'
 
 function buildPronunPageBg(glow1: string, glow2: string, base: string) {
   return `radial-gradient(900px 420px at 10% -12%, ${glow1}, transparent 55%), radial-gradient(860px 420px at 92% 112%, ${glow2}, transparent 57%), ${base}`
@@ -108,6 +110,20 @@ export default function SkillThemeSync() {
   useEffect(() => {
     if (typeof window === 'undefined' || !pathname) return
 
+    if (pathname === DASHBOARD_PATH || pathname.startsWith(`${DASHBOARD_PATH}/`)) {
+      const rgbTuple = hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
+      applyNavAccent(rgbTuple)
+      applyPageSurface(DASHBOARD_PAGE_BG)
+      return
+    }
+
+    if (pathname === SKILL_GAME_LINKS_PATH || pathname === `${SKILL_GAME_LINKS_PATH}/`) {
+      const rgbTuple = hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
+      applyNavAccent(rgbTuple)
+      applyPageSurface(buildSkillBackground(rgbTuple))
+      return
+    }
+
     const skillTypeFromPath = resolveSkillTypeFromPathname(pathname)
     const skillTypeFromStorage = (() => {
       try {
@@ -122,11 +138,6 @@ export default function SkillThemeSync() {
     const rgbTuple = hexToRgbTuple(hex) ?? hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
 
     applyNavAccent(rgbTuple)
-
-    if (pathname === '/dashboard' || pathname.startsWith('/dashboard/')) {
-      applyPageSurface(DASHBOARD_PAGE_BG)
-      return
-    }
 
     if (pathname === '/skill' || pathname === '/skill/') {
       applyPageSurface(SKILL_MENU_BG)

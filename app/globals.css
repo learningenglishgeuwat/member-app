@@ -4,9 +4,16 @@
 
 @layer base {
   :root {
-    --font-inter: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-space-grotesk: "Trebuchet MS", "Lucida Grande", "Segoe UI", sans-serif;
-    --font-jetbrains-mono: Consolas, "Courier New", monospace;
+    --font-ui: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Space Grotesk", "Sora", "Outfit", "Trebuchet MS", "Segoe UI", sans-serif;
+    --font-tech: "JetBrains Mono", "IBM Plex Mono", Consolas, "Courier New", monospace;
+
+    --font-inter: var(--font-ui);
+    --font-space-grotesk: var(--font-display);
+    --font-jetbrains-mono: var(--font-tech);
+    --font-modern: var(--font-ui);
+    --font-geometric: var(--font-display);
+    --font-futuristic: var(--font-display);
 
     /* Default page surface (used by RootLayout/body, nav spacer, overscroll). */
     --app-page-bg: #000000;
@@ -175,6 +182,85 @@
   --pronun-panel-rgb: 17 21 46;
   --pronun-accent-1-rgb: 129 140 248;
   --pronun-accent-2-rgb: 124 58 237;
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .glass-panel,
+  .pronunciation-topic-card-body,
+  .alphabet-main-title,
+  .alphabet-quick-spelling-panel,
+  .alphabet-notes-panel,
+  .alphabet-note-card,
+  .alphabet-prompt-card,
+  .alphabet-letter-card,
+  .fsn-orbit-stage,
+  .sh-card,
+  .fs-topic-block,
+  .fs-topic-card,
+  .fs-topic-rules-table-wrap,
+  .stress-block,
+  .stress-card,
+  .stress-syllable-card,
+  .stress-rule-card,
+  .stress-bank-card,
+  .stress-mark-card,
+  .stress-fix-card,
+  .stress-prompt-card,
+  .at-hub-canvas-wrap,
+  .at-hub-node-lesson-card,
+  .at-hub-summary-card,
+  .at-hub-group-card,
+  .text-pronunciation-panel,
+  .rt-panel
+) {
+  border-color: rgb(var(--pronun-accent-1-rgb) / 0.38);
+  border-radius: 14px;
+  background:
+    linear-gradient(165deg, rgb(var(--pronun-panel-rgb) / 0.86), rgb(var(--pronun-surface-rgb) / 0.94)),
+    radial-gradient(circle at 18% 12%, rgb(var(--pronun-accent-1-rgb) / 0.14), transparent 58%);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.1),
+    0 0 34px rgb(var(--pronun-accent-2-rgb) / 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .pronunciation-topic-card-body,
+  .alphabet-letter-card,
+  .fs-topic-card,
+  .stress-card,
+  .stress-syllable-card,
+  .stress-rule-card,
+  .stress-bank-card,
+  .sh-card,
+  .at-hub-node-lesson-card
+):hover {
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.62);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.18),
+    0 0 40px rgb(var(--pronun-accent-2-rgb) / 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-ring {
+  border: 2px dotted rgb(var(--pronun-accent-2-rgb) / 0.78);
+  box-shadow: 0 0 22px rgb(var(--pronun-accent-2-rgb) / 0.32);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-card-desc {
+  color: rgb(var(--pronun-accent-2-rgb) / 0.9);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-dot {
+  background: rgb(var(--pronun-accent-2-rgb) / 0.92);
+  box-shadow: 0 0 10px rgb(var(--pronun-accent-2-rgb) / 0.58);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-line {
+  background: linear-gradient(to bottom, rgb(var(--pronun-accent-2-rgb) / 0.9), transparent);
 }
 
 @supports (height: 100dvh) {

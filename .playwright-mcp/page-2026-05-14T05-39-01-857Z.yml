@@ -1,0 +1,17 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: Sesi tidak ditemukan.
+    - generic [ref=e5]:
+      - button "Refresh" [ref=e6] [cursor=pointer]
+      - button "Ke Login" [ref=e7] [cursor=pointer]
+  - navigation "Bottom navigation" [ref=e9]:
+    - generic [ref=e11]:
+      - button "Open menu" [ref=e12] [cursor=pointer]:
+        - img [ref=e13]
+        - generic [ref=e14]: MENU
+      - button "Enable Tour Guide" [ref=e15] [cursor=pointer]:
+        - img "Tour Guide" [ref=e16]
+      - button "View progress" [ref=e17] [cursor=pointer]:
+        - img [ref=e18]
+        - generic [ref=e19]: PROGRESS
+  - alert [ref=e20]

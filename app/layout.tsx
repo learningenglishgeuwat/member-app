@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/MemberAuthContext";
 import { TourGuideMount } from "@/app/bot-tourguide";
 import MobileBottomNav from "@/app/components/MobileBottomNav";
 import SkillThemeSync from "@/app/components/SkillThemeSync";
+import { GlobalHaptic } from "@/app/components/haptic";
 
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
@@ -31,10 +32,12 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased">
         <AuthProvider>
-          {children}
-          <SkillThemeSync />
-          <MobileBottomNav />
-          <TourGuideMount />
+          <GlobalHaptic>
+            {children}
+            <SkillThemeSync />
+            <MobileBottomNav />
+            <TourGuideMount />
+          </GlobalHaptic>
         </AuthProvider>
       </body>
     </html>

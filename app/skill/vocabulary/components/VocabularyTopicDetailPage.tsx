@@ -19,6 +19,8 @@ import {
 import VocabularyPracticeMissionModal from './VocabularyPracticeMissionModal';
 import VocabularyWordCarousel from './VocabularyWordCarousel';
 import { useKpiValueColumn } from './useKpiValueColumn';
+import { useHaptic } from '@/lib/haptic/useHaptic';
+import '../topic/shared/vocabulary.css';
 
 type DetailPlayMode = 'words' | 'word-example' | null;
 
@@ -269,6 +271,7 @@ export default function VocabularyTopicDetailPage({
   showCardinalNumber = false,
 }: VocabularyTopicDetailPageProps) {
   const kpiRef = useRef<HTMLDListElement | null>(null);
+  const { triggerHaptic } = useHaptic();
   const [search, setSearch] = useState('');
   const [isPracticeModalOpen, setIsPracticeModalOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);

@@ -13,6 +13,7 @@ import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -58,6 +59,7 @@ const AlphabetPage: React.FC = () => {
   const [currentPlayingLetter, setCurrentPlayingLetter] = useState<string | null>(null);
   const [currentPlayingPracticeCountry, setCurrentPlayingPracticeCountry] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { triggerHaptic } = useHaptic();
   const [savedProgressByTab, setSavedProgressByTab] = useState<Record<AlphabetProgressTabKey, boolean>>({
     alphabet: false,
     alphabet_quick_spelling: false,
@@ -151,7 +153,12 @@ const AlphabetPage: React.FC = () => {
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
     }
-    if (isPlayingRef.current) return;
+    
+    // Stop play all if active, but continue to play the clicked letter
+    if (isPlayingRef.current) {
+      stopAlphabetPlayAll();
+      stopSpeech();
+    }
     
     try {
       setCurrentPlayingLetter(letter);
@@ -433,11 +440,13 @@ const AlphabetPage: React.FC = () => {
 
     const matchedWord = findMatchedSpellingWord(spellingInput);
     if (matchedWord) {
+      triggerHaptic('success');
       setSpellingStatus('correct');
       void speakWordAndSpelling(matchedWord);
       return;
     }
 
+    triggerHaptic('error');
     setSpellingStatus('wrong');
   };
 

@@ -16,6 +16,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
       onClick={isDisabled ? undefined : onClick}
       data-tour={`pronunciation-topic-${topic.id}`}
       className={`
+        pronunciation-topic-card
         relative flex-shrink-0 transition-all duration-500 ease-out snap-center
         ${isDisabled 
           ? 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 opacity-40 cursor-not-allowed grayscale mt-6 sm:mt-12 md:mt-16 lg:mt-20' 
@@ -27,11 +28,12 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
     >
       {/* Active Indicator Ring */}
       {isActive && (
-        <div className="absolute -inset-4 border-2 border-purple-400 rounded-xl opacity-50 blur-sm animate-pulse"></div>
+        <div className="pronunciation-topic-ring absolute -inset-4 rounded-xl opacity-50 blur-sm animate-pulse"></div>
       )}
       
       {/* Card Body */}
       <div className={`
+        pronunciation-topic-card-body
         w-full h-full rounded-xl overflow-hidden relative border border-white/10
         transition-all duration-500
         ${isActive ? 'bg-slate-900 shadow-2xl shadow-purple-900/50 scale-105' : 'bg-slate-800 grayscale'}
@@ -65,7 +67,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
             )}
           </h3>
           {isActive && (
-            <p className="text-[7px] sm:text-[9px] md:text-[10px] lg:text-xs text-purple-300 mt-1 font-light tracking-wide animate-fade-in-up line-clamp-2 md:line-clamp-none">
+            <p className="pronunciation-topic-card-desc text-[7px] sm:text-[9px] md:text-[10px] lg:text-xs mt-1 font-light tracking-wide animate-fade-in-up line-clamp-2 md:line-clamp-none">
               {topic.shortDesc}
             </p>
           )}
@@ -74,15 +76,15 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
         {/* Corner Tech Elements */}
         {isActive && (
           <>
-            <div className="absolute top-2 right-2 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-            <div className="absolute bottom-2 left-2 w-1 h-1 bg-purple-400"></div>
-            <div className="absolute top-2 left-2 w-1 h-1 bg-purple-400"></div>
+            <div className="pronunciation-topic-dot absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"></div>
+            <div className="pronunciation-topic-dot absolute bottom-2 left-2 w-1 h-1"></div>
+            <div className="pronunciation-topic-dot absolute top-2 left-2 w-1 h-1"></div>
             {/* Additional Tech Lines */}
-            <div className="absolute top-1/2 right-1 w-px h-4 bg-gradient-to-b from-purple-400 to-transparent opacity-60"></div>
-            <div className="absolute bottom-1/2 left-1 w-px h-4 bg-gradient-to-t from-purple-400 to-transparent opacity-60"></div>
+            <div className="pronunciation-topic-line absolute top-1/2 right-1 w-px h-4 opacity-60"></div>
+            <div className="pronunciation-topic-line absolute bottom-1/2 left-1 w-px h-4 opacity-60"></div>
             {/* Tech Dots */}
-            <div className="absolute top-1/3 right-3 w-0.5 h-0.5 bg-purple-300 rounded-full"></div>
-            <div className="absolute bottom-1/3 left-3 w-0.5 h-0.5 bg-purple-300 rounded-full"></div>
+            <div className="pronunciation-topic-dot absolute top-1/3 right-3 w-0.5 h-0.5 rounded-full"></div>
+            <div className="pronunciation-topic-dot absolute bottom-1/3 left-3 w-0.5 h-0.5 rounded-full"></div>
           </>
         )}
 

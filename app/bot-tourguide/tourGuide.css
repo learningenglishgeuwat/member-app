@@ -32,6 +32,20 @@
   transition: transform 140ms ease, box-shadow 160ms ease;
 }
 
+.tg-avatar-button::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 999px;
+  border: 2px dotted rgba(var(--tg-accent-rgb), 0.72);
+  box-shadow:
+    0 0 12px rgba(var(--tg-accent-rgb), 0.24),
+    inset 0 0 10px rgba(var(--tg-accent-rgb), 0.14);
+  opacity: 0.82;
+  pointer-events: none;
+  animation: tg-avatar-dotted-shine 1.9s ease-in-out infinite;
+}
+
 .tg-avatar-button:hover {
   transform: translateY(-1px);
   box-shadow: var(--tg-glow-soft);
@@ -854,6 +868,25 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes tg-avatar-dotted-shine {
+  0%,
+  100% {
+    border-color: rgba(var(--tg-accent-rgb), 0.42);
+    box-shadow:
+      0 0 8px rgba(var(--tg-accent-rgb), 0.18),
+      inset 0 0 8px rgba(var(--tg-accent-rgb), 0.1);
+    opacity: 0.62;
+  }
+  48% {
+    border-color: rgba(var(--tg-accent-rgb), 0.95);
+    box-shadow:
+      0 0 18px rgba(var(--tg-accent-rgb), 0.42),
+      0 0 30px rgba(var(--tg-accent-rgb), 0.2),
+      inset 0 0 14px rgba(var(--tg-accent-rgb), 0.2);
+    opacity: 1;
   }
 }
 

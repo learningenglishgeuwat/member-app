@@ -14,6 +14,7 @@ import {
   writeSpeakingGoalCompletionMap,
   type SpeakingGoalCompletionMap,
 } from '../../../skill/speaking/data/progress'
+import { useHaptic } from '@/lib/haptic/useHaptic'
 
 type SpeakingRoadmapModalProps = {
   isOpen: boolean
@@ -95,6 +96,7 @@ const SpeakingRoadmapModal: React.FC<SpeakingRoadmapModalProps> = ({
     if (typeof window === 'undefined') return {}
     return readSpeakingGoalCompletionMap()
   })
+  const { triggerHaptic } = useHaptic()
 
   const [lessonDetailPopup, setLessonDetailPopup] = useState<null | { config: LessonDetailConfig; activeGroupIndex: number }>(
     null,

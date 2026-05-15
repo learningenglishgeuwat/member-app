@@ -62,3 +62,9 @@ next-env.d.ts
 # local AI notes
 AI.md
 /content/
+
+# documentation
+/documentation/
+
+# kiro
+.kiro

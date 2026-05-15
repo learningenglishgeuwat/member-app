@@ -23,6 +23,7 @@ const PUBLIC_PATHS = new Set([
 ]);
 
 const DASHBOARD_PATH = '/dashboard';
+const SKILL_MENU_PATH = '/skill';
 const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
 const BOOTSTRAP_EVENT = 'geuwat:tourguide-bootstrap';
 
@@ -61,6 +62,7 @@ export default function TourGuideMount() {
 
   if (loading || !hasSession) return null;
   if (!pathname || PUBLIC_PATHS.has(pathname)) return null;
+  if (pathname === SKILL_MENU_PATH || pathname === `${SKILL_MENU_PATH}/`) return null;
   if (pathname === DASHBOARD_PATH && isMobileViewport) return null;
 
   if (!isWidgetBootstrapped) {

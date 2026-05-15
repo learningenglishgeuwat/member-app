@@ -328,17 +328,33 @@ export default function AlphabetFlashcardPage() {
 
           <div
             className="vf-card-button"
-            onClick={() => setIsFlipped((prev) => !prev)}
+            onClick={() => {
+              if (isPlayAllActive) {
+                stopSpeech();
+              } else {
+                setIsFlipped((prev) => !prev);
+              }
+            }}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
-                setIsFlipped((prev) => !prev);
+                if (isPlayAllActive) {
+                  stopSpeech();
+                } else {
+                  setIsFlipped((prev) => !prev);
+                }
               }
             }}
             role="button"
             tabIndex={0}
             aria-pressed={isFlipped}
-            aria-label={isFlipped ? 'Balik ke sisi huruf' : 'Balik ke sisi contoh kata'}
+            aria-label={
+              isPlayAllActive
+                ? 'Stop play all'
+                : isFlipped
+                  ? 'Balik ke sisi huruf'
+                  : 'Balik ke sisi contoh kata'
+            }
           >
             <span className={`vf-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
               <span className="vf-card-face vf-card-face--front">
@@ -350,10 +366,18 @@ export default function AlphabetFlashcardPage() {
                   className={`vf-vocab-chip vf-vocab-chip--icon-only ${isSpeaking ? 'is-speaking' : ''}`}
                   onClick={(event) => {
                     event.stopPropagation();
-                    void speakLetter(currentCard.letter);
+                    if (isPlayAllActive) {
+                      stopSpeech();
+                    } else {
+                      void speakLetter(currentCard.letter);
+                    }
                   }}
-                  aria-label={`Putar bunyi huruf ${currentCard.letter}`}
-                  title="Putar huruf"
+                  aria-label={
+                    isPlayAllActive
+                      ? 'Stop play all'
+                      : `Putar bunyi huruf ${currentCard.letter}`
+                  }
+                  title={isPlayAllActive ? 'Stop play all' : 'Putar huruf'}
                 >
                   <span className="vf-vocab-chip-icon" aria-hidden="true" />
                 </button>

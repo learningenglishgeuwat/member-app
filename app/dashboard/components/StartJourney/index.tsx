@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { Loader, Zap, Play } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useHaptic } from '@/lib/haptic/useHaptic'
 
 interface JourneyPlan {
   title: string
@@ -17,10 +18,14 @@ const StartJourney: React.FC = () => {
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
   const [initiating, setInitiating] = useState(false)
   const [activePhases, setActivePhases] = useState<Set<number>>(new Set())
+  const { triggerHaptic } = useHaptic()
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!goal.trim()) return
+    if (!goal.trim()) {
+      triggerHaptic('error')
+      return
+    }
 
     setLoading(true)
     setPlan(null)
@@ -70,10 +75,12 @@ const StartJourney: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 1500))
     setPlan(selectedPlan)
     setLoading(false)
+    triggerHaptic('success')
   }
 
   const handleInitiate = async () => {
     setInitiating(true)
+    triggerHaptic('success')
     // Simulate loading delay for UX
     await new Promise(resolve => setTimeout(resolve, 1000))
     // Navigate to skills page
@@ -97,22 +104,22 @@ const StartJourney: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
       <header className="space-y-2">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
-          INITIATE <span className="text-purple-500">PROTOCOL</span>
+          INITIATE <span className="text-cyan-300">PROTOCOL</span>
         </h2>
         <p className="text-slate-400 font-mono text-xs sm:text-sm">Ketikkan keinginanmu dalam belajar bahasa Inggris.</p>
       </header>
 
       <form
         onSubmit={handleGenerate}
-        className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-2xl backdrop-blur-sm relative overflow-hidden group"
+        className="dashboard-widget-card p-4 sm:p-6 md:p-8 relative overflow-hidden group"
         data-tour="dashboard-mission-form"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-300 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
         
         <div className="space-y-4">
           <label
             htmlFor="mission-objective"
-            className="block text-[11px] sm:text-sm font-medium text-purple-300 uppercase tracking-widest font-display"
+            className="block text-[11px] sm:text-sm font-medium text-cyan-200 uppercase tracking-widest font-display"
           >
             Mission Objective
           </label>
@@ -125,14 +132,14 @@ const StartJourney: React.FC = () => {
               onChange={(e) => setGoal(e.target.value)}
               placeholder="e.g., I want to speak English fluently, Master business English, Prepare for IELTS exam..."
               data-tour="dashboard-mission-input"
-              className="flex-1 bg-black/40 border border-purple-900/50 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all text-sm sm:text-base"
+              className="flex-1 bg-black/40 border border-cyan-500/30 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-300 focus:shadow-[0_0_15px_rgba(34,211,238,0.22)] transition-all text-sm sm:text-base"
             />
             <button
               type="button"
               onClick={handleGenerate}
               disabled={loading || !goal.trim()}
               data-tour="dashboard-mission-enter"
-              className="bg-purple-600 hover:bg-purple-500 disabled:bg-slate-800 disabled:cursor-not-allowed text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-display font-bold flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] text-sm sm:text-base"
+              className="bg-cyan-500/90 hover:bg-cyan-400 disabled:bg-slate-800 disabled:cursor-not-allowed text-slate-950 disabled:text-slate-400 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-display font-bold flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(34,211,238,0.38)] text-sm sm:text-base"
             >
               {loading ? <Loader className="animate-spin w-4 h-4 sm:w-5 sm:h-5" /> : <span>ENTER</span>}
             </button>
@@ -142,14 +149,14 @@ const StartJourney: React.FC = () => {
 
       {plan && (
         <div className="animate-fade-in space-y-6">
-          <div className="p-4 sm:p-5 md:p-6 rounded-xl border border-purple-500/30 bg-purple-950/20 backdrop-blur-md">
+          <div className="dashboard-widget-card p-4 sm:p-5 md:p-6">
             <div className="mb-2">
               <div className="text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-widest">Mission:</div>
-              <h3 className="text-xl sm:text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-sky-400">
                 {plan.title.replace(/^Mission:\s*/i, '')}
               </h3>
             </div>
-            <p className="text-slate-300 italic border-l-2 border-purple-500 pl-3 sm:pl-4 py-1 font-mono text-xs sm:text-sm">
+            <p className="text-slate-300 italic border-l-2 border-cyan-300/80 pl-3 sm:pl-4 py-1 font-mono text-xs sm:text-sm">
               &ldquo;{plan.motivation}&rdquo;
             </p>
           </div>
@@ -158,7 +165,7 @@ const StartJourney: React.FC = () => {
             {plan.steps.map((_: string, index: number) => (
               <div 
                 key={index} 
-                className="bg-slate-900/80 border border-slate-800 p-4 sm:p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-purple-500/50 transition-colors text-center"
+                className="dashboard-widget-card dashboard-widget-card--interactive p-4 sm:p-5 md:p-6 relative overflow-hidden text-center"
               >
                 <div className={`flex justify-center mb-2 sm:mb-3 transition-opacity duration-300 ${
                   activePhases.has(index) ? 'opacity-100' : 'opacity-20'
@@ -166,13 +173,13 @@ const StartJourney: React.FC = () => {
                   <Zap 
                     className={`w-10 h-10 sm:w-12 sm:h-12 transition-all duration-300 ${
                       activePhases.has(index) 
-                        ? 'text-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.8)]' 
-                        : 'text-purple-500'
+                        ? 'text-cyan-200 drop-shadow-[0_0_16px_rgba(34,211,238,0.82)]' 
+                        : 'text-cyan-500'
                     }`} 
                   />
                 </div>
                 <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
-                  <h4 className="font-semibold text-purple-200 font-display text-sm sm:text-base">Phase {index + 1}</h4>
+                  <h4 className="font-semibold text-cyan-100 font-display text-sm sm:text-base">Phase {index + 1}</h4>
                 </div>
                 <p className="text-slate-400 leading-relaxed text-xs sm:text-sm">
                   {index === 0 ? "Bangun Fondasi" :
@@ -185,7 +192,7 @@ const StartJourney: React.FC = () => {
                   className={`mt-4 inline-flex w-full items-center justify-center rounded-full border px-3 py-1.5 text-[11px] sm:text-xs font-display transition-all ${
                     activePhases.has(index)
                       ? 'border-cyan-400/50 bg-cyan-500/10 text-cyan-200 shadow-[0_0_16px_rgba(34,211,238,0.28)]'
-                      : 'border-purple-500/40 bg-purple-500/10 text-purple-300 hover:border-purple-400/60 hover:bg-purple-500/20 hover:text-purple-200'
+                      : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:border-cyan-300/60 hover:bg-cyan-500/20 hover:text-cyan-100'
                   }`}
                   onClick={() => handlePhaseClick(index)}
                   data-tour={`dashboard-ready-phase-${index + 1}`}
@@ -204,7 +211,7 @@ const StartJourney: React.FC = () => {
               onClick={handleInitiate}
               disabled={initiating || activePhases.size < 3}
               data-tour="dashboard-initiate-training"
-              className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 disabled:from-slate-700 disabled:to-slate-600 disabled:cursor-not-allowed text-white px-8 sm:px-10 md:px-12 py-3 sm:py-3.5 md:py-4 rounded-xl font-display font-bold flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transform hover:scale-105 disabled:scale-100 disabled:shadow-none text-sm sm:text-base"
+              className="bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 disabled:from-slate-700 disabled:to-slate-600 disabled:cursor-not-allowed text-slate-950 disabled:text-slate-400 px-8 sm:px-10 md:px-12 py-3 sm:py-3.5 md:py-4 rounded-xl font-display font-bold flex items-center justify-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transform hover:scale-105 disabled:scale-100 disabled:shadow-none text-sm sm:text-base"
             >
               {initiating ? <Loader className="animate-spin w-5 h-5 sm:w-6 sm:h-6" /> : <Play className="w-5 h-5 sm:w-6 sm:h-6" />}
               <span>{initiating ? 'INITIATING...' : 'INITIATE TRAINING'}</span>

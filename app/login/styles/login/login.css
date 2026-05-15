@@ -1,13 +1,5 @@
 /* Login Page Specific Styles - Only Used Classes */
 
-/* Modern Futuristic Fonts - Using System Fonts */
-:root {
-  --font-futuristic: 'Segoe UI', 'Roboto', '-apple-system', 'BlinkMacSystemFont', sans-serif;
-  --font-tech: 'IBM Plex Mono', 'Courier New', monospace;
-  --font-modern: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
-  --font-geometric: 'Trebuchet MS', 'Lucida Grande', sans-serif;
-}
-
 .login-background-layer {
   position: absolute;
   inset: 0;
