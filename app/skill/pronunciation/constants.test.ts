@@ -1,0 +1,88 @@
+import { TOPICS, TOPIC_ROUTES, LOCKED_TOPIC_IDS } from './constants';
+
+describe('Tongue Twister Configuration', () => {
+  describe('TOPICS array', () => {
+    it('should have tongue-twister entry in TOPICS array', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister).toBeDefined();
+    });
+
+    it('should have correct title for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.title).toBe('Tongue Twister');
+    });
+
+    it('should have correct shortDesc for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.shortDesc).toBe('Latihan Artikulasi');
+    });
+
+    it('should have correct icon for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.icon).toBe('TT');
+    });
+
+    it('should have correct color gradient for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.color).toBe('from-amber-500 to-yellow-600');
+    });
+
+    it('should have description for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.description).toBeDefined();
+      expect(tongueTwister?.description.length).toBeGreaterThan(0);
+    });
+
+    it('should have bgImage for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      expect(tongueTwister?.bgImage).toBeDefined();
+      expect(tongueTwister?.bgImage).toContain('https://');
+    });
+
+    it('should position tongue-twister after reading-text', () => {
+      const readingTextIndex = TOPICS.findIndex(t => t.id === 'reading-text');
+      const tongueTwisterIndex = TOPICS.findIndex(t => t.id === 'tongue-twister');
+      
+      expect(readingTextIndex).toBeGreaterThanOrEqual(0);
+      expect(tongueTwisterIndex).toBeGreaterThan(readingTextIndex);
+    });
+  });
+
+  describe('TOPIC_ROUTES mapping', () => {
+    it('should have route mapping for tongue-twister', () => {
+      expect(TOPIC_ROUTES['tongue-twister']).toBeDefined();
+    });
+
+    it('should map tongue-twister to correct route', () => {
+      expect(TOPIC_ROUTES['tongue-twister']).toBe('/skill/pronunciation/phoneticSymbols/tongue-twister');
+    });
+  });
+
+  describe('LOCKED_TOPIC_IDS', () => {
+    it('should not include tongue-twister by default', () => {
+      expect(LOCKED_TOPIC_IDS).not.toContain('tongue-twister');
+    });
+  });
+
+  describe('Data consistency', () => {
+    it('should have all required properties for tongue-twister', () => {
+      const tongueTwister = TOPICS.find(t => t.id === 'tongue-twister');
+      
+      expect(tongueTwister).toMatchObject({
+        id: expect.any(String),
+        title: expect.any(String),
+        shortDesc: expect.any(String),
+        description: expect.any(String),
+        icon: expect.any(String),
+        color: expect.any(String),
+        bgImage: expect.any(String),
+      });
+    });
+
+    it('should have unique id for tongue-twister', () => {
+      const ids = TOPICS.map(t => t.id);
+      const tongueTwisterIds = ids.filter(id => id === 'tongue-twister');
+      expect(tongueTwisterIds.length).toBe(1);
+    });
+  });
+});

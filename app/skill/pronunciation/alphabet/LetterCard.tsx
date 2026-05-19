@@ -20,6 +20,8 @@ export const LetterCard: React.FC<LetterCardProps> = ({
   const { triggerHaptic } = useHaptic();
 
   const handleClick = () => {
+    console.log('LetterCard clicked, triggering haptic');
+    triggerHaptic('tap');
     onPlay();
   };
 

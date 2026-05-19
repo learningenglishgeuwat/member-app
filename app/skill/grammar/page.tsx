@@ -28,21 +28,6 @@ export default function GrammarPage() {
             <div className="grammar-snake" aria-hidden="true">
               <span className="snake-line snake-trunk" />
               <span className="snake-node" />
-              <span className="snake-line snake-branch-left" />
-              <span className="snake-line snake-branch-right" />
-              <span className="snake-line snake-left" />
-              <span className="snake-line snake-right" />
-            </div>
-            <div className="grammar-bottom">
-              <div className="grammar-btn grammar-btn-locked" aria-disabled="true">
-                <span>Grammar for Speaking</span>
-                <span className="grammar-lock-badge">Locked</span>
-              </div>
-
-              <div className="grammar-btn grammar-btn-locked" aria-disabled="true">
-                <span>Grammar for Writing</span>
-                <span className="grammar-lock-badge">Locked</span>
-              </div>
             </div>
 
             {showAnalisisGrammarForSpeakingCard && (

@@ -76,45 +76,6 @@
       "source": "manifest"
     },
     {
-      "id": "skill-grammar-grammar-for-speaking",
-      "label": "Grammar for Speaking",
-      "path": "/skill/grammar/grammar-for-speaking",
-      "scope": "grammar",
-      "keywords": [
-        "grammar",
-        "for",
-        "speaking",
-        "/skill/grammar/grammar-for-speaking",
-        "goals",
-        "200",
-        "roadmap",
-        "phase",
-        "kalimat",
-        "kunci",
-        "drill",
-        "latihan",
-        "praktis"
-      ],
-      "source": "manifest"
-    },
-    {
-      "id": "skill-grammar-grammar-for-writing",
-      "label": "Grammar for Writing",
-      "path": "/skill/grammar/grammar-for-writing",
-      "scope": "grammar",
-      "keywords": [
-        "grammar",
-        "for",
-        "writing",
-        "/skill/grammar/grammar-for-writing",
-        "struktur",
-        "tulisan",
-        "materi",
-        "untuk"
-      ],
-      "source": "manifest"
-    },
-    {
       "id": "skill-grammar-grammar-resource",
       "label": "Grammar Resource",
       "path": "/skill/grammar/grammar-resource",
@@ -2246,6 +2207,17 @@
       "source": "manifest"
     },
     {
+      "id": "skill-pronunciation-reading-text-tongueTwister",
+      "label": "TongueTwister",
+      "path": "/skill/pronunciation/reading-text/tongueTwister",
+      "scope": "pronunciation",
+      "keywords": [
+        "tonguetwister",
+        "/skill/pronunciation/reading-text/tonguetwister"
+      ],
+      "source": "route-scan"
+    },
+    {
       "id": "skill-pronunciation-stressing",
       "label": "Stressing Hub",
       "path": "/skill/pronunciation/stressing",
@@ -3390,47 +3362,6 @@
       "sourceSections": [
         {
           "label": "Grammar Cards"
-        }
-      ]
-    },
-    {
-      "topicId": "grammar-speaking-practical-goals",
-      "title": "Grammar for Speaking Practical Goals",
-      "route": "/skill/grammar/grammar-for-speaking",
-      "keywords": [
-        "apa isi grammar for speaking",
-        "speaking goals grammar",
-        "kalimat kunci speaking",
-        "drill speaking di mana",
-        "roadmap speaking dari nol",
-        "phase speaking profesional"
-      ],
-      "shortAnswer": "Halaman ini berisi roadmap 200 speaking goals dari level nol sampai profesional. Materi dibagi per fase dan fokus pada daily, work, public service, emergency, legal, dan finance.",
-      "sourceSections": [
-        {
-          "label": "Phase 0 - Zero-to-Speech Starter"
-        },
-        {
-          "label": "Phase 7 - Work Basics"
-        },
-        {
-          "label": "Phase 13 - Legal, Compliance, Finance Professional"
-        }
-      ]
-    },
-    {
-      "topicId": "grammar-for-writing-overview",
-      "title": "Grammar for Writing Overview",
-      "route": "/skill/grammar/grammar-for-writing",
-      "keywords": [
-        "apa itu grammar for writing",
-        "fungsi grammar for writing",
-        "materi writing grammar"
-      ],
-      "shortAnswer": "Grammar for Writing menekankan ketepatan struktur, konsistensi tense, dan kejelasan hubungan ide antar kalimat supaya tulisan lebih rapi dan mudah dibaca.",
-      "sourceSections": [
-        {
-          "label": "Grammar for Writing Main Content"
         }
       ]
     },

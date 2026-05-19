@@ -174,6 +174,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handlePlayAll = async () => {
+    triggerHaptic('tap');
+    
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
       stopSpeech();
@@ -243,6 +245,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handlePlayPracticeCountry = async (country: string) => {
+    triggerHaptic('tap');
+    
     try {
       if (isPlayingRef.current) {
         stopAlphabetPlayAll();
@@ -268,6 +272,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handlePlayAllPracticeCountries = async () => {
+    triggerHaptic('tap');
+    
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
       stopSpeech();
@@ -431,6 +437,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handleCheckSpelling = () => {
+    triggerHaptic('tap');
+    
     const cleanedInput = extractLetterSequence(spellingInput);
 
     if (!cleanedInput) {
@@ -464,6 +472,7 @@ const AlphabetPage: React.FC = () => {
 
     try {
       await navigator.clipboard.writeText(ALPHABET_EVALUATION_PROMPT);
+      triggerHaptic('success');
       setIsPromptCopied(true);
       if (promptCopyTimeoutRef.current) {
         window.clearTimeout(promptCopyTimeoutRef.current);
@@ -473,6 +482,7 @@ const AlphabetPage: React.FC = () => {
       }, 1800);
     } catch (error) {
       console.error('Failed to copy alphabet prompt:', error);
+      triggerHaptic('error');
       setIsPromptCopied(false);
     }
   };

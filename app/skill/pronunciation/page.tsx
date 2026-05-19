@@ -78,6 +78,14 @@ const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
     hintIcon: 'text-indigo-300',
     hintKicker: 'text-indigo-200',
   },
+  'tongue-twister': {
+    detailBorderLeft: 'border-l-amber-500',
+    detailBorder: 'border-amber-500/30',
+    hintBg: 'bg-amber-900/30',
+    hintBorder: 'border-amber-500/30',
+    hintIcon: 'text-amber-400',
+    hintKicker: 'text-amber-300',
+  },
 };
 
 const DEFAULT_DETAIL_THEME: TopicDetailTheme = {
@@ -223,7 +231,7 @@ const Page: React.FC = () => {
           <div className="h-6 sm:h-7 md:h-8 mb-2 sm:mb-3 md:mb-4 mt-1 md:mt-0" />
 
           <h1
-            className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 drop-shadow-lg mb-2 sm:mb-3 md:mb-4 leading-none animate-slide-in"
+            className="font-display text-2xl md:text-3xl font-bold uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 drop-shadow-lg mb-2 sm:mb-3 md:mb-4 leading-tight animate-slide-in"
             data-tour="pronunciation-title"
           >
             {selectedTopic.title}
@@ -232,7 +240,7 @@ const Page: React.FC = () => {
           <div
             className={`glass-panel p-2.5 sm:p-4 md:p-5 rounded-xl max-w-full md:max-w-2xl border border-transparent border-l-4 ${detailTheme.detailBorderLeft} ${detailTheme.detailBorder} mb-3 sm:mb-4 md:mb-6 animate-fade-in-up`}
           >
-             <p className="text-[11px] sm:text-sm md:text-base text-slate-200 font-light leading-relaxed">
+             <p className="text-sm md:text-base text-slate-200 font-light leading-relaxed">
                {selectedTopic.description}
              </p>
           </div>
@@ -244,8 +252,8 @@ const Page: React.FC = () => {
                 <div className="flex items-start gap-2 sm:gap-3">
                     <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
                     <div>
-                        <h4 className={`font-display text-[8px] sm:text-[10px] md:text-xs ${detailTheme.hintKicker} uppercase tracking-widest mb-1`}>GEUWAT Protocol</h4>
-                        <p className="text-[11px] sm:text-sm md:text-base text-white/90">
+                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>GEUWAT Protocol</h4>
+                        <p className="text-sm md:text-base text-white/90 leading-relaxed">
                           {isTopicLocked 
                             ? `${selectedTopic.title} module is currently locked. Please complete available modules first.`
                             : `Activate ${selectedTopic.title.toLowerCase()} training module to begin GEUWAT enhancement sequence`
@@ -288,7 +296,7 @@ const Page: React.FC = () => {
               </div>
             </div>
             
-            <div className="absolute bottom-1 md:bottom-4 left-0 right-0 text-center text-[10px] md:text-xs text-slate-500 font-mono hidden sm:block">
+            <div className="absolute bottom-1 md:bottom-4 left-0 right-0 text-center text-xs md:text-sm text-slate-500 font-mono hidden sm:block">
                 USE <span className="text-white bg-slate-800 px-1 rounded mx-1">&lt;-</span> <span className="text-white bg-slate-800 px-1 rounded mx-1">-&gt;</span> TO NAVIGATE • <span className="text-white bg-slate-800 px-1 rounded mx-1">ENTER</span> TO ENGAGE
             </div>
         </div>
@@ -299,7 +307,7 @@ const Page: React.FC = () => {
               onClick={handleStartLearning}
               disabled={isTopicLocked}
               data-tour="pronunciation-execute-button"
-              className={`relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r ${selectedTopic.color} text-white rounded-lg font-semibold text-xs sm:text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${
+              className={`relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r ${selectedTopic.color} text-white rounded-lg font-semibold text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${
                 isTopicLocked 
                   ? 'opacity-50 cursor-not-allowed' 
                   : 'animate-[pulse_1s_ease-in-out_infinite]'

@@ -82,6 +82,16 @@ export const TOPICS: Topic[] = [
     color: 'from-indigo-400 to-violet-600',
     bgImage: 'https://picsum.photos/id/80/1920/1080',
   },
+  {
+    id: 'tongue-twister',
+    title: 'Tongue Twister',
+    shortDesc: 'Latihan Artikulasi',
+    description:
+      'Latih kecepatan dan ketepatan artikulasi dengan tongue twisters. Tingkatkan muscle memory untuk bunyi-bunyi sulit dan kombinasi konsonan yang challenging.',
+    icon: 'TT',
+    color: 'from-amber-500 to-yellow-600',
+    bgImage: 'https://picsum.photos/id/90/1920/1080',
+  },
 ];
 
 export const LOCKED_TOPIC_IDS: string[] = [];
@@ -95,4 +105,5 @@ export const TOPIC_ROUTES: Record<string, string> = {
   'american-t': '/skill/pronunciation/american-t',
   text: '/skill/pronunciation/text',
   'reading-text': '/skill/pronunciation/reading-text',
+  'tongue-twister': '/skill/pronunciation/reading-text/tongueTwister',
 };
