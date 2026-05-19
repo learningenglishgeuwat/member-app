@@ -62,9 +62,14 @@ next-env.d.ts
 # local AI notes
 AI.md
 /content/
+/ai/
+/AI/
 
 # documentation
 /documentation/
 
 # kiro
 .kiro
+
+# prototypes
+tongue-twister-prototipe/
