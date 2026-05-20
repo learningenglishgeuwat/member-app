@@ -710,7 +710,7 @@ const SymbolDetailPage: React.FC = () => {
 
                 <div className="z-10 text-center">
                     <p className="font-mono text-purple-400/60 text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">TARGET_PHONEME</p>
-                    <h2 className="text-6xl md:text-8xl font-display font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}>
+                    <h2 className="text-6xl md:text-8xl font-ipa font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" data-ipa>
                         /{decodedSymbol}/
                     </h2>
                     <div className="mt-2 px-2 py-0.5 md:px-3 md:py-1 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[10px] md:text-xs">
@@ -834,7 +834,7 @@ const SymbolDetailPage: React.FC = () => {
                       <span className={`font-sans font-bold text-base md:text-lg tracking-wide transition-colors truncate w-full text-center ${isActive ? 'text-purple-400' : 'text-white group-hover:text-purple-400'}`}>
                         {example.word}
                       </span>
-                      <span className={`text-[10px] md:text-xs font-mono mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'text-white/80' : 'text-purple-400/60'}`} style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}>
+                      <span className={`text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'text-white/80' : 'text-purple-400/60'}`} data-ipa>
                         [{example.ipa}]
                       </span>
                     </div>
@@ -1161,7 +1161,7 @@ const SymbolDetailPage: React.FC = () => {
                                 ? 'border-purple-300 bg-purple-800/35 text-white cursor-default'
                                 : 'border-purple-500/35 bg-black/45 text-purple-200 hover:bg-purple-900/30 hover:border-purple-400'
                             }`}
-                            style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}
+                            data-ipa
                           >
                             {item}
                           </button>

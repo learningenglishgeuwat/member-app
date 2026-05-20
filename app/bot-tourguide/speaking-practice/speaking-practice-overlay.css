@@ -277,7 +277,7 @@
   font-size: 11px;
   line-height: 1.35;
   color: #d8bcff;
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-family: var(--font-ipa);
   text-align: center;
 }
 

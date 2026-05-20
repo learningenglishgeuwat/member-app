@@ -1,6 +1,7 @@
 .at-hub-page {
   min-height: 100vh;
   color: var(--pronun-text, #f4ebff);
+  font-family: var(--font-ui);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
 }

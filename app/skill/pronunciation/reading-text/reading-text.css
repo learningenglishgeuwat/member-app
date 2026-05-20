@@ -1,6 +1,7 @@
 .rt-page {
   min-height: 100vh;
   color: #eef2ff;
+  font-family: var(--font-ui);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
 }
@@ -274,7 +275,7 @@
 }
 
 .rt-phonetic {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family: var(--font-tech);
   color: rgba(224, 231, 255, 0.88);
   text-align: left;
   text-justify: auto;
@@ -286,7 +287,7 @@
 }
 
 .rt-inline-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family: var(--font-tech);
   font-size: 0.95em;
   padding: 0.08rem 0.35rem;
   border-radius: 0.45rem;

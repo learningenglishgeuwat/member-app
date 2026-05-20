@@ -1,6 +1,7 @@
 .fsn-page {
   min-height: 100vh;
   color: var(--pronun-text, #f6ecff);
+  font-family: var(--font-ui);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
 }

@@ -54,6 +54,14 @@ describe('Tongue Twister Configuration', () => {
       expect(americanTIndex).toBeGreaterThanOrEqual(0);
       expect(linkingWordIndex).toBeGreaterThan(americanTIndex);
     });
+
+    it('should position contraction after linking-word', () => {
+      const linkingWordIndex = TOPICS.findIndex(t => t.id === 'linking-word');
+      const contractionIndex = TOPICS.findIndex(t => t.id === 'contraction');
+
+      expect(linkingWordIndex).toBeGreaterThanOrEqual(0);
+      expect(contractionIndex).toBe(linkingWordIndex + 1);
+    });
   });
 
   describe('TOPIC_ROUTES mapping', () => {
@@ -68,6 +76,10 @@ describe('Tongue Twister Configuration', () => {
     it('should map linking-word to correct route', () => {
       expect(TOPIC_ROUTES['linking-word']).toBe('/skill/pronunciation/linking-word');
     });
+
+    it('should map contraction to correct route', () => {
+      expect(TOPIC_ROUTES.contraction).toBe('/skill/pronunciation/contraction');
+    });
   });
 
   describe('LOCKED_TOPIC_IDS', () => {
@@ -77,6 +89,10 @@ describe('Tongue Twister Configuration', () => {
 
     it('should not include linking-word by default', () => {
       expect(LOCKED_TOPIC_IDS).not.toContain('linking-word');
+    });
+
+    it('should not include contraction by default', () => {
+      expect(LOCKED_TOPIC_IDS).not.toContain('contraction');
     });
   });
 
@@ -123,6 +139,25 @@ describe('Tongue Twister Configuration', () => {
       const ids = TOPICS.map(t => t.id);
       const linkingWordIds = ids.filter(id => id === 'linking-word');
       expect(linkingWordIds.length).toBe(1);
+    });
+
+    it('should have required properties for contraction', () => {
+      const contraction = TOPICS.find(t => t.id === 'contraction');
+      expect(contraction).toMatchObject({
+        id: 'contraction',
+        title: 'Contraction',
+        shortDesc: expect.any(String),
+        description: expect.any(String),
+        icon: expect.any(String),
+        color: expect.any(String),
+        bgImage: expect.any(String),
+      });
+    });
+
+    it('should have unique id for contraction', () => {
+      const ids = TOPICS.map(t => t.id);
+      const contractionIds = ids.filter(id => id === 'contraction');
+      expect(contractionIds.length).toBe(1);
     });
   });
 });

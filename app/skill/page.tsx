@@ -201,7 +201,7 @@ function SkillMenuContent() {
   }, [clearPendingNavigationTimers]);
 
   return (
-    <div className="skill-layout overflow-x-hidden flex flex-col relative font-tech">
+    <div className="skill-layout overflow-x-hidden flex flex-col relative font-sans">
       
       {/* --- BACKGROUND LAYERS --- */}
       {/* Base Grid */}

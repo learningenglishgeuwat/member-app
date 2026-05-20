@@ -410,6 +410,7 @@
   line-height: 1.42;
   font-style: italic;
   opacity: 0.95;
+  font-family: var(--font-ipa);
 }
 
 .spk-card-footer {
@@ -1225,10 +1226,12 @@
 }
 
 .spk-ipa-text-detail {
+  font-family: var(--font-ipa);
   color: #eef6ff;
 }
 
 .spk-dialog-ipa-text {
+  font-family: var(--font-ipa);
   color: #dcefff;
 }
 

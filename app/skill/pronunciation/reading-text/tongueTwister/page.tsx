@@ -291,7 +291,7 @@ export default function TongueTwisterPage() {
         <div className="w-full max-w-[1200px] mx-auto">
           
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[#00f3ff] mb-8 text-center" style={{ fontFamily: 'Space Grotesk, sans-serif', textShadow: '0 0 20px rgba(0, 243, 255, 0.5)' }}>
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-[#00f3ff] mb-8 text-center" style={{ textShadow: '0 0 20px rgba(0, 243, 255, 0.5)' }}>
             TONGUE TWISTER
           </h1>
 

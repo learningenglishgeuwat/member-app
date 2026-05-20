@@ -1,6 +1,7 @@
 .text-pronunciation-page {
   min-height: 100vh;
   padding: 96px 20px 40px;
+  font-family: var(--font-ui);
   color: var(--pronun-text, #e8ebff);
   background: var(--pronun-page-bg);
   position: relative;

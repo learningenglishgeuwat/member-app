@@ -491,7 +491,7 @@
   color: rgba(210, 230, 220, 0.78);
   font-size: 0.82rem;
   line-height: 1.45;
-  font-family: 'Noto Sans', 'Segoe UI', 'Arial Unicode MS', 'Noto Sans IPA', sans-serif;
+  font-family: var(--font-ipa);
 }
 
 .vocab-meaning {
@@ -522,7 +522,7 @@
   font-size: 0.85rem;
   font-style: italic;
   line-height: 1.45;
-  font-family: 'Noto Sans', 'Segoe UI', 'Arial Unicode MS', 'Noto Sans IPA', sans-serif;
+  font-family: var(--font-ipa);
 }
 
 .vocab-example-translation {

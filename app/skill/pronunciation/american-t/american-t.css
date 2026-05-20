@@ -1,5 +1,6 @@
 .at-topic-page {
   background: var(--pronun-page-bg);
+  font-family: var(--font-ui);
 }
 
 .at-recording-anchor {
@@ -276,7 +277,7 @@
 .at-ipa {
   margin-top: 0.38rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-ipa);
   font-size: 0.86rem;
 }
 
@@ -367,7 +368,7 @@
 
 .at-sentence-focus-ipa {
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-ipa);
   font-size: 0.8rem;
 }
 
@@ -454,7 +455,7 @@
 
 .at-clear-t-chip-ipa {
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-ipa);
   font-size: 0.82rem;
 }
 

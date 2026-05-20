@@ -4,16 +4,10 @@
 
 @layer base {
   :root {
-    --font-ui: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-display: "Space Grotesk", "Sora", "Outfit", "Trebuchet MS", "Segoe UI", sans-serif;
-    --font-tech: "JetBrains Mono", "IBM Plex Mono", Consolas, "Courier New", monospace;
+    /* Mapping font-ipa ke font-noto dari Next.js loader */
+    --font-ipa: var(--font-noto);
 
-    --font-inter: var(--font-ui);
-    --font-space-grotesk: var(--font-display);
-    --font-jetbrains-mono: var(--font-tech);
-    --font-modern: var(--font-ui);
-    --font-geometric: var(--font-display);
-    --font-futuristic: var(--font-display);
+    /* Alias untuk backward compatibility */
 
     /* Default page surface (used by RootLayout/body, nav spacer, overscroll). */
     --app-page-bg: #000000;
@@ -44,6 +38,30 @@
   svg {
     max-width: 100%;
     height: auto;
+  }
+
+  /* Semua elemen yang render IPA — satu titik kontrol */
+  .font-ipa,
+  [data-ipa] {
+    /* Guard: pastikan IPA tidak tertukar dengan font lain */
+    font-family: var(--font-ipa);
+    line-height: 1.8; /* diakritik tidak terpotong */
+    font-feature-settings: normal;
+  }
+
+  /* Judul card boleh pakai Orbitron, TETAPI harus diisolasi dari `[data-ipa]` */
+  .orbitron-card-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  /* Play All buttons should use Orbitron across the app */
+  button[class*="play-all"],
+  button[class*="playall"],
+  [class*="play-all-btn"],
+  [class*="playall-btn"] {
+    font-family: var(--font-display);
   }
 }
 

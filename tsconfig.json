@@ -53,6 +53,10 @@
     ".d/**",
     "d",
     "d/**",
+    "*-prototype",
+    "*-prototype/**",
+    "*-prototipe",
+    "*-prototipe/**",
     "backups",
     "backups/**/*"
   ]

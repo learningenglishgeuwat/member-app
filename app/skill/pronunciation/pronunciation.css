@@ -10,7 +10,7 @@
 
 /* Extended Linguistic Font untuk æ, ø, dan karakter khusus */
 .font-extended-linguistic {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: var(--font-ipa);
   letter-spacing: 0.02em;
 }
 

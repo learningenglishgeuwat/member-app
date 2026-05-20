@@ -2015,6 +2015,17 @@
       "source": "route-scan"
     },
     {
+      "id": "skill-pronunciation-contraction",
+      "label": "Contraction",
+      "path": "/skill/pronunciation/contraction",
+      "scope": "pronunciation",
+      "keywords": [
+        "contraction",
+        "/skill/pronunciation/contraction"
+      ],
+      "source": "route-scan"
+    },
+    {
       "id": "skill-pronunciation-final-sound-new",
       "label": "Final Sound Hub",
       "path": "/skill/pronunciation/final-sound-new",

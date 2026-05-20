@@ -11,8 +11,9 @@ module.exports = {
         sans: ['var(--font-ui)', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-tech)', 'monospace'],
+        ipa: ['var(--font-ipa)', 'sans-serif'], // ← BARU
         futuristic: [
-          'var(--font-futuristic)',
+          'var(--font-display)',
           'system-ui',
           'sans-serif',
         ],
@@ -21,12 +22,12 @@ module.exports = {
           'monospace',
         ],
         modern: [
-          'var(--font-modern)',
+          'var(--font-ui)',
           'system-ui',
           'sans-serif',
         ],
         geometric: [
-          'var(--font-geometric)',
+          'var(--font-display)',
           'system-ui',
           'sans-serif',
         ],

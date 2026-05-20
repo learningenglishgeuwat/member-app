@@ -832,7 +832,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
             {ipaSectionKey ? (
               <button
                 type="button"
-                className={`stress-ipa-toggle-btn ${showIpa ? 'is-active' : ''}`}
+                className={`stress-ipa-toggle-btn font-sans font-semibold tracking-wider ${showIpa ? 'is-active' : ''}`}
                 onClick={() => toggleIpaBySection(ipaSectionKey)}
                 aria-pressed={showIpa}
               >
@@ -842,7 +842,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
             {translationToggle ? (
               <button
                 type="button"
-                className={`stress-ipa-toggle-btn ${translationToggle.show ? 'is-active' : ''}`}
+                className={`stress-ipa-toggle-btn font-sans font-semibold tracking-wider ${translationToggle.show ? 'is-active' : ''}`}
                 onClick={translationToggle.onToggle}
                 aria-pressed={translationToggle.show}
               >
@@ -855,7 +855,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         )}
         <button
           type="button"
-          className="stress-playall-btn"
+          className="stress-playall-btn font-semibold tracking-wider"
           onClick={() => void playAllBySection(sectionKey)}
         >
           {isPlaying ? 'Stop' : 'Play All'}
@@ -867,7 +867,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
   function renderSectionHeader(key: SectionKey, title: string) {
     const isOpen = openSections[key];
     return (
-      <h2 className="stress-block-title">
+      <h2 className="stress-block-title font-display">
         <button
           type="button"
           className="stress-section-toggle"
@@ -989,8 +989,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
 
       <main className="stress-shell">
         <header className="stress-header">
-          <h1 className="stress-title">{topicTitle}</h1>
-          <p className="stress-subtitle">{topicSubtitle}</p>
+          <h1 className="stress-title font-display">{topicTitle}</h1>
+          <p className="stress-subtitle font-sans">{topicSubtitle}</p>
           <div className="stress-progress-actions">
             <ButtonSavedProgress
               isSaved={isProgressSaved}
@@ -1006,7 +1006,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         <section className="stress-block">
           {renderSectionHeader('konsep', 'Concept')}
           {openSections.konsep && (
-            <p className="stress-text">
+            <p className="stress-text font-sans">
               Bahasa Inggris adalah bahasa bertempo tekanan (stress-timed). Artinya, beberapa suku
               kata atau kata diucapkan lebih kuat dibanding yang lain. Tekanan yang tepat membuat
               ucapan lebih jelas dan terdengar alami.
@@ -1019,7 +1019,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('dasarSukuKata', 'Syllable Basics and Beat')}
           {openSections.dasarSukuKata && (
             <>
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 <strong>Suku kata (syllable)</strong> adalah satu unit bunyi atau ketukan saat kata
                 diucapkan. Sebelum belajar tekanan, kenali dulu jumlah suku kata dan
                 pemenggalannya.
@@ -1037,7 +1037,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     >
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
-                        <h3 className="stress-word">
+                        <h3 className="stress-word font-display">
                           <span className="stress-example-chip">
                             {renderStressHighlight(item.word)}
                           </span>
@@ -1057,16 +1057,16 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         <span className="stress-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    <p className="stress-syllable-meta">
+                    <p className="stress-syllable-meta font-sans">
                       Pemisahan: {renderStressHighlight(item.split)}
                     </p>
-                    <p className="stress-syllable-meta">Jumlah suku kata: {item.count}</p>
-                    <p className="stress-card-note">{item.note}</p>
+                    <p className="stress-syllable-meta font-sans">Jumlah suku kata: {item.count}</p>
+                    <p className="stress-card-note font-sans">{item.note}</p>
                     </article>
                   );
                 })}
               </div>
-              <ul className="stress-bullets">
+              <ul className="stress-bullets font-sans">
                 <li>- Cara cepat menghitung: dengarkan jumlah ketukan saat kata diucapkan.</li>
                 <li>- Tepuk tangan per ketukan untuk membantu identifikasi suku kata.</li>
                 <li>- Setelah jumlah suku kata jelas, tentukan suku kata yang mendapat tekanan.</li>
@@ -1085,8 +1085,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                 <article key={item.mark + item.label} className="stress-mark-card">
                   <div className="stress-mark">{item.mark}</div>
                   <div>
-                    <p className="stress-mark-label">{item.label}</p>
-                    <p className="stress-mark-note">{item.note}</p>
+                    <p className="stress-mark-label font-display">{item.label}</p>
+                    <p className="stress-mark-note font-sans">{item.note}</p>
                   </div>
                 </article>
               ))}
@@ -1109,8 +1109,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`aturanCepat-${ruleIndex}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                  <h3 className="stress-rule-title">{item.title}</h3>
-                  <p className="stress-rule-note">{item.note}</p>
+                  <h3 className="stress-rule-title font-display">{item.title}</h3>
+                  <p className="stress-rule-note font-sans">{item.note}</p>
                   <div className="stress-rule-examples">
                     {item.examples.map((example, exampleIndex) => {
                       const itemKey = `aturanCepat-${ruleIndex}-${exampleIndex}`;
@@ -1157,7 +1157,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {openSections.tekananKata && (
             <>
               {renderAudioToolbar('tekananKata', 'tekananKata')}
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 Fokuskan latihan pada posisi tekanan utama. Perhatikan juga kontras kata benda-kata
                 kerja seperti <strong>REcord</strong> vs <strong>reCORD</strong>.
               </p>
@@ -1173,7 +1173,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     >
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
-                        <h3 className="stress-word">
+                        <h3 className="stress-word font-display">
                           <span className="stress-example-chip">
                             {renderStressHighlight(item.word)}
                           </span>
@@ -1193,8 +1193,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         <span className="stress-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    <p className="stress-card-type">{item.type}</p>
-                    <p className="stress-card-note">{item.note}</p>
+                    <p className="stress-card-type font-sans">{item.type}</p>
+                    <p className="stress-card-note font-sans">{item.note}</p>
                     </article>
                   );
                 })}
@@ -1215,7 +1215,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                 showLabel: 'Tampilkan Terjemah',
                 hideLabel: 'Sembunyikan Terjemah',
               })}
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 Pada beberapa kata 2 suku kata, <strong>noun</strong> sering ditekan di awal,
                 sedangkan <strong>verb</strong> di suku kata berikutnya.
               </p>
@@ -1227,8 +1227,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`kontrasNounVerb-${item.base}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title">{item.base.toUpperCase()}</h3>
-                    <p className="stress-rule-note">{item.note}</p>
+                    <h3 className="stress-rule-title font-display">{item.base.toUpperCase()}</h3>
+                    <p className="stress-rule-note font-sans">{item.note}</p>
                     <div className="stress-rule-examples">
                       <div
                         className={`stress-rule-example-item ${
@@ -1246,9 +1246,9 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                           {showIpaBySection.kontrasNounVerb ? (
                             <p className="stress-ipa stress-ipa--inline">{item.nounIpa}</p>
                           ) : null}
-                          <p className="stress-rule-example-sentence">{item.nounPlain}</p>
+                          <p className="stress-rule-example-sentence font-sans">{item.nounPlain}</p>
                           {showContrastTranslation ? (
-                            <p className="stress-rule-example-translation">{item.nounId}</p>
+                            <p className="stress-rule-example-translation font-sans">{item.nounId}</p>
                           ) : null}
                         </div>
                         <button
@@ -1280,9 +1280,9 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                           {showIpaBySection.kontrasNounVerb ? (
                             <p className="stress-ipa stress-ipa--inline">{item.verbIpa}</p>
                           ) : null}
-                          <p className="stress-rule-example-sentence">{item.verbPlain}</p>
+                          <p className="stress-rule-example-sentence font-sans">{item.verbPlain}</p>
                           {showContrastTranslation ? (
-                            <p className="stress-rule-example-translation">{item.verbId}</p>
+                            <p className="stress-rule-example-translation font-sans">{item.verbId}</p>
                           ) : null}
                         </div>
                         <button
@@ -1313,7 +1313,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {openSections.bankKata && (
             <>
               {renderAudioToolbar('bankKata', 'bankKata')}
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 Berikut bank kata untuk latihan membedakan posisi tekanan utama pada suku kata
                 pertama, kedua, ketiga, dan keempat.
               </p>
@@ -1325,8 +1325,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`bankKata-${groupIndex}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-bank-title">{group.title}</h3>
-                    <ul className="stress-bank-list">
+                    <h3 className="stress-bank-title font-display">{group.title}</h3>
+                    <ul className="stress-bank-list font-sans">
                       {group.items.map((item, itemIndex) => {
                         const itemKey = `bankKata-${groupIndex}-${itemIndex}`;
                         const isSpeaking = activeTtsItemKey === itemKey;
@@ -1386,7 +1386,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       ref={(node) => setItemRef(itemKey, node)}
                     >
                       <div className="stress-list-item-main">
-                        <p className="stress-sentence">
+                        <p className="stress-sentence font-sans">
                           {item.tokens.map((token, idx) => (
                             <span
                               key={`${item.tts}-${idx}-${token.text}`}
@@ -1402,7 +1402,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                             </span>
                           ))}
                         </p>
-                        <p className="stress-note">{item.note}</p>
+                        <p className="stress-note font-sans">{item.note}</p>
                       </div>
                       <div className="stress-list-item-play-row">
                         <button
@@ -1441,16 +1441,16 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       className={`stress-rule-card ${isSpeaking ? 'is-speaking' : ''}`}
                       ref={(node) => setItemRef(itemKey, node)}
                     >
-                  <h3 className="stress-rule-title">{item.title}</h3>
-                  <p className="stress-rule-note">{item.note}</p>
-                  <ul className="stress-bullets">
+                  <h3 className="stress-rule-title font-display">{item.title}</h3>
+                  <p className="stress-rule-note font-sans">{item.note}</p>
+                  <ul className="stress-bullets font-sans">
                     {item.points.map((point) => (
                       <li key={`${item.title}-${point}`}>- {point}</li>
                     ))}
                   </ul>
                   <div className="stress-rule-examples">
                     <div className={`stress-rule-example-item ${isSpeaking ? 'is-speaking' : ''}`}>
-                      <p className="stress-sentence">
+                      <p className="stress-sentence font-sans">
                         {item.tokens.map((token, idx) => (
                           <span
                             key={`${item.title}-${idx}-${token.text}`}
@@ -1491,10 +1491,10 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('alurCek', 'Self-Check Workflow')}
           {openSections.alurCek && (
             <>
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 Gunakan alur ini setiap selesai latihan supaya perbaikan pronunciation lebih konsisten.
               </p>
-              <ul className="stress-bullets">
+              <ul className="stress-bullets font-sans">
                 {SELF_CHECK_STEPS.map((step) => (
                   <li key={step}>- {step}</li>
                 ))}
@@ -1520,7 +1520,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         <section className="stress-block">
           {renderSectionHeader('catatanPenting', 'Practice Tips')}
           {openSections.catatanPenting && (
-            <ul className="stress-bullets">
+            <ul className="stress-bullets font-sans">
               <li>- Latih satu kata berkali-kali sambil tepuk ritme suku kata.</li>
               <li>- Bandingkan pronunciation di kamus (IPA + audio) dengan ucapan sendiri.</li>
               <li>
@@ -1538,7 +1538,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {openSections.practice && (
             <>
               {renderAudioToolbar('practice', 'practice')}
-              <p className="stress-text">
+              <p className="stress-text font-sans">
                 <strong>Mission:</strong>
                 <br />
                 {isWord
@@ -1553,7 +1553,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith('practice-word-') ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title">4 Kata (Posisi Stress Berbeda)</h3>
+                    <h3 className="stress-rule-title font-display">4 Kata (Posisi Stress Berbeda)</h3>
                     <div className="stress-rule-examples">
                       {PRACTICE_WORD_STRESS_SET.map((item, index) => {
                         const itemKey = `practice-word-${index}`;
@@ -1571,7 +1571,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                               {showIpaBySection.practice ? (
                                 <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                               ) : null}
-                              <p className="stress-rule-example-sentence">{item.position}</p>
+                              <p className="stress-rule-example-sentence font-sans">{item.position}</p>
                             </div>
                             <button
                               type="button"
@@ -1594,7 +1594,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith('practice-sentence-') ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title">3 Kalimat Latihan</h3>
+                    <h3 className="stress-rule-title font-display">3 Kalimat Latihan</h3>
                     <div className="stress-rule-examples">
                       {PRACTICE_SENTENCE_SET.map((item, index) => {
                         const itemKey = `practice-sentence-${index}`;
@@ -1606,7 +1606,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                             ref={(node) => setItemRef(itemKey, node)}
                           >
                             <div className="stress-rule-example-text">
-                              <p className="stress-sentence">{renderStressHighlight(item.sentence)}</p>
+                              <p className="stress-sentence font-sans">{renderStressHighlight(item.sentence)}</p>
                               {showIpaBySection.practice ? (
                                 <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                               ) : null}

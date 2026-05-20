@@ -56,7 +56,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
           >
             {topic.icon}
           </div>
-          <h3 className={`
+<h3 className={`orbitron-card-title 
             font-display font-bold uppercase tracking-wider
             ${isActive ? 'text-xs sm:text-base md:text-lg lg:text-xl text-white' : 'text-[10px] text-gray-400'}
             ${isDisabled ? 'text-gray-500' : ''}

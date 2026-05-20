@@ -1,6 +1,7 @@
 .tt-page {
   min-height: 100vh;
   min-height: 100dvh;
+  font-family: var(--font-ui);
   padding: 2.25rem 1.25rem;
   background:
     radial-gradient(circle at 20% 18%, rgba(190, 41, 236, 0.2), transparent 42%),
@@ -261,7 +262,7 @@
 
 .tt-ipa-text {
   margin: 0;
-  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans', sans-serif;
+  font-family: var(--font-ipa);
   color: #e6dcff;
   font-size: 0.9rem;
   line-height: 1.35;
@@ -275,7 +276,7 @@
 
 .tt-ipa-item {
   margin: 0;
-  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', 'Noto Sans', sans-serif;
+  font-family: var(--font-ipa);
   color: #e6dcff;
   font-size: 0.9rem;
   line-height: 1.35;

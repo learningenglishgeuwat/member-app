@@ -59,7 +59,7 @@
 
 /* Futuristic Font Utility Classes */
 .font-futuristic {
-  font-family: var(--font-futuristic);
+  font-family: var(--font-display);
   letter-spacing: 0.05em;
   font-weight: 600;
 }
@@ -71,20 +71,20 @@
 }
 
 .font-modern {
-  font-family: var(--font-modern);
+  font-family: var(--font-ui);
   letter-spacing: 0.03em;
   font-weight: 500;
 }
 
 .font-geometric {
-  font-family: var(--font-geometric);
+  font-family: var(--font-display);
   letter-spacing: 0.04em;
   font-weight: 600;
 }
 
 /* Heading Styles with Futuristic Fonts */
 .heading-futuristic {
-  font-family: var(--font-futuristic);
+  font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -93,7 +93,7 @@
 }
 
 .heading-tech {
-  font-family: var(--font-geometric);
+  font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -110,7 +110,7 @@
 }
 
 .text-tech {
-  font-family: var(--font-modern);
+  font-family: var(--font-ui);
   font-size: 0.95rem;
   letter-spacing: 0.03em;
   line-height: 1.5;
@@ -118,7 +118,7 @@
 
 /* Button Text Styles */
 .btn-text-futuristic {
-  font-family: var(--font-futuristic);
+  font-family: var(--font-display);
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -126,7 +126,7 @@
 }
 
 .btn-text-tech {
-  font-family: var(--font-geometric);
+  font-family: var(--font-display);
   font-size: 1rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;

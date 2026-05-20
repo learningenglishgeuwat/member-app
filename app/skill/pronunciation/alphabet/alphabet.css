@@ -45,6 +45,7 @@
 /* Main Container */
 .alphabet-container {
   min-height: 100vh;
+  font-family: var(--font-noto), system-ui, sans-serif;
   color: var(--pronun-text, #eaf2ff);
   background: var(--pronun-page-bg);
   position: relative;
@@ -140,6 +141,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: futuristicGlow 3s ease-in-out infinite;
+  font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -237,6 +239,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: futuristicGlow 3s ease-in-out infinite;
+  font-family: var(--font-display);
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -266,6 +269,7 @@
   color: white;
   padding: 10px 20px;
   border-radius: 12px;
+  font-family: var(--font-display);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -753,6 +757,7 @@
 }
 
 .alphabet-practice-country-ipa {
+  font-family: var(--font-ipa);
   color: rgb(var(--pronun-accent-2-rgb) / 0.82);
   font-size: 0.72rem;
   font-style: italic;
@@ -865,6 +870,7 @@
   background: rgb(var(--pronun-accent-1-rgb) / 0.18);
   color: #f5ebff;
   padding: 0.28rem 0.62rem;
+  font-family: var(--font-display);
   font-size: 0.74rem;
   font-weight: 700;
   line-height: 1.2;
@@ -927,7 +933,7 @@
 
 .alphabet-practice-ipa {
   color: rgb(var(--pronun-accent-2-rgb) / 0.82);
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-ipa);
   font-size: 0.72rem;
   line-height: 1.2;
 }
@@ -1030,6 +1036,7 @@
 
 /* Letter Display */
 .alphabet-letter {
+  font-family: var(--font-display);
   font-size: 2.4rem;
   font-weight: 900;
   color: #e2e8f0;
@@ -1038,6 +1045,8 @@
   z-index: 2;
   position: relative;
 }
+
+/* ensure non-IPA text stays Orbitron but keep explanation text unaffected (no Orbitron) */
 
 .alphabet-letter-card:hover .alphabet-letter {
   color: rgb(var(--pronun-accent-2-rgb) / 0.95);
@@ -1052,7 +1061,7 @@
 
 /* IPA Display */
 .alphabet-ipa {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-ipa);
   font-size: 0.65rem;
   color: #94a3b8;
   letter-spacing: 0.1em;

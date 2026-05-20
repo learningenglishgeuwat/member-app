@@ -336,8 +336,8 @@ export default function TongueTwisterPage() {
                 {activeTwister.ipaLines.map((line, index) => (
                   <li
                     key={`${activeTwister.id}-ipa-${index}`}
-                    className="tt-ipa-item"
-                    style={{ fontFamily: "'Charis SIL', 'Noto Sans', 'Arial', 'Times New Roman', 'serif'" }}
+                    className="tt-ipa-item font-ipa"
+                    data-ipa
                   >
                     {highlightIPA(line)}
                   </li>
@@ -347,7 +347,7 @@ export default function TongueTwisterPage() {
           ) : (
             <div className="tt-ipa-box">
               <p className="tt-ipa-label">IPA</p>
-              <p className="tt-ipa-text" style={{ fontFamily: "'Charis SIL', 'Noto Sans', 'Arial', 'Times New Roman', 'serif'" }}>
+              <p className="tt-ipa-text font-ipa" data-ipa>
                 IPA per kalimat belum tersedia untuk item ini.
               </p>
             </div>

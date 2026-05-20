@@ -5,9 +5,9 @@
 .symbol-detail-container {
   position: relative;
   min-height: 100vh;
+  font-family: var(--font-ui);
   background: #000000;
   color: white;
-  font-family: sans-serif;
   overflow-x: hidden;
 }
 
@@ -73,11 +73,11 @@
 }
 
 .symbol-detail-container .symbol-text {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 6vw, 3rem); /* 24px mobile - 48px desktop (H1) */
   font-weight: bold;
   color: white;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+  font-family: var(--font-ipa);
 }
 
 .symbol-detail-container .symbol-category {
@@ -89,7 +89,7 @@
   border: 1px solid #be29ec;
   padding: 0.35rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
   color: #be29ec;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -121,7 +121,7 @@
 
 .symbol-detail-container .video-title {
   color: #be29ec;
-  font-size: 0.7rem;
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -163,7 +163,7 @@
 
 .symbol-detail-container .word-examples-title {
   color: #be29ec;
-  font-size: 1.1rem;
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem); /* 18px mobile - 24px desktop (H3) */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -314,7 +314,7 @@
 }
 
 .symbol-detail-container .word-text {
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
   font-weight: bold;
   color: white;
   margin-bottom: 0.5rem;
@@ -325,9 +325,9 @@
 }
 
 .symbol-detail-container .word-ipa {
-  font-size: 0.7rem;
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
   color: #be29ec;
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+  font-family: var(--font-ipa);
 }
 
 .symbol-detail-container .word-card.active .word-ipa {
@@ -422,6 +422,7 @@
 
 .symbol-detail-container .recording-status {
   color: #ec4899;
+  font-size: clamp(0.75rem, 1.8vw, 0.875rem); /* 12px mobile - 14px desktop (Small Text) */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -447,6 +448,7 @@
   padding: 0.75rem;
   border-bottom: 1px solid #ec4899;
   color: #ec4899;
+  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -475,7 +477,8 @@
 
 .symbol-detail-container .tip-text {
   color: white;
-  line-height: 1.5;
+  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
+  line-height: 1.6;
 }
 
 /* Progress Section - SCOPED */
@@ -512,6 +515,7 @@
 
 .symbol-detail-container .progress-text {
   color: white;
+  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
   margin-bottom: 1rem;
 }
 
@@ -655,20 +659,10 @@
     height: 120px;
   }
   
-  .symbol-detail-container .symbol-text {
-    font-size: 2.4rem;
-  }
+  /* Ukuran teks sudah diatur dengan clamp(), tidak perlu override lagi */
   
   .symbol-detail-container .word-card {
     padding: 0.75rem;
-  }
-  
-  .symbol-detail-container .word-text {
-    font-size: 0.9rem;
-  }
-  
-  .symbol-detail-container .word-ipa {
-    font-size: 0.6rem;
   }
   
   .symbol-detail-container .record-button {

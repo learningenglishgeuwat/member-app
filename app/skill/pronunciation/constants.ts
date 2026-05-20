@@ -73,6 +73,16 @@ export const TOPICS: Topic[] = [
     bgImage: 'https://picsum.photos/id/55/1920/1080',
   },
   {
+    id: 'contraction',
+    title: 'Contraction',
+    shortDesc: 'Short Forms',
+    description:
+      "Pelajari contraction dalam spoken English: I'm, you're, I'll, can't, gonna, dan bentuk pendek lain yang membuat ucapan terdengar lebih natural.",
+    icon: "'",
+    color: 'from-teal-400 to-cyan-500',
+    bgImage: 'https://picsum.photos/id/60/1920/1080',
+  },
+  {
     id: 'text',
     title: 'TEXT',
     shortDesc: 'Baca & Ucapkan',
@@ -114,6 +124,7 @@ export const TOPIC_ROUTES: Record<string, string> = {
   'final-sound': '/skill/pronunciation/final-sound-new',
   'american-t': '/skill/pronunciation/american-t',
   'linking-word': '/skill/pronunciation/linking-word',
+  contraction: '/skill/pronunciation/contraction',
   text: '/skill/pronunciation/text',
   'reading-text': '/skill/pronunciation/reading-text',
   'tongue-twister': '/skill/pronunciation/phoneticSymbols/tongue-twister',
