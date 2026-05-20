@@ -57,6 +57,17 @@ function pickByExactNames(
   return null;
 }
 
+function pickByNameIncludes(
+  voices: SpeechSynthesisVoice[],
+  names: readonly string[],
+): SpeechSynthesisVoice | null {
+  for (const name of names) {
+    const matched = voices.find((voice) => voice.name.includes(name));
+    if (matched) return matched;
+  }
+  return null;
+}
+
 function pickEnglishVoiceFromCandidates(
   voices: SpeechSynthesisVoice[],
   preferred: PreferredEnglishLang,
@@ -74,6 +85,12 @@ function pickEnglishVoiceFromCandidates(
       ? pickByExactNames(preferredVoices, HIGH_QUALITY_EN_US_VOICE_NAMES)
       : pickByExactNames(preferredVoices, HIGH_QUALITY_EN_GB_VOICE_NAMES);
   if (exactPreferred) return exactPreferred;
+
+  const includesPreferred =
+    preferred === 'en-US'
+      ? pickByNameIncludes(preferredVoices, HIGH_QUALITY_EN_US_VOICE_NAMES)
+      : pickByNameIncludes(preferredVoices, HIGH_QUALITY_EN_GB_VOICE_NAMES);
+  if (includesPreferred) return includesPreferred;
 
   const naturalPreferred = preferredVoices.find(
     (voice) =>
@@ -96,6 +113,12 @@ function pickEnglishVoiceFromCandidates(
       ? pickByExactNames(englishVoices, HIGH_QUALITY_EN_US_VOICE_NAMES)
       : pickByExactNames(englishVoices, HIGH_QUALITY_EN_GB_VOICE_NAMES);
   if (exactEnglishFallback) return exactEnglishFallback;
+
+  const includesEnglishFallback =
+    preferred === 'en-US'
+      ? pickByNameIncludes(englishVoices, HIGH_QUALITY_EN_US_VOICE_NAMES)
+      : pickByNameIncludes(englishVoices, HIGH_QUALITY_EN_GB_VOICE_NAMES);
+  if (includesEnglishFallback) return includesEnglishFallback;
 
   const naturalEnglish = englishVoices.find(
     (voice) =>
@@ -254,4 +277,3 @@ export function stopSpeech(): void {
   if (!isSpeechSynthesisSupported()) return;
   window.speechSynthesis.cancel();
 }
-

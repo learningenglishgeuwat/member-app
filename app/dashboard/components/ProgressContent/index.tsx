@@ -892,7 +892,7 @@ const ProgressContent: React.FC = () => {
       <div className="grid grid-cols-1 xl:grid-cols-1 gap-4 sm:gap-6">
         
         {/* Skills Overview */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-3 sm:p-4 md:p-5 backdrop-blur-sm flex flex-col items-center justify-center min-h-[240px] sm:min-h-[260px] md:min-h-[340px] relative overflow-hidden">
+        <div className="bg-black/50 border border-slate-800 rounded-2xl p-3 sm:p-4 md:p-5 backdrop-blur-sm flex flex-col items-center justify-center min-h-[240px] sm:min-h-[260px] md:min-h-[340px] relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
           
           <h3 className="text-sm sm:text-base md:text-lg font-bold text-slate-200 mb-2 md:mb-3 w-full text-left flex items-center gap-2 z-10 font-display">
@@ -914,7 +914,7 @@ const ProgressContent: React.FC = () => {
                     <div 
                       className={`flex items-center gap-2 md:gap-3 p-2 sm:p-2.5 md:p-3 rounded-lg transition-all duration-200 ${
                         isDisabled
-                          ? 'bg-slate-900/50 border border-slate-700/30 cursor-not-allowed opacity-60'
+                          ? 'bg-black/50 border border-slate-700/30 cursor-not-allowed opacity-60'
                           : isSelected 
                             ? 'bg-purple-600/20 border border-purple-500/50 cursor-pointer' 
                             : 'bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800/50 hover:border-slate-600/50 cursor-pointer'
@@ -976,7 +976,7 @@ const ProgressContent: React.FC = () => {
                                 className={`
                                   relative py-1.5 md:py-2 px-2 md:px-3 rounded-lg font-display font-semibold text-[11px] sm:text-xs md:text-sm transition-all duration-200 border w-full
                                   ${isTopicLocked
-                                    ? 'bg-slate-900/50 border-slate-700/40 text-slate-500 cursor-not-allowed opacity-70'
+                                    ? 'bg-black/50 border-slate-700/40 text-slate-500 cursor-not-allowed opacity-70'
                                     : isSelected 
                                     ? 'bg-cyan-600 border-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] scale-105 z-10' 
                                     : 'bg-slate-800/50 border-slate-600/50 text-slate-300 hover:border-cyan-500/50 hover:bg-slate-700/50 hover:text-cyan-200'
@@ -995,7 +995,7 @@ const ProgressContent: React.FC = () => {
                                     )}
                                   </div>
                                   {!isTopicLocked ? (
-                                    <div className="bg-slate-900/40 rounded-full h-1.5 md:h-2 relative overflow-hidden">
+                                    <div className="bg-black/40 rounded-full h-1.5 md:h-2 relative overflow-hidden">
                                       <div
                                         className="h-full bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full transition-all duration-500"
                                         style={{ width: `${topic.percentage}%` }}
@@ -1256,13 +1256,13 @@ const ProgressContent: React.FC = () => {
 
       {/* Skill Progress Summary */}
       <div className="grid grid-cols-1 gap-3 sm:gap-4">
-        <div className="bg-slate-900/50 border border-cyan-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center max-w-xs sm:max-w-sm mx-auto">
+        <div className="bg-black/50 border border-cyan-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center max-w-xs sm:max-w-sm mx-auto">
           <div className="text-[11px] sm:text-xs text-slate-400 font-mono">Average Score</div>
           <div className="text-lg sm:text-xl font-mono text-cyan-400">{avgProgress.toFixed(1)}%</div>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          <div className="bg-slate-900/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
+          <div className="bg-black/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
             <div className="flex flex-col gap-1 items-center">
               <span className="text-green-400 text-xs sm:text-sm">Strongest Skill</span>
               <div className="text-base sm:text-lg font-bold text-white">{strongestSkill.name}</div>
@@ -1270,7 +1270,7 @@ const ProgressContent: React.FC = () => {
             </div>
           </div>
           
-          <div className="bg-slate-900/50 border border-purple-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
+          <div className="bg-black/50 border border-purple-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
             <div className="flex flex-col gap-1 items-center">
               <span className="text-purple-400 text-xs sm:text-sm">Needs Focus</span>
               <div className="text-base sm:text-lg font-bold text-white">{weakestSkill.name}</div>
@@ -1282,12 +1282,12 @@ const ProgressContent: React.FC = () => {
 
       {practicePopup ? (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm" onClick={closePracticePopup} />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closePracticePopup} />
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="practice-popup-title"
-            className="relative w-full max-w-lg rounded-2xl border border-slate-700/60 bg-slate-900/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] overflow-hidden"
+            className="relative w-full max-w-lg rounded-2xl border border-slate-700/60 bg-black/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] overflow-hidden"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-3 p-4 border-b border-slate-700/50">
@@ -1314,7 +1314,7 @@ const ProgressContent: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigatePracticePopup(-1)}
-                  className="px-2 py-1 rounded-md border border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
+                  className="px-2 py-1 rounded-md border border-slate-700/60 bg-black/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
                   aria-label="Previous category"
                 >
                   Prev
@@ -1330,7 +1330,7 @@ const ProgressContent: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigatePracticePopup(1)}
-                  className="px-2 py-1 rounded-md border border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
+                  className="px-2 py-1 rounded-md border border-slate-700/60 bg-black/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
                   aria-label="Next category"
                 >
                   Next

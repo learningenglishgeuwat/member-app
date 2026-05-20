@@ -196,6 +196,7 @@
     ),
     radial-gradient(circle at 50% 0%, rgba(var(--dashboard-tour-accent-rgb), 0.11), transparent 54%);
   opacity: 0.44;
+  pointer-events: none;
 }
 
 .dashboard-tour-nav-action {

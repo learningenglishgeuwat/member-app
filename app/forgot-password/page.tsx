@@ -49,8 +49,8 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 flex items-center justify-center px-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl">
+    <div className="min-h-screen bg-black text-slate-200 flex items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-black/50 p-6 shadow-xl">
         <h1 className="text-xl font-bold text-white mb-2">Forgot Password</h1>
         <p className="text-sm text-slate-400 mb-6">
           Masukkan email Anda untuk menerima link reset password.
@@ -62,7 +62,7 @@ export default function ForgotPasswordPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
-            className="w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 text-sm text-white outline-none focus:border-amber-400"
+            className="w-full rounded-xl bg-black border border-slate-800 px-4 py-3 text-sm text-white outline-none focus:border-amber-400"
           />
 
           <button

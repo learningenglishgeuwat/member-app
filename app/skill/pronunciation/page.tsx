@@ -62,6 +62,14 @@ const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
     hintIcon: 'text-[#6fb7ff]',
     hintKicker: 'text-[#9bd2ff]',
   },
+  'linking-word': {
+    detailBorderLeft: 'border-l-sky-400',
+    detailBorder: 'border-sky-400/30',
+    hintBg: 'bg-sky-950/35',
+    hintBorder: 'border-sky-400/30',
+    hintIcon: 'text-sky-300',
+    hintKicker: 'text-sky-200',
+  },
   text: {
     detailBorderLeft: 'border-l-emerald-400',
     detailBorder: 'border-emerald-400/30',

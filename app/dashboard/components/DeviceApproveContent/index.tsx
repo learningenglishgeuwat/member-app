@@ -40,9 +40,9 @@ export default function DeviceApproveContent() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-3xl rounded-2xl border border-slate-700 bg-slate-900/60 p-6 md:p-8">
+    <section className="mx-auto w-full max-w-3xl rounded-2xl border border-slate-700 bg-black/60 p-6 md:p-8">
       <div
-        className="w-full rounded-2xl border border-slate-800 bg-slate-900/40 p-6 md:p-8"
+        className="w-full rounded-2xl border border-slate-800 bg-black/40 p-6 md:p-8"
         data-tour="device-approve-form"
       >
         <h1 className="text-2xl font-bold text-white" data-tour="device-approve-title">
@@ -59,7 +59,7 @@ export default function DeviceApproveContent() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="123-456"
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-emerald-400"
+            className="w-full rounded-lg border border-slate-700 bg-black px-4 py-3 text-slate-100 outline-none focus:border-emerald-400"
           />
           <button
             type="submit"

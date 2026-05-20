@@ -46,6 +46,14 @@ describe('Tongue Twister Configuration', () => {
       expect(readingTextIndex).toBeGreaterThanOrEqual(0);
       expect(tongueTwisterIndex).toBeGreaterThan(readingTextIndex);
     });
+
+    it('should position linking-word after american-t', () => {
+      const americanTIndex = TOPICS.findIndex(t => t.id === 'american-t');
+      const linkingWordIndex = TOPICS.findIndex(t => t.id === 'linking-word');
+      
+      expect(americanTIndex).toBeGreaterThanOrEqual(0);
+      expect(linkingWordIndex).toBeGreaterThan(americanTIndex);
+    });
   });
 
   describe('TOPIC_ROUTES mapping', () => {
@@ -56,11 +64,19 @@ describe('Tongue Twister Configuration', () => {
     it('should map tongue-twister to correct route', () => {
       expect(TOPIC_ROUTES['tongue-twister']).toBe('/skill/pronunciation/phoneticSymbols/tongue-twister');
     });
+
+    it('should map linking-word to correct route', () => {
+      expect(TOPIC_ROUTES['linking-word']).toBe('/skill/pronunciation/linking-word');
+    });
   });
 
   describe('LOCKED_TOPIC_IDS', () => {
     it('should not include tongue-twister by default', () => {
       expect(LOCKED_TOPIC_IDS).not.toContain('tongue-twister');
+    });
+
+    it('should not include linking-word by default', () => {
+      expect(LOCKED_TOPIC_IDS).not.toContain('linking-word');
     });
   });
 
@@ -83,6 +99,30 @@ describe('Tongue Twister Configuration', () => {
       const ids = TOPICS.map(t => t.id);
       const tongueTwisterIds = ids.filter(id => id === 'tongue-twister');
       expect(tongueTwisterIds.length).toBe(1);
+    });
+
+    it('should have linking-word entry in TOPICS array', () => {
+      const linkingWord = TOPICS.find(t => t.id === 'linking-word');
+      expect(linkingWord).toBeDefined();
+    });
+
+    it('should have required properties for linking-word', () => {
+      const linkingWord = TOPICS.find(t => t.id === 'linking-word');
+      expect(linkingWord).toMatchObject({
+        id: expect.any(String),
+        title: expect.any(String),
+        shortDesc: expect.any(String),
+        description: expect.any(String),
+        icon: expect.any(String),
+        color: expect.any(String),
+        bgImage: expect.any(String),
+      });
+    });
+
+    it('should have unique id for linking-word', () => {
+      const ids = TOPICS.map(t => t.id);
+      const linkingWordIds = ids.filter(id => id === 'linking-word');
+      expect(linkingWordIds.length).toBe(1);
     });
   });
 });

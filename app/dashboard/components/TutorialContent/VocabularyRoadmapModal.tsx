@@ -60,7 +60,7 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
       style={{ zIndex }}
     >
       <div
-        className="w-full max-w-[96vw] sm:max-w-6xl bg-slate-950 border border-green-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(34,197,94,0.2)]"
+        className="w-full max-w-[96vw] sm:max-w-6xl bg-black border border-green-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(34,197,94,0.2)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 mb-4">
@@ -96,7 +96,7 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
           style={{ overflowY: 'auto' }}
         >
           <table className="min-w-full geuwat-table-responsive text-xs sm:text-sm">
-            <thead className="bg-slate-900/70 text-slate-200 sticky top-0">
+            <thead className="bg-black/70 text-slate-200 sticky top-0">
               <tr>
                 <th className="px-3 sm:px-4 py-3 text-left font-semibold">No</th>
                 <th className="px-3 sm:px-4 py-3 text-left font-semibold">Topik</th>
@@ -141,7 +141,7 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
           </table>
         </div>
 
-        <div className="mt-4 rounded-lg border border-slate-700/60 bg-slate-900/50 p-3 text-[11px] sm:text-xs text-slate-300 space-y-1">
+        <div className="mt-4 rounded-lg border border-slate-700/60 bg-black/50 p-3 text-[11px] sm:text-xs text-slate-300 space-y-1">
           <p className="font-semibold text-slate-200">Catatan</p>
           <p>1. Estimasi ini baseline untuk 30 menit per hari dengan pola belajar + review.</p>
           <p>2. Estimasi bisa berubah sesuai konsistensi latihan harian yang terbentuk.</p>

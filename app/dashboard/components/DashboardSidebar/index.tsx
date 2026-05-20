@@ -101,28 +101,28 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
 
   return (
     <>
-      {/* Mobile Overlay */}
+      {/* Overlay - covers entire screen including navbar area */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] md:hidden"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[1250] pointer-events-auto"
           onClick={() => setIsOpen(false)}
+          aria-hidden="true"
         />
       )}
 
       {/* Sidebar Container */}
       <aside 
         className={`
-          fixed top-0 left-0 z-[100] min-h-screen h-[100dvh] md:h-screen w-60 sm:w-64 bg-slate-950/90 border-r border-purple-900/30 backdrop-blur-xl 
+          fixed top-0 left-0 z-[1260] min-h-screen h-[100dvh] w-60 sm:w-64 bg-black/90 border-r border-purple-900/30 backdrop-blur-xl 
           transform transition-transform duration-300 ease-in-out flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom)+16px)]
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:relative md:h-screen md:translate-x-0 md:transform-none
         `}
       >
         {/* Logo/Header */}
         <div className="p-4 sm:p-6 border-b border-purple-900/30">
           <div className="flex flex-col items-center gap-2">
             <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr ${currentTierInfo.avatarGradient} p-[2px]`}>
-              <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
+              <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
                 <TierIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
@@ -162,7 +162,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                       w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/60 focus-visible:ring-offset-0
                       ${isLocked
-                        ? 'text-slate-500 bg-slate-900/40 border border-slate-800/60 cursor-not-allowed'
+                        ? 'text-slate-500 bg-black/40 border border-slate-800/60 cursor-not-allowed'
                         : isActive(item.id)
                         ? 'bg-purple-500/25 text-purple-200 border border-purple-500/40'
                         : 'text-slate-400 hover:text-white hover:bg-white/10'
@@ -196,7 +196,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                 data-tour="dashboard-sidebar-item-logout"
                 className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base border ${
                   isLoggingOut
-                    ? 'text-slate-500 cursor-not-allowed bg-slate-900/40 border-slate-800/60'
+                    ? 'text-slate-500 cursor-not-allowed bg-black/40 border-slate-800/60'
                     : 'text-red-300 hover:text-red-200 bg-red-500/10 hover:bg-red-500/20 border-red-500/30'
                 }`}
               >

@@ -9,7 +9,7 @@ export const HapticSettings: React.FC = () => {
 
   if (!isSupported) {
     return (
-      <div className="bg-slate-900/50 border border-slate-700/50 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-slate-700/50 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
         <h2 className="text-base sm:text-xl font-semibold text-white mb-2 font-display">Haptic Feedback</h2>
         <div className="flex items-center gap-3 text-slate-400 bg-slate-800/50 p-3 rounded-lg">
           <Smartphone className="w-5 h-5" />
@@ -30,7 +30,7 @@ export const HapticSettings: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
+    <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-base sm:text-xl font-semibold text-white mb-1 font-display flex items-center gap-2">

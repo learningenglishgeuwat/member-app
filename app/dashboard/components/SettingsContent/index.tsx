@@ -208,7 +208,7 @@ const SettingsContent: React.FC = () => {
       </div>
 
       {/* Member Information - Read Only */}
-      <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <h2 className="text-base sm:text-xl font-semibold text-white font-display">Member Information</h2>
           <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-slate-800/50 border border-slate-700/30 rounded-full">
@@ -265,7 +265,7 @@ const SettingsContent: React.FC = () => {
           </div>
           
           {/* GEUWAT Tower Hero */}
-          <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-slate-900/40 border border-purple-500/20 rounded-lg">
+          <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-black/40 border border-purple-500/20 rounded-lg">
             <h3 className="text-sm sm:text-base font-semibold text-white mb-3 text-center font-display leading-snug">
               <span className="block">Hidupkan Hero</span>
               <span className="block text-purple-200">Untuk Mengikuti GEUWAT Tower</span>
@@ -281,7 +281,7 @@ const SettingsContent: React.FC = () => {
                 : 'object-contain w-full h-full drop-shadow-[0_18px_20px_rgba(0,0,0,0.35)]';
 
               return (
-                <div className="rounded-xl border border-slate-700/40 bg-slate-950/30 overflow-hidden">
+                <div className="rounded-xl border border-slate-700/40 bg-black/30 overflow-hidden">
                   <div className="relative w-full aspect-[16/9] flex items-center justify-center p-4">
                     <Image
                       src="/ChibiLogin.webp"
@@ -295,7 +295,7 @@ const SettingsContent: React.FC = () => {
                     ) : null}
                     {showLock ? (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-2 rounded-2xl border border-slate-700/60 bg-slate-950/70 px-4 py-3">
+                        <div className="flex flex-col items-center gap-2 rounded-2xl border border-slate-700/60 bg-black/70 px-4 py-3">
                           <Lock className="w-6 h-6 text-slate-200" />
                           <div className="text-[11px] sm:text-xs text-slate-200 font-semibold text-center">
                             Locked
@@ -392,7 +392,7 @@ const SettingsContent: React.FC = () => {
       <HapticSettings />
 
       {/* Change Password */}
-      <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-6 rounded-xl backdrop-blur-sm">
         <h2 className="text-base sm:text-xl font-semibold text-white mb-3 sm:mb-4 font-display">Change Password</h2>
         <div className="space-y-3 sm:space-y-4">
           <div>
@@ -490,7 +490,7 @@ const SettingsContent: React.FC = () => {
       {/* Extension Modal */}
       {!EXTENSION_REQUEST_LOCKED && showExtensionModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4">
-          <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md w-full">
+          <div className="bg-black border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg sm:text-xl font-semibold text-white font-display">Request Extension</h3>
               <button
@@ -509,7 +509,7 @@ const SettingsContent: React.FC = () => {
                 </div>
                 <div className="space-y-2 text-xs sm:text-sm text-slate-300">
                   <p>Transfer the subscription fee to:</p>
-                  <div className="bg-slate-900/50 p-3 rounded border border-slate-600/30 space-y-3">
+                  <div className="bg-black/50 p-3 rounded border border-slate-600/30 space-y-3">
                     <div>
                       <p className="text-white font-medium flex items-center gap-2 text-sm sm:text-base">
                         <Smartphone className="w-4 h-4 text-green-400" />
@@ -595,7 +595,7 @@ const SettingsContent: React.FC = () => {
       {/* Hero Help Modal */}
       {showHeroHelpModal && (
         <div className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4">
-          <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[92vw] sm:max-w-md w-full">
+          <div className="bg-black border border-purple-500/20 rounded-xl p-4 sm:p-6 max-w-[92vw] sm:max-w-md w-full">
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-lg sm:text-xl font-semibold text-white font-display">
                 How to activate?
@@ -621,7 +621,7 @@ const SettingsContent: React.FC = () => {
                   mencapai <span className="text-cyan-300 font-semibold">70%</span>.
                 </p>
               </div>
-              <div className="rounded-lg border border-slate-700/50 bg-slate-950/30 p-3 space-y-2">
+              <div className="rounded-lg border border-slate-700/50 bg-black/30 p-3 space-y-2">
                 <p>1. Buka menu <span className="text-white font-semibold">Pronunciation</span>.</p>
                 <p>2. Masuk ke <span className="text-white font-semibold">Phonetic Symbols</span>.</p>
                 <p>3. Latih symbol-symbol sampai progress rata-rata naik.</p>

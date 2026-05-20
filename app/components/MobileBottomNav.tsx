@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useMemo, useState } from 'react'
-import { Menu, X, BarChart2, LayoutGrid, Settings, HelpCircle } from 'lucide-react'
+import { Menu, X, BarChart2, LayoutGrid, Settings, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
 const TOURGUIDE_COLLAPSED_STORAGE_KEY = 'tourguide_collapsed'
 const TOURGUIDE_BOOTSTRAP_EVENT = 'geuwat:tourguide-bootstrap'
@@ -40,6 +40,7 @@ export default function MobileBottomNav() {
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [tourGuideBootstrapped, setTourGuideBootstrapped] = useState(false)
+  const [isNavVisible, setIsNavVisible] = useState(true)
 
   const shouldRender = useMemo(() => {
     if (!pathname) return false
@@ -61,22 +62,48 @@ export default function MobileBottomNav() {
     dispatchBootstrapTourGuide()
   }
 
+  const toggleNavVisibility = () => {
+    setIsNavVisible(!isNavVisible)
+  }
+
   if (!shouldRender) return null
 
   return (
     <>
-      <div className="md:hidden h-28" aria-hidden="true" />
+      <div className="h-28" aria-hidden="true" />
+
+      {/* Toggle Button - Arrow Only */}
+      <button
+        type="button"
+        onClick={toggleNavVisibility}
+        className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[90] transition-all duration-300 group"
+        style={{
+          transform: isNavVisible 
+            ? 'translate(-50%, calc(-100% - 8px))' 
+            : 'translate(-50%, -8px)'
+        }}
+        aria-label={isNavVisible ? 'Hide navigation' : 'Show navigation'}
+      >
+        {/* Arrow Icon Only - No Circle */}
+        <div className="relative">
+          {isNavVisible ? (
+            <ChevronDown className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+          ) : (
+            <ChevronUp className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+          )}
+        </div>
+      </button>
 
       {menuOpen ? (
         <div
-          className="md:hidden fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
           onClick={() => setMenuOpen(false)}
         />
       ) : null}
 
       {menuOpen ? (
         <aside
-          className="md:hidden fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-slate-950/95 backdrop-blur-xl"
+          className="fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-black/95 backdrop-blur-xl"
           role="dialog"
           aria-label="Menu"
         >
@@ -137,14 +164,16 @@ export default function MobileBottomNav() {
         </aside>
       ) : null}
 
-      <nav className="md:hidden fixed inset-x-0 bottom-0 z-[80]" aria-label="Bottom navigation">
-        <div className="relative w-full rounded-t-2xl border-t border-[rgba(255,255,255,0.06)] bg-gradient-to-b from-slate-900/30 via-slate-950/95 to-black/95 backdrop-blur-xl">
+      <nav className={`fixed inset-x-0 bottom-0 z-[80] transition-transform duration-300 ${
+        isNavVisible ? 'translate-y-0' : 'translate-y-full'
+      }`} aria-label="Bottom navigation" aria-hidden={!isNavVisible}>
+        <div className="relative mx-auto w-full max-w-2xl rounded-t-2xl md:mb-4 md:rounded-2xl border-t border-[rgba(255,255,255,0.06)] bg-gradient-to-b from-slate-900/30 via-slate-950/95 to-black/95 backdrop-blur-xl">
           <div
-            className="pointer-events-none absolute inset-0 rounded-t-2xl shadow-[0_0_32px_rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.14)]"
+            className="pointer-events-none absolute inset-0 rounded-t-2xl md:rounded-2xl shadow-[0_0_32px_rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.14)]"
             aria-hidden="true"
           />
 
-          <div className="flex items-end justify-between px-6 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)]">
+          <div className="flex items-end justify-between px-6 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] md:px-8 md:pb-4">
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
@@ -163,7 +192,7 @@ export default function MobileBottomNav() {
               type="button"
               onClick={tourGuideBootstrapped ? undefined : enableTourGuide}
               disabled={tourGuideBootstrapped}
-              className="inline-flex -mt-10 h-[74px] w-[74px] items-center justify-center rounded-full border border-[rgba(255,255,255,0.10)] bg-slate-950/70 shadow-[0_0_0_8px_rgba(255,255,255,0.04),0_0_34px_rgba(0,0,0,0.55)] backdrop-blur-md transition hover:shadow-[0_0_0_10px_rgba(255,255,255,0.06),0_0_40px_rgba(0,0,0,0.62)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(255,255,255,0.35)] disabled:opacity-90"
+              className="inline-flex -mt-10 h-[74px] w-[74px] items-center justify-center rounded-full border border-[rgba(255,255,255,0.10)] bg-black/70 shadow-[0_0_0_8px_rgba(255,255,255,0.04),0_0_34px_rgba(0,0,0,0.55)] backdrop-blur-md transition hover:shadow-[0_0_0_10px_rgba(255,255,255,0.06),0_0_40px_rgba(0,0,0,0.62)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(255,255,255,0.35)] disabled:opacity-90"
               aria-label={tourGuideBootstrapped ? 'Tour Guide enabled' : 'Enable Tour Guide'}
             >
               {!tourGuideBootstrapped ? (

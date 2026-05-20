@@ -153,7 +153,7 @@ const TutorialContent: React.FC = () => {
               className={`
                 relative border p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm transition-all duration-300
                 ${tutorial.locked 
-                  ? 'bg-slate-900/30 border-gray-800/50 opacity-60 cursor-not-allowed' 
+                  ? 'bg-black/30 border-gray-800/50 opacity-60 cursor-not-allowed' 
                   : isPronunciationGuide
                     ? 'bg-purple-900/20 border-purple-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(188,19,254,0.22)] hover:shadow-[0_0_34px_rgba(188,19,254,0.35)]'
                     : isVocabularyGuide
@@ -324,7 +324,7 @@ const TutorialContent: React.FC = () => {
       />
 
       {/* Learning Path */}
-      <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-6 md:p-8 rounded-xl backdrop-blur-sm">
         <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 sm:mb-6 font-display">Recommended Learning Path</h3>
         <div className="space-y-3 sm:space-y-4">
           {learningPath.map((item) => (
@@ -360,7 +360,7 @@ const TutorialContent: React.FC = () => {
               }}
               className={`flex items-center gap-4 p-4 rounded-lg border ${
                 item.status === 'locked'
-                  ? 'bg-slate-900/40 border-slate-700/40 opacity-70'
+                  ? 'bg-black/40 border-slate-700/40 opacity-70'
                   : item.status === 'current'
                     ? `bg-purple-900/30 border-purple-500/30 ${item.opensPronunciationRoadmap || item.opensSpeakingRoadmap || item.opensVocabularyRoadmap ? 'cursor-pointer hover:bg-purple-900/40 transition-colors' : ''}`
                     : 'bg-slate-800/50 border-slate-700/30'

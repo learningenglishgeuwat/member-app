@@ -101,8 +101,8 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 flex items-center justify-center px-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl">
+    <div className="min-h-screen bg-black text-slate-200 flex items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-black/50 p-6 shadow-xl">
         <h1 className="text-xl font-bold text-white mb-2">Reset Password</h1>
         <p className="text-sm text-slate-400 mb-6">
           Masukkan password baru untuk akun Anda.
@@ -128,7 +128,7 @@ export default function ResetPasswordPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password Baru"
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 pr-20 text-sm text-white outline-none focus:border-amber-400"
+              className="w-full rounded-xl bg-black border border-slate-800 px-4 py-3 pr-20 text-sm text-white outline-none focus:border-amber-400"
               disabled={!ready || status === 'loading'}
             />
             <button
@@ -150,7 +150,7 @@ export default function ResetPasswordPage() {
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               placeholder="Konfirmasi Password"
-              className="w-full rounded-xl bg-slate-950 border border-slate-800 px-4 py-3 pr-20 text-sm text-white outline-none focus:border-amber-400"
+              className="w-full rounded-xl bg-black border border-slate-800 px-4 py-3 pr-20 text-sm text-white outline-none focus:border-amber-400"
               disabled={!ready || status === 'loading'}
             />
             <button

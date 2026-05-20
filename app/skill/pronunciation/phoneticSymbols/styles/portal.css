@@ -10,7 +10,7 @@
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
-  background: #0a0a0a;
+  background: #000000;
   overflow-x: hidden;
   overflow-y: visible;
   color: #ffffff;
@@ -18,7 +18,7 @@
 }
 
 .pronunciation-layout.futuristic-portal-container {
-  background-color: #0a0a0a;
+  background-color: #000000;
 }
 
 /* Reset only within the portal container */
@@ -547,7 +547,7 @@
 }
 
 .futuristic-portal-container .portal-card:hover {
-  background: #0a0a0a;
+  background: #000000;
   border-color: #00ffff;
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
@@ -723,7 +723,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #0a0a0a;
+  background: #000000;
   border: 2px solid #333;
   border-radius: 24px;
   padding: 0;
@@ -847,7 +847,7 @@
   max-height: calc(80vh - 120px);
   overflow-y: auto;
   position: relative;
-  background: #0a0a0a;
+  background: #000000;
   border-radius: 0 0 22px 22px;
 }
 
@@ -1173,9 +1173,7 @@
 .futuristic-portal-container .common-mistakes-btn {
   border-color: rgba(6, 182, 212, 0.38);
   border-radius: 14px;
-  background:
-    linear-gradient(165deg, rgba(18, 13, 35, 0.9), rgba(2, 8, 23, 0.96)),
-    radial-gradient(circle at 18% 12%, rgba(6, 182, 212, 0.14), transparent 58%);
+  background: rgba(0, 0, 0, 0.96);
   box-shadow:
     0 16px 32px rgba(0, 0, 0, 0.34),
     0 0 0 1px rgba(6, 182, 212, 0.1),

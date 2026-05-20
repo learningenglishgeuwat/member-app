@@ -79,7 +79,7 @@ const AchievementsContent: React.FC = () => {
     
     return {
       color: 'text-slate-400',
-      bgColor: 'bg-slate-900/50',
+      bgColor: 'bg-black/50',
       borderColor: 'border-slate-600/50',
       text: `${progress}%`
     };
@@ -179,7 +179,7 @@ const AchievementsContent: React.FC = () => {
       <h3 className="text-xl font-bold text-white border-b border-slate-800 pb-4 font-display">REFERRAL STATISTICS</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-slate-900/50 border border-green-500/20 p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-black/50 border border-green-500/20 p-6 rounded-xl backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <User className="w-8 h-8 text-green-400" />
@@ -190,7 +190,7 @@ const AchievementsContent: React.FC = () => {
           <p className="text-slate-400 text-sm mt-2">People joined with your code</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-green-500/20 p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-black/50 border border-green-500/20 p-6 rounded-xl backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <TrendingUp className="w-8 h-8 text-green-400" />
@@ -201,7 +201,7 @@ const AchievementsContent: React.FC = () => {
           <p className="text-slate-400 text-sm mt-2">This month&apos;s referrals</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-amber-500/20 p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-black/50 border border-amber-500/20 p-6 rounded-xl backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <Zap className="w-8 h-8 text-amber-400" />
@@ -214,7 +214,7 @@ const AchievementsContent: React.FC = () => {
       </div>
 
       {/* Tier Benefits */}
-      <div className="bg-slate-900/50 border border-cyan-500/20 p-6 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-cyan-500/20 p-6 rounded-xl backdrop-blur-sm">
         <h3 className="text-lg font-bold text-cyan-300 mb-6 font-display">TIER BENEFITS</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {(['Rookie', 'Pro', 'Legend'] as const).map((tier) => {
@@ -267,7 +267,7 @@ const AchievementsContent: React.FC = () => {
       {/* Withdraw Modal */}
       {showWithdrawModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900/95 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full backdrop-blur-xl">
+          <div className="bg-black/95 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full backdrop-blur-xl">
             <h3 className="text-2xl font-display font-bold text-white mb-6">WITHDRAWAL FORM</h3>
             
             <form onSubmit={handleWithdrawSubmit} className="space-y-6">

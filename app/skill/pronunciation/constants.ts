@@ -63,6 +63,16 @@ export const TOPICS: Topic[] = [
     bgImage: 'https://picsum.photos/id/50/1920/1080',
   },
   {
+    id: 'linking-word',
+    title: 'Linking Word',
+    shortDesc: 'Connected Speech',
+    description:
+      'Latih linking sound antar kata agar spoken English terdengar lebih natural: liaison, reduction, dan perubahan bunyi saat kata disambung.',
+    icon: 'LW',
+    color: 'from-sky-500 to-cyan-500',
+    bgImage: 'https://picsum.photos/id/55/1920/1080',
+  },
+  {
     id: 'text',
     title: 'TEXT',
     shortDesc: 'Baca & Ucapkan',
@@ -103,7 +113,8 @@ export const TOPIC_ROUTES: Record<string, string> = {
   intonation: '/skill/pronunciation/intonation',
   'final-sound': '/skill/pronunciation/final-sound-new',
   'american-t': '/skill/pronunciation/american-t',
+  'linking-word': '/skill/pronunciation/linking-word',
   text: '/skill/pronunciation/text',
   'reading-text': '/skill/pronunciation/reading-text',
-  'tongue-twister': '/skill/pronunciation/reading-text/tongueTwister',
+  'tongue-twister': '/skill/pronunciation/phoneticSymbols/tongue-twister',
 };

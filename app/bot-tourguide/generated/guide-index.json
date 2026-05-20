@@ -2119,6 +2119,18 @@
       "source": "manifest"
     },
     {
+      "id": "skill-pronunciation-linking-word",
+      "label": "Linking Word",
+      "path": "/skill/pronunciation/linking-word",
+      "scope": "pronunciation",
+      "keywords": [
+        "linking",
+        "word",
+        "/skill/pronunciation/linking-word"
+      ],
+      "source": "route-scan"
+    },
+    {
       "id": "skill-pronunciation-phoneticSymbols",
       "label": "Phonetic Symbols",
       "path": "/skill/pronunciation/phoneticSymbols",

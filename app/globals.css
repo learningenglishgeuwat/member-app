@@ -54,42 +54,31 @@
 }
 
 .dashboard-layout {
-  @apply min-h-screen bg-slate-900 text-white overflow-x-hidden;
+  @apply min-h-screen bg-black text-white overflow-x-hidden;
   @apply selection:bg-blue-500/30 selection:text-blue-200;
 }
 
 .skill-layout {
-  @apply min-h-screen bg-slate-950 text-white overflow-x-hidden;
+  @apply min-h-screen bg-black text-white overflow-x-hidden;
   @apply selection:bg-cyan-500/30 selection:text-cyan-200;
 }
 
 .pronunciation-layout {
   @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white;
-  background: transparent;
+  background: #000000;
   @apply selection:bg-fuchsia-500 selection:text-white;
 }
 
 .pronunciation-layout.pronunciation-theme {
-  --pronun-page-bg:
-    radial-gradient(
-      900px 420px at 10% -12%,
-      var(--pronun-glow-1, rgba(168, 85, 247, 0.26)),
-      transparent 55%
-    ),
-    radial-gradient(
-      860px 420px at 92% 112%,
-      var(--pronun-glow-2, rgba(217, 70, 239, 0.18)),
-      transparent 57%
-    ),
-    var(--pronun-base, #0a0a0a);
-  background: var(--pronun-page-bg) !important;
+  --pronun-page-bg: #000000;
+  background: #000000 !important;
 }
 
 .pronunciation-theme {
   --pronun-text: rgba(255, 255, 255, 0.96);
   --pronun-muted: rgba(255, 255, 255, 0.78);
-  --pronun-surface-rgb: 10 10 10;
-  --pronun-panel-rgb: 10 10 10;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 168 85 247;
   --pronun-accent-2-rgb: 217 70 239;
 }
@@ -100,86 +89,86 @@
 }
 
 .pronunciation-theme--alphabet {
-  --pronun-base: #050b19;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(59, 130, 246, 0.26);
   --pronun-glow-2: rgba(6, 182, 212, 0.18);
   --pronun-selection-bg: rgba(6, 182, 212, 0.35);
-  --pronun-surface-rgb: 5 11 25;
-  --pronun-panel-rgb: 10 18 40;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 59 130 246;
   --pronun-accent-2-rgb: 6 182 212;
 }
 
 .pronunciation-theme--stressing {
-  --pronun-base: #120a06;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(250, 204, 21, 0.26);
   --pronun-glow-2: rgba(249, 115, 22, 0.18);
   --pronun-selection-bg: rgba(249, 115, 22, 0.35);
-  --pronun-surface-rgb: 18 10 6;
-  --pronun-panel-rgb: 24 12 8;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 250 204 21;
   --pronun-accent-2-rgb: 249 115 22;
 }
 
 .pronunciation-theme--intonation {
-  --pronun-base: #1a0612;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(236, 72, 153, 0.24);
   --pronun-glow-2: rgba(225, 29, 72, 0.18);
   --pronun-selection-bg: rgba(236, 72, 153, 0.35);
-  --pronun-surface-rgb: 26 6 18;
-  --pronun-panel-rgb: 35 8 22;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 236 72 153;
   --pronun-accent-2-rgb: 225 29 72;
 }
 
 .pronunciation-theme--final-sound {
-  --pronun-base: #031116;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(34, 211, 238, 0.26);
   --pronun-glow-2: rgba(8, 145, 178, 0.18);
   --pronun-selection-bg: rgba(34, 211, 238, 0.35);
   --pronun-text: rgba(230, 251, 255, 0.97);
   --pronun-muted: rgba(195, 245, 255, 0.82);
-  --pronun-surface-rgb: 3 17 22;
-  --pronun-panel-rgb: 5 24 30;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 34 211 238;
   --pronun-accent-2-rgb: 8 145 178;
 }
 
 .pronunciation-theme--american-t {
-  --pronun-base: #020b1e;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(11, 74, 166, 0.22);
   --pronun-glow-2: rgba(0, 40, 104, 0.2);
   --pronun-selection-bg: rgba(11, 74, 166, 0.38);
   --pronun-text: rgba(236, 244, 255, 0.97);
   --pronun-muted: rgba(201, 221, 255, 0.82);
-  --pronun-surface-rgb: 2 11 30;
-  --pronun-panel-rgb: 6 18 46;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 11 74 166;
   --pronun-accent-2-rgb: 0 40 104;
 }
 
 .pronunciation-theme--text {
-  --pronun-base: #04140a;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(52, 211, 153, 0.22);
   --pronun-glow-2: rgba(22, 163, 74, 0.18);
   --pronun-selection-bg: rgba(34, 197, 94, 0.35);
   --pronun-text: rgba(236, 255, 245, 0.97);
   --pronun-muted: rgba(196, 255, 223, 0.82);
-  --pronun-surface-rgb: 4 20 10;
-  --pronun-panel-rgb: 8 34 18;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 52 211 153;
   --pronun-accent-2-rgb: 22 163 74;
 }
 
 .pronunciation-theme--reading-text {
-  --pronun-base: #080a18;
+  --pronun-base: #000000;
   --pronun-glow-1: rgba(129, 140, 248, 0.26);
   --pronun-glow-2: rgba(124, 58, 237, 0.18);
   --pronun-selection-bg: rgba(167, 139, 250, 0.35);
   --pronun-text: rgba(238, 242, 255, 0.97);
   --pronun-muted: rgba(224, 231, 255, 0.84);
-  --pronun-surface-rgb: 8 10 24;
-  --pronun-panel-rgb: 17 21 46;
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
   --pronun-accent-1-rgb: 129 140 248;
   --pronun-accent-2-rgb: 124 58 237;
 }

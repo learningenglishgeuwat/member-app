@@ -2,11 +2,10 @@
 
 import React, { useState, lazy, Suspense, useEffect, useRef, useCallback } from 'react'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Menu, Play } from 'lucide-react'
 import { useAuth } from '@/contexts/MemberAuthContext'
 import DashboardSidebar from './components/DashboardSidebar'
+import DashboardBottomNav from './components/DashboardBottomNav'
 import './dashboard.css'
 
 // Lazy load semua page components
@@ -54,7 +53,9 @@ function DashboardContent() {
     router.replace('/login')
   }, [loading, hasSession, router])
 
-  const toggleSidebar = () => {
+  const toggleSidebar = (e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    console.log('Toggle sidebar clicked! Current state:', isSidebarOpen, '-> New state:', !isSidebarOpen)
     setIsSidebarOpen(!isSidebarOpen)
   }
 
@@ -66,6 +67,11 @@ function DashboardContent() {
       // Ignore storage errors (e.g. private mode).
     }
     setIsTourGuideBootstrapped(true)
+  }
+
+  const handleStartJourney = () => {
+    setIsSidebarOpen(false)
+    handleViewChange('dashboard')
   }
 
   const handleViewChange = useCallback((nextView: string) => {
@@ -141,7 +147,7 @@ function DashboardContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-300 flex items-center justify-center">
+      <div className="min-h-screen bg-black text-slate-300 flex items-center justify-center">
         <div className="text-sm">Memuat dashboard...</div>
       </div>
     )
@@ -192,71 +198,13 @@ function DashboardContent() {
         {isTourGuideBootstrapped ? <LazyTourGuideWidget currentPath="/dashboard" /> : null}
 
         {/* Dashboard Bottom Navbar */}
-        <nav
-          className="dashboard-tour-nav fixed inset-x-0 bottom-0 z-[80]"
-          aria-label="Dashboard navigation"
-        >
-          <div className="dashboard-tour-nav-panel relative mx-auto w-full max-w-2xl rounded-t-2xl md:mb-4 md:rounded-2xl">
-            <div
-              className="dashboard-tour-nav-scan pointer-events-none absolute inset-0 rounded-t-2xl md:rounded-2xl"
-              aria-hidden="true"
-            />
-            <div className="flex items-end justify-between px-6 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] md:px-8 md:pb-4">
-                <button
-                  type="button"
-                  onClick={toggleSidebar}
-                  className="dashboard-tour-nav-action group inline-flex w-24 flex-col items-center gap-2"
-                  data-tour="dashboard-mobile-menu-toggle"
-                  aria-label={isSidebarOpen ? 'Close dashboard menu' : 'Open dashboard menu'}
-                >
-                  <Menu className="h-6 w-6 transition" />
-                  <span className="text-[11px] font-semibold tracking-[0.24em]">
-                    MENU
-                  </span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={isTourGuideBootstrapped ? undefined : handleEnableTourGuide}
-                  disabled={isTourGuideBootstrapped}
-                  className={`dashboard-tour-avatar -mt-10 inline-flex h-[78px] w-[78px] items-center justify-center rounded-full ${isTourGuideBootstrapped ? 'is-active' : ''}`}
-                  aria-label={
-                    isTourGuideBootstrapped
-                      ? 'Tour Guide Active'
-                      : 'Enable Tour Guide'
-                  }
-                >
-                  {!isTourGuideBootstrapped ? (
-                    <Image
-                      src="/Kepala.png"
-                      alt="Tour Guide"
-                      width={56}
-                      height={56}
-                      className="dashboard-tour-avatar-image h-14 w-14 object-contain"
-                      priority
-                    />
-                  ) : (
-                    <span className="dashboard-tour-active-dot h-3 w-3 rounded-full" />
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsSidebarOpen(false)
-                    handleViewChange('dashboard')
-                  }}
-                  className="dashboard-tour-nav-action group inline-flex w-24 flex-col items-center gap-2"
-                  aria-label="Start Journey"
-                >
-                  <Play className="h-6 w-6 transition" />
-                  <span className="text-[11px] font-semibold tracking-[0.24em]">
-                    MULAI
-                  </span>
-                </button>
-            </div>
-          </div>
-        </nav>
+        <DashboardBottomNav
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          isTourGuideBootstrapped={isTourGuideBootstrapped}
+          handleEnableTourGuide={handleEnableTourGuide}
+          handleStartJourney={handleStartJourney}
+        />
       </main>
     </div>
   )

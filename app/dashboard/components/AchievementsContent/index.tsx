@@ -332,7 +332,7 @@ const AchievementsContent: React.FC = () => {
       <h3 className="text-lg sm:text-xl font-bold text-white border-b border-slate-800 pb-3 sm:pb-4 font-display">REFERRAL STATISTICS</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-1 gap-4 sm:gap-6">
-        <div className="bg-slate-900/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm max-w-xs sm:max-w-sm mx-auto text-center">
+        <div className="bg-black/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm max-w-xs sm:max-w-sm mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3">
             <User className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
             <span className="text-green-300 font-semibold text-xs sm:text-sm">Total Referrals</span>
@@ -343,7 +343,7 @@ const AchievementsContent: React.FC = () => {
       </div>
 
       {/* Tier Benefits */}
-      <div className="bg-slate-900/50 border border-cyan-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm">
+      <div className="bg-black/50 border border-cyan-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm">
         <h3 className="text-base sm:text-lg font-bold text-cyan-300 mb-3 sm:mb-4 md:mb-6 font-display">TIER BENEFITS</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {tierLoading && tierConfig.length === 0 ? (
@@ -362,7 +362,7 @@ const AchievementsContent: React.FC = () => {
               <div key={tierName} className={`p-3 md:p-4 rounded-lg border ${
                 tierName === user?.tier 
                   ? 'border-green-500/50 bg-green-900/20' 
-                  : 'border-slate-600/50 bg-slate-900/50'
+                  : 'border-slate-600/50 bg-black/50'
               }`}>
                 <div className="flex items-center justify-between mb-2 md:mb-3">
                   <div className="flex items-center gap-2">
@@ -422,7 +422,7 @@ const AchievementsContent: React.FC = () => {
       {/* Withdraw Modal */}
       {showWithdrawModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
-          <div className="bg-slate-900/95 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto backdrop-blur-xl">
+          <div className="bg-black/95 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto backdrop-blur-xl">
             <h3 className="text-lg sm:text-xl md:text-2xl font-display font-bold text-white mb-4 sm:mb-6">WITHDRAWAL FORM</h3>
             <div className="flex items-center justify-between mb-4">
               <span className="text-[11px] sm:text-xs text-slate-400">Latest Request Status</span>

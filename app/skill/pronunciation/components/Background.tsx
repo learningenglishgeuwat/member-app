@@ -9,7 +9,7 @@ const Background: React.FC<BackgroundProps> = ({ topic }) => {
   return (
     <div className="fixed inset-0 -z-10 bg-black overflow-hidden">
       {/* Base Dark Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 z-0"></div>
+      <div className="absolute inset-0 bg-black z-0"></div>
       
       {/* Dynamic Image Layer */}
       <div 

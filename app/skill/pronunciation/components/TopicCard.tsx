@@ -36,7 +36,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
         pronunciation-topic-card-body
         w-full h-full rounded-xl overflow-hidden relative border border-white/10
         transition-all duration-500
-        ${isActive ? 'bg-slate-900 shadow-2xl shadow-purple-900/50 scale-105' : 'bg-slate-800 grayscale'}
+        ${isActive ? 'bg-black shadow-2xl shadow-purple-900/50 scale-105' : 'bg-slate-800 grayscale'}
       `}>
         {/* Tech Grid Pattern Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 z-10"></div>

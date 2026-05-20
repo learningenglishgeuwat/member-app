@@ -17,7 +17,7 @@ const PronunciationGuideModal: React.FC<PronunciationGuideModalProps> = ({ isOpe
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[90vw] sm:max-w-2xl bg-slate-950 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
+        className="w-full max-w-[90vw] sm:max-w-2xl bg-black border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 mb-4">
@@ -40,7 +40,7 @@ const PronunciationGuideModal: React.FC<PronunciationGuideModalProps> = ({ isOpe
         </div>
 
         <div className="space-y-3 sm:space-y-4 text-slate-200 text-xs sm:text-sm">
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Isi menu Pronunciation:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Alphabet</div>
@@ -53,7 +53,7 @@ const PronunciationGuideModal: React.FC<PronunciationGuideModalProps> = ({ isOpe
             </div>
           </div>
 
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Urutan belajar yang disarankan:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Mulai dari Alphabet untuk fondasi bunyi</div>
@@ -64,7 +64,7 @@ const PronunciationGuideModal: React.FC<PronunciationGuideModalProps> = ({ isOpe
             </div>
           </div>
 
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Tips pemakaian:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Pakai Play/Stop untuk dengar model pengucapan</div>

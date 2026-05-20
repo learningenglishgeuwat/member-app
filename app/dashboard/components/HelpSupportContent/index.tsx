@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import { HelpCircle, Bug, LifeBuoy } from 'lucide-react'
@@ -8,7 +8,7 @@ export default function HelpSupportContent() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-cyan-500/30 bg-slate-900/70 p-6 backdrop-blur-sm">
+      <section className="rounded-2xl border border-cyan-500/30 bg-black/70 p-6 backdrop-blur-sm">
         <div className="mb-3 flex items-center gap-2">
           <HelpCircle className="h-5 w-5 text-cyan-300" />
           <h2 className="font-display text-xl font-bold text-cyan-200">Help &amp; Support</h2>
@@ -18,7 +18,7 @@ export default function HelpSupportContent() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+      <section className="rounded-2xl border border-slate-700 bg-black/70 p-6">
         <div className="mb-3 flex items-center gap-2">
           <LifeBuoy className="h-5 w-5 text-teal-300" />
           <h3 className="font-display text-lg font-semibold text-white">Common Checks</h3>
@@ -30,7 +30,7 @@ export default function HelpSupportContent() {
         </ul>
       </section>
 
-      <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+      <section className="rounded-2xl border border-slate-700 bg-black/70 p-6">
         <div className="mb-3 flex items-center gap-2">
           <Bug className="h-5 w-5 text-rose-300" />
           <h3 className="font-display text-lg font-semibold text-white">Report an Issue</h3>

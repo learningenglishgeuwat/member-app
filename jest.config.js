@@ -14,6 +14,8 @@ const customJestConfig = {
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
     '<rootDir>/tests/e2e/',
+    '<rootDir>/tongue-twister-prototipe/',
+    '<rootDir>/linking-word-prototype/',
   ],
   modulePathIgnorePatterns: [
     '<rootDir>/.next/',
@@ -21,6 +23,8 @@ const customJestConfig = {
     '<rootDir>/.next_dev/',
     '<rootDir>/.x/',
     '<rootDir>/.d/',
+    '<rootDir>/tongue-twister-prototipe/',
+    '<rootDir>/linking-word-prototype/',
   ],
   watchPathIgnorePatterns: [
     '<rootDir>/.next/',
@@ -28,6 +32,8 @@ const customJestConfig = {
     '<rootDir>/.next_dev/',
     '<rootDir>/.x/',
     '<rootDir>/.d/',
+    '<rootDir>/tongue-twister-prototipe/',
+    '<rootDir>/linking-word-prototype/',
   ],
 }
 
