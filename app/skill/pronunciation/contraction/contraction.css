@@ -113,7 +113,7 @@
 .contraction-page .hero-ipa {
   font-family: var(--font-ipa);
   font-size: clamp(0.875rem, 2vw, 1.125rem); /* 14px mobile - 18px desktop (Body Text) */
-  color: var(--cyan);
+  color: var(--color-ipa);
   margin-top: 0.5rem;
   letter-spacing: 0.05em;
   animation: fadeIn 0.6s 0.2s ease both;
@@ -233,7 +233,7 @@
   display: inline-block;
   font-family: var(--font-ipa);
   font-size: 0.88rem;
-  color: var(--cyan);
+  color: var(--color-ipa);
   background: var(--cyan-faint);
   border: 1px solid var(--border-bright);
   padding: 3px 10px;
@@ -330,7 +330,7 @@
 
 .contraction-page .pill-ipa {
   font-size: 0.7rem;
-  color: #00f3ff;
+  color: var(--color-ipa);
   opacity: 0.8;
   font-family: var(--font-ipa), sans-serif;
   line-height: 1.8;
@@ -391,7 +391,7 @@
 .contraction-page .td-ipa {
   font-family: var(--font-ipa);
   font-size: 0.85rem;
-  color: var(--cyan);
+  color: var(--color-ipa);
   border-left: 1px solid var(--border);
   padding-left: 14px;
 }

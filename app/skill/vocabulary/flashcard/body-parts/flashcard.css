@@ -394,7 +394,7 @@
 .vf-face-ipa {
   font-family: var(--font-ipa);
   font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: rgba(244, 233, 255, 0.95);
+  color: var(--color-ipa);
   text-align: center;
 }
 

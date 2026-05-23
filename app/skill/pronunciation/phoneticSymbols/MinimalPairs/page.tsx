@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
@@ -8,6 +8,7 @@ import './styles/minimalPairs.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
+import { ControlCenter } from '@/app/components';
 import { categoryLabelMap, minimalPairCategories } from './data/index';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
@@ -161,17 +162,7 @@ const MinimalPairsPage: React.FC = () => {
             </select>
           </label>
 
-          <div className="minimal-actions">
-            <button className="minimal-action-button" onClick={handlePlayAllWords} type="button" disabled={isCategoryLoading}>
-              {isPlayingWords ? <Pause size={14} /> : <Play size={14} />}
-              <span>{isPlayingWords ? 'Stop Words' : 'Play Words'}</span>
-            </button>
-            <button className="minimal-action-button" onClick={handlePlayAllSentences} type="button" disabled={isCategoryLoading}>
-              {isPlayingSentences ? <Pause size={14} /> : <Play size={14} />}
-              <span>{isPlayingSentences ? 'Stop Sentences' : 'Play Sentences'}</span>
-            </button>
-          </div>
-        </section>
+          </section>
 
         {isCategoryLoading && (
           <section className="minimal-card">
@@ -348,6 +339,26 @@ const MinimalPairsPage: React.FC = () => {
         )}
       </main>
 
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">10 Word Pairs</span>
+            <button onClick={handlePlayAllWords} disabled={isCategoryLoading} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY WORDS</span>
+              <Play className={`w-5 h-5 transition-colors ${isPlayingWords ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
+            </button>
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">5 Sentence Pairs</span>
+            <button onClick={handlePlayAllSentences} disabled={isCategoryLoading} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY SENTENCES</span>
+              <Play className={`w-5 h-5 transition-colors ${isPlayingSentences ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
+            </button>
+          </div>
+        </div>
+      </ControlCenter>
       <RecordingControlsButton downloadFileName={`minimal-pairs-${selectedPairId || 'practice'}-GEUWAT-recording.wav`} />
     </div>
   );

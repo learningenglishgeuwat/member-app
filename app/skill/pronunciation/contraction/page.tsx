@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /* eslint-disable react/no-unescaped-entities, react/jsx-no-comment-textnodes, @typescript-eslint/no-explicit-any */
 
@@ -7,6 +7,7 @@ import { Volume2, Play } from "lucide-react";
 import BackButton from "../../components/BackButton";
 import Sidebar from "../../components/skillSidebar/SkillSidebar";
 import { IpaText } from "@/app/components/IpaText";
+import { IpaVisibilityToggle, ControlCenter } from "@/app/components";
 import { speakText, stopSpeech, waitForVoices } from "@/lib/tts/speech";
 import "./contraction.css";
 
@@ -799,12 +800,7 @@ export default function ContractionPage() {
           </div>
 
           <div className="flex justify-between items-center mb-3">
-            <button
-              onClick={() => setShowIpa(!showIpa)}
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              {showIpa ? "Hide IPA / Phonetics" : "Show IPA / Phonetics"}
-            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
             <button
               onClick={() =>
                 playSequence(
@@ -852,7 +848,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -878,7 +874,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -899,7 +895,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipa}
                               target={
@@ -1012,12 +1008,7 @@ export default function ContractionPage() {
           </div>
 
           <div className="flex justify-between items-center mb-3">
-            <button
-              onClick={() => setShowIpa(!showIpa)}
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              {showIpa ? "Hide IPA / Phonetics" : "Show IPA / Phonetics"}
-            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
             <button
               onClick={() =>
                 playSequence(
@@ -1065,7 +1056,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1091,7 +1082,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1112,7 +1103,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipa}
                               target={
@@ -1186,7 +1177,7 @@ export default function ContractionPage() {
                       </button>
                     </div>
                     {showIpa && (
-                      <div className="font-ipa text-[0.75rem] text-[#00f3ff]">
+                      <div className="font-ipa text-[0.75rem]">
                         <Highlight
                           text={item.ipa}
                           target={
@@ -1216,7 +1207,7 @@ export default function ContractionPage() {
                       </button>
                     </div>
                     {showIpa && (
-                      <div className="font-ipa text-[0.75rem] text-[#00f3ff]">
+                      <div className="font-ipa text-[0.75rem]">
                         <Highlight
                           text={item.ipa}
                           target={
@@ -1246,7 +1237,7 @@ export default function ContractionPage() {
                       </button>
                     </div>
                     {showIpa && (
-                      <div className="font-ipa text-[0.75rem] text-[#00f3ff]">
+                      <div className="font-ipa text-[0.75rem]">
                         <Highlight
                           text={item.ipa}
                           target={
@@ -1276,7 +1267,7 @@ export default function ContractionPage() {
                       </button>
                     </div>
                     {showIpa && (
-                      <div className="font-ipa text-[0.75rem] text-[#00f3ff]">
+                      <div className="font-ipa text-[0.75rem]">
                         <Highlight
                           text={item.ipa}
                           target={
@@ -1294,12 +1285,7 @@ export default function ContractionPage() {
           </div>
 
           <div className="flex justify-between items-center mb-3">
-            <button
-              onClick={() => setShowIpa(!showIpa)}
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              {showIpa ? "Hide IPA / Phonetics" : "Show IPA / Phonetics"}
-            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
             <button
               onClick={() =>
                 playSequence(
@@ -1347,7 +1333,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1373,7 +1359,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1394,7 +1380,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipa}
                               target={
@@ -1508,12 +1494,7 @@ export default function ContractionPage() {
           </div>
 
           <div className="flex justify-between items-center mb-3">
-            <button
-              onClick={() => setShowIpa(!showIpa)}
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              {showIpa ? "Hide IPA / Phonetics" : "Show IPA / Phonetics"}
-            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
             <button
               onClick={() =>
                 playSequence(
@@ -1564,7 +1545,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1590,7 +1571,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1614,7 +1595,7 @@ export default function ContractionPage() {
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem] text-[#00f3ff]">
+                          <span className="font-ipa text-[0.85rem]">
                             <Highlight
                               text={item.ipa}
                               target={
@@ -1661,4 +1642,3 @@ export default function ContractionPage() {
     </div>
   );
 }
-

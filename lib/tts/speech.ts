@@ -43,11 +43,29 @@ export type SpeakOptions = {
   preferEnglish?: boolean;
   preferredEnglish?: PreferredEnglishLang;
   contentType?: ContentType;
-  rate?: number;       // overrides contentType default rate if provided
+  rate?: number;       // base rate (overrides contentType default). Will be multiplied by global speed.
   pitch?: number;
   volume?: number;
   cancelBeforeSpeak?: boolean;
 };
+
+// ─────────────────────────────────────────────
+// GLOBAL SPEED STATE (LocalStorage)
+// ─────────────────────────────────────────────
+
+export function getGlobalPlaybackSpeed(): number {
+  if (typeof window !== 'undefined') {
+    const val = localStorage.getItem('tts_global_speed');
+    if (val && !isNaN(Number(val))) return Number(val);
+  }
+  return 1;
+}
+
+export function setGlobalPlaybackSpeed(speed: number) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('tts_global_speed', speed.toString());
+  }
+}
 
 // ─────────────────────────────────────────────
 // RATE TABLE PER CONTENT TYPE
@@ -456,11 +474,10 @@ export function createUtterance(
     utterance.lang = selectedVoice.lang;
   }
 
-  // Rate: explicit option wins, else use content-type default
-  utterance.rate =
-    options?.rate !== undefined
-      ? options.rate
-      : CONTENT_TYPE_RATE[contentType];
+  // Rate: base rate (explicit or content-type default) * global speed multiplier
+  const globalSpeed = getGlobalPlaybackSpeed();
+  const baseRate = options?.rate !== undefined ? options.rate : CONTENT_TYPE_RATE[contentType];
+  utterance.rate = baseRate * globalSpeed;
 
   utterance.pitch = options?.pitch ?? 1;
   utterance.volume = options?.volume ?? 1;

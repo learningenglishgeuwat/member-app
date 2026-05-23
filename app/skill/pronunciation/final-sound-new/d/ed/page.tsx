@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Play, Square } from 'lucide-react';
+import { ControlCenter, IpaVisibilityToggle } from '@/app/components';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -29,27 +30,27 @@ const PAST_ENDING_RULES = [
     ending: '/t/',
     trigger: 'Setelah bunyi voiceless (kecuali /t/).',
     examples: [
-      { word: 'worked', ipa: '/w\u025C\u02D0rkt/' },
-      { word: 'washed', ipa: '/w\u0252\u0283t/' },
-      { word: 'stopped', ipa: '/st\u0252pt/' },
+      { wordBefore: 'work', ipaBefore: '/w\u025C\u02D0rk/', word: 'worked', ipa: '/w\u025C\u02D0rkt/' },
+      { wordBefore: 'wash', ipaBefore: '/w\u0252\u0283/', word: 'washed', ipa: '/w\u0252\u0283t/' },
+      { wordBefore: 'stop', ipaBefore: '/st\u0252p/', word: 'stopped', ipa: '/st\u0252pt/' },
     ],
   },
   {
     ending: '/d/',
     trigger: 'Setelah bunyi voiced (kecuali /d/).',
     examples: [
-      { word: 'played', ipa: '/ple\u026Ad/' },
-      { word: 'cleaned', ipa: '/kli\u02D0nd/' },
-      { word: 'called', ipa: '/k\u0254\u02D0ld/' },
+      { wordBefore: 'play', ipaBefore: '/ple\u026A/', word: 'played', ipa: '/ple\u026Ad/' },
+      { wordBefore: 'clean', ipaBefore: '/kli\u02D0n/', word: 'cleaned', ipa: '/kli\u02D0nd/' },
+      { wordBefore: 'call', ipaBefore: '/k\u0254\u02D0l/', word: 'called', ipa: '/k\u0254\u02D0ld/' },
     ],
   },
   {
     ending: '/\u026Ad/',
     trigger: 'Setelah bunyi /t/ atau /d/.',
     examples: [
-      { word: 'wanted', ipa: '/\u02C8w\u0252nt\u026Ad/' },
-      { word: 'needed', ipa: '/\u02C8ni\u02D0d\u026Ad/' },
-      { word: 'decided', ipa: '/d\u026A\u02C8sa\u026Ad\u026Ad/' },
+      { wordBefore: 'want', ipaBefore: '/w\u0252nt/', word: 'wanted', ipa: '/\u02C8w\u0252nt\u026Ad/' },
+      { wordBefore: 'need', ipaBefore: '/ni\u02D0d/', word: 'needed', ipa: '/\u02C8ni\u02D0d\u026Ad/' },
+      { wordBefore: 'decide', ipaBefore: '/d\u026A\u02C8sa\u026Ad/', word: 'decided', ipa: '/d\u026A\u02C8sa\u026Ad\u026Ad/' },
     ],
   },
 ] as const;
@@ -57,6 +58,7 @@ const PAST_ENDING_RULES = [
 const PAST_ENDING_EXAMPLES_FLAT = PAST_ENDING_RULES.flatMap((rule) =>
   rule.examples.map((example) => ({
     key: `${rule.ending}-${example.word}`,
+    wordBefore: example.wordBefore,
     word: example.word,
   })),
 );
@@ -313,7 +315,7 @@ export default function FinalSoundDEdPage() {
   const singlePlayRunIdRef = useRef(0);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordBankRowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
-  const pastEndingItemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const pastEndingItemRefs = useRef<Array<HTMLDivElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [openSections, setOpenSections] = useState(() => {
@@ -589,6 +591,10 @@ export default function FinalSoundDEdPage() {
       });
       await sleep(120);
       if (runId !== pastEndingsPlayAllRunIdRef.current) break;
+      await speakQueuedText(item.wordBefore, runId, pastEndingsPlayAllRunIdRef);
+      if (runId !== pastEndingsPlayAllRunIdRef.current) break;
+      await sleep(120);
+      if (runId !== pastEndingsPlayAllRunIdRef.current) break;
       await speakQueuedText(item.word, runId, pastEndingsPlayAllRunIdRef);
       if (runId !== pastEndingsPlayAllRunIdRef.current) break;
       await sleep(140);
@@ -768,11 +774,15 @@ export default function FinalSoundDEdPage() {
                 <article key={rule.ending} className="fs-topic-card">
                   <h3 className="fs-topic-card-title">Dibaca {rule.ending}</h3>
                   <p className="fs-topic-card-note">{rule.trigger}</p>
-                  <ul className="fs-topic-example-list">
+                  <div className="flex flex-col gap-3 mt-3">
                     {rule.examples.map((example) => (
-                      <li
+                      <div
                         key={example.word}
-                        className={activePastEndingKey === `${rule.ending}-${example.word}` ? 'is-speaking' : ''}
+                        className={`bg-[#101414] border rounded-lg p-4 transition-all duration-300 flex flex-col gap-3 relative overflow-hidden ${
+                          activePastEndingKey === `${rule.ending}-${example.word}`
+                            ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
+                            : 'border-white/15 hover:border-cyan-300/70'
+                        }`}
                         ref={(node) => {
                           const flatIndex = PAST_ENDING_EXAMPLES_FLAT.findIndex(
                             (item) => item.key === `${rule.ending}-${example.word}`,
@@ -782,25 +792,53 @@ export default function FinalSoundDEdPage() {
                           }
                         }}
                       >
-                        <div className="fs-topic-table-example-row">
-                          <span>
-                            {example.word}
-                            {showPastEndingsIpa ? ` ${example.ipa}` : ''}
-                          </span>
-                          <button
-                            type="button"
-                            className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                            aria-label={`Putar ${example.word}`}
-                            title="Putar"
-                            onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
-                          >
-                            <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                            <span className="fs-topic-visually-hidden">Putar</span>
-                          </button>
+                        <div className="font-sans font-bold text-white uppercase text-xs tracking-wider opacity-80 border-b border-white/10 pb-2 mb-1">
+                          {rule.ending} ending
                         </div>
-                      </li>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2 text-white/55">
+                            <span className="font-mono text-[10px] uppercase tracking-wider opacity-80 whitespace-nowrap min-w-[45px]">
+                              Before
+                            </span>
+                            <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
+                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                                {example.wordBefore}
+                                {showPastEndingsIpa ? <span className="font-mono text-xs opacity-70 ml-1">{example.ipaBefore}</span> : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void playPastEndingSingle(example.wordBefore, `${rule.ending}-${example.word}`)}
+                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.wordBefore}`}
+                              >
+                                <Play className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-white/80">
+                            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap min-w-[45px]">
+                              After
+                            </span>
+                            <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                                {example.word}
+                                {showPastEndingsIpa ? <span className="font-mono text-sm opacity-70 ml-1">{example.ipa}</span> : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.word}`}
+                              >
+                                <Play className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </article>
               ))}
               </div>
@@ -1082,6 +1120,82 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
       </main>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Past Endings
+            </span>
+            <button
+              type="button"
+              onClick={() => void handlePastEndingsPlayAll()}
+              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
+            >
+              <span className="tracking-widest font-bold">PLAY PAST ENDINGS</span>
+              {isPlayingPastEndingsAll ? (
+                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
+              ) : (
+                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
+              )}
+            </button>
+            <IpaVisibilityToggle
+              checked={showPastEndingsIpa}
+              onChange={setShowPastEndingsIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Past Endings IPA"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Rules Table
+            </span>
+            <button
+              type="button"
+              onClick={() => void handleRulesTablePlayAll()}
+              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
+            >
+              <span className="tracking-widest font-bold">PLAY RULES TABLE</span>
+              {isPlayingRulesTableAll ? (
+                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
+              ) : (
+                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
+              )}
+            </button>
+            <IpaVisibilityToggle
+              checked={showRulesTableIpa}
+              onChange={setShowRulesTableIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Rules Table IPA"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Word Bank
+            </span>
+            <button
+              type="button"
+              onClick={() => void handleWordBankPlayAll()}
+              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
+            >
+              <span className="tracking-widest font-bold">PLAY WORD BANK</span>
+              {isPlayingWordBankAll ? (
+                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
+              ) : (
+                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
+              )}
+            </button>
+            <IpaVisibilityToggle
+              checked={showWordBankIpa}
+              onChange={setShowWordBankIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Word Bank IPA"
+            />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="d-ed-recording-anchor"

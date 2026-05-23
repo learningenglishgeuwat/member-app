@@ -75,7 +75,7 @@
 .symbol-detail-container .symbol-text {
   font-size: clamp(1.5rem, 6vw, 3rem); /* 24px mobile - 48px desktop (H1) */
   font-weight: bold;
-  color: white;
+  color: var(--color-ipa);
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
   font-family: var(--font-ipa);
 }
@@ -326,7 +326,7 @@
 
 .symbol-detail-container .word-ipa {
   font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
-  color: #be29ec;
+  color: var(--color-ipa);
   font-family: var(--font-ipa);
 }
 

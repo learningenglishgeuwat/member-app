@@ -488,7 +488,7 @@
 
 .vocab-ipa {
   margin: 0.28rem 0 0;
-  color: rgba(210, 230, 220, 0.78);
+  color: var(--color-ipa);
   font-size: 0.82rem;
   line-height: 1.45;
   font-family: var(--font-ipa);
@@ -518,7 +518,7 @@
 
 .vocab-example-ipa {
   margin: 0.22rem 0 0;
-  color: #f2fff5;
+  color: var(--color-ipa);
   font-size: 0.85rem;
   font-style: italic;
   line-height: 1.45;

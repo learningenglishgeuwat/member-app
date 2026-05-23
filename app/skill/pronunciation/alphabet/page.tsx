@@ -13,6 +13,7 @@ import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
 import { useHaptic } from '@/lib/haptic/useHaptic';
 import {
   isSpeechSynthesisSupported,
@@ -71,6 +72,7 @@ const AlphabetPage: React.FC = () => {
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [showPracticeIpa, setShowPracticeIpa] = useState(true);
+  const [showIpa, setShowIpa] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [spellingInput, setSpellingInput] = useState('');
   const [spellingStatus, setSpellingStatus] = useState<'idle' | 'correct' | 'wrong' | 'empty'>('idle');
@@ -569,6 +571,7 @@ const AlphabetPage: React.FC = () => {
               ipa={item.ipa}
               isPlaying={currentPlayingLetter === item.letter}
               onPlay={() => handlePlayLetter(item.letter)}
+              showIpa={showIpa}
             />
           ))}
         </div>
@@ -750,9 +753,13 @@ const AlphabetPage: React.FC = () => {
                         <span>- {countryEntry.name}</span>
                         {showPracticeIpa && (
                           <>
-                            <span className="alphabet-practice-country-ipa">IPA kata: {countryEntry.ipa}</span>
                             <span className="alphabet-practice-country-ipa">
-                              IPA spelling: {getSpellingIpa(countryEntry.name)}
+                              <span className="ipa-label">IPA kata: </span>
+                              {countryEntry.ipa}
+                            </span>
+                            <span className="alphabet-practice-country-ipa">
+                              <span className="ipa-label">IPA spelling: </span>
+                              {getSpellingIpa(countryEntry.name)}
                             </span>
                           </>
                         )}
@@ -818,6 +825,24 @@ const AlphabetPage: React.FC = () => {
           )}
         </section>
       </main>
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Actions</span>
+            <button onClick={handlePlayAll} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY ALPHABET</span>
+              {isPlayingAll ? <Square className={`w-5 h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400`} /> : <Play className={`w-5 h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400`} />}
+            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-6" label="Show Alphabet IPA" />
+            
+            <button onClick={handlePlayAllPracticeCountries} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY PRACTICE</span>
+              {isPlayingPracticeAll ? <Square className={`w-5 h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400`} /> : <Play className={`w-5 h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400`} />}
+            </button>
+            <IpaVisibilityToggle checked={showPracticeIpa} onChange={setShowPracticeIpa} className="w-full flex justify-between text-[10px] sm:text-xs" label="Practice IPA" />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="alphabet-recording-anchor"

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, Gauge, Play, Volume2 } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
+import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -47,16 +48,16 @@ function Toggle({
   activeClass?: string;
 }) {
   return (
-    <label className="flex items-center gap-3 cursor-pointer group">
+    <label className="flex w-full justify-between items-center gap-3 cursor-pointer group">
       <span
         className={cx(
-          'font-mono text-xs sm:text-sm tracking-widest text-white/55 uppercase transition-colors',
-          checked ? activeClass : 'group-hover:text-cyan-100',
+          'font-mono text-[9px] sm:text-[10px] tracking-widest text-white/55 uppercase transition-colors',
+          checked ? activeClass : 'group-hover:text-orange-200',
         )}
       >
         {label}
       </span>
-      <span className="relative">
+      <span className="relative flex items-center">
         <input
           type="checkbox"
           className="sr-only peer"
@@ -65,16 +66,29 @@ function Toggle({
         />
         <span
           className={cx(
-            'block w-11 h-6 rounded-full border-2 bg-transparent transition-all',
-            checked ? 'border-cyan-300 shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'border-white/25',
+            'block w-12 h-6 rounded-full transition-all duration-300',
+            checked 
+              ? 'bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.6)]' 
+              : 'bg-[#1a1f24] border-2 border-white/20'
           )}
         />
         <span
           className={cx(
-            'absolute top-1 left-1 w-3.5 h-3.5 rounded-full transition-all',
-            checked ? 'translate-x-5 bg-cyan-300 shadow-[0_0_8px_#00f0ff]' : 'bg-white/35',
+            'absolute left-[3px] top-[3px] w-[18px] h-[18px] rounded-full transition-transform duration-300 flex items-center justify-center',
+            checked 
+              ? 'translate-x-6 bg-[#101414] shadow-md' 
+              : 'translate-x-0 bg-white/40'
           )}
-        />
+        >
+          <span
+            className={cx(
+              'rounded-full transition-all duration-300',
+              checked 
+                ? 'w-[10px] h-[10px] bg-orange-500 shadow-[0_0_6px_#f97316]' 
+                : 'w-0 h-0 bg-transparent'
+            )}
+          />
+        </span>
       </span>
     </label>
   );
@@ -162,7 +176,6 @@ export default function LinkingWordPage() {
   const categories = data as unknown as LinkingWordCategory[];
   const [activeTab, setActiveTab] = useState(0);
   const [activeSubTab, setActiveSubTab] = useState('All');
-  const [speed, setSpeed] = useState(1);
   const [showIpa, setShowIpa] = useState(true);
   const [highlightZone, setHighlightZone] = useState(true);
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -217,7 +230,6 @@ export default function LinkingWordPage() {
       await speakText(text, {
         preferEnglish: true,
         preferredEnglish: 'en-US',
-        rate: speed,
         pitch: 1,
         volume: 1,
         cancelBeforeSpeak: false,
@@ -229,7 +241,7 @@ export default function LinkingWordPage() {
         await new Promise((resolve) => window.setTimeout(resolve, pauseAfter));
       }
     },
-    [activeTab, speed],
+    [activeTab],
   );
 
   const playItemSequence = useCallback(
@@ -305,7 +317,7 @@ export default function LinkingWordPage() {
   if (!currentCategory) return null;
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-white pt-16 sm:pt-20">
       <div className="fixed top-4 left-4 z-50">
         <BackButton to="/skill/pronunciation" />
       </div>
@@ -319,13 +331,13 @@ export default function LinkingWordPage() {
 
       <nav className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur overflow-x-auto no-scrollbar-mobile">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="flex whitespace-nowrap py-4 gap-6">
+          <div className="flex whitespace-nowrap py-3 sm:py-4 gap-3 sm:gap-6">
             {categories.map((category, index) => (
               <button
                 key={category.category}
                 onClick={() => handleTabChange(index)}
                 className={cx(
-                  'font-mono text-sm uppercase transition-all pb-2 border-b-2',
+                  'font-mono text-[10px] sm:text-sm uppercase transition-all pb-1.5 sm:pb-2 border-b-2',
                   activeTab === index
                     ? 'text-cyan-200 border-cyan-300'
                     : 'text-white/45 border-transparent hover:text-cyan-100',
@@ -338,45 +350,27 @@ export default function LinkingWordPage() {
         </div>
       </nav>
 
-      <div className="sticky top-[57px] z-30 border-b border-white/10 bg-[#101314]/95 backdrop-blur">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => void playAll(false)}
-              className="bg-cyan-300 text-cyan-950 px-4 py-2 font-mono text-sm uppercase rounded flex items-center gap-2 hover:brightness-110 transition-all"
-            >
-              <Play className="w-4 h-4 fill-current stroke-current" />
-              PLAY ALL
-            </button>
-            <div className="flex items-center gap-2 border border-white/15 rounded px-3 py-1.5 bg-black/30 hover:border-cyan-300/50 transition-colors">
-              <Gauge className="w-4 h-4 text-white/45" />
-              <select
-                title="Playback Speed"
-                className="bg-transparent border-none text-white font-mono text-sm p-0 focus:ring-0 outline-none cursor-pointer appearance-none pr-8"
-                value={speed}
-                onChange={(event) => setSpeed(Number(event.target.value))}
-              >
-                <option value={0.5} className="bg-black">0.5x</option>
-                <option value={0.8} className="bg-black">0.8x</option>
-                <option value={1} className="bg-black">1.0x</option>
-                <option value={1.2} className="bg-black">1.2x</option>
-                <option value={1.5} className="bg-black">1.5x</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-white/40 -ml-7 pointer-events-none" />
-            </div>
-          </div>
+      <ControlCenter>
+        <button
+          onClick={() => void playAll(false)}
+          className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-4"
+        >
+          <span className="tracking-widest font-bold">PLAY ALL</span>
+          <Play className={cx("w-3 h-3 sm:w-5 sm:h-5 transition-colors", playingId ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400")} />
+        </button>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Toggle label="SHOW IPA" checked={showIpa} onChange={setShowIpa} />
-            <Toggle
-              label="HIGHLIGHT LINKING ZONE"
-              checked={highlightZone}
-              onChange={setHighlightZone}
-              activeClass="text-orange-400"
-            />
-          </div>
+        <hr className="border-white/10 my-2 sm:my-4" />
+
+        <div className="flex flex-col gap-3 sm:gap-6">
+          <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          <Toggle
+            label="HIGHLIGHT LINKING ZONE"
+            checked={highlightZone}
+            onChange={setHighlightZone}
+            activeClass="text-orange-400"
+          />
         </div>
-      </div>
+      </ControlCenter>
 
       <main className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <header className="mb-10 sm:mb-12">
@@ -585,7 +579,7 @@ function PhraseCard({
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 flex-wrap">
             {item.ipaBefore && (
               <div className="flex items-center gap-2 text-white/55">
-                <span className="font-mono text-[10px] uppercase tracking-wider opacity-80 whitespace-nowrap">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 opacity-80 whitespace-nowrap">
                   Before
                 </span>
                 <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
@@ -613,7 +607,7 @@ function PhraseCard({
 
             {item.ipa && (
               <div className="flex items-center gap-2 text-white/80">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 whitespace-nowrap">
                   After
                 </span>
                 <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">

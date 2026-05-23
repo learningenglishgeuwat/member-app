@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { Highlighter, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { ControlCenter } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { READING_TEXT_MATERIALS, type ReadingTextMaterial } from './data/readingTexts';
@@ -19,6 +21,31 @@ const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
 const READING_TEXT_PROGRESS_ID = 'readingTextPractice';
 
 type TabKey = 'origin' | 'phonetic';
+type HighlightMapKey = 'ipa' | 'examples';
+type HighlightLegendItem = {
+  key: HighlightMapKey;
+  color: string;
+  label: string;
+  description: string;
+};
+
+const getHighlightLegendItems = (activeTab: TabKey): HighlightLegendItem[] => [
+  {
+    key: 'ipa',
+    color: '#00E5FF',
+    label: 'Cyan',
+    description:
+      activeTab === 'phonetic'
+        ? 'Transkripsi fonetik yang sedang dibaca'
+        : 'Dipakai di tab Phonetic Transcription',
+  },
+  {
+    key: 'examples',
+    color: '#a5b4fc',
+    label: 'Example',
+    description: 'Contoh bunyi atau kata yang ditandai di Origin Text',
+  },
+];
 
 const calcPronunciationAverage = (progress: Record<string, number>): number => {
   const values = Object.values(progress).filter(
@@ -67,6 +94,11 @@ export default function ReadingTextForPracticePage() {
   const [activeTab, setActiveTab] = useState<TabKey>('origin');
   const [activeSpeechMode, setActiveSpeechMode] = useState<'all' | 'single' | null>(null);
   const [activeParagraphKey, setActiveParagraphKey] = useState<string | null>(null);
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
+  const [highlightMapEnabled, setHighlightMapEnabled] = useState<Record<HighlightMapKey, boolean>>({
+    ipa: true,
+    examples: true,
+  });
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const speechTokenRef = useRef(0);
 
@@ -85,6 +117,14 @@ export default function ReadingTextForPracticePage() {
     const blocks = (selectedMaterial?.phoneticText ?? '').split(/\n\s*\n/g).map((block) => normalizeParagraph(block));
     return blocks.filter(Boolean);
   }, [selectedMaterial?.phoneticText]);
+  const highlightLegendItems = useMemo(() => getHighlightLegendItems(activeTab), [activeTab]);
+
+  const toggleHighlightMapItem = useCallback((key: HighlightMapKey) => {
+    setHighlightMapEnabled((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  }, []);
 
   const stopAllSpeech = useCallback(() => {
     speechTokenRef.current += 1;
@@ -265,7 +305,13 @@ export default function ReadingTextForPracticePage() {
   }, []);
 
   return (
-    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--reading-text rt-page">
+    <div
+      className={`pronunciation-layout pronunciation-theme pronunciation-theme--reading-text rt-page ${
+        isHighlightEnabled ? '' : 'rt-highlight-off'
+      } ${highlightMapEnabled.ipa ? '' : 'rt-ipa-highlight-off'} ${
+        highlightMapEnabled.examples ? '' : 'rt-example-highlight-off'
+      }`}
+    >
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation" />
       </div>
@@ -420,6 +466,76 @@ export default function ReadingTextForPracticePage() {
           </div>
         </article>
       </main>
+
+      <ControlCenter>
+        <button
+          type="button"
+          onClick={() => setIsHighlightEnabled((prev) => !prev)}
+          className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
+            isHighlightEnabled
+              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
+              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+          }`}
+          aria-pressed={isHighlightEnabled}
+        >
+          <span className="tracking-widest font-bold">HIGHLIGHT</span>
+          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+        </button>
+
+        {isHighlightEnabled ? (
+          <div className="rounded-lg sm:rounded-xl border border-white/10 bg-[#1a1f24]/80 px-2 py-2 sm:px-4 sm:py-3">
+            <p className="mb-2 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45">
+              Highlight Map
+            </p>
+            <div className="flex flex-col gap-2">
+              {highlightLegendItems.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={`flex w-full items-start gap-2 rounded-lg border px-2 py-2 text-left transition-all ${
+                    highlightMapEnabled[item.key]
+                      ? 'border-white/10 bg-white/[0.03] text-white/80'
+                      : 'border-white/5 bg-transparent text-white/35'
+                  }`}
+                  onClick={() => toggleHighlightMapItem(item.key)}
+                  aria-pressed={highlightMapEnabled[item.key]}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor] sm:h-3 sm:w-3 ${
+                      highlightMapEnabled[item.key] ? '' : 'opacity-30 grayscale'
+                    }`}
+                    style={{ backgroundColor: item.color, color: item.color }}
+                  />
+                  <span className="min-w-0">
+                    <span className="block font-mono text-[8px] font-bold uppercase tracking-wider sm:text-[10px]">
+                      {item.label}
+                    </span>
+                    <span className="block text-[9px] leading-snug text-white/50 sm:text-xs">
+                      {item.description}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <hr className="border-white/10" />
+
+        <button
+          type="button"
+          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
+            activeSpeechMode === 'all' ? 'is-active' : ''
+          }`}
+          onClick={togglePlayAll}
+        >
+          <span className="tracking-widest font-bold">
+            {activeSpeechMode === 'all' ? 'STOP TEXT' : 'PLAY TEXT'}
+          </span>
+          <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${activeSpeechMode === 'all' ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+        </button>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="rt-recording-anchor"

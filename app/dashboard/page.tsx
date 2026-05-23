@@ -69,6 +69,15 @@ function DashboardContent() {
     setIsTourGuideBootstrapped(true)
   }
 
+  const handleResetTourGuide = () => {
+    try {
+      window.localStorage.setItem(TOURGUIDE_COLLAPSED_STORAGE_KEY, '1')
+    } catch {
+      // Ignore storage errors (e.g. private mode).
+    }
+    setIsTourGuideBootstrapped(false)
+  }
+
   const handleStartJourney = () => {
     setIsSidebarOpen(false)
     handleViewChange('dashboard')
@@ -203,6 +212,7 @@ function DashboardContent() {
           toggleSidebar={toggleSidebar}
           isTourGuideBootstrapped={isTourGuideBootstrapped}
           handleEnableTourGuide={handleEnableTourGuide}
+          handleResetTourGuide={handleResetTourGuide}
           handleStartJourney={handleStartJourney}
         />
       </main>

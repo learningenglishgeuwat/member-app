@@ -208,7 +208,7 @@
 
 .stress-ipa {
   margin-top: 0.2rem;
-  color: var(--pronun-muted, #c4b5fd);
+  color: var(--color-ipa);
   font-size: 0.75rem;
   line-height: 1.5;
   font-family: var(--font-ipa);

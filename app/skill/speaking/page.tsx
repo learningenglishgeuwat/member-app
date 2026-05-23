@@ -239,18 +239,7 @@ export default function SpeakingRoadmapPage() {
               </label>
 
               <div className="spk-roadmap-controls" aria-label="Roadmap controls">
-                <button
-                  type="button"
-                  className={`spk-control-btn spk-control-btn--secondary ${showIdTranslation ? 'is-active' : ''}`}
-                  onClick={() => {
-                    const next = !showIdTranslation;
-                    setShowIdTranslation(next);
-                    writeSpeakingShowTranslation(next);
-                  }}
-                  aria-pressed={showIdTranslation}
-                >
-                  {showIdTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
-                </button>
+                
                 {search.trim() ? (
                   <button
                     type="button"

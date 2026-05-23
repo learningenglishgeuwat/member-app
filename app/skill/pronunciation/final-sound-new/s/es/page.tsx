@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Play } from 'lucide-react';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -51,27 +51,27 @@ const S_ES_USAGE_RULES = [
     ending: '/s/',
     trigger: 'Setelah bunyi voiceless non-sibilant (contoh: /p/, /k/, /t/, /f/).',
     examples: [
-      { label: 'Plural', word: 'cats', ipa: '/k\u00E6ts/' },
-      { label: 'Third-person singular', word: 'works', ipa: '/w\u025D\u02D0rks/' },
-      { label: 'Possessive', word: "Kate's", ipa: '/ke\u026Ats/' },
+      { label: 'Plural', wordBefore: 'cat', ipaBefore: '/kæt/', word: 'cats', ipa: '/kæts/' },
+      { label: 'Third-person singular', wordBefore: 'work', ipaBefore: '/wɝːrk/', word: 'works', ipa: '/wɝːrks/' },
+      { label: 'Possessive', wordBefore: 'Kate', ipaBefore: '/keɪt/', word: "Kate's", ipa: '/keɪts/' },
     ],
   },
   {
     ending: '/z/',
     trigger: 'Setelah bunyi voiced non-sibilant dan vokal.',
     examples: [
-      { label: 'Plural', word: 'dogs', ipa: '/d\u0254\u0261z/' },
-      { label: 'Third-person singular', word: 'runs', ipa: '/r\u028Cnz/' },
-      { label: 'Possessive', word: "Bob's", ipa: '/b\u0251bz/' },
+      { label: 'Plural', wordBefore: 'dog', ipaBefore: '/dɔɡ/', word: 'dogs', ipa: '/dɔɡz/' },
+      { label: 'Third-person singular', wordBefore: 'run', ipaBefore: '/rʌn/', word: 'runs', ipa: '/rʌnz/' },
+      { label: 'Possessive', wordBefore: 'Bob', ipaBefore: '/bɑb/', word: "Bob's", ipa: '/bɑbz/' },
     ],
   },
   {
-    ending: '/\u026Az/',
-    trigger: 'Setelah sibilant: /s/, /z/, /\u0283/, /\u0292/, /t\u0283/, /d\u0292/.',
+    ending: '/ɪz/',
+    trigger: 'Setelah sibilant: /s/, /z/, /ʃ/, /ʒ/, /tʃ/, /dʒ/.',
     examples: [
-      { label: 'Plural', word: 'buses', ipa: '/\u02C8b\u028Cs\u026Az/' },
-      { label: 'Third-person singular', word: 'washes', ipa: '/\u02C8w\u0251\u0283\u026Az/' },
-      { label: 'Possessive', word: "Rose's", ipa: '/\u02C8ro\u028Az\u026Az/' },
+      { label: 'Plural', wordBefore: 'bus', ipaBefore: '/bʌs/', word: 'buses', ipa: '/ˈbʌsɪz/' },
+      { label: 'Third-person singular', wordBefore: 'wash', ipaBefore: '/wɑʃ/', word: 'washes', ipa: '/ˈwɑʃɪz/' },
+      { label: 'Possessive', wordBefore: 'Rose', ipaBefore: '/roʊz/', word: "Rose's", ipa: '/ˈroʊzɪz/' },
     ],
   },
 ] as const;
@@ -79,6 +79,7 @@ const S_ES_USAGE_RULES = [
 const S_ES_PLURAL_RULE_EXAMPLES = S_ES_USAGE_RULES.flatMap((rule) =>
   rule.examples.map((example) => ({
     key: `${rule.ending}-${example.label}`,
+    wordBefore: example.wordBefore,
     word: example.word,
   })),
 );
@@ -312,7 +313,7 @@ export default function FinalSoundSEsPage() {
   const singlePlayRunIdRef = useRef(0);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordBankRowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
-  const pluralExampleRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const pluralExampleRefs = useRef<Array<HTMLDivElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [openSections, setOpenSections] = useState(() => {
@@ -574,6 +575,10 @@ export default function FinalSoundSEsPage() {
       });
       await sleep(120);
       if (runId !== pluralPlayAllRunIdRef.current) break;
+      await speakQueuedText(item.wordBefore, runId, pluralPlayAllRunIdRef);
+      if (runId !== pluralPlayAllRunIdRef.current) break;
+      await sleep(120);
+      if (runId !== pluralPlayAllRunIdRef.current) break;
       await speakQueuedText(item.word, runId, pluralPlayAllRunIdRef);
       if (runId !== pluralPlayAllRunIdRef.current) break;
       await sleep(150);
@@ -753,12 +758,14 @@ export default function FinalSoundSEsPage() {
                 <article key={rule.ending} className="fs-topic-card">
                   <h3 className="fs-topic-card-title">Dibaca {rule.ending}</h3>
                   <p className="fs-topic-card-note">{rule.trigger}</p>
-                  <ul className="fs-topic-example-list s-es-rule-example-list">
+                  <div className="flex flex-col gap-3 mt-3">
                     {rule.examples.map((example) => (
-                      <li
+                      <div
                         key={`${rule.ending}-${example.label}`}
-                        className={`s-es-rule-example-item ${
-                          activePluralExampleKey === `${rule.ending}-${example.label}` ? 'is-speaking' : ''
+                        className={`bg-[#101414] border rounded-lg p-4 transition-all duration-300 flex flex-col gap-3 relative overflow-hidden ${
+                          activePluralExampleKey === `${rule.ending}-${example.label}` 
+                            ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]' 
+                            : 'border-white/15 hover:border-cyan-300/70'
                         }`}
                         ref={(node) => {
                           const flatIndex = S_ES_PLURAL_RULE_EXAMPLES.findIndex(
@@ -769,25 +776,53 @@ export default function FinalSoundSEsPage() {
                           }
                         }}
                       >
-                        <div className="fs-topic-table-example-row s-es-rule-example-row">
-                          <span>
-                            <strong>{example.label}:</strong> {example.word}
-                            {showPluralIpa ? ` ${example.ipa}` : ''}
-                          </span>
-                          <button
-                            type="button"
-                            className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                            aria-label={`Putar ${example.word}`}
-                            title="Putar"
-                            onClick={() => void speakWithBestEnglishVoice(example.word)}
-                          >
-                            <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                            <span className="fs-topic-visually-hidden">Putar</span>
-                          </button>
+                        <div className="font-sans font-bold text-white uppercase text-xs tracking-wider opacity-80 border-b border-white/10 pb-2 mb-1">
+                          {example.label}
                         </div>
-                      </li>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2 text-white/55">
+                            <span className="font-mono text-[10px] uppercase tracking-wider opacity-80 whitespace-nowrap min-w-[45px]">
+                              Before
+                            </span>
+                            <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
+                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                                {example.wordBefore}
+                                {showPluralIpa ? <span className="font-mono text-xs opacity-70 ml-1">{example.ipaBefore}</span> : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void speakWithBestEnglishVoice(example.wordBefore)}
+                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.wordBefore}`}
+                              >
+                                <Play className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-white/80">
+                            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap min-w-[45px]">
+                              After
+                            </span>
+                            <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                                {example.word}
+                                {showPluralIpa ? <span className="font-mono text-sm opacity-70 ml-1">{example.ipa}</span> : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void speakWithBestEnglishVoice(example.word)}
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.word}`}
+                              >
+                                <Play className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </article>
               ))}
               </div>

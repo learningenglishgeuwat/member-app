@@ -263,7 +263,7 @@
 .tt-ipa-text {
   margin: 0;
   font-family: var(--font-ipa);
-  color: #00f3ff;
+  color: var(--color-ipa);
   font-size: 0.9rem;
   line-height: 1.35;
 }
@@ -277,7 +277,7 @@
 .tt-ipa-item {
   margin: 0;
   font-family: var(--font-ipa);
-  color: #00f3ff;
+  color: var(--color-ipa);
   font-size: 0.9rem;
   line-height: 1.35;
 }

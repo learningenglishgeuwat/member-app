@@ -197,7 +197,7 @@
   font-size: 1.35rem;
   font-weight: 700;
   font-family: var(--font-ipa);
-  color: #f7e8ff;
+  color: var(--color-ipa);
   box-shadow: inset 0 0 14px rgba(160, 80, 235, 0.18);
 }
 
@@ -279,7 +279,7 @@
 }
 
 .sps-ipa {
-  color: #dbb3ff;
+  color: var(--color-ipa);
   font-family: var(--font-ipa);
   font-size: 0.66rem;
   line-height: 1.1;

@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import { BookOpen, Mic, Volume2, MessageCircle, BarChart3, Lock } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { BookOpen, Mic, Volume2, MessageCircle, BarChart3, Lock, Download, Upload } from 'lucide-react';
 import Link from 'next/link';
 import { VOCABULARY_TOPICS } from '../../../skill/vocabulary/topic/data/topics';
 import { SPEAKING_GOALS } from '../../../skill/speaking/data/goals';
 import { SPEAKING_PHASES } from '../../../skill/speaking/data/phases';
 import { AUTHORED_SPEAKING_GOAL_IDS } from '../../../skill/speaking/data/details/authored-goals';
-import { SPEAKING_GOALS as GRAMMAR_FOR_SPEAKING_GOALS } from '../../../skill/grammar/analisis-grammar-for-speaking/data/speakingGoals';
 import {
   SPEAKING_GOAL_COMPLETION_KEY,
   SPEAKING_PRACTICE_WITH_GEUWAT_PREFIX,
@@ -57,9 +56,68 @@ const PRONUNCIATION_ROADMAP_CHECKLIST_KEY = 'dashboard-pronunciation-roadmap-che
 const VOCABULARY_PROGRESS_KEY = 'vocabularyProgress';
 const VOCABULARY_ROADMAP_CHECKLIST_KEY = 'dashboard-vocabulary-roadmap-checklist-v1';
 const SAVED_ASSESSMENTS_KEY = 'savedAssessments';
-const GRAMMAR_FOR_SPEAKING_PROGRESS_KEY = 'gfs_goal_progress_v1';
-const GRAMMAR_FOR_SPEAKING_GOAL_IDS = new Set(GRAMMAR_FOR_SPEAKING_GOALS.map((goal) => goal.goalId));
 const ROADMAP_LESSON_DETAIL_PREFIX = 'lesson:';
+const TRANSFER_MEMORY_KEYS = [
+  'pronunciationProgress',
+  'dashboardProgress',
+  PRONUNCIATION_ROADMAP_CHECKLIST_KEY,
+  VOCABULARY_PROGRESS_KEY,
+  VOCABULARY_ROADMAP_CHECKLIST_KEY,
+  SAVED_ASSESSMENTS_KEY,
+  SPEAKING_GOAL_COMPLETION_KEY,
+] as const;
+
+const csvEscape = (value: string) => `"${value.replace(/"/g, '""')}"`;
+
+const parseCsvRows = (text: string): string[][] => {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let cell = '';
+  let inQuotes = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    const nextChar = text[index + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        cell += '"';
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (char === ',' && !inQuotes) {
+      row.push(cell);
+      cell = '';
+      continue;
+    }
+
+    if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        index += 1;
+      }
+      row.push(cell);
+      if (row.some((value) => value.length > 0)) {
+        rows.push(row);
+      }
+      row = [];
+      cell = '';
+      continue;
+    }
+
+    cell += char;
+  }
+
+  row.push(cell);
+  if (row.some((value) => value.length > 0)) {
+    rows.push(row);
+  }
+
+  return rows;
+};
 
 const PHONETIC_SYMBOL_GROUPS: Array<{ id: string; title: string; symbols: string[] }> = [
   {
@@ -165,14 +223,16 @@ const AMERICAN_T_PRACTICE_GROUPS: Array<{
 const initialSkills: SkillData[] = [
   { id: 'pronunciation', name: 'Pronunciation', progress: 75, icon: Volume2, description: 'Speaking clarity and accent' },
   { id: 'vocabulary', name: 'Vocabulary', progress: 60, icon: BookOpen, description: 'Word knowledge and usage' },
-  { id: 'grammar', name: 'Grammar', progress: 85, icon: MessageCircle, description: 'Sentence structure and rules' },
   { id: 'speaking', name: 'Speaking', progress: 45, icon: Mic, description: 'Conversation skills' },
+  { id: 'grammar', name: 'Grammar', progress: 0, icon: MessageCircle, description: 'Sentence structure and rules' },
 ];
 
 const ProgressContent: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedTopics, setSelectedTopics] = useState<{[key: string]: string[]}>({});
   const [expandedTopics, setExpandedTopics] = useState<{[key: string]: string[]}>({});
+  const [transferStatus, setTransferStatus] = useState('');
+  const transferInputRef = useRef<HTMLInputElement>(null);
   const [practicePopup, setPracticePopup] = useState<
     | null
     | {
@@ -235,6 +295,72 @@ const ProgressContent: React.FC = () => {
       const nextIndex = (prev.activeGroupIndex + direction + totalGroups) % totalGroups;
       return { ...prev, activeGroupIndex: nextIndex };
     });
+  };
+
+  const exportTransferMemory = () => {
+    try {
+      const rows = TRANSFER_MEMORY_KEYS.flatMap((key) => {
+        const value = window.localStorage.getItem(key);
+        return value === null ? [] : [[key, value]];
+      });
+
+      if (rows.length === 0) {
+        setTransferStatus('No progress memory found to export.');
+        return;
+      }
+
+      const csv = [
+        'key,value',
+        ...rows.map(([key, value]) => `${csvEscape(key)},${csvEscape(value)}`),
+      ].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `geuwat-progress-memory-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setTransferStatus(`Exported ${rows.length} memory item${rows.length === 1 ? '' : 's'}.`);
+    } catch {
+      setTransferStatus('Export failed. Please try again.');
+    }
+  };
+
+  const importTransferMemory = async (file: File | undefined) => {
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const rows = parseCsvRows(text);
+      const allowedKeys = new Set<string>(TRANSFER_MEMORY_KEYS);
+      const dataRows = rows[0]?.[0] === 'key' && rows[0]?.[1] === 'value' ? rows.slice(1) : rows;
+      let importedCount = 0;
+
+      dataRows.forEach((row) => {
+        const [key, value] = row;
+        if (!key || !allowedKeys.has(key) || value === undefined) return;
+        window.localStorage.setItem(key, value);
+        importedCount += 1;
+      });
+
+      if (transferInputRef.current) {
+        transferInputRef.current.value = '';
+      }
+
+      if (importedCount === 0) {
+        setTransferStatus('No matching GEUWAT progress memory found in this CSV.');
+        return;
+      }
+
+      setTransferStatus(`Imported ${importedCount} memory item${importedCount === 1 ? '' : 's'}. Refreshing...`);
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 650);
+    } catch {
+      setTransferStatus('Import failed. Please check the CSV file.');
+    }
   };
   
   // Helper function to calculate phonetic symbols average
@@ -663,7 +789,6 @@ const ProgressContent: React.FC = () => {
       SAVED_ASSESSMENTS_KEY,
       {},
     );
-    const grammarProgress = readLocalStorageObject<Record<string, number>>('grammarSpeakingProgress', {});
     const vocabularyProgress = readLocalStorageObject<Record<string, number>>(VOCABULARY_PROGRESS_KEY, {});
     const speakingCompletionMap = readLocalStorageObject<Record<string, boolean>>(
       SPEAKING_GOAL_COMPLETION_KEY,
@@ -721,28 +846,6 @@ const ProgressContent: React.FC = () => {
     const pronunciationAverage = allTopicProgress.length > 0 
       ? Math.round(allTopicProgress.reduce((acc, curr) => acc + curr, 0) / allTopicProgress.length)
       : 0;
-    const grammarValues = Object.values(grammarProgress);
-    const grammarAverage = grammarValues.length > 0
-      ? Math.round(grammarValues.reduce((acc, curr) => acc + curr, 0) / grammarValues.length)
-      : 0;
-
-    const completedGrammarGoalIdsRaw = readLocalStorageObject<unknown[]>(
-      GRAMMAR_FOR_SPEAKING_PROGRESS_KEY,
-      [],
-    );
-    const completedGrammarGoalCount = Array.isArray(completedGrammarGoalIdsRaw)
-      ? new Set(
-          completedGrammarGoalIdsRaw.filter(
-            (goalId): goalId is string =>
-              typeof goalId === 'string' && GRAMMAR_FOR_SPEAKING_GOAL_IDS.has(goalId),
-          ),
-        ).size
-      : 0;
-    const grammarForSpeakingAverage =
-      GRAMMAR_FOR_SPEAKING_GOALS.length > 0
-        ? Math.round((completedGrammarGoalCount / GRAMMAR_FOR_SPEAKING_GOALS.length) * 100)
-        : 0;
-
     const vocabularyTopicProgress = VOCABULARY_TOPICS.map((topic) => {
       const value = vocabularyProgress[topic.topicId];
       if (typeof value !== 'number' || !Number.isFinite(value)) return 0;
@@ -779,9 +882,6 @@ const ProgressContent: React.FC = () => {
       if (skill.id === 'pronunciation') {
         return { ...skill, progress: pronunciationAverage };
       }
-      if (skill.id === 'grammar') {
-        return { ...skill, progress: grammarForSpeakingAverage || grammarAverage };
-      }
       if (skill.id === 'vocabulary') {
         return { ...skill, progress: vocabularyAverage };
       }
@@ -795,56 +895,19 @@ const ProgressContent: React.FC = () => {
   // All skills are displayed
   const displayedSkills = skills;
   const lockedSkillIds = new Set<string>([]);
-  const unlockedSkills = displayedSkills.filter(skill => !lockedSkillIds.has(skill.id));
-  const fallbackSkill: SkillData = {
-    id: 'none',
+  const pronunciationAverage = displayedSkills.find((skill) => skill.id === 'pronunciation')?.progress ?? 0;
+  const pronunciationSummaryTopics = getPronunciationTopicProgress().filter((topic) => topic.locked !== true);
+  const fallbackTopic: DashboardTopicProgress = {
     name: '-',
-    progress: 0,
-    icon: BarChart3,
-    description: ''
+    percentage: 0,
   };
 
-  const getGrammarTrackProgress = (): DashboardTopicProgress[] => {
-    const grammarSpeakingProgress = readLocalStorageObject<Record<string, number>>('grammarSpeakingProgress', {});
-    const legacyValues = Object.values(grammarSpeakingProgress).filter(
-      (value): value is number => typeof value === 'number' && Number.isFinite(value),
-    );
-    const legacyAverage =
-      legacyValues.length > 0
-        ? Math.round(legacyValues.reduce((acc, curr) => acc + curr, 0) / legacyValues.length)
-        : 0;
-
-    const completedGoalsRaw = readLocalStorageObject<unknown[]>(GRAMMAR_FOR_SPEAKING_PROGRESS_KEY, []);
-    const completedGoalCount = Array.isArray(completedGoalsRaw)
-      ? new Set(
-          completedGoalsRaw.filter(
-            (goalId): goalId is string =>
-              typeof goalId === 'string' && GRAMMAR_FOR_SPEAKING_GOAL_IDS.has(goalId),
-          ),
-        ).size
-      : 0;
-
-    const grammarForSpeakingPercentage =
-      GRAMMAR_FOR_SPEAKING_GOALS.length > 0
-        ? Math.round((completedGoalCount / GRAMMAR_FOR_SPEAKING_GOALS.length) * 100)
-        : 0;
-
-    return [
-      { name: 'Grammar for Speaking', percentage: grammarForSpeakingPercentage || legacyAverage },
-      { name: 'Grammar for Writing', percentage: 0, locked: true },
-    ];
-  };
-
-  const totalProgress = unlockedSkills.reduce((acc, curr) => acc + curr.progress, 0);
-  const avgProgress = unlockedSkills.length > 0 ? totalProgress / unlockedSkills.length : 0;
-
-  // Calculate strongest and weakest skills from unlocked skills only
-  const strongestSkill = unlockedSkills.length > 0
-    ? unlockedSkills.reduce((prev, curr) => (curr.progress > prev.progress ? curr : prev))
-    : fallbackSkill;
-  const weakestSkill = unlockedSkills.length > 0
-    ? unlockedSkills.reduce((prev, curr) => (curr.progress < prev.progress ? curr : prev))
-    : fallbackSkill;
+  const strongestPronunciationTopic = pronunciationSummaryTopics.length > 0
+    ? pronunciationSummaryTopics.reduce((prev, curr) => (curr.percentage > prev.percentage ? curr : prev))
+    : fallbackTopic;
+  const weakestPronunciationTopic = pronunciationSummaryTopics.length > 0
+    ? pronunciationSummaryTopics.reduce((prev, curr) => (curr.percentage < prev.percentage ? curr : prev))
+    : fallbackTopic;
 
   const handleTopicClick = (skillId: string, topicName: string) => {
     setSelectedTopics(prev => {
@@ -907,7 +970,8 @@ const ProgressContent: React.FC = () => {
                 const percentage = skill.progress;
                 const isSelected = selectedSkill === skill.id;
                 const isDisabled = lockedSkillIds.has(skill.id); // Lock selected skills only.
-                const displayPercentage = isDisabled ? null : percentage;
+                const isGrammar = skill.id === 'grammar';
+                const displayPercentage = isDisabled || isGrammar ? null : percentage;
                 
                 return (
                   <div key={skill.id} className="space-y-2">
@@ -915,11 +979,13 @@ const ProgressContent: React.FC = () => {
                       className={`flex items-center gap-2 md:gap-3 p-2 sm:p-2.5 md:p-3 rounded-lg transition-all duration-200 ${
                         isDisabled
                           ? 'bg-black/50 border border-slate-700/30 cursor-not-allowed opacity-60'
+                          : isGrammar
+                            ? 'bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800/50 hover:border-cyan-500/50'
                           : isSelected 
                             ? 'bg-purple-600/20 border border-purple-500/50 cursor-pointer' 
                             : 'bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800/50 hover:border-slate-600/50 cursor-pointer'
                       }`}
-                      onClick={() => !isDisabled && setSelectedSkill(isSelected ? null : skill.id)}
+                      onClick={() => !isDisabled && !isGrammar && setSelectedSkill(isSelected ? null : skill.id)}
                     >
                       {(() => {
                         const Icon = isDisabled ? Lock : skill.icon;
@@ -927,17 +993,28 @@ const ProgressContent: React.FC = () => {
                       })()}
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-1 md:gap-2">
-                          <div className="text-xs sm:text-sm md:text-base font-semibold text-white truncate font-display">{skill.name}</div>
+                          {isGrammar ? (
+                            <Link
+                              href="/skill/grammar"
+                              className="text-xs sm:text-sm md:text-base font-semibold text-cyan-200 truncate font-display underline underline-offset-4 decoration-cyan-400/60 hover:text-cyan-100 hover:decoration-cyan-200 transition-colors"
+                            >
+                              {skill.name}
+                            </Link>
+                          ) : (
+                            <div className="text-xs sm:text-sm md:text-base font-semibold text-white truncate font-display">{skill.name}</div>
+                          )}
                         {isDisabled && (
                           <span className="text-[11px] sm:text-xs text-slate-400 ml-0 sm:ml-2">(Locked)</span>
                         )}
                         </div>
-                        <div className="flex-1 bg-slate-800/50 rounded-full h-1.5 md:h-2 relative overflow-hidden mt-1">
-                          <div 
-                            className="h-full bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full transition-all duration-500"
-                            style={{ width: `${displayPercentage ?? 0}%` }}
-                          />
-                        </div>
+                        {!isGrammar ? (
+                          <div className="flex-1 bg-slate-800/50 rounded-full h-1.5 md:h-2 relative overflow-hidden mt-1">
+                            <div 
+                              className="h-full bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full transition-all duration-500"
+                              style={{ width: `${displayPercentage ?? 0}%` }}
+                            />
+                          </div>
+                        ) : null}
                       </div>
                       <div className="text-[10px] sm:text-xs md:text-sm text-cyan-400 font-semibold hidden sm:block">
                         {displayPercentage === null ? '' : `${displayPercentage.toFixed(0)}%`}
@@ -945,7 +1022,7 @@ const ProgressContent: React.FC = () => {
                     </div>
                     
                     {/* Show topics when selected */}
-                    {isSelected && (
+                    {isSelected && !isGrammar && (
                       <div className="pl-3 sm:pl-4 md:pl-6 pr-1 sm:pr-2 md:pr-3 space-y-1 md:space-y-2 animate-fade-in">
                         {(() => {
                           switch(skill.id) {
@@ -953,8 +1030,6 @@ const ProgressContent: React.FC = () => {
                               return getPronunciationTopicProgress();
                             case 'vocabulary':
                               return getVocabularyTopicProgress();
-                            case 'grammar':
-                              return getGrammarTrackProgress();
                             case 'speaking':
                               return getSpeakingTopicProgress();
                             default:
@@ -1254,27 +1329,68 @@ const ProgressContent: React.FC = () => {
         </div>
       </div>
 
+      <section className="rounded-xl border border-cyan-500/25 bg-black/50 p-3 sm:p-4 backdrop-blur-sm">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <h3 className="font-display text-sm sm:text-base font-bold text-cyan-200">Transfer Memory</h3>
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-400">
+              Export progress memory to CSV or import it on a new device.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={exportTransferMemory}
+              className="inline-flex items-center gap-2 rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-3 py-2 text-xs font-semibold text-cyan-200 transition-colors hover:bg-cyan-500/20 hover:text-cyan-100"
+            >
+              <Download className="h-4 w-4" />
+              Export CSV
+            </button>
+            <button
+              type="button"
+              onClick={() => transferInputRef.current?.click()}
+              className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 transition-colors hover:bg-emerald-500/20 hover:text-emerald-100"
+            >
+              <Upload className="h-4 w-4" />
+              Upload CSV
+            </button>
+            <input
+              ref={transferInputRef}
+              type="file"
+              accept=".csv,text/csv"
+              className="hidden"
+              onChange={(event) => {
+                void importTransferMemory(event.target.files?.[0]);
+              }}
+            />
+          </div>
+        </div>
+        {transferStatus ? (
+          <p className="mt-3 text-[11px] sm:text-xs text-slate-300">{transferStatus}</p>
+        ) : null}
+      </section>
+
       {/* Skill Progress Summary */}
       <div className="grid grid-cols-1 gap-3 sm:gap-4">
         <div className="bg-black/50 border border-cyan-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center max-w-xs sm:max-w-sm mx-auto">
-          <div className="text-[11px] sm:text-xs text-slate-400 font-mono">Average Score</div>
-          <div className="text-lg sm:text-xl font-mono text-cyan-400">{avgProgress.toFixed(1)}%</div>
+          <div className="text-[11px] sm:text-xs text-slate-400 font-mono">Pronunciation Average</div>
+          <div className="text-lg sm:text-xl font-mono text-cyan-400">{pronunciationAverage.toFixed(1)}%</div>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div className="bg-black/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
             <div className="flex flex-col gap-1 items-center">
-              <span className="text-green-400 text-xs sm:text-sm">Strongest Skill</span>
-              <div className="text-base sm:text-lg font-bold text-white">{strongestSkill.name}</div>
-              <div className="text-[11px] sm:text-xs text-slate-400">{strongestSkill.progress}% Complete</div>
+              <span className="text-green-400 text-xs sm:text-sm">Strongest Topic</span>
+              <div className="text-base sm:text-lg font-bold text-white">{strongestPronunciationTopic.name}</div>
+              <div className="text-[11px] sm:text-xs text-slate-400">{strongestPronunciationTopic.percentage}% Complete</div>
             </div>
           </div>
           
           <div className="bg-black/50 border border-purple-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm text-center">
             <div className="flex flex-col gap-1 items-center">
-              <span className="text-purple-400 text-xs sm:text-sm">Needs Focus</span>
-              <div className="text-base sm:text-lg font-bold text-white">{weakestSkill.name}</div>
-              <div className="text-[11px] sm:text-xs text-slate-400">{weakestSkill.progress}% Complete</div>
+              <span className="text-purple-400 text-xs sm:text-sm">Needs Focus Topic</span>
+              <div className="text-base sm:text-lg font-bold text-white">{weakestPronunciationTopic.name}</div>
+              <div className="text-[11px] sm:text-xs text-slate-400">{weakestPronunciationTopic.percentage}% Complete</div>
             </div>
           </div>
         </div>
@@ -1354,8 +1470,8 @@ const ProgressContent: React.FC = () => {
                               onClick={closePracticePopup}
                               className={
                                 (group.labelVariant === 'symbol'
-                                  ? 'w-[64px] text-base sm:text-lg font-mono'
-                                  : 'w-[160px] text-[11px] sm:text-xs font-semibold leading-tight') +
+                                  ? 'dashboard-ipa-label w-[64px] text-base sm:text-lg '
+                                  : 'w-[160px] text-[11px] sm:text-xs font-semibold leading-tight ') +
                                 ' block text-slate-200 underline underline-offset-2 decoration-slate-600/60 hover:text-cyan-200 hover:decoration-cyan-300/80 transition-colors'
                               }
                               title="Open page"
@@ -1366,7 +1482,7 @@ const ProgressContent: React.FC = () => {
                             <div
                               className={
                                 group.labelVariant === 'symbol'
-                                  ? 'w-[64px] text-base sm:text-lg font-mono text-slate-200'
+                                  ? 'dashboard-ipa-label w-[64px] text-base sm:text-lg text-slate-200'
                                   : 'w-[160px] text-[11px] sm:text-xs text-slate-200 font-semibold leading-tight'
                               }
                             >

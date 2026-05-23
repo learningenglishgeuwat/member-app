@@ -2,19 +2,22 @@
 
 import React, { useRef, useEffect } from 'react';
 import { useHaptic } from '@/lib/haptic/useHaptic';
+import { IpaText } from '@/app/components/IpaText';
 
 interface LetterCardProps {
   letter: string;
   ipa: string;
   isPlaying: boolean;
   onPlay: () => void;
+  showIpa?: boolean;
 }
 
 export const LetterCard: React.FC<LetterCardProps> = ({ 
   letter, 
   ipa,
   isPlaying, 
-  onPlay 
+  onPlay,
+  showIpa = true
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { triggerHaptic } = useHaptic();
@@ -53,11 +56,13 @@ export const LetterCard: React.FC<LetterCardProps> = ({
         {letter}
       </div>
 
-      <div className="alphabet-ipa">
-        <span className="opacity-50 mr-1">[</span>
-        {ipa}
-        <span className="opacity-50 ml-1">]</span>
-      </div>
+      {showIpa && (
+        <IpaText as="div" className="alphabet-ipa" aria-label={ipa}>
+          <span className="opacity-50 mr-1">[</span>
+          {ipa}
+          <span className="opacity-50 ml-1">]</span>
+        </IpaText>
+      )}
       
       {/* Scanline effect when playing */}
       {isPlaying && (

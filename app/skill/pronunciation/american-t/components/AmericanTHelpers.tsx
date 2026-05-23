@@ -16,6 +16,53 @@ export function renderGeneralIpaWithTHighlight(ipa: string) {
   });
 }
 
+export function renderAmericanTTextHighlight(text: string) {
+  const chunks = text.split(/(t)/gi);
+
+  return chunks.map((chunk, idx) => {
+    if (chunk.toLowerCase() === 't') {
+      return (
+        <span key={`${text}-t-${idx}`} className="at-text-t">
+          {chunk}
+        </span>
+      );
+    }
+
+    return <span key={`${text}-plain-${idx}`}>{chunk}</span>;
+  });
+}
+
+function escapeRegexForIpaHighlight(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export function renderAmericanTIpaSymbolHighlight(
+  ipa: string,
+  symbols: ReadonlyArray<string>,
+) {
+  const safeSymbols = symbols
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length)
+    .map((symbol) => escapeRegexForIpaHighlight(symbol));
+
+  if (!safeSymbols.length) return ipa;
+
+  const regex = new RegExp(`(${safeSymbols.join('|')})`, 'g');
+  const chunks = ipa.split(regex);
+
+  return chunks.map((chunk, idx) => {
+    if (symbols.includes(chunk)) {
+      return (
+        <span key={`${ipa}-symbol-${idx}`} className="at-ipa-t">
+          {chunk}
+        </span>
+      );
+    }
+
+    return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
+  });
+}
+
 export function extractFocusPhrase(note: string) {
   const prefix = 'Fokus pada:';
   if (!note.startsWith(prefix)) return '';

@@ -6,6 +6,7 @@
   :root {
     /* Mapping font-ipa ke font-noto dari Next.js loader */
     --font-ipa: var(--font-noto);
+    --color-ipa: #00f3ff; /* Warna Tosca untuk teks IPA */
 
     /* Alias untuk backward compatibility */
 
@@ -44,9 +45,29 @@
   .font-ipa,
   [data-ipa] {
     /* Guard: pastikan IPA tidak tertukar dengan font lain */
-    font-family: var(--font-ipa);
+    font-family: var(--font-ipa) !important;
     line-height: 1.8; /* diakritik tidak terpotong */
     font-feature-settings: normal;
+    color: var(--color-ipa);
+  }
+
+  .ipa-label,
+  .font-ipa .ipa-label,
+  [data-ipa] .ipa-label {
+    font-family: var(--font-ui) !important;
+    color: var(--app-page-fg) !important;
+  }
+
+  .font-display-ui {
+    font-family: var(--font-display);
+  }
+
+  .font-body-ui {
+    font-family: var(--font-ui);
+  }
+
+  .font-tech-ui {
+    font-family: var(--font-tech);
   }
 
   /* Judul card boleh pakai Orbitron, TETAPI harus diisolasi dari `[data-ipa]` */
@@ -63,6 +84,21 @@
   [class*="playall-btn"] {
     font-family: var(--font-display);
   }
+}
+
+/* Shared UI primitives for pages that are still using classic CSS files. */
+.ui-display-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.ui-body-text {
+  font-family: var(--font-ui);
+}
+
+.ui-tech-text {
+  font-family: var(--font-tech);
 }
 
 /* Page Layout Base Classes - Prevent CSS Conflicts */
@@ -192,12 +228,15 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
+  .pronun-panel,
+  .pronun-card,
   .glass-panel,
   .pronunciation-topic-card-body,
   .alphabet-main-title,
   .alphabet-quick-spelling-panel,
   .alphabet-notes-panel,
   .alphabet-note-card,
+  .alphabet-practice-task,
   .alphabet-prompt-card,
   .alphabet-letter-card,
   .fsn-orbit-stage,
@@ -234,6 +273,8 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
+  .pronun-card,
+  .pronun-interactive,
   .pronunciation-topic-card-body,
   .alphabet-letter-card,
   .fs-topic-card,
@@ -250,6 +291,42 @@
     0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.18),
     0 0 40px rgb(var(--pronun-accent-2-rgb) / 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .pronun-action-button,
+  .alphabet-play-all-btn,
+  .alphabet-quick-spelling-btn,
+  .alphabet-practice-toggle-btn,
+  .alphabet-practice-playall-btn,
+  .alphabet-prompt-copy-btn
+) {
+  font-family: var(--font-display);
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .pronun-icon-button,
+  .alphabet-practice-country-play,
+  .alphabet-practice-letter-play,
+  .alphabet-section-toggle-icon-wrap
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.62);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.16);
+  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .pronun-icon-button,
+  .alphabet-practice-country-play,
+  .alphabet-practice-letter-play,
+  .alphabet-section-toggle-icon-wrap
+):hover {
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.9);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.22);
 }
 
 .pronunciation-layout.pronunciation-theme .pronunciation-topic-ring {

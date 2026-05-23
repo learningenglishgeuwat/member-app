@@ -275,10 +275,15 @@
 }
 
 .rt-phonetic {
-  font-family: var(--font-tech);
-  color: rgba(224, 231, 255, 0.88);
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
   text-align: left;
   text-justify: auto;
+}
+
+.rt-ipa-highlight-off .rt-phonetic,
+.rt-highlight-off .rt-phonetic {
+  color: rgba(224, 231, 255, 0.86);
 }
 
 .rt-empty {
@@ -294,6 +299,16 @@
   background: rgba(99, 102, 241, 0.18);
   border: 1px solid rgba(165, 180, 252, 0.22);
   color: rgba(255, 255, 255, 0.92);
+}
+
+.rt-example-highlight-off .rt-inline-code,
+.rt-highlight-off .rt-inline-code {
+  font-family: inherit;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border-color: transparent;
+  color: inherit;
 }
 
 .rt-recording-anchor {

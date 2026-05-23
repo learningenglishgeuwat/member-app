@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
+import { ControlCenter } from '@/app/components';
 import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './summary-of-phonetic-symbols.css';
 
@@ -252,23 +253,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                 <section key={group.title} className="sps-vowel-column">
                   <div className="sps-column-head">
                     <h2 className="sps-column-title">{group.title}</h2>
-                    <button
-                      type="button"
-                      className={`sps-play-all-btn ${activePlayGroup === `${activeTab}-${group.title}` ? 'is-playing' : ''}`}
-                      onClick={() => {
-                        const queuedWords = group.items.flatMap((item, itemIndex) =>
-                          item.examples.map((example, exampleIndex) => ({
-                            key: buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex),
-                            word: example.word,
-                          })),
-                        );
-                        void playAllWordsByGroup(`${activeTab}-${group.title}`, queuedWords);
-                      }}
-                      aria-label={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
-                      title={activePlayGroup === `${activeTab}-${group.title}` ? 'Stop' : 'Play all words'}
-                    >
-                      <span aria-hidden="true">{activePlayGroup === `${activeTab}-${group.title}` ? '■' : '▶'}</span>
-                    </button>
+                    
                   </div>
                   <div className="sps-symbol-list">
                     {group.items.map((item, itemIndex) => (

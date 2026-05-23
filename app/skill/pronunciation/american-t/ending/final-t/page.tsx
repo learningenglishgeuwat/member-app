@@ -2,11 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
 import {
   extractFocusPhrase,
+  renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
   renderSentenceWithFocusHighlight,
 } from '../../components/AmericanTHelpers';
@@ -130,10 +132,11 @@ export default function FinalTEndingPage() {
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    phraseExamples: false,
-    sentenceBank: false,
-    drills: false,
+    phraseExamples: true,
+    sentenceBank: true,
+    drills: true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
 
   const phrasePlayAllTokenRef = useRef(0);
   const sentenceBankPlayAllTokenRef = useRef(0);
@@ -363,6 +366,7 @@ export default function FinalTEndingPage() {
       title="Final T Before Consonant"
       subtitle="Latihan final /t/ saat bertemu konsonan berikutnya."
       backTo="/skill/pronunciation/american-t"
+      pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
       headerActions={
         <ButtonSavedProgress
           isSaved={isProgressSaved}
@@ -424,7 +428,7 @@ export default function FinalTEndingPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.phrase}</h3>
+                      <h3>{renderAmericanTTextHighlight(item.phrase)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -439,9 +443,13 @@ export default function FinalTEndingPage() {
                     {showIpaBySection.phraseExamples ? (
                       <>
                         <p className="at-ipa">
-                          General IPA: {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                          <span className="at-ipa-label">General IPA: </span>
+                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                         </p>
-                        <p className="at-ipa">Bunyi santai: {formatIpaForDisplay(item.spoken)}</p>
+                        <p className="at-ipa">
+                          <span className="at-ipa-label">Bunyi santai: </span>
+                          {formatIpaForDisplay(item.spoken)}
+                        </p>
                       </>
                     ) : null}
                     <p className="at-note">{item.note}</p>
@@ -646,6 +654,51 @@ export default function FinalTEndingPage() {
         },
       ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <button
+            type="button"
+            onClick={() => setIsHighlightEnabled((prev) => !prev)}
+            className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
+              isHighlightEnabled
+                ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
+                : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+            }`}
+            aria-pressed={isHighlightEnabled}
+          >
+            <span className="tracking-widest font-bold">HIGHLIGHT</span>
+            <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+          </button>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
+            <button onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY PHRASES</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingPhraseAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection.phraseExamples} onChange={() => toggleIpaBySection('phraseExamples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
+            <button onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY SENTENCE BANK</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentenceBankAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection.sentenceBank} onChange={() => toggleIpaBySection('sentenceBank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <button onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY DRILLS</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingDrillsAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection.drills} onChange={() => toggleIpaBySection('drills')} className="w-full flex justify-between" />
+          </div>
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-final-before-consonant-GEUWAT-recording.wav"

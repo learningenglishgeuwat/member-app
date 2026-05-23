@@ -11,6 +11,7 @@
 /* Extended Linguistic Font untuk æ, ø, dan karakter khusus */
 .font-extended-linguistic {
   font-family: var(--font-ipa);
+  color: var(--color-ipa);
   letter-spacing: 0.02em;
 }
 

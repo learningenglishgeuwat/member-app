@@ -9,6 +9,7 @@ interface DashboardBottomNavProps {
   toggleSidebar: (e?: React.MouseEvent) => void
   isTourGuideBootstrapped: boolean
   handleEnableTourGuide: () => void
+  handleResetTourGuide: () => void
   handleStartJourney: () => void
 }
 
@@ -17,6 +18,7 @@ const DashboardBottomNav: React.FC<DashboardBottomNavProps> = ({
   toggleSidebar,
   isTourGuideBootstrapped,
   handleEnableTourGuide,
+  handleResetTourGuide,
   handleStartJourney,
 }) => {
   const [isNavVisible, setIsNavVisible] = useState(true)
@@ -27,34 +29,42 @@ const DashboardBottomNav: React.FC<DashboardBottomNavProps> = ({
     setIsNavVisible(!isNavVisible)
   }
 
+  const toggleTourGuide = () => {
+    if (isTourGuideBootstrapped) {
+      handleResetTourGuide()
+      return
+    }
+
+    handleEnableTourGuide()
+  }
+
   return (
     <>
       {/* Toggle Button - Arrow Only */}
       <button
         type="button"
         onClick={toggleNavVisibility}
-        className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[1310] transition-all duration-300 group"
-        style={{
-          transform: isNavVisible 
-            ? 'translate(-50%, calc(-100% - 8px))' 
-            : 'translate(-50%, -8px)'
-        }}
+        className={`fixed left-1/2 z-[1310] -translate-x-1/2 transition-all duration-300 group ${
+          isNavVisible
+            ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
+            : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'
+        }`}
         aria-label={isNavVisible ? 'Hide navigation' : 'Show navigation'}
       >
         {/* Arrow Icon Only - No Circle */}
         <div className="relative">
           {isNavVisible ? (
-            <ChevronDown className="w-6 h-6 text-purple-300 drop-shadow-[0_2px_8px_rgba(168,85,247,0.6)] group-hover:text-purple-200 transition-colors" />
+            <ChevronDown className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
           ) : (
-            <ChevronUp className="w-6 h-6 text-purple-300 drop-shadow-[0_2px_8px_rgba(168,85,247,0.6)] group-hover:text-purple-200 transition-colors" />
+            <ChevronUp className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
           )}
         </div>
       </button>
 
       {/* Navigation Bar */}
       <nav
-        className={`dashboard-tour-nav fixed inset-x-0 bottom-0 z-[1300] transition-transform duration-300 ${
-          isNavVisible ? 'translate-y-0' : 'translate-y-full'
+        className={`dashboard-tour-nav fixed inset-x-0 bottom-0 z-[1300] ${
+          isNavVisible ? '' : 'is-hidden'
         }`}
         aria-label="Dashboard navigation"
         aria-hidden={!isNavVisible}
@@ -85,12 +95,11 @@ const DashboardBottomNav: React.FC<DashboardBottomNavProps> = ({
 
           <button
             type="button"
-            onClick={isTourGuideBootstrapped ? undefined : handleEnableTourGuide}
-            disabled={isTourGuideBootstrapped}
+            onClick={toggleTourGuide}
             className={`dashboard-tour-avatar -mt-10 inline-flex h-[78px] w-[78px] items-center justify-center rounded-full ${isTourGuideBootstrapped ? 'is-active' : ''}`}
             aria-label={
               isTourGuideBootstrapped
-                ? 'Tour Guide Active'
+                ? 'Return Tour Guide to bottom navigation'
                 : 'Enable Tour Guide'
             }
           >

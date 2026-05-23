@@ -75,7 +75,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
     { id: 'notifications', label: 'Notifications', icon: Bell, locked: false },
     { id: 'progress', label: 'Progress', icon: BarChart2, locked: false },
     { id: 'achievements', label: 'Achievements', icon: Trophy, locked: true },
-    { id: 'tutorial', label: 'Tutorial', icon: HelpCircle, locked: false },
     { id: 'settings', label: 'Settings', icon: Settings, locked: false },
     { id: 'device-approve', label: 'Approve Device', icon: CheckCircle, locked: false },
     { id: 'help-support', label: 'Help & Support', icon: HelpCircle, locked: false },
@@ -160,11 +159,11 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                     disabled={isLocked}
                     className={`
                       w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base
-                      focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/60 focus-visible:ring-offset-0
+                      focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/60 focus-visible:ring-offset-0
                       ${isLocked
                         ? 'text-slate-500 bg-black/40 border border-slate-800/60 cursor-not-allowed'
                         : isActive(item.id)
-                        ? 'bg-purple-500/25 text-purple-200 border border-purple-500/40'
+                        ? 'bg-cyan-500/25 text-cyan-200 border border-cyan-500/40'
                         : 'text-slate-400 hover:text-white hover:bg-white/10'
                       }
                     `}
@@ -180,7 +179,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                         Locked
                       </span>
                     ) : isActive(item.id) && (
-                      <div className="w-2 h-2 bg-purple-400 rounded-full ml-auto"></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full ml-auto"></div>
                     )}
                   </button>
                 </li>

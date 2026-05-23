@@ -19,11 +19,9 @@ describe('IpaText', () => {
   });
 
   it('applies additional className', () => {
-    const { container } = render(
-      <IpaText className="text-[#00f3ff] text-lg">/ʌ/</IpaText>
-    );
-    const element = container.firstChild as HTMLElement;
-    expect(element).toHaveClass('font-ipa', 'text-[#00f3ff]', 'text-lg');
+    render(<IpaText className="text-lg">/aɪ θɔːt ə θɔːt/</IpaText>);
+    const element = screen.getByText('/aɪ θɔːt ə θɔːt/');
+    expect(element).toHaveClass('font-ipa', 'text-lg');
   });
 
   it('renders as span by default', () => {

@@ -144,6 +144,7 @@
 .minimal-pair-info h2 {
   font-size: 1.4rem;
   font-family: var(--font-ipa);
+  color: var(--color-ipa);
 }
 
 .minimal-pair-info p {
@@ -336,14 +337,7 @@
   background: rgba(190, 41, 236, 0.14);
 }
 
-.minimal-word-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  min-width: 0;
-  text-align: center;
-}
+
 
 .minimal-vs-cell {
   align-self: stretch;
@@ -360,7 +354,7 @@
   letter-spacing: 0.08em;
 }
 
-.minimal-word-column {
+.minimal-word-content {
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -369,7 +363,7 @@
   align-items: center;
 }
 
-.minimal-word-column strong {
+.minimal-word-content strong {
   display: block;
   font-size: 1rem;
   margin: 0;
@@ -398,11 +392,11 @@
   text-align: center;
 }
 
-.minimal-word-column span {
+.minimal-word-content span {
   display: block;
   margin-top: 0;
   font-family: var(--font-ipa);
-  color: rgba(156, 240, 255, 0.95);
+  color: var(--color-ipa);
   font-size: 0.84rem;
   line-height: 1.2;
 }
@@ -448,7 +442,7 @@
 .minimal-sentence-pair small {
   display: block;
   margin-top: 4px;
-  color: rgba(156, 240, 255, 0.95);
+  color: var(--color-ipa);
   font-family: var(--font-ipa);
   font-size: 0.78rem;
 }
@@ -519,7 +513,7 @@
   padding: 10px;
   min-height: 46px;
   font-family: var(--font-ipa);
-  color: #9cf0ff;
+  color: var(--color-ipa);
 }
 
 @keyframes minimalTitleShift {
@@ -627,11 +621,11 @@
     padding: 12px;
   }
 
-  .minimal-word-column strong {
+  .minimal-word-content strong {
     font-size: 0.95rem;
   }
 
-  .minimal-word-column span {
+  .minimal-word-content span {
     font-size: 0.8rem;
   }
 

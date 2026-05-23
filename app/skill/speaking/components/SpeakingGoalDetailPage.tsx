@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
+import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
 import GoalSelector from './GoalSelector';
 import GoalSentenceTts from './GoalSentenceTts';
 import DialogScriptTts from './DialogScriptTts';
@@ -253,26 +254,8 @@ export default function SpeakingGoalDetailPage({
             >
               Practice
             </button>
-            <button
-              type="button"
-              className={`spk-control-btn spk-control-btn--secondary ${showIpa ? 'is-active' : ''}`}
-              onClick={() => setShowIpa((prev) => !prev)}
-              aria-pressed={showIpa}
-            >
-              {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-            </button>
-            <button
-              type="button"
-              className={`spk-control-btn spk-control-btn--secondary ${showIdTranslation ? 'is-active' : ''}`}
-              onClick={() => {
-                const next = !showIdTranslation;
-                setShowIdTranslation(next);
-                writeSpeakingShowTranslation(next);
-              }}
-              aria-pressed={showIdTranslation}
-            >
-              {showIdTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
-            </button>
+            
+            
             <button
               type="button"
               className={`spk-control-btn spk-control-btn--secondary spk-control-btn--full ${isPracticeWithGeuwatCompleted ? 'is-active' : ''}`}

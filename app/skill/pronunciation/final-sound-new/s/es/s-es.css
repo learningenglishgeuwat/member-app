@@ -236,7 +236,7 @@
 }
 
 .s-es-table-example-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
+  color: var(--color-ipa);
   font-family: var(--font-ipa);
   font-size: 0.82rem;
 }
@@ -429,6 +429,7 @@
 
 .s-es-process-ipa-card .s-es-process-card-value {
   font-family: var(--font-ipa);
+  color: var(--color-ipa);
 }
 
 .s-es-process-card-value {

@@ -8,6 +8,7 @@ import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -211,6 +212,8 @@ const SymbolDetailPage: React.FC = () => {
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
   const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(null);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
@@ -319,6 +322,75 @@ const SymbolDetailPage: React.FC = () => {
     sectionStateStorageKey,
   ]);
   
+  
+  useEffect(() => {
+    if (showHighlight && !commonLetters && !commonLettersLoading) {
+      setCommonLettersLoading(true);
+      import('../data/commonLetters/CommonLetters').then(module => {
+        setCommonLetters(module.getAllCommonLetters());
+        setCommonLettersLoading(false);
+      }).catch(err => {
+        console.error(err);
+        setCommonLettersLoading(false);
+      });
+    }
+  }, [showHighlight, commonLetters, commonLettersLoading]);
+
+  const currentSymbolCommonLetters = useMemo(() => {
+    if (!commonLetters) return [];
+    const found = commonLetters.find(c => c.ipaSymbol === `/${decodedSymbol}/` || c.ipaSymbol === decodedSymbol);
+    if (!found) return [];
+    return found.letter.split(',').map(s => s.trim().replace(/^-|-$/g, ''));
+  }, [commonLetters, decodedSymbol]);
+
+  const renderWord = (word: string) => {
+    if (!showHighlight || currentSymbolCommonLetters.length === 0) return word;
+    
+    const patterns = [...currentSymbolCommonLetters].sort((a,b)=>b.length-a.length);
+    
+    for (const pattern of patterns) {
+      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
+      const regex = new RegExp(`(${escapedPattern})`, 'ig');
+      
+      if (regex.test(word)) {
+        const parts = word.split(regex);
+        return (
+          <>
+            {parts.map((part, i) => {
+              if (i % 2 === 1) {
+                return <span key={i} className="text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.6)]">{part}</span>;
+              }
+              return <React.Fragment key={i}>{part}</React.Fragment>;
+            })}
+          </>
+        );
+      }
+    }
+    return word;
+  };
+
+  const renderIpa = (ipa: string) => {
+    if (!showHighlight || !decodedSymbol) return ipa;
+    
+    const escapedSymbol = decodedSymbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedSymbol})`, 'g');
+    
+    if (regex.test(ipa)) {
+      const parts = ipa.split(regex);
+      return (
+        <>
+          {parts.map((part, i) => {
+            if (i % 2 === 1) {
+              return <span key={i} className="text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.6)]">{part}</span>;
+            }
+            return <React.Fragment key={i}>{part}</React.Fragment>;
+          })}
+        </>
+      );
+    }
+    return ipa;
+  };
+
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
   const playSessionRef = useRef(0);
@@ -710,7 +782,7 @@ const SymbolDetailPage: React.FC = () => {
 
                 <div className="z-10 text-center">
                     <p className="font-mono text-purple-400/60 text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">TARGET_PHONEME</p>
-                    <h2 className="text-6xl md:text-8xl font-ipa font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" data-ipa>
+                    <h2 className="text-6xl md:text-8xl font-ipa font-bold drop-shadow-[0_0_10px_rgba(0,243,255,0.8)]" data-ipa>
                         /{decodedSymbol}/
                     </h2>
                     <div className="mt-2 px-2 py-0.5 md:px-3 md:py-1 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[10px] md:text-xs">
@@ -832,11 +904,10 @@ const SymbolDetailPage: React.FC = () => {
 
                     <div className="flex flex-col items-center justify-center h-full z-10 relative px-1">
                       <span className={`font-sans font-bold text-base md:text-lg tracking-wide transition-colors truncate w-full text-center ${isActive ? 'text-purple-400' : 'text-white group-hover:text-purple-400'}`}>
-                        {example.word}
+                        {renderWord(example.word)}
                       </span>
-                      <span className={`text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'text-white/80' : 'text-purple-400/60'}`} data-ipa>
-                        [{example.ipa}]
-                      </span>
+                      {showIpa && <span className={`text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'opacity-90' : 'opacity-60'}`} data-ipa>
+                        [{renderIpa(example.ipa)}]</span>}
                     </div>
                   </button>
                 );
@@ -1178,6 +1249,20 @@ const SymbolDetailPage: React.FC = () => {
       </main>
 
       {/* Floating Control Button */}
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <button onClick={handlePlayAllWords} disabled={symbolLoading || symbolData.examples.length === 0} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY WORDS</span>
+              <Play className={`w-5 h-5 transition-colors ${isPlayingAll ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
+            <IpaVisibilityToggle checked={showHighlight} onChange={setShowHighlight} className="w-full flex justify-between text-[10px] sm:text-xs" label="Common Letters" />
+          </div>
+        </div>
+      </ControlCenter>
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
 
 

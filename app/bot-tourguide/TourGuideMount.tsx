@@ -1,7 +1,6 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/MemberAuthContext';
@@ -25,6 +24,7 @@ const PUBLIC_PATHS = new Set([
 const DASHBOARD_PATH = '/dashboard';
 const SKILL_MENU_PATH = '/skill';
 const BOOTSTRAP_EVENT = 'geuwat:tourguide-bootstrap';
+const RESET_EVENT = 'geuwat:tourguide-reset';
 
 export default function TourGuideMount() {
   const pathname = usePathname();
@@ -35,9 +35,16 @@ export default function TourGuideMount() {
     const onBootstrap = () => {
       setIsWidgetBootstrapped(true);
     };
+    const onReset = () => {
+      setIsWidgetBootstrapped(false);
+    };
 
     window.addEventListener(BOOTSTRAP_EVENT, onBootstrap as EventListener);
-    return () => window.removeEventListener(BOOTSTRAP_EVENT, onBootstrap as EventListener);
+    window.addEventListener(RESET_EVENT, onReset as EventListener);
+    return () => {
+      window.removeEventListener(BOOTSTRAP_EVENT, onBootstrap as EventListener);
+      window.removeEventListener(RESET_EVENT, onReset as EventListener);
+    };
   }, []);
 
   if (loading || !hasSession) return null;
@@ -52,26 +59,7 @@ export default function TourGuideMount() {
 
   console.log('[TourGuideMount] Showing TourGuide, pathname:', pathname);
 
-  if (!isWidgetBootstrapped) {
-    return (
-      <button
-        type="button"
-        aria-label="Buka Tour Guide"
-        className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+14px)] left-1/2 z-[55] inline-flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-slate-500/60 bg-black/80 transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-        onClick={() => {
-          setIsWidgetBootstrapped(true);
-        }}
-      >
-        <Image
-          src="/Kepala.png"
-          alt="Tour Guide"
-          width={48}
-          height={48}
-          className="h-11 w-11 rounded-full object-cover opacity-85 grayscale saturate-50 brightness-90"
-        />
-      </button>
-    );
-  }
+  if (!isWidgetBootstrapped) return null;
 
   return <TourGuideWidget currentPath={pathname} />;
 }

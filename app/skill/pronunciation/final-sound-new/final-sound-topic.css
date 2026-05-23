@@ -282,7 +282,7 @@
 }
 
 .fs-topic-table-example-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
+  color: var(--color-ipa);
   font-family: var(--font-ipa);
   font-size: 0.82rem;
 }

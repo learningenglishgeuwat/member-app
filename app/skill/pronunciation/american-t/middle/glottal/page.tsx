@@ -2,10 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
-import { renderGeneralIpaWithTHighlight } from '../../components/AmericanTHelpers';
+import {
+  renderAmericanTIpaSymbolHighlight,
+  renderAmericanTTextHighlight,
+  renderGeneralIpaWithTHighlight,
+} from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter  } from '@/app/components';
 import {
   GLOTTAL_SENTENCES,
   GLOTTAL_SENTENCE_DRILL_EXAMPLES_15,
@@ -226,11 +231,12 @@ export default function GlottalPage() {
   const [isPlayingSentenceDrillsAll, setIsPlayingSentenceDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    examples: false,
-    'word-bank': false,
-    sentences: false,
-    'sentence-drills-examples': false,
+    examples: true,
+    'word-bank': true,
+    sentences: true,
+    'sentence-drills-examples': true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
 
   const examplesPlayAllTokenRef = useRef(0);
@@ -495,6 +501,7 @@ export default function GlottalPage() {
       title="Glottal Stop /ʔ/"
       subtitle="Pola jeda glotis pada beberapa kata American English."
       backTo="/skill/pronunciation/american-t"
+      pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
       headerActions={
         <ButtonSavedProgress
           isSaved={isProgressSaved}
@@ -547,28 +554,7 @@ export default function GlottalPage() {
           title: 'Glottal Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('examples')}
-                >
-                  {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingExamplesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllExamples();
-                  }}
-                >
-                  {isPlayingExamplesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-example-grid">
                 {GLOTTAL_STOP_EXAMPLES.map((item, index) => (
                   <article
@@ -579,7 +565,7 @@ export default function GlottalPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.word}</h3>
+                      <h3>{renderAmericanTTextHighlight(item.word)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -594,10 +580,14 @@ export default function GlottalPage() {
                     {showIpaBySection.examples ? (
                       <>
                         <p className="at-ipa">
-                          General IPA: {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                          <span className="at-ipa-label">General IPA: </span>
+                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                         </p>
                         {item.spoken ? (
-                          <p className="at-ipa">Natural speech: {formatIpaForDisplay(item.spoken)}</p>
+                          <p className="at-ipa">
+                            <span className="at-ipa-label">Natural speech: </span>
+                            {renderAmericanTIpaSymbolHighlight(formatIpaForDisplay(item.spoken), ['ʔ'])}
+                          </p>
                         ) : null}
                       </>
                     ) : null}
@@ -616,28 +606,7 @@ export default function GlottalPage() {
               <p className="fs-topic-text">
                 Daftar latihan untuk pola glottal pada American casual speech.
               </p>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('word-bank')}
-                >
-                  {showIpaBySection['word-bank'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingWordBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllWordBank();
-                  }}
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-glottal-bank-grid">
                 {GLOTTAL_WORD_BANK.map((word, index) => (
                   <article
@@ -648,7 +617,7 @@ export default function GlottalPage() {
                     }}
                   >
                     <div className="at-glottal-bank-head">
-                      <span className="at-glottal-bank-word">{word}</span>
+                      <span className="at-glottal-bank-word">{renderAmericanTTextHighlight(word)}</span>
                       {!showIpaBySection['word-bank'] ? (
                         <button
                           type="button"
@@ -671,7 +640,8 @@ export default function GlottalPage() {
                         <>
                           <div className="at-glottal-bank-ipa-line">
                             <p className="at-ipa at-glottal-bank-ipa-row at-glottal-bank-ipa-text">
-                              Before: {beforeDisplay}
+                              <span className="at-ipa-label">Before: </span>
+                              {renderGeneralIpaWithTHighlight(beforeDisplay)}
                             </p>
                             <button
                               type="button"
@@ -686,7 +656,8 @@ export default function GlottalPage() {
                           </div>
                           <div className="at-glottal-bank-ipa-line">
                             <p className="at-ipa at-glottal-bank-ipa-row at-glottal-bank-ipa-text">
-                              After: {afterDisplay}
+                              <span className="at-ipa-label">After: </span>
+                              {renderAmericanTIpaSymbolHighlight(afterDisplay, ['ʔ'])}
                             </p>
                             <button
                               type="button"
@@ -713,28 +684,7 @@ export default function GlottalPage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentences')}
-                >
-                  {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentencesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentences();
-                  }}
-                >
-                  {isPlayingSentencesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-sentence-list">
                 {GLOTTAL_SENTENCES.map((item, index) => (
                   <article
@@ -781,28 +731,7 @@ export default function GlottalPage() {
                   untuk ritme beruntun.
                 </p>
               </div>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentence-drills-examples')}
-                >
-                  {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceDrillsExamples();
-                  }}
-                >
-                  {isPlayingSentenceDrillsAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               {GLOTTAL_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (
                 <article
                   key={item.id}
@@ -904,6 +833,60 @@ export default function GlottalPage() {
         },
       ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <button
+            type="button"
+            onClick={() => setIsHighlightEnabled((prev) => !prev)}
+            className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
+              isHighlightEnabled
+                ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
+                : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+            }`}
+            aria-pressed={isHighlightEnabled}
+          >
+            <span className="tracking-widest font-bold">HIGHLIGHT</span>
+            <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+          </button>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <button onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY EXAMPLES</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingExamplesAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
+            <button onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY 50 WORDS</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingWordBankAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection['word-bank']} onChange={() => toggleIpaBySection('word-bank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <button onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY SENTENCES</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentencesAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
+            <button onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
+              <span className="tracking-widest font-bold">PLAY DRILLS</span>
+              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentenceDrillsAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+            </button>
+            <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
+          </div>
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-glottal-middle-GEUWAT-recording.wav"

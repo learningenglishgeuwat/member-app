@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ReactNode } from 'react';
 import BackButton from '../../../components/BackButton';
+import { ControlCenter } from '@/app/components';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import { Highlight } from '../../reading-text/tongueTwister/components/Highlight';
@@ -309,19 +310,7 @@ export default function TongueTwisterPage() {
             <span className="tt-pill">Level: {activeTwister.level}</span>
             <span className="tt-pill">Focus: {activeTwister.focus}</span>
           </div>
-          <div className="tt-tts-actions">
-            <button
-              type="button"
-              className="tt-tts-toggle"
-              onClick={isSpeaking ? handleStopSpeak : handleSpeakTwister}
-              aria-label={isSpeaking ? 'Stop TTS' : 'Play TTS'}
-              title={isSpeaking ? 'Stop TTS' : 'Play TTS'}
-            >
-              <span className="tt-tts-icon" aria-hidden="true">
-                {isSpeaking ? '■' : '▶'}
-              </span>
-            </button>
-          </div>
+          
           <div className="tt-card-text">
             {twisterLines.map((line, index) => (
               <p key={`${activeTwister.id}-${index}`} className="tt-line">

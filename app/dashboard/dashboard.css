@@ -155,6 +155,11 @@
 
 .dashboard-tour-nav {
   --dashboard-tour-accent-rgb: 34, 211, 238;
+  transition: transform 300ms ease;
+}
+
+.dashboard-tour-nav.is-hidden {
+  transform: translateY(calc(100% + 84px));
 }
 
 .dashboard-tour-nav-panel {
@@ -287,6 +292,11 @@
   z-index: 1;
   background: rgba(var(--dashboard-tour-accent-rgb), 0.86);
   box-shadow: 0 0 18px rgba(var(--dashboard-tour-accent-rgb), 0.62);
+}
+
+.dashboard-ipa-label {
+  font-family: var(--font-ipa) !important;
+  color: var(--color-ipa) !important;
 }
 
 @keyframes fadeIn {

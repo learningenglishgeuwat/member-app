@@ -405,7 +405,7 @@
 
 .spk-ipa-text {
   display: block;
-  color: #e7f5ff;
+  color: var(--color-ipa);
   font-size: 0.83rem;
   line-height: 1.42;
   font-style: italic;
@@ -1227,12 +1227,12 @@
 
 .spk-ipa-text-detail {
   font-family: var(--font-ipa);
-  color: #eef6ff;
+  color: var(--color-ipa);
 }
 
 .spk-dialog-ipa-text {
   font-family: var(--font-ipa);
-  color: #dcefff;
+  color: var(--color-ipa);
 }
 
 .spk-detail-sentence-item.is-speaking {

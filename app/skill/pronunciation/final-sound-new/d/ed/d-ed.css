@@ -298,6 +298,7 @@
 
 .d-ed-process-ipa-card .d-ed-process-card-value {
   font-family: var(--font-ipa);
+  color: var(--color-ipa);
 }
 
 .d-ed-process-card-value {

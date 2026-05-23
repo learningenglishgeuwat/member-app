@@ -390,6 +390,15 @@
   flex: 1;
 }
 
+.text-pronunciation-reading-row p.text-pronunciation-phonetic-p {
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
+}
+
+.text-ipa-highlight-off .text-pronunciation-reading-row p.text-pronunciation-phonetic-p {
+  color: #f0ebff;
+}
+
 .text-pronunciation-tts-chip {
   border: 1px solid rgba(168, 223, 255, 0.5);
   background: rgba(24, 71, 120, 0.42);
@@ -492,6 +501,62 @@
   padding: 0 4px;
   font-weight: 800;
   box-shadow: 0 0 0 1px rgba(255, 98, 0, 0.2), 0 0 14px rgba(255, 128, 0, 0.32);
+}
+
+.text-hl-symbol {
+  color: #f59e0b;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.38);
+}
+
+.text-hl-base-final {
+  color: #E040FB;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(240, 171, 252, 0.45);
+}
+
+.text-highlight-off .text-hl-key,
+.text-highlight-off .text-hl-letter {
+  background: transparent;
+  color: inherit;
+  border-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  box-shadow: none;
+}
+
+.text-highlight-off .text-hl-symbol {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
+}
+
+.text-highlight-off .text-hl-base-final {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
+}
+
+.text-target-highlight-off .text-hl-key,
+.text-target-highlight-off .text-hl-letter,
+.text-target-highlight-off .text-hl-symbol {
+  background: transparent;
+  color: inherit;
+  border-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.text-base-final-highlight-off .text-hl-base-final {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
 }
 
 @media (max-width: 900px) {

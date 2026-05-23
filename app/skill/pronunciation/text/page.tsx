@@ -1,14 +1,16 @@
-﻿'use client';
+'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ChevronDown, Copy } from 'lucide-react';
+import { ChevronDown, Copy, Highlighter, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { ControlCenter } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { MATERIALS, TOPIC_HIGHLIGHTS, type TextMaterial, type TopicHighlightConfig } from './data/textData';
+import { commonLettersData } from '../phoneticSymbols/data/commonLetters/CommonLetters';
 import './text.css';
 
 const RecordingControlsButton = dynamic(() => import('../../components/RecordingControlsButton'), {
@@ -20,6 +22,13 @@ type TextSectionUiState = {
   practiceOpen?: boolean;
   promptOpen?: boolean;
 };
+type HighlightLegendItem = {
+  key: 'ipa' | 'target' | 'baseFinal';
+  color: string;
+  label: string;
+  description: string;
+};
+type HighlightMapState = Record<HighlightLegendItem['key'], boolean>;
 const TEXT_TAB_PROGRESS_STORAGE_KEY = 'pronunciationTextTabProgress';
 const TEXT_SECTION_UI_STATE_STORAGE_KEY = 'pronunciationTextSectionUiState';
 const VISIBLE_MATERIALS = MATERIALS.filter((item) => item.id !== 'phonetic-symbols');
@@ -121,6 +130,18 @@ const S_ES_EXCLUDED_WORDS = new Set([
 ]);
 const D_ED_EXCLUDED_WORDS = new Set(['red', 'bed', 'need']);
 
+const COMMON_IPA_SYMBOLS = commonLettersData
+  .flatMap((category) => category.letters)
+  .map((item) => item.ipaSymbol.replace(/\//g, ''));
+
+const BASE_FINAL_IPA_SYMBOLS = [
+  ...new Set([...COMMON_IPA_SYMBOLS, 'tʃ', 'dʒ', 'ɡ', 'ɚ'])
+].sort((a, b) => b.length - a.length);
+
+const S_ES_BASE_LETTER_PATTERNS = ['tch', 'dge', 'ng', 'sh', 'ch', 'ss', 'ce', 'ge', 'x'];
+const D_ED_BASE_LETTER_PATTERNS = ['tch', 'dge', 'sh', 'ch', 'ck', 'gh', 'ph', 'ss', 'ce', 'ge'];
+const D_ED_D_ONLY_SUFFIX_WORDS = new Set(['practiced', 'improved']);
+
 const isPlainWord = (term: string): boolean => /^[A-Za-z]+$/.test(term);
 
 const toWordVariants = (term: string): string[] => {
@@ -176,8 +197,9 @@ const extractFocusTerms = (focus: string): TopicHighlightConfig => {
 
 const isSEndingTargetWord = (rawWord: string): boolean => {
   const word = rawWord.toLowerCase();
-  if (!/^[a-z]+$/.test(word)) return false;
+  if (!/^[a-z]+(?:'s)?$/.test(word)) return false;
   if (S_ES_EXCLUDED_WORDS.has(word)) return false;
+  if (word.endsWith("'s")) return word.length >= 4;
   if (S_ES_STRICT_TERMS.has(word)) return true;
 
   if (word.endsWith('es')) return word.length >= 4;
@@ -185,6 +207,68 @@ const isSEndingTargetWord = (rawWord: string): boolean => {
   if (word.length < 4) return false;
   if (/(ss|us|is)$/.test(word)) return false;
   return true;
+};
+
+const getSEndingLength = (word: string) => {
+  const lower = word.toLowerCase();
+  if (lower.endsWith("'s")) return 2;
+  if (!lower.endsWith('s')) return 0;
+
+  if (lower.endsWith('es')) {
+    const base = lower.slice(0, -2);
+    if (/(s|z|x|ch|sh)$/.test(base)) return 2;
+  }
+
+  return 1;
+};
+
+const getBaseFinalLetterRange = (
+  base: string,
+  materialId: 'final-sound-s-es' | 'final-sound-d-ed'
+) => {
+  if (!base) return { start: 0, end: 0 };
+
+  const lower = base.toLowerCase();
+  const patterns = materialId === 'final-sound-s-es' ? S_ES_BASE_LETTER_PATTERNS : D_ED_BASE_LETTER_PATTERNS;
+  const matchedPattern = patterns.find((pattern) => lower.endsWith(pattern));
+
+  if (matchedPattern) {
+    return { start: base.length - matchedPattern.length, end: base.length };
+  }
+
+  if (lower.endsWith('e') && base.length > 1 && !lower.endsWith('ee')) {
+    return { start: base.length - 2, end: base.length - 1 };
+  }
+
+  return { start: base.length - 1, end: base.length };
+};
+
+const renderBaseAndEndingLetters = (
+  word: string,
+  endingLength: number,
+  materialId: 'final-sound-s-es' | 'final-sound-d-ed',
+  keyPrefix: string
+) => {
+  const splitIndex = Math.max(0, word.length - endingLength);
+  const base = word.slice(0, splitIndex);
+  const ending = word.slice(splitIndex);
+  const baseFinalRange = getBaseFinalLetterRange(base, materialId);
+
+  return (
+    <React.Fragment key={keyPrefix}>
+      {base.slice(0, baseFinalRange.start)}
+      {baseFinalRange.end > baseFinalRange.start ? (
+        <span className='text-hl-base-final'>{base.slice(baseFinalRange.start, baseFinalRange.end)}</span>
+      ) : null}
+      {base.slice(baseFinalRange.end)}
+      <span className='text-hl-symbol'>{ending}</span>
+    </React.Fragment>
+  );
+};
+
+const renderSEndingLetters = (word: string, keyPrefix: string) => {
+  const endingLength = getSEndingLength(word);
+  return renderBaseAndEndingLetters(word, endingLength, 'final-sound-s-es', keyPrefix);
 };
 
 const highlightSEndingsByRule = (text: string, keyPrefix: string) => {
@@ -198,10 +282,18 @@ const highlightSEndingsByRule = (text: string, keyPrefix: string) => {
 
     const normalizedChunk = chunk.toLowerCase();
     if (S_ES_STRICT_TERMS.has(normalizedChunk)) {
+      if (/^[a-z]+(?:'s)?$/i.test(chunk) && isSEndingTargetWord(chunk)) {
+        return (
+          <React.Fragment key={`${keyPrefix}-strict-${chunkIndex}`}>
+            {renderSEndingLetters(chunk, `${keyPrefix}-strict-${chunkIndex}-ending`)}
+          </React.Fragment>
+        );
+      }
+
       return (
-        <span key={`${keyPrefix}-strict-${chunkIndex}`} className='text-hl-letter'>
+        <React.Fragment key={`${keyPrefix}-strict-${chunkIndex}`}>
           {chunk}
-        </span>
+        </React.Fragment>
       );
     }
 
@@ -211,9 +303,9 @@ const highlightSEndingsByRule = (text: string, keyPrefix: string) => {
 
       if (isSEndingTargetWord(wordChunk)) {
         return (
-          <span key={`${keyPrefix}-word-${chunkIndex}-${wordIndex}`} className='text-hl-letter'>
-            {wordChunk}
-          </span>
+          <React.Fragment key={`${keyPrefix}-word-${chunkIndex}-${wordIndex}`}>
+            {renderSEndingLetters(wordChunk, `${keyPrefix}-word-${chunkIndex}-${wordIndex}-ending`)}
+          </React.Fragment>
         );
       }
 
@@ -250,19 +342,6 @@ const getOriginTargetWordOrdinals = (
     }
   });
 
-  const patternMap =
-    materialId === 'final-sound-s-es'
-      ? [/S\/ES/gi, /\/s\//gi, /\/z\//gi, /\/[iɪ]z\//gi, /-s\b/gi, /-es\b/gi]
-      : [/D\/ED/gi, /\/t\//gi, /\/d\//gi, /\/[iɪ]d\//gi, /-ed\b/gi];
-
-  patternMap.forEach((pattern) => {
-    for (const match of originParagraph.matchAll(pattern)) {
-      const matchIndex = match.index ?? 0;
-      const ordinal = getWordOrdinalAtCharIndex(originParagraph, matchIndex);
-      ordinals.add(ordinal);
-    }
-  });
-
   return { totalWords: words.length, targetOrdinals: [...ordinals].sort((a, b) => a - b) };
 };
 
@@ -288,12 +367,15 @@ const isPhoneticCandidateForMaterial = (
   if (!core) return false;
 
   if (materialId === 'final-sound-s-es') {
-    if (['s', 'z', 'ɪz', 'iz'].includes(core)) return true;
+    if (['s', 'z', 'ɪz', 'iz'].includes(core)) return false;
     if (core.length < 3 || S_ES_PHONETIC_EXCLUDED.has(core)) return false;
     return core.endsWith('ɪz') || core.endsWith('iz') || core.endsWith('s') || core.endsWith('z');
   }
 
-  if (['t', 'd', 'ɪd', 'id', 'əd'].includes(core)) return true;
+  if (core.length < 3) return false;
+
+  if (['t', 'd', 'ɪd', 'id', 'əd'].includes(core)) return false;
+  if (core.length < 3) return false;
   if (core.length < 3 || D_ED_PHONETIC_EXCLUDED.has(core)) return false;
   return (
     core.endsWith('ɪd') ||
@@ -392,9 +474,9 @@ const highlightPhoneticByOriginWords = (
 
     if (shouldHighlight) {
       return (
-        <span key={`${keyPrefix}-word-${index}`} className='text-hl-letter'>
-          {part}
-        </span>
+        <React.Fragment key={`${keyPrefix}-word-${index}`}>
+          {renderPhoneticTargetEnding(part, `${keyPrefix}-word-${index}-ending`, materialId)}
+        </React.Fragment>
       );
     }
 
@@ -423,6 +505,12 @@ const isDEdTargetWord = (rawWord: string): boolean => {
   return word.endsWith('ed') && word.length >= 4;
 };
 
+const renderDEdEndingLetters = (word: string, keyPrefix: string) => {
+  const lower = word.toLowerCase();
+  const endingLength = D_ED_D_ONLY_SUFFIX_WORDS.has(lower) ? 1 : lower.endsWith('ed') ? 2 : 1;
+  return renderBaseAndEndingLetters(word, endingLength, 'final-sound-d-ed', keyPrefix);
+};
+
 const highlightDEdByRule = (text: string, keyPrefix: string) => {
   const strictTokens = [...D_ED_STRICT_TERMS].sort((a, b) => b.length - a.length);
   const strictRegex =
@@ -434,10 +522,18 @@ const highlightDEdByRule = (text: string, keyPrefix: string) => {
 
     const normalizedChunk = chunk.toLowerCase();
     if (D_ED_STRICT_TERMS.has(normalizedChunk)) {
+      if (/^[a-z]+$/.test(chunk) && isDEdTargetWord(chunk)) {
+        return (
+          <React.Fragment key={`${keyPrefix}-strict-${chunkIndex}`}>
+            {renderDEdEndingLetters(chunk, `${keyPrefix}-strict-${chunkIndex}-ending`)}
+          </React.Fragment>
+        );
+      }
+
       return (
-        <span key={`${keyPrefix}-strict-${chunkIndex}`} className='text-hl-letter'>
+        <React.Fragment key={`${keyPrefix}-strict-${chunkIndex}`}>
           {chunk}
-        </span>
+        </React.Fragment>
       );
     }
 
@@ -447,9 +543,9 @@ const highlightDEdByRule = (text: string, keyPrefix: string) => {
 
       if (isDEdTargetWord(wordChunk)) {
         return (
-          <span key={`${keyPrefix}-word-${chunkIndex}-${wordIndex}`} className='text-hl-letter'>
-            {wordChunk}
-          </span>
+          <React.Fragment key={`${keyPrefix}-word-${chunkIndex}-${wordIndex}`}>
+            {renderDEdEndingLetters(wordChunk, `${keyPrefix}-word-${chunkIndex}-${wordIndex}-ending`)}
+          </React.Fragment>
         );
       }
 
@@ -588,9 +684,9 @@ const highlightOriginWordsByOrdinals = (originText: string, ordinals: Set<number
 
       if (shouldHighlight) {
         return (
-          <span key={`${keyPrefix}-word-${index}`} className='text-hl-letter'>
-            {part}
-          </span>
+          <React.Fragment key={`${keyPrefix}-word-${index}`}>
+            {highlightTextLetters(part, `${keyPrefix}-word-${index}`)}
+          </React.Fragment>
         );
       }
 
@@ -599,6 +695,86 @@ const highlightOriginWordsByOrdinals = (originText: string, ordinals: Set<number
 
     return <React.Fragment key={`${keyPrefix}-sep-${index}`}>{part}</React.Fragment>;
   });
+};
+
+const highlightTextLetters = (text: string, keyPrefix: string) => {
+  const chunks = text.split(/(t)/gi);
+
+  return chunks.map((chunk, index) => {
+    if (chunk.toLowerCase() === 't') {
+      return (
+        <span key={`${keyPrefix}-t-${index}`} className='text-hl-symbol'>
+          {chunk}
+        </span>
+      );
+    }
+
+    return <React.Fragment key={`${keyPrefix}-plain-${index}`}>{chunk}</React.Fragment>;
+  });
+};
+
+const splitPhoneticToken = (token: string) => {
+  const leadingMatch = token.match(/^[\/()[\]{}.,;:!?'"`]+/)?.[0] ?? '';
+  const trailingMatch = token.match(/[\/()[\]{}.,;:!?'"`]+$/)?.[0] ?? '';
+  const coreStart = leadingMatch.length;
+  const coreEnd = token.length - trailingMatch.length;
+
+  return {
+    leading: leadingMatch,
+    core: token.slice(coreStart, coreEnd),
+    trailing: trailingMatch
+  };
+};
+
+const getPhoneticTargetEndingLength = (
+  core: string,
+  materialId: 'final-sound-s-es' | 'final-sound-d-ed'
+) => {
+  const lower = core.toLowerCase();
+
+  if (materialId === 'final-sound-s-es') {
+    if (core.length < 3) return 0;
+    if (lower.endsWith('ɪz') || lower.endsWith('iz')) return 2;
+    if (lower.endsWith('s') || lower.endsWith('z')) return 1;
+    return 0;
+  }
+
+  if (lower.endsWith('ɪd') || lower.endsWith('id') || lower.endsWith('əd')) return 2;
+  if (lower.endsWith('t') || lower.endsWith('d')) return 1;
+  return 0;
+};
+
+const getBaseFinalIpaSymbol = (baseCore: string) => {
+  const normalized = stripIpaStressMarks(baseCore);
+  return BASE_FINAL_IPA_SYMBOLS.find((symbol) => normalized.endsWith(symbol)) ?? '';
+};
+
+const renderPhoneticTargetEnding = (
+  token: string,
+  keyPrefix: string,
+  materialId: 'final-sound-s-es' | 'final-sound-d-ed'
+) => {
+  const { leading, core, trailing } = splitPhoneticToken(token);
+  const endingLength = getPhoneticTargetEndingLength(core, materialId);
+
+  if (!endingLength) {
+    return <React.Fragment key={keyPrefix}>{token}</React.Fragment>;
+  }
+
+  const splitIndex = Math.max(0, core.length - endingLength);
+  const baseCore = core.slice(0, splitIndex);
+  const baseFinal = getBaseFinalIpaSymbol(baseCore);
+  const baseFinalIndex = baseFinal ? Math.max(0, baseCore.length - baseFinal.length) : baseCore.length;
+
+  return (
+    <React.Fragment key={keyPrefix}>
+      {leading}
+      {baseCore.slice(0, baseFinalIndex)}
+      {baseFinal ? <span className='text-hl-base-final'>{baseCore.slice(baseFinalIndex)}</span> : null}
+      <span className='text-hl-symbol'>{core.slice(splitIndex)}</span>
+      {trailing}
+    </React.Fragment>
+  );
 };
 
 const getAmericanTOriginHighlightOrdinals = (
@@ -642,15 +818,36 @@ const highlightAmericanTByIpaMapping = (
   return highlightOriginWordsByOrdinals(originText, originOrdinals, keyPrefix);
 };
 
-const highlightPhoneticWordsByOrdinals = (
-  phoneticText: string,
-  ordinals: Set<number>,
-  keyPrefix: string
-) => {
-  if (!ordinals.size) return phoneticText;
+const renderAmericanTIpaTarget = (text: string, keyPrefix: string) => {
+  const chunks = text.split(/(ɾ|ʔ|t̚|t)/g);
+
+  return chunks.map((chunk, index) => {
+    if (chunk === 'ɾ') {
+      return (
+        <span key={`${keyPrefix}-flap-${index}`} className='text-hl-symbol'>
+          d
+        </span>
+      );
+    }
+
+    if (chunk === 'ʔ' || chunk === 't' || chunk === 't̚') {
+      return (
+        <span key={`${keyPrefix}-symbol-${index}`} className='text-hl-symbol'>
+          {chunk}
+        </span>
+      );
+    }
+
+    return <React.Fragment key={`${keyPrefix}-plain-${index}`}>{chunk}</React.Fragment>;
+  });
+};
+
+const renderAmericanTIpaLearnerText = (text: string) => text.replace(/ɾ/g, 'd');
+
+const highlightAmericanTPhoneticTargets = (phoneticText: string, keyPrefix: string) => {
+  if (!phoneticText.trim()) return phoneticText;
 
   const parts = phoneticText.split(/(\s+)/);
-  let displayWordOrdinal = 0;
 
   return parts.map((part, index) => {
     if (!part) return null;
@@ -663,18 +860,21 @@ const highlightPhoneticWordsByOrdinals = (
       return <React.Fragment key={`${keyPrefix}-plain-${index}`}>{part}</React.Fragment>;
     }
 
-    const shouldHighlight = ordinals.has(displayWordOrdinal);
-    displayWordOrdinal += 1;
+    const hasTarget = /ɾ|ʔ|t̚|t/.test(core);
 
-    if (shouldHighlight) {
+    if (hasTarget) {
       return (
-        <span key={`${keyPrefix}-word-${index}`} className='text-hl-letter'>
-          {part}
-        </span>
+        <React.Fragment key={`${keyPrefix}-word-${index}`}>
+          {renderAmericanTIpaTarget(part, `${keyPrefix}-word-${index}`)}
+        </React.Fragment>
       );
     }
 
-    return <React.Fragment key={`${keyPrefix}-plain-${index}`}>{part}</React.Fragment>;
+    return (
+      <React.Fragment key={`${keyPrefix}-plain-${index}`}>
+        {renderAmericanTIpaLearnerText(part)}
+      </React.Fragment>
+    );
   });
 };
 
@@ -688,18 +888,7 @@ const highlightAmericanTPhoneticByOriginMapping = (
   const originOrdinals = getAmericanTOriginHighlightOrdinals(originText, phoneticText);
   if (!originOrdinals.size) return phoneticText;
 
-  const totalOriginWords = (originText.match(/[A-Za-z']+/g) ?? []).length;
-  const totalPhoneticWords = tokenizeIpaWords(phoneticText).length;
-  const phoneticCandidateOrdinals = Array.from({ length: totalPhoneticWords }, (_, index) => index);
-
-  const phoneticOrdinals = mapOriginTargetsToPhoneticWordOrdinals(
-    [...originOrdinals].sort((a, b) => a - b),
-    totalOriginWords,
-    phoneticCandidateOrdinals,
-    totalPhoneticWords
-  );
-
-  return highlightPhoneticWordsByOrdinals(phoneticText, phoneticOrdinals, keyPrefix);
+  return highlightAmericanTPhoneticTargets(phoneticText, keyPrefix);
 };
 
 const renderHighlightedParagraph = (
@@ -806,6 +995,44 @@ const renderPhoneticHighlightedParagraph = (
   return paragraph;
 };
 
+const getHighlightLegendItems = (
+  materialId: string,
+  activeTab: TabKey
+): HighlightLegendItem[] => {
+  const ipaLocation =
+    activeTab === 'phonetic'
+      ? 'Transkripsi fonetik yang sedang dibaca'
+      : 'Dipakai di tab Phonetic Transcription';
+
+  if (materialId === 'final-sound-s-es') {
+    return [
+      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
+      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Ending S/ES yang diterapkan' },
+      { key: 'baseFinal', color: '#E040FB', label: 'Light Magenta', description: 'Final sound kata dasar sebelum S/ES' },
+    ];
+  }
+
+  if (materialId === 'final-sound-d-ed') {
+    return [
+      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
+      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Ending D/ED yang diterapkan' },
+      { key: 'baseFinal', color: '#E040FB', label: 'Light Magenta', description: 'Final sound kata dasar sebelum D/ED' },
+    ];
+  }
+
+  if (materialId === 'american-t') {
+    return [
+      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
+      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Huruf atau simbol American T' },
+    ];
+  }
+
+  return [
+    { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
+    { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Fokus bunyi atau istilah utama topik' },
+  ];
+};
+
 export default function PronunciationTextPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>(VISIBLE_MATERIALS[0]?.id ?? '');
@@ -818,6 +1045,12 @@ export default function PronunciationTextPage() {
   const [activeSubsectionId, setActiveSubsectionId] = useState<string>('');
   const [activeSpeechKey, setActiveSpeechKey] = useState<string | null>(null);
   const [activeSpeechGroup, setActiveSpeechGroup] = useState<'main' | 'subsection' | null>(null);
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
+  const [highlightMapEnabled, setHighlightMapEnabled] = useState<HighlightMapState>({
+    ipa: true,
+    target: true,
+    baseFinal: true,
+  });
   const [isPracticeOpen, setIsPracticeOpen] = useState<boolean>(() => {
     const uiState = readTextSectionUiStateFromStorage();
     return uiState.practiceOpen ?? false;
@@ -888,6 +1121,16 @@ export default function PronunciationTextPage() {
       APPLIED_TEXT_DEFAULT_EVALUATION_PROMPT,
     [activeMaterial.id]
   );
+  const highlightLegendItems = useMemo(
+    () => getHighlightLegendItems(activeMaterial.id, activeTab),
+    [activeMaterial.id, activeTab]
+  );
+  const toggleHighlightMapItem = useCallback((key: HighlightLegendItem['key']) => {
+    setHighlightMapEnabled((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -1173,7 +1416,13 @@ export default function PronunciationTextPage() {
   }, [isPracticeOpen, isPromptOpen]);
 
   return (
-    <div className='pronunciation-layout pronunciation-theme pronunciation-theme--text text-pronunciation-layout'>
+    <div
+      className={`pronunciation-layout pronunciation-theme pronunciation-theme--text text-pronunciation-layout ${
+        isHighlightEnabled ? '' : 'text-highlight-off'
+      } ${highlightMapEnabled.ipa ? '' : 'text-ipa-highlight-off'} ${
+        highlightMapEnabled.target ? '' : 'text-target-highlight-off'
+      } ${highlightMapEnabled.baseFinal ? '' : 'text-base-final-highlight-off'}`}
+    >
       <div className='back-button-fixed'>
         <BackButton to='/skill/pronunciation' />
       </div>
@@ -1344,7 +1593,7 @@ export default function PronunciationTextPage() {
                         activeSpeechKey === speechItem?.key ? 'is-speaking' : ''
                       }`}
                     >
-                      <p>
+                      <p className={activeTab === 'phonetic' ? 'text-pronunciation-phonetic-p' : undefined}>
                         {activeTab === 'origin'
                           ? renderHighlightedParagraph(paragraph, activeMaterial, index)
                           : renderPhoneticHighlightedParagraph(
@@ -1420,7 +1669,7 @@ export default function PronunciationTextPage() {
                               activeSpeechKey === speechItem?.key ? 'is-speaking' : ''
                             }`}
                           >
-                            <p>
+                            <p className={activeTab === 'phonetic' ? 'text-pronunciation-phonetic-p' : undefined}>
                               {activeTab === 'origin'
                                 ? renderHighlightedParagraph(paragraph, activeMaterial, paragraphIndex)
                                 : renderPhoneticHighlightedParagraph(
@@ -1459,6 +1708,75 @@ export default function PronunciationTextPage() {
           </section>
         </main>
       </div>
+      <ControlCenter>
+        <button
+          type='button'
+          onClick={() => setIsHighlightEnabled((prev) => !prev)}
+          className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
+            isHighlightEnabled
+              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
+              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+          }`}
+          aria-pressed={isHighlightEnabled}
+        >
+          <span className='tracking-widest font-bold'>HIGHLIGHT</span>
+          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+        </button>
+
+        {isHighlightEnabled ? (
+          <div className='rounded-lg sm:rounded-xl border border-white/10 bg-[#1a1f24]/80 px-2 py-2 sm:px-4 sm:py-3'>
+            <p className='mb-2 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45'>
+              Highlight Map
+            </p>
+            <div className='flex flex-col gap-2'>
+              {highlightLegendItems.map((item) => (
+                <button
+                  key={item.key}
+                  type='button'
+                  className={`flex w-full items-start gap-2 rounded-lg border px-2 py-2 text-left transition-all ${
+                    highlightMapEnabled[item.key]
+                      ? 'border-white/10 bg-white/[0.03] text-white/80'
+                      : 'border-white/5 bg-transparent text-white/35'
+                  }`}
+                  onClick={() => toggleHighlightMapItem(item.key)}
+                  aria-pressed={highlightMapEnabled[item.key]}
+                >
+                  <span
+                    aria-hidden='true'
+                    className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor] sm:h-3 sm:w-3 ${
+                      highlightMapEnabled[item.key] ? '' : 'opacity-30 grayscale'
+                    }`}
+                    style={{ backgroundColor: item.color, color: item.color }}
+                  />
+                  <span className='min-w-0'>
+                    <span className='block font-mono text-[8px] font-bold uppercase tracking-wider sm:text-[10px]'>
+                      {item.label}
+                    </span>
+                    <span className='block text-[9px] leading-snug text-white/50 sm:text-xs'>
+                      {item.description}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <hr className='border-white/10' />
+
+        <button
+          type='button'
+          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
+            activeSpeechGroup === 'main' ? 'is-active' : ''
+          }`}
+          onClick={toggleMainPlayAll}
+        >
+          <span className='tracking-widest font-bold'>
+            {activeSpeechGroup === 'main' ? 'STOP TEXT' : 'PLAY TEXT'}
+          </span>
+          <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${activeSpeechGroup === 'main' ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
+        </button>
+      </ControlCenter>
       <RecordingControlsButton
         className='text-recording-anchor'
         downloadFileName='applied-pronunciation-text-GEUWAT-recording.wav'
