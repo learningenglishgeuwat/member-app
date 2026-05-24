@@ -6,7 +6,7 @@ import { ChevronDown, Copy, Highlighter, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { ControlCenter } from '@/app/components';
+import { ControlCenter, PlayStopButton } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { MATERIALS, TOPIC_HIGHLIGHTS, type TextMaterial, type TopicHighlightConfig } from './data/textData';
@@ -1298,6 +1298,12 @@ export default function PronunciationTextPage() {
         if (speechTokenRef.current !== token) return;
 
         const item = validItems[index];
+
+        window.setTimeout(() => {
+          const el = document.getElementById(item.key);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+
         await speakQueueItem(item.text, item.key, token);
         if (speechTokenRef.current !== token) return;
 
@@ -1589,6 +1595,7 @@ export default function PronunciationTextPage() {
                   return (
                     <div
                       key={rowKey}
+                      id={speechItem?.key}
                       className={`text-pronunciation-reading-row ${
                         activeSpeechKey === speechItem?.key ? 'is-speaking' : ''
                       }`}
@@ -1665,6 +1672,7 @@ export default function PronunciationTextPage() {
                         return (
                           <div
                             key={`${activeSubsection.id}-${activeTab}-${paragraphIndex}`}
+                            id={speechItem?.key}
                             className={`text-pronunciation-reading-row text-pronunciation-reading-row--sub ${
                               activeSpeechKey === speechItem?.key ? 'is-speaking' : ''
                             }`}
@@ -1764,18 +1772,12 @@ export default function PronunciationTextPage() {
 
         <hr className='border-white/10' />
 
-        <button
-          type='button'
-          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
-            activeSpeechGroup === 'main' ? 'is-active' : ''
-          }`}
+        <PlayStopButton
+          isActive={activeSpeechGroup === 'main'}
+          label="TEXT"
           onClick={toggleMainPlayAll}
-        >
-          <span className='tracking-widest font-bold'>
-            {activeSpeechGroup === 'main' ? 'STOP TEXT' : 'PLAY TEXT'}
-          </span>
-          <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${activeSpeechGroup === 'main' ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-        </button>
+          size="sm"
+        />
       </ControlCenter>
       <RecordingControlsButton
         className='text-recording-anchor'

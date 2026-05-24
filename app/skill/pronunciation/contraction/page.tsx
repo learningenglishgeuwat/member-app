@@ -3,17 +3,17 @@
 /* eslint-disable react/no-unescaped-entities, react/jsx-no-comment-textnodes, @typescript-eslint/no-explicit-any */
 
 import React, { useState, useRef, useEffect } from "react";
-import { Volume2, Play } from "lucide-react";
+import { Volume2, Highlighter } from "lucide-react";
 import BackButton from "../../components/BackButton";
 import Sidebar from "../../components/skillSidebar/SkillSidebar";
 import { IpaText } from "@/app/components/IpaText";
-import { IpaVisibilityToggle, ControlCenter } from "@/app/components";
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from "@/app/components";
 import { speakText, stopSpeech, waitForVoices } from "@/lib/tts/speech";
 import "./contraction.css";
 
-const Highlight = ({ text, target }: { text?: string; target?: string }) => {
+const Highlight = ({ text, target, active = true }: { text?: string; target?: string; active?: boolean }) => {
   if (!text) return null;
-  if (!target || !text.includes(target)) return <span>{text}</span>;
+  if (!active || !target || !text.includes(target)) return <span>{text}</span>;
   // highlight first occurrence or all, let's replace all
   const parts = text.split(target);
   return (
@@ -51,10 +51,15 @@ type InformalWord = {
 };
 
 export default function ContractionPage() {
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
+  const [highlightTargetEnabled, setHighlightTargetEnabled] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [showIpa, setShowIpa] = useState(true);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activePillGroup, setActivePillGroup] = useState<string | null>(null);
+  const [activeSequence, setActiveSequence] = useState<string | null>(null);
+  const [activePillId, setActivePillId] = useState<string | null>(null);
 
   // Helper dictionary arrays
   const tabs = [
@@ -76,6 +81,13 @@ export default function ContractionPage() {
   // - 1 kata → 'contraction' (rate 0.85, apostrophe fix)
   // - >1 kata → 'sentence' (rate 0.95)
   const speak = async (text: string) => {
+    // Stop any running Play All sequence
+    playIdRef.current += 1;
+    setActiveRowId(null);
+    setActivePillGroup(null);
+    setActivePillId(null);
+    stopSpeech();
+
     const wordCount = text.trim().split(/\s+/).length;
     const contentType = wordCount === 1 ? 'contraction' : 'sentence';
 
@@ -91,9 +103,19 @@ export default function ContractionPage() {
   // 1. cancelBeforeSpeak: true — AMAN dalam sequence karena await
   // 2. Auto contentType detection per item
   // 3. Tidak ada overlap utterance
-  const playSequence = async (items: { id: string; texts: string[] }[]) => {
+  const playSequence = async (sequenceId: string, items: { id: string; texts: string[] }[]) => {
     playIdRef.current += 1;
+    setActivePillGroup(null);
+    setActivePillId(null);
+    
+    if (activeSequence === sequenceId) {
+      setActiveSequence(null);
+      stopSpeech();
+      return;
+    }
+    
     const currentId = playIdRef.current;
+    setActiveSequence(sequenceId);
 
     stopSpeech();
     await new Promise((r) => setTimeout(r, 150));
@@ -132,8 +154,56 @@ export default function ContractionPage() {
 
     if (playIdRef.current === currentId) {
       setActiveRowId(null);
+      setActiveSequence(null);
     }
   };
+
+  // ── PLAY PILL GROUP (Play All for pattern pills) ────────────
+  const playPillGroup = async (groupId: string, words: string[]) => {
+    playIdRef.current += 1;
+    setActiveSequence(null);
+
+    if (activePillGroup === groupId) {
+      // Stop if same group clicked again
+      playIdRef.current += 1;
+      setActivePillGroup(null);
+      setActivePillId(null);
+      setActiveRowId(null);
+      stopSpeech();
+      return;
+    }
+
+    playIdRef.current += 1;
+    const currentId = playIdRef.current;
+    setActivePillGroup(groupId);
+    setActivePillId(null);
+    setActiveRowId(null);
+    stopSpeech();
+    await new Promise((r) => setTimeout(r, 100));
+
+    for (let i = 0; i < words.length; i++) {
+      if (playIdRef.current !== currentId) return;
+      const pillId = `pill-${groupId}-${i}`;
+      setActivePillId(pillId);
+      setTimeout(() => {
+        const el = document.getElementById(pillId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+      await speakText(words[i], {
+        preferredEnglish: 'en-US',
+        contentType: 'contraction',
+        cancelBeforeSpeak: true,
+      });
+      if (playIdRef.current !== currentId) return;
+      await new Promise((r) => setTimeout(r, 500));
+    }
+
+    if (playIdRef.current === currentId) {
+      setActivePillGroup(null);
+      setActivePillId(null);
+    }
+  };
+
 
   // ── USE EFFECT ──────────────────────────────────────────────
   useEffect(() => {
@@ -573,6 +643,172 @@ export default function ContractionPage() {
         <BackButton to="/skill/pronunciation" />
       </div>
 
+      <ControlCenter>
+        <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
+        {activeTab !== 0 && (
+          <div className="mt-4 flex flex-col gap-2">
+            <p className='font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45 mb-1'>
+              Play All
+            </p>
+            {activeTab === 1 && (
+              <>
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternIs'}
+                  label="'S = IS, HAS"
+                  onClick={() => void playPillGroup('patternIs', patternIs.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternAre'}
+                  label="'RE = ARE"
+                  onClick={() => void playPillGroup('patternAre', patternAre.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternAm'}
+                  label="'M = AM"
+                  onClick={() => void playPillGroup('patternAm', patternAm.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activeSequence === 'sec1'}
+                  label="SENTENCES"
+                  onClick={() => playSequence('sec1', sec1Examples.map((item: any, idx: number) => ({ id: `sec1-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                  size="sm"
+                />
+              </>
+            )}
+            {activeTab === 2 && (
+              <>
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternWill'}
+                  label="'LL = WILL"
+                  onClick={() => void playPillGroup('patternWill', patternWill.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternHave'}
+                  label="'VE = HAVE"
+                  onClick={() => void playPillGroup('patternHave', patternHave.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'patternWould'}
+                  label="'D = WOULD, HAD"
+                  onClick={() => void playPillGroup('patternWould', patternWould.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activeSequence === 'sec2'}
+                  label="SENTENCES"
+                  onClick={() => playSequence('sec2', sec2Examples.map((item: any, idx: number) => ({ id: `sec2-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                  size="sm"
+                />
+              </>
+            )}
+            {activeTab === 3 && (
+              <>
+                <PlayStopButton
+                  isActive={activePillGroup === 'negPresent'}
+                  label="N'T PRESENT"
+                  onClick={() => void playPillGroup('negPresent', negPresent.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'negPast'}
+                  label="N'T PAST"
+                  onClick={() => void playPillGroup('negPast', negPast.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'negModal'}
+                  label="N'T MODAL"
+                  onClick={() => void playPillGroup('negModal', negModal.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activePillGroup === 'negHave'}
+                  label="N'T HAVE"
+                  onClick={() => void playPillGroup('negHave', negHave.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activeSequence === 'sec3'}
+                  label="SENTENCES"
+                  onClick={() => playSequence('sec3', sec3Examples.map((item: any, idx: number) => ({ id: `sec3-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                  size="sm"
+                />
+              </>
+            )}
+            {activeTab === 4 && (
+              <>
+                <PlayStopButton
+                  isActive={activePillGroup === 'informalWords'}
+                  label="WORDS"
+                  onClick={() => void playPillGroup('informalWords', informalWords.map(i => i.word))}
+                  size="sm"
+                />
+                <PlayStopButton
+                  isActive={activeSequence === 'informal'}
+                  label="SENTENCES"
+                  onClick={() => playSequence('informal', informalSentences.map((item: any, idx: number) => ({ id: `inf-${idx}`, texts: [item.formal, item.contract, item.informal] })))}
+                  size="sm"
+                />
+              </>
+            )}
+          </div>
+        )}
+        <button
+          type='button'
+          onClick={() => setIsHighlightEnabled((prev) => !prev)}
+          className={`w-full mt-3 border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
+            isHighlightEnabled
+              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
+              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+          }`}
+          aria-pressed={isHighlightEnabled}
+        >
+          <span className='tracking-widest font-bold'>HIGHLIGHT</span>
+          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+        </button>
+
+        {isHighlightEnabled && (
+          <div className='rounded-lg sm:rounded-xl border border-white/10 bg-[#1a1f24]/80 px-2 py-2 sm:px-4 sm:py-3 mt-3'>
+            <p className='mb-2 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45'>
+              Highlight Map
+            </p>
+            <div className='flex flex-col gap-2'>
+              <button
+                type='button'
+                className={`flex w-full items-start gap-2 rounded-lg border px-2 py-2 text-left transition-all ${
+                  highlightTargetEnabled
+                    ? 'border-white/10 bg-white/[0.03] text-white/80'
+                    : 'border-white/5 bg-transparent text-white/35'
+                }`}
+                onClick={() => setHighlightTargetEnabled((prev) => !prev)}
+                aria-pressed={highlightTargetEnabled}
+              >
+                <span
+                  aria-hidden='true'
+                  className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor] sm:h-3 sm:w-3 ${
+                    highlightTargetEnabled ? '' : 'opacity-30 grayscale'
+                  }`}
+                  style={{ backgroundColor: '#ffb800', color: '#ffb800' }}
+                />
+                <span className='min-w-0'>
+                  <span className='block font-mono text-[8px] font-bold uppercase tracking-wider sm:text-[10px]'>
+                    Target
+                  </span>
+                  <span className='mt-0.5 block text-[9px] leading-relaxed text-white/50 sm:text-[11px]'>
+                    Kata atau frasa yang mengalami kontraksi
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        )}
+      </ControlCenter>
+
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -597,21 +833,19 @@ export default function ContractionPage() {
       </header>
 
       {/* NAV */}
-      <nav className="nav-bar flex-col md:flex-row items-center justify-between gap-4 py-4 px-6 bg-black/40 border-b border-[#2d5560]/30 sticky top-0 z-40 backdrop-blur-md">
-        <div className="flex overflow-x-auto w-full md:w-auto gap-2 pb-2 md:pb-0 hide-scrollbar">
-          {tabs.map((tab, idx) => (
-            <button
-              key={idx}
-              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === idx ? "bg-[#00b8c4] text-[#0d2028]" : "bg-[#00f5ff]/5 text-[#a5d8df] hover:bg-[#00f5ff]/10 hover:text-[#f0fdfa]"}`}
-              onClick={() => {
-                setActiveTab(idx);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      <nav className="nav-bar items-center gap-2 py-2 px-3 bg-black/40 border-b border-[#2d5560]/30 sticky top-0 z-40 backdrop-blur-md overflow-x-auto hide-scrollbar">
+        {tabs.map((tab, idx) => (
+          <button
+            key={idx}
+            className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-colors flex-shrink-0 ${activeTab === idx ? "bg-[#00b8c4] text-[#0d2028]" : "bg-[#00f5ff]/5 text-[#a5d8df] hover:bg-[#00f5ff]/10 hover:text-[#f0fdfa]"}`}
+            onClick={() => {
+              setActiveTab(idx);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            {tab}
+          </button>
+        ))}
       </nav>
 
       {/* MAIN */}
@@ -753,12 +987,15 @@ export default function ContractionPage() {
 
           <div className="pattern-grid">
             <div className="pattern-cell">
-              <div className="p-label">'s = is — orang ke-3 tunggal</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'s = is — orang ke-3 tunggal</div>
+              </div>
               <div className="pill-wrap">
                 {patternIs.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternIs-${i}`}
+                    className={`pill${activePillId === `pill-patternIs-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>{item.word}</span>
@@ -768,12 +1005,15 @@ export default function ContractionPage() {
               </div>
             </div>
             <div className="pattern-cell">
-              <div className="p-label">'re = are — jamak / you</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'re = are — jamak / you</div>
+              </div>
               <div className="pill-wrap">
                 {patternAre.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternAre-${i}`}
+                    className={`pill${activePillId === `pill-patternAre-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>{item.word}</span>
@@ -783,12 +1023,15 @@ export default function ContractionPage() {
               </div>
             </div>
             <div className="pattern-cell">
-              <div className="p-label">'m = am — hanya I</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'m = am — hanya I</div>
+              </div>
               <div className="pill-wrap">
                 {patternAm.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternAm-${i}`}
+                    className={`pill${activePillId === `pill-patternAm-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>{item.word}</span>
@@ -799,22 +1042,7 @@ export default function ContractionPage() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mb-3">
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
-            <button
-              onClick={() =>
-                playSequence(
-                  sec1Examples.map((item: any, idx: number) => ({
-                    id: `sec1-${idx}`,
-                    texts: [item.en, item.contract, item.after],
-                  })),
-                )
-              }
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              <Play size={14} /> Play All
-            </button>
-          </div>
+          {/* sec1Examples Play All moved to ControlCenter */}
           <table className="ex-table">
             <thead>
               <tr>
@@ -837,7 +1065,7 @@ export default function ContractionPage() {
                   <td className="td-en">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.en} target={item.enTarget} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -849,7 +1077,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
                             />
@@ -884,7 +1112,7 @@ export default function ContractionPage() {
                   <td className="td-after">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.after} target={item.contract} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -896,7 +1124,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
                                 item.ipaContract
@@ -955,12 +1183,15 @@ export default function ContractionPage() {
 
           <div className="pattern-grid">
             <div className="pattern-cell">
-              <div className="p-label">'ll = will (masa depan)</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'ll = will (masa depan)</div>
+              </div>
               <div className="pill-wrap">
                 {patternWill.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternWill-${i}`}
+                    className={`pill${activePillId === `pill-patternWill-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>
@@ -972,12 +1203,15 @@ export default function ContractionPage() {
               </div>
             </div>
             <div className="pattern-cell">
-              <div className="p-label">'ve / 's = have / has</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'ve / 's = have / has</div>
+              </div>
               <div className="pill-wrap">
                 {patternHave.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternHave-${i}`}
+                    className={`pill${activePillId === `pill-patternHave-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>
@@ -989,12 +1223,15 @@ export default function ContractionPage() {
               </div>
             </div>
             <div className="pattern-cell">
-              <div className="p-label">'d = would atau had</div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-label" style={{marginBottom: 0}}>'d = would atau had</div>
+              </div>
               <div className="pill-wrap">
                 {patternWould.map((item, i) => (
                   <button
                     key={i}
-                    className="pill"
+                    id={`pill-patternWould-${i}`}
+                    className={`pill${activePillId === `pill-patternWould-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
                     onClick={() => speak(item.word)}
                   >
                     <span>
@@ -1007,22 +1244,7 @@ export default function ContractionPage() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mb-3">
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
-            <button
-              onClick={() =>
-                playSequence(
-                  sec2Examples.map((item: any, idx: number) => ({
-                    id: `sec2-${idx}`,
-                    texts: [item.en, item.contract, item.after],
-                  })),
-                )
-              }
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              <Play size={14} /> Play All
-            </button>
-          </div>
+          {/* sec2Examples Play All moved to ControlCenter */}
           <table className="ex-table">
             <thead>
               <tr>
@@ -1045,7 +1267,7 @@ export default function ContractionPage() {
                   <td className="td-en">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.en} target={item.enTarget} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -1057,7 +1279,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
                             />
@@ -1092,7 +1314,7 @@ export default function ContractionPage() {
                   <td className="td-after">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.after} target={item.contract} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -1104,7 +1326,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
                                 item.ipaContract
@@ -1164,8 +1386,12 @@ export default function ContractionPage() {
           <div className="neg-cols">
             <div className="neg-group">
               <div className="neg-group-title">Present</div>
-              {negPresent.map((item) => (
-                <div key={item.word} className="neg-item">
+              {negPresent.map((item, i) => (
+                <div
+                  key={item.word}
+                  id={`pill-negPresent-${i}`}
+                  className={`neg-item${activePillId === `pill-negPresent-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
+                >
                   <div className="flex flex-col gap-1 w-full">
                     <div className="flex items-center justify-between">
                       <span className="neg-word">{item.word}</span>
@@ -1178,7 +1404,7 @@ export default function ContractionPage() {
                     </div>
                     {showIpa && (
                       <div className="font-ipa text-[0.75rem]">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.ipa}
                           target={
                             item.ipaContract
@@ -1194,8 +1420,12 @@ export default function ContractionPage() {
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Past</div>
-              {negPast.map((item) => (
-                <div key={item.word} className="neg-item">
+              {negPast.map((item, i) => (
+                <div
+                  key={item.word}
+                  id={`pill-negPast-${i}`}
+                  className={`neg-item${activePillId === `pill-negPast-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
+                >
                   <div className="flex flex-col gap-1 w-full">
                     <div className="flex items-center justify-between">
                       <span className="neg-word">{item.word}</span>
@@ -1208,7 +1438,7 @@ export default function ContractionPage() {
                     </div>
                     {showIpa && (
                       <div className="font-ipa text-[0.75rem]">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.ipa}
                           target={
                             item.ipaContract
@@ -1224,8 +1454,12 @@ export default function ContractionPage() {
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Modal</div>
-              {negModal.map((item) => (
-                <div key={item.word} className="neg-item">
+              {negModal.map((item, i) => (
+                <div
+                  key={item.word}
+                  id={`pill-negModal-${i}`}
+                  className={`neg-item${activePillId === `pill-negModal-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
+                >
                   <div className="flex flex-col gap-1 w-full">
                     <div className="flex items-center justify-between">
                       <span className="neg-word">{item.word}</span>
@@ -1238,7 +1472,7 @@ export default function ContractionPage() {
                     </div>
                     {showIpa && (
                       <div className="font-ipa text-[0.75rem]">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.ipa}
                           target={
                             item.ipaContract
@@ -1254,8 +1488,12 @@ export default function ContractionPage() {
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Have / Has</div>
-              {negHave.map((item) => (
-                <div key={item.word} className="neg-item">
+              {negHave.map((item, i) => (
+                <div
+                  key={item.word}
+                  id={`pill-negHave-${i}`}
+                  className={`neg-item${activePillId === `pill-negHave-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
+                >
                   <div className="flex flex-col gap-1 w-full">
                     <div className="flex items-center justify-between">
                       <span className="neg-word">{item.word}</span>
@@ -1268,7 +1506,7 @@ export default function ContractionPage() {
                     </div>
                     {showIpa && (
                       <div className="font-ipa text-[0.75rem]">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.ipa}
                           target={
                             item.ipaContract
@@ -1284,22 +1522,7 @@ export default function ContractionPage() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mb-3">
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
-            <button
-              onClick={() =>
-                playSequence(
-                  sec3Examples.map((item: any, idx: number) => ({
-                    id: `sec3-${idx}`,
-                    texts: [item.en, item.contract, item.after],
-                  })),
-                )
-              }
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              <Play size={14} /> Play All
-            </button>
-          </div>
+          {/* sec3Examples Play All moved to ControlCenter */}
           <table className="ex-table">
             <thead>
               <tr>
@@ -1322,7 +1545,7 @@ export default function ContractionPage() {
                   <td className="td-en">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.en} target={item.enTarget} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -1334,7 +1557,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
                             />
@@ -1369,7 +1592,7 @@ export default function ContractionPage() {
                   <td className="td-after">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight text={item.after} target={item.contract} />
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
                           className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
@@ -1381,7 +1604,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
                                 item.ipaContract
@@ -1465,7 +1688,11 @@ export default function ContractionPage() {
 
           <div className="informal-grid">
             {informalWords.map((item, idx) => (
-              <div key={idx} className="informal-cell group">
+              <div
+                key={idx}
+                id={`pill-informal-${idx}`}
+                className={`informal-cell group${activePillId === `pill-informal-${idx}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10' : ''}`}
+              >
                 <div className="flex justify-between items-start">
                   <div className="inf-word">{item.word}</div>
                   <button
@@ -1479,7 +1706,7 @@ export default function ContractionPage() {
                 <div className="inf-full">{item.full}</div>
                 {showIpa && (
                   <div className="inf-ipa border-0 pt-0 mt-0">
-                    <Highlight
+                    <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                       text={item.ipa}
                       target={
                         item.ipaContract
@@ -1493,22 +1720,7 @@ export default function ContractionPage() {
             ))}
           </div>
 
-          <div className="flex justify-between items-center mb-3">
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
-            <button
-              onClick={() =>
-                playSequence(
-                  informalSentences.map((item: any, idx: number) => ({
-                    id: `inf-${idx}`,
-                    texts: [item.formal, item.contract, item.informal],
-                  })),
-                )
-              }
-              className="flex items-center gap-2 px-3 py-1 rounded border border-[#00f5ff]/20 text-[#00f5ff] text-xs hover:bg-[#00f5ff]/20 transition-colors bg-[#00f5ff]/10"
-            >
-              <Play size={14} /> Play All
-            </button>
-          </div>
+          {/* informalSentences Play All moved to ControlCenter */}
           <table className="ex-table">
             <thead>
               <tr>
@@ -1531,7 +1743,7 @@ export default function ContractionPage() {
                   <td className="td-en">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.formal}
                           target={item.formalTarget}
                         />
@@ -1546,7 +1758,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
                             />
@@ -1581,7 +1793,7 @@ export default function ContractionPage() {
                   <td className="td-after">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <Highlight
+                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                           text={item.informal}
                           target={item.contract}
                         />
@@ -1596,7 +1808,7 @@ export default function ContractionPage() {
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
                           <span className="font-ipa text-[0.85rem]">
-                            <Highlight
+                            <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
                                 item.ipaContract

@@ -6,6 +6,7 @@ import { Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { ControlCenter, PlayStopButton } from '@/app/components';
 import '../final-sound-new/final-sound-topic.css';
 import './intonation.css';
 import { primeBestEnglishVoice, speakWithBestEnglishVoice } from '../final-sound-new/tts-utils';
@@ -77,6 +78,14 @@ const AUDIO_ITEM_IDS: Record<IntonationAudioSectionKey, string[]> = {
   emphasisFeeling: EMPHASIS_FEELING_EXAMPLES.map((item) => item.id),
   dialogueDrills: DIALOGUE_DRILLS.map((item) => item.id),
 };
+
+const INTONATION_AUDIO_SECTIONS: Array<{ key: IntonationAudioSectionKey; label: string }> = [
+  { key: 'patterns', label: 'PATTERNS' },
+  { key: 'statementsQuestions', label: 'STATEMENTS' },
+  { key: 'listContinuation', label: 'LIST' },
+  { key: 'emphasisFeeling', label: 'EMPHASIS' },
+  { key: 'dialogueDrills', label: 'DIALOGUE' },
+];
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
@@ -796,6 +805,17 @@ export default function IntonationPage() {
     void playerRef.current?.playModel(sentences);
   }, []);
 
+  const handleControlCenterPlay = useCallback(
+    (section: IntonationAudioSectionKey) => {
+      if (section === activeAudioSection && playbackState.isPlaying) {
+        handleStopAudio();
+        return;
+      }
+      handlePlayModel(section);
+    },
+    [activeAudioSection, playbackState.isPlaying, handlePlayModel, handleStopAudio],
+  );
+
   const handleCopyPrompt = useCallback(async () => {
     if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) return;
 
@@ -1223,6 +1243,21 @@ export default function IntonationPage() {
         className="intonation-recording-anchor"
         downloadFileName="intonation-GEUWAT-recording.wav"
       />
+
+      <ControlCenter>
+        <div className="flex flex-col gap-3">
+          {INTONATION_AUDIO_SECTIONS.map((section) => (
+            <PlayStopButton
+              key={section.key}
+              isActive={activeAudioSection === section.key && playbackState.isPlaying}
+              label={section.label}
+              onClick={() => handleControlCenterPlay(section.key)}
+              disabled={AUDIO_SENTENCES[section.key].length === 0}
+              size="sm"
+            />
+          ))}
+        </div>
+      </ControlCenter>
     </div>
   );
 }

@@ -11,3 +11,4 @@ export { default as RequireActive } from './RequireActive';
 export { default as RequireActiveWrapper } from './RequireActiveWrapper';
 export { default as SkillThemeSync } from './SkillThemeSync';
 export { default as ControlCenter } from './ControlCenter/ControlCenter';
+export { PlayStopButton } from './PlayStopButton';

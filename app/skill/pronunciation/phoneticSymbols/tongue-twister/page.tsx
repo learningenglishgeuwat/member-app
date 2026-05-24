@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ReactNode } from 'react';
 import BackButton from '../../../components/BackButton';
-import { ControlCenter } from '@/app/components';
+import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import { Highlight } from '../../reading-text/tongueTwister/components/Highlight';
@@ -15,6 +15,8 @@ export default function TongueTwisterPage() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [focusDropdownOpen, setFocusDropdownOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const speakSessionRef = useRef(0);
@@ -362,6 +364,29 @@ export default function TongueTwisterPage() {
           </ul>
         </article>
       </section>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-3">
+          <PlayStopButton
+            isActive={isSpeaking}
+            label="PLAY"
+            onClick={handleSpeakTwister}
+            size="sm"
+          />
+          <IpaVisibilityToggle
+            checked={showIpa}
+            onChange={setShowIpa}
+            label="Show IPA"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <IpaVisibilityToggle
+            checked={showHighlight}
+            onChange={setShowHighlight}
+            label="Common Letters"
+            className="w-full flex justify-between text-[10px] sm:text-xs"
+          />
+        </div>
+      </ControlCenter>
     </main>
   );
 }

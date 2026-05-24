@@ -8,12 +8,12 @@ import {
   QUICK_SPELLING_WORDS,
 } from './constants';
 import { LetterCard } from './LetterCard';
-import { ChevronRight, Copy, Play, Square } from 'lucide-react';
+import { ChevronRight, Copy, Square, Play } from 'lucide-react';
 import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import { useHaptic } from '@/lib/haptic/useHaptic';
 import {
   isSpeechSynthesisSupported,
@@ -498,6 +498,15 @@ const AlphabetPage: React.FC = () => {
     [],
   );
 
+  useEffect(() => {
+    if (currentPlayingPracticeCountry) {
+      const activeItem = document.getElementById(`practice-country-${currentPlayingPracticeCountry.replace(/\s+/g, '-')}`);
+      if (activeItem) {
+        activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [currentPlayingPracticeCountry]);
+
   return (
     <div className="pronunciation-layout pronunciation-theme pronunciation-theme--alphabet alphabet-container">
       {/* Back Button */}
@@ -745,6 +754,7 @@ const AlphabetPage: React.FC = () => {
                   {PRACTICE_COUNTRIES.map((countryEntry) => (
                     <li
                       key={countryEntry.name}
+                      id={`practice-country-${countryEntry.name.replace(/\s+/g, '-')}`}
                       className={`alphabet-practice-country-item ${
                         currentPlayingPracticeCountry === countryEntry.name ? 'is-playing' : ''
                       }`}
@@ -828,17 +838,24 @@ const AlphabetPage: React.FC = () => {
       <ControlCenter>
         <div className="flex flex-col gap-6">
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Actions</span>
-            <button onClick={handlePlayAll} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY ALPHABET</span>
-              {isPlayingAll ? <Square className={`w-5 h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400`} /> : <Play className={`w-5 h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400`} />}
-            </button>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Alphabet</span>
+            <PlayStopButton
+              isActive={isPlayingAll}
+              label="ALPHABET"
+              onClick={handlePlayAll}
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-6" label="Show Alphabet IPA" />
-            
-            <button onClick={handlePlayAllPracticeCountries} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY PRACTICE</span>
-              {isPlayingPracticeAll ? <Square className={`w-5 h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400`} /> : <Play className={`w-5 h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400`} />}
-            </button>
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Practice</span>
+            <PlayStopButton
+              isActive={isPlayingPracticeAll}
+              label="PRACTICE"
+              onClick={handlePlayAllPracticeCountries}
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle checked={showPracticeIpa} onChange={setShowPracticeIpa} className="w-full flex justify-between text-[10px] sm:text-xs" label="Practice IPA" />
           </div>
         </div>

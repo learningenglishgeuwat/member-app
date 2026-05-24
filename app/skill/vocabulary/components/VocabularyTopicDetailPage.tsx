@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Check, Copy, Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import type { VocabularyItem, VocabularyTopicMeta } from '../topic/data/types';
 import {
   getVocabularyExampleIpa,
@@ -813,30 +813,32 @@ export default function VocabularyTopicDetailPage({
           
           <div className="flex flex-col gap-1.5 sm:gap-2">
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1 sm:mb-2 uppercase">AUDIO CONTROLS</span>
-            <button 
-              onClick={() => void playAllWords()}
-              disabled={!pagedWords.length || isPlayAllRunning}
-              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <span className="tracking-widest font-bold">PLAY WORDS</span>
-              <Play className={`w-3 h-3 sm:w-5 sm:h-5 transition-colors ${isPlayAllRunning && playMode === 'words' ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
-            </button>
-            <button 
-              onClick={() => void playAllWordThenExample()}
-              disabled={!pagedWords.length || isPlayAllRunning}
-              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <span className="tracking-widest font-bold">PLAY W -&gt; EX</span>
-              <Play className={`w-3 h-3 sm:w-5 sm:h-5 transition-colors ${isPlayAllRunning && playMode === 'word-example' ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
-            </button>
-            <button 
-              onClick={stopPlayback}
-              disabled={!isPlayAllRunning && !playingItemId}
-              className="w-full bg-red-900/20 border border-red-500/20 text-red-400/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-red-900/40 hover:border-red-500/50 hover:text-red-300 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <span className="tracking-widest font-bold">STOP</span>
-              <Square className={`w-3 h-3 sm:w-5 sm:h-5 transition-colors ${(!isPlayAllRunning && !playingItemId) ? "fill-transparent stroke-current" : "fill-red-500 stroke-red-500 text-red-500 group-hover:fill-red-400 group-hover:stroke-red-400 group-hover:text-red-400"}`} />
-            </button>
+            <PlayStopButton
+              isActive={!!(isPlayAllRunning && playMode === 'words')}
+              label="WORDS"
+              onClick={() => {
+                if (isPlayAllRunning && playMode === 'words') {
+                  stopPlayback();
+                  return;
+                }
+                void playAllWords();
+              }}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'words')}
+              size="sm"
+            />
+            <PlayStopButton
+              isActive={!!(isPlayAllRunning && playMode === 'word-example')}
+              label="W -> EX"
+              onClick={() => {
+                if (isPlayAllRunning && playMode === 'word-example') {
+                  stopPlayback();
+                  return;
+                }
+                void playAllWordThenExample();
+              }}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'word-example')}
+              size="sm"
+            />
           </div>
         </div>
       </ControlCenter>

@@ -16,6 +16,8 @@ type DialogScriptTtsProps = {
   showTranslations?: boolean;
   ipaLines?: string[];
   showIpa?: boolean;
+  autoPlayTrigger?: number;
+  onSpeakingChange?: (isSpeaking: boolean) => void;
 };
 
 type PlayMode = 'single' | 'scenario';
@@ -28,6 +30,8 @@ export default function DialogScriptTts({
   showTranslations = false,
   ipaLines,
   showIpa = false,
+  autoPlayTrigger,
+  onSpeakingChange,
 }: DialogScriptTtsProps) {
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
   const [isPlayingScenario, setIsPlayingScenario] = useState(false);
@@ -41,6 +45,8 @@ export default function DialogScriptTts({
   const parsedLines = useMemo(() => lines.map(parseDialogLine), [lines]);
   const speakableLines = useMemo(() => parsedLines.map((line) => line.content), [parsedLines]);
   const isAnySpeaking = speakingIndex !== null || isPlayingScenario;
+  const onSpeakingChangeRef = useRef(onSpeakingChange);
+  onSpeakingChangeRef.current = onSpeakingChange;
 
   const clearScenarioTimeout = () => {
     if (typeof window === 'undefined') return;
@@ -55,6 +61,7 @@ export default function DialogScriptTts({
     stopSpeechSynthesisPlayback();
     setSpeakingIndex(null);
     setIsPlayingScenario(false);
+    onSpeakingChangeRef.current?.(false);
   };
 
   const playAt = (index: number, mode: PlayMode, token: number) => {
@@ -78,6 +85,7 @@ export default function DialogScriptTts({
         if (playTokenRef.current !== token) return;
         setSpeakingIndex(index);
         setIsPlayingScenario(mode === 'scenario');
+        onSpeakingChangeRef.current?.(true);
       };
 
       utterance.onend = () => {
@@ -92,6 +100,7 @@ export default function DialogScriptTts({
           if (nextIndex >= speakableLines.length) {
             setSpeakingIndex(null);
             setIsPlayingScenario(false);
+            onSpeakingChangeRef.current?.(false);
             return;
           }
 
@@ -105,12 +114,14 @@ export default function DialogScriptTts({
 
         setSpeakingIndex(null);
         setIsPlayingScenario(false);
+        onSpeakingChangeRef.current?.(false);
       };
 
       utterance.onerror = () => {
         if (playTokenRef.current !== token) return;
         setSpeakingIndex(null);
         setIsPlayingScenario(false);
+        onSpeakingChangeRef.current?.(false);
       };
 
       window.speechSynthesis.speak(utterance);
@@ -164,6 +175,12 @@ export default function DialogScriptTts({
       stopSpeechSynthesisPlayback();
     };
   }, []);
+
+  useEffect(() => {
+    if (!autoPlayTrigger || !canSpeak) return;
+    playScenario();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPlayTrigger, canSpeak]);
 
   useEffect(() => {
     if (speakingIndex === null) return;

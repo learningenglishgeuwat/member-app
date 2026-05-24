@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronDown, Gauge, Play, Volume2 } from 'lucide-react';
+import { ChevronDown, Gauge, Volume2, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -351,13 +351,12 @@ export default function LinkingWordPage() {
       </nav>
 
       <ControlCenter>
-        <button
-          onClick={() => void playAll(false)}
-          className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-4"
-        >
-          <span className="tracking-widest font-bold">PLAY ALL</span>
-          <Play className={cx("w-3 h-3 sm:w-5 sm:h-5 transition-colors", playingId ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400")} />
-        </button>
+        <PlayStopButton
+          isActive={!!playingId}
+          label="ALL"
+          onClick={() => playingId ? cancelPlayback() : void playAll(false)}
+          className="mb-2 sm:mb-4"
+        />
 
         <hr className="border-white/10 my-2 sm:my-4" />
 

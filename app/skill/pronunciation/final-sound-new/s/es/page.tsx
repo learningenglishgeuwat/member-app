@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Copy, Play } from 'lucide-react';
+import { ControlCenter, IpaVisibilityToggle, PlayStopButton } from '@/app/components';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -1124,6 +1125,67 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
       </main>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Plural Rules
+            </span>
+            <PlayStopButton
+              isActive={isPlayingPluralAll}
+              label="PLURAL RULES"
+              onClick={() => void handlePluralRulesPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showPluralIpa}
+              onChange={setShowPluralIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Plural Rules IPA"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Rules Table
+            </span>
+            <PlayStopButton
+              isActive={isPlayingRulesTableAll}
+              label="RULES TABLE"
+              onClick={() => void handleRulesTablePlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showRulesTableIpa}
+              onChange={setShowRulesTableIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Rules Table IPA"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Word Bank
+            </span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="WORD BANK"
+              onClick={() => void handleWordBankPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showWordBankIpa}
+              onChange={setShowWordBankIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Word Bank IPA"
+            />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="s-es-recording-anchor"

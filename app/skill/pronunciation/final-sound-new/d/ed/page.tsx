@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Play, Square } from 'lucide-react';
-import { ControlCenter, IpaVisibilityToggle } from '@/app/components';
+import { Copy, Play } from 'lucide-react';
+import { ControlCenter, IpaVisibilityToggle, PlayStopButton } from '@/app/components';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -1127,18 +1127,13 @@ export default function FinalSoundDEdPage() {
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
               Past Endings
             </span>
-            <button
-              type="button"
+            <PlayStopButton
+              isActive={isPlayingPastEndingsAll}
+              label="PAST ENDINGS"
               onClick={() => void handlePastEndingsPlayAll()}
-              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
-            >
-              <span className="tracking-widest font-bold">PLAY PAST ENDINGS</span>
-              {isPlayingPastEndingsAll ? (
-                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
-              ) : (
-                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
-              )}
-            </button>
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle
               checked={showPastEndingsIpa}
               onChange={setShowPastEndingsIpa}
@@ -1151,18 +1146,13 @@ export default function FinalSoundDEdPage() {
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
               Rules Table
             </span>
-            <button
-              type="button"
+            <PlayStopButton
+              isActive={isPlayingRulesTableAll}
+              label="RULES TABLE"
               onClick={() => void handleRulesTablePlayAll()}
-              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
-            >
-              <span className="tracking-widest font-bold">PLAY RULES TABLE</span>
-              {isPlayingRulesTableAll ? (
-                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
-              ) : (
-                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
-              )}
-            </button>
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle
               checked={showRulesTableIpa}
               onChange={setShowRulesTableIpa}
@@ -1175,18 +1165,13 @@ export default function FinalSoundDEdPage() {
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
               Word Bank
             </span>
-            <button
-              type="button"
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="WORD BANK"
               onClick={() => void handleWordBankPlayAll()}
-              className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3"
-            >
-              <span className="tracking-widest font-bold">PLAY WORD BANK</span>
-              {isPlayingWordBankAll ? (
-                <Square className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" />
-              ) : (
-                <Play className="w-3 h-3 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />
-              )}
-            </button>
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle
               checked={showWordBankIpa}
               onChange={setShowWordBankIpa}

@@ -13,6 +13,8 @@ type GoalSentenceTtsProps = {
   showTranslations?: boolean;
   ipaLines?: string[];
   showIpa?: boolean;
+  autoPlayTrigger?: number;
+  onSpeakingChange?: (isSpeaking: boolean) => void;
 };
 
 type PlayMode = 'single' | 'all';
@@ -46,6 +48,8 @@ export default function GoalSentenceTts({
   showTranslations = false,
   ipaLines,
   showIpa = false,
+  autoPlayTrigger,
+  onSpeakingChange,
 }: GoalSentenceTtsProps) {
   const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
   const [canSpeak, setCanSpeak] = useState(false);
@@ -53,12 +57,15 @@ export default function GoalSentenceTts({
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
   const supportCheckTimerRef = useRef<number | null>(null);
   const isSpeaking = speakingIndex !== null;
+  const onSpeakingChangeRef = useRef(onSpeakingChange);
+  onSpeakingChangeRef.current = onSpeakingChange;
 
   function stopAll() {
     if (!isSpeechSynthesisSupported()) return;
     playTokenRef.current += 1;
     stopSpeech();
     setSpeakingIndex(null);
+    onSpeakingChangeRef.current?.(false);
   }
 
   function playAt(index: number, mode: PlayMode, token: number) {
@@ -72,6 +79,7 @@ export default function GoalSentenceTts({
     utterance.onstart = () => {
       if (playTokenRef.current !== token) return;
       setSpeakingIndex(index);
+      onSpeakingChangeRef.current?.(true);
     };
     utterance.onend = () => {
       if (playTokenRef.current !== token) return;
@@ -80,10 +88,12 @@ export default function GoalSentenceTts({
         return;
       }
       setSpeakingIndex(null);
+      onSpeakingChangeRef.current?.(false);
     };
     utterance.onerror = () => {
       if (playTokenRef.current !== token) return;
       setSpeakingIndex(null);
+      onSpeakingChangeRef.current?.(false);
     };
 
     synth.speak(utterance);
@@ -120,6 +130,12 @@ export default function GoalSentenceTts({
       stopSpeech();
     };
   }, []);
+
+  useEffect(() => {
+    if (!autoPlayTrigger || !canSpeak) return;
+    playAll();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPlayTrigger, canSpeak]);
 
   useEffect(() => {
     if (speakingIndex === null) return;

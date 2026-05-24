@@ -95,6 +95,20 @@
   letter-spacing: 1px;
 }
 
+.symbol-detail-container .symbol-letter-highlight {
+  display: inline !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: #fb923c !important;
+  font-weight: 900 !important;
+  text-shadow:
+    0 0 8px rgba(251, 146, 60, 0.88),
+    0 0 16px rgba(251, 146, 60, 0.46) !important;
+}
+
 /* Video Section - SCOPED */
 .symbol-detail-container .video-section {
   max-width: 1000px;

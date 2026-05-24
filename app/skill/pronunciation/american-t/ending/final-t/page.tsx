@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play } from 'lucide-react';
+import { Copy, Highlighter, Play, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   extractFocusPhrase,
   renderAmericanTTextHighlight,
@@ -657,6 +657,42 @@ export default function FinalTEndingPage() {
       
       <ControlCenter>
         <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
+            <PlayStopButton
+              isActive={isPlayingPhraseAll}
+              label="PHRASES"
+              onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.phraseExamples} onChange={() => toggleIpaBySection('phraseExamples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
+            <PlayStopButton
+              isActive={isPlayingSentenceBankAll}
+              label="SENTENCE BANK"
+              onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.sentenceBank} onChange={() => toggleIpaBySection('sentenceBank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <PlayStopButton
+              isActive={isPlayingDrillsAll}
+              label="DRILLS"
+              onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.drills} onChange={() => toggleIpaBySection('drills')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
           <button
             type="button"
             onClick={() => setIsHighlightEnabled((prev) => !prev)}
@@ -670,33 +706,6 @@ export default function FinalTEndingPage() {
             <span className="tracking-widest font-bold">HIGHLIGHT</span>
             <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
           </button>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
-            <button onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY PHRASES</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingPhraseAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
-            <IpaVisibilityToggle checked={showIpaBySection.phraseExamples} onChange={() => toggleIpaBySection('phraseExamples')} className="w-full flex justify-between" />
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
-            <button onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY SENTENCE BANK</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentenceBankAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
-            <IpaVisibilityToggle checked={showIpaBySection.sentenceBank} onChange={() => toggleIpaBySection('sentenceBank')} className="w-full flex justify-between" />
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
-            <button onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY DRILLS</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingDrillsAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
-            <IpaVisibilityToggle checked={showIpaBySection.drills} onChange={() => toggleIpaBySection('drills')} className="w-full flex justify-between" />
-          </div>
         </div>
       </ControlCenter>
       <RecordingControlsButton

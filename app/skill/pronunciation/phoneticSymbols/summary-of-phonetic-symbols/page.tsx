@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
-import { ControlCenter } from '@/app/components';
+import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './summary-of-phonetic-symbols.css';
 
@@ -109,6 +109,8 @@ export default function SummaryOfPhoneticSymbolsPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('vowel');
   const [activePlayGroup, setActivePlayGroup] = useState<string | null>(null);
   const [activeSpeakingExampleKey, setActiveSpeakingExampleKey] = useState<string | null>(null);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const playGroupRef = useRef<string | null>(null);
   const playSessionRef = useRef(0);
   const exampleCardRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -131,6 +133,31 @@ export default function SummaryOfPhoneticSymbolsPage() {
       inline: 'nearest',
     });
   };
+
+  const activeGroups = useMemo(() => {
+    return activeTab === 'vowel'
+      ? VOWEL_GROUPS
+      : activeTab === 'consonant'
+        ? CONSONANT_GROUPS
+        : DIPHTHONG_GROUPS;
+  }, [activeTab]);
+
+  const activeGroupPlayLists = useMemo(() => {
+    return activeGroups.map((group) => ({
+      groupKey: `${activeTab}-${group.title}`,
+      label: group.title,
+      words: group.items.flatMap((item, itemIndex) =>
+        item.examples.map((example, exampleIndex) => ({
+          key: buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex),
+          word: example.word,
+        })),
+      ),
+    }));
+  }, [activeGroups, activeTab]);
+
+  const allExampleWords = useMemo(() => {
+    return activeGroupPlayLists.flatMap((group) => group.words);
+  }, [activeGroupPlayLists]);
 
   useEffect(() => {
     void waitForVoices();
@@ -319,6 +346,44 @@ export default function SummaryOfPhoneticSymbolsPage() {
           </div>
         )}
       </section>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-3">
+          <PlayStopButton
+            isActive={activePlayGroup === `${activeTab}-all`}
+            label={`PLAY ALL`}
+            onClick={() => void playAllWordsByGroup(`${activeTab}-all`, allExampleWords)}
+            disabled={!allExampleWords.length}
+            size="sm"
+          />
+          <IpaVisibilityToggle
+            checked={showIpa}
+            onChange={setShowIpa}
+            label="Show IPA"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <IpaVisibilityToggle
+            checked={showHighlight}
+            onChange={setShowHighlight}
+            label="Common Letters"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <div className="pt-3 border-t border-white/10">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Groups</span>
+            {activeGroupPlayLists.map((group) => (
+              <PlayStopButton
+                key={group.groupKey}
+                isActive={activePlayGroup === group.groupKey}
+                label={group.label}
+                onClick={() => void playAllWordsByGroup(group.groupKey, group.words)}
+                disabled={!group.words.length}
+                size="sm"
+                className="mb-1.5"
+              />
+            ))}
+          </div>
+        </div>
+      </ControlCenter>
     </main>
   );
 }

@@ -141,13 +141,14 @@
 /* ─── NAV TABS ──────────────────────────────────── */
 .contraction-page .nav-bar {
   position: sticky; top: 0;
-  z-index: 100;
+  z-index: 30;
   background: rgba(2,6,8,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
+  padding: 0 1rem;
   display: flex;
-  gap: 0;
+  gap: 6px;
+  align-items: center;
   justify-content: center;
   overflow-x: auto;
 }

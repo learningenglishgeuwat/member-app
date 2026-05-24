@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import { Play, Pause, ChevronDown } from 'lucide-react';
+import { Play, Pause, ChevronDown, Square } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import './styles/minimalPairs.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
-import { ControlCenter } from '@/app/components';
+import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { categoryLabelMap, minimalPairCategories } from './data/index';
+import { getAllCommonLetters } from '../data/commonLetters/CommonLetters';
+import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
 
@@ -17,11 +19,80 @@ const RecordingControlsButton = dynamic(() => import('../../../components/Record
   ssr: false,
 });
 
+const stripIpaSlashes = (ipa: string) => ipa.replace(/^\/|\/$/g, '');
+
+const COMMON_SENTENCE_IPA: Record<string, string> = {
+  a: 'ə',
+  about: 'əˈbaʊt',
+  again: 'əˈgɛn',
+  all: 'ɔl',
+  am: 'æm',
+  an: 'ən',
+  and: 'ænd',
+  are: 'ɑr',
+  around: 'əˈraʊnd',
+  at: 'æt',
+  by: 'baɪ',
+  can: 'kæn',
+  do: 'du',
+  "don't": 'doʊnt',
+  for: 'fɔr',
+  from: 'frʌm',
+  he: 'hi',
+  her: 'hɝ',
+  here: 'hɪr',
+  his: 'hɪz',
+  i: 'aɪ',
+  in: 'ɪn',
+  is: 'ɪz',
+  it: 'ɪt',
+  its: 'ɪts',
+  me: 'mi',
+  my: 'maɪ',
+  near: 'nɪr',
+  of: 'əv',
+  on: 'ɑn',
+  one: 'wʌn',
+  outside: 'ˌaʊtˈsaɪd',
+  please: 'pliz',
+  say: 'seɪ',
+  she: 'ʃi',
+  that: 'ðæt',
+  the: 'ðə',
+  them: 'ðɛm',
+  then: 'ðɛn',
+  there: 'ðɛr',
+  they: 'ðeɪ',
+  this: 'ðɪs',
+  to: 'tu',
+  too: 'tu',
+  two: 'tu',
+  use: 'juz',
+  very: 'ˈvɛri',
+  was: 'wʌz',
+  we: 'wi',
+  will: 'wɪl',
+  with: 'wɪð',
+  you: 'ju',
+  your: 'jʊr',
+};
+
+const BASE_WORD_IPA = Object.values(allWordExamples).reduce<Record<string, string>>((acc, examples) => {
+  examples.forEach((example) => {
+    acc[example.word.toLowerCase()] = stripIpaSlashes(example.ipa);
+  });
+  return acc;
+}, { ...COMMON_SENTENCE_IPA });
+
+const normalizeSentenceWord = (word: string) => word.toLowerCase().replace(/^["']|["']$/g, '');
+
 const MinimalPairsPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isWordPairsOpen, setIsWordPairsOpen] = useState(true);
   const [isSentencePairsOpen, setIsSentencePairsOpen] = useState(true);
   const [isVideoTutorialOpen, setIsVideoTutorialOpen] = useState(true);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const router = useRouter();
   const {
     activeSpeechKey,
@@ -49,6 +120,49 @@ const MinimalPairsPage: React.FC = () => {
     router.push('/skill/pronunciation/phoneticSymbols');
   };
 
+  const commonLetters = useMemo(() => getAllCommonLetters(), []);
+
+  const selectedPairSymbols = useMemo(() => {
+    if (!selectedPair?.pairLabel) return { a: '', b: '' };
+    const [left = '', right = ''] = selectedPair.pairLabel.split('↔');
+
+    const normalizeSymbol = (value: string) =>
+      value
+        .replace(/\([^)]*\)/g, '')
+        .trim()
+        .replace(/^\/|\/$/g, '');
+
+    return {
+      a: normalizeSymbol(left),
+      b: normalizeSymbol(right),
+    };
+  }, [selectedPair?.pairLabel]);
+
+  const selectedPairCommonLetters = useMemo(() => {
+    const getPatterns = (symbol: string) => {
+      if (!symbol) return [];
+      const found = commonLetters.find(
+        (item) => item.ipaSymbol === `/${symbol}/` || item.ipaSymbol === symbol,
+      );
+      if (!found) return [];
+      return found.letter.split(',').map((item) => item.trim().replace(/^-|-$/g, ''));
+    };
+
+    return {
+      a: getPatterns(selectedPairSymbols.a),
+      b: getPatterns(selectedPairSymbols.b),
+    };
+  }, [commonLetters, selectedPairSymbols]);
+
+  const selectedPairWordIpa = useMemo(() => {
+    const entries: Record<string, string> = {};
+    selectedPair?.words.forEach((word) => {
+      if (word.ipaA) entries[normalizeSentenceWord(word.a)] = stripIpaSlashes(word.ipaA);
+      if (word.ipaB) entries[normalizeSentenceWord(word.b)] = stripIpaSlashes(word.ipaB);
+    });
+    return entries;
+  }, [selectedPair?.words]);
+
   const findWholeWordStart = (sentence: string, targetWord: string): number => {
     if (!sentence || !targetWord) return -1;
     const source = sentence.toLowerCase();
@@ -69,15 +183,85 @@ const MinimalPairsPage: React.FC = () => {
     return -1;
   };
 
-  const renderSentenceWithHighlight = (sentence: string, targetWord?: string) => {
-    if (!targetWord) return sentence;
+  const renderWord = (word: string, side: 'a' | 'b') => {
+    const patterns = selectedPairCommonLetters[side];
+    if (!showHighlight || patterns.length === 0) return word;
+
+    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+
+    for (const pattern of sortedPatterns) {
+      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
+      const regex = new RegExp(`(${escapedPattern})`, 'ig');
+
+      if (regex.test(word)) {
+        const parts = word.split(regex);
+        return (
+          <>
+            {parts.map((part, index) => {
+              if (index % 2 === 1) {
+                return (
+                  <span key={index} className="minimal-letter-highlight">
+                    {part}
+                  </span>
+                );
+              }
+              return <React.Fragment key={index}>{part}</React.Fragment>;
+            })}
+          </>
+        );
+      }
+    }
+
+    return word;
+  };
+
+  const renderIpa = (ipa: string, side: 'a' | 'b') => {
+    const symbol = selectedPairSymbols[side];
+    if (!showHighlight || !symbol) return ipa;
+
+    const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedSymbol})`, 'g');
+
+    if (regex.test(ipa)) {
+      const parts = ipa.split(regex);
+      return (
+        <>
+          {parts.map((part, index) => {
+            if (index % 2 === 1) {
+              return (
+                <span key={index} className="minimal-letter-highlight">
+                  {part}
+                </span>
+              );
+            }
+            return <React.Fragment key={index}>{part}</React.Fragment>;
+          })}
+        </>
+      );
+    }
+
+    return ipa;
+  };
+
+  const sentenceToIpa = (sentence: string) => {
+    const words = sentence.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g) ?? [];
+    return words
+      .map((word) => {
+        const normalizedWord = normalizeSentenceWord(word);
+        return selectedPairWordIpa[normalizedWord] ?? BASE_WORD_IPA[normalizedWord] ?? normalizedWord;
+      })
+      .join(' ');
+  };
+
+  const renderSentenceWithHighlight = (sentence: string, side: 'a' | 'b', targetWord?: string) => {
+    if (!showHighlight || !targetWord) return sentence;
     const start = findWholeWordStart(sentence, targetWord);
     if (start === -1) return sentence;
     const end = start + targetWord.length;
     return (
       <>
         {sentence.slice(0, start)}
-        <span className="minimal-highlight-token">{sentence.slice(start, end)}</span>
+        {renderWord(sentence.slice(start, end), side)}
         {sentence.slice(end)}
       </>
     );
@@ -227,8 +411,8 @@ const MinimalPairsPage: React.FC = () => {
                         onClick={() => speakText(item.ttsA ?? item.a, `word-${index}-a`, item.ttsLangA ?? 'en-US')}
                       >
                         <div className="minimal-word-content">
-                          <strong>{item.a}</strong>
-                          <span>{item.ipaA ? `/${item.ipaA}/` : '-'}</span>
+                          <strong>{renderWord(item.a, 'a')}</strong>
+                          <span>{showIpa ? (item.ipaA ? <>/{renderIpa(item.ipaA, 'a')}/</> : '-') : ''}</span>
                         </div>
                       </button>
 
@@ -247,8 +431,8 @@ const MinimalPairsPage: React.FC = () => {
                         }
                       >
                         <div className="minimal-word-content">
-                          <strong>{item.b}</strong>
-                          <span>{item.ipaB ? `/${item.ipaB}/` : '-'}</span>
+                          <strong>{renderWord(item.b, 'b')}</strong>
+                          <span>{showIpa ? (item.ipaB ? <>/{renderIpa(item.ipaB, 'b')}/</> : '-') : ''}</span>
                         </div>
                       </button>
                     </div>
@@ -272,43 +456,62 @@ const MinimalPairsPage: React.FC = () => {
               </div>
               {isSentencePairsOpen && (
                 <div className="minimal-list">
-                  {selectedPair.sentences.map((item, index) => (
-                    <div className="minimal-row minimal-sentence-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
-                      <button
-                        ref={(el) => registerSpeechElement(`sentence-${index}-a`, el)}
-                        className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-a` ? 'active' : ''}`}
-                        type="button"
-                        onClick={() => {
-                          const matchedA = findMatchedWordItemInSentence(item.a, 'a', selectedPair.words);
-                          speakText(item.a, `sentence-${index}-a`, matchedA?.ttsLangA ?? 'en-US');
-                        }}
-                      >
-                        <p className="minimal-sentence-text">
-                          {renderSentenceWithHighlight(item.a, findTargetWordInSentence(item.a, 'a', selectedPair.words))}
-                        </p>
-                      </button>
+                  {selectedPair.sentences.map((item, index) => {
+                    const matchedA = findMatchedWordItemInSentence(item.a, 'a', selectedPair.words);
+                    const matchedB = findMatchedWordItemInSentence(item.b, 'b', selectedPair.words);
+                    const sentenceIpaA = item.ipaA ?? sentenceToIpa(item.a);
+                    const sentenceIpaB = item.ipaB ?? sentenceToIpa(item.b);
 
-                      <div className="minimal-vs-cell">VS</div>
+                    return (
+                      <div className="minimal-row minimal-sentence-row minimal-compare-row" key={`${item.a}-${item.b}-${index}`}>
+                        <button
+                          ref={(el) => registerSpeechElement(`sentence-${index}-a`, el)}
+                          className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-a` ? 'active' : ''}`}
+                          type="button"
+                          onClick={() => {
+                            speakText(item.a, `sentence-${index}-a`, matchedA?.ttsLangA ?? 'en-US');
+                          }}
+                        >
+                          <span className="minimal-sentence-content">
+                            <span className="minimal-sentence-text">
+                              {renderSentenceWithHighlight(item.a, 'a', findTargetWordInSentence(item.a, 'a', selectedPair.words))}
+                            </span>
+                            {showIpa && sentenceIpaA ? (
+                              <span className="minimal-sentence-ipa" data-ipa>
+                                /{renderIpa(sentenceIpaA, 'a')}/
+                              </span>
+                            ) : null}
+                          </span>
+                        </button>
 
-                      <button
-                        ref={(el) => registerSpeechElement(`sentence-${index}-b`, el)}
-                        className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-b` ? 'active' : ''}`}
-                        type="button"
-                        onClick={() => {
-                          const matchedB = findMatchedWordItemInSentence(item.b, 'b', selectedPair.words);
-                          speakText(
-                            item.b,
-                            `sentence-${index}-b`,
-                            matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
-                          );
-                        }}
-                      >
-                        <p className="minimal-sentence-text">
-                          {renderSentenceWithHighlight(item.b, findTargetWordInSentence(item.b, 'b', selectedPair.words))}
-                        </p>
-                      </button>
-                    </div>
-                  ))}
+                        <div className="minimal-vs-cell">VS</div>
+
+                        <button
+                          ref={(el) => registerSpeechElement(`sentence-${index}-b`, el)}
+                          className={`minimal-example-button ${activeSpeechKey === `sentence-${index}-b` ? 'active' : ''}`}
+                          type="button"
+                          onClick={() => {
+                            speakText(
+                              item.b,
+                              `sentence-${index}-b`,
+                              matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                            );
+                          }}
+                        >
+                          <span className="minimal-sentence-content">
+                            <span className="minimal-sentence-text">
+                              {renderSentenceWithHighlight(item.b, 'b', findTargetWordInSentence(item.b, 'b', selectedPair.words))}
+                            </span>
+                            {showIpa && sentenceIpaB ? (
+                              <span className="minimal-sentence-ipa" data-ipa>
+                                /{renderIpa(sentenceIpaB, 'b')}/
+                              </span>
+                            ) : null}
+                          </span>
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </section>
@@ -341,21 +544,35 @@ const MinimalPairsPage: React.FC = () => {
 
       
       <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">10 Word Pairs</span>
-            <button onClick={handlePlayAllWords} disabled={isCategoryLoading} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY WORDS</span>
-              <Play className={`w-5 h-5 transition-colors ${isPlayingWords ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
-            </button>
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">5 Sentence Pairs</span>
-            <button onClick={handlePlayAllSentences} disabled={isCategoryLoading} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY SENTENCES</span>
-              <Play className={`w-5 h-5 transition-colors ${isPlayingSentences ? "fill-cyan-400 stroke-cyan-400 text-cyan-400" : "fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400"}`} />
-            </button>
+        <div className="flex flex-col gap-3">
+          <PlayStopButton
+            isActive={isPlayingWords}
+            label="WORDS"
+            onClick={handlePlayAllWords}
+            disabled={isCategoryLoading}
+            size="sm"
+          />
+          <IpaVisibilityToggle
+            checked={showIpa}
+            onChange={setShowIpa}
+            label="Show IPA"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <IpaVisibilityToggle
+            checked={showHighlight}
+            onChange={setShowHighlight}
+            label="Highlight Letters"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <div className="pt-3 border-t border-white/10">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentences</span>
+            <PlayStopButton
+              isActive={isPlayingSentences}
+              label="SENTENCES"
+              onClick={handlePlayAllSentences}
+              disabled={isCategoryLoading}
+              size="sm"
+            />
           </div>
         </div>
       </ControlCenter>

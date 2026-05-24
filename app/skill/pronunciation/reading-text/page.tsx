@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Highlighter, Play } from 'lucide-react';
+import { Highlighter, Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { ControlCenter } from '@/app/components';
+import { ControlCenter, PlayStopButton } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { READING_TEXT_MATERIALS, type ReadingTextMaterial } from './data/readingTexts';
@@ -133,7 +133,7 @@ export default function ReadingTextForPracticePage() {
     setActiveParagraphKey(null);
   }, []);
 
-  const speakQueueItem = useCallback((text: string, token: number): Promise<void> => {
+  const speakQueueItem = useCallback((text: string, key: string, token: number): Promise<void> => {
     if (!text || typeof window === 'undefined' || !('speechSynthesis' in window)) {
       return Promise.resolve();
     }
@@ -156,7 +156,12 @@ export default function ReadingTextForPracticePage() {
         return;
       }
 
-      const finish = () => resolve();
+      const finish = () => {
+        if (speechTokenRef.current === token) {
+          setActiveParagraphKey((current) => (current === key ? null : current));
+        }
+        resolve();
+      };
       utterance.onend = finish;
       utterance.onerror = finish;
 
@@ -165,6 +170,7 @@ export default function ReadingTextForPracticePage() {
         return;
       }
 
+      setActiveParagraphKey(key);
       synth.speak(utterance);
     });
   }, []);
@@ -184,7 +190,14 @@ export default function ReadingTextForPracticePage() {
     for (let index = 0; index < validParagraphs.length; index += 1) {
       if (speechTokenRef.current !== token) return;
 
-      await speakQueueItem(validParagraphs[index], token);
+      const key = `${selectedMaterial?.id}-${activeTab === 'phonetic' ? 'ph' : 'p'}-${index}`;
+
+      window.setTimeout(() => {
+        const el = document.getElementById(key);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+
+      await speakQueueItem(validParagraphs[index], key, token);
       if (speechTokenRef.current !== token) return;
 
       if (index < validParagraphs.length - 1) {
@@ -197,7 +210,7 @@ export default function ReadingTextForPracticePage() {
     if (speechTokenRef.current === token) {
       setActiveSpeechMode(null);
     }
-  }, [paragraphs, speakQueueItem, stopAllSpeech]);
+  }, [paragraphs, selectedMaterial?.id, activeTab, speakQueueItem, stopAllSpeech]);
 
   const playSingleParagraph = useCallback(
     async (text: string, key: string) => {
@@ -211,7 +224,7 @@ export default function ReadingTextForPracticePage() {
       await primeBestEnglishVoice();
       if (speechTokenRef.current !== token) return;
 
-      await speakQueueItem(text, token);
+      await speakQueueItem(text, key, token);
       if (speechTokenRef.current !== token) return;
 
       setActiveSpeechMode(null);
@@ -230,7 +243,7 @@ export default function ReadingTextForPracticePage() {
 
   const toggleSinglePlay = useCallback(
     (text: string, key: string) => {
-      if (activeSpeechMode === 'single' && activeParagraphKey === key) {
+      if (activeParagraphKey === key) {
         stopAllSpeech();
         return;
       }
@@ -378,16 +391,6 @@ export default function ReadingTextForPracticePage() {
           <header className="rt-card-head">
             <div className="rt-card-head-top">
               <h2 className="rt-card-title">{selectedMaterial?.title}</h2>
-              <div className="rt-card-actions">
-                <button
-                  type="button"
-                  className={`rt-tts-btn ${activeSpeechMode === 'all' ? 'is-speaking' : ''}`}
-                  onClick={togglePlayAll}
-                  aria-pressed={activeSpeechMode === 'all'}
-                >
-                  {activeSpeechMode === 'all' ? 'Stop' : 'Play All'}
-                </button>
-              </div>
             </div>
 
             <div className="rt-tabs" role="tablist" aria-label="Reading text mode">
@@ -418,10 +421,10 @@ export default function ReadingTextForPracticePage() {
                 {paragraphs.map((paragraph, index) => {
                   const speechText = stripInlineCodeMarkers(paragraph);
                   const key = `${selectedMaterial?.id}-p-${index}`;
-                  const isActive = activeSpeechMode === 'single' && activeParagraphKey === key;
+                  const isActive = activeParagraphKey === key;
 
                   return (
-                    <div key={key} className="rt-paragraph-row">
+                    <div key={key} id={key} className="rt-paragraph-row">
                       <button
                         type="button"
                         className={`rt-paragraph-play ${isActive ? 'is-active' : ''}`}
@@ -440,11 +443,11 @@ export default function ReadingTextForPracticePage() {
                 {phoneticParagraphs.map((paragraph, index) => {
                   const originText = paragraphs[index] ? stripInlineCodeMarkers(paragraphs[index]) : '';
                   const key = `${selectedMaterial?.id}-ph-${index}`;
-                  const isActive = activeSpeechMode === 'single' && activeParagraphKey === key;
+                  const isActive = activeParagraphKey === key;
                   const disabled = !originText;
 
                   return (
-                    <div key={key} className="rt-paragraph-row">
+                    <div key={key} id={key} className="rt-paragraph-row">
                       <button
                         type="button"
                         className={`rt-paragraph-play ${isActive ? 'is-active' : ''}`}
@@ -468,6 +471,19 @@ export default function ReadingTextForPracticePage() {
       </main>
 
       <ControlCenter>
+        <button
+          type="button"
+          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
+            activeSpeechMode === 'all' ? 'is-active' : ''
+          }`}
+          onClick={togglePlayAll}
+        >
+          <span className="tracking-widest font-bold">
+            {activeSpeechMode === 'all' ? 'STOP TEXT' : 'PLAY TEXT'}
+          </span>
+          {(activeSpeechMode === 'all') ? <Square className="w-3 h-3 sm:w-4 sm:h-4 transition-colors" style={{ fill: '#E53935', stroke: '#E53935', color: '#E53935' }} /> : <Play className="w-3 h-3 sm:w-4 sm:h-4 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
+        </button>
+
         <button
           type="button"
           onClick={() => setIsHighlightEnabled((prev) => !prev)}
@@ -520,21 +536,6 @@ export default function ReadingTextForPracticePage() {
             </div>
           </div>
         ) : null}
-
-        <hr className="border-white/10" />
-
-        <button
-          type="button"
-          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
-            activeSpeechMode === 'all' ? 'is-active' : ''
-          }`}
-          onClick={togglePlayAll}
-        >
-          <span className="tracking-widest font-bold">
-            {activeSpeechMode === 'all' ? 'STOP TEXT' : 'PLAY TEXT'}
-          </span>
-          <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${activeSpeechMode === 'all' ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-        </button>
       </ControlCenter>
 
       <RecordingControlsButton

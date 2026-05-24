@@ -6,7 +6,7 @@ import { Copy, Square, Play } from 'lucide-react';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter  } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import { speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
@@ -1666,45 +1666,51 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
             {isWord && (
               <>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('dasarSukuKata')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY DASAR SUKU KATA</span>
-                    {activePlayAllSection === 'dasarSukuKata' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'dasarSukuKata'}
+                    label="DASAR SUKU KATA"
+                    onClick={() => void playAllBySection('dasarSukuKata')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.dasarSukuKata} onChange={() => toggleIpaBySection('dasarSukuKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Dasar Suku Kata" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('aturanCepat')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY ATURAN CEPAT</span>
-                    {activePlayAllSection === 'aturanCepat' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'aturanCepat'}
+                    label="ATURAN CEPAT"
+                    onClick={() => void playAllBySection('aturanCepat')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.aturanCepat} onChange={() => toggleIpaBySection('aturanCepat')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Aturan Cepat" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('tekananKata')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY TEKANAN KATA</span>
-                    {activePlayAllSection === 'tekananKata' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'tekananKata'}
+                    label="TEKANAN KATA"
+                    onClick={() => void playAllBySection('tekananKata')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.tekananKata} onChange={() => toggleIpaBySection('tekananKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Tekanan Kata" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('kontrasNounVerb')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY KONTRAS N & V</span>
-                    {activePlayAllSection === 'kontrasNounVerb' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'kontrasNounVerb'}
+                    label="KONTRAS N & V"
+                    onClick={() => void playAllBySection('kontrasNounVerb')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.kontrasNounVerb} onChange={() => toggleIpaBySection('kontrasNounVerb')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Kontras Noun and Verb" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('bankKata')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY BANK KATA</span>
-                    {activePlayAllSection === 'bankKata' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'bankKata'}
+                    label="BANK KATA"
+                    onClick={() => void playAllBySection('bankKata')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.bankKata} onChange={() => toggleIpaBySection('bankKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Bank Kata" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <button onClick={() => void playAllBySection('practice')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY PRACTICE</span>
-                    {activePlayAllSection === 'practice' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'practice'}
+                    label="PRACTICE"
+                    onClick={() => void playAllBySection('practice')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Practice" />
                 </div>
               </>
@@ -1712,22 +1718,25 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
             {!isWord && (
               <>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('tekananKalimat')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY TEKANAN KALIMAT</span>
-                    {activePlayAllSection === 'tekananKalimat' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'tekananKalimat'}
+                    label="TEKANAN KALIMAT"
+                    onClick={() => void playAllBySection('tekananKalimat')}
+                  />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <button onClick={() => void playAllBySection('kataKontenFungsi')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY KATA KONTEN & FUNGSI</span>
-                    {activePlayAllSection === 'kataKontenFungsi' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'kataKontenFungsi'}
+                    label="KATA KONTEN & FUNGSI"
+                    onClick={() => void playAllBySection('kataKontenFungsi')}
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <button onClick={() => void playAllBySection('practice')} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group">
-                    <span className="tracking-widest font-bold">PLAY PRACTICE</span>
-                    {activePlayAllSection === 'practice' ? <Square className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-cyan-400 stroke-cyan-400 text-cyan-400" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-                  </button>
+                  <PlayStopButton
+                    isActive={activePlayAllSection === 'practice'}
+                    label="PRACTICE"
+                    onClick={() => void playAllBySection('practice')}
+                  />
                   <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Practice" />
                 </div>
               </>
@@ -1742,3 +1751,4 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
     </div>
   );
 }
+

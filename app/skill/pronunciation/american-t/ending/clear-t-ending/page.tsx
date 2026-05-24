@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play } from 'lucide-react';
+import { Copy, Highlighter, Play, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import {
   renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   CLEAR_T_ENDING_EXAMPLES,
   CLEAR_T_ENDING_NOTES,
@@ -698,29 +698,38 @@ export default function ClearTEndingPage() {
           <hr className="border-white/10" />
           <div>
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
-            <button onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY EXAMPLES</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingExamplesAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
+            <PlayStopButton
+              isActive={isPlayingExamplesAll}
+              label="EXAMPLES"
+              onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between" />
           </div>
 
           <hr className="border-white/10" />
           <div>
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
-            <button onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY SENTENCES</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentencesAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
+            <PlayStopButton
+              isActive={isPlayingSentencesAll}
+              label="SENTENCES"
+              onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between" />
           </div>
           <hr className="border-white/10" />
           <div>
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
-            <button onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()} className="w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group mb-2 sm:mb-3">
-              <span className="tracking-widest font-bold">PLAY DRILLS</span>
-              <Play className={`w-3 h-3 sm:w-4 sm:h-4 transition-colors ${isPlayingSentenceDrillsAll ? 'fill-cyan-400 stroke-cyan-400 text-cyan-400' : 'fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400'}`} />
-            </button>
+            <PlayStopButton
+              isActive={isPlayingSentenceDrillsAll}
+              label="DRILLS"
+              onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
             <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
           </div>
         </div>

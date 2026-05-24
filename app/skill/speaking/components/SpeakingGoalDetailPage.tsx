@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
-import { IpaVisibilityToggle, ControlCenter } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import GoalSelector from './GoalSelector';
 import GoalSentenceTts from './GoalSentenceTts';
 import DialogScriptTts from './DialogScriptTts';
@@ -49,6 +49,7 @@ const PRACTICE_WITH_GEUWAT_STEPS = [
   'Gunakan Ulang Turn jika ingin mengulang giliran yang sama, atau Stop untuk menghentikan sesi.',
   'Klik tombol x pada overlay untuk menutup Speaking Practice dan kembali ke halaman ini.',
 ] as const;
+
 function stopSpeechSynthesis() {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
@@ -70,6 +71,10 @@ export default function SpeakingGoalDetailPage({
   const [showIpa, setShowIpa] = useState<boolean>(true);
   const [openSectionId, setOpenSectionId] = useState<string | null>(null);
   const [dialogScenarioIndex, setDialogScenarioIndex] = useState(0);
+  const [keySentencePlayTrigger, setKeySentencePlayTrigger] = useState(0);
+  const [dialogPlayTrigger, setDialogPlayTrigger] = useState(0);
+  const [isKeySentencePlaying, setIsKeySentencePlaying] = useState(false);
+  const [isDialogPlaying, setIsDialogPlaying] = useState(false);
   const restoreUiStateTimerRef = useRef<number | null>(null);
   const openPracticeScrollTimerRef = useRef<number | null>(null);
 
@@ -255,7 +260,6 @@ export default function SpeakingGoalDetailPage({
               Practice
             </button>
             
-            
             <button
               type="button"
               className={`spk-control-btn spk-control-btn--secondary spk-control-btn--full ${isPracticeWithGeuwatCompleted ? 'is-active' : ''}`}
@@ -368,6 +372,8 @@ export default function SpeakingGoalDetailPage({
                 showTranslations={showIdTranslation}
                 ipaLines={keySentenceIpaLines}
                 showIpa={showIpa}
+                autoPlayTrigger={keySentencePlayTrigger}
+                onSpeakingChange={setIsKeySentencePlaying}
               />
             ) : null}
           </div>
@@ -420,14 +426,24 @@ export default function SpeakingGoalDetailPage({
             className={`spk-detail-section-body ${openSectionId === 'common-mistakes' ? 'is-open' : ''}`}
           >
             <div className="spk-detail-grid-2">
-              {detail.commonMistakes.map((item, index) => (
-                <article key={`${goalId}-mistake-${index}`} className="spk-detail-mini-card">
-                  <p className="spk-detail-mini-label">Mistake</p>
-                  <p>{item.mistake}</p>
-                  <p className="spk-detail-mini-label">Correction</p>
-                  <p>{item.correction}</p>
-                </article>
-              ))}
+              {detail.commonMistakes.map((item, index) => {
+                const mistakeIpa = getSpeakingIpaByText(item.mistake);
+                const correctionIpa = getSpeakingIpaByText(item.correction);
+                return (
+                  <article key={`${goalId}-mistake-${index}`} className="spk-detail-mini-card">
+                    <p className="spk-detail-mini-label">Mistake</p>
+                    <p>{item.mistake}</p>
+                    {showIpa && mistakeIpa ? (
+                      <p className="spk-ipa-text spk-ipa-text-detail">{mistakeIpa}</p>
+                    ) : null}
+                    <p className="spk-detail-mini-label">Correction</p>
+                    <p>{item.correction}</p>
+                    {showIpa && correctionIpa ? (
+                      <p className="spk-ipa-text spk-ipa-text-detail">{correctionIpa}</p>
+                    ) : null}
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -492,6 +508,8 @@ export default function SpeakingGoalDetailPage({
                         showTranslations={showIdTranslation}
                         ipaLines={activeDialogScript.ipaLines}
                         showIpa={showIpa}
+                        autoPlayTrigger={dialogPlayTrigger}
+                        onSpeakingChange={setIsDialogPlaying}
                       />
                     ) : (
                       <div className="spk-detail-dialog-lines">
@@ -554,6 +572,65 @@ export default function SpeakingGoalDetailPage({
         </section>
 
       </div>
+
+      <ControlCenter defaultOpen={true}>
+        <div className="flex flex-col gap-3">
+          <PlayStopButton
+            isActive={isKeySentencePlaying}
+            label="PLAY"
+            onClick={() => {
+              if (isKeySentencePlaying) {
+                stopSpeechSynthesis();
+                setIsKeySentencePlaying(false);
+                return;
+              }
+              if (openSectionId !== 'key-sentences') {
+                setOpenSectionId('key-sentences');
+                writeSpeakingDetailOpenSection(goalId, 'key-sentences');
+              }
+              setKeySentencePlayTrigger((prev) => prev + 1);
+            }}
+            size="sm"
+          />
+          <IpaVisibilityToggle
+            checked={showIpa}
+            onChange={setShowIpa}
+            label="Show IPA"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <IpaVisibilityToggle
+            checked={showIdTranslation}
+            onChange={(val) => {
+              setShowIdTranslation(val);
+              writeSpeakingShowTranslation(val);
+            }}
+            label="Terjemah"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <div className="pt-3 border-t border-white/10">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Dialog
+            </span>
+            <PlayStopButton
+              isActive={isDialogPlaying}
+              label="DIALOG"
+              onClick={() => {
+                if (isDialogPlaying) {
+                  stopSpeechSynthesis();
+                  setIsDialogPlaying(false);
+                  return;
+                }
+                if (openSectionId !== 'dialog') {
+                  setOpenSectionId('dialog');
+                  writeSpeakingDetailOpenSection(goalId, 'dialog');
+                }
+                setDialogPlayTrigger((prev) => prev + 1);
+              }}
+              size="sm"
+            />
+          </div>
+        </div>
+      </ControlCenter>
     </main>
   );
 }
