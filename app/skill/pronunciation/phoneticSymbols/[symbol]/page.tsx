@@ -127,12 +127,12 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
     ],
   },
   '\u025a': {
-    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /?/ atau /?r/.',
+    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /ɚ/ atau /əɹ/.',
     items: [
-      { word: 'teacher', britishIpa: "/'ti?t??/", americanIpa: "/'ti?t??/" },
-      { word: 'doctor', britishIpa: "/'d?kt?/", americanIpa: "/'d?kt?/" },
-      { word: 'water', britishIpa: "/'w??t?/", americanIpa: "/'w???/" },
-      { word: 'later', britishIpa: "/'le?t?/", americanIpa: "/'le???/" },
+      { word: 'teacher', britishIpa: "/'tiːtʃə/", americanIpa: "/'tiːtʃɚ/" },
+      { word: 'doctor', britishIpa: "/'dɒktə/", americanIpa: "/'dɑktɚ/" },
+      { word: 'water', britishIpa: "/'wɔːtə/", americanIpa: "/'wɔtɚ/" },
+      { word: 'later', britishIpa: "/'leɪtə/", americanIpa: "/'leɪɾɚ/" },
     ],
   },
   'e\u0259': {
