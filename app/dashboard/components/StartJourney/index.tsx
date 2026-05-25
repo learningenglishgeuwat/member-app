@@ -1,15 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Loader, Zap, Play } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useHaptic } from '@/lib/haptic/useHaptic'
+import PronunciationRoadmapModal from '@/app/dashboard/components/TutorialContent/PronunciationRoadmapModal'
 
 interface JourneyPlan {
   title: string
   motivation: string
   steps: string[]
 }
+
+const STORAGE_KEY = 'dashboard-mission-goal'
 
 const StartJourney: React.FC = () => {
   const router = useRouter()
@@ -18,15 +21,30 @@ const StartJourney: React.FC = () => {
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
   const [initiating, setInitiating] = useState(false)
   const [activePhases, setActivePhases] = useState<Set<number>>(new Set())
+  const [showEmptyWarning, setShowEmptyWarning] = useState(false)
+  const [isPronunciationRoadmapOpen, setIsPronunciationRoadmapOpen] = useState(false)
   const { triggerHaptic } = useHaptic()
+
+  useEffect(() => {
+    const savedGoal = localStorage.getItem(STORAGE_KEY)
+    if (savedGoal) {
+      setGoal(savedGoal)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, goal)
+  }, [goal])
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!goal.trim()) {
       triggerHaptic('error')
+      setShowEmptyWarning(true)
       return
     }
 
+    setShowEmptyWarning(false)
     setLoading(true)
     setPlan(null)
     
@@ -71,6 +89,12 @@ const StartJourney: React.FC = () => {
       selectedPlan = mockPlans.react
     }
 
+    selectedPlan = {
+      ...selectedPlan,
+      title: goal.trim(),
+      motivation: 'Klik READY pada setiap phase untuk mengunci misi dan memulai perjalananmu.',
+    }
+
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1500))
     setPlan(selectedPlan)
@@ -106,7 +130,7 @@ const StartJourney: React.FC = () => {
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
           INITIATE <span className="text-cyan-300">PROTOCOL</span>
         </h2>
-        <p className="text-slate-400 font-mono text-xs sm:text-sm">Ketikkan keinginanmu dalam belajar bahasa Inggris.</p>
+        <p className="text-slate-400 font-mono text-xs sm:text-sm">Jangan biarkan bahasa membatasi langkahmu. Tuliskan mimpi besar yang sedang kamu perjuangkan di sini.</p>
       </header>
 
       <form
@@ -123,29 +147,44 @@ const StartJourney: React.FC = () => {
           >
             Mission Objective
           </label>
-          <div className="flex gap-4 flex-col sm:flex-row">
+          <div className={`flex gap-4 flex-col sm:flex-row relative ${showEmptyWarning ? 'animate-shake' : ''}`}>
             <input
               id="mission-objective"
               name="missionObjective"
               type="text"
               value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              placeholder="e.g., I want to speak English fluently, Master business English, Prepare for IELTS exam..."
+              onChange={(e) => {
+                setGoal(e.target.value)
+                if (showEmptyWarning && e.target.value.trim()) {
+                  setShowEmptyWarning(false)
+                }
+              }}
+              placeholder="Aku ingin lolos beasiswa luar negeri, Bekerja di perusahaan global..."
               data-tour="dashboard-mission-input"
-              className="flex-1 bg-black/40 border border-cyan-500/30 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white placeholder-slate-600 focus:outline-none focus:border-cyan-300 focus:shadow-[0_0_15px_rgba(34,211,238,0.22)] transition-all text-sm sm:text-base"
+              className="flex-1 bg-black/40 border border-cyan-500/30 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-300 focus:shadow-[0_0_15px_rgba(34,211,238,0.22)] transition-all text-sm sm:text-base"
             />
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={loading || !goal.trim()}
+              disabled={loading}
               data-tour="dashboard-mission-enter"
               className="bg-cyan-500/90 hover:bg-cyan-400 disabled:bg-slate-800 disabled:cursor-not-allowed text-slate-950 disabled:text-slate-400 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-display font-bold flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(34,211,238,0.38)] text-sm sm:text-base"
             >
               {loading ? <Loader className="animate-spin w-4 h-4 sm:w-5 sm:h-5" /> : <span>ENTER</span>}
             </button>
+            {showEmptyWarning && (
+              <div className="absolute right-0 top-full mt-2 max-w-[160px] rounded-md border border-[#7b1f29] bg-[#4a0e17] px-1.5 py-1 text-[9px] text-white font-mono shadow-[0_0_10px_rgba(74,14,23,0.35)] animate-fade-in" aria-live="assertive">
+                <span className="block animate-pulse tracking-wide">Tuliskan dulu mimpimu!</span>
+              </div>
+            )}
           </div>
         </div>
       </form>
+
+      <PronunciationRoadmapModal
+        isOpen={isPronunciationRoadmapOpen}
+        onClose={() => setIsPronunciationRoadmapOpen(false)}
+      />
 
       {plan && (
         <div className="animate-fade-in space-y-6">
@@ -182,10 +221,15 @@ const StartJourney: React.FC = () => {
                   <h4 className="font-semibold text-cyan-100 font-display text-sm sm:text-base">Phase {index + 1}</h4>
                 </div>
                 <p className="text-slate-400 leading-relaxed text-xs sm:text-sm">
-                  {index === 0 ? "Bangun Fondasi" :
-                   index === 1 ? "Latihan Terarah" :
-                   index === 2 ? "Optimalkan Hasil" :
-                   "Capai kefasihan bahasa Inggris"}
+                  {index === 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsPronunciationRoadmapOpen(true)}
+                      className="font-semibold text-cyan-200 underline underline-offset-4 decoration-cyan-400/80 hover:text-cyan-100 transition-colors"
+                    >
+                      Bangun Fondasi
+                    </button>
+                  ) : index === 1 ? "Latihan Terarah" : index === 2 ? "Optimalkan Hasil" : "Capai kefasihan bahasa Inggris"}
                 </p>
                 <button
                   type="button"
