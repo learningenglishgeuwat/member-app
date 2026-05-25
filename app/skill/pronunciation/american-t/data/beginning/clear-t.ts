@@ -76,11 +76,11 @@ export const CLEAR_T_BEGINNING_WORD_BANK_50: ReadonlyArray<ClearTExample> = [
   { text: 'teach', ipa: '/tiːtʃ/', note: 'Fokus /t/ awal sebelum bunyi akhir /ch/.' },
   { text: 'teacher', ipa: '/ˈtiːtʃər/', note: 'Jaga /t/ awal tetap bersih di tempo normal.' },
   { text: 'team', ipa: '/tiːm/', note: 'Gunakan airflow ringan setelah penutupan /t/.' },
-  { text: 'tell', ipa: '/tel/', note: 'Awal kata harus terdengar tajam tapi natural.' },
-  { text: 'ten', ipa: '/ten/', note: 'Latihan dasar untuk konsistensi /t/ awal.' },
+  { text: 'tell', ipa: '/tɛl/', note: 'Awal kata harus terdengar tajam tapi natural.' },
+  { text: 'ten', ipa: '/tɛn/', note: 'Latihan dasar untuk konsistensi /t/ awal.' },
   { text: 'term', ipa: '/tɝːm/', note: 'Jangan menelan /t/ saat bicara cepat.' },
-  { text: 'test', ipa: '/test/', note: 'Awali dengan /t/ tegas, akhirkan tetap ringkas.' },
-  { text: 'text', ipa: '/tekst/', note: 'Bersihkan /t/ awal sebelum cluster konsonan.' },
+  { text: 'test', ipa: '/tɛst/', note: 'Awali dengan /t/ tegas, akhirkan tetap ringkas.' },
+  { text: 'text', ipa: '/tɛkst/', note: 'Bersihkan /t/ awal sebelum cluster konsonan.' },
   { text: 'ticket', ipa: '/ˈtɪkɪt/', note: 'Pastikan /t/ pertama paling terdengar.' },
   { text: 'tidy', ipa: '/ˈtaɪdi/', note: 'Awal kata clear, lalu lanjut ritme santai.' },
   { text: 'tie', ipa: '/taɪ/', note: 'Lepasan /t/ harus cepat dan akurat.' },
@@ -88,7 +88,7 @@ export const CLEAR_T_BEGINNING_WORD_BANK_50: ReadonlyArray<ClearTExample> = [
   { text: 'tiny', ipa: '/ˈtaɪni/', note: 'Jaga /t/ awal tidak berubah jadi /d/.' },
   { text: 'title', ipa: '/ˈtaɪtəl/', note: 'Awal kata clear, akhir kata tetap ringan.' },
   { text: 'today', ipa: '/təˈdeɪ/', note: 'Fokus /t/ awal sebelum schwa.' },
-  { text: 'together', ipa: '/təˈɡeðər/', note: 'Awali lembut tetapi /t/ tetap terdengar.' },
+  { text: 'together', ipa: '/təˈɡɛðər/', note: 'Awali lembut tetapi /t/ tetap terdengar.' },
   { text: 'tomato', ipa: '/təˈmeɪtoʊ/', note: 'Latih /t/ awal di tempo percakapan natural.' },
   { text: 'tomorrow', ipa: '/təˈmɑːroʊ/', note: 'Bunyi /t/ awal harus jelas saat runut.' },
   { text: 'tone', ipa: '/toʊn/', note: 'Gunakan sentuhan lidah singkat dan presisi.' },
@@ -145,7 +145,7 @@ export const CLEAR_T_BEGINNING_SENTENCES: ReadonlyArray<SentenceDrillItem> = [
   },
   {
     text: 'Turn to page ten and take notes.',
-    ipa: '/tɝn tə peɪdʒ ten ænd teɪk noʊts/',
+    ipa: '/tɝrn tə peɪdʒ tɛn ænd teɪk noʊts/',
     note: 'Fokus ritme: released /t/ tanpa terdengar kaku.',
     focusWords: ['Turn', 'ten', 'take'],
   },
@@ -184,7 +184,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-03',
     text: 'Try to talk ten times tonight.',
-    ipa: '/traɪ tə tɔk ten taɪmz təˈnaɪt/',
+    ipa: '/traɪ tə tɔk tɛn taɪmz təˈnaɪt/',
     focusWords: [
       'Try',
       'talk',
@@ -196,7 +196,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-04',
     text: 'The teacher tests ten topics today.',
-    ipa: '/ðə ˈtitʃər tests ten ˈtɑpɪks təˈdeɪ/',
+    ipa: '/ðə ˈtiːtʃər tɛsts tɛn ˈtɑpɪks təˈdeɪ/',
     focusWords: [
       'teacher',
       'tests',
@@ -208,7 +208,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-05',
     text: 'Turn to topic ten, then take notes.',
-    ipa: '/tɝn tə ˈtɑpɪk ten ðen teɪk noʊts/',
+    ipa: '/tɝrn tə ˈtɑpɪk tɛn ðɛn teɪk noʊts/',
     focusWords: [
       'Turn',
       'topic',
@@ -219,7 +219,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-06',
     text: 'Tony took two tickets to Texas.',
-    ipa: '/ˈtoʊni tʊk tu ˈtɪkɪts tə ˈteksəs/',
+    ipa: '/ˈtoʊni tʊk tu ˈtɪkits tə ˈtɛksəs/',
     focusWords: [
       'Tony',
       'took',
@@ -231,7 +231,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-07',
     text: 'Tell Tim to text me tomorrow.',
-    ipa: '/tel tɪm tə tekst mi təˈmɑroʊ/',
+    ipa: '/tɛl tɪm tə tɛkst mi təˈmɑroʊ/',
     focusWords: [
       'Tell',
       'Tim',
@@ -263,7 +263,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-10',
     text: 'Try this task ten times.',
-    ipa: '/traɪ ðɪs tæsk ten taɪmz/',
+    ipa: '/traɪ ðɪs tæsk tɛn taɪmz/',
     focusWords: [
       'Try',
       'task',
@@ -285,7 +285,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-12',
     text: 'Turn the TV to ten.',
-    ipa: '/tɝn ðə ˌtiˈvi tə ten/',
+    ipa: '/tɝrn ðə ˌtiˈvi tə tɛn/',
     focusWords: [
       'Turn',
       'TV',

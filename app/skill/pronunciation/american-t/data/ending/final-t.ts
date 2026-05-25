@@ -27,7 +27,7 @@ export const FINAL_T_BEFORE_CONSONANT: ReadonlyArray<PhraseExample> = [
   },
   {
     phrase: 'get ready',
-    ipa: '/ɡet ˈredi/',
+    ipa: '/ɡɛt ˈrɛdi/',
     spoken: '/ɡet̚ ˈredi/',
     note: 'Prioritaskan kelancaran antar kata.',
   },

@@ -45,7 +45,7 @@ const WORD_STRESS_EXAMPLES = [
   {
     word: 'REcord',
     plain: 'The record is on the table.',
-    ipa: '/ˈrek.ərd/',
+    ipa: '/ˈrɛk.ərd/',
     type: 'Kata Benda',
     note: 'Kontras kata benda-kata kerja: kata benda biasanya ditekan di awal.',
   },
@@ -301,7 +301,7 @@ const NOUN_VERB_STRESS_CONTRAST = [
   {
     base: 'record',
     noun: 'REcord',
-    nounIpa: '/ˈrek.ərd/',
+    nounIpa: '/ˈrɛk.ərd/',
     nounPlain: 'The record is on the table.',
     nounId: 'Rekaman itu ada di atas meja.',
     verb: 'reCORD',
@@ -313,11 +313,11 @@ const NOUN_VERB_STRESS_CONTRAST = [
   {
     base: 'present',
     noun: 'PREsent',
-    nounIpa: '/ˈprez.ənt/',
+    nounIpa: '/ˈprɛz.ənt/',
     nounPlain: 'This is a birthday present.',
     nounId: 'Ini hadiah ulang tahun.',
     verb: 'preSENT',
-    verbIpa: '/prɪˈzent/',
+    verbIpa: '/prɪˈzɛnt/',
     verbPlain: 'They will present the final report today.',
     verbId: 'Mereka akan mempresentasikan laporan akhir hari ini.',
     note: 'Kontras noun-verb paling umum di level menengah.',
@@ -381,13 +381,13 @@ const PRACTICE_WORD_STRESS_SET = [
   {
     word: 'hoTEL',
     plain: 'hotel',
-    ipa: '/hoʊˈtel/',
+    ipa: '/hoʊˈtɛl/',
     position: 'Stress suku kata kedua',
   },
   {
     word: 'engiNEER',
     plain: 'engineer',
-    ipa: '/ˌen.dʒəˈnɪr/',
+    ipa: '/ˌɛn.dʒəˈnɪr/',
     position: 'Stress suku kata ketiga',
   },
   {
@@ -402,12 +402,12 @@ const PRACTICE_SENTENCE_SET = [
   {
     sentence: 'I BOOKED a hoTEL near the STAtion.',
     plain: 'I booked a hotel near the station.',
-    ipa: '/aɪ bʊkt ə hoʊˈtel nɪr ðə ˈsteɪ.ʃən/',
+    ipa: '/aɪ bʊkt ə hoʊˈtɛl nɪr ðə ˈsteɪ.ʃən/',
   },
   {
     sentence: 'The engiNEER will reCORD the DAta.',
     plain: 'The engineer will record the data.',
-    ipa: '/ði ˌen.dʒəˈnɪr wɪl rɪˈkɔrd ðə ˈdeɪ.tə/',
+    ipa: '/ði ˌɛn.dʒəˈnɪr wɪl rɪˈkɔrd ðə ˈdeɪ.tə/',
   },
   {
     sentence: 'CommuNIcation SKILLS are imPORtant toDAY.',

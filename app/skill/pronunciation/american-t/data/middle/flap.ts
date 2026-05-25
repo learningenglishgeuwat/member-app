@@ -29,7 +29,7 @@ export const FLAP_T_EXAMPLES: ReadonlyArray<WordExample> = [
   },
   {
     word: 'better',
-    ipa: '/ˈbetər/',
+    ipa: '/ˈbɛtər/',
     spoken: '/ˈbeɾɚ/',
     note: 'Pola paling umum untuk American T saat berbicara santai.',
   },
