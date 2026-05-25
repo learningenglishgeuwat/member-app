@@ -7,6 +7,8 @@ import { TourGuideMount } from "@/app/bot-tourguide";
 import MobileBottomNav from "@/app/components/MobileBottomNav";
 import SkillThemeSync from "@/app/components/SkillThemeSync";
 import { GlobalHaptic } from "@/app/components/haptic";
+import ScrollToHashMount from '@/app/components/ScrollToHashMount'
+import GlobalScrollToItemMount from '@/app/components/GlobalScrollToItemMount'
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -64,6 +66,8 @@ export default function RootLayout({
         <AuthProvider>
           <GlobalHaptic>
             {children}
+            <ScrollToHashMount />
+            <GlobalScrollToItemMount />
             <SkillThemeSync />
             <MobileBottomNav />
             <TourGuideMount />

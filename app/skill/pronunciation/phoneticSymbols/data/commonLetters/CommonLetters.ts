@@ -108,7 +108,7 @@ export const commonLettersData: CommonLettersCategory[] = [
         ],
         category: 'vowel_lax',
         pronunciationTip: 'Schwa + warna /r/ (AmE) pada suku kata LEMAH. Lidah naik sedikit ke belakang tanpa trill.',
-        traps: ['Jangan dibaca "er" keras ala Indonesia.', 'Ini untuk suku kata tanpa tekanan. Untuk stressed, lihat /ɝ/.'],
+        traps: ['Jangan dibaca "er" keras ala Indonesia.', 'Ini untuk suku kata tanpa tekanan. Untuk stressed, lihat /ɚ/.'],
       },
       {
         letter: '-ir, -ur, -or, -ear, -er',
@@ -123,7 +123,7 @@ export const commonLettersData: CommonLettersCategory[] = [
         ],
         category: 'vowel_lax',
         pronunciationTip: 'AmE: Vokal tegang dengan warna /r/ pada suku kata DITEKAN. BrE: /ɜː/ panjang tanpa /r/.',
-        traps: ['Jangan samakan dengan /ɚ/ yang unstressed.', 'BrE: bird -> /bɜːd/, AmE: bird -> /bɝd/.'],
+        traps: ['Jangan samakan dengan /ɚ/ yang unstressed.', 'BrE: bird -> /bɜːd/, AmE: bird -> /bɚd/.'],
       },
     ],
   },

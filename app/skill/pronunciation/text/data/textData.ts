@@ -114,10 +114,10 @@ export const MATERIALS: TextMaterial[] = [
       `In conclusion, Final Sound S/ES practice made Rina's speaking more complete and accurate. Her classmates could understand her grammar faster in conversation. She now checks every key ending as part of her normal speaking habit.`
     ],
     phoneticParagraphs: [
-      '/ɪn ðə ˈfaɪnəl saʊnd ɛs ˌiː ˈɛs ˈsɛkʃən, ˈriːnə lɝnd ðət smɔl ˈɛndɪŋz ˈkæri bɪɡ ˈɡræmɚ ˈmiːnɪŋ. ʃi ˈɔfən drɑpt ˈfaɪnəl saʊndz ɪn fæst spiːtʃ, soʊ səm ˈlɪsənɚz ˌmɪsəndɚˈstʊd hɚ ˈmɛsɪdʒ. hɚ ˈtiːtʃɚ toʊld hɚ tə kip ɛs ˌiː ˈɛs ˈɛndɪŋz klɪr ɪn ˈɛvri ˈpræktɪs laɪn./',
-      '/fɝst, ʃi ˈpræktɪst s əfˈtɝ ˈvɔɪsləs saʊndz wɪð wɝdz laɪk kʌps, bʊks, ænd stɑps. ʃi rɛd ʃɔrt laɪnz ænd pɔzd ˈbrifli æt itʃ ˈɛndɪŋ. ðɪs ˈsʌpɔrtɪŋ dɪˈteɪl hɛlpt hɚ fil ði ˈɛrˌfloʊ ænd kip ðə ˈfaɪnəl ˈkɑnsənənt ˈɔdəbəl./',
-      '/ˈsɛkənd, ʃi ˈpræktɪst z ænd ɪz ˈɛndɪŋz wɪð wɝdz laɪk bæɡz, pleɪz, ˈklæsɪz, ænd ˈwɑtʃɪz. ʃi ˈnoʊtɪst ðət ɪz nidz wʌn ˈɛkstrə ˈsɪləbəl, soʊ ɪt ˈkænɑt bi rʌʃt. ðɪs dɪˈteɪl meɪd hɚ ˈɡræmɚ ˈmiːnɪŋ ˈiziɚ fɚ ˈlɪsənɚz tə kætʃ./',
-      '/θɝd, ʃi juːzd ə ˈpɛrəˌɡræf drɪl ænd tæpt wʌns æt ˈɛvri ˈtɑrɡɪt ˈɛndɪŋ. ðɛn ʃi rɪˈpitəd ðə seɪm ˈpɛrəˌɡræf æt ˈnɔrməl spiːd tə tɛst kənˈtroʊl. ðɪs ˈmɛθəd hɛlpt hɚ kip ɛs ˌiː ˈɛs ˈɛndɪŋz klɪr ˈivən wɛn ʃi fɛlt ˈnɝvəs./',
+      '/ɪn ðə ˈfaɪnəl saʊnd ɛs ˌiː ˈɛs ˈsɛkʃən, ˈriːnə lɚnd ðət smɔl ˈɛndɪŋz ˈkæri bɪɡ ˈɡræmɚ ˈmiːnɪŋ. ʃi ˈɔfən drɑpt ˈfaɪnəl saʊndz ɪn fæst spiːtʃ, soʊ səm ˈlɪsənɚz ˌmɪsəndɚˈstʊd hɚ ˈmɛsɪdʒ. hɚ ˈtiːtʃɚ toʊld hɚ tə kip ɛs ˌiː ˈɛs ˈɛndɪŋz klɪr ɪn ˈɛvri ˈpræktɪs laɪn./',
+      '/fɚst, ʃi ˈpræktɪst s əfˈtɚ ˈvɔɪsləs saʊndz wɪð wɚdz laɪk kʌps, bʊks, ænd stɑps. ʃi rɛd ʃɔrt laɪnz ænd pɔzd ˈbrifli æt itʃ ˈɛndɪŋ. ðɪs ˈsʌpɔrtɪŋ dɪˈteɪl hɛlpt hɚ fil ði ˈɛrˌfloʊ ænd kip ðə ˈfaɪnəl ˈkɑnsənənt ˈɔdəbəl./',
+      '/ˈsɛkənd, ʃi ˈpræktɪst z ænd ɪz ˈɛndɪŋz wɪð wɚdz laɪk bæɡz, pleɪz, ˈklæsɪz, ænd ˈwɑtʃɪz. ʃi ˈnoʊtɪst ðət ɪz nidz wʌn ˈɛkstrə ˈsɪləbəl, soʊ ɪt ˈkænɑt bi rʌʃt. ðɪs dɪˈteɪl meɪd hɚ ˈɡræmɚ ˈmiːnɪŋ ˈiziɚ fɚ ˈlɪsənɚz tə kætʃ./',
+      '/θɚd, ʃi juːzd ə ˈpɛrəˌɡræf drɪl ænd tæpt wʌns æt ˈɛvri ˈtɑrɡɪt ˈɛndɪŋ. ðɛn ʃi rɪˈpitəd ðə seɪm ˈpɛrəˌɡræf æt ˈnɔrməl spiːd tə tɛst kənˈtroʊl. ðɪs ˈmɛθəd hɛlpt hɚ kip ɛs ˌiː ˈɛs ˈɛndɪŋz klɪr ˈivən wɛn ʃi fɛlt ˈnɚvəs./',
       '/ɪn kənˈkluʒən, ˈfaɪnəl saʊnd ɛs ˌiː ˈɛs ˈpræktɪs meɪd ˈriːnəz ˈspiːkɪŋ mɔr kəmˈplit ænd ˈækjərət. hɚ ˈklæsˌmeɪts kʊd ˌʌndɚˈstænd hɚ ˈɡræmɚ ˈfæstɚ ɪn ˌkɑnvɚˈseɪʃən. ʃi naʊ tʃɛks ˈɛvri ki ˈɛndɪŋ æz pɑrt əv hɚ ˈnɔrməl ˈspiːkɪŋ ˈhæbɪt./'
     ]
   },
@@ -134,10 +134,10 @@ export const MATERIALS: TextMaterial[] = [
     ],
     phoneticParagraphs: [
       '/ɪn ðə ˈfaɪnəl saʊnd diː iː diː ˈtɑpɪk, ˈɑrɡə faʊnd ðæt hɪz ˈstɔriz wɚ ʌnˈklɪr bɪˈkɔz hi drɑpt əd ˈɛndɪŋz. hi ˈfoʊkəst ɑn aɪˈdiːəz bʌt ɪɡˈnɔrd ˈfaɪnəl saʊndz. hɪz ˈtiːtʃɚ rɪˈmaɪndəd hɪm ðæt diː iː diː ˈɛndɪŋz ʃoʊ pæst taɪm ænd mʌst bi ˈspoʊkən ˈklɪrli./',
-      '/fɝst, hi ˈpræktɪst t ˈɛndɪŋz wɪð wɑtʃt, hɛlpt, ænd wɑʃt. hi rɛd ʃɔrt ˈdeɪli laɪnz ænd stɑpt ˈæftɚ itʃ ˈtɑrɡɪt wɝd. ðɪs səˈpɔrtɪŋ dɪˈteɪl hɛlpt hɪm meɪk ðə ˈfaɪnəl ˈkɑnsənənt klɪr ɪˈnʌf fɚ ˈlɪsənɚz tə hɪr ðə tɛns./',
-      '/ˈsɛkənd, hi ˈpræktɪst d ænd ɪd ˈɛndɪŋz wɪð kliːnd, pleɪd, ˈwɑntɪd, ænd ˈniːdɪd. hi lɝnd ðæt ɪd ædz wʌn ˈɛkstrə ˈsɪləbəl, soʊ ɪt nidz ə ˈlɪtəl mɔr taɪm. ðɪs ɡeɪv hɪm ˈbɛtɚ kənˈtroʊl ænd ɪmˈpruvd pæst tɛns ˈækjərəsi ɪn ˌkɑnvɚˈseɪʃən./',
-      '/θɝd, hi muːvd tə ʃɔrt ˈstɔriˌtɛlɪŋ. hi rɛd wʌn ˈpɛrəˌɡræf, ðɛn riˈtoʊld ðə seɪm ˈmɛsɪdʒ wɪˈðaʊt ˈlʊkɪŋ æt ðə tɛkst. ðɪs ˈtɛstəd ˈwɛðɚ hi kʊd kiːp diː iː diː ˈɛndɪŋz klɪr ɪn spɑnˈteɪniəs ˈspiːkɪŋ, nɑt ˈoʊnli ɪn ˈriːdɪŋ ˈpræktɪs./',
-      '/ɪn kənˈkluːʒən, ˈfaɪnəl saʊnd diː iː diː ˈtreɪnɪŋ ɪmˈpruvd ˈɑrɡəz ˈspiːkɪŋ ˈækjərəsi. ˈlɪsənɚz kʊd hɪr pæst ɪˈvɛnts mɔr ˈklɪrli, ænd hɪz ˈstɔriz bɪˈkeɪm ˈiːziɚ tə ˈfɑloʊ. hi naʊ ˈjuːzɪz ðɪs ruːˈtiːn ˈrɛɡjələrli bɪˈkɔz ɪt wɝks ɪn rɪəl ˈdeɪli ˈspiːkɪŋ./'
+      '/fɚst, hi ˈpræktɪst t ˈɛndɪŋz wɪð wɑtʃt, hɛlpt, ænd wɑʃt. hi rɛd ʃɔrt ˈdeɪli laɪnz ænd stɑpt ˈæftɚ itʃ ˈtɑrɡɪt wɚd. ðɪs səˈpɔrtɪŋ dɪˈteɪl hɛlpt hɪm meɪk ðə ˈfaɪnəl ˈkɑnsənənt klɪr ɪˈnʌf fɚ ˈlɪsənɚz tə hɪr ðə tɛns./',
+      '/ˈsɛkənd, hi ˈpræktɪst d ænd ɪd ˈɛndɪŋz wɪð kliːnd, pleɪd, ˈwɑntɪd, ænd ˈniːdɪd. hi lɚnd ðæt ɪd ædz wʌn ˈɛkstrə ˈsɪləbəl, soʊ ɪt nidz ə ˈlɪtəl mɔr taɪm. ðɪs ɡeɪv hɪm ˈbɛtɚ kənˈtroʊl ænd ɪmˈpruvd pæst tɛns ˈækjərəsi ɪn ˌkɑnvɚˈseɪʃən./',
+      '/θɚd, hi muːvd tə ʃɔrt ˈstɔriˌtɛlɪŋ. hi rɛd wʌn ˈpɛrəˌɡræf, ðɛn riˈtoʊld ðə seɪm ˈmɛsɪdʒ wɪˈðaʊt ˈlʊkɪŋ æt ðə tɛkst. ðɪs ˈtɛstəd ˈwɛðɚ hi kʊd kiːp diː iː diː ˈɛndɪŋz klɪr ɪn spɑnˈteɪniəs ˈspiːkɪŋ, nɑt ˈoʊnli ɪn ˈriːdɪŋ ˈpræktɪs./',
+      '/ɪn kənˈkluːʒən, ˈfaɪnəl saʊnd diː iː diː ˈtreɪnɪŋ ɪmˈpruvd ˈɑrɡəz ˈspiːkɪŋ ˈækjərəsi. ˈlɪsənɚz kʊd hɪr pæst ɪˈvɛnts mɔr ˈklɪrli, ænd hɪz ˈstɔriz bɪˈkeɪm ˈiːziɚ tə ˈfɑloʊ. hi naʊ ˈjuːzɪz ðɪs ruːˈtiːn ˈrɛɡjələrli bɪˈkɔz ɪt wɚks ɪn rɪəl ˈdeɪli ˈspiːkɪŋ./'
     ]
   },
   {
@@ -152,10 +152,10 @@ export const MATERIALS: TextMaterial[] = [
       `In conclusion, American T practice improved both Bimo's listening and speaking. His speech became smoother and less rigid in informal conversation. He now practices short daily lines to keep this pronunciation pattern active.`
     ],
     phoneticParagraphs: [
-      '/ɪn ði əˈmɛrɪkən tiː ˈlɛsən, ˈbimoʊ dɪˈskʌvɚd ðæt ˈmɛni tiː saʊndz ɪn riːl spiːtʃ wɚ ˈsɔftɚ ðæn ˈtɛkstˌbʊk ɪɡˈzæmpəlz. æt fɝst, hi fɛlt kənˈfjuzd wɛn ˈhɪrɪŋ wɝdz laɪk ˈwɔɾɚ ænd ˈsɪɾi ɪn fæst ˌkɑnvɚˈseɪʃən. ˈleɪtɚ, hi ˌʌndɚˈstʊd ðɪs wəz ə ˈnɔrməl əˈmɛrɪkən ˈpætɚn./',
-      '/fɝst, hi ˈfoʊkəst ɑn flæp tiː ɪn wɝdz sʌtʃ əz ˈwɔɾɚ, ˈbɛɾɚ, ænd ˈsɪɾi. ðə ˈmɪdəl saʊnd wəz kwɪk ænd laɪt, ˈɔlmoʊst laɪk ə sɔft diː. ðɪs səˈpɔrtɪŋ dɪˈteɪl ɪmˈpruvd ˈlɪsənɪŋ bɪˈkɔz hi kʊd ˈrɛkəɡˌnaɪz ˈkɑmən wɝdz æt ˈnætʃrəl spiːd./',
-      '/ˈsɛkənd, hi lɝnd əˈbaʊt ðə stɑp bɪˈfɔr ˈfaɪnəl ɛn ɪn wɝdz laɪk ˈbʌʔn ænd ˈmaʊʔn. ɪn ˈkæʒuəl spiːtʃ, ˈmɛni ˈspikɚz du nɑt rɪˈlis ə fʊl tiː ðɛr. ðɪs hɛlpt hɪm ˌʌndɚˈstænd waɪ sʌm wɝdz ˈsaʊndɪd ˈʃɔrtɚ ænd ˈsmuðɚ ðæn ɪkˈspɛktɪd./',
-      '/θɝd, hi ˈpræktɪst wɪð kəmˈplit ˈsɛntənsɪz, nɑt ˈaɪsəˌleɪtɪd wɝdz. hi juzd laɪnz laɪk aɪ bɔt ˈwɔɾɚ ɪn ðə ˈsɪɾi ˈsɛntɚ ænd ðæt ˈbʌʔn ɪz ˈbɛɾɚ. hi ˈɔlsoʊ treɪnd ˈfaɪnəl tiː bɪˈfɔr ˈkɑnsənənts ɪn ˈfreɪzɪz sʌtʃ əz æt skuːl, hɑt dɔɡ, ænd nɑt bæd. ðɪs ɡeɪv hɪm ˈtreɪnɪŋ ɪn saʊnd ænd ˈrɪðəm æt ðə seɪm taɪm./',
+      '/ɪn ði əˈmɛrɪkən tiː ˈlɛsən, ˈbimoʊ dɪˈskʌvɚd ðæt ˈmɛni tiː saʊndz ɪn riːl spiːtʃ wɚ ˈsɔftɚ ðæn ˈtɛkstˌbʊk ɪɡˈzæmpəlz. æt fɚst, hi fɛlt kənˈfjuzd wɛn ˈhɪrɪŋ wɚdz laɪk ˈwɔɾɚ ænd ˈsɪɾi ɪn fæst ˌkɑnvɚˈseɪʃən. ˈleɪtɚ, hi ˌʌndɚˈstʊd ðɪs wəz ə ˈnɔrməl əˈmɛrɪkən ˈpætɚn./',
+      '/fɚst, hi ˈfoʊkəst ɑn flæp tiː ɪn wɚdz sʌtʃ əz ˈwɔɾɚ, ˈbɛɾɚ, ænd ˈsɪɾi. ðə ˈmɪdəl saʊnd wəz kwɪk ænd laɪt, ˈɔlmoʊst laɪk ə sɔft diː. ðɪs səˈpɔrtɪŋ dɪˈteɪl ɪmˈpruvd ˈlɪsənɪŋ bɪˈkɔz hi kʊd ˈrɛkəɡˌnaɪz ˈkɑmən wɚdz æt ˈnætʃrəl spiːd./',
+      '/ˈsɛkənd, hi lɚnd əˈbaʊt ðə stɑp bɪˈfɔr ˈfaɪnəl ɛn ɪn wɚdz laɪk ˈbʌʔn ænd ˈmaʊʔn. ɪn ˈkæʒuəl spiːtʃ, ˈmɛni ˈspikɚz du nɑt rɪˈlis ə fʊl tiː ðɛr. ðɪs hɛlpt hɪm ˌʌndɚˈstænd waɪ sʌm wɚdz ˈsaʊndɪd ˈʃɔrtɚ ænd ˈsmuðɚ ðæn ɪkˈspɛktɪd./',
+      '/θɚd, hi ˈpræktɪst wɪð kəmˈplit ˈsɛntənsɪz, nɑt ˈaɪsəˌleɪtɪd wɚdz. hi juzd laɪnz laɪk aɪ bɔt ˈwɔɾɚ ɪn ðə ˈsɪɾi ˈsɛntɚ ænd ðæt ˈbʌʔn ɪz ˈbɛɾɚ. hi ˈɔlsoʊ treɪnd ˈfaɪnəl tiː bɪˈfɔr ˈkɑnsənənts ɪn ˈfreɪzɪz sʌtʃ əz æt skuːl, hɑt dɔɡ, ænd nɑt bæd. ðɪs ɡeɪv hɪm ˈtreɪnɪŋ ɪn saʊnd ænd ˈrɪðəm æt ðə seɪm taɪm./',
       '/ɪn kənˈkluʒən, əˈmɛrɪkən ti ˈpræktɪs ɪmˈpruvd boʊθ ˈbimoʊz ˈlɪsənɪŋ ænd ˈspikɪŋ. hɪz spiːtʃ bɪˈkeɪm ˈsmuðɚ ænd lɛs ˈrɪdʒɪd ɪn ɪnˈfɔrməl ˌkɑnvɚˈseɪʃən. hi naʊ ˈpræktɪsɪz ʃɔrt ˈdeɪli laɪnz tə kip ðɪs prəˌnʌnsiˈeɪʃən ˈpætɚn ˈæktɪv./'
     ]
   }

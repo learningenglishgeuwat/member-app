@@ -48,6 +48,17 @@ interface PlayStopButtonProps {
   className?: string;
 }
 
+// Optional integration with ControlCenter navigator: when `sectionId` is provided,
+// the button will request the ControlCenter to open that section (and optionally
+// navigate to a different path) before triggering the provided onClick.
+interface PlayStopButtonPropsExtended extends PlayStopButtonProps {
+  sectionId?: string;
+  targetPath?: string;
+  scrollItemKey?: string;
+}
+
+import { useSectionNavigator } from './ControlCenter/ControlCenter'
+
 export function PlayStopButton({
   isActive,
   label,
@@ -55,14 +66,49 @@ export function PlayStopButton({
   disabled = false,
   size = 'md',
   className = '',
-}: PlayStopButtonProps) {
+  sectionId,
+  targetPath,
+  scrollItemKey,
+}: PlayStopButtonPropsExtended) {
   const iconSize = size === 'sm'
     ? 'w-3 h-3 sm:w-4 sm:h-4'
     : 'w-4 h-4 sm:w-5 sm:h-5';
+  const navigator = useSectionNavigator()
+
+  const handleClick = () => {
+    if (disabled) return
+
+    const resolvedSectionId = sectionId ?? label.toLowerCase().replace(/[^a-z0-9-_]/gi, '')
+
+    if (resolvedSectionId && navigator?.openSection) {
+      try {
+        navigator.openSection(resolvedSectionId, targetPath)
+      } catch (err) {
+        // ignore
+      }
+      // delay calling onClick slightly to allow scroll/open to happen
+      if (!isActive) {
+        setTimeout(() => onClick(), 80)
+        return
+      }
+    }
+
+    // If a specific item key was provided, dispatch a global scroll event
+    if (scrollItemKey && typeof window !== 'undefined') {
+      try {
+        window.dispatchEvent(new CustomEvent('geuwat:scroll-to', { detail: { key: scrollItemKey } }))
+      } catch {}
+      // small delay so scroll can start before playing
+      setTimeout(() => onClick(), 80)
+      return
+    }
+
+    onClick()
+  }
 
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       className={[
         'w-full border px-2 py-1.5 sm:px-4 sm:py-3',

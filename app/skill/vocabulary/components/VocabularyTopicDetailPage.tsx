@@ -821,9 +821,15 @@ export default function VocabularyTopicDetailPage({
                   stopPlayback();
                   return;
                 }
+                if (playingItemId) {
+                  // stop current single playback, then immediately start play-all
+                  stopPlayback();
+                  void playAllWords();
+                  return;
+                }
                 void playAllWords();
               }}
-              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'words')}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'words' && !playingItemId)}
               size="sm"
             />
             <PlayStopButton
@@ -834,9 +840,14 @@ export default function VocabularyTopicDetailPage({
                   stopPlayback();
                   return;
                 }
+                if (playingItemId) {
+                  stopPlayback();
+                  void playAllWordThenExample();
+                  return;
+                }
                 void playAllWordThenExample();
               }}
-              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'word-example')}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'word-example' && !playingItemId)}
               size="sm"
             />
           </div>

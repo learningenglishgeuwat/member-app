@@ -39,7 +39,7 @@ const COMMON_SENTENCE_IPA: Record<string, string> = {
   for: 'fɔr',
   from: 'frʌm',
   he: 'hi',
-  her: 'hɝ',
+  her: 'hɚ',
   here: 'hɪr',
   his: 'hɪz',
   i: 'aɪ',

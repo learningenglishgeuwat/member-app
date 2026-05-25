@@ -9,7 +9,7 @@ const FRUIT_ROWS = [
   { en: 'This banana is very sweet.', id: 'Pisang ini manis sekali.', ipa: '/ðɪs bəˈnænə ɪz ˈvɛri swit/' },
   { en: 'I drink orange juice in the morning.', id: 'Saya minum jus jeruk di pagi hari.', ipa: '/aɪ drɪŋk ˈɔrɪndʒ dʒus ɪn ðə ˈmɔrnɪŋ/' },
   { en: 'These grapes are fresh.', id: 'Anggur ini segar.', ipa: '/ðiz ɡreɪps ɑr frɛʃ/' },
-  { en: 'Watermelon is perfect on hot days.', id: 'Semangka cocok dimakan saat hari panas.', ipa: '/ˈwɔtərˌmɛlən ɪz ˈpɝfɪkt ɑn hɑt deɪz/' },
+  { en: 'Watermelon is perfect on hot days.', id: 'Semangka cocok dimakan saat hari panas.', ipa: '/ˈwɔtərˌmɛlən ɪz ˈpɚfɪkt ɑn hɑt deɪz/' },
   { en: 'The melon tastes fresh.', id: 'Melon ini rasanya segar.', ipa: '/ðə ˈmɛlən teɪsts frɛʃ/' },
   { en: 'Pineapple can be sweet and sour.', id: 'Nanas bisa manis dan asam.', ipa: '/ˈpaɪnˌæpəl kən bi swit ænd saʊər/' },
   { en: 'This mango is ripe.', id: 'Mangga ini sudah matang.', ipa: '/ðɪs ˈmæŋɡoʊ ɪz raɪp/' },
@@ -50,10 +50,10 @@ const FRUIT_ROWS = [
   { en: 'The watermelon is sweet.', id: 'Semangka ini manis.', ipa: '/ðə ˈwɔtərˌmɛlən ɪz swit/' },
   { en: 'This orange is too sour.', id: 'Jeruk ini terlalu asam.', ipa: '/ðɪs ˈɔrɪndʒ ɪz tu saʊər/' },
   { en: 'The peach is very juicy.', id: 'Persik ini sangat berair.', ipa: '/ðə pitʃ ɪz ˈvɛri ˈdʒusi/' },
-  { en: 'Remove the seeds first.', id: 'Buang bijinya dulu.', ipa: '/rɪˈmuv ðə sidz fɝst/' },
+  { en: 'Remove the seeds first.', id: 'Buang bijinya dulu.', ipa: '/rɪˈmuv ðə sidz fɚst/' },
   { en: 'The peel is thick.', id: 'Kulit buahnya tebal.', ipa: '/ðə pil ɪz θɪk/' },
   { en: 'Cut the apple into slices.', id: 'Potong apel menjadi beberapa irisan.', ipa: '/kʌt ði ˈæpəl ˈɪntu ˈslaɪsɪz/' },
-  { en: 'Please wash the fruit first.', id: 'Tolong cuci buahnya dulu.', ipa: '/pliz wɑʃ ðə frut fɝst/' },
+  { en: 'Please wash the fruit first.', id: 'Tolong cuci buahnya dulu.', ipa: '/pliz wɑʃ ðə frut fɚst/' },
 ];
 
 const wordsContent = fs.readFileSync(WORDS_PATH, 'utf8');

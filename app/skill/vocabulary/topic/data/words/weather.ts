@@ -29,7 +29,7 @@ export const VOCAB_TOPIC_WEATHER_WORDS: VocabularyItem[] = [
   { id: 'weather-w26', topicId: 'weather', word: 'wind', ipa: '/wɪnd/', meaningId: 'angin', exampleEn: 'The wind is strong today.' },
   { id: 'weather-w27', topicId: 'weather', word: 'breeze', ipa: '/briːz/', meaningId: 'angin sepoi-sepoi', exampleEn: 'A cool breeze comes from the sea.' },
   { id: 'weather-w28', topicId: 'weather', word: 'gust', ipa: '/ɡʌst/', meaningId: 'hembusan angin kencang', exampleEn: 'A gust moved the door.' },
-  { id: 'weather-w29', topicId: 'weather', word: 'hurricane', ipa: '/ˈhɝːɪˌkeɪn/', meaningId: 'badai topan', exampleEn: 'The hurricane warning is serious.' },
+  { id: 'weather-w29', topicId: 'weather', word: 'hurricane', ipa: '/ˈhɚːɪˌkeɪn/', meaningId: 'badai topan', exampleEn: 'The hurricane warning is serious.' },
   { id: 'weather-w30', topicId: 'weather', word: 'flood', ipa: '/flʌd/', meaningId: 'banjir', exampleEn: 'The village had a flood.' },
   { id: 'weather-w31', topicId: 'weather', word: 'drought', ipa: '/draʊt/', meaningId: 'kekeringan', exampleEn: 'The area suffers from drought.' },
   { id: 'weather-w32', topicId: 'weather', word: 'sun', ipa: '/sʌn/', meaningId: 'matahari', exampleEn: 'The sun is very bright.' },

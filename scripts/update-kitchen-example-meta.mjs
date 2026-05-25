@@ -5,7 +5,7 @@ const META_PATH = 'app/skill/vocabulary/topic/data/example-meta.ts';
 
 const KITCHEN_ROWS = [
   { en: 'The kitchen is clean today.', id: 'Dapurnya bersih hari ini.', ipa: '/ðə ˈkɪtʃən ɪz klin təˈdeɪ/' },
-  { en: 'Turn off the stove after cooking.', id: 'Matikan kompor setelah memasak.', ipa: '/tɝn ɔf ðə stoʊv ˈæftɚ ˈkʊkɪŋ/' },
+  { en: 'Turn off the stove after cooking.', id: 'Matikan kompor setelah memasak.', ipa: '/tɚn ɔf ðə stoʊv ˈæftɚ ˈkʊkɪŋ/' },
   { en: 'We use a gas stove at home.', id: 'Kami memakai kompor gas di rumah.', ipa: '/wi juz ə ɡæs stoʊv æt hoʊm/' },
   { en: 'The electric stove heats up quickly.', id: 'Kompor listrik cepat panas.', ipa: '/ði ɪˈlɛktrɪk stoʊv hits ʌp ˈkwɪkli/' },
   { en: 'Put the cake in the oven.', id: 'Masukkan kuenya ke oven.', ipa: '/pʊt ðə keɪk ɪn ði ˈʌvən/' },
@@ -46,13 +46,13 @@ const KITCHEN_ROWS = [
   { en: 'This recipe is simple.', id: 'Resep ini sederhana.', ipa: '/ðɪs ˈrɛsəpi ɪz ˈsɪmpəl/' },
   { en: 'I cook dinner every evening.', id: 'Saya masak makan malam setiap sore.', ipa: '/aɪ kʊk ˈdɪnɚ ˈɛvri ˈivnɪŋ/' },
   { en: 'Fry the chicken for ten minutes.', id: 'Goreng ayamnya selama sepuluh menit.', ipa: '/fraɪ ðə ˈtʃɪkən fɚ tɛn ˈmɪnəts/' },
-  { en: 'Boil the eggs first.', id: 'Rebus telurnya dulu.', ipa: '/bɔɪl ði ɛɡz fɝst/' },
+  { en: 'Boil the eggs first.', id: 'Rebus telurnya dulu.', ipa: '/bɔɪl ði ɛɡz fɚst/' },
   { en: 'Steam the vegetables lightly.', id: 'Kukus sayurnya sebentar.', ipa: '/stim ðə ˈvɛdʒtəbəlz ˈlaɪtli/' },
-  { en: 'Bake the cake for thirty minutes.', id: 'Panggang kuenya selama tiga puluh menit.', ipa: '/beɪk ðə keɪk fɚ ˈθɝti ˈmɪnəts/' },
+  { en: 'Bake the cake for thirty minutes.', id: 'Panggang kuenya selama tiga puluh menit.', ipa: '/beɪk ðə keɪk fɚ ˈθɚti ˈmɪnəts/' },
   { en: 'Chop the garlic finely.', id: 'Cincang bawangnya halus.', ipa: '/tʃɑp ðə ˈɡɑrlɪk ˈfaɪnli/' },
   { en: 'Slice the tomatoes thinly.', id: 'Iris tomatnya tipis-tipis.', ipa: '/slaɪs ðə təˈmeɪtoʊz ˈθɪnli/' },
   { en: 'Mix all ingredients well.', id: 'Aduk semua bahan sampai rata.', ipa: '/mɪks ɔl ɪnˈɡridiənts wɛl/' },
-  { en: 'Serve the soup while hot.', id: 'Sajikan supnya saat masih panas.', ipa: '/sɝv ðə sup waɪl hɑt/' },
+  { en: 'Serve the soup while hot.', id: 'Sajikan supnya saat masih panas.', ipa: '/sɚv ðə sup waɪl hɑt/' },
   { en: 'Please wash dishes after dinner.', id: 'Tolong cuci piring setelah makan malam.', ipa: '/pliz wɑʃ ˈdɪʃɪz ˈæftɚ ˈdɪnɚ/' },
 ];
 

@@ -44,7 +44,7 @@ export const VOCAB_TOPIC_FOOD_WORDS: VocabularyItem[] = [
   { id: 'food-w41', topicId: 'food', word: 'fried rice', ipa: '/fraɪd raɪs/', meaningId: 'nasi goreng', exampleEn: 'We ate fried rice for dinner.' },
   { id: 'food-w42', topicId: 'food', word: 'sandwich', ipa: '/ˈsænwɪtʃ/', meaningId: 'roti isi', exampleEn: 'I made a sandwich for lunch.' },
   { id: 'food-w43', topicId: 'food', word: 'pizza', ipa: '/ˈpiːtsə/', meaningId: 'pizza', exampleEn: 'The kids want pizza.' },
-  { id: 'food-w44', topicId: 'food', word: 'burger', ipa: '/ˈbɝːɡər/', meaningId: 'burger', exampleEn: 'He ordered a chicken burger.' },
+  { id: 'food-w44', topicId: 'food', word: 'burger', ipa: '/ˈbɚːɡər/', meaningId: 'burger', exampleEn: 'He ordered a chicken burger.' },
   { id: 'food-w45', topicId: 'food', word: 'cake', ipa: '/keɪk/', meaningId: 'kue', exampleEn: 'We baked a chocolate cake.' },
   { id: 'food-w46', topicId: 'food', word: 'cookie', ipa: '/ˈkʊki/', meaningId: 'kue kering', exampleEn: 'I ate two cookies.' },
   { id: 'food-w47', topicId: 'food', word: 'ice cream', ipa: '/ˈaɪs kriːm/', meaningId: 'es krim', exampleEn: 'She likes vanilla ice cream.' },

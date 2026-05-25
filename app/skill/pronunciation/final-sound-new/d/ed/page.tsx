@@ -522,6 +522,14 @@ export default function FinalSoundDEdPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    setOpenSections((prev) => {
+      if (!prev.wordBank) {
+        return { ...prev, wordBank: true };
+      }
+      return prev;
+    });
+    await sleep(80);
+
     const runId = playAllRunIdRef.current + 1;
     playAllRunIdRef.current = runId;
     setIsPlayingWordBankAll(true);
@@ -575,6 +583,14 @@ export default function FinalSoundDEdPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    setOpenSections((prev) => {
+      if (!prev.pastEndings) {
+        return { ...prev, pastEndings: true };
+      }
+      return prev;
+    });
+    await sleep(80);
+
     const runId = pastEndingsPlayAllRunIdRef.current + 1;
     pastEndingsPlayAllRunIdRef.current = runId;
     setIsPlayingPastEndingsAll(true);
@@ -613,6 +629,14 @@ export default function FinalSoundDEdPage() {
     }
 
     if (!isSpeechSynthesisSupported()) return;
+
+    setOpenSections((prev) => {
+      if (!prev.rulesTable) {
+        return { ...prev, rulesTable: true };
+      }
+      return prev;
+    });
+    await sleep(80);
 
     const runId = rulesTablePlayAllRunIdRef.current + 1;
     rulesTablePlayAllRunIdRef.current = runId;
@@ -738,7 +762,7 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="pastEndings" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -846,7 +870,7 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="rulesTable" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -917,7 +941,7 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block" ref={wordBankSectionRef}>
+        <section id="wordBank" className="fs-topic-block" ref={wordBankSectionRef}>
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1130,6 +1154,7 @@ export default function FinalSoundDEdPage() {
             <PlayStopButton
               isActive={isPlayingPastEndingsAll}
               label="PAST ENDINGS"
+              sectionId="pastEndings"
               onClick={() => void handlePastEndingsPlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -1149,6 +1174,7 @@ export default function FinalSoundDEdPage() {
             <PlayStopButton
               isActive={isPlayingRulesTableAll}
               label="RULES TABLE"
+              sectionId="rulesTable"
               onClick={() => void handleRulesTablePlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -1168,6 +1194,7 @@ export default function FinalSoundDEdPage() {
             <PlayStopButton
               isActive={isPlayingWordBankAll}
               label="WORD BANK"
+              sectionId="wordBank"
               onClick={() => void handleWordBankPlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"

@@ -79,6 +79,7 @@ const AlphabetPage: React.FC = () => {
   
   const isPlayingRef = useRef(false);
   const isPlayingPracticeRef = useRef(false);
+  const practiceSectionRef = useRef<HTMLElement | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
 
   // Handle hydration
@@ -273,6 +274,19 @@ const AlphabetPage: React.FC = () => {
     }
   };
 
+  const scrollToPracticeSection = () => {
+    if (practiceSectionRef.current) {
+      practiceSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const openPracticeSection = () => {
+    setIsPracticeOpen(true);
+    window.setTimeout(() => {
+      scrollToPracticeSection();
+    }, 50);
+  };
+
   const handlePlayAllPracticeCountries = async () => {
     triggerHaptic('tap');
     
@@ -281,6 +295,8 @@ const AlphabetPage: React.FC = () => {
       stopSpeech();
       return;
     }
+
+    openPracticeSection();
 
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
@@ -572,7 +588,7 @@ const AlphabetPage: React.FC = () => {
         </div>
 
         {/* Alphabet Grid */}
-        <div className="alphabet-grid">
+        <div id="alphabet-grid-section" className="alphabet-grid">
           {ALPHABET_DATA.map((item) => (
             <LetterCard
               key={item.letter}
@@ -695,8 +711,10 @@ const AlphabetPage: React.FC = () => {
         </section>
 
         <section
+          ref={practiceSectionRef}
           className={`alphabet-notes-panel ${isPracticeOpen ? '' : 'collapsed'}`}
           aria-labelledby="alphabet-practice-title"
+          id="alphabet-practice-section"
         >
           <button
             type="button"
@@ -842,6 +860,7 @@ const AlphabetPage: React.FC = () => {
             <PlayStopButton
               isActive={isPlayingAll}
               label="ALPHABET"
+              sectionId="alphabet-grid-section"
               onClick={handlePlayAll}
               className="mb-2 sm:mb-3"
             />
@@ -853,6 +872,7 @@ const AlphabetPage: React.FC = () => {
             <PlayStopButton
               isActive={isPlayingPracticeAll}
               label="PRACTICE"
+              sectionId="alphabet-practice-section"
               onClick={handlePlayAllPracticeCountries}
               className="mb-2 sm:mb-3"
             />

@@ -18,15 +18,15 @@ The second point is the difference between writing and speaking. In many languag
 The final point is that pronunciation is a physical skill. It is like a sport for your mouth. To produce "Lax Vowels" or specific American sounds, students must train their facial muscles. If we do not move our mouth correctly, the sound will be wrong. This is why practicing the physical movement of the tongue is very important from the beginning.
 
 In summary, pronunciation is the foundation of speaking. It is the study of sounds, the bridge between spelling and speech, and a physical exercise for the mouth. If a beginner understands these three things, learning English becomes much easier.`,
-    phoneticText: `/ˈmɛni ˈɪŋɡlɪʃ ˈlɝnɚz ˈfoʊkəs ˈoʊnli ɑn voʊˈkæbjəˌlɛri ænd ˈɡræmɚ. haʊˈɛvɚ, ðeɪ ˈɔfən fɚˈɡɛt ðə moʊst ˈbeɪsɪk pɑrt əv ə ˈlæŋɡwɪdʒ: prəˌnʌnsiˈeɪʃən. tə spiːk ˈɪŋɡlɪʃ wɛl, wi mʌst ˌʌndɚˈstænd wʌt prəˌnʌnsiˈeɪʃən ɪz ænd waɪ ɪt ˈmætɚz./
+    phoneticText: `/ˈmɛni ˈɪŋɡlɪʃ ˈlɚnɚz ˈfoʊkəs ˈoʊnli ɑn voʊˈkæbjəˌlɛri ænd ˈɡræmɚ. haʊˈɛvɚ, ðeɪ ˈɔfən fɚˈɡɛt ðə moʊst ˈbeɪsɪk pɑrt əv ə ˈlæŋɡwɪdʒ: prəˌnʌnsiˈeɪʃən. tə spiːk ˈɪŋɡlɪʃ wɛl, wi mʌst ˌʌndɚˈstænd wʌt prəˌnʌnsiˈeɪʃən ɪz ænd waɪ ɪt ˈmætɚz./
 
-/prəˌnʌnsiˈeɪʃən ɪz ðə weɪ wi meɪk ðə saʊndz əv ə ˈlæŋɡwɪdʒ. ɪt ɪz nɑt dʒʌst əˈbaʊt ˈtɔkɪŋ; ɪt ɪz əˈbaʊt haʊ wi juːz aʊɚ maʊθ, lɪps, ænd tʌŋ tə kriˈeɪt spəˈsɪfɪk ˈnɔɪzɪz. ɪn ˈɪŋɡlɪʃ, wʌn ˈlɛtɚ kæn hæv ˈdɪfrənt saʊndz. fɔr ɪɡˈzæmpəl, ði \"eɪ\" ɪn \"ˈæpəl\" ɪz ˈdɪfrənt frəm ði \"eɪ\" ɪn \"kɑr.\" ˌʌndɚˈstændɪŋ ðiz saʊndz ɪz ðə fɝst stɛp fɔr ˈɛvri ˈstudənt./
+/prəˌnʌnsiˈeɪʃən ɪz ðə weɪ wi meɪk ðə saʊndz əv ə ˈlæŋɡwɪdʒ. ɪt ɪz nɑt dʒʌst əˈbaʊt ˈtɔkɪŋ; ɪt ɪz əˈbaʊt haʊ wi juːz aʊɚ maʊθ, lɪps, ænd tʌŋ tə kriˈeɪt spəˈsɪfɪk ˈnɔɪzɪz. ɪn ˈɪŋɡlɪʃ, wʌn ˈlɛtɚ kæn hæv ˈdɪfrənt saʊndz. fɔr ɪɡˈzæmpəl, ði \"eɪ\" ɪn \"ˈæpəl\" ɪz ˈdɪfrənt frəm ði \"eɪ\" ɪn \"kɑr.\" ˌʌndɚˈstændɪŋ ðiz saʊndz ɪz ðə fɚst stɛp fɔr ˈɛvri ˈstudənt./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈdɪfrəns bɪˈtwiːn ˈraɪtɪŋ ænd ˈspiːkɪŋ. ɪn ˈmɛni ˈlæŋɡwɪdʒɪz, wi seɪ ə wɝd ɪɡˈzæktli haʊ wi raɪt ɪt. bʌt ɪn ˈɪŋɡlɪʃ, ðə ˈspɛlɪŋ kæn bi kənˈfjuːzɪŋ. prəˌnʌnsiˈeɪʃən hɛlps ˈstudənts lɝn ðæt \"ˈnɑlɪdʒ\" stɑrts wɪð ə \"ɛn\" saʊnd, nɑt ə \"keɪ\" saʊnd. ðɪs hɛlps ˈlɝnɚz riːd ænd spiːk mɔr ˈækjɚətli./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈdɪfrəns bɪˈtwiːn ˈraɪtɪŋ ænd ˈspiːkɪŋ. ɪn ˈmɛni ˈlæŋɡwɪdʒɪz, wi seɪ ə wɚd ɪɡˈzæktli haʊ wi raɪt ɪt. bʌt ɪn ˈɪŋɡlɪʃ, ðə ˈspɛlɪŋ kæn bi kənˈfjuːzɪŋ. prəˌnʌnsiˈeɪʃən hɛlps ˈstudənts lɚn ðæt \"ˈnɑlɪdʒ\" stɑrts wɪð ə \"ɛn\" saʊnd, nɑt ə \"keɪ\" saʊnd. ðɪs hɛlps ˈlɚnɚz riːd ænd spiːk mɔr ˈækjɚətli./
 
 /ðə ˈfaɪnəl pɔɪnt ɪz ðæt prəˌnʌnsiˈeɪʃən ɪz ə ˈfɪzɪkəl skɪl. ɪt ɪz laɪk ə spɔrt fɔr jɔr maʊθ. tə prəˈdus \"læks ˈvaʊəlz\" ɔr spəˈsɪfɪk əˈmɛrɪkən saʊndz, ˈstudənts mʌst treɪn ðɛr ˈfeɪʃəl ˈmʌsəlz. ɪf wi du nɑt muːv aʊɚ maʊθ kəˈrɛktli, ðə saʊnd wɪl bi rɔŋ. ðɪs ɪz waɪ ˈpræktəsɪŋ ðə ˈfɪzɪkəl ˈmuvmənt əv ðə tʌŋ ɪz ˈvɛri ɪmˈpɔrtənt frəm ðə bɪˈɡɪnɪŋ./
 
-/ɪn ˈsʌmɚi, prəˌnʌnsiˈeɪʃən ɪz ðə faʊnˈdeɪʃən əv ˈspiːkɪŋ. ɪt ɪz ðə ˈstʌdi əv saʊndz, ðə brɪdʒ bɪˈtwiːn ˈspɛlɪŋ ænd spiːtʃ, ænd ə ˈfɪzɪkəl ˈɛksɚˌsaɪz fɔr ðə maʊθ. ɪf ə bɪˈɡɪnɚ ˌʌndɚˈstændz ðiz θriː θɪŋz, ˈlɝnɪŋ ˈɪŋɡlɪʃ bɪˈkʌmz mʌtʃ ˈiːziɚ./`,
+/ɪn ˈsʌmɚi, prəˌnʌnsiˈeɪʃən ɪz ðə faʊnˈdeɪʃən əv ˈspiːkɪŋ. ɪt ɪz ðə ˈstʌdi əv saʊndz, ðə brɪdʒ bɪˈtwiːn ˈspɛlɪŋ ænd spiːtʃ, ænd ə ˈfɪzɪkəl ˈɛksɚˌsaɪz fɔr ðə maʊθ. ɪf ə bɪˈɡɪnɚ ˌʌndɚˈstændz ðiz θriː θɪŋz, ˈlɚnɪŋ ˈɪŋɡlɪʃ bɪˈkʌmz mʌtʃ ˈiːziɚ./`,
   },
   {
     id: 'english-alphabet-and-sounds',
@@ -40,15 +40,15 @@ The second point is the division of letters into vowels and consonants. There ar
 The final point is the importance of spelling. In daily life, we often need to spell our names, addresses, or email accounts. If a student knows the alphabet perfectly, they can give information accurately. This is a basic skill that builds a strong foundation for communication in the real world.
 
 In conclusion, the alphabet is the starting point for every learner. By understanding the sounds, the vowels, and the spelling, students can start their English journey correctly. It is the door to good pronunciation and clear speaking.`,
-    phoneticText: `/ði ˈælfəˌbɛt ɪz ðə fɝst θɪŋ ˈɛvri ˈstudənt lɝnz ɪn ˈɪŋɡlɪʃ. ɪt hæz ˈtwɛntiˌsɪks ˈlɛtɚz, frəm eɪ tə ziː. haʊˈɛvɚ, ði ˈælfəˌbɛt ɪz mɔr ðæn dʒʌst ə lɪst əv neɪmz. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt waɪ ði ˈælfəˌbɛt ɪz ɪmˈpɔrtənt fɔr prəˌnʌnsiˈeɪʃən./
+    phoneticText: `/ði ˈælfəˌbɛt ɪz ðə fɚst θɪŋ ˈɛvri ˈstudənt lɚnz ɪn ˈɪŋɡlɪʃ. ɪt hæz ˈtwɛntiˌsɪks ˈlɛtɚz, frəm eɪ tə ziː. haʊˈɛvɚ, ði ˈælfəˌbɛt ɪz mɔr ðæn dʒʌst ə lɪst əv neɪmz. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt waɪ ði ˈælfəˌbɛt ɪz ɪmˈpɔrtənt fɔr prəˌnʌnsiˈeɪʃən./
 
-/ðə fɝst pɔɪnt ɪz ðæt ˈlɛtɚz ænd saʊndz ɑr ˈdɪfrənt. ɪn ði ˈɪŋɡlɪʃ ˈælfəˌbɛt, wi hæv ˈtwɛntiˌsɪks ˈlɛtɚz, bʌt ðiz ˈlɛtɚz kæn meɪk mɔr ðæn ˈfɔrti ˈdɪfrənt saʊndz. fɔr ɪɡˈzæmpəl, ðə ˈlɛtɚ \"siː\" kæn saʊnd laɪk /k/ ɪn \"kæt\" ɔr /s/ ɪn \"ˈsɪɾi.\" bɪˈɡɪnɚz mʌst lɝn ðæt ðə neɪm əv ðə ˈlɛtɚ ɪz nɑt ˈɔlweɪz ðə saʊnd ɪt meɪks./
+/ðə fɚst pɔɪnt ɪz ðæt ˈlɛtɚz ænd saʊndz ɑr ˈdɪfrənt. ɪn ði ˈɪŋɡlɪʃ ˈælfəˌbɛt, wi hæv ˈtwɛntiˌsɪks ˈlɛtɚz, bʌt ðiz ˈlɛtɚz kæn meɪk mɔr ðæn ˈfɔrti ˈdɪfrənt saʊndz. fɔr ɪɡˈzæmpəl, ðə ˈlɛtɚ \"siː\" kæn saʊnd laɪk /k/ ɪn \"kæt\" ɔr /s/ ɪn \"ˈsɪɾi.\" bɪˈɡɪnɚz mʌst lɚn ðæt ðə neɪm əv ðə ˈlɛtɚ ɪz nɑt ˈɔlweɪz ðə saʊnd ɪt meɪks./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə dɪˈvɪʒən əv ˈlɛtɚz ˈɪntu ˈvaʊəlz ænd ˈkɑnsənənts. ðɛr ɑr faɪv ˈvaʊəlz (eɪ, iː, aɪ, oʊ, juː) ænd ˈtwɛntiˌwʌn ˈkɑnsənənts. ˈvaʊəlz ɑr ðə moʊst ɪmˈpɔrtənt pɑrt əv prəˌnʌnsiˈeɪʃən bɪˈkɔz ˈɛvri ˈɪŋɡlɪʃ wɝd nidz ə ˈvaʊəl saʊnd. ˈlɝnɪŋ haʊ tə seɪ ˈvaʊəlz kəˈrɛktli ɪz ðə \"ˈsiːkrət\" tə ˈspiːkɪŋ klɪr ˈɪŋɡlɪʃ./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə dɪˈvɪʒən əv ˈlɛtɚz ˈɪntu ˈvaʊəlz ænd ˈkɑnsənənts. ðɛr ɑr faɪv ˈvaʊəlz (eɪ, iː, aɪ, oʊ, juː) ænd ˈtwɛntiˌwʌn ˈkɑnsənənts. ˈvaʊəlz ɑr ðə moʊst ɪmˈpɔrtənt pɑrt əv prəˌnʌnsiˈeɪʃən bɪˈkɔz ˈɛvri ˈɪŋɡlɪʃ wɚd nidz ə ˈvaʊəl saʊnd. ˈlɚnɪŋ haʊ tə seɪ ˈvaʊəlz kəˈrɛktli ɪz ðə \"ˈsiːkrət\" tə ˈspiːkɪŋ klɪr ˈɪŋɡlɪʃ./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ði ɪmˈpɔrtəns əv ˈspɛlɪŋ. ɪn ˈdeɪli laɪf, wi ˈɔfən nidz tə spɛl aʊɚ neɪmz, əˈdrɛsɪz, ɔr ˈiːˌmeɪl əˈkaʊnts. ɪf ə ˈstudənt noʊz ði ˈælfəˌbɛt ˈpɝfɪktli, ðeɪ kæn ɡɪv ˌɪnfɚˈmeɪʃən ˈækjɚətli. ðɪs ɪz ə ˈbeɪsɪk skɪl ðæt bɪldz ə strɔŋ faʊnˈdeɪʃən fɔr kəˌmjunəˈkeɪʃən ɪn ðə riːl wɝld./
+/ðə ˈfaɪnəl pɔɪnt ɪz ði ɪmˈpɔrtəns əv ˈspɛlɪŋ. ɪn ˈdeɪli laɪf, wi ˈɔfən nidz tə spɛl aʊɚ neɪmz, əˈdrɛsɪz, ɔr ˈiːˌmeɪl əˈkaʊnts. ɪf ə ˈstudənt noʊz ði ˈælfəˌbɛt ˈpɚfɪktli, ðeɪ kæn ɡɪv ˌɪnfɚˈmeɪʃən ˈækjɚətli. ðɪs ɪz ə ˈbeɪsɪk skɪl ðæt bɪldz ə strɔŋ faʊnˈdeɪʃən fɔr kəˌmjunəˈkeɪʃən ɪn ðə riːl wɚld./
 
-/ɪn kənˈkluːʒən, ði ˈælfəˌbɛt ɪz ðə ˈstɑrtɪŋ pɔɪnt fɔr ˈɛvri ˈlɝnɚ. baɪ ˌʌndɚˈstændɪŋ ðə saʊndz, ðə ˈvaʊəlz, ænd ðə ˈspɛlɪŋ, ˈstudənts kæn stɑrt ðɛr ˈɪŋɡlɪʃ ˈdʒɝni kəˈrɛktli. ɪt ɪz ðə dɔr tə ɡʊd prəˌnʌnsiˈeɪʃən ænd klɪr ˈspiːkɪŋ./`,
+/ɪn kənˈkluːʒən, ði ˈælfəˌbɛt ɪz ðə ˈstɑrtɪŋ pɔɪnt fɔr ˈɛvri ˈlɚnɚ. baɪ ˌʌndɚˈstændɪŋ ðə saʊndz, ðə ˈvaʊəlz, ænd ðə ˈspɛlɪŋ, ˈstudənts kæn stɑrt ðɛr ˈɪŋɡlɪʃ ˈdʒɚni kəˈrɛktli. ɪt ɪz ðə dɔr tə ɡʊd prəˌnʌnsiˈeɪʃən ænd klɪr ˈspiːkɪŋ./`,
   },
   {
     id: 'power-of-phonetic-symbols',
@@ -62,15 +62,15 @@ The second point is that symbols fix spelling mistakes. Some English words look 
 The final point is independence. When a student understands phonetic symbols, they do not always need a teacher to tell them how to pronounce a word. They can use a dictionary or an app to learn by themselves. This makes learning faster because the student can practice anytime and anywhere.
 
 In conclusion, phonetic symbols are a vital tool for every beginner. They provide a clear guide, solve spelling confusion, and make students independent. Learning these symbols is the best way to master English pronunciation quickly.`,
-    phoneticText: `/ˈmɛni ˈstudənts fil kənˈfjuzd wɛn ðeɪ si ə nuː ˈɪŋɡlɪʃ wɝd bɪˈkɔz ðə ˈspɛlɪŋ dʌz nɑt mætʃ ðə saʊnd. tə sɑlv ðɪs ˈprɑbləm, wi juːz fəˈnɛtɪk ˈsɪmbəlz. ðiz ɑr ˈspɛʃəl saɪnz ðæt tɛl ʌs ɪɡˈzæktli haʊ tə seɪ ə wɝd. hɪr ɑr θriː ˈrizənz waɪ ðeɪ ɑr ɪmˈpɔrtənt./
+    phoneticText: `/ˈmɛni ˈstudənts fil kənˈfjuzd wɛn ðeɪ si ə nuː ˈɪŋɡlɪʃ wɚd bɪˈkɔz ðə ˈspɛlɪŋ dʌz nɑt mætʃ ðə saʊnd. tə sɑlv ðɪs ˈprɑbləm, wi juːz fəˈnɛtɪk ˈsɪmbəlz. ðiz ɑr ˈspɛʃəl saɪnz ðæt tɛl ʌs ɪɡˈzæktli haʊ tə seɪ ə wɚd. hɪr ɑr θriː ˈrizənz waɪ ðeɪ ɑr ɪmˈpɔrtənt./
 
-/ðə fɝst pɔɪnt ɪz ðæt fəˈnɛtɪk ˈsɪmbəlz ækt æz ə mæp. ɪn ˈɪŋɡlɪʃ, ði ˈælfəˌbɛt ˈoʊnli hæz ˈtwɛntiˌsɪks ˈlɛtɚz, bʌt ðɛr ɑr ˈmɛni mɔr saʊndz. ˈsɪmbəlz laɪk /æ/ ɔr /ɪ/ hɛlp ˈstudənts ˌʌndɚˈstænd ði ɪɡˈzækt pəˈzɪʃən əv ðə maʊθ. wɛn ə ˈstudənt siz ə ˈsɪmbəl, ðeɪ noʊ ɪɡˈzæktli wɪtʃ saʊnd tə meɪk, ˈivən ɪf ðeɪ hæv ˈnɛvɚ hɝd ðə wɝd bɪˈfɔr./
+/ðə fɚst pɔɪnt ɪz ðæt fəˈnɛtɪk ˈsɪmbəlz ækt æz ə mæp. ɪn ˈɪŋɡlɪʃ, ði ˈælfəˌbɛt ˈoʊnli hæz ˈtwɛntiˌsɪks ˈlɛtɚz, bʌt ðɛr ɑr ˈmɛni mɔr saʊndz. ˈsɪmbəlz laɪk /æ/ ɔr /ɪ/ hɛlp ˈstudənts ˌʌndɚˈstænd ði ɪɡˈzækt pəˈzɪʃən əv ðə maʊθ. wɛn ə ˈstudənt siz ə ˈsɪmbəl, ðeɪ noʊ ɪɡˈzæktli wɪtʃ saʊnd tə meɪk, ˈivən ɪf ðeɪ hæv ˈnɛvɚ hɚd ðə wɚd bɪˈfɔr./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðæt ˈsɪmbəlz fɪks ˈspɛlɪŋ mɪˈsteɪks. sʌm ˈɪŋɡlɪʃ wɝdz lʊk ðə seɪm bʌt saʊnd ˈdɪfrənt, laɪk \"riːd\" (ˈprɛzənt) ænd \"rɛd\" (pæst). baɪ ˈlʊkɪŋ æt ðə fəˈnɛtɪk ˈsɪmbəlz ɪn ə ˈdɪkʃəˌnɛri, ə ˈlɝnɚ kæn si ðə ˈdɪfrəns ˈklɪrli. ðɪs hɛlps ˈstudənts spiːk mɔr ˈækjɚətli ænd fil mɔr prəˈfɛʃənəl./
+/ðə ˈsɛkənd pɔɪnt ɪz ðæt ˈsɪmbəlz fɪks ˈspɛlɪŋ mɪˈsteɪks. sʌm ˈɪŋɡlɪʃ wɚdz lʊk ðə seɪm bʌt saʊnd ˈdɪfrənt, laɪk \"riːd\" (ˈprɛzənt) ænd \"rɛd\" (pæst). baɪ ˈlʊkɪŋ æt ðə fəˈnɛtɪk ˈsɪmbəlz ɪn ə ˈdɪkʃəˌnɛri, ə ˈlɚnɚ kæn si ðə ˈdɪfrəns ˈklɪrli. ðɪs hɛlps ˈstudənts spiːk mɔr ˈækjɚətli ænd fil mɔr prəˈfɛʃənəl./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ˌɪndɪˈpɛndəns. wɛn ə ˈstudənt ˌʌndɚˈstændz fəˈnɛtɪk ˈsɪmbəlz, ðeɪ du nɑt ˈɔlweɪz nid ə ˈtiːtʃɚ tə tɛl ðɛm haʊ tə prəˈnaʊns ə wɝd. ðeɪ kæn juːz ə ˈdɪkʃəˌnɛri ɔr ən æp tə lɝn baɪ ðɛmˈsɛlvz. ðɪs meɪks ˈlɝnɪŋ ˈfæstɚ bɪˈkɔz ðə ˈstudənt kæn ˈpræktəs ˈɛniˌtaɪm ænd ˈɛniˌwɛr./
+/ðə ˈfaɪnəl pɔɪnt ɪz ˌɪndɪˈpɛndəns. wɛn ə ˈstudənt ˌʌndɚˈstændz fəˈnɛtɪk ˈsɪmbəlz, ðeɪ du nɑt ˈɔlweɪz nid ə ˈtiːtʃɚ tə tɛl ðɛm haʊ tə prəˈnaʊns ə wɚd. ðeɪ kæn juːz ə ˈdɪkʃəˌnɛri ɔr ən æp tə lɚn baɪ ðɛmˈsɛlvz. ðɪs meɪks ˈlɚnɪŋ ˈfæstɚ bɪˈkɔz ðə ˈstudənt kæn ˈpræktəs ˈɛniˌtaɪm ænd ˈɛniˌwɛr./
 
-/ɪn kənˈkluːʒən, fəˈnɛtɪk ˈsɪmbəlz ɑr ə ˈvaɪtəl tul fɔr ˈɛvri bɪˈɡɪnɚ. ðeɪ prəˈvaɪd ə klɪr ɡaɪd, sɑlv ˈspɛlɪŋ kənˈfjuːʒən, ænd meɪk ˈstudənts ˌɪndɪˈpɛndənt. ˈlɝnɪŋ ðiz ˈsɪmbəlz ɪz ðə bɛst weɪ tə ˈmæstɚ ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən ˈkwɪkli./`,
+/ɪn kənˈkluːʒən, fəˈnɛtɪk ˈsɪmbəlz ɑr ə ˈvaɪtəl tul fɔr ˈɛvri bɪˈɡɪnɚ. ðeɪ prəˈvaɪd ə klɪr ɡaɪd, sɑlv ˈspɛlɪŋ kənˈfjuːʒən, ænd meɪk ˈstudənts ˌɪndɪˈpɛndənt. ˈlɚnɪŋ ðiz ˈsɪmbəlz ɪz ðə bɛst weɪ tə ˈmæstɚ ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən ˈkwɪkli./`,
   },
   {
     id: 'understanding-word-stress',
@@ -84,15 +84,15 @@ The second point is that stress can change the meaning of a word. Sometimes, two
 The final point is about natural rhythm. Native speakers use stress to create a flow in their speech. If a student says every sound with the same power, they will sound like a robot. Using word stress helps students sound more like a real person and less like a computer. It makes the conversation feel comfortable for everyone.
 
 In conclusion, word stress is a key skill for speaking. It makes words clear, helps with meaning, and creates a natural rhythm. If a beginner practices stressing, their English will sound much better and more professional.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi du nɑt seɪ ˈɛvri pɑrt əv ə wɝd wɪð ðə seɪm ˈpaʊɚ. wi meɪk wʌn pɑrt ˈlaʊdɚ ænd ˈlɔŋɡɚ ðæn ði ˈʌðɚz. ðɪs ɪz kɔld wɝd strɛs. ɪt ɪz laɪk ðə ˈmjuzɪk ɔr ðə ˈrɪðəm əv ðə ˈlæŋɡwɪdʒ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈstrɛsɪŋ./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi du nɑt seɪ ˈɛvri pɑrt əv ə wɚd wɪð ðə seɪm ˈpaʊɚ. wi meɪk wʌn pɑrt ˈlaʊdɚ ænd ˈlɔŋɡɚ ðæn ði ˈʌðɚz. ðɪs ɪz kɔld wɚd strɛs. ɪt ɪz laɪk ðə ˈmjuzɪk ɔr ðə ˈrɪðəm əv ðə ˈlæŋɡwɪdʒ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈstrɛsɪŋ./
 
-/ðə fɝst pɔɪnt ɪz ðæt strɛs meɪks ə wɝd klɪr. ˈɛvri wɝd wɪð mɔr ðæn wʌn pɑrt (ˈsɪləbəl) hæz ə ˈstrɛst pɑrt. fɔr ɪɡˈzæmpəl, ɪn ðə wɝd \"ˈtiːtʃɚ,\" wi strɛs ðə fɝst pɑrt: ˈtiː-tʃɚ. ɪf wi strɛs ðə rɔŋ pɑrt, laɪk tiˈtʃɚ, ˈpipəl maɪt nɑt ˌʌndɚˈstænd ʌs. ˈstrɛsɪŋ hɛlps ˈlɪsənɚz hɪr ðə moʊst ɪmˈpɔrtənt pɑrt əv ðə wɝd./
+/ðə fɚst pɔɪnt ɪz ðæt strɛs meɪks ə wɚd klɪr. ˈɛvri wɚd wɪð mɔr ðæn wʌn pɑrt (ˈsɪləbəl) hæz ə ˈstrɛst pɑrt. fɔr ɪɡˈzæmpəl, ɪn ðə wɚd \"ˈtiːtʃɚ,\" wi strɛs ðə fɚst pɑrt: ˈtiː-tʃɚ. ɪf wi strɛs ðə rɔŋ pɑrt, laɪk tiˈtʃɚ, ˈpipəl maɪt nɑt ˌʌndɚˈstænd ʌs. ˈstrɛsɪŋ hɛlps ˈlɪsənɚz hɪr ðə moʊst ɪmˈpɔrtənt pɑrt əv ðə wɚd./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðæt strɛs kæn tʃeɪndʒ ðə ˈmiːnɪŋ əv ə wɝd. ˈsʌmˌtaɪmz, tuː wɝdz hæv ðə seɪm ˈlɛtɚz bʌt ˈdɪfrənt strɛs. fɔr ɪɡˈzæmpəl, \"ˈrɛkɚd\" (naʊn) ɪz ə θɪŋ, bʌt \"rɪˈkɔrd\" (vɝb) ɪz æn ˈækʃən. baɪ ˈlɝnɪŋ wɛr tə pʊt ðə strɛs, ˈstudənts kæn juːz ðə seɪm wɝd ɪn ˈdɪfrənt weɪz kəˈrɛktli./
+/ðə ˈsɛkənd pɔɪnt ɪz ðæt strɛs kæn tʃeɪndʒ ðə ˈmiːnɪŋ əv ə wɚd. ˈsʌmˌtaɪmz, tuː wɚdz hæv ðə seɪm ˈlɛtɚz bʌt ˈdɪfrənt strɛs. fɔr ɪɡˈzæmpəl, \"ˈrɛkɚd\" (naʊn) ɪz ə θɪŋ, bʌt \"rɪˈkɔrd\" (vɚb) ɪz æn ˈækʃən. baɪ ˈlɚnɪŋ wɛr tə pʊt ðə strɛs, ˈstudənts kæn juːz ðə seɪm wɚd ɪn ˈdɪfrənt weɪz kəˈrɛktli./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ˈnætʃrəl ˈrɪðəm. ˈneɪtɪv ˈspikɚz juːz strɛs tə kriˈeɪt ə floʊ ɪn ðɛr spiːtʃ. ɪf ə ˈstudənt sɛz ˈɛvri saʊnd wɪð ðə seɪm ˈpaʊɚ, ðeɪ wɪl saʊnd laɪk ə ˈroʊˌbɑt. ˈjuːzɪŋ wɝd strɛs hɛlps ˈstudənts saʊnd mɔr laɪk ə riːl ˈpɝsən ænd lɛs laɪk ə kəmˈpjutɚ. ɪt meɪks ðə ˌkɑnvɚˈseɪʃən fil ˈkʌmftɚbəl fɔr ˈɛvriˌwʌn./
+/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ˈnætʃrəl ˈrɪðəm. ˈneɪtɪv ˈspikɚz juːz strɛs tə kriˈeɪt ə floʊ ɪn ðɛr spiːtʃ. ɪf ə ˈstudənt sɛz ˈɛvri saʊnd wɪð ðə seɪm ˈpaʊɚ, ðeɪ wɪl saʊnd laɪk ə ˈroʊˌbɑt. ˈjuːzɪŋ wɚd strɛs hɛlps ˈstudənts saʊnd mɔr laɪk ə riːl ˈpɚsən ænd lɛs laɪk ə kəmˈpjutɚ. ɪt meɪks ðə ˌkɑnvɚˈseɪʃən fil ˈkʌmftɚbəl fɔr ˈɛvriˌwʌn./
 
-/ɪn kənˈkluːʒən, wɝd strɛs ɪz ə kiː skɪl fɔr ˈspiːkɪŋ. ɪt meɪks wɝdz klɪr, hɛlps wɪð ˈmiːnɪŋ, ænd kriˈeɪts ə ˈnætʃrəl ˈrɪðəm. ɪf ə bɪˈɡɪnɚ ˈpræktəsɪz ˈstrɛsɪŋ, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd mʌtʃ ˈbɛtɚ ænd mɔr prəˈfɛʃənəl./`,
+/ɪn kənˈkluːʒən, wɚd strɛs ɪz ə kiː skɪl fɔr ˈspiːkɪŋ. ɪt meɪks wɚdz klɪr, hɛlps wɪð ˈmiːnɪŋ, ænd kriˈeɪts ə ˈnætʃrəl ˈrɪðəm. ɪf ə bɪˈɡɪnɚ ˈpræktəsɪz ˈstrɛsɪŋ, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd mʌtʃ ˈbɛtɚ ænd mɔr prəˈfɛʃənəl./`,
   },
   {
     id: 'melody-of-english-intonation',
@@ -108,7 +108,7 @@ The final point is about understanding the message. Sometimes, a sentence can ha
 In conclusion, intonation is the melody of the English language. It expresses feelings, separates questions from facts, and ensures clear communication. For every beginner, practicing the "up and down" of the voice is a great way to sound like a natural speaker.`,
     phoneticText: `/wɛn wi spiːk, aʊɚ vɔɪs ɡoʊz ʌp ænd daʊn. ðɪs ˈmuvmənt ɪz kɔld ˌɪntəˈneɪʃən. ɪt ɪz nɑt əˈbaʊt wʌt wi seɪ, bʌt haʊ wi seɪ ɪt. ˌɪntəˈneɪʃən ɪz ˈvɛri ɪmˈpɔrtənt bɪˈkɔz ɪt ˈkæriz ðə ˈfilɪŋ əv ðə ˈspikɚ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˌɪntəˈneɪʃən./
 
-/ðə fɝst pɔɪnt ɪz ðæt ˌɪntəˈneɪʃən ʃoʊz aʊɚ ɪˈmoʊʃənz. fɔr ɪɡˈzæmpəl, ɪf aʊɚ vɔɪs ɡoʊz ʌp æt ði ɛnd əv ə ˈsɛntəns, wi maɪt saʊnd sɚˈpraɪzd ɔr ɪkˈsaɪtɪd. ɪf aʊɚ vɔɪs ɪz flæt, wi maɪt saʊnd bɔrd ɔr sæd. baɪ ˈtʃeɪndʒɪŋ ðə ˈmɛlədi əv aʊɚ vɔɪs, wi kæn tɛl ˈpipəl ɪf wi ɑr ˈhæpi, ˈæŋɡri, ɔr kənˈfjuzd wɪˈðaʊt ˈjuːzɪŋ ˈɛkstrə wɝdz./
+/ðə fɚst pɔɪnt ɪz ðæt ˌɪntəˈneɪʃən ʃoʊz aʊɚ ɪˈmoʊʃənz. fɔr ɪɡˈzæmpəl, ɪf aʊɚ vɔɪs ɡoʊz ʌp æt ði ɛnd əv ə ˈsɛntəns, wi maɪt saʊnd sɚˈpraɪzd ɔr ɪkˈsaɪtɪd. ɪf aʊɚ vɔɪs ɪz flæt, wi maɪt saʊnd bɔrd ɔr sæd. baɪ ˈtʃeɪndʒɪŋ ðə ˈmɛlədi əv aʊɚ vɔɪs, wi kæn tɛl ˈpipəl ɪf wi ɑr ˈhæpi, ˈæŋɡri, ɔr kənˈfjuzd wɪˈðaʊt ˈjuːzɪŋ ˈɛkstrə wɚdz./
 
 /ðə ˈsɛkənd pɔɪnt ɪz ðə ˈdɪfrəns bɪˈtwiːn ˈkwɛstʃənz ænd ˈsteɪtmənts. ɪn ˈɪŋɡlɪʃ, wi ˈjuːʒuəli muːv aʊɚ vɔɪs ʌp æt ði ɛnd əv ə \"jɛs/noʊ\" ˈkwɛstʃən (laɪk \"ɑr ju ˈhʌŋɡri?\"). haʊˈɛvɚ, fɔr ə ˈnɔrməl ˈsteɪtmənt (laɪk \"aɪ æm ˈhʌŋɡri\"), aʊɚ vɔɪs ˈjuːʒuəli ɡoʊz daʊn. ðɪs hɛlps ðə ˈlɪsənɚ noʊ ɪf wi wɑnt æn ˈænsɚ ɔr ɪf wi ɑr dʒʌst ˈɡɪvɪŋ ˌɪnfɚˈmeɪʃən./
 
@@ -128,15 +128,15 @@ The second point is the vibrating /z/ sound, like a bee. This is the most common
 The final point is the extra syllable /ɪz/. We use this after specific sounds like /sh/, /ch/, or /x/. For example, the word "bus" becomes "bus-es" and "watch" becomes "watch-es." This sound adds a small extra beat to the word. It is important because if we forget the extra syllable, the listener might not know if the word is plural or singular.
 
 In conclusion, the final -s/-es is not always the same. It can sound like a soft /s/, a buzzing /z/, or an extra /ɪz/. By learning these three rules, beginners can improve their grammar and pronunciation at the same time.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi ˈɔfən æd -s ɔr -əz tə ði ɛnd əv wɝdz. ðɪs ˈhæpənz wɛn wi tɔk əˈbaʊt mɔr ðæn wʌn θɪŋ ɔr wɛn wi juːz \"hi, ʃi, ɪt\" ɪn ə ˈsɛntəns. haʊˈɛvɚ, ðɪs ˈɛndɪŋ hæz θriː ˈdɪfrənt saʊndz. hɪr ɑr ðə θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðiz saʊndz./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi ˈɔfən æd -s ɔr -əz tə ði ɛnd əv wɚdz. ðɪs ˈhæpənz wɛn wi tɔk əˈbaʊt mɔr ðæn wʌn θɪŋ ɔr wɛn wi juːz \"hi, ʃi, ɪt\" ɪn ə ˈsɛntəns. haʊˈɛvɚ, ðɪs ˈɛndɪŋ hæz θriː ˈdɪfrənt saʊndz. hɪr ɑr ðə θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðiz saʊndz./
 
-/ðə fɝst pɔɪnt ɪz ðə sɔft /s/ saʊnd, laɪk ðə saʊnd əv ə sneɪk. wi juːz ðɪs saʊnd ˈæftɚ \"ˈvɔɪsləs\" ˈlɛtɚz wɛr aʊɚ θroʊt dʌz nɑt ˈvaɪbreɪt. fɔr ɪɡˈzæmpəl, ɪn wɝdz laɪk \"kæts,\" \"bʊks,\" ɔr \"mæps.\" ðə saʊnd ɪz ʃɔrt ænd ʃɑrp. ɪf ə ˈstudənt ˈpræktəsɪz ðɪs saʊnd, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd ˈvɛri klin ænd ˈækjɚət./
+/ðə fɚst pɔɪnt ɪz ðə sɔft /s/ saʊnd, laɪk ðə saʊnd əv ə sneɪk. wi juːz ðɪs saʊnd ˈæftɚ \"ˈvɔɪsləs\" ˈlɛtɚz wɛr aʊɚ θroʊt dʌz nɑt ˈvaɪbreɪt. fɔr ɪɡˈzæmpəl, ɪn wɚdz laɪk \"kæts,\" \"bʊks,\" ɔr \"mæps.\" ðə saʊnd ɪz ʃɔrt ænd ʃɑrp. ɪf ə ˈstudənt ˈpræktəsɪz ðɪs saʊnd, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd ˈvɛri klin ænd ˈækjɚət./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈvaɪbreɪtɪŋ /z/ saʊnd, laɪk ə biː. ðɪs ɪz ðə moʊst ˈkɑmən saʊnd fɔr -s. ɪt ˈhæpənz ˈæftɚ \"vɔɪst\" ˈlɛtɚz wɛr aʊɚ θroʊt muːvz. fɔr ɪɡˈzæmpəl, ɪn ðə wɝdz \"dɔɡz,\" \"pɛnz,\" ɔr \"triz.\" ˈmɛni bɪˈɡɪnɚz meɪk ə mɪˈsteɪk baɪ ˈjuːzɪŋ ə hɑrd /s/ saʊnd hɪr. ˈjuːzɪŋ ðə ˈbʌzɪŋ /z/ saʊnd meɪks ə ˈstudənt saʊnd mʌtʃ mɔr ˈnætʃrəl./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈvaɪbreɪtɪŋ /z/ saʊnd, laɪk ə biː. ðɪs ɪz ðə moʊst ˈkɑmən saʊnd fɔr -s. ɪt ˈhæpənz ˈæftɚ \"vɔɪst\" ˈlɛtɚz wɛr aʊɚ θroʊt muːvz. fɔr ɪɡˈzæmpəl, ɪn ðə wɚdz \"dɔɡz,\" \"pɛnz,\" ɔr \"triz.\" ˈmɛni bɪˈɡɪnɚz meɪk ə mɪˈsteɪk baɪ ˈjuːzɪŋ ə hɑrd /s/ saʊnd hɪr. ˈjuːzɪŋ ðə ˈbʌzɪŋ /z/ saʊnd meɪks ə ˈstudənt saʊnd mʌtʃ mɔr ˈnætʃrəl./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ði ˈɛkstrə ˈsɪləbəl /ɪz/. wi juːz ðɪs ˈæftɚ spəˈsɪfɪk saʊndz laɪk /ʃ/, /tʃ/, ɔr /ks/. fɔr ɪɡˈzæmpəl, ðə wɝd \"bʌs\" bɪˈkʌmz \"ˈbʌsɪz\" ænd \"wɑtʃ\" bɪˈkʌmz \"ˈwɑtʃɪz.\" ðɪs saʊnd ædz ə smɔl ˈɛkstrə bit tə ðə wɝd. ɪt ɪz ɪmˈpɔrtənt bɪˈkɔz ɪf wi fɚˈɡɛt ði ˈɛkstrə ˈsɪləbəl, ðə ˈlɪsənɚ maɪt nɑt noʊ ɪf ðə wɝd ɪz ˈplʊrəl ɔr ˈsɪŋɡjələr./
+/ðə ˈfaɪnəl pɔɪnt ɪz ði ˈɛkstrə ˈsɪləbəl /ɪz/. wi juːz ðɪs ˈæftɚ spəˈsɪfɪk saʊndz laɪk /ʃ/, /tʃ/, ɔr /ks/. fɔr ɪɡˈzæmpəl, ðə wɚd \"bʌs\" bɪˈkʌmz \"ˈbʌsɪz\" ænd \"wɑtʃ\" bɪˈkʌmz \"ˈwɑtʃɪz.\" ðɪs saʊnd ædz ə smɔl ˈɛkstrə bit tə ðə wɚd. ɪt ɪz ɪmˈpɔrtənt bɪˈkɔz ɪf wi fɚˈɡɛt ði ˈɛkstrə ˈsɪləbəl, ðə ˈlɪsənɚ maɪt nɑt noʊ ɪf ðə wɚd ɪz ˈplʊrəl ɔr ˈsɪŋɡjələr./
 
-/ɪn kənˈkluːʒən, ðə ˈfaɪnəl -s/-əz ɪz nɑt ˈɔlweɪz ðə seɪm. ɪt kæn saʊnd laɪk ə sɔft /s/, ə ˈbʌzɪŋ /z/, ɔr æn ˈɛkstrə /ɪz/. baɪ ˈlɝnɪŋ ðiz θriː rulz, bɪˈɡɪnɚz kæn ɪmˈpruv ðɛr ˈɡræmɚ ænd prəˌnʌnsiˈeɪʃən æt ðə seɪm taɪm./`,
+/ɪn kənˈkluːʒən, ðə ˈfaɪnəl -s/-əz ɪz nɑt ˈɔlweɪz ðə seɪm. ɪt kæn saʊnd laɪk ə sɔft /s/, ə ˈbʌzɪŋ /z/, ɔr æn ˈɛkstrə /ɪz/. baɪ ˈlɚnɪŋ ðiz θriː rulz, bɪˈɡɪnɚz kæn ɪmˈpruv ðɛr ˈɡræmɚ ænd prəˌnʌnsiˈeɪʃən æt ðə seɪm taɪm./`,
   },
   {
     id: 'three-sounds-final-ed',
@@ -150,13 +150,13 @@ The second point is the soft /d/ sound. This happens after "voiced" letters wher
 The final point is the extra syllable /ɪd/. We only use this when the word ends with the letters "t" or "d." For example, "wanted" becomes "wan-ted" and "needed" becomes "nee-ded." This is the only time we add an extra beat to the word. If a student says "walk-ed" instead of "walk-t," it can sound strange to a native speaker.
 
 In summary, the final -ed can be pronounced as a strong /t/, a soft /d/, or an extra /ɪd/. Understanding these three rules is very helpful for beginners. If students practice these sounds, they will speak about the past with clarity and confidence.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi æd -d ɔr -əd tə ði ɛnd əv ə vɝb tə ʃoʊ ðæt æn ˈækʃən ɪz ˈfɪnɪʃt. ˈmɛni bɪˈɡɪnɚz θɪŋk ðæt wi ˈɔlweɪz seɪ \"ɛd\" ˈklɪrli, bʌt ðæt ɪz nɑt kəˈrɛkt. ɪn riˈæləti, ðɪs ˈɛndɪŋ hæz θriː ˈdɪfrənt saʊndz. hɪr ɑr ðə θriː meɪn pɔɪnts tə rɪˈmɛmbɚ./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi æd -d ɔr -əd tə ði ɛnd əv ə vɚb tə ʃoʊ ðæt æn ˈækʃən ɪz ˈfɪnɪʃt. ˈmɛni bɪˈɡɪnɚz θɪŋk ðæt wi ˈɔlweɪz seɪ \"ɛd\" ˈklɪrli, bʌt ðæt ɪz nɑt kəˈrɛkt. ɪn riˈæləti, ðɪs ˈɛndɪŋ hæz θriː ˈdɪfrənt saʊndz. hɪr ɑr ðə θriː meɪn pɔɪnts tə rɪˈmɛmbɚ./
 
-/ðə fɝst pɔɪnt ɪz ðə strɔŋ /t/ saʊnd. wi juːz ðɪs saʊnd ˈæftɚ \"ˈvɔɪsləs\" ˈlɛtɚz laɪk /p/, /k/, /s/, ɔr /ʃ/. fɔr ɪɡˈzæmpəl, ðə wɝd \"wɔkt\" saʊndz laɪk \"wɔk-t\" ænd \"wɑʃt\" saʊndz laɪk \"wɑʃ-t.\" ˈivən ðoʊ wi raɪt \"ɛd,\" wi du nɑt juːz aʊɚ θroʊt tə meɪk ðə saʊnd. ðɪs ɪz ə ˈvɛri ˈkɑmən rul ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən./
+/ðə fɚst pɔɪnt ɪz ðə strɔŋ /t/ saʊnd. wi juːz ðɪs saʊnd ˈæftɚ \"ˈvɔɪsləs\" ˈlɛtɚz laɪk /p/, /k/, /s/, ɔr /ʃ/. fɔr ɪɡˈzæmpəl, ðə wɚd \"wɔkt\" saʊndz laɪk \"wɔk-t\" ænd \"wɑʃt\" saʊndz laɪk \"wɑʃ-t.\" ˈivən ðoʊ wi raɪt \"ɛd,\" wi du nɑt juːz aʊɚ θroʊt tə meɪk ðə saʊnd. ðɪs ɪz ə ˈvɛri ˈkɑmən rul ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə sɔft /d/ saʊnd. ðɪs ˈhæpənz ˈæftɚ \"vɔɪst\" ˈlɛtɚz wɛr aʊɚ θroʊt ˈvaɪbreɪts, sʌtʃ əz /l/, /n/, /r/, ɔr /v/. fɔr ɪɡˈzæmpəl, \"pleɪd\" saʊndz laɪk \"pleɪ-d\" ænd \"klind\" saʊndz laɪk \"klin-d.\" ðɪs saʊnd ɪz ˈvɛri smuːð ænd blɛndz wɪð ðə wɝd. ˈjuːzɪŋ ðə kəˈrɛkt /d/ saʊnd hɛlps ˈstudənts saʊnd mɔr ˈfluːənt ænd ˈnætʃrəl./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə sɔft /d/ saʊnd. ðɪs ˈhæpənz ˈæftɚ \"vɔɪst\" ˈlɛtɚz wɛr aʊɚ θroʊt ˈvaɪbreɪts, sʌtʃ əz /l/, /n/, /r/, ɔr /v/. fɔr ɪɡˈzæmpəl, \"pleɪd\" saʊndz laɪk \"pleɪ-d\" ænd \"klind\" saʊndz laɪk \"klin-d.\" ðɪs saʊnd ɪz ˈvɛri smuːð ænd blɛndz wɪð ðə wɚd. ˈjuːzɪŋ ðə kəˈrɛkt /d/ saʊnd hɛlps ˈstudənts saʊnd mɔr ˈfluːənt ænd ˈnætʃrəl./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ði ˈɛkstrə ˈsɪləbəl /ɪd/. wi ˈoʊnli juːz ðɪs wɛn ðə wɝd ɛndz wɪð ðə ˈlɛtɚz \"t\" ɔr \"d.\" fɔr ɪɡˈzæmpəl, \"ˈwɑntɪd\" bɪˈkʌmz \"wɑn-tɪd\" ænd \"ˈniːdɪd\" bɪˈkʌmz \"niː-dɪd.\" ðɪs ɪz ði ˈoʊnli taɪm wi æd æn ˈɛkstrə bit tə ðə wɝd. ɪf ə ˈstudənt sɛz \"wɔk-ɛd\" ɪnˈstɛd əv \"wɔk-t,\" ɪt kæn saʊnd streɪndʒ tə ə ˈneɪtɪv ˈspikɚ./
+/ðə ˈfaɪnəl pɔɪnt ɪz ði ˈɛkstrə ˈsɪləbəl /ɪd/. wi ˈoʊnli juːz ðɪs wɛn ðə wɚd ɛndz wɪð ðə ˈlɛtɚz \"t\" ɔr \"d.\" fɔr ɪɡˈzæmpəl, \"ˈwɑntɪd\" bɪˈkʌmz \"wɑn-tɪd\" ænd \"ˈniːdɪd\" bɪˈkʌmz \"niː-dɪd.\" ðɪs ɪz ði ˈoʊnli taɪm wi æd æn ˈɛkstrə bit tə ðə wɚd. ɪf ə ˈstudənt sɛz \"wɔk-ɛd\" ɪnˈstɛd əv \"wɔk-t,\" ɪt kæn saʊnd streɪndʒ tə ə ˈneɪtɪv ˈspikɚ./
 
 /ɪn ˈsʌmɚi, ðə ˈfaɪnəl -d kæn bi prəˈnaʊnst æz ə strɔŋ /t/, ə sɔft /d/, ɔr æn ˈɛkstrə /ɪd/. ˌʌndɚˈstændɪŋ ðiz θriː rulz ɪz ˈvɛri ˈhɛlpfəl fɔr bɪˈɡɪnɚz. ɪf ˈstudənts ˈpræktəs ðiz saʊndz, ðeɪ wɪl spiːk əˈbaʊt ðə pæst wɪð ˈklɛrəti ænd ˈkɑnfɪdəns./`,
   },
@@ -172,15 +172,15 @@ The second point is that it helps people hear the difference between similar wor
 The final point is that we use the Released T most often when we speak slowly or when a word is at the end of a sentence. For example, if you say "The coffee is hot," the "T" in "hot" should be released. Practicing this sound helps beginners feel more professional because their words do not sound "cut off" or incomplete.
 
 In conclusion, the Released T is a vital part of clear English. It creates a small explosion of air, separates words clearly, and is very useful for daily communication. If a beginner trains their tongue to release the "T," they will become much easier to understand.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ðə ˈlɛtɚ \"tiː\" ɪz ə ˈvɛri ɪmˈpɔrtənt saʊnd. wɛn ə \"tiː\" kʌmz æt ði ɛnd əv ə wɝd, wi ˈɔfən lɛt aʊt ə smɔl pʌf əv ɛr. ðɪs ɪz kɔld ə rɪˈlist tiː. hɪr ɑr θriː meɪn pɔɪnts waɪ ðɪs saʊnd ɪz ɪmˈpɔrtənt fɔr ˈɛvri ˈstudənt./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ðə ˈlɛtɚ \"tiː\" ɪz ə ˈvɛri ɪmˈpɔrtənt saʊnd. wɛn ə \"tiː\" kʌmz æt ði ɛnd əv ə wɚd, wi ˈɔfən lɛt aʊt ə smɔl pʌf əv ɛr. ðɪs ɪz kɔld ə rɪˈlist tiː. hɪr ɑr θriː meɪn pɔɪnts waɪ ðɪs saʊnd ɪz ɪmˈpɔrtənt fɔr ˈɛvri ˈstudənt./
 
-/ðə fɝst pɔɪnt ɪz ðæt ðə rɪˈlist tiː ɪz laɪk ə smɔl ɪkˈsploʊʒən. tə meɪk ðɪs saʊnd, ju pʊt jɔr tʌŋ bɪˈhaɪnd jɔr tɑp tiːθ ænd ðɛn rɪˈlis ði ɛr ˈkwɪkli. fɔr ɪɡˈzæmpəl, ɪn wɝdz laɪk \"kæt,\" \"hɑt,\" ɔr \"stɑp ɪt.\" ðɪs smɔl hɪs əv ɛr tɛlz ðə ˈlɪsənɚ ðæt ðə wɝd ɪz ˈfɪnɪʃt. ɪt meɪks jɔr ˈspiːkɪŋ saʊnd ˈvɛri klɪr ænd ʃɑrp./
+/ðə fɚst pɔɪnt ɪz ðæt ðə rɪˈlist tiː ɪz laɪk ə smɔl ɪkˈsploʊʒən. tə meɪk ðɪs saʊnd, ju pʊt jɔr tʌŋ bɪˈhaɪnd jɔr tɑp tiːθ ænd ðɛn rɪˈlis ði ɛr ˈkwɪkli. fɔr ɪɡˈzæmpəl, ɪn wɚdz laɪk \"kæt,\" \"hɑt,\" ɔr \"stɑp ɪt.\" ðɪs smɔl hɪs əv ɛr tɛlz ðə ˈlɪsənɚ ðæt ðə wɚd ɪz ˈfɪnɪʃt. ɪt meɪks jɔr ˈspiːkɪŋ saʊnd ˈvɛri klɪr ænd ʃɑrp./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðæt ɪt hɛlps ˈpipəl hɪr ðə ˈdɪfrəns bɪˈtwiːn ˈsɪmələr wɝdz. ɪf wi du nɑt rɪˈlis ðə \"tiː,\" ə wɝd laɪk \"hæt\" maɪt saʊnd laɪk \"hæd\" ɔr \"hæm.\" baɪ rɪˈlisɪŋ ðə \"tiː\" saʊnd, ju ɡɪv ə klɪr ˈsɪɡnəl tə ðə ˈlɪsənɚ. ðɪs ɪz ə ˈbeɪsɪk ˈfɪzɪkəl skɪl ðæt prɪˈvɛnts kənˈfjuːʒən ˈdʊrɪŋ ə ˌkɑnvɚˈseɪʃən./
+/ðə ˈsɛkənd pɔɪnt ɪz ðæt ɪt hɛlps ˈpipəl hɪr ðə ˈdɪfrəns bɪˈtwiːn ˈsɪmələr wɚdz. ɪf wi du nɑt rɪˈlis ðə \"tiː,\" ə wɚd laɪk \"hæt\" maɪt saʊnd laɪk \"hæd\" ɔr \"hæm.\" baɪ rɪˈlisɪŋ ðə \"tiː\" saʊnd, ju ɡɪv ə klɪr ˈsɪɡnəl tə ðə ˈlɪsənɚ. ðɪs ɪz ə ˈbeɪsɪk ˈfɪzɪkəl skɪl ðæt prɪˈvɛnts kənˈfjuːʒən ˈdʊrɪŋ ə ˌkɑnvɚˈseɪʃən./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt wi juːz ðə rɪˈlist tiː moʊst ˈɔfən wɛn wi spiːk ˈsloʊli ɔr wɛn ə wɝd ɪz æt ði ɛnd əv ə ˈsɛntəns. fɔr ɪɡˈzæmpəl, ɪf ju seɪ \"ðə ˈkɔfi ɪz hɑt,\" ðə \"tiː\" ɪn \"hɑt\" ʃʊd bi rɪˈlist. ˈpræktəsɪŋ ðɪs saʊnd hɛlps bɪˈɡɪnɚz fil mɔr prəˈfɛʃənəl bɪˈkɔz ðɛr wɝdz du nɑt saʊnd \"kʌt ɔf\" ɔr ˌɪnkəmˈplit./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt wi juːz ðə rɪˈlist tiː moʊst ˈɔfən wɛn wi spiːk ˈsloʊli ɔr wɛn ə wɚd ɪz æt ði ɛnd əv ə ˈsɛntəns. fɔr ɪɡˈzæmpəl, ɪf ju seɪ \"ðə ˈkɔfi ɪz hɑt,\" ðə \"tiː\" ɪn \"hɑt\" ʃʊd bi rɪˈlist. ˈpræktəsɪŋ ðɪs saʊnd hɛlps bɪˈɡɪnɚz fil mɔr prəˈfɛʃənəl bɪˈkɔz ðɛr wɚdz du nɑt saʊnd \"kʌt ɔf\" ɔr ˌɪnkəmˈplit./
 
-/ɪn kənˈkluːʒən, ðə rɪˈlist tiː ɪz ə ˈvaɪtəl pɑrt əv klɪr ˈɪŋɡlɪʃ. ɪt kriˈeɪts ə smɔl ɪkˈsploʊʒən əv ɛr, ˈsɛpəˌreɪts wɝdz ˈklɪrli, ænd ɪz ˈvɛri ˈjuːsfəl fɔr ˈdeɪli kəˌmjunəˈkeɪʃən. ɪf ə bɪˈɡɪnɚ treɪnz ðɛr tʌŋ tə rɪˈlis ðə \"tiː,\" ðeɪ wɪl bɪˈkʌm mʌtʃ ˈiːziɚ tə ˌʌndɚˈstænd./`,
+/ɪn kənˈkluːʒən, ðə rɪˈlist tiː ɪz ə ˈvaɪtəl pɑrt əv klɪr ˈɪŋɡlɪʃ. ɪt kriˈeɪts ə smɔl ɪkˈsploʊʒən əv ɛr, ˈsɛpəˌreɪts wɚdz ˈklɪrli, ænd ɪz ˈvɛri ˈjuːsfəl fɔr ˈdeɪli kəˌmjunəˈkeɪʃən. ɪf ə bɪˈɡɪnɚ treɪnz ðɛr tʌŋ tə rɪˈlis ðə \"tiː,\" ðeɪ wɪl bɪˈkʌm mʌtʃ ˈiːziɚ tə ˌʌndɚˈstænd./`,
   },
   {
     id: 'released-t-at-the-end',
@@ -194,15 +194,15 @@ The second point is using the Released T at the end of a sentence. When a word w
 The final point is that the Released T is a physical exercise. To make this sound correctly, your tongue must touch the top of your mouth and then move away quickly. This is what we call "Physical Movement." By practicing this movement, students train their mouth to be more active. This makes all of their English speaking sound stronger and more confident.
 
 In conclusion, the Released T at the end is a simple but powerful skill. It helps finish words, creates clarity in sentences, and trains the mouth. If a learner focuses on this small sound, they will sound much more like a professional English speaker.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ˈmɛni wɝdz ɛnd wɪð ðə ˈlɛtɚ \"tiː.\" tə spiːk ˈklɪrli, wi mʌst ˈɔfən rɪˈlis ðɪs saʊnd æt ðə ˈvɛri ɛnd əv ə wɝd ɔr ˈsɛntəns. ðɪs minz wi lɛt ə smɔl əˈmaʊnt əv ɛr kʌm aʊt əv aʊɚ maʊθ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈjuːzɪŋ ðə rɪˈlist tiː æt ði ɛnd./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ˈmɛni wɚdz ɛnd wɪð ðə ˈlɛtɚ \"tiː.\" tə spiːk ˈklɪrli, wi mʌst ˈɔfən rɪˈlis ðɪs saʊnd æt ðə ˈvɛri ɛnd əv ə wɚd ɔr ˈsɛntəns. ðɪs minz wi lɛt ə smɔl əˈmaʊnt əv ɛr kʌm aʊt əv aʊɚ maʊθ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈjuːzɪŋ ðə rɪˈlist tiː æt ði ɛnd./
 
-/ðə fɝst pɔɪnt ɪz ðæt ðə rɪˈlist tiː ækts æz ə ˈstɑpɚ. ɪt tɛlz ðə ˈlɪsənɚ ðæt ðə wɝd ɪz ˈfɪnɪʃt. fɔr ɪɡˈzæmpəl, wɛn wi seɪ \"weɪt,\" \"kæt,\" ɔr \"əˈpɑrtmənt,\" wi rɪˈlis ə ˈtaɪni pʌf əv ɛr. wɪˈðaʊt ðɪs saʊnd, ðə wɝd maɪt saʊnd ˌɪnkəmˈplit. ðɪs ɪz ə ˈvɛri ɪmˈpɔrtənt ˈhæbɪt fɔr bɪˈɡɪnɚz tə bɪld soʊ ðeɪ saʊnd mɔr ˈækjɚət./
+/ðə fɚst pɔɪnt ɪz ðæt ðə rɪˈlist tiː ækts æz ə ˈstɑpɚ. ɪt tɛlz ðə ˈlɪsənɚ ðæt ðə wɚd ɪz ˈfɪnɪʃt. fɔr ɪɡˈzæmpəl, wɛn wi seɪ \"weɪt,\" \"kæt,\" ɔr \"əˈpɑrtmənt,\" wi rɪˈlis ə ˈtaɪni pʌf əv ɛr. wɪˈðaʊt ðɪs saʊnd, ðə wɚd maɪt saʊnd ˌɪnkəmˈplit. ðɪs ɪz ə ˈvɛri ɪmˈpɔrtənt ˈhæbɪt fɔr bɪˈɡɪnɚz tə bɪld soʊ ðeɪ saʊnd mɔr ˈækjɚət./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ˈjuːzɪŋ ðə rɪˈlist tiː æt ði ɛnd əv ə ˈsɛntəns. wɛn ə wɝd wɪð \"tiː\" ɪz ðə læst wɝd wi seɪ, wi ˈjuːʒuəli rɪˈlis ðə saʊnd tə bi ˈɛkstrə klɪr. fɔr ˈɪnstəns, ɪn ðə ˈsɛntəns \"aɪ æm æt bæt,\" ðə læst \"tiː\" ɪz laʊd ænd klɪr. ðɪs hɛlps ðə ˈpɝsən ˈlɪsənɪŋ tə ju ˌʌndɚˈstænd ɪɡˈzæktli wɛr jɔr ˈsɛntəns stɑps./
+/ðə ˈsɛkənd pɔɪnt ɪz ˈjuːzɪŋ ðə rɪˈlist tiː æt ði ɛnd əv ə ˈsɛntəns. wɛn ə wɚd wɪð \"tiː\" ɪz ðə læst wɚd wi seɪ, wi ˈjuːʒuəli rɪˈlis ðə saʊnd tə bi ˈɛkstrə klɪr. fɔr ˈɪnstəns, ɪn ðə ˈsɛntəns \"aɪ æm æt bæt,\" ðə læst \"tiː\" ɪz laʊd ænd klɪr. ðɪs hɛlps ðə ˈpɚsən ˈlɪsənɪŋ tə ju ˌʌndɚˈstænd ɪɡˈzæktli wɛr jɔr ˈsɛntəns stɑps./
 
 /ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðə rɪˈlist tiː ɪz ə ˈfɪzɪkəl ˈɛksɚˌsaɪz. tə meɪk ðɪs saʊnd kəˈrɛktli, jɔr tʌŋ mʌst tʌtʃ ðə tɑp əv jɔr maʊθ ænd ðɛn muːv əˈweɪ ˈkwɪkli. ðɪs ɪz wʌt wi kɔl \"ˈfɪzɪkəl ˈmuvmənt.\" baɪ ˈpræktəsɪŋ ðɪs ˈmuvmənt, ˈstudənts treɪn ðɛr maʊθ tə bi mɔr ˈæktɪv. ðɪs meɪks ɔl əv ðɛr ˈɪŋɡlɪʃ ˈspiːkɪŋ saʊnd ˈstrɔŋɡɚ ænd mɔr ˈkɑnfɪdənt./
 
-/ɪn kənˈkluːʒən, ðə rɪˈlist tiː æt ði ɛnd ɪz ə ˈsɪmpəl bʌt ˈpaʊɚfəl skɪl. ɪt hɛlps ˈfɪnɪʃ wɝdz, kriˈeɪts ˈklɛrəti ɪn ˈsɛntənsɪz, ænd treɪnz ðə maʊθ. ɪf ə ˈlɝnɚ ˈfoʊkəsɪz ɑn ðɪs smɔl saʊnd, ðeɪ wɪl saʊnd mʌtʃ mɔr laɪk ə prəˈfɛʃənəl ˈɪŋɡlɪʃ ˈspikɚ./`,
+/ɪn kənˈkluːʒən, ðə rɪˈlist tiː æt ði ɛnd ɪz ə ˈsɪmpəl bʌt ˈpaʊɚfəl skɪl. ɪt hɛlps ˈfɪnɪʃ wɚdz, kriˈeɪts ˈklɛrəti ɪn ˈsɛntənsɪz, ænd treɪnz ðə maʊθ. ɪf ə ˈlɚnɚ ˈfoʊkəsɪz ɑn ðɪs smɔl saʊnd, ðeɪ wɪl saʊnd mʌtʃ mɔr laɪk ə prəˈfɛʃənəl ˈɪŋɡlɪʃ ˈspikɚ./`,
   },
   {
     id: 'held-t-and-glottal-stop',
@@ -218,13 +218,13 @@ The final point is that using a Held T helps students sound more natural. If you
 In conclusion, the Held T and Glottal Stop are about stopping the sound instead of releasing it. It is a natural habit that makes English sound smooth and fluent. If a beginner learns how to "hold" their sounds, they will understand fast English much better.`,
     phoneticText: `/ɪn ˈnætʃrəl ˈɪŋɡlɪʃ ˌkɑnvɚˈseɪʃən, ˈspikɚz du nɑt ˈɔlweɪz rɪˈlis ðə \"tiː\" saʊnd wɪð ɛr. ˈsʌmˌtaɪmz, ðeɪ stɑp ðə saʊnd ˈkwɪkli. ðɪs ɪz kɔld ə hɛld tiː ɔr ə ˈɡlɑɾəl stɑp. ɪt ɪz ˈvɛri ˈkɑmən ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ. hɪr ɑr θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðɪs saʊnd./
 
-/ðə fɝst pɔɪnt ɪz ðæt ə hɛld tiː minz wi stɑp ði ɛr ɪn aʊɚ θroʊt ɔr wɪð aʊɚ tʌŋ. ɪnˈstɛd əv ˈlɛtɪŋ ði ɛr aʊt (laɪk æn ɪkˈsploʊʒən), wi kiːp ɪt ɪnˈsaɪd. fɔr ɪɡˈzæmpəl, ɪn ðə wɝd \"pʊt\" ɔr \"it,\" ðə saʊnd ɛndz ˈvɛri ˈkwɪkli. ɪt saʊndz laɪk ðə wɝd ɪz \"kʌt ʃɔrt.\" ðɪs ɪz ə ˈvɛri ˈnætʃrəl weɪ fɔr ˈneɪtɪv ˈspikɚz tə tɔk wɛn ðeɪ ɑr ˈspiːkɪŋ fæst./
+/ðə fɚst pɔɪnt ɪz ðæt ə hɛld tiː minz wi stɑp ði ɛr ɪn aʊɚ θroʊt ɔr wɪð aʊɚ tʌŋ. ɪnˈstɛd əv ˈlɛtɪŋ ði ɛr aʊt (laɪk æn ɪkˈsploʊʒən), wi kiːp ɪt ɪnˈsaɪd. fɔr ɪɡˈzæmpəl, ɪn ðə wɚd \"pʊt\" ɔr \"it,\" ðə saʊnd ɛndz ˈvɛri ˈkwɪkli. ɪt saʊndz laɪk ðə wɚd ɪz \"kʌt ʃɔrt.\" ðɪs ɪz ə ˈvɛri ˈnætʃrəl weɪ fɔr ˈneɪtɪv ˈspikɚz tə tɔk wɛn ðeɪ ɑr ˈspiːkɪŋ fæst./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈɡlɑɾəl stɑp. ðɪs ɪz ə ˈspɛʃəl weɪ tə stɑp ðə saʊnd ˈjuːzɪŋ ˈoʊnli ðə θroʊt. wi ˈɔfən juːz ðɪs fɔr wɝdz ðæt ɛnd ɪn \"-t\" ɔr \"-nt,\" laɪk \"ˈmaʊʔn,\" \"ˈbʌʔn,\" ɔr ˈivən ðə wɝd \"kæʔnt.\" ɪt saʊndz laɪk ə ˈtaɪni kætʃ ɪn jɔr vɔɪs. ˈlɝnɪŋ ðɪs hɛlps ˈstudənts ˌʌndɚˈstænd waɪ ˈneɪtɪv ˈspikɚz saʊnd ˈdɪfrənt frəm ə ˈtɛkstˌbʊk./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈɡlɑɾəl stɑp. ðɪs ɪz ə ˈspɛʃəl weɪ tə stɑp ðə saʊnd ˈjuːzɪŋ ˈoʊnli ðə θroʊt. wi ˈɔfən juːz ðɪs fɔr wɚdz ðæt ɛnd ɪn \"-t\" ɔr \"-nt,\" laɪk \"ˈmaʊʔn,\" \"ˈbʌʔn,\" ɔr ˈivən ðə wɚd \"kæʔnt.\" ɪt saʊndz laɪk ə ˈtaɪni kætʃ ɪn jɔr vɔɪs. ˈlɚnɪŋ ðɪs hɛlps ˈstudənts ˌʌndɚˈstænd waɪ ˈneɪtɪv ˈspikɚz saʊnd ˈdɪfrənt frəm ə ˈtɛkstˌbʊk./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈjuːzɪŋ ə hɛld tiː hɛlps ˈstudənts saʊnd mɔr ˈnætʃrəl. ɪf ju rɪˈlis ˈɛvri \"tiː\" saʊnd æt ði ɛnd əv ˈɛvri wɝd, ju maɪt saʊnd tuː ˈfɔrməl ɔr laɪk ə ˈroʊˌbɑt. baɪ ˈjuːzɪŋ ə hɛld tiː ɪn ˈdeɪli ˈsɛntənsɪz, laɪk \"aɪ fɚˈɡɑt ɪt,\" jɔr ˈɪŋɡlɪʃ floʊz ˈbɛtɚ. ɪt meɪks jɔr ˈspiːkɪŋ fil ˈsmuðɚ ænd ˈiːziɚ fɔr ˈʌðɚz tə ˈlɪsən tu./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈjuːzɪŋ ə hɛld tiː hɛlps ˈstudənts saʊnd mɔr ˈnætʃrəl. ɪf ju rɪˈlis ˈɛvri \"tiː\" saʊnd æt ði ɛnd əv ˈɛvri wɚd, ju maɪt saʊnd tuː ˈfɔrməl ɔr laɪk ə ˈroʊˌbɑt. baɪ ˈjuːzɪŋ ə hɛld tiː ɪn ˈdeɪli ˈsɛntənsɪz, laɪk \"aɪ fɚˈɡɑt ɪt,\" jɔr ˈɪŋɡlɪʃ floʊz ˈbɛtɚ. ɪt meɪks jɔr ˈspiːkɪŋ fil ˈsmuðɚ ænd ˈiːziɚ fɔr ˈʌðɚz tə ˈlɪsən tu./
 
-/ɪn kənˈkluːʒən, ðə hɛld tiː ænd ˈɡlɑɾəl stɑp ɑr əˈbaʊt ˈstɑpɪŋ ðə saʊnd ɪnˈstɛd əv rɪˈlisɪŋ ɪt. ɪt ɪz ə ˈnætʃrəl ˈhæbɪt ðæt meɪks ˈɪŋɡlɪʃ saʊnd smuːð ænd ˈfluːənt. ɪf ə bɪˈɡɪnɚ lɝnz haʊ tə \"hoʊld\" ðɛr saʊndz, ðeɪ wɪl ˌʌndɚˈstænd fæst ˈɪŋɡlɪʃ mʌtʃ ˈbɛtɚ./`,
+/ɪn kənˈkluːʒən, ðə hɛld tiː ænd ˈɡlɑɾəl stɑp ɑr əˈbaʊt ˈstɑpɪŋ ðə saʊnd ɪnˈstɛd əv rɪˈlisɪŋ ɪt. ɪt ɪz ə ˈnætʃrəl ˈhæbɪt ðæt meɪks ˈɪŋɡlɪʃ saʊnd smuːð ænd ˈfluːənt. ɪf ə bɪˈɡɪnɚ lɚnz haʊ tə \"hoʊld\" ðɛr saʊndz, ðeɪ wɪl ˌʌndɚˈstænd fæst ˈɪŋɡlɪʃ mʌtʃ ˈbɛtɚ./`,
   },
   {
     id: 'secret-of-silent-t',
@@ -240,13 +240,13 @@ The final point is that the Silent T helps with the flow of the language. Englis
 In conclusion, the Silent T is an important part of English pronunciation. It often happens after the letter N, exists in fixed words, and helps the flow of speech. If a beginner understands these rules, they will find it much easier to understand movies and native speakers.`,
     phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi ˈjuːʒuəli seɪ ˈɛvri ˈlɛtɚ wi siː. haʊˈɛvɚ, ˈsʌmˌtaɪmz ðə ˈlɛtɚ \"tiː\" ɪz ˈsaɪlənt. ðɪs minz wi raɪt ðə ˈlɛtɚ, bʌt wi du nɑt meɪk ˈɛni saʊnd. ˌʌndɚˈstændɪŋ ðə ˈsaɪlənt tiː ɪz ə ɡreɪt weɪ tə saʊnd mɔr laɪk ə ˈneɪtɪv ˈspikɚ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ðɪs ˈsiːkrət saʊnd./
 
-/ðə fɝst pɔɪnt ɪz ðæt ðə \"tiː\" ˈɔfən ˌdɪsəˈpɪrz wɛn ɪt kʌmz ˈæftɚ ðə ˈlɛtɚ \"ɛn.\" ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ, ˈmɛni ˈpipəl du nɑt seɪ ðə \"tiː\" ɪn wɝdz laɪk \"ˈɪntɚˌnɛt,\" \"ˈsɛntɚ,\" ɔr \"ˈtwɛni.\" ɪnˈstɛd, ðeɪ seɪ \"ˈɪnɚˌnɛt\" ɔr \"ˈsɛnɚ.\" ðɪs ˈhæpənz bɪˈkɔz ðə \"ɛn\" ænd \"tiː\" ɑr ɪn ðə seɪm pəˈzɪʃən ɪn ðə maʊθ, soʊ ˈspikɚz skɪp ðə \"tiː\" tə spiːk ˈfæstɚ./
+/ðə fɚst pɔɪnt ɪz ðæt ðə \"tiː\" ˈɔfən ˌdɪsəˈpɪrz wɛn ɪt kʌmz ˈæftɚ ðə ˈlɛtɚ \"ɛn.\" ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ, ˈmɛni ˈpipəl du nɑt seɪ ðə \"tiː\" ɪn wɚdz laɪk \"ˈɪntɚˌnɛt,\" \"ˈsɛntɚ,\" ɔr \"ˈtwɛni.\" ɪnˈstɛd, ðeɪ seɪ \"ˈɪnɚˌnɛt\" ɔr \"ˈsɛnɚ.\" ðɪs ˈhæpənz bɪˈkɔz ðə \"ɛn\" ænd \"tiː\" ɑr ɪn ðə seɪm pəˈzɪʃən ɪn ðə maʊθ, soʊ ˈspikɚz skɪp ðə \"tiː\" tə spiːk ˈfæstɚ./
 
-/ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt fɪkst ˈsaɪlənt ˈlɛtɚz ɪn oʊld ˈɪŋɡlɪʃ wɝdz. sʌm wɝdz hæv ə \"tiː\" ðæt ɪz ˈɔlweɪz ˈsaɪlənt, noʊ ˈmætɚ haʊ sloʊ ju spiːk. fɔr ɪɡˈzæmpəl, ɪn ðə wɝdz \"ˈlɪsən,\" \"ˈkæsəl,\" ænd \"ˈwɪsəl.\" ɪn ðiz wɝdz, ðə \"tiː\" ɪz kəmˈplitli ˈkwaɪət. ˈstudənts mʌst ˈmɛmɚaɪz ðiz ˈspɛʃəl wɝdz soʊ ðeɪ du nɑt meɪk mɪˈsteɪks wɛn ˈriːdɪŋ aʊt laʊd./
+/ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt fɪkst ˈsaɪlənt ˈlɛtɚz ɪn oʊld ˈɪŋɡlɪʃ wɚdz. sʌm wɚdz hæv ə \"tiː\" ðæt ɪz ˈɔlweɪz ˈsaɪlənt, noʊ ˈmætɚ haʊ sloʊ ju spiːk. fɔr ɪɡˈzæmpəl, ɪn ðə wɚdz \"ˈlɪsən,\" \"ˈkæsəl,\" ænd \"ˈwɪsəl.\" ɪn ðiz wɚdz, ðə \"tiː\" ɪz kəmˈplitli ˈkwaɪət. ˈstudənts mʌst ˈmɛmɚaɪz ðiz ˈspɛʃəl wɚdz soʊ ðeɪ du nɑt meɪk mɪˈsteɪks wɛn ˈriːdɪŋ aʊt laʊd./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðə ˈsaɪlənt tiː hɛlps wɪð ðə floʊ əv ðə ˈlæŋɡwɪdʒ. ˈɪŋɡlɪʃ ɪz ə ˈlæŋɡwɪdʒ ðæt laɪks tə muːv ˈkwɪkli frəm wʌn saʊnd tə ðə nɛkst. baɪ nɑt ˈseɪɪŋ ðə \"tiː,\" ðə wɝdz bɪˈkʌm ˈsɔftɚ ænd ˈiːziɚ tə kəˈnɛkt. ðɪs ɪz pɑrt əv \"ˈnætʃrəl spiːtʃ.\" wɛn ə ˈstudənt lɝnz wɪtʃ \"tiː\" tə kip ænd wɪtʃ \"tiː\" tə haɪd, ðɛr ˈɪŋɡlɪʃ saʊndz mʌtʃ ˈsmuðɚ./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðə ˈsaɪlənt tiː hɛlps wɪð ðə floʊ əv ðə ˈlæŋɡwɪdʒ. ˈɪŋɡlɪʃ ɪz ə ˈlæŋɡwɪdʒ ðæt laɪks tə muːv ˈkwɪkli frəm wʌn saʊnd tə ðə nɛkst. baɪ nɑt ˈseɪɪŋ ðə \"tiː,\" ðə wɚdz bɪˈkʌm ˈsɔftɚ ænd ˈiːziɚ tə kəˈnɛkt. ðɪs ɪz pɑrt əv \"ˈnætʃrəl spiːtʃ.\" wɛn ə ˈstudənt lɚnz wɪtʃ \"tiː\" tə kip ænd wɪtʃ \"tiː\" tə haɪd, ðɛr ˈɪŋɡlɪʃ saʊndz mʌtʃ ˈsmuðɚ./
 
-/ɪn kənˈkluːʒən, ðə ˈsaɪlənt tiː ɪz æn ɪmˈpɔrtənt pɑrt əv ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən. ɪt ˈɔfən ˈhæpənz ˈæftɚ ðə ˈlɛtɚ \"ɛn,\" ɪɡˈzɪsts ɪn fɪkst wɝdz, ænd hɛlps ðə floʊ əv spiːtʃ. ɪf ə bɪˈɡɪnɚ ˌʌndɚˈstændz ðiz rulz, ðeɪ wɪl faɪnd ɪt mʌtʃ ˈiːziɚ tə ˌʌndɚˈstænd ˈmuviz ænd ˈneɪtɪv ˈspikɚz./`,
+/ɪn kənˈkluːʒən, ðə ˈsaɪlənt tiː ɪz æn ɪmˈpɔrtənt pɑrt əv ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən. ɪt ˈɔfən ˈhæpənz ˈæftɚ ðə ˈlɛtɚ \"ɛn,\" ɪɡˈzɪsts ɪn fɪkst wɚdz, ænd hɛlps ðə floʊ əv spiːtʃ. ɪf ə bɪˈɡɪnɚ ˌʌndɚˈstændz ðiz rulz, ðeɪ wɪl faɪnd ɪt mʌtʃ ˈiːziɚ tə ˌʌndɚˈstænd ˈmuviz ænd ˈneɪtɪv ˈspikɚz./`,
   },
   {
     id: 'american-flap-t',
@@ -262,7 +262,7 @@ The final point is that the Flap T is the secret to a natural American accent. I
 In conclusion, the Flap T is a special sound that makes "T" sound like a soft "D". It depends on the tongue movement and is a key part of American English. If a beginner practices this sound, they will sound much more natural and fluent when they speak.`,
     phoneticText: `/ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ, ðə ˈlɛtɚ \"tiː\" ˈɔfən ˈtʃeɪndʒɪz ɪts saʊnd. wɛn ə \"tiː\" ɪz bɪˈtwiːn tuː ˈvaʊəl saʊndz, ɪt dʌz nɑt saʊnd laɪk ə ʃɑrp \"tiː.\" ɪnˈstɛd, ɪt saʊndz laɪk ə ˈvɛri fæst ænd laɪt \"diː.\" ðɪs ɪz kɔld ðə flæp tiː. hɪr ɑr θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðɪs saʊnd./
 
-/ðə fɝst pɔɪnt ɪz ðæt ðə flæp tiː saʊndz laɪk ə sɔft \"diː.\" fɔr ɪɡˈzæmpəl, ɪn ðə wɝd \"ˈwɔɾɚ,\" əˈmɛrɪkənz du nɑt seɪ \"wɔ-tɚ\" wɪð ə ʃɑrp \"tiː.\" ðeɪ seɪ \"ˈwɔɾɚ.\" ˈʌðɚ ˈkɑmən wɝdz ɑr \"ˈbɛɾɚ,\" \"ˈsɪɾi,\" ænd \"ˈpɑrɾi.\" baɪ ˈtʃeɪndʒɪŋ ðə \"tiː\" tə ə laɪt \"diː,\" ðə wɝd bɪˈkʌmz mʌtʃ ˈiːziɚ ænd ˈfæstɚ tə seɪ./
+/ðə fɚst pɔɪnt ɪz ðæt ðə flæp tiː saʊndz laɪk ə sɔft \"diː.\" fɔr ɪɡˈzæmpəl, ɪn ðə wɚd \"ˈwɔɾɚ,\" əˈmɛrɪkənz du nɑt seɪ \"wɔ-tɚ\" wɪð ə ʃɑrp \"tiː.\" ðeɪ seɪ \"ˈwɔɾɚ.\" ˈʌðɚ ˈkɑmən wɚdz ɑr \"ˈbɛɾɚ,\" \"ˈsɪɾi,\" ænd \"ˈpɑrɾi.\" baɪ ˈtʃeɪndʒɪŋ ðə \"tiː\" tə ə laɪt \"diː,\" ðə wɚd bɪˈkʌmz mʌtʃ ˈiːziɚ ænd ˈfæstɚ tə seɪ./
 
 /ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt ðə ˈfɪzɪkəl ˈmuvmənt əv ðə tʌŋ. tə meɪk ə flæp tiː, ðə tʌŋ \"flæps\" ɔr hɪts ðə tɑp əv ðə maʊθ ˈvɛri ˈkwɪkli. ɪt ɪz mʌtʃ ˈsɔftɚ ðæn ə ˈrɛɡjələr \"diː.\" ðɪs ɪz ə ˈfɪzɪkəl skɪl ðæt ˈstudənts mʌst ˈpræktəs. ɪt ɪz laɪk ə kwɪk baʊns əv ðə tʌŋ. ðɪs ˈmuvmənt hɛlps ðə ˈspikɚ muːv frəm wʌn ˈvaʊəl tə ðə nɛkst wɪˈðaʊt ˈstɑpɪŋ./
 
@@ -282,15 +282,15 @@ The second point is about the origin of the language. Many years ago, people act
 The final point is that silent letters help you read and write accurately. Even though we do not say the letter, we still need to write it. For example, "Write" (menulis) and "Right" (benar) sound exactly the same, but the silent "W" tells us the meaning is about using a pen. Learning these letters helps students become better at both spelling and speaking at the same time.
 
 In conclusion, Silent Letters are a "mystery" that every beginner must solve. They are hidden sounds, they have a long history, and they help with clear reading. If a student practices these special words, they will feel much more confident when talking to others.`,
-    phoneticText: `/ˈɪŋɡlɪʃ ˈspɛlɪŋ kæn bi ˈvɛri kənˈfjuzɪŋ fɔr bɪˈɡɪnɚz. wʌn əv ðə ˈbɪɡəst ˈtʃælɪndʒɪz ɪz ˈsaɪlənt ˈlɛtɚz. ðiz ɑr ˈlɛtɚz ðæt wi si ɪn ə wɝd, bʌt wi du nɑt seɪ ðɛm æt ɔl. hɪr ɑr θriː meɪn pɔɪnts tə hɛlp ju ˌʌndɚˈstænd waɪ ðeɪ ɪɡˈzɪst ænd haʊ tə juːz ðɛm./
+    phoneticText: `/ˈɪŋɡlɪʃ ˈspɛlɪŋ kæn bi ˈvɛri kənˈfjuzɪŋ fɔr bɪˈɡɪnɚz. wʌn əv ðə ˈbɪɡəst ˈtʃælɪndʒɪz ɪz ˈsaɪlənt ˈlɛtɚz. ðiz ɑr ˈlɛtɚz ðæt wi si ɪn ə wɚd, bʌt wi du nɑt seɪ ðɛm æt ɔl. hɪr ɑr θriː meɪn pɔɪnts tə hɛlp ju ˌʌndɚˈstænd waɪ ðeɪ ɪɡˈzɪst ænd haʊ tə juːz ðɛm./
 
-/ðə fɝst pɔɪnt ɪz ðæt ˈmɛni ˈkɑmən wɝdz hæv ˈhɪdən ˈsaɪlənt ˈlɛtɚz. fɔr ɪɡˈzæmpəl, ɪn ðə wɝd \"wɔk,\" ðə ˈlɛtɚ \"ɛl\" ɪz ˈsaɪlənt. ɪn ðə wɝd \"noʊ,\" ðə ˈlɛtɚ \"keɪ\" ɪz ˈsaɪlənt. ˈivən ðə ˈlɛtɚ \"biː\" kæn bi ˈsaɪlənt, laɪk ɪn ðə wɝd \"koʊm\" ɔr \"θʌm.\" ˈstudənts mʌst lɝn tə lʊk æt ə wɝd ænd noʊ wɪtʃ ˈlɛtɚ tə ɪɡˈnɔr soʊ ðeɪ kæn spiːk kəˈrɛktli./
+/ðə fɚst pɔɪnt ɪz ðæt ˈmɛni ˈkɑmən wɚdz hæv ˈhɪdən ˈsaɪlənt ˈlɛtɚz. fɔr ɪɡˈzæmpəl, ɪn ðə wɚd \"wɔk,\" ðə ˈlɛtɚ \"ɛl\" ɪz ˈsaɪlənt. ɪn ðə wɚd \"noʊ,\" ðə ˈlɛtɚ \"keɪ\" ɪz ˈsaɪlənt. ˈivən ðə ˈlɛtɚ \"biː\" kæn bi ˈsaɪlənt, laɪk ɪn ðə wɚd \"koʊm\" ɔr \"θʌm.\" ˈstudənts mʌst lɚn tə lʊk æt ə wɚd ænd noʊ wɪtʃ ˈlɛtɚ tə ɪɡˈnɔr soʊ ðeɪ kæn spiːk kəˈrɛktli./
 
 /ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt ði ˈɔrɪdʒən əv ðə ˈlæŋɡwɪdʒ. ˈmɛni jɪrz əˈɡoʊ, ˈpipəl ˈækʧuəli prəˈnaʊnst ðiz ˈlɛtɚz. haʊˈɛvɚ, ˈoʊvɚ taɪm, ðə ˈspiːkɪŋ staɪl tʃeɪndʒd, bʌt ðə ˈraɪtɪŋ steɪd ðə seɪm. ðɪs ɪz waɪ ˈɪŋɡlɪʃ ˈspɛlɪŋ lʊks ˈdɪfrənt frəm ðə saʊnd. ˌʌndɚˈstændɪŋ ðɪs hɛlps ˈstudənts ˈriːəˌlaɪz ðæt ˈsaɪlənt ˈlɛtɚz ɑr nɑt mɪˈsteɪks, bʌt ðeɪ ɑr ə pɑrt əv ðə ˈhɪstɚi əv ˈɪŋɡlɪʃ./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈsaɪlənt ˈlɛtɚz hɛlp ju riːd ænd raɪt ˈækjɚətli. ˈivən ðoʊ wi du nɑt seɪ ðə ˈlɛtɚ, wi stɪl nid tə raɪt ɪt. fɔr ɪɡˈzæmpəl, \"raɪt\" (məˈnulɪs) ænd \"raɪt\" (bəˈnɑr) saʊnd ɪɡˈzæktli ðə seɪm, bʌt ðə ˈsaɪlənt \"ˈdʌbəl juː\" tɛlz ʌs ðə ˈmiːnɪŋ ɪz əˈbaʊt ˈjuːzɪŋ ə pɛn. ˈlɝnɪŋ ðiz ˈlɛtɚz hɛlps ˈstudənts bɪˈkʌm ˈbɛtɚ æt boʊθ ˈspɛlɪŋ ænd ˈspiːkɪŋ æt ðə seɪm taɪm./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈsaɪlənt ˈlɛtɚz hɛlp ju riːd ænd raɪt ˈækjɚətli. ˈivən ðoʊ wi du nɑt seɪ ðə ˈlɛtɚ, wi stɪl nid tə raɪt ɪt. fɔr ɪɡˈzæmpəl, \"raɪt\" (məˈnulɪs) ænd \"raɪt\" (bəˈnɑr) saʊnd ɪɡˈzæktli ðə seɪm, bʌt ðə ˈsaɪlənt \"ˈdʌbəl juː\" tɛlz ʌs ðə ˈmiːnɪŋ ɪz əˈbaʊt ˈjuːzɪŋ ə pɛn. ˈlɚnɪŋ ðiz ˈlɛtɚz hɛlps ˈstudənts bɪˈkʌm ˈbɛtɚ æt boʊθ ˈspɛlɪŋ ænd ˈspiːkɪŋ æt ðə seɪm taɪm./
 
-/ɪn kənˈkluːʒən, ˈsaɪlənt ˈlɛtɚz ɑr ə \"ˈmɪstɚi\" ðæt ˈɛvri bɪˈɡɪnɚ mʌst sɑlv. ðeɪ ɑr ˈhɪdən saʊndz, ðeɪ hæv ə lɔŋ ˈhɪstɚi, ænd ðeɪ hɛlp wɪð klɪr ˈriːdɪŋ. ɪf ə ˈstudənt ˈpræktəsɪz ðiz ˈspɛʃəl wɝdz, ðeɪ wɪl fil mʌtʃ mɔr ˈkɑnfɪdənt wɛn ˈtɔkɪŋ tə ˈʌðɚz./`,
+/ɪn kənˈkluːʒən, ˈsaɪlənt ˈlɛtɚz ɑr ə \"ˈmɪstɚi\" ðæt ˈɛvri bɪˈɡɪnɚ mʌst sɑlv. ðeɪ ɑr ˈhɪdən saʊndz, ðeɪ hæv ə lɔŋ ˈhɪstɚi, ænd ðeɪ hɛlp wɪð klɪr ˈriːdɪŋ. ɪf ə ˈstudənt ˈpræktəsɪz ðiz ˈspɛʃəl wɚdz, ðeɪ wɪl fil mʌtʃ mɔr ˈkɑnfɪdənt wɛn ˈtɔkɪŋ tə ˈʌðɚz./`,
   },
   {
     id: 'eight-pop-sounds',
@@ -306,11 +306,11 @@ The final point is that these 8 sounds help separate words. Because these sounds
 In conclusion, there are 8 Pop Sounds divided into Voiceless and Voiced groups. They are the building blocks of clear speech. By practicing the physical movement of these 8 sounds, beginners can speak English with better rhythm and clarity.`,
     phoneticText: `/ɪn ˈɪŋɡlɪʃ prəˌnʌnsiˈeɪʃən, ðɛr ɑr eɪt spəˈsɪfɪk saʊndz wɛr ði ɛr ɪz blɑkt ænd ðɛn rɪˈlist laɪk ə smɔl ɪkˈsploʊʒən. ðiz ɑr kɔld \"ˈploʊsɪvz\" ɔr pɑp saʊndz. tə ˈmæstɚ ˈɪŋɡlɪʃ, ə ˈstudənt mʌst ˌʌndɚˈstænd haʊ tə kənˈtroʊl ðiz eɪt saʊndz. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ðɛm./
 
-/ðə fɝst pɔɪnt ɪz ðə \"ˈvɔɪsləs pɑps.\" ðiz saʊndz juːz ˈoʊnli ɛr, ænd jɔr θroʊt dʌz nɑt ˈvaɪbreɪt. ðeɪ ɑr [p] æz ɪn \"pɪk,\" [t] æz ɪn \"tɔl,\" [k] æz ɪn \"kʊk,\" ænd [tʃ] æz ɪn \"tʃɪps.\" ðiz fɔr saʊndz ɑr ˈvɛri ˈɛri. wɛn ju seɪ ðɛm æt ðə bɪˈɡɪnɪŋ əv ə wɝd, ju ʃʊd fil ə strɔŋ pʌf əv ɛr ɑn jɔr hænd./
+/ðə fɚst pɔɪnt ɪz ðə \"ˈvɔɪsləs pɑps.\" ðiz saʊndz juːz ˈoʊnli ɛr, ænd jɔr θroʊt dʌz nɑt ˈvaɪbreɪt. ðeɪ ɑr [p] æz ɪn \"pɪk,\" [t] æz ɪn \"tɔl,\" [k] æz ɪn \"kʊk,\" ænd [tʃ] æz ɪn \"tʃɪps.\" ðiz fɔr saʊndz ɑr ˈvɛri ˈɛri. wɛn ju seɪ ðɛm æt ðə bɪˈɡɪnɪŋ əv ə wɚd, ju ʃʊd fil ə strɔŋ pʌf əv ɛr ɑn jɔr hænd./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə \"vɔɪst pɑps.\" ðiz ɑr ðə \"ˈpɑrtnɚz\" əv ðə fɝst ɡrup, bʌt jɔr θroʊt ˈvaɪbreɪts wɛn ju seɪ ðɛm. ðeɪ ɑr [b] æz ɪn \"bɪɡ,\" [d] æz ɪn \"dɔɡ,\" [ɡ] æz ɪn \"ɡoʊ,\" ænd [dʒ] æz ɪn \"dʒʌmp.\" ˈivən ðoʊ ðeɪ ɑr \"pɑps,\" ði ɪkˈsploʊʒən ɪz ˈsɔftɚ bɪˈkɔz ði ˈɛnɚdʒi kʌmz frəm jɔr vɔɪs bɑks./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə \"vɔɪst pɑps.\" ðiz ɑr ðə \"ˈpɑrtnɚz\" əv ðə fɚst ɡrup, bʌt jɔr θroʊt ˈvaɪbreɪts wɛn ju seɪ ðɛm. ðeɪ ɑr [b] æz ɪn \"bɪɡ,\" [d] æz ɪn \"dɔɡ,\" [ɡ] æz ɪn \"ɡoʊ,\" ænd [dʒ] æz ɪn \"dʒʌmp.\" ˈivən ðoʊ ðeɪ ɑr \"pɑps,\" ði ɪkˈsploʊʒən ɪz ˈsɔftɚ bɪˈkɔz ði ˈɛnɚdʒi kʌmz frəm jɔr vɔɪs bɑks./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðiz eɪt saʊndz hɛlp ˈsɛpəˌreɪt wɝdz. bɪˈkɔz ðiz saʊndz stɑp ði ɛr, ðeɪ kriˈeɪt klɪr ˈbɔrdɚz bɪˈtwiːn wɝdz. ɪf ə ˈstudənt ɪz tuː ˈleɪzi tə meɪk ðiz pɑp saʊndz, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd \"ˈblɝi\" ɔr ˈdɪfɪkəlt tə hɪr. ˈpræktəsɪŋ ɔl eɪt saʊndz ɪnˈʃʊrz ðæt ˈɛvri wɝd ju seɪ ɪz ʃɑrp ænd prəˈfɛʃənəl./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðiz eɪt saʊndz hɛlp ˈsɛpəˌreɪt wɚdz. bɪˈkɔz ðiz saʊndz stɑp ði ɛr, ðeɪ kriˈeɪt klɪr ˈbɔrdɚz bɪˈtwiːn wɚdz. ɪf ə ˈstudənt ɪz tuː ˈleɪzi tə meɪk ðiz pɑp saʊndz, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd \"ˈblɚi\" ɔr ˈdɪfɪkəlt tə hɪr. ˈpræktəsɪŋ ɔl eɪt saʊndz ɪnˈʃʊrz ðæt ˈɛvri wɚd ju seɪ ɪz ʃɑrp ænd prəˈfɛʃənəl./
 
 /ɪn kənˈkluːʒən, ðɛr ɑr eɪt pɑp saʊndz dɪˈvaɪdɪd ˈɪntu ˈvɔɪsləs ænd vɔɪst ɡrups. ðeɪ ɑr ðə ˈbɪldɪŋ blɑks əv klɪr spiːtʃ. baɪ ˈpræktəsɪŋ ðə ˈfɪzɪkəl ˈmuvmənt əv ðiz eɪt saʊndz, bɪˈɡɪnɚz kæn spiːk ˈɪŋɡlɪʃ wɪð ˈbɛtɚ ˈrɪðəm ænd ˈklɛrəti./`,
   },
@@ -326,15 +326,15 @@ The second point is about removing the silence. Beginners often put a small "gap
 The final point is that connecting words saves energy and time. When you connect sounds, your mouth does not have to restart for every word. This allows you to speak faster and more easily. It also helps your listening skills. When you hear a native speaker say "Hold_on," you will recognize it as "Hol-don" because you understand how the connection works.
 
 In conclusion, connecting sounds is a vital skill for speaking. It joins consonants to vowels, removes silence, and saves energy. If a student practices connecting their words, they will stop sounding like a robot and start sounding like a natural speaker.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi du nɑt stɑp ˈæftɚ ˈɛvri wɝd. ɪnˈstɛd, wi kəˈnɛkt ðə wɝdz təˈɡɛðɚ. ðɪs ɪz kɔld ˈlɪŋkɪŋ. ɪt ɪz laɪk ˈbɪldɪŋ ə tʃeɪn wɛr ˈɛvri pɑrt ɪz ˈtʌtʃɪŋ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt haʊ tə kəˈnɛkt jɔr saʊndz ˈpɝfɪktli./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, wi du nɑt stɑp ˈæftɚ ˈɛvri wɚd. ɪnˈstɛd, wi kəˈnɛkt ðə wɚdz təˈɡɛðɚ. ðɪs ɪz kɔld ˈlɪŋkɪŋ. ɪt ɪz laɪk ˈbɪldɪŋ ə tʃeɪn wɛr ˈɛvri pɑrt ɪz ˈtʌtʃɪŋ. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt haʊ tə kəˈnɛkt jɔr saʊndz ˈpɚfɪktli./
 
-/ðə fɝst pɔɪnt ɪz ðə moʊst ɪmˈpɔrtənt: ˈdʒɔɪnɪŋ ə ˈkɑnsənənt tə ə ˈvaʊəl. wɛn ə wɝd ɛndz wɪð ə ˈkɑnsənənt saʊnd ænd ðə nɛkst wɝd bɪˈɡɪnz wɪð ə ˈvaʊəl, ðə tuː saʊndz bɪˈkʌm wʌn. fɔr ɪɡˈzæmpəl, ɪnˈstɛd əv ˈseɪɪŋ \"æn... ˈɔrɪndʒ,\" wi seɪ \"ə ˈnɔrɪndʒ.\" ɪt filz laɪk ðə \"ɛn\" muːvz tə ðə nɛkst wɝd. ðɪs kəˈnɛkʃən meɪks jɔr ˈɪŋɡlɪʃ saʊnd ˈvɛri smuːð ænd prəˈfɛʃənəl./
+/ðə fɚst pɔɪnt ɪz ðə moʊst ɪmˈpɔrtənt: ˈdʒɔɪnɪŋ ə ˈkɑnsənənt tə ə ˈvaʊəl. wɛn ə wɚd ɛndz wɪð ə ˈkɑnsənənt saʊnd ænd ðə nɛkst wɚd bɪˈɡɪnz wɪð ə ˈvaʊəl, ðə tuː saʊndz bɪˈkʌm wʌn. fɔr ɪɡˈzæmpəl, ɪnˈstɛd əv ˈseɪɪŋ \"æn... ˈɔrɪndʒ,\" wi seɪ \"ə ˈnɔrɪndʒ.\" ɪt filz laɪk ðə \"ɛn\" muːvz tə ðə nɛkst wɚd. ðɪs kəˈnɛkʃən meɪks jɔr ˈɪŋɡlɪʃ saʊnd ˈvɛri smuːð ænd prəˈfɛʃənəl./
 
-/ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt rɪˈmuvɪŋ ðə ˈsaɪləns. bɪˈɡɪnɚz ˈɔfən pʊt ə smɔl ɡæp ɔr ˈsaɪləns bɪˈtwiːn wɝdz. bʌt ɪn ˈnætʃrəl spiːtʃ, ðɛr ɪz noʊ speɪs. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"kip ɪt,\" ðə lɪps kloʊz fɔr ðə \"piː\" ænd ɪˈmidiətli ˈoʊpən fɔr ði \"aɪ.\" baɪ kəˈnɛktɪŋ ðiz saʊndz wɪˈðaʊt ˈstɑpɪŋ, ju kriˈeɪt ðə floʊ ðæt ˈneɪtɪv ˈspikɚz juːz ˈɛvri deɪ./
+/ðə ˈsɛkənd pɔɪnt ɪz əˈbaʊt rɪˈmuvɪŋ ðə ˈsaɪləns. bɪˈɡɪnɚz ˈɔfən pʊt ə smɔl ɡæp ɔr ˈsaɪləns bɪˈtwiːn wɚdz. bʌt ɪn ˈnætʃrəl spiːtʃ, ðɛr ɪz noʊ speɪs. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"kip ɪt,\" ðə lɪps kloʊz fɔr ðə \"piː\" ænd ɪˈmidiətli ˈoʊpən fɔr ði \"aɪ.\" baɪ kəˈnɛktɪŋ ðiz saʊndz wɪˈðaʊt ˈstɑpɪŋ, ju kriˈeɪt ðə floʊ ðæt ˈneɪtɪv ˈspikɚz juːz ˈɛvri deɪ./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt kəˈnɛktɪŋ wɝdz seɪvz ˈɛnɚdʒi ænd taɪm. wɛn ju kəˈnɛkt saʊndz, jɔr maʊθ dʌz nɑt hæv tə riˈstɑrt fɔr ˈɛvri wɝd. ðɪs əˈlaʊz ju tə spiːk ˈfæstɚ ænd mɔr ˈiːzəli. ɪt ˈɔlsoʊ hɛlps jɔr ˈlɪsənɪŋ skɪlz. wɛn ju hɪr ə ˈneɪtɪv ˈspikɚ seɪ \"hoʊld ɑn,\" ju wɪl ˈrɛkəɡˌnaɪz ɪt æz \"ˈhoʊldɑn\" bɪˈkɔz ju ˌʌndɚˈstænd haʊ ðə kəˈnɛkʃən wɝks./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt kəˈnɛktɪŋ wɚdz seɪvz ˈɛnɚdʒi ænd taɪm. wɛn ju kəˈnɛkt saʊndz, jɔr maʊθ dʌz nɑt hæv tə riˈstɑrt fɔr ˈɛvri wɚd. ðɪs əˈlaʊz ju tə spiːk ˈfæstɚ ænd mɔr ˈiːzəli. ɪt ˈɔlsoʊ hɛlps jɔr ˈlɪsənɪŋ skɪlz. wɛn ju hɪr ə ˈneɪtɪv ˈspikɚ seɪ \"hoʊld ɑn,\" ju wɪl ˈrɛkəɡˌnaɪz ɪt æz \"ˈhoʊldɑn\" bɪˈkɔz ju ˌʌndɚˈstænd haʊ ðə kəˈnɛkʃən wɚks./
 
-/ɪn kənˈkluːʒən, kəˈnɛktɪŋ saʊndz ɪz ə ˈvaɪtəl skɪl fɔr ˈspiːkɪŋ. ɪt dʒɔɪnz ˈkɑnsənənts tə ˈvaʊəlz, rɪˈmuvz ˈsaɪləns, ænd seɪvz ˈɛnɚdʒi. ɪf ə ˈstudənt ˈpræktəsɪz kəˈnɛktɪŋ ðɛr wɝdz, ðeɪ wɪl stɑp ˈsaʊndɪŋ laɪk ə ˈroʊˌbɑt ænd stɑrt ˈsaʊndɪŋ laɪk ə ˈnætʃrəl ˈspikɚ./`,
+/ɪn kənˈkluːʒən, kəˈnɛktɪŋ saʊndz ɪz ə ˈvaɪtəl skɪl fɔr ˈspiːkɪŋ. ɪt dʒɔɪnz ˈkɑnsənənts tə ˈvaʊəlz, rɪˈmuvz ˈsaɪləns, ænd seɪvz ˈɛnɚdʒi. ɪf ə ˈstudənt ˈpræktəsɪz kəˈnɛktɪŋ ðɛr wɚdz, ðeɪ wɪl stɑp ˈsaʊndɪŋ laɪk ə ˈroʊˌbɑt ænd stɑrt ˈsaʊndɪŋ laɪk ə ˈnætʃrəl ˈspikɚ./`,
   },
   {
     id: 'linking-missing-sound-rule',
@@ -348,15 +348,15 @@ The second point is that we hold the sound a little longer. Even though we "miss
 The final point is that this rule helps you avoid extra effort. It is very tiring for your mouth muscles to say the same sound twice in a row, like "Bad dog." By using the "missing sound" rule, your mouth can move more easily to the next part of the sentence. This is a key part of sounding natural in American English and not sounding like a beginner who is struggling.
 
 In conclusion, linking by missing sounds is a smart way to speak. It uses twin consonants, involves holding the sound, and saves your energy. If a student learns to skip the first sound of a pair, their English will flow much better and sound more professional.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ˈsʌmˌtaɪmz wi \"haɪd\" ə saʊnd tə spiːk ˈfæstɚ. ðɪs ˈhæpənz wɛn ði ɛnd əv wʌn wɝd ænd ðə stɑrt əv ðə nɛkst wɝd hæv ðə seɪm ˈkɑnsənənt. ɪnˈstɛd əv ˈseɪɪŋ ðə saʊnd tuː taɪmz, wi seɪ ɪt ˈoʊnli wʌns. hɪr ɑr θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðɪs rul./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, ˈsʌmˌtaɪmz wi \"haɪd\" ə saʊnd tə spiːk ˈfæstɚ. ðɪs ˈhæpənz wɛn ði ɛnd əv wʌn wɚd ænd ðə stɑrt əv ðə nɛkst wɚd hæv ðə seɪm ˈkɑnsənənt. ɪnˈstɛd əv ˈseɪɪŋ ðə saʊnd tuː taɪmz, wi seɪ ɪt ˈoʊnli wʌns. hɪr ɑr θriː meɪn pɔɪnts tə ˌʌndɚˈstænd ðɪs rul./
 
-/ðə fɝst pɔɪnt ɪz əˈbaʊt twɪn ˈkɑnsənənts. wɛn tuː wɝdz miːt ænd hæv ðə seɪm ˈlɛtɚ, ðeɪ bɪˈkʌm ə tim. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"rɛd drɛs,\" wi du nɑt seɪ \"rɛd-drɛs\" wɪð tuː \"diː\" saʊndz. wi seɪ \"rɛ-drɛs.\" wi skɪp ðə fɝst \"diː\" ænd dʒʌmp tə ðə ˈsɛkənd wʌn. ðɪs meɪks ðə trænˈzɪʃən bɪˈtwiːn wɝdz ˈvɛri smuːð ænd fæst./
+/ðə fɚst pɔɪnt ɪz əˈbaʊt twɪn ˈkɑnsənənts. wɛn tuː wɚdz miːt ænd hæv ðə seɪm ˈlɛtɚ, ðeɪ bɪˈkʌm ə tim. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"rɛd drɛs,\" wi du nɑt seɪ \"rɛd-drɛs\" wɪð tuː \"diː\" saʊndz. wi seɪ \"rɛ-drɛs.\" wi skɪp ðə fɚst \"diː\" ænd dʒʌmp tə ðə ˈsɛkənd wʌn. ðɪs meɪks ðə trænˈzɪʃən bɪˈtwiːn wɚdz ˈvɛri smuːð ænd fæst./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðæt wi hoʊld ðə saʊnd ə ˈlɪtəl ˈlɔŋɡɚ. ˈivən ðoʊ wi \"mɪs\" ɔr skɪp wʌn saʊnd, wi du nɑt dʒʌst dɪˈlit ɪt. wi steɪ ɑn ðæt ˈlɛtɚ fɔr ə ˈtaɪni ˈɛkstrə ˈsɛkənd. fɔr ɪɡˈzæmpəl, ɪn \"ˈsoʊʃəl laɪf,\" wi kəˈnɛkt ðə tuː \"ɛl\" saʊndz. ɪt saʊndz laɪk wʌn lɔŋ \"ɛl.\" ðɪs tɛlz ðə ˈlɪsənɚ ðæt ðɛr ɑr ˈækʧuəli tuː wɝdz, bʌt ðeɪ ɑr kəˈnɛktɪd ˈpɝfɪktli./
+/ðə ˈsɛkənd pɔɪnt ɪz ðæt wi hoʊld ðə saʊnd ə ˈlɪtəl ˈlɔŋɡɚ. ˈivən ðoʊ wi \"mɪs\" ɔr skɪp wʌn saʊnd, wi du nɑt dʒʌst dɪˈlit ɪt. wi steɪ ɑn ðæt ˈlɛtɚ fɔr ə ˈtaɪni ˈɛkstrə ˈsɛkənd. fɔr ɪɡˈzæmpəl, ɪn \"ˈsoʊʃəl laɪf,\" wi kəˈnɛkt ðə tuː \"ɛl\" saʊndz. ɪt saʊndz laɪk wʌn lɔŋ \"ɛl.\" ðɪs tɛlz ðə ˈlɪsənɚ ðæt ðɛr ɑr ˈækʧuəli tuː wɚdz, bʌt ðeɪ ɑr kəˈnɛktɪd ˈpɚfɪktli./
 
 /ðə ˈfaɪnəl pɔɪnt ɪz ðæt ðɪs rul hɛlps ju əˈvɔɪd ˈɛkstrə ˈɛfɚt. ɪt ɪz ˈvɛri ˈtaɪrɪŋ fɔr jɔr maʊθ ˈmʌsəlz tə seɪ ðə seɪm saʊnd twaɪs ɪn ə roʊ, laɪk \"bæd dɔɡ.\" baɪ ˈjuːzɪŋ ðə \"ˈmɪsɪŋ saʊnd\" rul, jɔr maʊθ kæn muːv mɔr ˈiːzəli tə ðə nɛkst pɑrt əv ðə ˈsɛntəns. ðɪs ɪz ə kiː pɑrt əv ˈsaʊndɪŋ ˈnætʃrəl ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ ænd nɑt ˈsaʊndɪŋ laɪk ə bɪˈɡɪnɚ hu ɪz ˈstrʌɡəlɪŋ./
 
-/ɪn kənˈkluːʒən, ˈlɪŋkɪŋ baɪ ˈmɪsɪŋ saʊndz ɪz ə smɑrt weɪ tə spiːk. ɪt ˈjuːzɪz twɪn ˈkɑnsənənts, ɪnˈvɑlvz hoʊldɪŋ ðə saʊnd, ænd seɪvz jɔr ˈɛnɚdʒi. ɪf ə ˈstudənt lɝnz tə skɪp ðə fɝst saʊnd əv ə pɛr, ðɛr ˈɪŋɡlɪʃ wɪl floʊ mʌtʃ ˈbɛtɚ ænd saʊnd mɔr prəˈfɛʃənəl./`,
+/ɪn kənˈkluːʒən, ˈlɪŋkɪŋ baɪ ˈmɪsɪŋ saʊndz ɪz ə smɑrt weɪ tə spiːk. ɪt ˈjuːzɪz twɪn ˈkɑnsənənts, ɪnˈvɑlvz hoʊldɪŋ ðə saʊnd, ænd seɪvz jɔr ˈɛnɚdʒi. ɪf ə ˈstudənt lɚnz tə skɪp ðə fɚst saʊnd əv ə pɛr, ðɛr ˈɪŋɡlɪʃ wɪl floʊ mʌtʃ ˈbɛtɚ ænd saʊnd mɔr prəˈfɛʃənəl./`,
   },
   {
     id: 'linking-adding-extra-sounds',
@@ -370,13 +370,13 @@ The second point is the hidden /j/ sound (like the letter "Y"). We add this when
 The final point is about the perfect flow. In English, stopping your voice between vowels sounds very jumpy or strange. Adding these tiny sounds creates a "bridge." This is a key part of the American accent. When you add a /w/ or a /j/, your speaking becomes very soft and fluid. It shows that you have great control over your mouth and your breath.
 
 In conclusion, adding sounds is a smart trick for better pronunciation. We use the hidden /w/ and the hidden /j/ to build a bridge between vowels. If a beginner practices these extra sounds, their English will sound much more natural and very professional.`,
-    phoneticText: `/ˈsʌmˌtaɪmz, ˈɪŋɡlɪʃ ˈspikɚz æd ə \"ˈsiːkrət\" saʊnd bɪˈtwiːn wɝdz. ðɪs ˈhæpənz wɛn wʌn wɝd ɛndz wɪð ə ˈvaʊəl ænd ðə nɛkst wɝd stɑrts wɪð ə ˈvaʊəl. tə kip ðə vɔɪs ˈmuvɪŋ, wi æd ə ˈtaɪni saʊnd laɪk ə /w/ ɔr ə /j/. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈædɪŋ saʊndz./
+    phoneticText: `/ˈsʌmˌtaɪmz, ˈɪŋɡlɪʃ ˈspikɚz æd ə \"ˈsiːkrət\" saʊnd bɪˈtwiːn wɚdz. ðɪs ˈhæpənz wɛn wʌn wɚd ɛndz wɪð ə ˈvaʊəl ænd ðə nɛkst wɚd stɑrts wɪð ə ˈvaʊəl. tə kip ðə vɔɪs ˈmuvɪŋ, wi æd ə ˈtaɪni saʊnd laɪk ə /w/ ɔr ə /j/. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈædɪŋ saʊndz./
 
-/ðə fɝst pɔɪnt ɪz ðə ˈhɪdən /w/ saʊnd. wi æd ðɪs saʊnd wɛn ðə fɝst wɝd ɛndz ɪn ə raʊnd ˈvaʊəl laɪk /u/ ɔr /oʊ/. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"ɡoʊ aʊt,\" wi du nɑt stɑp bɪˈtwiːn ðə wɝdz. wi æd ə smɔl /w/ ænd seɪ \"ɡoʊ-w-aʊt.\" əˈnʌðɚ ɪɡˈzæmpəl ɪz \"tuː ˈɔfən,\" wɪtʃ saʊndz laɪk \"tuː-w-ˈɔfən.\" ðɪs hɛlps ðə maʊθ muːv ˈsmuðli frəm wʌn ʃeɪp tə ðə nɛkst./
+/ðə fɚst pɔɪnt ɪz ðə ˈhɪdən /w/ saʊnd. wi æd ðɪs saʊnd wɛn ðə fɚst wɚd ɛndz ɪn ə raʊnd ˈvaʊəl laɪk /u/ ɔr /oʊ/. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"ɡoʊ aʊt,\" wi du nɑt stɑp bɪˈtwiːn ðə wɚdz. wi æd ə smɔl /w/ ænd seɪ \"ɡoʊ-w-aʊt.\" əˈnʌðɚ ɪɡˈzæmpəl ɪz \"tuː ˈɔfən,\" wɪtʃ saʊndz laɪk \"tuː-w-ˈɔfən.\" ðɪs hɛlps ðə maʊθ muːv ˈsmuðli frəm wʌn ʃeɪp tə ðə nɛkst./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈhɪdən /j/ saʊnd (laɪk ðə ˈlɛtɚ \"waɪ\"). wi æd ðɪs wɛn ðə fɝst wɝd ɛndz ɪn ə waɪd ˈvaʊəl laɪk /i/ ɔr /eɪ/. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"aɪ æm,\" wi seɪ \"aɪ-j-æm.\" ɔr ɪn \"ʃi ˈɔlweɪz,\" ɪt saʊndz laɪk \"ʃi-j-ˈɔlweɪz.\" baɪ ˈædɪŋ ðɪs ˈtaɪni saʊnd, wi doʊnt hæv tə stɑp aʊɚ brɛθ. ɪt meɪks ðə tuː wɝdz fil laɪk wʌn ˈsɪŋɡəl pis əv ˈmjuzɪk./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə ˈhɪdən /j/ saʊnd (laɪk ðə ˈlɛtɚ \"waɪ\"). wi æd ðɪs wɛn ðə fɚst wɚd ɛndz ɪn ə waɪd ˈvaʊəl laɪk /i/ ɔr /eɪ/. fɔr ɪɡˈzæmpəl, ɪn ðə freɪz \"aɪ æm,\" wi seɪ \"aɪ-j-æm.\" ɔr ɪn \"ʃi ˈɔlweɪz,\" ɪt saʊndz laɪk \"ʃi-j-ˈɔlweɪz.\" baɪ ˈædɪŋ ðɪs ˈtaɪni saʊnd, wi doʊnt hæv tə stɑp aʊɚ brɛθ. ɪt meɪks ðə tuː wɚdz fil laɪk wʌn ˈsɪŋɡəl pis əv ˈmjuzɪk./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ðə ˈpɝfɪkt floʊ. ɪn ˈɪŋɡlɪʃ, ˈstɑpɪŋ jɔr vɔɪs bɪˈtwiːn ˈvaʊəlz saʊndz ˈvɛri ˈdʒʌmpi ɔr streɪndʒ. ˈædɪŋ ðiz ˈtaɪni saʊndz kriˈeɪts ə brɪdʒ. ðɪs ɪz ə kiː pɑrt əv ði əˈmɛrɪkən ˈæksɛnt. wɛn ju æd ə /w/ ɔr ə /j/, jɔr ˈspiːkɪŋ bɪˈkʌmz ˈvɛri sɔft ænd ˈfluːɪd. ɪt ʃoʊz ðæt ju hæv ɡreɪt kənˈtroʊl ˈoʊvɚ jɔr maʊθ ænd jɔr brɛθ./
+/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ðə ˈpɚfɪkt floʊ. ɪn ˈɪŋɡlɪʃ, ˈstɑpɪŋ jɔr vɔɪs bɪˈtwiːn ˈvaʊəlz saʊndz ˈvɛri ˈdʒʌmpi ɔr streɪndʒ. ˈædɪŋ ðiz ˈtaɪni saʊndz kriˈeɪts ə brɪdʒ. ðɪs ɪz ə kiː pɑrt əv ði əˈmɛrɪkən ˈæksɛnt. wɛn ju æd ə /w/ ɔr ə /j/, jɔr ˈspiːkɪŋ bɪˈkʌmz ˈvɛri sɔft ænd ˈfluːɪd. ɪt ʃoʊz ðæt ju hæv ɡreɪt kənˈtroʊl ˈoʊvɚ jɔr maʊθ ænd jɔr brɛθ./
 
 /ɪn kənˈkluːʒən, ˈædɪŋ saʊndz ɪz ə smɑrt trɪk fɔr ˈbɛtɚ prəˌnʌnsiˈeɪʃən. wi juːz ðə ˈhɪdən /w/ ænd ðə ˈhɪdən /j/ tə bɪld ə brɪdʒ bɪˈtwiːn ˈvaʊəlz. ɪf ə bɪˈɡɪnɚ ˈpræktəsɪz ðiz ˈɛkstrə saʊndz, ðɛr ˈɪŋɡlɪʃ wɪl saʊnd mʌtʃ mɔr ˈnætʃrəl ænd ˈvɛri prəˈfɛʃənəl./`,
   },
@@ -392,15 +392,15 @@ The second point is merging with "S" or "Z." When a word ends with an "S" and th
 The final point is that merging makes you sound natural and fast. Beginners often try to say every letter separately: "Did... You... Know?" But native speakers always merge them: "Di-ju-know?" If a student learns these "sound formulas," they will understand movies much better. It is a key secret for anyone who wants to speak English with a smooth flow.
 
 In conclusion, merging sounds is a process where two letters become one new sound. It creates the CH, J, SH, and ZH sounds. By practicing these "mergers," students can transform their English from a textbook style to a real, natural American style.`,
-    phoneticText: `/ɪn ˈɪŋɡlɪʃ, sʌm ˈlɛtɚz ɑr laɪk ˈkɛmɪkəlz. wɛn ðeɪ tʌtʃ itʃ ˈʌðɚ, ðeɪ tʃeɪndʒ ænd bɪˈkʌm ə nuː saʊnd. ðɪs ˈɔfən ˈhæpənz wɛn ə wɝd ɛndz wɪð \"diː,\" \"tiː,\" \"ɛs,\" ɔr \"ziː\" ænd ðə nɛkst wɝd stɑrts wɪð ðə ˈlɛtɚ \"waɪ.\" hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈmɝdʒɪŋ saʊndz./
+    phoneticText: `/ɪn ˈɪŋɡlɪʃ, sʌm ˈlɛtɚz ɑr laɪk ˈkɛmɪkəlz. wɛn ðeɪ tʌtʃ itʃ ˈʌðɚ, ðeɪ tʃeɪndʒ ænd bɪˈkʌm ə nuː saʊnd. ðɪs ˈɔfən ˈhæpənz wɛn ə wɚd ɛndz wɪð \"diː,\" \"tiː,\" \"ɛs,\" ɔr \"ziː\" ænd ðə nɛkst wɚd stɑrts wɪð ðə ˈlɛtɚ \"waɪ.\" hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈmɚdʒɪŋ saʊndz./
 
-/ðə fɝst pɔɪnt ɪz ðə moʊst ˈkɑmən ˈmɝdʒɚ. wɛn ə wɝd ɛndz wɪð ə \"tiː\" ænd ðə nɛkst wɝd ɪz \"juː,\" ðeɪ dʒɔɪn tə meɪk ə \"tʃ\" saʊnd. fɔr ɪɡˈzæmpəl, \"miːt ju\" saʊndz laɪk \"ˈmiːtʃu.\" ɪf ðə fɝst wɝd ɛndz wɪð ə \"diː,\" ɪt dʒɔɪnz wɪð \"juː\" tə meɪk ə \"dʒ\" saʊnd. fɔr ɪɡˈzæmpəl, \"dɪd ju\" saʊndz laɪk \"ˈdɪdʒu.\" ðɪs ɪz ə ˈvɛri ˈnætʃrəl weɪ tə spiːk ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ./
+/ðə fɚst pɔɪnt ɪz ðə moʊst ˈkɑmən ˈmɚdʒɚ. wɛn ə wɚd ɛndz wɪð ə \"tiː\" ænd ðə nɛkst wɚd ɪz \"juː,\" ðeɪ dʒɔɪn tə meɪk ə \"tʃ\" saʊnd. fɔr ɪɡˈzæmpəl, \"miːt ju\" saʊndz laɪk \"ˈmiːtʃu.\" ɪf ðə fɚst wɚd ɛndz wɪð ə \"diː,\" ɪt dʒɔɪnz wɪð \"juː\" tə meɪk ə \"dʒ\" saʊnd. fɔr ɪɡˈzæmpəl, \"dɪd ju\" saʊndz laɪk \"ˈdɪdʒu.\" ðɪs ɪz ə ˈvɛri ˈnætʃrəl weɪ tə spiːk ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ˈmɝdʒɪŋ wɪð \"ɛs\" ɔr \"ziː.\" wɛn ə wɝd ɛndz wɪð an \"ɛs\" ænd ðə nɛkst wɝd stɑrts wɪð \"waɪ,\" ðeɪ meɪk ə \"ʃ\" saʊnd. fɔr ɪɡˈzæmpəl, \"blɛs ju\" saʊndz laɪk \"ˈblɛʃu.\" ɪf ɪt ɛndz wɪð ə \"ziː,\" ɪt meɪks ə ˈvaɪbreɪtɪŋ \"ʒ\" saʊnd, laɪk ɪn \"æz ju\" (saʊndz laɪk \"ˈæʒu\"). ðɪs ˈmɝdʒɚ hɛlps ðə maʊθ muːv ˈfæstɚ bɪˈtwiːn wɝdz./
+/ðə ˈsɛkənd pɔɪnt ɪz ˈmɚdʒɪŋ wɪð \"ɛs\" ɔr \"ziː.\" wɛn ə wɚd ɛndz wɪð an \"ɛs\" ænd ðə nɛkst wɚd stɑrts wɪð \"waɪ,\" ðeɪ meɪk ə \"ʃ\" saʊnd. fɔr ɪɡˈzæmpəl, \"blɛs ju\" saʊndz laɪk \"ˈblɛʃu.\" ɪf ɪt ɛndz wɪð ə \"ziː,\" ɪt meɪks ə ˈvaɪbreɪtɪŋ \"ʒ\" saʊnd, laɪk ɪn \"æz ju\" (saʊndz laɪk \"ˈæʒu\"). ðɪs ˈmɚdʒɚ hɛlps ðə maʊθ muːv ˈfæstɚ bɪˈtwiːn wɚdz./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈmɝdʒɪŋ meɪks ju saʊnd ˈnætʃrəl ænd fæst. bɪˈɡɪnɚz ˈɔfən traɪ tə seɪ ˈɛvri ˈlɛtɚ səˈpɛrətli: \"dɪd... ju... noʊ?\" bʌt ˈneɪtɪv ˈspikɚz ˈɔlweɪz mɝdʒ ðɛm: \"ˈdɪdʒə noʊ?\" ɪf ə ˈstudənt lɝnz ðiz saʊnd ˈfɔrmjəlz, ðeɪ wɪl ˌʌndɚˈstænd ˈmuviz mʌtʃ ˈbɛtɚ. ɪt ɪz ə kiː ˈsiːkrət fɔr ˈɛniˌwʌn hu wɑnts tə spiːk ˈɪŋɡlɪʃ wɪð ə smuːð floʊ./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt ˈmɚdʒɪŋ meɪks ju saʊnd ˈnætʃrəl ænd fæst. bɪˈɡɪnɚz ˈɔfən traɪ tə seɪ ˈɛvri ˈlɛtɚ səˈpɛrətli: \"dɪd... ju... noʊ?\" bʌt ˈneɪtɪv ˈspikɚz ˈɔlweɪz mɚdʒ ðɛm: \"ˈdɪdʒə noʊ?\" ɪf ə ˈstudənt lɚnz ðiz saʊnd ˈfɔrmjəlz, ðeɪ wɪl ˌʌndɚˈstænd ˈmuviz mʌtʃ ˈbɛtɚ. ɪt ɪz ə kiː ˈsiːkrət fɔr ˈɛniˌwʌn hu wɑnts tə spiːk ˈɪŋɡlɪʃ wɪð ə smuːð floʊ./
 
-/ɪn kənˈkluːʒən, ˈmɝdʒɪŋ saʊndz ɪz ə ˈprɑsɛs wɛr tuː ˈlɛtɚz bɪˈkʌm wʌn nuː saʊnd. ɪt kriˈeɪts ðə tʃ, dʒ, ʃ, ænd ʒ saʊndz. baɪ ˈpræktəsɪŋ ðiz \"ˈmɝdʒɚz,\" ˈstudənts kæn trænsˈfɔrm ðɛr ˈɪŋɡlɪʃ frəm ə ˈtɛkstˌbʊk staɪl tə ə riːl, ˈnætʃrəl əˈmɛrɪkən staɪl./`,
+/ɪn kənˈkluːʒən, ˈmɚdʒɪŋ saʊndz ɪz ə ˈprɑsɛs wɛr tuː ˈlɛtɚz bɪˈkʌm wʌn nuː saʊnd. ɪt kriˈeɪts ðə tʃ, dʒ, ʃ, ænd ʒ saʊndz. baɪ ˈpræktəsɪŋ ðiz \"ˈmɚdʒɚz,\" ˈstudənts kæn trænsˈfɔrm ðɛr ˈɪŋɡlɪʃ frəm ə ˈtɛkstˌbʊk staɪl tə ə riːl, ˈnætʃrəl əˈmɛrɪkən staɪl./`,
   },
   {
     id: 'contractions-writing',
@@ -416,11 +416,11 @@ The final point is about special words that look similar. A very common problem 
 In conclusion, contractions in writing depend on the level of formality, the correct use of marks, and avoiding common mistakes. If a student knows when to use "do not" and when to use "don't," their writing will always be appropriate for the situation.`,
     phoneticText: `/ɪn ˈɪŋɡlɪʃ ˈraɪtɪŋ, kənˈtrækʃənz laɪk \"doʊnt\" ɔr \"ɪts\" ɑr ˈvɛri ˈkɑmən. haʊˈɛvɚ, ðɛr ɑr rulz əˈbaʊt wɛn tə juːz ðɛm dɪˈpɛndɪŋ ɑn ðə ˌsɪtʃuˈeɪʃən. ˈnoʊɪŋ ðiz rulz hɛlps ə ˈstudənt raɪt kəˈrɛktli fɔr ˈdɪfrənt ˈpipəl. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt kənˈtrækʃənz ɪn ˈraɪtɪŋ./
 
-/ðə fɝst pɔɪnt ɪz ðə ˈdɪfrəns bɪˈtwiːn ˌɪnfɔrˈmæl ænd ˈfɔrməl staɪlz. wi juːz kənˈtrækʃənz ɪn ˌɪnfɔrˈmæl ˈraɪtɪŋ, sʌtʃ əz ˈiːˌmeɪlz tə frɛndz, ˈsoʊʃəl ˈmidiə poʊsts, ɔr ˈpɝsənəl ˈstɔriz. bʌt ɪn ˈfɔrməl ˈraɪtɪŋ, laɪk ə dʒɑb ˌæplɪˈkeɪʃən ɔr ə ˈsɪriəs ˈɛseɪ, wi ˈjuːʒuəli du nɑt juːz ðɛm. ɪnˈstɛd əv ˈraɪtɪŋ \"aɪm,\" wi raɪt \"aɪ æm.\" ðɪs meɪks ðə ˈraɪtɪŋ lʊk mɔr prəˈfɛʃənəl ænd rɪˈspɛktfəl./
+/ðə fɚst pɔɪnt ɪz ðə ˈdɪfrəns bɪˈtwiːn ˌɪnfɔrˈmæl ænd ˈfɔrməl staɪlz. wi juːz kənˈtrækʃənz ɪn ˌɪnfɔrˈmæl ˈraɪtɪŋ, sʌtʃ əz ˈiːˌmeɪlz tə frɛndz, ˈsoʊʃəl ˈmidiə poʊsts, ɔr ˈpɚsənəl ˈstɔriz. bʌt ɪn ˈfɔrməl ˈraɪtɪŋ, laɪk ə dʒɑb ˌæplɪˈkeɪʃən ɔr ə ˈsɪriəs ˈɛseɪ, wi ˈjuːʒuəli du nɑt juːz ðɛm. ɪnˈstɛd əv ˈraɪtɪŋ \"aɪm,\" wi raɪt \"aɪ æm.\" ðɪs meɪks ðə ˈraɪtɪŋ lʊk mɔr prəˈfɛʃənəl ænd rɪˈspɛktfəl./
 
 /ðə ˈsɛkənd pɔɪnt ɪz ðə kəˈrɛkt juːs əv ði əˈpɑstrəfi. ɪn ˈraɪtɪŋ, ði əˈpɑstrəfi teɪks ðə pleɪs əv ðə ˈmɪsɪŋ ˈlɛtɚz. fɔr ɪɡˈzæmpəl, ɪn \"kænt,\" ði əˈpɑstrəfi ʃoʊz ðæt ðə ˈlɛtɚz \"ɛn\" ænd \"oʊ\" ɑr ɡɔn. ə ˈkɑmən mɪˈsteɪk fɔr bɪˈɡɪnɚz ɪz fɚˈɡɛtɪŋ ðə mɑrk ɔr ˈpʊtɪŋ ɪt ɪn ðə rɔŋ pleɪs. ˈraɪtɪŋ ˈkɛrfəli hɛlps ðə ˈridɚ ˌʌndɚˈstænd jɔr ˈmɛsɪdʒ wɪˈðaʊt kənˈfjuːʒən./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ˈspɛʃəl wɝdz ðæt lʊk ˈsɪmələr. ə ˈvɛri ˈkɑmən ˈprɑbləm ɪn ˈraɪtɪŋ ɪz ðə ˈdɪfrəns bɪˈtwiːn \"ɪts\" ænd \"ɪts.\" \"ɪts\" wɪð ən əˈpɑstrəfi minz \"ɪt ɪz.\" bʌt \"ɪts\" wɪˈðaʊt ə mɑrk ʃoʊz ðæt ˈsʌmθɪŋ bɪˈlɔŋz tə æn ˈɑbdʒɛkt. baɪ ˈlɝnɪŋ ðiz smɔl ˈdiːteɪlz ɪn ˈraɪtɪŋ, ˈstudənts kæn əˈvɔɪd ˈbeɪsɪk mɪˈsteɪks ænd bɪˈkʌm mʌtʃ ˈbɛtɚ ˈraɪtɚz./
+/ðə ˈfaɪnəl pɔɪnt ɪz əˈbaʊt ˈspɛʃəl wɚdz ðæt lʊk ˈsɪmələr. ə ˈvɛri ˈkɑmən ˈprɑbləm ɪn ˈraɪtɪŋ ɪz ðə ˈdɪfrəns bɪˈtwiːn \"ɪts\" ænd \"ɪts.\" \"ɪts\" wɪð ən əˈpɑstrəfi minz \"ɪt ɪz.\" bʌt \"ɪts\" wɪˈðaʊt ə mɑrk ʃoʊz ðæt ˈsʌmθɪŋ bɪˈlɔŋz tə æn ˈɑbdʒɛkt. baɪ ˈlɚnɪŋ ðiz smɔl ˈdiːteɪlz ɪn ˈraɪtɪŋ, ˈstudənts kæn əˈvɔɪd ˈbeɪsɪk mɪˈsteɪks ænd bɪˈkʌm mʌtʃ ˈbɛtɚ ˈraɪtɚz./
 
 /ɪn kənˈkluːʒən, kənˈtrækʃənz ɪn ˈraɪtɪŋ dɪˈpɛnd ɑn ðə ˈlɛvəl əv fɔrˈmæləti, ðə kəˈrɛkt juːs əv mɑrks, ænd əˈvɔɪdɪŋ ˈkɑmən mɪˈsteɪks. ɪf ə ˈstudənt noʊz wɛn tə juːz \"du nɑt\" ænd wɛn tə juːz \"doʊnt,\" ðɛr ˈraɪtɪŋ wɪl ˈɔlweɪz bi əˈproʊpriət fɔr ðə ˌsɪtʃuˈeɪʃən./`,
   },
@@ -436,13 +436,13 @@ The second point is the use of informal contractions. In daily conversation, Ame
 The final point is that contractions help the listener understand your focus. When you shorten "do not" to "don't," the listener can focus on the action word that follows. It makes your sentences easier to follow because the "grammar words" are small and the "meaning words" are big. This is a key skill for clear and effective communication in the real world.
 
 In conclusion, using contractions in speaking is about rhythm, informal style, and clarity. They help you save energy and sound more friendly. For a beginner, practicing these short sounds is the best way to transform a "textbook accent" into a real, natural American accent.`,
-    phoneticText: `/ɪn ˈspoʊkən ˈɪŋɡlɪʃ, wi ˈɔlmoʊst ˈnɛvɚ seɪ ˈɛvri wɝd səˈpɛrətli. wi dʒɔɪn wɝdz təˈɡɛðɚ tə kriˈeɪt ə smuːð saʊnd. ðɪs ɪz ˈvɛri ˈkɑmən ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ. ɪf ju wɑnt tə saʊnd ˈnætʃrəl, ju mʌst juːz kənˈtrækʃənz wɛn ju spiːk. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈjuːzɪŋ ðɛm ɪn ˌkɑnvɚˈseɪʃən./
+    phoneticText: `/ɪn ˈspoʊkən ˈɪŋɡlɪʃ, wi ˈɔlmoʊst ˈnɛvɚ seɪ ˈɛvri wɚd səˈpɛrətli. wi dʒɔɪn wɚdz təˈɡɛðɚ tə kriˈeɪt ə smuːð saʊnd. ðɪs ɪz ˈvɛri ˈkɑmən ɪn əˈmɛrɪkən ˈɪŋɡlɪʃ. ɪf ju wɑnt tə saʊnd ˈnætʃrəl, ju mʌst juːz kənˈtrækʃənz wɛn ju spiːk. hɪr ɑr θriː meɪn pɔɪnts əˈbaʊt ˈjuːzɪŋ ðɛm ɪn ˌkɑnvɚˈseɪʃən./
 
-/ðə fɝst pɔɪnt ɪz ðæt kənˈtrækʃənz hɛlp ju seɪv brɛθ. ɪn ˈɪŋɡlɪʃ, wi ˈfoʊkəs ɑn ðə moʊst ɪmˈpɔrtənt wɝdz. baɪ ˈmeɪkɪŋ smɔl wɝdz ˈʃɔrtɚ, laɪk ˈtʃeɪndʒɪŋ \"aɪ wɪl\" tə \"aɪl,\" wi kæn muːv ˈkwɪkli tə ðə meɪn aɪˈdiə. ðɪs kriˈeɪts ðə ˈrɪðəm əv ˈɪŋɡlɪʃ. ɪt meɪks ˈspiːkɪŋ fil lɛs laɪk ə lɑt əv wɝk ænd mɔr laɪk ə ˈnætʃrəl floʊ əv ɛr./
+/ðə fɚst pɔɪnt ɪz ðæt kənˈtrækʃənz hɛlp ju seɪv brɛθ. ɪn ˈɪŋɡlɪʃ, wi ˈfoʊkəs ɑn ðə moʊst ɪmˈpɔrtənt wɚdz. baɪ ˈmeɪkɪŋ smɔl wɚdz ˈʃɔrtɚ, laɪk ˈtʃeɪndʒɪŋ \"aɪ wɪl\" tə \"aɪl,\" wi kæn muːv ˈkwɪkli tə ðə meɪn aɪˈdiə. ðɪs kriˈeɪts ðə ˈrɪðəm əv ˈɪŋɡlɪʃ. ɪt meɪks ˈspiːkɪŋ fil lɛs laɪk ə lɑt əv wɚk ænd mɔr laɪk ə ˈnætʃrəl floʊ əv ɛr./
 
-/ðə ˈsɛkənd pɔɪnt ɪz ðə juːs əv ˌɪnfɔrˈmæl kənˈtrækʃənz. ɪn ˈdeɪli ˌkɑnvɚˈseɪʃən, əˈmɛrɪkənz ˈɔfən juːz wɝdz laɪk \"ˈɡʌnə\" (ˈɡoʊɪŋ tə), \"ˈwɑnə\" (wɑnt tə), ɔr \"ˈɡɑɾə\" (ɡɑt tə). ðiz ɑr nɑt ˈjuːʒuəli ˈrɪtən ɪn bʊks, bʌt ˈɛvriˌwʌn sɛz ðɛm. ˈlɝnɪŋ tə seɪ \"aɪm ˈɡʌnə ɡoʊ\" ɪnˈstɛd əv \"aɪ æm ˈɡoʊɪŋ tə ɡoʊ\" wɪl ɪˈmidiətli meɪk ju saʊnd mɔr laɪk ə ˈneɪtɪv ˈspikɚ./
+/ðə ˈsɛkənd pɔɪnt ɪz ðə juːs əv ˌɪnfɔrˈmæl kənˈtrækʃənz. ɪn ˈdeɪli ˌkɑnvɚˈseɪʃən, əˈmɛrɪkənz ˈɔfən juːz wɚdz laɪk \"ˈɡʌnə\" (ˈɡoʊɪŋ tə), \"ˈwɑnə\" (wɑnt tə), ɔr \"ˈɡɑɾə\" (ɡɑt tə). ðiz ɑr nɑt ˈjuːʒuəli ˈrɪtən ɪn bʊks, bʌt ˈɛvriˌwʌn sɛz ðɛm. ˈlɚnɪŋ tə seɪ \"aɪm ˈɡʌnə ɡoʊ\" ɪnˈstɛd əv \"aɪ æm ˈɡoʊɪŋ tə ɡoʊ\" wɪl ɪˈmidiətli meɪk ju saʊnd mɔr laɪk ə ˈneɪtɪv ˈspikɚ./
 
-/ðə ˈfaɪnəl pɔɪnt ɪz ðæt kənˈtrækʃənz hɛlp ðə ˈlɪsənɚ ˌʌndɚˈstænd jɔr ˈfoʊkəs. wɛn ju ˈʃɔrtən \"du nɑt\" tə \"doʊnt,\" ðə ˈlɪsənɚ kæn ˈfoʊkəs ɑn ði ˈækʃən wɝd ðæt ˈfɑloʊz. ɪt meɪks jɔr ˈsɛntənsɪz ˈiːziɚ tə ˈfɑloʊ bɪˈkɔz ðə \"ˈɡræmɚ wɝdz\" ɑr smɔl ænd ðə \"ˈmiːnɪŋ wɝdz\" ɑr bɪɡ. ðɪs ɪz ə kiː skɪl fɔr klɪr ænd ɪˈfɛktɪv kəˌmjunəˈkeɪʃən ɪn ðə riːl wɝld./
+/ðə ˈfaɪnəl pɔɪnt ɪz ðæt kənˈtrækʃənz hɛlp ðə ˈlɪsənɚ ˌʌndɚˈstænd jɔr ˈfoʊkəs. wɛn ju ˈʃɔrtən \"du nɑt\" tə \"doʊnt,\" ðə ˈlɪsənɚ kæn ˈfoʊkəs ɑn ði ˈækʃən wɚd ðæt ˈfɑloʊz. ɪt meɪks jɔr ˈsɛntənsɪz ˈiːziɚ tə ˈfɑloʊ bɪˈkɔz ðə \"ˈɡræmɚ wɚdz\" ɑr smɔl ænd ðə \"ˈmiːnɪŋ wɚdz\" ɑr bɪɡ. ðɪs ɪz ə kiː skɪl fɔr klɪr ænd ɪˈfɛktɪv kəˌmjunəˈkeɪʃən ɪn ðə riːl wɚld./
 
 /ɪn kənˈkluːʒən, ˈjuːzɪŋ kənˈtrækʃənz ɪn ˈspiːkɪŋ ɪz əˈbaʊt ˈrɪðəm, ˌɪnfɔrˈmæl staɪl, ænd ˈklɛrəti. ðeɪ hɛlp ju seɪv ˈɛnɚdʒi ænd saʊnd mɔr ˈfrɛndli. fɔr ə bɪˈɡɪnɚ, ˈpræktəsɪŋ ðiz ʃɔrt saʊndz ɪz ðə bɛst weɪ tə trænsˈfɔrm ə \"ˈtɛkstˌbʊk ˈæksɛnt\" ˈɪntu ə riːl, ˈnætʃrəl əˈmɛrɪkən ˈæksɛnt./`,
   },

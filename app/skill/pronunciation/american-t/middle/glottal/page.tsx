@@ -841,6 +841,7 @@ export default function GlottalPage() {
             <PlayStopButton
               isActive={isPlayingExamplesAll}
               label="EXAMPLES"
+              sectionId="examples"
               onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -853,6 +854,7 @@ export default function GlottalPage() {
             <PlayStopButton
               isActive={isPlayingWordBankAll}
               label="50 WORDS"
+              sectionId="wordBank"
               onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -865,6 +867,7 @@ export default function GlottalPage() {
             <PlayStopButton
               isActive={isPlayingSentencesAll}
               label="SENTENCES"
+              sectionId="sentences"
               onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -877,6 +880,7 @@ export default function GlottalPage() {
             <PlayStopButton
               isActive={isPlayingSentenceDrillsAll}
               label="DRILLS"
+              sectionId="sentence-drills-examples"
               onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
               size="sm"
               className="mb-2 sm:mb-3"

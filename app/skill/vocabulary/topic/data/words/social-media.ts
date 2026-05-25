@@ -6,7 +6,7 @@ export const VOCAB_TOPIC_SOCIAL_MEDIA_WORDS: VocabularyItem[] = [
   { id: 'social-media-w03', topicId: 'social-media', word: 'account', ipa: '/əˈkaʊnt/', meaningId: 'akun', exampleEn: 'I created a new account.' },
   { id: 'social-media-w04', topicId: 'social-media', word: 'profile', ipa: '/ˈproʊfaɪl/', meaningId: 'profil', exampleEn: 'Please update your profile photo.' },
   { id: 'social-media-w05', topicId: 'social-media', word: 'username', ipa: '/ˈjuːzərneɪm/', meaningId: 'nama pengguna', exampleEn: 'My username is easy to remember.' },
-  { id: 'social-media-w06', topicId: 'social-media', word: 'password', ipa: '/ˈpæswɜːrd/', meaningId: 'kata sandi', exampleEn: 'Never share your password.' },
+  { id: 'social-media-w06', topicId: 'social-media', word: 'password', ipa: '/ˈpæswɚd/', meaningId: 'kata sandi', exampleEn: 'Never share your password.' },
   { id: 'social-media-w07', topicId: 'social-media', word: 'login', ipa: '/ˈlɔːɡɪn/', meaningId: 'masuk akun', exampleEn: 'I cannot login to my account.' },
   { id: 'social-media-w08', topicId: 'social-media', word: 'logout', ipa: '/ˈlɔːɡaʊt/', meaningId: 'keluar akun', exampleEn: 'Please logout on public devices.' },
   { id: 'social-media-w09', topicId: 'social-media', word: 'post', ipa: '/poʊst/', meaningId: 'unggahan', exampleEn: 'She posted a new picture.' },

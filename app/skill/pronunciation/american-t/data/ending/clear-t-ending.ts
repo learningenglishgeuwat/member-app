@@ -45,7 +45,7 @@ export const CLEAR_T_ENDING_EXAMPLES: ReadonlyArray<ClearTExample> = [
 export const CLEAR_T_ENDING_SENTENCES: ReadonlyArray<SentenceNoteItem> = [
   {
     text: 'Say that word again: cat.',
-    ipa: '/seɪ ðæt wɝd əˈɡɛn kæt/',
+    ipa: '/seɪ ðæt wɚd əˈɡɛn kæt/',
     note: 'Fokus pada letupan kecil /t/ di akhir.',
   },
   {

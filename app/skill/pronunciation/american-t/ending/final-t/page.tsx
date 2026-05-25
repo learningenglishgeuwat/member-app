@@ -662,6 +662,7 @@ export default function FinalTEndingPage() {
             <PlayStopButton
               isActive={isPlayingPhraseAll}
               label="PHRASES"
+              sectionId="phraseExamples"
               onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -674,6 +675,7 @@ export default function FinalTEndingPage() {
             <PlayStopButton
               isActive={isPlayingSentenceBankAll}
               label="SENTENCE BANK"
+              sectionId="sentenceBank"
               onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -686,6 +688,7 @@ export default function FinalTEndingPage() {
             <PlayStopButton
               isActive={isPlayingDrillsAll}
               label="DRILLS"
+              sectionId="drills"
               onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()}
               size="sm"
               className="mb-2 sm:mb-3"

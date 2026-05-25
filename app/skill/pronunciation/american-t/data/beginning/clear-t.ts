@@ -78,7 +78,7 @@ export const CLEAR_T_BEGINNING_WORD_BANK_50: ReadonlyArray<ClearTExample> = [
   { text: 'team', ipa: '/tiːm/', note: 'Gunakan airflow ringan setelah penutupan /t/.' },
   { text: 'tell', ipa: '/tɛl/', note: 'Awal kata harus terdengar tajam tapi natural.' },
   { text: 'ten', ipa: '/tɛn/', note: 'Latihan dasar untuk konsistensi /t/ awal.' },
-  { text: 'term', ipa: '/tɝːm/', note: 'Jangan menelan /t/ saat bicara cepat.' },
+  { text: 'term', ipa: '/tɚːm/', note: 'Jangan menelan /t/ saat bicara cepat.' },
   { text: 'test', ipa: '/tɛst/', note: 'Awali dengan /t/ tegas, akhirkan tetap ringkas.' },
   { text: 'text', ipa: '/tɛkst/', note: 'Bersihkan /t/ awal sebelum cluster konsonan.' },
   { text: 'ticket', ipa: '/ˈtɪkɪt/', note: 'Pastikan /t/ pertama paling terdengar.' },
@@ -110,8 +110,8 @@ export const CLEAR_T_BEGINNING_WORD_BANK_50: ReadonlyArray<ClearTExample> = [
   { text: 'true', ipa: '/truː/', note: 'Pastikan tidak langsung ke /r/ tanpa /t/.' },
   { text: 'trust', ipa: '/trʌst/', note: 'Jaga /t/ awal sebelum kombinasi konsonan berikut.' },
   { text: 'try', ipa: '/traɪ/', note: 'Mulai dengan /t/ clear, baru glide ke /r/.' },
-  { text: 'turn', ipa: '/tɝːn/', note: 'Latih /t/ awal di kata sehari-hari.' },
-  { text: 'turtle', ipa: '/ˈtɝːtəl/', note: 'Awal kata harus jelas meski ada dua suku.' },
+  { text: 'turn', ipa: '/tɚːn/', note: 'Latih /t/ awal di kata sehari-hari.' },
+  { text: 'turtle', ipa: '/ˈtɚːtəl/', note: 'Awal kata harus jelas meski ada dua suku.' },
   { text: 'type', ipa: '/taɪp/', note: 'Release /t/ singkat membantu kejelasan kata.' },
   { text: 'typical', ipa: '/ˈtɪpɪkəl/', note: 'Fokus suku pertama dengan /t/ yang bersih.' },
   { text: 'target', ipa: '/ˈtɑːrɡɪt/', note: 'Awal /t/ perlu stabil saat bicara natural.' },
@@ -145,7 +145,7 @@ export const CLEAR_T_BEGINNING_SENTENCES: ReadonlyArray<SentenceDrillItem> = [
   },
   {
     text: 'Turn to page ten and take notes.',
-    ipa: '/tɝrn tə peɪdʒ tɛn ænd teɪk noʊts/',
+    ipa: '/tɚrn tə peɪdʒ tɛn ænd teɪk noʊts/',
     note: 'Fokus ritme: released /t/ tanpa terdengar kaku.',
     focusWords: ['Turn', 'ten', 'take'],
   },
@@ -208,7 +208,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-05',
     text: 'Turn to topic ten, then take notes.',
-    ipa: '/tɝrn tə ˈtɑpɪk tɛn ðɛn teɪk noʊts/',
+    ipa: '/tɚrn tə ˈtɑpɪk tɛn ðɛn teɪk noʊts/',
     focusWords: [
       'Turn',
       'topic',
@@ -285,7 +285,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-12',
     text: 'Turn the TV to ten.',
-    ipa: '/tɝrn ðə ˌtiˈvi tə tɛn/',
+    ipa: '/tɚrn ðə ˌtiˈvi tə tɛn/',
     focusWords: [
       'Turn',
       'TV',
@@ -296,7 +296,7 @@ export const CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<Sentenc
   {
     id: 'set-13',
     text: 'The taxi turned toward town.',
-    ipa: '/ðə ˈtæksi tɝnd təˈwɔrd taʊn/',
+    ipa: '/ðə ˈtæksi tɚnd təˈwɔrd taʊn/',
     focusWords: [
       'taxi',
       'turned',

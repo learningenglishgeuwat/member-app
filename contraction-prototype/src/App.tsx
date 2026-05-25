@@ -376,10 +376,10 @@ export default function App() {
       enTarget: "were not",
       contract: "weren't",
       after: "They weren't here",
-      ipaContract: "/wɜːrnt/",
-      ipa: "/ðeɪ wɜːrnt hɪr/",
-      ipaEn: "/ðeɪ wɜːr nɑːt hɪr/",
-      ipaEnTarget: "wɜːr nɑːt",
+      ipaContract: "/wɚrnt/",
+      ipa: "/ðeɪ wɚrnt hɪr/",
+      ipaEn: "/ðeɪ wɚr nɑːt hɪr/",
+      ipaEnTarget: "wɚr nɑːt",
     },
     {
       en: "You should not go",
@@ -523,7 +523,7 @@ export default function App() {
   const negPast = [
     { word: "Didn't", ipa: "/ˈdɪdənt/" },
     { word: "Wasn't", ipa: "/ˈwɑːzənt/" },
-    { word: "Weren't", ipa: "/wɜːrnt/" },
+    { word: "Weren't", ipa: "/wɚrnt/" },
     { word: "Hadn't", ipa: "/ˈhædənt/" },
   ];
   const negModal = [

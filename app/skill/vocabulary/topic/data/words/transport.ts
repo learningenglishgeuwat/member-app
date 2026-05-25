@@ -21,7 +21,7 @@ export const VOCAB_TOPIC_TRANSPORT_WORDS: VocabularyItem[] = [
   { id: 'transport-w18', topicId: 'transport', word: 'plane', ipa: '/pleɪn/', meaningId: 'pesawat', exampleEn: 'Our plane is on time.' },
   { id: 'transport-w19', topicId: 'transport', word: 'airport', ipa: '/ˈɛrpɔrt/', meaningId: 'bandara', exampleEn: 'We arrived at the airport early.' },
   { id: 'transport-w20', topicId: 'transport', word: 'station', ipa: '/ˈsteɪʃən/', meaningId: 'stasiun', exampleEn: 'Meet me at the station.' },
-  { id: 'transport-w21', topicId: 'transport', word: 'terminal', ipa: '/ˈtɝːmɪnəl/', meaningId: 'terminal', exampleEn: 'The bus terminal is very crowded.' },
+  { id: 'transport-w21', topicId: 'transport', word: 'terminal', ipa: '/ˈtɚːmɪnəl/', meaningId: 'terminal', exampleEn: 'The bus terminal is very crowded.' },
   { id: 'transport-w22', topicId: 'transport', word: 'port', ipa: '/pɔrt/', meaningId: 'pelabuhan', exampleEn: 'The cargo is at the port.' },
   { id: 'transport-w23', topicId: 'transport', word: 'platform', ipa: '/ˈplætfɔrm/', meaningId: 'peron', exampleEn: 'The train is at platform two.' },
   { id: 'transport-w24', topicId: 'transport', word: 'bus stop', ipa: '/ˈbʌs stɑp/', meaningId: 'halte bus', exampleEn: 'Wait for me at the bus stop.' },
@@ -30,7 +30,7 @@ export const VOCAB_TOPIC_TRANSPORT_WORDS: VocabularyItem[] = [
   { id: 'transport-w27', topicId: 'transport', word: 'schedule', ipa: '/ˈskɛdʒuːl/', meaningId: 'jadwal', exampleEn: 'Check the bus schedule first.' },
   { id: 'transport-w28', topicId: 'transport', word: 'route', ipa: '/ruːt/', meaningId: 'rute', exampleEn: 'This route is faster.' },
   { id: 'transport-w29', topicId: 'transport', word: 'map', ipa: '/mæp/', meaningId: 'peta', exampleEn: 'Look at the subway map.' },
-  { id: 'transport-w30', topicId: 'transport', word: 'transfer', ipa: '/trænsˈfɝː/', meaningId: 'pindah jalur', exampleEn: 'You need one transfer downtown.' },
+  { id: 'transport-w30', topicId: 'transport', word: 'transfer', ipa: '/trænsˈfɚː/', meaningId: 'pindah jalur', exampleEn: 'You need one transfer downtown.' },
   { id: 'transport-w31', topicId: 'transport', word: 'driver', ipa: '/ˈdraɪvər/', meaningId: 'pengemudi', exampleEn: 'The driver is very helpful.' },
   { id: 'transport-w32', topicId: 'transport', word: 'passenger', ipa: '/ˈpæsɪndʒər/', meaningId: 'penumpang', exampleEn: 'Every passenger needs a ticket.' },
   { id: 'transport-w33', topicId: 'transport', word: 'seat', ipa: '/siːt/', meaningId: 'kursi', exampleEn: 'Is this seat free?' },
@@ -49,7 +49,7 @@ export const VOCAB_TOPIC_TRANSPORT_WORDS: VocabularyItem[] = [
   { id: 'transport-w46', topicId: 'transport', word: 'arrive', ipa: '/əˈraɪv/', meaningId: 'tiba', exampleEn: 'What time will you arrive?' },
   { id: 'transport-w47', topicId: 'transport', word: 'depart', ipa: '/dɪˈpɑrt/', meaningId: 'berangkat', exampleEn: 'The train will depart at six.' },
   { id: 'transport-w48', topicId: 'transport', word: 'delay', ipa: '/dɪˈleɪ/', meaningId: 'tertunda', exampleEn: 'Our flight has a delay.' },
-  { id: 'transport-w49', topicId: 'transport', word: 'early', ipa: '/ˈɝːli/', meaningId: 'lebih awal', exampleEn: 'Please come early to the station.' },
+  { id: 'transport-w49', topicId: 'transport', word: 'early', ipa: '/ˈɚːli/', meaningId: 'lebih awal', exampleEn: 'Please come early to the station.' },
   { id: 'transport-w50', topicId: 'transport', word: 'late', ipa: '/leɪt/', meaningId: 'terlambat', exampleEn: 'The bus is late again.' },
 ];
 

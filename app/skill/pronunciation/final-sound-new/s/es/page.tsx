@@ -53,7 +53,7 @@ const S_ES_USAGE_RULES = [
     trigger: 'Setelah bunyi voiceless non-sibilant (contoh: /p/, /k/, /t/, /f/).',
     examples: [
       { label: 'Plural', wordBefore: 'cat', ipaBefore: '/kæt/', word: 'cats', ipa: '/kæts/' },
-      { label: 'Third-person singular', wordBefore: 'work', ipaBefore: '/wɝːrk/', word: 'works', ipa: '/wɝːrks/' },
+      { label: 'Third-person singular', wordBefore: 'work', ipaBefore: '/wɚːrk/', word: 'works', ipa: '/wɚːrks/' },
       { label: 'Possessive', wordBefore: 'Kate', ipaBefore: '/keɪt/', word: "Kate's", ipa: '/keɪts/' },
     ],
   },
@@ -521,6 +521,16 @@ export default function FinalSoundSEsPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.wordBank) {
+        return { ...prev, wordBank: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
+
     const runId = playAllRunIdRef.current + 1;
     playAllRunIdRef.current = runId;
     setIsPlayingWordBankAll(true);
@@ -560,6 +570,16 @@ export default function FinalSoundSEsPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.pluralEndings) {
+        return { ...prev, pluralEndings: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
+
     const runId = pluralPlayAllRunIdRef.current + 1;
     pluralPlayAllRunIdRef.current = runId;
     setIsPlayingPluralAll(true);
@@ -598,6 +618,16 @@ export default function FinalSoundSEsPage() {
     }
 
     if (!isSpeechSynthesisSupported()) return;
+
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.rulesTable) {
+        return { ...prev, rulesTable: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
 
     const runId = rulesTablePlayAllRunIdRef.current + 1;
     rulesTablePlayAllRunIdRef.current = runId;
@@ -723,7 +753,7 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="pluralEndings" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -831,7 +861,7 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="rulesTable" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -916,7 +946,7 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block" ref={wordBankSectionRef}>
+        <section id="wordBank" className="fs-topic-block" ref={wordBankSectionRef}>
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1135,6 +1165,7 @@ export default function FinalSoundSEsPage() {
             <PlayStopButton
               isActive={isPlayingPluralAll}
               label="PLURAL RULES"
+              sectionId="pluralEndings"
               onClick={() => void handlePluralRulesPlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -1154,6 +1185,7 @@ export default function FinalSoundSEsPage() {
             <PlayStopButton
               isActive={isPlayingRulesTableAll}
               label="RULES TABLE"
+              sectionId="rulesTable"
               onClick={() => void handleRulesTablePlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"
@@ -1173,6 +1205,7 @@ export default function FinalSoundSEsPage() {
             <PlayStopButton
               isActive={isPlayingWordBankAll}
               label="WORD BANK"
+              sectionId="wordBank"
               onClick={() => void handleWordBankPlayAll()}
               size="sm"
               className="mb-2 sm:mb-3"

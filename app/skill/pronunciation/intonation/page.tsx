@@ -811,9 +811,14 @@ export default function IntonationPage() {
         handleStopAudio();
         return;
       }
+
+      if (!openSections[section]) {
+        setOpenSections((prev) => ({ ...prev, [section]: true }));
+      }
+
       handlePlayModel(section);
     },
-    [activeAudioSection, playbackState.isPlaying, handlePlayModel, handleStopAudio],
+    [activeAudioSection, playbackState.isPlaying, handlePlayModel, handleStopAudio, openSections],
   );
 
   const handleCopyPrompt = useCallback(async () => {
@@ -981,7 +986,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="patterns" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1015,7 +1020,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="statementsQuestions" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1049,7 +1054,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="listContinuation" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1083,7 +1088,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="emphasisFeeling" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1117,7 +1122,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="dialogueDrills" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1251,6 +1256,7 @@ export default function IntonationPage() {
               key={section.key}
               isActive={activeAudioSection === section.key && playbackState.isPlaying}
               label={section.label}
+              sectionId={section.key}
               onClick={() => handleControlCenterPlay(section.key)}
               disabled={AUDIO_SENTENCES[section.key].length === 0}
               size="sm"

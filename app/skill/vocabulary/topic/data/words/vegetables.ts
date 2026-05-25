@@ -30,7 +30,7 @@ export const VOCAB_TOPIC_VEGETABLES_WORDS: VocabularyItem[] = [
   { id: 'vegetables-w27', topicId: 'vegetables', word: 'spring onion', ipa: '/sprɪŋ ˈʌnjən/', meaningId: 'daun bawang', exampleEn: 'Top the noodles with spring onion.' },
   { id: 'vegetables-w28', topicId: 'vegetables', word: 'shallot', ipa: '/ʃəˈlɑːt/', meaningId: 'bawang merah', exampleEn: 'Fry the shallot until golden.' },
   { id: 'vegetables-w29', topicId: 'vegetables', word: 'ginger', ipa: '/ˈdʒɪndʒər/', meaningId: 'jahe', exampleEn: 'Add ginger to the broth.' },
-  { id: 'vegetables-w30', topicId: 'vegetables', word: 'turmeric', ipa: '/ˈtɝːmərɪk/', meaningId: 'kunyit', exampleEn: 'Turmeric gives yellow color.' },
+  { id: 'vegetables-w30', topicId: 'vegetables', word: 'turmeric', ipa: '/ˈtɚːmərɪk/', meaningId: 'kunyit', exampleEn: 'Turmeric gives yellow color.' },
   { id: 'vegetables-w31', topicId: 'vegetables', word: 'sweet potato', ipa: '/swiːt pəˈteɪtoʊ/', meaningId: 'ubi jalar', exampleEn: 'Roasted sweet potato is tasty.' },
   { id: 'vegetables-w32', topicId: 'vegetables', word: 'cassava', ipa: '/kəˈsɑːvə/', meaningId: 'singkong', exampleEn: 'Cassava chips are crunchy.' },
   { id: 'vegetables-w33', topicId: 'vegetables', word: 'yam', ipa: '/jæm/', meaningId: 'ubi', exampleEn: 'Yam soup is common here.' },
@@ -50,6 +50,6 @@ export const VOCAB_TOPIC_VEGETABLES_WORDS: VocabularyItem[] = [
   { id: 'vegetables-w47', topicId: 'vegetables', word: 'organic', ipa: '/ɔːrˈɡænɪk/', meaningId: 'organik', exampleEn: 'I prefer organic vegetables.' },
   { id: 'vegetables-w48', topicId: 'vegetables', word: 'chop', ipa: '/tʃɑːp/', meaningId: 'memotong', exampleEn: 'Please chop the carrot.' },
   { id: 'vegetables-w49', topicId: 'vegetables', word: 'boil', ipa: '/bɔɪl/', meaningId: 'merebus', exampleEn: 'Boil the potatoes first.' },
-  { id: 'vegetables-w50', topicId: 'vegetables', word: 'stir-fry', ipa: '/ˈstɝː fraɪ/', meaningId: 'menumis', exampleEn: 'I stir-fry vegetables for dinner.' },
+  { id: 'vegetables-w50', topicId: 'vegetables', word: 'stir-fry', ipa: '/ˈstɚː fraɪ/', meaningId: 'menumis', exampleEn: 'I stir-fry vegetables for dinner.' },
 ];
 

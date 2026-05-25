@@ -47,7 +47,7 @@ const FOOD_ROWS = [
   { en: 'We ate fried rice for dinner.', id: 'Kami makan nasi goreng untuk makan malam.', ipa: '/wi eɪt fraɪd raɪs fɔr ˈdɪnɚ/' },
   { en: 'I made a sandwich for lunch.', id: 'Saya membuat roti isi untuk makan siang.', ipa: '/aɪ meɪd ə ˈsænwɪtʃ fɔr lʌntʃ/' },
   { en: 'The kids want pizza.', id: 'Anak-anak mau pizza.', ipa: '/ðə kɪdz wɑnt ˈpitsə/' },
-  { en: 'He ordered a chicken burger.', id: 'Dia memesan burger ayam.', ipa: '/hi ˈɔrdɚd ə ˈtʃɪkən ˈbɝɡɚ/' },
+  { en: 'He ordered a chicken burger.', id: 'Dia memesan burger ayam.', ipa: '/hi ˈɔrdɚd ə ˈtʃɪkən ˈbɚɡɚ/' },
   { en: 'We baked a chocolate cake.', id: 'Kami memanggang kue cokelat.', ipa: '/wi beɪkt ə ˈtʃɔklət keɪk/' },
   { en: 'I ate two cookies.', id: 'Saya makan dua kue kering.', ipa: '/aɪ eɪt tu ˈkʊkiz/' },
   { en: 'She likes vanilla ice cream.', id: 'Dia suka es krim vanila.', ipa: '/ʃi laɪks vəˈnɪlə aɪs krim/' },

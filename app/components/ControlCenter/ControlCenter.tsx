@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Gauge, ChevronDown } from 'lucide-react';
 import { getGlobalPlaybackSpeed, setGlobalPlaybackSpeed } from '@/lib/tts/speech';
 
@@ -9,6 +10,10 @@ interface ControlCenterProps {
   title?: string;
   defaultOpen?: boolean;
 }
+
+// Section navigator type + context — exported so other components can consume it
+export type SectionNavigator = { openSection: (id: string, path?: string) => void };
+export const SectionNavigatorContext = createContext<SectionNavigator | null>(null);
 
 function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(' ');
@@ -21,6 +26,8 @@ export function ControlCenter({
 }: ControlCenterProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [speed, setSpeed] = useState<number>(1);
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     setSpeed(getGlobalPlaybackSpeed());
@@ -31,8 +38,32 @@ export function ControlCenter({
     setGlobalPlaybackSpeed(val);
   };
 
+  // Provide openSection to children
+  const openSection = (id: string, path?: string) => {
+    setIsOpen(true)
+    try {
+      const base = (path ?? pathname) || '/'
+      const target = `${base.replace(/\/$/, '')}#${id}`
+      router.push(target)
+    } catch (err) {
+      // ignore navigation errors
+      console.error('openSection failed', err)
+    }
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.dispatchEvent(new CustomEvent('at-lesson-jump-to-section', {
+          detail: { sectionId: id },
+        }))
+      } catch (err) {
+        // ignore event dispatch failures
+      }
+    }
+  }
+
   return (
-    <div
+    <SectionNavigatorContext.Provider value={{ openSection }}>
+      <div
       className={cx(
         'fixed right-0 top-1/2 -translate-y-1/2 z-50 transition-transform duration-300 ease-in-out flex shadow-[0_0_30px_rgba(0,0,0,0.8)]',
         isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -81,7 +112,13 @@ export function ControlCenter({
         </div>
       </div>
     </div>
+    </SectionNavigatorContext.Provider>
   );
+}
+
+// Hook for consumers to access navigator (may return null if used outside provider)
+export function useSectionNavigator() {
+  return useContext(SectionNavigatorContext);
 }
 
 export default ControlCenter;
