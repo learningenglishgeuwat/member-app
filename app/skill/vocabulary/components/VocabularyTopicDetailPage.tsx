@@ -529,9 +529,9 @@ export default function VocabularyTopicDetailPage({
   useEffect(() => {
     void primeVocabularyVoice();
     return () => {
-      stopVocabularySpeech();
+      stopPlayback();
     };
-  }, []);
+  }, [stopPlayback]);
 
   useEffect(() => {
     if (!playingItemId || isMobile) return;
