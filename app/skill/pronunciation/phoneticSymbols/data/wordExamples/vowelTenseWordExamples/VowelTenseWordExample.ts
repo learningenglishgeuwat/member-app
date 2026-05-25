@@ -4,6 +4,8 @@
 export interface WordExample {
   word: string;
   ipa: string;
+  americanIpa?: string;
+  britishIpa?: string;
 }
 
 export interface SymbolWordExamples {
@@ -108,36 +110,36 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'family', ipa: '/ˈfæməli/' }
   ],
   'Vowel‑Tense‑ɔ': [
-    { word: 'dog', ipa: '/dɔg/' },
-    { word: 'long', ipa: '/lɔŋ/' },
-    { word: 'song', ipa: '/sɔŋ/' },
-    { word: 'strong', ipa: '/strɔŋ/' },
-    { word: 'wrong', ipa: '/rɔŋ/' },
-    { word: 'off', ipa: '/ɔf/' },
-    { word: 'soft', ipa: '/sɔft/' },
-    { word: 'boss', ipa: '/bɔs/' },
-    { word: 'loss', ipa: '/lɔs/' },
-    { word: 'cross', ipa: '/krɔs/' },
-    { word: 'cost', ipa: '/kɔst/' },
-    { word: 'hot', ipa: '/hɔt/' },
-    { word: 'not', ipa: '/nɔt/' },
-    { word: 'lot', ipa: '/lɔt/' },
-    { word: 'top', ipa: '/tɔp/' },
-    { word: 'shop', ipa: '/ʃɔp/' },
-    { word: 'stop', ipa: '/stɔp/' },
-    { word: 'clock', ipa: '/klɔk/' },
-    { word: 'rock', ipa: '/rɔk/' },
-    { word: 'box', ipa: '/bɔks/' },
-    { word: 'fox', ipa: '/fɔks/' },
-    { word: 'job', ipa: '/ʤɔb/' },
-    { word: 'odd', ipa: '/ɔd/' },
-    { word: 'body', ipa: '/ˈbɔdi/' },
-    { word: 'coffee', ipa: '/ˈkɔfi/' },
-    { word: 'office', ipa: '/ˈɔfɪs/' },
-    { word: 'often', ipa: '/ˈɔfən/' },
-    { word: 'law', ipa: '/lɔ/' },
-    { word: 'talk', ipa: '/tɔk/' },
-    { word: 'walk', ipa: '/wɔk/' }
+    { word: 'dog', ipa: '/dɑg/', americanIpa: '/dɑg/', britishIpa: '/dɔg/' },
+    { word: 'long', ipa: '/lɑŋ/', americanIpa: '/lɑŋ/', britishIpa: '/lɔŋ/' },
+    { word: 'song', ipa: '/sɑŋ/', americanIpa: '/sɑŋ/', britishIpa: '/sɔŋ/' },
+    { word: 'strong', ipa: '/strɑŋ/', americanIpa: '/strɑŋ/', britishIpa: '/strɔŋ/' },
+    { word: 'wrong', ipa: '/rɑŋ/', americanIpa: '/rɑŋ/', britishIpa: '/rɔŋ/' },
+    { word: 'off', ipa: '/ɑf/', americanIpa: '/ɑf/', britishIpa: '/ɔf/' },
+    { word: 'soft', ipa: '/sɑft/', americanIpa: '/sɑft/', britishIpa: '/sɔft/' },
+    { word: 'boss', ipa: '/bɑs/', americanIpa: '/bɑs/', britishIpa: '/bɔs/' },
+    { word: 'loss', ipa: '/lɑs/', americanIpa: '/lɑs/', britishIpa: '/lɔs/' },
+    { word: 'cross', ipa: '/krɑs/', americanIpa: '/krɑs/', britishIpa: '/krɔs/' },
+    { word: 'cost', ipa: '/kɑst/', americanIpa: '/kɑst/', britishIpa: '/kɔst/' },
+    { word: 'hot', ipa: '/hɑt/', americanIpa: '/hɑt/', britishIpa: '/hɔt/' },
+    { word: 'not', ipa: '/nɑt/', americanIpa: '/nɑt/', britishIpa: '/nɔt/' },
+    { word: 'lot', ipa: '/lɑt/', americanIpa: '/lɑt/', britishIpa: '/lɔt/' },
+    { word: 'top', ipa: '/tɑp/', americanIpa: '/tɑp/', britishIpa: '/tɔp/' },
+    { word: 'shop', ipa: '/ʃɑp/', americanIpa: '/ʃɑp/', britishIpa: '/ʃɔp/' },
+    { word: 'stop', ipa: '/stɑp/', americanIpa: '/stɑp/', britishIpa: '/stɔp/' },
+    { word: 'clock', ipa: '/klɑk/', americanIpa: '/klɑk/', britishIpa: '/klɔk/' },
+    { word: 'rock', ipa: '/rɑk/', americanIpa: '/rɑk/', britishIpa: '/rɔk/' },
+    { word: 'box', ipa: '/bɑks/', americanIpa: '/bɑks/', britishIpa: '/bɔks/' },
+    { word: 'fox', ipa: '/fɑks/', americanIpa: '/fɑks/', britishIpa: '/fɔks/' },
+    { word: 'job', ipa: '/ʤɑb/', americanIpa: '/ʤɑb/', britishIpa: '/ʤɔb/' },
+    { word: 'odd', ipa: '/ɑd/', americanIpa: '/ɑd/', britishIpa: '/ɔd/' },
+    { word: 'body', ipa: '/ˈbɑdi/', americanIpa: '/ˈbɑdi/', britishIpa: '/ˈbɔdi/' },
+    { word: 'coffee', ipa: '/ˈkɑfi/', americanIpa: '/ˈkɑfi/', britishIpa: '/ˈkɔfi/' },
+    { word: 'office', ipa: '/ˈɑfɪs/', americanIpa: '/ˈɑfɪs/', britishIpa: '/ˈɔfɪs/' },
+    { word: 'often', ipa: '/ˈɑfən/', americanIpa: '/ˈɑfən/', britishIpa: '/ˈɔfən/' },
+    { word: 'law', ipa: '/lɑ/', americanIpa: '/lɑ/', britishIpa: '/lɔ/' },
+    { word: 'talk', ipa: '/tɑk/', americanIpa: '/tɑk/', britishIpa: '/tɔk/' },
+    { word: 'walk', ipa: '/wɑk/', americanIpa: '/wɑk/', britishIpa: '/wɔk/' }
   ],
   'Vowel‑Tense‑ɑ': [
     { word: 'father', ipa: '/ˈfɑðɚ/' },

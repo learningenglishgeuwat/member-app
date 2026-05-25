@@ -17,6 +17,7 @@ import {
 } from '@/lib/tts/speech';
 import type { WordExample } from '../data/wordExamples/wordExamples';
 import { getAllCommonLetters, type CommonLetter } from '../data/commonLetters/CommonLetters';
+import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
@@ -27,19 +28,119 @@ const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal
 
 const ALL_COMMON_LETTERS = getAllCommonLetters();
 const COMMON_LETTER_SYMBOL_ALIASES: Record<string, string[]> = {
+  // E / Eh / Ash / etc.
   e: ['ɛ'],
+  'ɛ': ['e'],
+  
+  // Diphthongs & Rhotic variants
   'eə': ['ɛr', 'ɛə'],
+  'ɛə': ['eə', 'ɛr'],
+  'ɛr': ['eə', 'ɛə'],
+  
   'ɪə': ['ɪr', 'iə'],
   'ɪr': ['ɪə', 'iə'],
   'iə': ['ɪə', 'ɪr'],
+  
   'ʊə': ['ʊr'],
+  'ʊr': ['ʊə'],
+  
   'əʊ': ['oʊ'],
+  'oʊ': ['əʊ'],
+  
+  // Affricates
+  'tʃ': ['ʧ'],
+  'ʧ': ['tʃ'],
+  'dʒ': ['ʤ'],
+  'ʤ': ['dʒ'],
+  
+  // Glides
+  y: ['j'],
+  j: ['y'],
+};
+
+const BRITISH_NOTE_COUNTERPARTS: Record<string, string[]> = {
+  'ɔ': ['ɑ'],
+  'ɑ': ['ɔ'],
+  'ɚ': ['ə'],
+  'ə': ['ɚ'],
+  'ɒ': ['ɑ', 'ɔ'],
+};
+
+const SYMBOL_HIGHLIGHT_PATTERNS: Record<string, string[]> = {
+  // Lax Vowels
+  'ʌ': ['ou', 'oo', 'oe', 'u', 'o'],
+  'ɪ': ['ui', 'ie', 'ee', 'ei', 'i', 'y', 'e', 'u'],
+  'ʊ': ['oo', 'ou', 'u', 'o'],
+  'ɛ': ['ea', 'ie', 'ai', 'ue', 'e', 'a'],
+  'ə': ['ion', 'ian', 'ou', 'io', 'ia', 'a', 'e', 'o', 'u', 'i'],
+  'ɚ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
+  'ɝ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'ɜ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'ɜr': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'əɹ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
+  
+  // Tense Vowels
+  'ɑ': ['al', 'au', 'o', 'a'],
+  'ɑr': ['ear', 'ar', 'al', 'r'],
+  'ɒ': ['ock', 'od', 'og', 'op', 'o'],
+  'i': ['ee', 'ea', 'ie', 'ei', 'ey', 'e', 'y', 'i'],
+  'u': ['oo', 'ue', 'ew', 'ou', 'ui', 'u', 'o'],
+  'æ': ['adge', 'ank', 'ai', 'au', 'a'],
+  'ɔ': ['aw', 'au', 'al', 'ough', 'o', 'a'],
+  'ɔr': ['oor', 'oar', 'our', 'ore', 'or', 'ar', 'r'],
+
+  // Diphthongs
+  'aɪ': ['igh', 'ie', 'uy', 'ai', 'i', 'y'],
+  'eɪ': ['ai', 'ay', 'ei', 'ea', 'ey', 'a', 'e'],
+  'ɔɪ': ['oi', 'oy'],
+  'ɪr': ['ear', 'eer', 'ere', 'eard', 'ier', 'ir', 'r'],
+  'ɪə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
+  'iə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
+  'ɛr': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'ɛə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'eə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'ʊr': ['ure', 'our', 'oor', 'ur', 'r'],
+  'ʊə': ['ure', 'our', 'oor', 'ur', 'r'],
+  'oʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
+  'əʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
+  'aʊ': ['ou', 'ow', 'ough'],
+
+  // Consonants Voiceless
+  'p': ['pp', 'p'],
+  't': ['tt', 'ed', 't'],
+  'k': ['ck', 'ch', 'qu', 'k', 'c', 'q'],
+  'f': ['ff', 'ph', 'gh', 'f'],
+  'θ': ['th'],
+  's': ['ss', 'sc', 'ce', 's', 'c'],
+  'ʃ': ['sh', 'ti', 'ci', 'si', 'ch', 's'],
+  'tʃ': ['tch', 'ch', 't'],
+  'ʧ': ['tch', 'ch', 't'],
+  'h': ['wh', 'h'],
+
+  // Consonants Voiced
+  'b': ['bb', 'b'],
+  'd': ['dd', 'ed', 'd'],
+  'g': ['gg', 'gh', 'gu', 'g'],
+  'v': ['vv', 've', 'v', 'f'],
+  'ð': ['th'],
+  'z': ['zz', 'se', 'z', 's', 'x'],
+  'ʒ': ['si', 'ge', 'su', 's', 'z'],
+  'ʤ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
+  'dʒ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
+  'l': ['ll', 'le', 'al', 'l'],
+  'm': ['mm', 'mb', 'm'],
+  'n': ['nn', 'kn', 'gn', 'pn', 'n'],
+  'ŋ': ['ng', 'n'],
+  'r': ['rr', 'wr', 'rh', 'r'],
+  'w': ['wh', 'qu', 'w', 'u'],
+  'y': ['y', 'i', 'u', 'eu', 'ew'],
+  'j': ['y', 'i', 'u', 'eu', 'ew'],
 };
 
 const highlightLetterStyle: React.CSSProperties = {
   color: '#fb923c',
   fontWeight: 900,
-  textShadow: '0 0 8px rgba(251,146,60,0.88), 0 0 16px rgba(251,146,60,0.46)',
+  textShadow: '0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6)',
 };
 
 const VOWEL_LAX_SYMBOLS = ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'] as const;
@@ -104,15 +205,35 @@ type SymbolDetailSectionState = {
 
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
-    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British. TTS American biasanya memakai vokal lebih ke /?/.',
+    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British; di banyak dialek AmE vokal ini terdengar lebih ke /ɑ/.',
     items: [
-      { word: 'hot', britishIpa: '/h?t/', americanIpa: '/h?t/' },
-      { word: 'not', britishIpa: '/n?t/', americanIpa: '/n?t/' },
-      { word: 'lot', britishIpa: '/l?t/', americanIpa: '/l?t/' },
-      { word: 'top', britishIpa: '/t?p/', americanIpa: '/t?p/' },
-      { word: 'shop', britishIpa: '/??p/', americanIpa: '/??p/' },
-      { word: 'box', britishIpa: '/b?ks/', americanIpa: '/b?ks/' },
-      { word: 'fox', britishIpa: '/f?ks/', americanIpa: '/f?ks/' },
+      { word: 'dog', britishIpa: '/dɔg/', americanIpa: '/dɑg/' },
+      { word: 'long', britishIpa: '/lɔŋ/', americanIpa: '/lɑŋ/' },
+      { word: 'song', britishIpa: '/sɔŋ/', americanIpa: '/sɑŋ/' },
+      { word: 'strong', britishIpa: '/strɔŋ/', americanIpa: '/strɑŋ/' },
+      { word: 'wrong', britishIpa: '/rɔŋ/', americanIpa: '/rɑŋ/' },
+      { word: 'off', britishIpa: '/ɔf/', americanIpa: '/ɑf/' },
+      { word: 'soft', britishIpa: '/sɔft/', americanIpa: '/sɑft/' },
+      { word: 'boss', britishIpa: '/bɔs/', americanIpa: '/bɑs/' },
+      { word: 'loss', britishIpa: '/lɔs/', americanIpa: '/lɑs/' },
+      { word: 'cross', britishIpa: '/krɔs/', americanIpa: '/krɑs/' },
+      { word: 'cost', britishIpa: '/kɔst/', americanIpa: '/kɑst/' },
+      { word: 'hot', britishIpa: '/hɔt/', americanIpa: '/hɑt/' },
+      { word: 'not', britishIpa: '/nɔt/', americanIpa: '/nɑt/' },
+      { word: 'lot', britishIpa: '/lɔt/', americanIpa: '/lɑt/' },
+      { word: 'top', britishIpa: '/tɔp/', americanIpa: '/tɑp/' },
+      { word: 'shop', britishIpa: '/ʃɔp/', americanIpa: '/ʃɑp/' },
+      { word: 'stop', britishIpa: '/stɔp/', americanIpa: '/stɑp/' },
+      { word: 'clock', britishIpa: '/klɔk/', americanIpa: '/klɑk/' },
+      { word: 'rock', britishIpa: '/rɔk/', americanIpa: '/rɑk/' },
+      { word: 'box', britishIpa: '/bɔks/', americanIpa: '/bɑks/' },
+      { word: 'fox', britishIpa: '/fɔks/', americanIpa: '/fɑks/' },
+      { word: 'job', britishIpa: '/ʤɔb/', americanIpa: '/ʤɑb/' },
+      { word: 'odd', britishIpa: '/ɔd/', americanIpa: '/ɑd/' },
+      { word: 'body', britishIpa: '/ˈbɔdi/', americanIpa: '/ˈbɑdi/' },
+      { word: 'coffee', britishIpa: '/ˈkɔfi/', americanIpa: '/ˈkɑfi/' },
+      { word: 'office', britishIpa: '/ˈɔfɪs/', americanIpa: '/ˈɑfɪs/' },
+      { word: 'often', britishIpa: '/ˈɔfən/', americanIpa: '/ˈɑfən/' },
     ],
   },
   h: {
@@ -346,83 +467,155 @@ const SymbolDetailPage: React.FC = () => {
     sectionStateStorageKey,
   ]);
 
-  const symbolAliasCandidates = useMemo(
-    () => [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])],
-    [decodedSymbol]
-  );
+  const symbolAliasCandidates = useMemo(() => {
+    const base = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
+    return Array.from(new Set(base.filter(Boolean)));
+  }, [decodedSymbol]);
 
   const currentSymbolCommonLetters = useMemo(() => {
+    if (SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol]) {
+      return SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol];
+    }
     const foundLetters = ALL_COMMON_LETTERS
       .filter(c => symbolAliasCandidates.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate))
       .flatMap((c) => c.letter.split(',').map((s) => s.trim().replace(/^-|-$/g, '')));
 
     return Array.from(new Set(foundLetters.filter(Boolean)));
-  }, [symbolAliasCandidates]);
+  }, [decodedSymbol, symbolAliasCandidates]);
 
   const renderWord = (word: string) => {
-    if (!showHighlight || currentSymbolCommonLetters.length === 0) return word;
+    if (!showHighlight) return word;
     
-    const patterns = [...currentSymbolCommonLetters].sort((a,b)=>b.length-a.length);
+    const lowerWord = word.toLowerCase();
+    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    if (patterns.length === 0) return word;
     
-    for (const pattern of patterns) {
-      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
-      const regex = new RegExp(`(${escapedPattern})`, 'ig');
-      
-      if (regex.test(word)) {
-        const parts = word.split(regex);
-        return (
-          <>
-            {parts.map((part, i) => {
-              if (i % 2 === 1) {
-                return (
-                  <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                    {part}
-                  </span>
-                );
-              }
-              return <React.Fragment key={i}>{part}</React.Fragment>;
-            })}
-          </>
-        );
-      }
-    }
-    return word;
+    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    
+    const parts = word.split(regex);
+    let matchedCount = 0;
+    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
+    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
+    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
+    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
+    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
+    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
+    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
+    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
+    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
+    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
+    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
+    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (i % 2 === 1) {
+            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
+              ? matchedCount === 1
+              : animalSecondMatch
+                ? matchedCount === 1 || matchedCount === 2
+                : bananaOneThreeMatch
+                  ? matchedCount === 0 || matchedCount === 2
+                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
+                    ? matchedCount === 0
+                    : tomorrowAlphaMatch
+                      ? matchedCount === 1
+                      : true;
+            matchedCount += 1;
+            if (shouldHighlight) {
+              return (
+                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                  {part}
+                </span>
+              );
+            }
+          }
+          return <React.Fragment key={i}>{part}</React.Fragment>;
+        })}
+      </>
+    );
   };
 
   const renderBritishNoteWord = (word: string) => {
-    if (!showBritishNoteHighlight || currentSymbolCommonLetters.length === 0) return word;
+    if (!showBritishNoteHighlight) return word;
     
-    const patterns = [...currentSymbolCommonLetters].sort((a,b)=>b.length-a.length);
+    const lowerWord = word.toLowerCase();
+    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    if (patterns.length === 0) return word;
     
-    for (const pattern of patterns) {
-      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
-      const regex = new RegExp(`(${escapedPattern})`, 'ig');
-      
-      if (regex.test(word)) {
-        const parts = word.split(regex);
-        return (
-          <>
-            {parts.map((part, i) => {
-              if (i % 2 === 1) {
-                return (
-                  <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                    {part}
-                  </span>
-                );
-              }
-              return <React.Fragment key={i}>{part}</React.Fragment>;
-            })}
-          </>
-        );
-      }
-    }
-    return word;
+    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    
+    const parts = word.split(regex);
+    let matchedCount = 0;
+    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
+    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
+    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
+    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
+    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
+    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
+    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
+    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
+    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
+    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
+    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
+    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (i % 2 === 1) {
+            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
+              ? matchedCount === 1
+              : animalSecondMatch
+                ? matchedCount === 1 || matchedCount === 2
+                : bananaOneThreeMatch
+                  ? matchedCount === 0 || matchedCount === 2
+                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
+                    ? matchedCount === 0
+                    : tomorrowAlphaMatch
+                      ? matchedCount === 1
+                      : true;
+            matchedCount += 1;
+            if (shouldHighlight) {
+              return (
+                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                  {part}
+                </span>
+              );
+            }
+          }
+          return <React.Fragment key={i}>{part}</React.Fragment>;
+        })}
+      </>
+    );
   };
 
-  const renderIpa = (ipa: string) => {
+  const renderIpa = (ipa?: string, isBritishNoteOrAlternative = false) => {
+    if (!ipa) return '';
     if (!showHighlight || symbolAliasCandidates.length === 0) return ipa;
     
-    const escapedSymbols = symbolAliasCandidates
+    const allowedSymbols = isBritishNoteOrAlternative
+      ? [...symbolAliasCandidates, ...(BRITISH_NOTE_COUNTERPARTS[decodedSymbol] ?? [])]
+      : symbolAliasCandidates;
+
+    const escapedSymbols = allowedSymbols
       .map(symbol => symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
       .filter(Boolean);
     const regex = new RegExp(`(${escapedSymbols.join('|')})`, 'g');
@@ -1005,11 +1198,22 @@ const SymbolDetailPage: React.FC = () => {
                     }`}></div>
 
                     <div className="flex flex-col items-center justify-center h-full z-10 relative px-1">
-                      <span className={`font-sans font-bold text-base md:text-lg tracking-wide transition-colors truncate w-full text-center ${isActive ? 'text-purple-400' : 'text-white group-hover:text-purple-400'}`}>
+                      <span className="word-text font-sans font-bold text-base md:text-lg tracking-wide text-white transition-colors truncate w-full text-center">
                         {renderWord(example.word)}
                       </span>
-                      {showIpa && <span className={`text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'opacity-90' : 'opacity-60'}`} data-ipa>
-                        [{renderIpa(example.ipa)}]</span>}
+                      {showIpa && (
+                        <span className={`word-ipa text-cyan-300 text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'opacity-90' : 'opacity-60'}`} data-ipa>
+                          {example.britishIpa ? (
+                            <>
+                              <span className="text-cyan-300/80">BrE {renderIpa(example.britishIpa, true)}</span>
+                              {' '}&rarr;{' '}
+                              <span className="text-cyan-300 font-bold">AmE {renderIpa(example.americanIpa || example.ipa, true)}</span>
+                            </>
+                          ) : (
+                            <>[{renderIpa(example.americanIpa || example.ipa)}]</>
+                          )}
+                        </span>
+                      )}
                     </div>
                   </button>
                 );
@@ -1047,11 +1251,11 @@ const SymbolDetailPage: React.FC = () => {
                     const isItemActive = activeWord === item.word;
                     return (
                     <div key={item.word} className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}>
-                      <div className={`font-semibold ${isItemActive ? 'text-amber-100' : 'text-amber-200'}`}>{renderBritishNoteWord(item.word)}</div>
+                      <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
                       {showBritishNoteIpa && (
-                        <div className="text-gray-300">
-                          BrE <span className="font-mono text-amber-200">{renderIpa(item.britishIpa)}</span>
-                          {' '}&rarr; AmE <span className="font-mono text-cyan-300">{renderIpa(item.americanIpa)}</span>
+                        <div className="text-cyan-300/60 font-mono text-xs">
+                          BrE <span className="text-cyan-300/80 font-medium">{renderIpa(item.britishIpa, true)}</span>
+                          {' '}&rarr; AmE <span className="text-cyan-300 font-bold">{renderIpa(item.americanIpa, true)}</span>
                         </div>
                       )}
                       <div className="mt-2 flex flex-wrap gap-2">

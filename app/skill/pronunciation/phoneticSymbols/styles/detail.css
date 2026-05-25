@@ -300,13 +300,13 @@
 }
 
 .symbol-detail-container .word-grid button.word-card.is-speaking .word-text {
-  color: #f5d0fe !important;
-  text-shadow: 0 0 8px rgba(245, 208, 254, 0.65);
+  color: #ffffff !important;
+  text-shadow: none !important;
 }
 
 .symbol-detail-container .word-grid button.word-card.is-speaking .word-ipa {
-  color: #e9d5ff !important;
-  text-shadow: 0 0 6px rgba(233, 213, 255, 0.45);
+  color: #06b6d4 !important;
+  text-shadow: 0 0 6px rgba(6, 182, 212, 0.45) !important;
 }
 
 @keyframes symbolWordCardSpeakingPulse {
@@ -330,22 +330,22 @@
 .symbol-detail-container .word-text {
   font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
   font-weight: bold;
-  color: white;
+  color: #ffffff !important;
   margin-bottom: 0.5rem;
 }
 
 .symbol-detail-container .word-card.active .word-text {
-  color: #be29ec;
+  color: #ffffff !important;
 }
 
 .symbol-detail-container .word-ipa {
   font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
-  color: var(--color-ipa);
+  color: #06b6d4 !important;
   font-family: var(--font-ipa);
 }
 
 .symbol-detail-container .word-card.active .word-ipa {
-  color: rgba(255, 255, 255, 0.8);
+  color: #06b6d4 !important;
 }
 
 /* Corner markers for word cards */

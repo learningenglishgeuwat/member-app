@@ -25,7 +25,8 @@ const DEFAULT_PRONUNCIATION_TIPS: PronunciationTip[] = [
 
 // Helper function to get pronunciation tips for a symbol
 export function getPronunciationTips(symbol: string): string[] {
-  const tips = allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  const tips = allPronunciationTips[normalizedKey] || DEFAULT_PRONUNCIATION_TIPS
   return tips.map((tip) => tip.tip)
 }
 
@@ -34,7 +35,8 @@ export function getTipsByCategory(
   category: 'mouth' | 'tongue' | 'lips' | 'airflow' | 'voice' | 'general',
   symbol: string
 ): string[] {
-  const tips = allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  const tips = allPronunciationTips[normalizedKey] || DEFAULT_PRONUNCIATION_TIPS
   return tips
     .filter((tip) => tip.category === category)
     .map((tip) => tip.tip)
@@ -42,7 +44,8 @@ export function getTipsByCategory(
 
 // Helper function to get all tips with categories
 export function getAllTipsWithCategories(symbol: string): PronunciationTip[] {
-  return allPronunciationTips[symbol] || DEFAULT_PRONUNCIATION_TIPS
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  return allPronunciationTips[normalizedKey] || DEFAULT_PRONUNCIATION_TIPS
 }
 
 // Helper function to get tips by symbol category

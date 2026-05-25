@@ -3,7 +3,11 @@
 
 export interface WordExample {
   word: string;
-  ipa: string;
+  // `ipa` kept for backward compatibility and will default to American IPA when present.
+  ipa?: string;
+  // Explicit fields to store both variants when available.
+  americanIpa?: string;
+  britishIpa?: string;
 }
 
 export interface SymbolWordExamples {
@@ -55,6 +59,7 @@ export function getWordExamples(symbol: string): WordExample[] {
     's': 'Consonant‑Voiceless‑s',
     'ʃ': 'Consonant‑Voiceless‑ʃ',
     'ʧ': 'Consonant‑Voiceless‑ʧ',
+    'tʃ': 'Consonant‑Voiceless‑ʧ',
     'h': 'Consonant‑Voiceless‑h',
     
     // Consonant Voiced (some use single chars, others formatted)
@@ -66,6 +71,7 @@ export function getWordExamples(symbol: string): WordExample[] {
     'z': 'Consonant‑Voiced‑z',
     'ʒ': 'Consonant‑Voiced‑ʒ',
     'ʤ': 'Consonant‑Voiced‑ʤ',
+    'dʒ': 'Consonant‑Voiced‑ʤ',
     'l': 'Consonant‑Voiced‑l',
     'n': 'Consonant‑Voiced‑n',
     'r': 'Consonant‑Voiced‑r',

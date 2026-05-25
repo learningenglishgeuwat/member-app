@@ -85,9 +85,10 @@ export const allVideoIds: { [category: string]: VideoCategory } = {
 
 // Helper function to get video ID by symbol
 export function getVideoIdBySymbol(symbol: string): string | undefined {
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
   for (const category of Object.values(allVideoIds)) {
-    if (category[symbol]) {
-      return category[symbol];
+    if (category[normalizedKey]) {
+      return category[normalizedKey];
     }
   }
   return undefined;

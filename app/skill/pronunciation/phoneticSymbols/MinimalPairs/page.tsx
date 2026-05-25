@@ -14,6 +14,7 @@ import { getAllCommonLetters } from '../data/commonLetters/CommonLetters';
 import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
+import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
@@ -79,7 +80,7 @@ const COMMON_SENTENCE_IPA: Record<string, string> = {
 
 const BASE_WORD_IPA = Object.values(allWordExamples).reduce<Record<string, string>>((acc, examples) => {
   examples.forEach((example) => {
-    acc[example.word.toLowerCase()] = stripIpaSlashes(example.ipa);
+    acc[example.word.toLowerCase()] = stripIpaSlashes(example.ipa || '');
   });
   return acc;
 }, { ...COMMON_SENTENCE_IPA });
@@ -184,35 +185,38 @@ const MinimalPairsPage: React.FC = () => {
   };
 
   const renderWord = (word: string, side: 'a' | 'b') => {
-    const patterns = selectedPairCommonLetters[side];
-    if (!showHighlight || patterns.length === 0) return word;
+    if (!showHighlight) return word;
+
+    const symbol = selectedPairSymbols[side];
+    const lowerWord = word.toLowerCase();
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[symbol];
+
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    if (patterns.length === 0) return word;
 
     const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
 
-    for (const pattern of sortedPatterns) {
-      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
-      const regex = new RegExp(`(${escapedPattern})`, 'ig');
-
-      if (regex.test(word)) {
-        const parts = word.split(regex);
-        return (
-          <>
-            {parts.map((part, index) => {
-              if (index % 2 === 1) {
-                return (
-                  <span key={index} className="minimal-letter-highlight">
-                    {part}
-                  </span>
-                );
-              }
-              return <React.Fragment key={index}>{part}</React.Fragment>;
-            })}
-          </>
-        );
-      }
-    }
-
-    return word;
+    const parts = word.split(regex);
+    return (
+      <>
+        {parts.map((part, index) => {
+          if (index % 2 === 1) {
+            return (
+              <span key={index} className="minimal-letter-highlight">
+                {part}
+              </span>
+            );
+          }
+          return <React.Fragment key={index}>{part}</React.Fragment>;
+        })}
+      </>
+    );
   };
 
   const renderIpa = (ipa: string, side: 'a' | 'b') => {

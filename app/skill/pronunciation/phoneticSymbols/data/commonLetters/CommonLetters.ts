@@ -229,10 +229,11 @@ export const commonLettersData: CommonLettersCategory[] = [
         ],
       },
       {
-        letter: 'aw, au, al, -ough',
+        letter: 'o, aw, au, al, -ough',
         ipaSymbol: '/\u0254/',
         description: 'Pola umum untuk /ɔ/ (tanpa /r/ setelahnya):',
         examples: [
+          'o -> dog, hot, not, lot, box, coffee',
           'aw -> saw, law, draw',
           'au -> cause, caught, pause',
           'al -> talk, walk, chalk',

@@ -1,0 +1,422 @@
+/**
+ * Word Highlight Overrides for Phonetic Symbols
+ * This file maps phonetic symbols to specific words and their exact target letters to be highlighted.
+ * This guarantees 100% precision, preventing false positives like silent 'e' or schwas.
+ */
+
+export const WORD_HIGHLIGHT_OVERRIDES: Record<string, Record<string, string[]>> = {
+  'aɪ': {
+    'buy': ["uy"],     'child': ["i"],     'cry': ["y"],     'drive': ["i", "e"],     'fight': ["igh"],
+    'find': ["i"],     'fine': ["i", "e"],     'fly': ["y"],     'guy': ["uy"],     'high': ["igh"],
+    'kind': ["i"],     'life': ["i", "e"],     'light': ["igh"],     'line': ["i", "e"],     'might': ["igh"],
+    'mind': ["i"],     'my': ["y"],     'night': ["igh"],     'nine': ["i", "e"],     'price': ["i", "e"],
+    'right': ["igh"],     'sight': ["igh"],     'sign': ["ig"],     'sky': ["y"],     'smile': ["i", "e"],
+    'style': ["y"],     'tight': ["igh"],     'time': ["i", "e"],     'try': ["y"],     'wife': ["i", "e"]
+  },
+  'aʊ': {
+    'about': ["ou"],     'account': ["ou"],     'allow': ["ow"],     'amount': ["ou"],     'announce': ["ou"],
+    'around': ["ou"],     'bounce': ["ou"],     'brown': ["ow"],     'cloud': ["ou"],     'cow': ["ow"],
+    'crowd': ["ow"],     'crown': ["ow"],     'down': ["ow"],     'found': ["ou"],     'ground': ["ou"],
+    'house': ["ou"],     'how': ["ow"],     'loud': ["ou"],     'mouse': ["ou"],     'mouth': ["ou"],
+    'now': ["ow"],     'outside': ["ou"],     'proud': ["ou"],     'round': ["ou"],     'shout': ["ou"],
+    'sound': ["ou"],     'south': ["ou"],     'town': ["ow"],     'without': ["ou"],     'wow': ["ow"]
+  },
+  'b': {
+    'about': ["b"],     'baby': ["b"],     'back': ["b"],     'bad': ["b"],     'bag': ["b"],
+    'bat': ["b"],     'bed': ["b"],     'best': ["b"],     'better': ["b"],     'big': ["b"],
+    'black': ["b"],     'blue': ["b"],     'book': ["b"],     'boy': ["b"],     'bread': ["b"],
+    'bring': ["b"],     'brother': ["b"],     'bus': ["b"],     'buy': ["b"],     'cabin': ["b"],
+    'club': ["b"],     'habit': ["b"],     'job': ["b"],     'number': ["b"],     'object': ["b"],
+    'problem': ["b"],     'public': ["b"],     'rabbit': ["bb"],     'sub': ["b"],     'table': ["b"]
+  },
+  'd': {
+    'dad': ["d"],     'dance': ["d"],     'danger': ["d"],     'dark': ["d"],     'date': ["d"],
+    'day': ["d"],     'deal': ["d"],     'dear': ["d"],     'decide': ["d"],     'deep': ["d"],
+    'deliver': ["d"],     'demand': ["d"],     'design': ["d"],     'detail': ["d"],     'develop': ["d"],
+    'did': ["d"],     'dinner': ["d"],     'divide': ["d"],     'doctor': ["d"],     'dog': ["d"],
+    'dollar': ["d"],     'done': ["d"],     'door': ["d"],     'doubt': ["d"],     'down': ["d"],
+    'dream': ["d"],     'drink': ["d"],     'drive': ["d"],     'drop': ["d"],     'dry': ["d"]
+  },
+  'dʒ': {
+    'adjust': ["dj"],     'age': ["g", "e"],     'badge': ["dge"],     'bridge': ["dge"],     'cage': ["g", "e"],
+    'change': ["g", "e"],     'charge': ["g", "e"],     'edge': ["dge"],     'education': ["d"],     'engine': ["g"],
+    'general': ["g"],     'generation': ["g"],     'gentle': ["g"],     'giant': ["g"],     'graduate': ["d"],
+    'huge': ["g", "e"],     'individual': ["d"],     'jam': ["j"],     'january': ["j"],     'jazz': ["j"],
+    'jealous': ["j"],     'jeans': ["j"],     'job': ["j"],     'join': ["j"],     'joke': ["j"],
+    'journal': ["j"],     'journey': ["j"],     'joy': ["j"],     'judge': ["dge"],     'juice': ["j"],
+    'july': ["j"],     'jump': ["j"],     'june': ["j"],     'jungle': ["j"],     'junior': ["j"],
+    'just': ["j"],     'page': ["g", "e"],     'procedure': ["d"],     'project': ["j"],     'region': ["g"],
+    'religion': ["g"],     'ridge': ["dge"],     'soldier': ["d"],     'stage': ["g", "e"],     'subject': ["j"]
+  },
+  'eə': {
+    'air': ["air"],     'aware': ["are"],     'bare': ["are"],     'bear': ["ear"],     'care': ["are"],
+    'chair': ["air"],     'compare': ["are"],     'dare': ["are"],     'declare': ["are"],     'fair': ["air"],
+    'flare': ["are"],     'hair': ["air"],     'hardware': ["are"],     'nightmare': ["are"],     'pair': ["air"],
+    'prepare': ["are"],     'rare': ["are"],     'repair': ["air"],     'scare': ["are"],     'share': ["are"],
+    'software': ["are"],     'spare': ["are"],     'square': ["are"],     'stair': ["air"],     'tear': ["ear"],
+    'there': ["ere"],     'unfair': ["air"],     'wear': ["ear"],     'welfare': ["are"],     'where': ["ere"]
+  },
+  'eɪ': {
+    'break': ["ea"],     'case': ["a", "e"],     'change': ["a", "e"],     'date': ["a", "e"],     'day': ["ay"],
+    'face': ["a", "e"],     'game': ["a", "e"],     'gate': ["a", "e"],     'gray': ["ay"],     'great': ["ea"],
+    'late': ["a", "e"],     'lay': ["ay"],     'main': ["ai"],     'make': ["a", "e"],     'may': ["ay"],
+    'name': ["a", "e"],     'place': ["a", "e"],     'plate': ["a", "e"],     'play': ["ay"],
+    'rain': ["ai"],     'same': ["a", "e"],     'say': ["ay"],     'shake': ["a", "e"],     'state': ["a", "e"],
+    'stay': ["ay"],     'take': ["a", "e"],     'train': ["ai"],     'wake': ["a", "e"],     'way': ["ay"]
+  },
+  'f': {
+    'coffee': ["ff"],     'face': ["f"],     'fair': ["f"],     'family': ["f"],     'fan': ["f"],
+    'farm': ["f"],     'fast': ["f"],     'fat': ["f"],     'fear': ["f"],     'file': ["f"],
+    'fine': ["f"],     'finish': ["f"],     'fire': ["f"],     'fish': ["f"],     'fit': ["f"],
+    'five': ["f"],     'food': ["f"],     'football': ["f"],     'free': ["f"],     'fresh': ["f"],
+    'friend': ["f"],     'full': ["f"],     'fun': ["f"],     'future': ["f"],     'half': ["f"],
+    'life': ["f"],     'office': ["ff"],     'safe': ["f"],     'stuff': ["ff"],     'wife': ["f"]
+  },
+  'g': {
+    'game': ["g"],     'gap': ["g"],     'garden': ["g"],     'gas': ["g"],     'gear': ["g"],
+    'get': ["g"],     'gift': ["g"],     'girl': ["g"],     'give': ["g"],     'glad': ["g"],
+    'glass': ["g"],     'global': ["g"],     'go': ["g"],     'goal': ["g"],     'god': ["g"],
+    'gold': ["g"],     'good': ["g"],     'grade': ["g"],     'grand': ["g"],     'gray': ["g"],
+    'great': ["g"],     'green': ["g"],     'ground': ["g"],     'group': ["g"],     'grow': ["g"],
+    'guess': ["gu"],     'guide': ["gu"],     'hug': ["g"],     'hungry': ["g"],     'together': ["g"]
+  },
+  'h': {
+    'hair': ["h"],     'hand': ["h"],     'happy': ["h"],     'hard': ["h"],     'hat': ["h"],
+    'head': ["h"],     'hear': ["h"],     'heart': ["h"],     'hello': ["h"],     'help': ["h"],
+    'high': ["h"],     'hill': ["h"],     'history': ["h"],     'hit': ["h"],     'holiday': ["h"],
+    'home': ["h"],     'hop': ["h"],     'hope': ["h"],     'hospital': ["h"],     'hot': ["h"],
+    'house': ["h"],     'hug': ["h"],     'human': ["h"],     'humor': ["h"],     'hundred': ["h"],
+    'hungry': ["h"],     'hunt': ["h"],     'hurt': ["h"],     'husband': ["h"],     'yahoo': ["h"]
+  },
+  'i': {
+    'be': ["e"],     'beat': ["ea"],     'believe': ["ie"],     'chief': ["ie"],     'clean': ["ea"],
+    'dream': ["ea"],     'easy': ["ea","y"],     'eat': ["ea"],     'field': ["ie"],     'free': ["ee"],
+    'green': ["ee"],     'heat': ["ea"],     'key': ["ey"],     'leave': ["ea"],     'machine': ["i"],
+    'me': ["e"],     'meat': ["ea"],     'people': ["eo"],     'piece': ["ie"],     'police': ["i"],
+    'seat': ["ea"],     'see': ["ee"],     'speak': ["ea"],     'street': ["ee"],     'tea': ["ea"],
+    'teacher': ["ea"],     'team': ["ea"],     'tree': ["ee"],     'we': ["e"],     'week': ["ee"]
+  },
+  'j': {
+    'yacht': ["y"],     'yahoo': ["y"],     'yank': ["y"],     'yard': ["y"],     'yardstick': ["y"],
+    'yarn': ["y"],     'yawn': ["y"],     'year': ["y"],     'yell': ["y"],     'yellow': ["y"],
+    'yes': ["y"],     'yesterday': ["y"],     'yet': ["y"],     'yield': ["y"],     'yip': ["y"],
+    'yodel': ["y"],     'yoga': ["y"],     'yoga‑mat': ["y"],     'yolk': ["y"],     'yonder': ["y"],
+    'you': ["y"],     'young': ["y"],     'your': ["y"],     'yours': ["y"],     'yourself': ["y"],
+    'youth': ["y"],     'yowl': ["y"],     'yule': ["y"],     'yummy': ["y"],     'yuppie': ["y"]
+  },
+  'k': {
+    'cake': ["k"],     'call': ["c"],     'car': ["c"],     'care': ["c"],     'cat': ["c"],
+    'class': ["c"],     'clean': ["c"],     'clear': ["c"],     'clock': ["ck"],     'close': ["c"],
+    'cloud': ["c"],     'coffee': ["c"],     'cold': ["c"],     'color': ["c"],     'come': ["c"],
+    'cook': ["k"],     'corner': ["c"],     'could': ["c"],     'country': ["c"],     'cover': ["c"],
+    'culture': ["c"],     'cup': ["c"],     'cut': ["c"],     'keep': ["k"],     'key': ["k"],
+    'kick': ["ck"],     'kid': ["k"],     'kind': ["k"],     'king': ["k"],     'kiss': ["k"]
+  },
+  'l': {
+    'lady': ["l"],     'land': ["l"],     'language': ["l"],     'large': ["l"],     'last': ["l"],
+    'late': ["l"],     'laugh': ["l"],     'law': ["l"],     'learn': ["l"],     'leave': ["l"],
+    'lesson': ["l"],     'let': ["l"],     'letter': ["l"],     'level': ["l"],     'life': ["l"],
+    'light': ["l"],     'like': ["l"],     'line': ["l"],     'list': ["l"],     'little': ["l","le"],
+    'live': ["l"],     'loan': ["l"],     'local': ["l"],     'long': ["l"],     'look': ["l"],
+    'lord': ["l"],     'lose': ["l"],     'love': ["l"],     'low': ["l"],     'luck': ["l"]
+  },
+  'm': {
+    'machine': ["m"],     'mad': ["m"],     'mail': ["m"],     'main': ["m"],     'make': ["m"],
+    'man': ["m"],     'manager': ["m"],     'many': ["m"],     'map': ["m"],     'market': ["m"],
+    'meal': ["m"],     'meet': ["m"],     'member': ["m"],     'memory': ["m"],     'menu': ["m"],
+    'message': ["m"],     'milk': ["m"],     'minute': ["m"],     'moment': ["m"],     'money': ["m"],
+    'mood': ["m"],     'more': ["m"],     'morning': ["m"],     'most': ["m"],     'mother': ["m"],
+    'mountain': ["m"],     'mouth': ["m"],     'move': ["m"],     'movie': ["m"],     'music': ["m"]
+  },
+  'n': {
+    'nail': ["n"],     'name': ["n"],     'narrow': ["n"],     'nation': ["n"],     'nature': ["n"],
+    'near': ["n"],     'neck': ["n"],     'need': ["n"],     'neighbor': ["n"],     'network': ["n"],
+    'never': ["n"],     'new': ["n"],     'news': ["n"],     'next': ["n"],     'nice': ["n"],
+    'night': ["n"],     'nine': ["n"],     'no': ["n"],     'nobody': ["n"],     'noise': ["n"],
+    'normal': ["n"],     'north': ["n"],     'not': ["n"],     'note': ["n"],     'nothing': ["n"],
+    'notice': ["n"],     'novel': ["n"],     'now': ["n"],     'number': ["n"],     'nurse': ["n"]
+  },
+  'oʊ': {
+    'blow': ["ow"],     'borrow': ["ow"],     'chicago': ["o"],     'flow': ["ow"],     'follow': ["ow"],
+    'go': ["o"],     'grow': ["ow"],     'hello': ["o"],     'hero': ["o"],     'know': ["ow"],
+    'logo': ["o"],     'low': ["ow"],     'no': ["o"],     'photo': ["o"],     'piano': ["o"],
+    'potato': ["o"],     'radio': ["o"],     'show': ["ow"],     'slow': ["ow"],     'snow': ["ow"],
+    'so': ["o"],     'solo': ["o"],     'studio': ["o"],     'throw': ["ow"],     'tomato': ["o"],
+    'tomorrow': ["ow"],     'video': ["o"],     'window': ["ow"],     'yellow': ["ow"],     'zero': ["o"]
+  },
+  'p': {
+    'pack': ["p"],     'paint': ["p"],     'pan': ["p"],     'paper': ["p"],     'park': ["p"],
+    'part': ["p"],     'party': ["p"],     'path': ["p"],     'pen': ["p"],     'people': ["p"],
+    'perfect': ["p"],     'person': ["p"],     'pet': ["p"],     'place': ["p"],     'plan': ["p"],
+    'play': ["p"],     'point': ["p"],     'pot': ["p"],     'power': ["p"],     'practice': ["p"],
+    'present': ["p"],     'price': ["p"],     'problem': ["p"],     'promise': ["p"],     'prove': ["p"],
+    'public': ["p"],     'pull': ["p"],     'push': ["p"],     'supply': ["pp"],     'support': ["pp"]
+  },
+  'r': {
+    'race': ["r"],     'radio': ["r"],     'rain': ["r"],     'rare': ["r"],     'rate': ["r"],
+    'reach': ["r"],     'read': ["r"],     'ready': ["r"],     'real': ["r"],     'reason': ["r"],
+    'red': ["r"],     'region': ["r"],     'report': ["r"],     'rest': ["r"],     'result': ["r"],
+    'return': ["r"],     'rich': ["r"],     'ride': ["r"],     'right': ["r"],     'rise': ["r"],
+    'risk': ["r"],     'river': ["r"],     'road': ["r"],     'rock': ["r"],     'role': ["r"],
+    'roll': ["r"],     'room': ["r"],     'round': ["r"],     'rule': ["r"],     'run': ["r"]
+  },
+  's': {
+    'bus': ["s"],     'class': ["ss"],     'dress': ["ss"],     'glass': ["ss"],     'guess': ["ss"],
+    'house': ["se"],     'lesson': ["ss"],     'safe': ["s"],     'same': ["s"],     'say': ["s"],
+    'school': ["s"],     'season': ["s"],     'see': ["s"],     'sell': ["s"],     'send': ["s"],
+    'set': ["s"],     'seven': ["s"],     'sit': ["s"],     'six': ["s"],     'small': ["s"],
+    'so': ["s"],     'soft': ["s"],     'song': ["s"],     'sound': ["s"],     'street': ["s"],
+    'student': ["s"],     'summer': ["s"],     'sun': ["s"],     'system': ["s"],     'yes': ["s"]
+  },
+  't': {
+    'table': ["t"],     'take': ["t"],     'talk': ["t"],     'tall': ["t"],     'taste': ["t"],
+    'teacher': ["t"],     'team': ["t"],     'tell': ["t"],     'ten': ["t"],     'test': ["t"],
+    'ticket': ["t"],     'time': ["t"],     'tired': ["t"],     'title': ["t"],     'today': ["t"],
+    'together': ["t"],     'tomorrow': ["t"],     'tool': ["t"],     'top': ["t"],     'total': ["t"],
+    'touch': ["t"],     'tough': ["t"],     'town': ["t"],     'train': ["t"],     'travel': ["t"],
+    'true': ["t"],     'trust': ["t"],     'try': ["t"],     'turn': ["t"],     'type': ["t"]
+  },
+  'tʃ': {
+    'actually': ["t"],     'beach': ["ch"],     'catch': ["tch"],     'century': ["t"],     'chain': ["ch"],
+    'chair': ["ch"],     'challenge': ["ch"],     'champion': ["ch"],     'chance': ["ch"],     'change': ["ch"],
+    'chapter': ["ch"],     'charm': ["ch"],     'chart': ["ch"],     'chase': ["ch"],     'chat': ["ch"],
+    'cheap': ["ch"],     'cheat': ["ch"],     'check': ["ch"],     'cheer': ["ch"],     'cheese': ["ch"],
+    'cherry': ["ch"],     'chess': ["ch"],     'chest': ["ch"],     'chicken': ["ch"],     'chief': ["ch"],
+    'child': ["ch"],     'chill': ["ch"],     'chip': ["ch"],     'chocolate': ["ch"],     'choice': ["ch"],
+    'choke': ["ch"],     'chop': ["ch"],     'chopstick': ["ch"],     'church': ["ch"],     'culture': ["t"],
+    'each': ["ch"],     'future': ["t"],     'kitchen': ["tch"],     'match': ["tch"],     'much': ["ch"],
+    'nature': ["t"],     'picture': ["t"],     'pitch': ["tch"],     'question': ["t"],     'reach': ["ch"],
+    'rich': ["ch"],     'situation': ["t"],     'such': ["ch"],     'suggestion': ["t"],     'teach': ["ch"],
+    'watch': ["tch"]
+  },
+  'u': {
+    'blue': ["ue"],     'boom': ["oo"],     'choose': ["oo"],     'computer': ["u"],     'cool': ["oo"],
+    'few': ["ew"],     'food': ["oo"],     'fruit': ["ui"],     'glue': ["ue"],     'group': ["ou"],
+    'juice': ["ui"],     'lose': ["o"],     'mood': ["oo"],     'moon': ["oo"],     'move': ["o"],
+    'music': ["u"],     'new': ["ew"],     'pool': ["oo"],     'prove': ["o"],     'room': ["oo"],
+    'rule': ["u"],     'school': ["oo"],     'soon': ["oo"],     'student': ["u"],     'suit': ["ui"],
+    'tool': ["oo"],     'true': ["ue"],     'tuesday': ["ue"],     'use': ["u"],     'you': ["ou"]
+  },
+  'v': {
+    'ever': ["v"],     'give': ["ve"],     'live': ["ve"],     'love': ["ve"],     'move': ["ve"],
+    'never': ["v"],     'over': ["v"],     'prove': ["ve"],     'river': ["v"],     'silver': ["v"],
+    'vacation': ["v"],     'value': ["v"],     'van': ["v"],     'various': ["v"],     'vegetable': ["v"],
+    'vehicle': ["v"],     'version': ["v"],     'very': ["v"],     'veteran': ["v"],     'victim': ["v"],
+    'victory': ["v"],     'video': ["v"],     'view': ["v"],     'village': ["v"],     'vision': ["v"],
+    'visit': ["v"],     'voice': ["v"],     'volunteer': ["v"],     'vote': ["v"],     'vowel': ["v"]
+  },
+  'w': {
+    'wait': ["w"],     'wake': ["w"],     'walk': ["w"],     'wall': ["w"],     'want': ["w"],
+    'warm': ["w"],     'water': ["w"],     'wave': ["w"],     'way': ["w"],     'we': ["w"],
+    'wear': ["w"],     'weather': ["w"],     'week': ["w"],     'welcome': ["w"],     'well': ["w"],
+    'west': ["w"],     'wheel': ["wh"],     'white': ["wh"],     'wife': ["w"],     'win': ["w"],
+    'wish': ["w"],     'with': ["w"],     'wolf': ["w"],     'woman': ["w"],     'wonder': ["w"],
+    'wood': ["w"],     'word': ["w"],     'work': ["w"],     'world': ["w"],     'worth': ["w"]
+  },
+  'y': {
+    'yacht': ["y"],     'yahoo': ["y"],     'yank': ["y"],     'yard': ["y"],     'yardstick': ["y"],
+    'yarn': ["y"],     'yawn': ["y"],     'year': ["y"],     'yell': ["y"],     'yellow': ["y"],
+    'yes': ["y"],     'yesterday': ["y"],     'yet': ["y"],     'yield': ["y"],     'yip': ["y"],
+    'yodel': ["y"],     'yoga': ["y"],     'yoga‑mat': ["y"],     'yolk': ["y"],     'yonder': ["y"],
+    'you': ["y"],     'young': ["y"],     'your': ["y"],     'yours': ["y"],     'yourself': ["y"],
+    'youth': ["y"],     'yowl': ["y"],     'yule': ["y"],     'yummy': ["y"],     'yuppie': ["y"]
+  },
+  'z': {
+    'amaze': ["ze"],     'because': ["se"],     'busy': ["s"],     'buzz': ["zz"],     'crazy': ["z"],
+    'does': ["s"],     'dozen': ["z"],     'easy': ["s"],     'fizz': ["zz"],     'freeze': ["ze"],
+    'his': ["s"],     'is': ["s"],     'lazy': ["z"],     'noise': ["se"],     'please': ["se"],
+    'prize': ["ze"],     'quiz': ["z"],     'rise': ["se"],     'size': ["ze"],     'these': ["se"],
+    'those': ["se"],     'was': ["s"],     'wise': ["se"],     'zeal': ["z"],     'zebra': ["z"],
+    'zero': ["z"],     'zip': ["z"],     'zone': ["z"],     'zoo': ["z"],     'zoom': ["z"]
+  },
+  'æ': {
+    'answer': ["a"],     'attack': ["a"],     'back': ["a"],     'bad': ["a"],     'bag': ["a"],
+    'bat': ["a"],     'black': ["a"],     'can': ["a"],     'cap': ["a"],     'cat': ["a"],
+    'class': ["a"],     'dance': ["a"],     'family': ["a"],     'fan': ["a"],     'flag': ["a"],
+    'gap': ["a"],     'glad': ["a"],     'glass': ["a"],     'ham': ["a"],     'happy': ["a"],
+    'hat': ["a"],     'jam': ["a"],     'lack': ["a"],     'mad': ["a"],     'man': ["a"],
+    'map': ["a"],     'nap': ["a"],     'pack': ["a"],     'pan': ["a"],     'pass': ["a"],
+    'plan': ["a"],     'rat': ["a"],     'sad': ["a"],     'shadow': ["a"],     'tag': ["a"],
+    'tap': ["a"],     'track': ["a"],     'value': ["a"]
+  },
+  'ð': {
+    'another': ["th"],     'bathe': ["the"],     'breathe': ["the"],     'brother': ["th"],     'clothes': ["th"],
+    'father': ["th"],     'gather': ["th"],     'mother': ["th"],     'northern': ["th"],     'other': ["th"],
+    'rather': ["th"],     'smooth': ["th"],     'than': ["th"],     'that': ["th"],     'the': ["th"],
+    'their': ["th"],     'them': ["th"],     'then': ["th"],     'there': ["th"],     'these': ["th"],
+    'they': ["th"],     'this': ["th"],     'those': ["th"],     'though': ["th"],     'thus': ["th"],
+    'together': ["th"],     'weather': ["th"],     'whether': ["th"],     'with': ["th"],     'without': ["th"]
+  },
+  'ŋ': {
+    'English': ["n"],     'anger': ["ng"],     'bang': ["ng"],     'bank': ["n"],     'beginning': ["ng"],
+    'bring': ["ng"],     'coming': ["ng"],     'doing': ["ng"],     'drink': ["n"],     'ending': ["ng"],
+    'evening': ["ng"],     'finger': ["ng"],     'going': ["ng"],     'hang': ["ng"],     'hungry': ["n"],
+    'king': ["ng"],     'living': ["ng"],     'long': ["ng"],     'loving': ["ng"],     'morning': ["ng"],
+    'pink': ["n"],     'ring': ["ng"],     'running': ["ng"],     'sing': ["ng"],     'sink': ["n"],
+    'song': ["ng"],     'spring': ["ng"],     'string': ["ng"],     'strong': ["ng"],     'swimming': ["ng"],
+    'talking': ["ng"],     'thank': ["n"],     'thing': ["ng"],     'think': ["n"],     'thinking': ["ng"],
+    'uncle': ["n"],     'walking': ["ng"],     'wing': ["ng"],     'working': ["ng"],     'wrong': ["ng"],
+    'young': ["ng"]
+  },
+  'ɑ': {
+    'alarm': ["a"],     'argument': ["a"],     'arm': ["a"],     'art': ["a"],     'aunt': ["au"],
+    'bar': ["a"],     'body': ["o"],     'borrow': ["o"],     'box': ["o"],     'calm': ["al"],
+    'car': ["a"],     'charge': ["a"],     'clock': ["o"],     'coffee': ["o"],     'dark': ["a"],
+    'far': ["a"],     'farm': ["a"],     'father': ["a"],     'follow': ["o"],     'garden': ["a"],
+    'half': ["al"],     'harbor': ["a"],     'hard': ["a"],     'harder': ["a"],     'heart': ["ea"],
+    'hospital': ["o"],     'hot': ["o"],     'jar': ["a"],     'job': ["o"],     'large': ["a"],
+    'march': ["a"],     'market': ["a"],     'not': ["o"],     'odd': ["o"],     'office': ["o"],
+    'often': ["o"],     'palm': ["al"],     'park': ["a"],     'part': ["a"],     'party': ["a"],
+    'pot': ["o"],     'problem': ["o"],     'rock': ["o"],     'scar': ["a"],     'sharp': ["a"],
+    'shop': ["o"],     'smart': ["a"],     'spa': ["a"],     'star': ["a"],     'start': ["a"],
+    'stop': ["o"],     'target': ["a"],     'tomorrow': ["o"],     'top': ["o"],     'yard': ["a"]
+  },
+  'ɔ': {
+    'body': ["o"],     'boss': ["o"],     'bought': ["ou"],     'box': ["o"],     'brought': ["ou"],
+    'call': ["a"],     'caught': ["au"],     'cause': ["au"],     'clock': ["o"],     'coffee': ["o"],
+    'cost': ["o"],     'cross': ["o"],     'dog': ["o"],     'draw': ["aw"],     'fall': ["a"],
+    'fought': ["ou"],     'fox': ["o"],     'hall': ["a"],     'hot': ["o"],     'job': ["o"],
+    'law': ["aw"],     'long': ["o"],     'loss': ["o"],     'lot': ["o"],     'not': ["o"],
+    'odd': ["o"],     'off': ["o"],     'office': ["o"],     'often': ["o"],     'ought': ["ou"],
+    'pause': ["au"],     'rock': ["o"],     'saw': ["aw"],     'shop': ["o"],     'small': ["a"],
+    'soft': ["o"],     'song': ["o"],     'stop': ["o"],     'strong': ["o"],     'talk': ["a"],
+    'tall': ["a"],     'thought': ["ou"],     'top': ["o"],     'walk': ["a"],     'wall': ["a"],
+    'water': ["a"],     'wrong': ["o"]
+  },
+  'ɔɪ': {
+    'annoy': ["oy"],     'appoint': ["oi"],     'avoid': ["oi"],     'boil': ["oi"],     'boy': ["oy"],
+    'choice': ["oi"],     'coin': ["oi"],     'destroy': ["oy"],     'disjoint': ["oi"],     'employ': ["oy"],
+    'enjoy': ["oy"],     'foist': ["oi"],     'invoice': ["oi"],     'join': ["oi"],     'joy': ["oy"],
+    'loyal': ["oy"],     'moist': ["oi"],     'noise': ["oi"],     'oil': ["oi"],     'oyster': ["oy"],
+    'point': ["oi"],     'poison': ["oi"],     'rejoice': ["oi"],     'rejoin': ["oi"],     'royal': ["oy"],
+    'soil': ["oi"],     'spoiled': ["oi"],     'toy': ["oy"],     'voice': ["oi"],     'voyage': ["oy"]
+  },
+  'ə': {
+    'about': ["a"],     'ago': ["a"],     'animal': ["i","a"],     'another': ["a"],     'banana': ["a"],
+    'condition': ["o","io"],     'family': ["i"],     'garden': ["e"],     'global': ["a"],     'hospital': ["i","a"],
+    'human': ["a"],     'hundred': ["e"],     'husband': ["a"],     'machine': ["a"],     'opinion': ["o","io"],
+    'people': ["e"],     'person': ["o"],     'police': ["o"],     'position': ["o","io"],     'present': ["e"],
+    'problem': ["e"],     'sofa': ["a"],     'supply': ["u"],     'support': ["u"],     'suppose': ["u"],
+    'system': ["e"],     'today': ["o"],     'together': ["o"],     'tomorrow': ["o"],     'welcome': ["o"]
+  },
+  'əʊ': {
+    'blow': ["ow"],     'borrow': ["ow"],     'chicago': ["o"],     'flow': ["ow"],     'follow': ["ow"],
+    'go': ["o"],     'grow': ["ow"],     'hello': ["o"],     'hero': ["o"],     'know': ["ow"],
+    'logo': ["o"],     'low': ["ow"],     'no': ["o"],     'photo': ["o"],     'piano': ["o"],
+    'potato': ["o"],     'radio': ["o"],     'show': ["ow"],     'slow': ["ow"],     'snow': ["ow"],
+    'so': ["o"],     'solo': ["o"],     'studio': ["o"],     'throw': ["ow"],     'tomato': ["o"],
+    'tomorrow': ["ow"],     'video': ["o"],     'window': ["ow"],     'yellow': ["ow"],     'zero': ["o"]
+  },
+  'ɚ': {
+    'better': ["er"],     'brother': ["er"],     'center': ["er"],     'collar': ["ar"],     'computer': ["er"],
+    'corner': ["er"],     'customer': ["er"],     'dinner': ["er"],     'doctor': ["or"],     'dollar': ["ar"],
+    'driver': ["er"],     'father': ["er"],     'gamer': ["er"],     'later': ["er"],     'leader': ["er"],
+    'letter': ["er"],     'manager': ["er"],     'mother': ["er"],     'number': ["er"],     'order': ["er"],
+    'painter': ["er"],     'player': ["er"],     'reader': ["er"],     'singer': ["er"],     'sister': ["er"],
+    'sugar': ["ar"],     'summer': ["er"],     'teacher': ["er"],     'visitor': ["or"],     'water': ["er"],
+    'winner': ["er"],     'winter': ["er"],     'worker': ["er"],     'writer': ["er"]
+  },
+  'ɛ': {
+    'bed': ["e"],     'best': ["e"],     'bet': ["e"],     'bread': ["ea"],     'chest': ["e"],
+    'dead': ["ea"],     'dress': ["e"],     'fed': ["e"],     'friend': ["ie"],     'get': ["e"],
+    'guess': ["ue"],     'head': ["ea"],     'hen': ["e"],     'led': ["e"],     'lend': ["e"],
+    'let': ["e"],     'men': ["e"],     'message': ["e"],     'net': ["e"],     'pen': ["e"],     'present': ["e"],
+    'pet': ["e"],     'red': ["e"],     'rest': ["e"],     'said': ["ai"],     'send': ["e"],
+    'set': ["e"],     'ten': ["e"],     'test': ["e"],     'wet': ["e"],     'welcome': ["e"],     'yes': ["e"]
+  },
+  'ɪ': {
+    'big': ["i"],     'bit': ["i"],     'chill': ["i"],     'dig': ["i"],     'fill': ["i"],
+    'finish': ["i"],     'fish': ["i"],     'fit': ["i"],     'gift': ["i"],     'hill': ["i"],
+    'him': ["i"],     'hit': ["i"],     'kid': ["i"],     'kiss': ["i"],     'lid': ["i"],
+    'lift': ["i"],     'list': ["i"],     'milk': ["i"],     'minute': ["i","u"],     'miss': ["i"],
+    'pin': ["i"],     'quick': ["ui"],     'rich': ["i"],     'ship': ["i"],     'sick': ["i"],
+    'sit': ["i"],     'still': ["i"],     'thin': ["i"],     'will': ["i"],     'win': ["i"]
+  },
+  'ɪə': {
+    'appear': ["ear"],     'area': ["ea"],     'beer': ["eer"],     'career': ["eer"],     'cheer': ["eer"],
+    'clear': ["ear"],     'criteria': ["ia"],     'curious': ["io"],     'deer': ["eer"],     'disappear': ["ear"],
+    'ear': ["ear"],     'engineer': ["eer"],     'fear': ["ear"],     'gear': ["ear"],     'hear': ["ear"],
+    'idea': ["ea"],     'india': ["ia"],     'inferior': ["er"],     'interior': ["er"],     'material': ["ia"],
+    'media': ["ia"],     'near': ["ear"],     'period': ["er"],     'pier': ["ier"],     'serious': ["eri"],
+    'sphere': ["ere"],     'superior': ["er"],     'various': ["io"],     'volunteer': ["eer"],     'year': ["ear"]
+  },
+  'ʃ': {
+    'action': ["ti"],     'ancient': ["ci"],     'brochure': ["ch"],     'chef': ["ch"],     'chicago': ["ch"],
+    'delicious': ["ci"],     'expression': ["ss"],     'fish': ["sh"],     'issue': ["ss"],     'machine': ["ch"],
+    'mansion': ["si"],     'mention': ["ti"],     'mission': ["ss"],     'nation': ["ti"],     'ocean': ["c"],
+    'patient': ["ti"],     'pressure': ["ss"],     'session': ["ss"],     'shadow': ["sh"],     'shame': ["sh"],
+    'shape': ["sh"],     'share': ["sh"],     'sharp': ["sh"],     'she': ["sh"],     'sheet': ["sh"],
+    'shell': ["sh"],     'shelter': ["sh"],     'shift': ["sh"],     'shine': ["sh"],     'ship': ["sh"],
+    'shirt': ["sh"],     'shock': ["sh"],     'shoe': ["sh"],     'shoot': ["sh"],     'shop': ["sh"],
+    'shopping': ["sh"],     'short': ["sh"],     'should': ["sh"],     'shoulder': ["sh"],     'shout': ["sh"],
+    'shovel': ["sh"],     'show': ["sh"],     'shower': ["sh"],     'shrimp': ["sh"],     'shrink': ["sh"],
+    'shuffle': ["sh"],     'shut': ["sh"],     'social': ["ci"],     'special': ["ci"],     'sugar': ["s"],
+    'sure': ["s"],     'tension': ["si"],     'wish': ["sh"]
+  },
+  'ʊ': {
+    'book': ["oo"],     'bull': ["u"],     'bush': ["u"],     'butcher': ["u"],     'cook': ["oo"],
+    'cookie': ["oo"],     'could': ["ou"],     'cushion': ["u"],     'foot': ["oo"],     'full': ["u"],
+    'good': ["oo"],     'hood': ["oo"],     'hoodie': ["oo"],     'hook': ["oo"],     'look': ["oo"],
+    'pudding': ["u"],     'pull': ["u"],     'pulling': ["u"],     'push': ["u"],     'put': ["u"],
+    'rookie': ["oo"],     'shook': ["oo"],     'should': ["ou"],     'stood': ["oo"],     'sugar': ["u"],
+    'took': ["oo"],     'wolf': ["o"],     'woman': ["o"],     'wood': ["oo"],     'wooden': ["oo"],
+    'would': ["ou"]
+  },
+  'ʊə': {
+    'allure': ["ure"],     'boor': ["oor"],     'brochure': ["ure"],     'cure': ["ure"],     'curious': ["ur"],
+    'detour': ["our"],     'during': ["ur"],     'endure': ["ure"],     'europe': ["ur"],     'fury': ["ur"],
+    'gourd': ["our"],     'insure': ["ure"],     'jury': ["ur"],     'lure': ["ure"],     'mature': ["ure"],
+    'moor': ["oor"],     'obscure': ["ure"],     'plural': ["ur"],     'poor': ["oor"],     'pure': ["ure"],
+    'reassure': ["ure"],     'rural': ["ur"],     'secure': ["ure"],     'spoor': ["oor"],     'sure': ["ure"],
+    'tour': ["our"],     'tourist': ["our"],     'your': ["our"],     'yours': ["our"],     'yourself': ["our"]
+  },
+  'ʌ': {
+    'bus': ["u"],     'but': ["u"],     'come': ["o"],     'cover': ["o"],     'cup': ["u"],
+    'cut': ["u"],     'dull': ["u"],     'dust': ["u"],     'fun': ["u"],     'gun': ["u"],
+    'honey': ["o"],     'hurry': ["u"],     'jump': ["u"],     'love': ["o"],     'luck': ["u"],
+    'money': ["o"],     'much': ["u"],     'onion': ["o"],     'run': ["u"],     'shut': ["u"],
+    'stuff': ["u"],     'sunday': ["u"],     'touch': ["ou"],     'trust': ["u"],     'ugly': ["u"],
+    'uncle': ["u"],     'under': ["u"],     'up': ["u"],     'us': ["u"],     'worry': ["o"]
+  },
+  'ʒ': {
+    'asia': ["si"],     'beige': ["ge"],     'casual': ["s"],     'collision': ["s"],     'conclusion': ["s"],
+    'confusion': ["s"],     'decision': ["s"],     'division': ["s"],     'erosion': ["s"],     'explosion': ["s"],
+    'fusion': ["s"],     'garage': ["g"],     'genre': ["g"],     'illusion': ["s"],     'invasion': ["s"],
+    'leisure': ["s"],     'massage': ["g"],     'measure': ["s"],     'mirage': ["g"],     'occasion': ["s"],
+    'persian': ["s"],     'pleasure': ["s"],     'precision': ["s"],     'prestige': ["g"],     'provision': ["s"],
+    'revision': ["s"],     'television': ["s"],     'treasure': ["s"],     'usual': ["s"],     'version': ["s"],
+    'vision': ["s"],     'visual': ["s"]
+  },
+  'ʤ': {
+    'adjust': ["dj"],     'age': ["g"],     'badge': ["dge"],     'bridge': ["dge"],     'cage': ["g"],
+    'change': ["g"],     'charge': ["g"],     'edge': ["dge"],     'education': ["d"],     'engine': ["g"],
+    'general': ["g"],     'generation': ["g"],     'gentle': ["g"],     'giant': ["g"],     'graduate': ["d"],
+    'huge': ["g"],     'individual': ["d"],     'jam': ["j"],     'january': ["j"],     'jazz': ["j"],
+    'jealous': ["j"],     'jeans': ["j"],     'job': ["j"],     'join': ["j"],     'joke': ["j"],
+    'journal': ["j"],     'journey': ["j"],     'joy': ["j"],     'judge': ["dge"],     'juice': ["j"],
+    'july': ["j"],     'jump': ["j"],     'june': ["j"],     'jungle': ["j"],     'junior': ["j"],
+    'just': ["j"],     'page': ["g"],     'procedure': ["d"],     'project': ["j"],     'region': ["g"],
+    'religion': ["g"],     'ridge': ["dge"],     'soldier': ["d"],     'stage': ["g"],     'subject': ["j"]
+  },
+  'ʧ': {
+    'actually': ["t"],     'beach': ["ch"],     'catch': ["tch"],     'century': ["t"],     'chain': ["ch"],
+    'chair': ["ch"],     'challenge': ["ch"],     'champion': ["ch"],     'chance': ["ch"],     'change': ["ch"],
+    'chapter': ["ch"],     'charm': ["ch"],     'chart': ["ch"],     'chase': ["ch"],     'chat': ["ch"],
+    'cheap': ["ch"],     'cheat': ["ch"],     'check': ["ch"],     'cheer': ["ch"],     'cheese': ["ch"],
+    'cherry': ["ch"],     'chess': ["ch"],     'chest': ["ch"],     'chicken': ["ch"],     'chief': ["ch"],
+    'child': ["ch"],     'chill': ["ch"],     'chip': ["ch"],     'chocolate': ["ch"],     'choice': ["ch"],
+    'choke': ["ch"],     'chop': ["ch"],     'chopstick': ["ch"],     'church': ["ch"],     'culture': ["t"],
+    'each': ["ch"],     'future': ["t"],     'kitchen': ["tch"],     'match': ["tch"],     'much': ["ch"],
+    'nature': ["t"],     'picture': ["t"],     'pitch': ["tch"],     'question': ["t"],     'reach': ["ch"],
+    'rich': ["ch"],     'situation': ["t"],     'such': ["ch"],     'suggestion': ["t"],     'teach': ["ch"],
+    'watch': ["tch"]
+  },
+  'θ': {
+    'birth': ["th"],     'both': ["th"],     'cloth': ["th"],     'earth': ["th"],     'math': ["th"],
+    'mouth': ["th"],     'north': ["th"],     'south': ["th"],     'thank': ["th"],     'theater': ["th"],
+    'theme': ["th"],     'theory': ["th"],     'thick': ["th"],     'thief': ["th"],     'thin': ["th"],
+    'think': ["th"],     'thirsty': ["th"],     'thirteen': ["th"],     'thirty': ["th"],     'thousand': ["th"],
+    'threat': ["th"],     'three': ["th"],     'thrive': ["th"],     'throat': ["th"],     'through': ["th"],
+    'throw': ["th"],     'thunder': ["th"],     'thursday': ["th"],     'tooth': ["th"],     'worth': ["th"]
+  }
+};
