@@ -29,7 +29,9 @@ const ALL_COMMON_LETTERS = getAllCommonLetters();
 const COMMON_LETTER_SYMBOL_ALIASES: Record<string, string[]> = {
   e: ['ɛ'],
   'eə': ['ɛr', 'ɛə'],
-  'ɪə': ['ɪr'],
+  'ɪə': ['ɪr', 'iə'],
+  'ɪr': ['ɪə', 'iə'],
+  'iə': ['ɪə', 'ɪr'],
   'ʊə': ['ʊr'],
   'əʊ': ['oʊ'],
 };
@@ -229,7 +231,9 @@ const SymbolDetailPage: React.FC = () => {
   const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
+  const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
+  const [showBritishNoteHighlight, setShowBritishNoteHighlight] = useState(true);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
   const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(() => ALL_COMMON_LETTERS);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
@@ -341,14 +345,19 @@ const SymbolDetailPage: React.FC = () => {
     isSectionStateHydrated,
     sectionStateStorageKey,
   ]);
+
+  const symbolAliasCandidates = useMemo(
+    () => [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])],
+    [decodedSymbol]
+  );
+
   const currentSymbolCommonLetters = useMemo(() => {
-    const candidateSymbols = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
-    const found = ALL_COMMON_LETTERS.find(c =>
-      candidateSymbols.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate)
-    );
-    if (!found) return [];
-    return found.letter.split(',').map(s => s.trim().replace(/^-|-$/g, ''));
-  }, [decodedSymbol]);
+    const foundLetters = ALL_COMMON_LETTERS
+      .filter(c => symbolAliasCandidates.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate))
+      .flatMap((c) => c.letter.split(',').map((s) => s.trim().replace(/^-|-$/g, '')));
+
+    return Array.from(new Set(foundLetters.filter(Boolean)));
+  }, [symbolAliasCandidates]);
 
   const renderWord = (word: string) => {
     if (!showHighlight || currentSymbolCommonLetters.length === 0) return word;
@@ -380,11 +389,43 @@ const SymbolDetailPage: React.FC = () => {
     return word;
   };
 
-  const renderIpa = (ipa: string) => {
-    if (!showHighlight || !decodedSymbol) return ipa;
+  const renderBritishNoteWord = (word: string) => {
+    if (!showBritishNoteHighlight || currentSymbolCommonLetters.length === 0) return word;
     
-    const escapedSymbol = decodedSymbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`(${escapedSymbol})`, 'g');
+    const patterns = [...currentSymbolCommonLetters].sort((a,b)=>b.length-a.length);
+    
+    for (const pattern of patterns) {
+      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.');
+      const regex = new RegExp(`(${escapedPattern})`, 'ig');
+      
+      if (regex.test(word)) {
+        const parts = word.split(regex);
+        return (
+          <>
+            {parts.map((part, i) => {
+              if (i % 2 === 1) {
+                return (
+                  <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                    {part}
+                  </span>
+                );
+              }
+              return <React.Fragment key={i}>{part}</React.Fragment>;
+            })}
+          </>
+        );
+      }
+    }
+    return word;
+  };
+
+  const renderIpa = (ipa: string) => {
+    if (!showHighlight || symbolAliasCandidates.length === 0) return ipa;
+    
+    const escapedSymbols = symbolAliasCandidates
+      .map(symbol => symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .filter(Boolean);
+    const regex = new RegExp(`(${escapedSymbols.join('|')})`, 'g');
     
     if (regex.test(ipa)) {
       const parts = ipa.split(regex);
@@ -978,7 +1019,7 @@ const SymbolDetailPage: React.FC = () => {
         </div>
 
         {britishNote && (
-          <div className="w-full max-w-4xl mx-auto mt-2 mb-2">
+          <div id="britishNote" className="w-full max-w-4xl mx-auto mt-2 mb-2">
             <div className="bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]">
               <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
                 <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
@@ -1006,11 +1047,13 @@ const SymbolDetailPage: React.FC = () => {
                     const isItemActive = activeWord === item.word;
                     return (
                     <div key={item.word} className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}>
-                      <div className={`font-semibold ${isItemActive ? 'text-amber-100' : 'text-amber-200'}`}>{item.word}</div>
-                      <div className="text-gray-300">
-                        BrE <span className="font-mono text-amber-200">{item.britishIpa}</span>
-                        {' '}&rarr; AmE <span className="font-mono text-cyan-300">{item.americanIpa}</span>
-                      </div>
+                      <div className={`font-semibold ${isItemActive ? 'text-amber-100' : 'text-amber-200'}`}>{renderBritishNoteWord(item.word)}</div>
+                      {showBritishNoteIpa && (
+                        <div className="text-gray-300">
+                          BrE <span className="font-mono text-amber-200">{renderIpa(item.britishIpa)}</span>
+                          {' '}&rarr; AmE <span className="font-mono text-cyan-300">{renderIpa(item.americanIpa)}</span>
+                        </div>
+                      )}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
                           onClick={() => handlePlayBritishNoteWord(item.word)}
@@ -1343,6 +1386,31 @@ const SymbolDetailPage: React.FC = () => {
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
             <IpaVisibilityToggle checked={showHighlight} onChange={setShowHighlight} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" label="Highlight Letters" />
           </div>
+          {britishNote && (
+            <div>
+              <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-amber-400/80 block mb-1.5 sm:mb-2 uppercase">Catatan (UK vs US)</span>
+              <PlayStopButton
+                isActive={isPlayingAllBritishNotes}
+                label="BRITISH NOTES"
+                sectionId="britishNote"
+                onClick={handlePlayAllBritishNotes}
+                disabled={!britishNote || britishNote.items.length === 0}
+                className="mb-2 sm:mb-3"
+              />
+              <IpaVisibilityToggle
+                checked={showBritishNoteIpa}
+                onChange={setShowBritishNoteIpa}
+                className="w-full flex justify-between text-[10px] sm:text-xs mb-2"
+                label="IPA"
+              />
+              <IpaVisibilityToggle
+                checked={showBritishNoteHighlight}
+                onChange={setShowBritishNoteHighlight}
+                className="w-full flex justify-between text-[10px] sm:text-xs"
+                label="Highlight Letters"
+              />
+            </div>
+          )}
         </div>
       </ControlCenter>
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
