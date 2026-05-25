@@ -347,20 +347,27 @@ export default function VocabularyTopicDetailPage({
     });
   }, [search, topicWords]);
 
+  const wordsPerPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
+
   const totalPages = useMemo(() => {
     if (!visibleWords.length) return 1;
-    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
-    return Math.ceil(visibleWords.length / perPage);
-  }, [isMobile, visibleWords.length]);
+    return Math.ceil(visibleWords.length / wordsPerPage);
+  }, [visibleWords.length, wordsPerPage]);
 
   const effectivePage = Math.min(currentPage, totalPages);
 
+  const pageWords = useCallback(
+    (page: number) => {
+      const safePage = Math.min(totalPages, Math.max(1, page));
+      const start = (safePage - 1) * wordsPerPage;
+      return visibleWords.slice(start, start + wordsPerPage);
+    },
+    [visibleWords, totalPages, wordsPerPage],
+  );
+
   const pagedWords = useMemo(() => {
-    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
-    const start = (effectivePage - 1) * perPage;
-    const end = start + perPage;
-    return visibleWords.slice(start, end);
-  }, [effectivePage, isMobile, visibleWords]);
+    return pageWords(effectivePage);
+  }, [effectivePage, pageWords]);
 
   const practiceExample = useMemo(() => {
     const firstItem = topicWords[0];
@@ -421,7 +428,7 @@ export default function VocabularyTopicDetailPage({
   }, []);
 
   const playAllWords = useCallback(async () => {
-    if (!pagedWords.length) return;
+    if (!visibleWords.length) return;
 
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
@@ -429,10 +436,22 @@ export default function VocabularyTopicDetailPage({
     setIsPlayAllRunning(true);
     setPlayMode('words');
 
-    for (const item of pagedWords) {
+    for (let page = effectivePage; page <= totalPages; page += 1) {
       if (playTokenRef.current !== token) break;
-      setPlayingItemId(item.id);
-      await speakVocabularyText(item.word);
+      const items = pageWords(page);
+      if (!items.length) break;
+
+      if (page !== effectivePage) {
+        setCurrentPage(page);
+        setCarouselIndex(0);
+        await new Promise((resolve) => window.requestAnimationFrame(() => resolve(undefined)));
+      }
+
+      for (const item of items) {
+        if (playTokenRef.current !== token) break;
+        setPlayingItemId(item.id);
+        await speakVocabularyText(item.word);
+      }
     }
 
     if (playTokenRef.current === token) {
@@ -440,10 +459,10 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [pagedWords]);
+  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
 
   const playAllWordThenExample = useCallback(async () => {
-    if (!pagedWords.length) return;
+    if (!visibleWords.length) return;
 
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
@@ -451,12 +470,24 @@ export default function VocabularyTopicDetailPage({
     setIsPlayAllRunning(true);
     setPlayMode('word-example');
 
-    for (const item of pagedWords) {
+    for (let page = effectivePage; page <= totalPages; page += 1) {
       if (playTokenRef.current !== token) break;
-      setPlayingItemId(item.id);
-      await speakVocabularyText(item.word);
-      if (playTokenRef.current !== token) break;
-      await speakVocabularyText(item.exampleEn);
+      const items = pageWords(page);
+      if (!items.length) break;
+
+      if (page !== effectivePage) {
+        setCurrentPage(page);
+        setCarouselIndex(0);
+        await new Promise((resolve) => window.requestAnimationFrame(() => resolve(undefined)));
+      }
+
+      for (const item of items) {
+        if (playTokenRef.current !== token) break;
+        setPlayingItemId(item.id);
+        await speakVocabularyText(item.word);
+        if (playTokenRef.current !== token) break;
+        await speakVocabularyText(item.exampleEn);
+      }
     }
 
     if (playTokenRef.current === token) {
@@ -464,7 +495,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [pagedWords]);
+  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
 
   const handleSaveProgress = useCallback(
     async (percentage: number) => {
