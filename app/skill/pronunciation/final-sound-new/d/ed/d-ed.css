@@ -191,6 +191,32 @@
   background: rgb(var(--pronun-panel-rgb) / 0.94);
 }
 
+.d-ed-page .d-ed-hl-target {
+  color: #f59e0b;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.38);
+}
+
+.d-ed-page .d-ed-hl-base-final {
+  color: #e040fb;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(240, 171, 252, 0.45);
+}
+
+.d-ed-page .fs-topic-table-example-ipa .d-ed-hl-target,
+.d-ed-page .fs-topic-table-example-ipa .d-ed-hl-base-final {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.d-ed-page .d-ed-target-highlight-off .d-ed-hl-target,
+.d-ed-page .d-ed-base-highlight-off .d-ed-hl-base-final {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
+}
+
 .d-ed-page .fs-topic-example-list li.is-speaking {
   border: 1px solid rgba(34, 211, 238, 0.38);
   border-radius: 0.5rem;

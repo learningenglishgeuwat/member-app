@@ -5,6 +5,8 @@ type IpaVisibilityToggleProps = {
   onChange: (checked: boolean) => void;
   label?: string;
   activeClass?: string;
+  activeTrackClass?: string;
+  activeDotClass?: string;
   className?: string;
   disabled?: boolean;
 };
@@ -18,6 +20,8 @@ export function IpaVisibilityToggle({
   onChange,
   label = 'IPA',
   activeClass = 'text-cyan-200',
+  activeTrackClass = 'bg-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.6)]',
+  activeDotClass = 'bg-[#00f0ff] shadow-[0_0_6px_#00f0ff]',
   className = '',
   disabled = false,
 }: IpaVisibilityToggleProps) {
@@ -42,7 +46,6 @@ export function IpaVisibilityToggle({
           type="checkbox"
           role="switch"
           aria-label={`${label} visibility`}
-          aria-pressed={checked}
           className="sr-only peer"
           checked={checked}
           disabled={disabled}
@@ -52,7 +55,7 @@ export function IpaVisibilityToggle({
           className={cx(
             'block h-6 w-12 rounded-full transition-all duration-300',
             checked
-              ? 'bg-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.6)]'
+              ? activeTrackClass
               : 'border-2 border-white/20 bg-[#1a1f24]',
           )}
         />
@@ -65,7 +68,7 @@ export function IpaVisibilityToggle({
           <span
             className={cx(
               'rounded-full transition-all duration-300',
-              checked ? 'h-[10px] w-[10px] bg-[#00f0ff] shadow-[0_0_6px_#00f0ff]' : 'h-0 w-0 bg-transparent',
+              checked ? cx('h-[10px] w-[10px]', activeDotClass) : 'h-0 w-0 bg-transparent',
             )}
           />
         </span>

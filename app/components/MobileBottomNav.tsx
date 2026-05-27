@@ -4,12 +4,18 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useMemo, useState } from 'react'
 import { Menu, X, BarChart2, LayoutGrid, Settings, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { useAuth } from '@/contexts/MemberAuthContext'
+import {
+  DASHBOARD_VIEW_STORAGE_KEY,
+  NOTIFICATIONS_VIEW_ID,
+  START_JOURNEY_VIEW_ID,
+  type ViewId,
+} from '@/app/dashboard/dashboardView'
 import './MobileBottomNav.css'
 
 const TOURGUIDE_COLLAPSED_STORAGE_KEY = 'tourguide_collapsed'
 const TOURGUIDE_BOOTSTRAP_EVENT = 'geuwat:tourguide-bootstrap'
 const TOURGUIDE_RESET_EVENT = 'geuwat:tourguide-reset'
-const DASHBOARD_VIEW_STORAGE_KEY = 'dashboardCurrentView'
 
 const PUBLIC_PATHS = new Set(['/login', '/device-pairing', '/forgot-password', '/reset-password'])
 
@@ -40,6 +46,7 @@ function dispatchResetTourGuide() {
 export default function MobileBottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const { user } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const [tourGuideBootstrapped, setTourGuideBootstrapped] = useState(false)
   const [isNavVisible, setIsNavVisible] = useState(true)
@@ -53,8 +60,11 @@ export default function MobileBottomNav() {
     return true
   }, [pathname])
 
-  const goDashboardView = (viewId: string) => {
-    safeSetLocalStorage(DASHBOARD_VIEW_STORAGE_KEY, viewId)
+  const goDashboardView = (viewId: ViewId) => {
+    const nextView = viewId === START_JOURNEY_VIEW_ID && user?.status !== 'active'
+      ? NOTIFICATIONS_VIEW_ID
+      : viewId
+    safeSetLocalStorage(DASHBOARD_VIEW_STORAGE_KEY, nextView)
     router.push('/dashboard')
   }
 

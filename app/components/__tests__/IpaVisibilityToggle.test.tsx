@@ -19,7 +19,6 @@ describe('IpaVisibilityToggle', () => {
 
     const switchInput = screen.getByRole('switch', { name: 'IPA visibility' });
     expect(switchInput).toBeChecked();
-    expect(switchInput).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('calls onChange with the next checked state', async () => {

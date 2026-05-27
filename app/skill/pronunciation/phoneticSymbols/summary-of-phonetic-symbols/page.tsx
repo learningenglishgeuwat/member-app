@@ -1,10 +1,63 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import './summary-of-phonetic-symbols.css';
+
+const highlightLetterStyle: React.CSSProperties = {
+  color: '#fb923c',
+  fontWeight: 900,
+  textShadow: '0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6)',
+};
+
+// Map IPA symbol → letter patterns commonly used in English words
+const SYMBOL_WORD_LETTERS: Record<string, string[]> = {
+  'ʌ': ['u', 'o', 'ou', 'oo'],
+  'ɪ': ['i', 'y', 'ui', 'e'],
+  'ʊ': ['oo', 'u', 'ou'],
+  'ɛ': ['ea', 'e', 'a'],
+  'ə': ['a', 'e', 'i', 'o', 'u'],
+  'ɚ': ['er', 'ar', 'or', 'ur', 'ir'],
+  'ɑ': ['al', 'ar', 'a'],
+  'i': ['ee', 'ea', 'ie', 'ei', 'e'],
+  'u': ['oo', 'ue', 'ui', 'ew', 'ou'],
+  'æ': ['a'],
+  'ɔ': ['aw', 'al', 'au', 'ou'],
+  'aɪ': ['igh', 'ie', 'ai', 'y', 'i'],
+  'eɪ': ['ay', 'ai', 'ea', 'a'],
+  'ɔɪ': ['oy', 'oi'],
+  'ɪə': ['ear', 'eer', 'ere', 'ia'],
+  'eə': ['are', 'air', 'ear', 'ere'],
+  'ʊə': ['our', 'ure', 'oor'],
+  'oʊ': ['oa', 'ow', 'oe', 'o'],
+  'aʊ': ['ou', 'ow'],
+  'p': ['pp', 'p'],
+  't': ['tt', 't'],
+  'k': ['ck', 'ch', 'cc', 'c', 'k', 'q'],
+  'f': ['ff', 'ph', 'f'],
+  'θ': ['th'],
+  's': ['ss', 'sc', 's', 'c'],
+  'ʃ': ['sh', 'ti', 'si', 'ci'],
+  'ʧ': ['tch', 'ch'],
+  'h': ['h'],
+  'b': ['bb', 'b'],
+  'd': ['dd', 'd'],
+  'g': ['gg', 'gh', 'g'],
+  'v': ['v'],
+  'ð': ['th'],
+  'z': ['zz', 'z', 's'],
+  'ʒ': ['si', 'ge', 'su'],
+  'ʤ': ['dg', 'ge', 'j', 'g'],
+  'l': ['ll', 'l'],
+  'm': ['mm', 'm'],
+  'n': ['nn', 'n'],
+  'ŋ': ['ng', 'n'],
+  'r': ['wr', 'rr', 'r'],
+  'w': ['wh', 'w'],
+  'y': ['y'],
+};
 
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
 type SymbolExample = { word: string; ipa: string };
@@ -104,6 +157,55 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
     ],
   },
 ];
+
+function renderWordHighlight(word: string, symbol: string, showHighlight: boolean): React.ReactNode {
+  if (!showHighlight) return word;
+  const patterns = SYMBOL_WORD_LETTERS[symbol];
+  if (!patterns || patterns.length === 0) return word;
+  const sorted = [...patterns].sort((a, b) => b.length - a.length);
+  const escaped = sorted.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const regex = new RegExp(`(${escaped.join('|')})`, 'i');
+  const parts = word.split(regex);
+  if (parts.length <= 1) return word;
+  let highlighted = false;
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (i % 2 === 1 && !highlighted) {
+          highlighted = true;
+          return (
+            <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+              {part}
+            </span>
+          );
+        }
+        return <React.Fragment key={i}>{part}</React.Fragment>;
+      })}
+    </>
+  );
+}
+
+function renderIpaHighlight(ipa: string, symbol: string, showHighlight: boolean): React.ReactNode {
+  if (!showHighlight || !symbol) return ipa;
+  const escaped = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'g');
+  const parts = ipa.split(regex);
+  if (parts.length <= 1) return ipa;
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (i % 2 === 1) {
+          return (
+            <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+              {part}
+            </span>
+          );
+        }
+        return <React.Fragment key={i}>{part}</React.Fragment>;
+      })}
+    </>
+  );
+}
 
 export default function SummaryOfPhoneticSymbolsPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('vowel');
@@ -308,8 +410,8 @@ export default function SummaryOfPhoneticSymbolsPage() {
                                 }}
                                 aria-label={`Play pronunciation for ${example.word}`}
                               >
-                                <span className="sps-word">{example.word}</span>
-                                <span className="sps-ipa">/{example.ipa}/</span>
+                                <span className="sps-word">{renderWordHighlight(example.word, item.symbol, showHighlight)}</span>
+                                <span className="sps-ipa">/{renderIpaHighlight(example.ipa, item.symbol, showHighlight)}/</span>
                               </button>
                             </li>
                             );
@@ -367,6 +469,9 @@ export default function SummaryOfPhoneticSymbolsPage() {
             onChange={setShowHighlight}
             label="Common Letters"
             className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
           />
           <div className="pt-3 border-t border-white/10">
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Groups</span>

@@ -3,6 +3,7 @@
  */
 
 export { IpaText } from './IpaText';
+export { HighlightVisibilityToggle } from './HighlightVisibilityToggle';
 export { IpaVisibilityToggle } from './IpaVisibilityToggle';
 export { default as AuthLoadingSkeleton } from './AuthLoadingSkeleton';
 export { default as HoverPrefetchLink } from './HoverPrefetchLink';

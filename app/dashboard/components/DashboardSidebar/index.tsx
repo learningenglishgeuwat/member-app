@@ -22,9 +22,18 @@ interface DashboardSidebarProps {
   setIsOpen: (isOpen: boolean) => void
   currentView: string
   setCurrentView: (view: string) => void
+  canAccessStartJourney: boolean
+  onStartJourneyBlocked: () => void
 }
 
-const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, currentView, setCurrentView }) => {
+const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
+  isOpen,
+  setIsOpen,
+  currentView,
+  setCurrentView,
+  canAccessStartJourney,
+  onStartJourneyBlocked,
+}) => {
   const router = useRouter()
   const { user, signOut } = useAuth()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
@@ -153,6 +162,11 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, setIsOpen, 
                   <button
                     onClick={() => {
                       if (isLocked) return;
+                      if (item.id === 'dashboard' && !canAccessStartJourney) {
+                        onStartJourneyBlocked();
+                        setIsOpen(false);
+                        return;
+                      }
                       setCurrentView(item.id);
                       setIsOpen(false);
                     }}

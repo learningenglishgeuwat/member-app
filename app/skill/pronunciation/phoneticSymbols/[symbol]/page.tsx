@@ -1588,7 +1588,15 @@ const SymbolDetailPage: React.FC = () => {
               className="mb-2 sm:mb-3"
             />
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
-            <IpaVisibilityToggle checked={showHighlight} onChange={setShowHighlight} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" label="Highlight Letters" />
+            <IpaVisibilityToggle
+              checked={showHighlight}
+              onChange={setShowHighlight}
+              className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+              label="Highlight Letters"
+              activeClass="text-orange-200"
+              activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+              activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+            />
           </div>
           {britishNote && (
             <div>
@@ -1612,6 +1620,9 @@ const SymbolDetailPage: React.FC = () => {
                 onChange={setShowBritishNoteHighlight}
                 className="w-full flex justify-between text-[10px] sm:text-xs"
                 label="Highlight Letters"
+                activeClass="text-orange-200"
+                activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+                activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
               />
             </div>
           )}

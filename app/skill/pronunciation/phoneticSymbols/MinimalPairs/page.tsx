@@ -567,6 +567,9 @@ const MinimalPairsPage: React.FC = () => {
             onChange={setShowHighlight}
             label="Highlight Letters"
             className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
           />
           <div className="pt-3 border-t border-white/10">
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentences</span>

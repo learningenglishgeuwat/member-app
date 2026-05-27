@@ -4,6 +4,7 @@ import { LoginForm } from './components/login/LoginForm'
 import { useAuth } from '@/contexts/MemberAuthContext'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { NOTIFICATIONS_VIEW_ID, saveDashboardView } from '@/app/dashboard/dashboardView'
 import './styles/login/login.css'
 
 export default function LoginPage() {
@@ -13,6 +14,7 @@ export default function LoginPage() {
   useEffect(() => {
     // If user is already logged in, redirect to dashboard
     if (hasSession) {
+      saveDashboardView(NOTIFICATIONS_VIEW_ID)
       router.push('/dashboard')
     }
   }, [hasSession, router])

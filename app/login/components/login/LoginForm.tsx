@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { signIn } from '@/lib/auth'
 import { supabaseLoose } from '@/lib/supabase'
 import { getDeviceId } from '@/lib/device'
+import { NOTIFICATIONS_VIEW_ID, saveDashboardView } from '@/app/dashboard/dashboardView'
 import { FormBackground } from './ui/FormBackground'
 import { LoginHeader } from './ui/LoginHeader'
 import { GearInputRow } from './form/GearInputRow'
@@ -135,6 +136,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       console.log('✅ Login successful')
       triggerHaptic('success')
       onLogin?.()
+      saveDashboardView(NOTIFICATIONS_VIEW_ID)
       router.push('/dashboard')
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Terjadi kesalahan saat masuk.'

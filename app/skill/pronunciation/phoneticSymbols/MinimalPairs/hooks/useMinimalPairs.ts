@@ -13,7 +13,7 @@ const readSavedState = (pairId: string): boolean => {
 
 const isWordSpeechKey = (speechKey: string): boolean => speechKey.startsWith('word-');
 
-const getUtteranceOptions = (
+export const getMinimalPairUtteranceOptions = (
   speechKey: string,
   lang: SpeechLang,
 ): {
@@ -32,12 +32,10 @@ const getUtteranceOptions = (
     cancelBeforeSpeak: false,
   };
 
-  // Keep explicit non-default language behavior (e.g. en-GB/id-ID),
-  // but let default en-US words follow global best-English voice selection.
-  if (isWordKey && lang === 'en-US') {
+  if (lang === 'en-US' || lang === 'en-GB') {
     return {
       ...base,
-      preferredEnglish: 'en-US',
+      preferredEnglish: lang,
     };
   }
 
@@ -113,7 +111,7 @@ export const useMinimalPairs = () => {
     setActiveSpeechKey(speechKey);
 
     const utterance = createUtterance(text, {
-      ...getUtteranceOptions(speechKey, lang),
+      ...getMinimalPairUtteranceOptions(speechKey, lang),
     });
     if (!utterance) return;
 
@@ -155,7 +153,7 @@ export const useMinimalPairs = () => {
       scrollToSpeechKey(current.key);
 
       const utterance = createUtterance(current.text, {
-        ...getUtteranceOptions(current.key, current.lang),
+        ...getMinimalPairUtteranceOptions(current.key, current.lang),
       });
       if (!utterance) {
         index += 1;
