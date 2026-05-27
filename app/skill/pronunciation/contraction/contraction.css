@@ -383,10 +383,10 @@
 }
 
 .contraction-page .td-contract {
-  color: var(--amber);
+  color: #fb923c;
   font-family: var(--mono);
   font-size: 0.9rem;
-  text-shadow: 0 0 8px rgba(255, 184, 0, 0.4);
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .contraction-page .td-ipa {
@@ -475,9 +475,9 @@
 }
 
 .contraction-page .def-text .highlight {
-  color: var(--cyan);
-  font-weight: 600;
-  text-shadow: 0 0 10px rgba(0,245,255,0.3);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 /* ─── IPA LEGEND ────────────────────────────────── */
@@ -551,8 +551,8 @@
   font-family: var(--head);
   font-size: clamp(1.125rem, 2.5vw, 1.5rem); /* 18px mobile - 24px desktop (H3) */
   font-weight: 700;
-  color: var(--amber);
-  text-shadow: 0 0 12px rgba(255, 184, 0, 0.4);
+  color: #fb923c;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .contraction-page .inf-arrow { color: var(--text-muted); font-size: 0.85rem; font-family: var(--mono); }
@@ -604,8 +604,9 @@
 .contraction-page .neg-word {
   font-family: var(--mono);
   font-size: 0.95rem;
-  color: var(--amber);
+  color: #fb923c;
   font-weight: 500;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .contraction-page .neg-ipa {

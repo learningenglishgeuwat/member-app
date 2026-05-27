@@ -21,6 +21,11 @@ export function renderAmericanTTextHighlight(text: string) {
 
   return chunks.map((chunk, idx) => {
     if (chunk.toLowerCase() === 't') {
+      // Check if this 't' is followed by 'h' (part of the 'th' digraph representing /ð/ or /θ/)
+      const nextChunk = chunks[idx + 1];
+      if (nextChunk && nextChunk.toLowerCase().startsWith('h')) {
+        return <span key={`${text}-plain-${idx}`}>{chunk}</span>;
+      }
       return (
         <span key={`${text}-t-${idx}`} className="at-text-t">
           {chunk}

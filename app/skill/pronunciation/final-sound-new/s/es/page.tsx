@@ -1425,11 +1425,13 @@ export default function FinalSoundSEsPage() {
               checked={showPluralOrangeHighlight}
               onChange={setShowPluralOrangeHighlight}
               color="orange"
+              label="Ending S/ES"
             />
             <HighlightVisibilityToggle
               checked={showPluralMagentaHighlight}
               onChange={setShowPluralMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
 
@@ -1455,11 +1457,13 @@ export default function FinalSoundSEsPage() {
               checked={showRulesTableOrangeHighlight}
               onChange={setShowRulesTableOrangeHighlight}
               color="orange"
+              label="Ending S/ES"
             />
             <HighlightVisibilityToggle
               checked={showRulesTableMagentaHighlight}
               onChange={setShowRulesTableMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
 
@@ -1485,11 +1489,13 @@ export default function FinalSoundSEsPage() {
               checked={showWordBankOrangeHighlight}
               onChange={setShowWordBankOrangeHighlight}
               color="orange"
+              label="Ending S/ES"
             />
             <HighlightVisibilityToggle
               checked={showWordBankMagentaHighlight}
               onChange={setShowWordBankMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
         </div>

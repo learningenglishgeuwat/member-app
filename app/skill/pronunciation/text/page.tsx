@@ -2,11 +2,11 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ChevronDown, Copy, Highlighter, Play } from 'lucide-react';
+import { ChevronDown, Copy, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { ControlCenter, PlayStopButton } from '@/app/components';
+import { ControlCenter, HighlightVisibilityToggle, IpaVisibilityToggle, PlayStopButton } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { MATERIALS, TOPIC_HIGHLIGHTS, type TextMaterial, type TopicHighlightConfig } from './data/textData';
@@ -22,13 +22,7 @@ type TextSectionUiState = {
   practiceOpen?: boolean;
   promptOpen?: boolean;
 };
-type HighlightLegendItem = {
-  key: 'ipa' | 'target' | 'baseFinal';
-  color: string;
-  label: string;
-  description: string;
-};
-type HighlightMapState = Record<HighlightLegendItem['key'], boolean>;
+type HighlightMapState = Record<'ipa' | 'target' | 'baseFinal', boolean>;
 const TEXT_TAB_PROGRESS_STORAGE_KEY = 'pronunciationTextTabProgress';
 const TEXT_SECTION_UI_STATE_STORAGE_KEY = 'pronunciationTextSectionUiState';
 const VISIBLE_MATERIALS = MATERIALS.filter((item) => item.id !== 'phonetic-symbols');
@@ -702,6 +696,11 @@ const highlightTextLetters = (text: string, keyPrefix: string) => {
 
   return chunks.map((chunk, index) => {
     if (chunk.toLowerCase() === 't') {
+      // Check if this 't' is followed by 'h' (part of the 'th' digraph representing /ð/ or /θ/)
+      const nextChunk = chunks[index + 1];
+      if (nextChunk && nextChunk.toLowerCase().startsWith('h')) {
+        return <React.Fragment key={`${keyPrefix}-plain-${index}`}>{chunk}</React.Fragment>;
+      }
       return (
         <span key={`${keyPrefix}-t-${index}`} className='text-hl-symbol'>
           {chunk}
@@ -995,43 +994,6 @@ const renderPhoneticHighlightedParagraph = (
   return paragraph;
 };
 
-const getHighlightLegendItems = (
-  materialId: string,
-  activeTab: TabKey
-): HighlightLegendItem[] => {
-  const ipaLocation =
-    activeTab === 'phonetic'
-      ? 'Transkripsi fonetik yang sedang dibaca'
-      : 'Dipakai di tab Phonetic Transcription';
-
-  if (materialId === 'final-sound-s-es') {
-    return [
-      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
-      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Ending S/ES yang diterapkan' },
-      { key: 'baseFinal', color: '#E040FB', label: 'Light Magenta', description: 'Final sound kata dasar sebelum S/ES' },
-    ];
-  }
-
-  if (materialId === 'final-sound-d-ed') {
-    return [
-      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
-      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Ending D/ED yang diterapkan' },
-      { key: 'baseFinal', color: '#E040FB', label: 'Light Magenta', description: 'Final sound kata dasar sebelum D/ED' },
-    ];
-  }
-
-  if (materialId === 'american-t') {
-    return [
-      { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
-      { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Huruf atau simbol American T' },
-    ];
-  }
-
-  return [
-    { key: 'ipa', color: '#00E5FF', label: 'Cyan', description: ipaLocation },
-    { key: 'target', color: '#f59e0b', label: 'Orange', description: 'Fokus bunyi atau istilah utama topik' },
-  ];
-};
 
 export default function PronunciationTextPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1121,16 +1083,7 @@ export default function PronunciationTextPage() {
       APPLIED_TEXT_DEFAULT_EVALUATION_PROMPT,
     [activeMaterial.id]
   );
-  const highlightLegendItems = useMemo(
-    () => getHighlightLegendItems(activeMaterial.id, activeTab),
-    [activeMaterial.id, activeTab]
-  );
-  const toggleHighlightMapItem = useCallback((key: HighlightLegendItem['key']) => {
-    setHighlightMapEnabled((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  }, []);
+
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -1717,67 +1670,43 @@ export default function PronunciationTextPage() {
         </main>
       </div>
       <ControlCenter>
-        <button
-          type='button'
-          onClick={() => setIsHighlightEnabled((prev) => !prev)}
-          className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
-            isHighlightEnabled
-              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
-          }`}
-          aria-pressed={isHighlightEnabled}
-        >
-          <span className='tracking-widest font-bold'>HIGHLIGHT</span>
-          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
-        </button>
-
-        {isHighlightEnabled ? (
-          <div className='rounded-lg sm:rounded-xl border border-white/10 bg-[#1a1f24]/80 px-2 py-2 sm:px-4 sm:py-3'>
-            <p className='mb-2 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45'>
-              Highlight Map
-            </p>
-            <div className='flex flex-col gap-2'>
-              {highlightLegendItems.map((item) => (
-                <button
-                  key={item.key}
-                  type='button'
-                  className={`flex w-full items-start gap-2 rounded-lg border px-2 py-2 text-left transition-all ${
-                    highlightMapEnabled[item.key]
-                      ? 'border-white/10 bg-white/[0.03] text-white/80'
-                      : 'border-white/5 bg-transparent text-white/35'
-                  }`}
-                  onClick={() => toggleHighlightMapItem(item.key)}
-                  aria-pressed={highlightMapEnabled[item.key]}
-                >
-                  <span
-                    aria-hidden='true'
-                    className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor] sm:h-3 sm:w-3 ${
-                      highlightMapEnabled[item.key] ? '' : 'opacity-30 grayscale'
-                    }`}
-                    style={{ backgroundColor: item.color, color: item.color }}
-                  />
-                  <span className='min-w-0'>
-                    <span className='block font-mono text-[8px] font-bold uppercase tracking-wider sm:text-[10px]'>
-                      {item.label}
-                    </span>
-                    <span className='block text-[9px] leading-snug text-white/50 sm:text-xs'>
-                      {item.description}
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Text
+            </span>
+            <PlayStopButton
+              isActive={activeSpeechGroup === 'main'}
+              label="TEXT"
+              onClick={toggleMainPlayAll}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={highlightMapEnabled.ipa}
+              onChange={(val) => setHighlightMapEnabled((prev) => ({ ...prev, ipa: val }))}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="IPA / Phonetic"
+            />
+            <HighlightVisibilityToggle
+              checked={highlightMapEnabled.target && isHighlightEnabled}
+              onChange={(val) => {
+                setIsHighlightEnabled(val);
+                setHighlightMapEnabled((prev) => ({ ...prev, target: val }));
+              }}
+              color="orange"
+              label="Highlight Target"
+            />
+            {(activeMaterial.id === 'final-sound-s-es' || activeMaterial.id === 'final-sound-d-ed') && (
+              <HighlightVisibilityToggle
+                checked={highlightMapEnabled.baseFinal && isHighlightEnabled}
+                onChange={(val) => setHighlightMapEnabled((prev) => ({ ...prev, baseFinal: val }))}
+                color="magenta"
+                label="Base Final Sound"
+              />
+            )}
           </div>
-        ) : null}
-
-        <hr className='border-white/10' />
-
-        <PlayStopButton
-          isActive={activeSpeechGroup === 'main'}
-          label="TEXT"
-          onClick={toggleMainPlayAll}
-          size="sm"
-        />
+        </div>
       </ControlCenter>
       <RecordingControlsButton
         className='text-recording-anchor'

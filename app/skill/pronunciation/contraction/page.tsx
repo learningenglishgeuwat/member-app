@@ -3,11 +3,11 @@
 /* eslint-disable react/no-unescaped-entities, react/jsx-no-comment-textnodes, @typescript-eslint/no-explicit-any */
 
 import React, { useState, useRef, useEffect } from "react";
-import { Volume2, Highlighter } from "lucide-react";
+import { Volume2 } from "lucide-react";
 import BackButton from "../../components/BackButton";
 import Sidebar from "../../components/skillSidebar/SkillSidebar";
 import { IpaText } from "@/app/components/IpaText";
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from "@/app/components";
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from "@/app/components";
 import { speakText, stopSpeech, waitForVoices } from "@/lib/tts/speech";
 import "./contraction.css";
 
@@ -22,7 +22,12 @@ const Highlight = ({ text, target, active = true }: { text?: string; target?: st
         <React.Fragment key={i}>
           {part}
           {i < parts.length - 1 && (
-            <span className="text-[#ffb800]">{target}</span>
+            <span 
+              className="text-[#fb923c] font-black"
+              style={{ textShadow: "0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6)" }}
+            >
+              {target}
+            </span>
           )}
         </React.Fragment>
       ))}
@@ -52,7 +57,7 @@ type InformalWord = {
 
 export default function ContractionPage() {
   const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
-  const [highlightTargetEnabled, setHighlightTargetEnabled] = useState(true);
+  const highlightTargetEnabled = true;
   const [activeTab, setActiveTab] = useState(0);
   const [showIpa, setShowIpa] = useState(true);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
@@ -758,55 +763,14 @@ export default function ContractionPage() {
             )}
           </div>
         )}
-        <button
-          type='button'
-          onClick={() => setIsHighlightEnabled((prev) => !prev)}
-          className={`w-full mt-3 border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
-            isHighlightEnabled
-              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
-          }`}
-          aria-pressed={isHighlightEnabled}
-        >
-          <span className='tracking-widest font-bold'>HIGHLIGHT</span>
-          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
-        </button>
+        <HighlightVisibilityToggle
+          checked={isHighlightEnabled}
+          onChange={setIsHighlightEnabled}
+          color="orange"
+          label="Highlight Contraction"
+        />
 
-        {isHighlightEnabled && (
-          <div className='rounded-lg sm:rounded-xl border border-white/10 bg-[#1a1f24]/80 px-2 py-2 sm:px-4 sm:py-3 mt-3'>
-            <p className='mb-2 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45'>
-              Highlight Map
-            </p>
-            <div className='flex flex-col gap-2'>
-              <button
-                type='button'
-                className={`flex w-full items-start gap-2 rounded-lg border px-2 py-2 text-left transition-all ${
-                  highlightTargetEnabled
-                    ? 'border-white/10 bg-white/[0.03] text-white/80'
-                    : 'border-white/5 bg-transparent text-white/35'
-                }`}
-                onClick={() => setHighlightTargetEnabled((prev) => !prev)}
-                aria-pressed={highlightTargetEnabled}
-              >
-                <span
-                  aria-hidden='true'
-                  className={`mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor] sm:h-3 sm:w-3 ${
-                    highlightTargetEnabled ? '' : 'opacity-30 grayscale'
-                  }`}
-                  style={{ backgroundColor: '#ffb800', color: '#ffb800' }}
-                />
-                <span className='min-w-0'>
-                  <span className='block font-mono text-[8px] font-bold uppercase tracking-wider sm:text-[10px]'>
-                    Target
-                  </span>
-                  <span className='mt-0.5 block text-[9px] leading-relaxed text-white/50 sm:text-[11px]'>
-                    Kata atau frasa yang mengalami kontraksi
-                  </span>
-                </span>
-              </button>
-            </div>
-          </div>
-        )}
+
       </ControlCenter>
 
       <Sidebar
@@ -1089,7 +1053,7 @@ export default function ContractionPage() {
                   <td className="td-contract">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#ffb800]">
+                        <span className="font-semibold text-[#fb923c]">
                           {item.contract}
                         </span>
                         <button
@@ -1291,7 +1255,7 @@ export default function ContractionPage() {
                   <td className="td-contract">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#ffb800]">
+                        <span className="font-semibold text-[#fb923c]">
                           {item.contract}
                         </span>
                         <button
@@ -1569,7 +1533,7 @@ export default function ContractionPage() {
                   <td className="td-contract">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#ffb800]">
+                        <span className="font-semibold text-[#fb923c]">
                           {item.contract}
                         </span>
                         <button
@@ -1770,7 +1734,7 @@ export default function ContractionPage() {
                   <td className="td-contract">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#ffb800]">
+                        <span className="font-semibold text-[#fb923c]">
                           {item.contract}
                         </span>
                         <button

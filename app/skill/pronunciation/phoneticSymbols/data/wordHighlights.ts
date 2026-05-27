@@ -629,6 +629,7 @@ Object.assign(WORD_HIGHLIGHT_OVERRIDES, {
     putar: ['r'],
     dengar: ['r'],
     servis: ['r'],
+    'servɪs': ['r'],
     kerja: ['r'],
   },
   f: {

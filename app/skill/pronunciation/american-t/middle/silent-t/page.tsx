@@ -9,7 +9,7 @@ import {
   renderGeneralIpaWithTHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   SILENT_T_EXAMPLES,
   SILENT_T_SENTENCES,
@@ -79,6 +79,68 @@ function deriveBeforeIpaFromSilent(silentIpa: string): string {
     .replace(/ni/g, 'nti');
 
   return `/${core}/`;
+}
+
+function renderSilentTTextHighlight(text: string) {
+  const lower = text.toLowerCase();
+
+  // Primary rule: find the t that follows n — this is always the silent /t/ in these words
+  // e.g. in"t"ernet, win"t"er, cen"t"er, prin"t"er, twen"t"y, sev"t"en"t"y...
+  const ntIdx = lower.indexOf('nt');
+  let silentTIdx = ntIdx !== -1 ? ntIdx + 1 : -1;
+
+  if (silentTIdx === -1) {
+    // Fallback for words like ninety / nineties where the silent t is
+    // in a -ty or -ties suffix (no direct nt adjacency)
+    const tyIdx = lower.lastIndexOf('ty');
+    const tiIdx = lower.lastIndexOf('ti');
+    if (tyIdx !== -1 && tyIdx > lower.length - 4) {
+      silentTIdx = tyIdx;
+    } else if (tiIdx !== -1 && tiIdx > lower.length - 5) {
+      silentTIdx = tiIdx;
+    }
+  }
+
+  if (silentTIdx === -1) {
+    return <span>{text}</span>;
+  }
+
+  const before = text.slice(0, silentTIdx);
+  const silentT = text.slice(silentTIdx, silentTIdx + 1);
+  const after = text.slice(silentTIdx + 1);
+
+  return (
+    <>
+      <span>{before}</span>
+      <span className="at-text-t">{silentT}</span>
+      <span>{after}</span>
+    </>
+  );
+}
+
+function renderSilentTIpaHighlight(ipa: string) {
+  const chunks = ipa.split(/(t̚|t)/g);
+  let accumulated = '';
+
+  return chunks.map((chunk, idx) => {
+    if (chunk === 't' || chunk === 't̚') {
+      const lastChar = accumulated.slice(-1);
+      accumulated += chunk;
+      
+      if (lastChar === 'n') {
+        return (
+          <span key={`${ipa}-t-${idx}`} className="at-ipa-t">
+            {chunk}
+          </span>
+        );
+      } else {
+        return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
+      }
+    }
+
+    accumulated += chunk;
+    return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
+  });
 }
 
 function escapeRegex(text: string): string {
@@ -487,7 +549,7 @@ export default function SilentTMiddlePage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{renderAmericanTTextHighlight(item.word)}</h3>
+                      <h3>{renderSilentTTextHighlight(item.word)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -507,7 +569,7 @@ export default function SilentTMiddlePage() {
                     {showIpaBySection.examples ? (
                       <>
                         <p className="at-ipa">
-                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                          {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
                         </p>
                         {item.spoken ? (
                           <p className="at-ipa">
@@ -544,7 +606,7 @@ export default function SilentTMiddlePage() {
                     }}
                   >
                     <div className="at-silent-bank-head">
-                      <span className="at-silent-bank-word">{renderAmericanTTextHighlight(word)}</span>
+                      <span className="at-silent-bank-word">{renderSilentTTextHighlight(word)}</span>
                       {!showIpaBySection['word-bank'] ? (
                         <button
                           type="button"
@@ -570,7 +632,7 @@ export default function SilentTMiddlePage() {
                           <div className="at-silent-bank-ipa-line">
                             <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
                               <span className="at-ipa-label">Before: </span>
-                              {renderGeneralIpaWithTHighlight(beforeDisplay)}
+                              {renderSilentTIpaHighlight(beforeDisplay)}
                             </p>
                             <button
                               type="button"
@@ -825,19 +887,12 @@ export default function SilentTMiddlePage() {
             <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
           </div>
           <hr className="border-white/10" />
-          <button
-            type="button"
-            onClick={() => setIsHighlightEnabled((prev) => !prev)}
-            className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
-              isHighlightEnabled
-                ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-                : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
-            }`}
-            aria-pressed={isHighlightEnabled}
-          >
-            <span className="tracking-widest font-bold">HIGHLIGHT</span>
-            <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
-          </button>
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
         </div>
       </ControlCenter>
       <RecordingControlsButton

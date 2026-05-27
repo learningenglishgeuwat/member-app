@@ -2,20 +2,14 @@ import { ReactNode } from 'react';
 
 interface HighlightProps {
   children: ReactNode;
-  color?: 'orange' | 'cyan';
 }
 
-export function Highlight({ children, color = 'orange' }: HighlightProps) {
-  if (color === 'cyan') {
-    return (
-      <span className="text-[#00f3ff] font-bold" style={{ textShadow: '0 0 8px rgba(0, 243, 255, 0.6)' }}>
-        {children}
-      </span>
-    );
-  }
-  
+export function Highlight({ children }: HighlightProps) {
   return (
-    <span className="text-[#ff8c00] font-bold" style={{ textShadow: '0 0 8px rgba(255, 140, 0, 0.6)' }}>
+    <span
+      className="text-[#fb923c] font-bold"
+      style={{ textShadow: '0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6)' }}
+    >
       {children}
     </span>
   );

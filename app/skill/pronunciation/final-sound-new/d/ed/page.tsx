@@ -1409,11 +1409,13 @@ export default function FinalSoundDEdPage() {
               checked={showPastEndingsOrangeHighlight}
               onChange={setShowPastEndingsOrangeHighlight}
               color="orange"
+              label="Ending D/ED"
             />
             <HighlightVisibilityToggle
               checked={showPastEndingsMagentaHighlight}
               onChange={setShowPastEndingsMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
 
@@ -1439,11 +1441,13 @@ export default function FinalSoundDEdPage() {
               checked={showRulesTableOrangeHighlight}
               onChange={setShowRulesTableOrangeHighlight}
               color="orange"
+              label="Ending D/ED"
             />
             <HighlightVisibilityToggle
               checked={showRulesTableMagentaHighlight}
               onChange={setShowRulesTableMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
 
@@ -1469,11 +1473,13 @@ export default function FinalSoundDEdPage() {
               checked={showWordBankOrangeHighlight}
               onChange={setShowWordBankOrangeHighlight}
               color="orange"
+              label="Ending D/ED"
             />
             <HighlightVisibilityToggle
               checked={showWordBankMagentaHighlight}
               onChange={setShowWordBankMagentaHighlight}
               color="magenta"
+              label="Base Final Sound"
             />
           </div>
         </div>

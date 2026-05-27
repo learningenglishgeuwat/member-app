@@ -9,7 +9,7 @@ import {
   renderGeneralIpaWithTHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   CLEAR_T_BEGINNING_COMMON_MISTAKES,
   CLEAR_T_BEGINNING_EXAMPLES,
@@ -817,19 +817,12 @@ export default function ClearTBeginningPage() {
             <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between text-[10px] sm:text-xs" />
           </div>
           <hr className="border-white/10" />
-          <button
-            type="button"
-            onClick={() => setIsHighlightEnabled((prev) => !prev)}
-            className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
-              isHighlightEnabled
-                ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-                : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
-            }`}
-            aria-pressed={isHighlightEnabled}
-          >
-            <span className="tracking-widest font-bold">HIGHLIGHT</span>
-            <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
-          </button>
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
         </div>
       </ControlCenter>
       <RecordingControlsButton

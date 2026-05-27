@@ -211,6 +211,14 @@
   padding: 0;
 }
 
+.stress-highlight-off .stress-inline-highlight,
+.stress-highlight-off .stress-example-chip .stress-inline-highlight,
+.stress-highlight-off .stress-token-strong {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
+}
+
 .stress-ipa {
   margin-top: 0.2rem;
   color: var(--color-ipa);

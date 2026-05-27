@@ -8,6 +8,7 @@ type HighlightVisibilityToggleProps = {
   color: HighlightVisibilityToggleColor;
   className?: string;
   disabled?: boolean;
+  label?: string;
 };
 
 const HIGHLIGHT_TOGGLE_STYLE: Record<
@@ -39,6 +40,7 @@ export function HighlightVisibilityToggle({
   color,
   className = '',
   disabled = false,
+  label,
 }: HighlightVisibilityToggleProps) {
   const style = HIGHLIGHT_TOGGLE_STYLE[color];
 
@@ -46,7 +48,7 @@ export function HighlightVisibilityToggle({
     <IpaVisibilityToggle
       checked={checked}
       onChange={onChange}
-      label={style.label}
+      label={label ?? style.label}
       activeClass={style.activeClass}
       activeTrackClass={style.activeTrackClass}
       activeDotClass={style.activeDotClass}

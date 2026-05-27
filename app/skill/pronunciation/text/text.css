@@ -483,36 +483,27 @@
 }
 
 .text-hl-key {
-  background: linear-gradient(120deg, rgba(255, 133, 46, 0.42), rgba(255, 180, 94, 0.35));
-  color: #fff4de;
-  border: 1px solid rgba(255, 191, 122, 0.72);
-  border-radius: 6px;
-  padding: 0 4px;
-  font-weight: 700;
-  box-shadow: 0 0 0 1px rgba(255, 128, 0, 0.2), 0 0 10px rgba(255, 136, 31, 0.26);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .text-hl-letter {
-  background: linear-gradient(120deg, rgba(255, 104, 0, 0.52), rgba(255, 154, 70, 0.44));
-  color: #fff7eb;
-  border: 1px solid rgba(255, 202, 148, 0.86);
-  border-bottom: 2px solid rgba(255, 215, 172, 0.95);
-  border-radius: 4px;
-  padding: 0 4px;
-  font-weight: 800;
-  box-shadow: 0 0 0 1px rgba(255, 98, 0, 0.2), 0 0 14px rgba(255, 128, 0, 0.32);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .text-hl-symbol {
-  color: #f59e0b;
+  color: #fb923c;
   font-weight: 900;
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.38);
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .text-hl-base-final {
-  color: #E040FB;
+  color: #e040fb;
   font-weight: 900;
-  text-shadow: 0 0 10px rgba(240, 171, 252, 0.45);
+  text-shadow: 0 0 8px rgba(224, 64, 251, 0.95), 0 0 16px rgba(224, 64, 251, 0.6);
 }
 
 .text-highlight-off .text-hl-key,

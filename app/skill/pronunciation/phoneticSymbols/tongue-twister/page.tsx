@@ -185,7 +185,7 @@ export default function TongueTwisterPage() {
 
   // Helper function to highlight IPA symbols
   const highlightIPA = useCallback((ipaLine: string): ReactNode => {
-    if (focusIPASymbols.length === 0) {
+    if (!showHighlight || focusIPASymbols.length === 0) {
       return ipaLine;
     }
 
@@ -208,7 +208,7 @@ export default function TongueTwisterPage() {
     });
 
     return <>{ipaParts}</>;
-  }, [focusIPASymbols]);
+  }, [showHighlight, focusIPASymbols]);
 
   return (
     <main className="tt-page">
@@ -377,12 +377,18 @@ export default function TongueTwisterPage() {
             checked={showIpa}
             onChange={setShowIpa}
             label="Show IPA"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
             className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
           />
           <IpaVisibilityToggle
             checked={showHighlight}
             onChange={setShowHighlight}
             label="Common Letters"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
             className="w-full flex justify-between text-[10px] sm:text-xs"
           />
         </div>

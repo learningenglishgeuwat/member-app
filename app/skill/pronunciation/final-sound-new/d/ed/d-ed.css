@@ -192,15 +192,15 @@
 }
 
 .d-ed-page .d-ed-hl-target {
-  color: #f59e0b;
+  color: #fb923c;
   font-weight: 900;
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.38);
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .d-ed-page .d-ed-hl-base-final {
   color: #e040fb;
   font-weight: 900;
-  text-shadow: 0 0 10px rgba(240, 171, 252, 0.45);
+  text-shadow: 0 0 8px rgba(224, 64, 251, 0.95), 0 0 16px rgba(224, 64, 251, 0.6);
 }
 
 .d-ed-page .fs-topic-table-example-ipa .d-ed-hl-target,
@@ -335,9 +335,9 @@
 }
 
 .d-ed-process-highlight {
-  color: #ffb84d;
-  font-weight: 800;
-  text-shadow: 0 0 10px rgba(255, 184, 77, 0.42);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .d-ed-process-description {

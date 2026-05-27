@@ -32,18 +32,18 @@ type HighlightLegendItem = {
 const getHighlightLegendItems = (activeTab: TabKey): HighlightLegendItem[] => [
   {
     key: 'ipa',
-    color: '#00E5FF',
-    label: 'Cyan',
+    color: '#fb923c',
+    label: 'Phonetic Highlight',
     description:
       activeTab === 'phonetic'
-        ? 'Transkripsi fonetik yang sedang dibaca'
-        : 'Dipakai di tab Phonetic Transcription',
+        ? 'Transkripsi fonetik yang sedang aktif dibaca'
+        : 'Bunyi pengucapan di tab Phonetic Transcription',
   },
   {
     key: 'examples',
-    color: '#a5b4fc',
-    label: 'Example',
-    description: 'Contoh bunyi atau kata yang ditandai di Origin Text',
+    color: '#fb923c',
+    label: 'Target Word Highlight',
+    description: 'Kata atau frasa yang ditandai sebagai fokus di Origin Text',
   },
 ];
 
@@ -489,13 +489,13 @@ export default function ReadingTextForPracticePage() {
           onClick={() => setIsHighlightEnabled((prev) => !prev)}
           className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
             isHighlightEnabled
-              ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
+              ? 'bg-orange-500/15 border-orange-400/50 text-orange-100'
+              : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-orange-900/20 hover:border-orange-500/30'
           }`}
           aria-pressed={isHighlightEnabled}
         >
           <span className="tracking-widest font-bold">HIGHLIGHT</span>
-          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
+          <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-orange-300' : 'text-white/45'}`} />
         </button>
 
         {isHighlightEnabled ? (

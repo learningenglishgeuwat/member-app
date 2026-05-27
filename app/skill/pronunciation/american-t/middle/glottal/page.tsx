@@ -10,7 +10,7 @@ import {
   renderGeneralIpaWithTHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   GLOTTAL_SENTENCES,
   GLOTTAL_SENTENCE_DRILL_EXAMPLES_15,
@@ -85,6 +85,62 @@ function deriveBeforeIpaFromGlottal(glottalIpa: string): string {
 
 function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function renderGlottalTTextHighlight(text: string) {
+  const lower = text.toLowerCase();
+  let glottalTIdx = -1;
+  let glottalTLength = 1;
+
+  // Rule 1: t immediately or shortly before n (button, kitten, tighten, threaten, straighten…)
+  // Pattern: t + zero-or-more vowels + n
+  const tnMatch = lower.match(/t[aeiou]*n/);
+  if (tnMatch && tnMatch.index !== undefined) {
+    glottalTIdx = tnMatch.index;
+  }
+
+  // Rule 2: no tn-pattern → scan right-to-left for last non-final t before a consonant
+  // Covers: outfit, outback, hotdog, textbook, notepad, etc.
+  if (glottalTIdx === -1) {
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    const consonants = new Set([...'bcdfghjklmnpqrstvwxyz']);
+    for (let i = lower.length - 2; i >= 0; i--) {
+      if (lower[i] !== 't') continue;
+      const next = lower[i + 1];
+      if (consonants.has(next)) {
+        glottalTIdx = i;
+        break;
+      }
+      // t + vowel + consonant (e.g. notepad: t-e-p)
+      if (vowels.has(next) && i + 2 < lower.length && consonants.has(lower[i + 2])) {
+        glottalTIdx = i;
+        break;
+      }
+    }
+  }
+
+  if (glottalTIdx === -1) return <span>{text}</span>;
+
+  // Expand to include adjacent 't's if there are multiple adjacent (like 'tt' in button/kitten)
+  while (glottalTIdx > 0 && lower[glottalTIdx - 1] === 't') {
+    glottalTIdx--;
+    glottalTLength++;
+  }
+  while (glottalTIdx + glottalTLength < lower.length && lower[glottalTIdx + glottalTLength] === 't') {
+    glottalTLength++;
+  }
+
+  const before = text.slice(0, glottalTIdx);
+  const glottalT = text.slice(glottalTIdx, glottalTIdx + glottalTLength);
+  const after = text.slice(glottalTIdx + glottalTLength);
+
+  return (
+    <>
+      <span>{before}</span>
+      <span className="at-text-t">{glottalT}</span>
+      <span>{after}</span>
+    </>
+  );
 }
 
 function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
@@ -565,7 +621,7 @@ export default function GlottalPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{renderAmericanTTextHighlight(item.word)}</h3>
+                      <h3>{renderGlottalTTextHighlight(item.word)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -617,7 +673,7 @@ export default function GlottalPage() {
                     }}
                   >
                     <div className="at-glottal-bank-head">
-                      <span className="at-glottal-bank-word">{renderAmericanTTextHighlight(word)}</span>
+                      <span className="at-glottal-bank-word">{renderGlottalTTextHighlight(word)}</span>
                       {!showIpaBySection['word-bank'] ? (
                         <button
                           type="button"
@@ -888,19 +944,12 @@ export default function GlottalPage() {
             <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
           </div>
           <hr className="border-white/10" />
-          <button
-            type="button"
-            onClick={() => setIsHighlightEnabled((prev) => !prev)}
-            className={`w-full border px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between transition-all ${
-              isHighlightEnabled
-                ? 'bg-amber-500/15 border-amber-400/50 text-amber-100'
-                : 'bg-[#1a1f24] border-white/10 text-white/60 hover:bg-amber-900/20 hover:border-amber-500/30'
-            }`}
-            aria-pressed={isHighlightEnabled}
-          >
-            <span className="tracking-widest font-bold">HIGHLIGHT</span>
-            <Highlighter className={`w-3 h-3 sm:w-4 sm:h-4 ${isHighlightEnabled ? 'text-amber-300' : 'text-white/45'}`} />
-          </button>
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
         </div>
       </ControlCenter>
       <RecordingControlsButton
