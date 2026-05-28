@@ -287,11 +287,12 @@ export default function TutorialCoachOverlay({
         <div className="tg-tutorial-coach-shell">
           <div className="tg-tutorial-coach-avatar-orb">
             <Image
-              src="/Kepala1.png"
+              src="/Kepala1.png?v=20260528"
               alt="Geuwat Coach"
               width={48}
               height={48}
               className="tg-tutorial-coach-avatar"
+              unoptimized
             />
           </div>
           <div className="tg-tutorial-oval">
