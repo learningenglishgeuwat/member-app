@@ -29,6 +29,7 @@ export const LoginHeader: React.FC<LoginHeaderProps> = ({
           width={128}
           height={128}
           loading="eager"
+          unoptimized
           className={`relative w-32 h-32 object-contain transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]
             ${
               isFullyActive
