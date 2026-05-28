@@ -23,7 +23,7 @@ const ENTERTAINMENT_MEDIA_ROWS = [
   { en: 'The theater is full tonight.', id: 'Teaternya penuh malam ini.', ipa: '/ðə ˈθiətər ɪz fʊl təˈnaɪt/' },
   { en: 'I bought two tickets.', id: 'Saya membeli dua tiket.', ipa: '/aɪ bɔt tu ˈtɪkəts/' },
   { en: 'The screen is very big.', id: 'Layarnya sangat besar.', ipa: '/ðə skrin ɪz ˈvɛri bɪɡ/' },
-  { en: 'Please turn on the subtitles.', id: 'Tolong nyalakan subtitle.', ipa: '/pliz tɝn ɑn ðə ˈsʌbˌtaɪtəlz/' },
+  { en: 'Please turn on the subtitles.', id: 'Tolong nyalakan subtitle.', ipa: '/pliz tɚn ɑn ðə ˈsʌbˌtaɪtəlz/' },
   { en: 'I listen to music daily.', id: 'Saya mendengarkan musik setiap hari.', ipa: '/aɪ ˈlɪsən tə ˈmjuzɪk ˈdeɪli/' },
   { en: 'This song is very calm.', id: 'Lagu ini sangat menenangkan.', ipa: '/ðɪs sɔŋ ɪz ˈvɛri kɑm/' },
   { en: 'She is my favorite singer.', id: 'Dia penyanyi favorit saya.', ipa: '/ʃi ɪz maɪ ˈfeɪvərɪt ˈsɪŋər/' },

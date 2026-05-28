@@ -1,8 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Play } from 'lucide-react';
+import {
+  ControlCenter,
+  HighlightVisibilityToggle,
+  IpaVisibilityToggle,
+  PlayStopButton,
+} from '@/app/components';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -30,6 +36,8 @@ type ParsedTableExampleItem = {
   rawLabel: string;
 };
 
+type HighlightMode = 'base' | 'withEnding';
+
 function parseTableExampleItems(value: string): ParsedTableExampleItem[] {
   return value
     .split(',')
@@ -51,27 +59,27 @@ const S_ES_USAGE_RULES = [
     ending: '/s/',
     trigger: 'Setelah bunyi voiceless non-sibilant (contoh: /p/, /k/, /t/, /f/).',
     examples: [
-      { label: 'Plural', word: 'cats', ipa: '/k\u00E6ts/' },
-      { label: 'Third-person singular', word: 'works', ipa: '/w\u025D\u02D0rks/' },
-      { label: 'Possessive', word: "Kate's", ipa: '/ke\u026Ats/' },
+      { label: 'Plural', wordBefore: 'cat', ipaBefore: '/kæt/', word: 'cats', ipa: '/kæts/' },
+      { label: 'Third-person singular', wordBefore: 'work', ipaBefore: '/wɚːrk/', word: 'works', ipa: '/wɚːrks/' },
+      { label: 'Possessive', wordBefore: 'Kate', ipaBefore: '/keɪt/', word: "Kate's", ipa: '/keɪts/' },
     ],
   },
   {
     ending: '/z/',
     trigger: 'Setelah bunyi voiced non-sibilant dan vokal.',
     examples: [
-      { label: 'Plural', word: 'dogs', ipa: '/d\u0254\u0261z/' },
-      { label: 'Third-person singular', word: 'runs', ipa: '/r\u028Cnz/' },
-      { label: 'Possessive', word: "Bob's", ipa: '/b\u0251bz/' },
+      { label: 'Plural', wordBefore: 'dog', ipaBefore: '/dɔɡ/', word: 'dogs', ipa: '/dɔɡz/' },
+      { label: 'Third-person singular', wordBefore: 'run', ipaBefore: '/rʌn/', word: 'runs', ipa: '/rʌnz/' },
+      { label: 'Possessive', wordBefore: 'Bob', ipaBefore: '/bɑb/', word: "Bob's", ipa: '/bɑbz/' },
     ],
   },
   {
-    ending: '/\u026Az/',
-    trigger: 'Setelah sibilant: /s/, /z/, /\u0283/, /\u0292/, /t\u0283/, /d\u0292/.',
+    ending: '/ɪz/',
+    trigger: 'Setelah sibilant: /s/, /z/, /ʃ/, /ʒ/, /tʃ/, /dʒ/.',
     examples: [
-      { label: 'Plural', word: 'buses', ipa: '/\u02C8b\u028Cs\u026Az/' },
-      { label: 'Third-person singular', word: 'washes', ipa: '/\u02C8w\u0251\u0283\u026Az/' },
-      { label: 'Possessive', word: "Rose's", ipa: '/\u02C8ro\u028Az\u026Az/' },
+      { label: 'Plural', wordBefore: 'bus', ipaBefore: '/bʌs/', word: 'buses', ipa: '/ˈbʌsɪz/' },
+      { label: 'Third-person singular', wordBefore: 'wash', ipaBefore: '/wɑʃ/', word: 'washes', ipa: '/ˈwɑʃɪz/' },
+      { label: 'Possessive', wordBefore: 'Rose', ipaBefore: '/roʊz/', word: "Rose's", ipa: '/ˈroʊzɪz/' },
     ],
   },
 ] as const;
@@ -79,6 +87,7 @@ const S_ES_USAGE_RULES = [
 const S_ES_PLURAL_RULE_EXAMPLES = S_ES_USAGE_RULES.flatMap((rule) =>
   rule.examples.map((example) => ({
     key: `${rule.ending}-${example.label}`,
+    wordBefore: example.wordBefore,
     word: example.word,
   })),
 );
@@ -221,6 +230,168 @@ const S_ES_COMMON_MISTAKES_OPEN_KEY = 'final-sound-s-es-common-mistakes-open-v1'
 const S_ES_EVALUATION_PROMPT =
   "Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan kata atau kalimat yang saya ucapkan dalam rekaman ini. 2. Analisis pengucapan dengan fokus pada American Accent (General American), terutama akurasi final sound S/ES: /s/, /z/, dan /ɪz/, serta kejelasan transisi bunyi akhir kata. 3. Format output: sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata/frasa yang diucapkan (khusus ending -s/-es). - Kolom 2: Status kualitatif ('🟢 Sangat bagus 🔵Bagus', '🟡 Perlu Sedikit Perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan balik spesifik yang menjelaskan bunyi akhir mana yang perlu diperbaiki.";
 
+const S_ES_BASE_LETTER_PATTERNS = ['tch', 'dge', 'ng', 'sh', 'ch', 'ss', 'ce', 'ge', 'x'];
+const S_ES_BASE_IPA_SYMBOLS = [
+  't\u0283',
+  'd\u0292',
+  '\u0283',
+  '\u0292',
+  '\u03b8',
+  '\u00f0',
+  '\u014b',
+  '\u0261',
+  'g',
+  'p',
+  'b',
+  't',
+  'd',
+  'k',
+  'f',
+  'v',
+  's',
+  'z',
+  'm',
+  'n',
+  'l',
+  'r',
+  'w',
+  'j',
+  'i\u02d0',
+  'u\u02d0',
+  '\u0254\u026a',
+  'a\u026a',
+  'e\u026a',
+  'o\u028a',
+  'a\u028a',
+  '\u00e6',
+  '\u0251',
+  '\u0254',
+  '\u028c',
+  '\u025b',
+  '\u026a',
+  '\u028a',
+  '\u0259',
+  'i',
+  'u',
+].sort((a, b) => b.length - a.length);
+
+function getSEsEndingLength(word: string): number {
+  const lower = word.toLowerCase();
+  if (lower.endsWith("'s")) return 2;
+  if (!lower.endsWith('s')) return 0;
+
+  if (lower.endsWith('es')) {
+    const base = lower.slice(0, -2);
+    if (/(s|z|x|ch|sh)$/.test(base)) return 2;
+  }
+
+  return 1;
+}
+
+function getBaseFinalLetterRange(base: string) {
+  if (!base) return { start: 0, end: 0 };
+
+  const lower = base.toLowerCase();
+  const matchedPattern = S_ES_BASE_LETTER_PATTERNS.find((pattern) => lower.endsWith(pattern));
+
+  if (matchedPattern) {
+    return { start: base.length - matchedPattern.length, end: base.length };
+  }
+
+  if (lower.endsWith('e') && base.length > 1 && !lower.endsWith('ee')) {
+    return { start: base.length - 2, end: base.length - 1 };
+  }
+
+  return { start: base.length - 1, end: base.length };
+}
+
+function renderSEsWordHighlight(word: string, mode: HighlightMode, keyPrefix: string): ReactNode {
+  const endingLength = mode === 'withEnding' ? getSEsEndingLength(word) : 0;
+  const splitIndex = Math.max(0, word.length - endingLength);
+  const base = word.slice(0, splitIndex);
+  const ending = word.slice(splitIndex);
+  const baseFinalRange = getBaseFinalLetterRange(base);
+
+  return (
+    <>
+      {base.slice(0, baseFinalRange.start)}
+      {baseFinalRange.end > baseFinalRange.start ? (
+        <span className="s-es-hl-base-final" key={`${keyPrefix}-base-final`}>
+          {base.slice(baseFinalRange.start, baseFinalRange.end)}
+        </span>
+      ) : null}
+      {base.slice(baseFinalRange.end)}
+      {ending ? (
+        <span className="s-es-hl-target" key={`${keyPrefix}-target`}>
+          {ending}
+        </span>
+      ) : null}
+    </>
+  );
+}
+
+function splitIpaToken(value: string) {
+  const match = value.match(/^([\/()[\]{}.,;:!?'"`]*)(.*?)([\/()[\]{}.,;:!?'"`]*)$/);
+
+  return {
+    leading: match?.[1] ?? '',
+    core: match?.[2] ?? value,
+    trailing: match?.[3] ?? '',
+  };
+}
+
+function getSEsIpaEndingLength(core: string): number {
+  const normalized = core.toLowerCase();
+  if (normalized.endsWith('\u026az') || normalized.endsWith('iz')) return 2;
+  if (normalized.endsWith('s') || normalized.endsWith('z')) return 1;
+  return 0;
+}
+
+function getBaseFinalIpaSymbol(baseCore: string): string {
+  const normalized = baseCore.replace(/[ˈˌ]/g, '').toLowerCase();
+  return S_ES_BASE_IPA_SYMBOLS.find((symbol) => normalized.endsWith(symbol)) ?? '';
+}
+
+function getBaseFinalIpaIndex(baseCore: string, baseFinal: string): number {
+  if (!baseFinal) return baseCore.length;
+
+  const normalizedTarget = baseFinal.toLowerCase();
+  for (let index = baseCore.length - 1; index >= 0; index -= 1) {
+    const normalizedSlice = baseCore.slice(index).replace(/[ˈˌ]/g, '').toLowerCase();
+    if (normalizedSlice === normalizedTarget) return index;
+  }
+
+  return Math.max(0, baseCore.length - baseFinal.length);
+}
+
+function renderSEsIpaHighlight(ipa: string, mode: HighlightMode, keyPrefix: string): ReactNode {
+  const { leading, core, trailing } = splitIpaToken(ipa);
+  const endingLength = mode === 'withEnding' ? getSEsIpaEndingLength(core) : 0;
+  const splitIndex = Math.max(0, core.length - endingLength);
+  const baseCore = core.slice(0, splitIndex);
+  const ending = core.slice(splitIndex);
+  const baseFinal = getBaseFinalIpaSymbol(baseCore);
+  const baseFinalIndex = getBaseFinalIpaIndex(baseCore, baseFinal);
+
+  return (
+    <>
+      {leading}
+      {baseCore.slice(0, baseFinalIndex)}
+      {baseFinal ? (
+        <span className="s-es-hl-base-final" key={`${keyPrefix}-ipa-base-final`}>
+          {baseCore.slice(baseFinalIndex)}
+        </span>
+      ) : null}
+      {ending ? (
+        <span className="s-es-hl-target" key={`${keyPrefix}-ipa-target`}>
+          {ending}
+        </span>
+      ) : null}
+      {trailing}
+    </>
+  );
+}
+
 function renderUseAfter(value: string) {
   const parts = value
     .split(';')
@@ -241,18 +412,26 @@ function renderUseAfter(value: string) {
 function renderTableExamples(
   value: string,
   onSpeak: (word: string) => void,
-  options?: { showIpa?: boolean },
+  options?: { showIpa?: boolean; highlightMode?: HighlightMode },
 ) {
   const items = parseTableExampleItems(value);
   const showIpa = options?.showIpa ?? true;
+  const highlightMode = options?.highlightMode ?? 'base';
 
   return (
     <ul className="fs-topic-table-example-list fs-topic-table-example-list--chip">
       {items.map((item) => (
         <li key={item.rawLabel} className="fs-topic-table-example-row fs-topic-table-example-row--chip">
           <span>
-            <span className="fs-topic-table-example-word">{item.word}</span>
-            {showIpa && item.ipa ? <span className="fs-topic-table-example-ipa"> {item.ipa}</span> : null}
+            <span className="fs-topic-table-example-word">
+              {renderSEsWordHighlight(item.word, highlightMode, `table-${item.rawLabel}-word`)}
+            </span>
+            {showIpa && item.ipa ? (
+              <span className="fs-topic-table-example-ipa">
+                {' '}
+                {renderSEsIpaHighlight(item.ipa, highlightMode, `table-${item.rawLabel}-ipa`)}
+              </span>
+            ) : null}
           </span>
           <button
             type="button"
@@ -303,6 +482,12 @@ export default function FinalSoundSEsPage() {
   const [showPluralIpa, setShowPluralIpa] = useState(true);
   const [showWordBankIpa, setShowWordBankIpa] = useState(true);
   const [showRulesTableIpa, setShowRulesTableIpa] = useState(true);
+  const [showPluralOrangeHighlight, setShowPluralOrangeHighlight] = useState(true);
+  const [showPluralMagentaHighlight, setShowPluralMagentaHighlight] = useState(true);
+  const [showRulesTableOrangeHighlight, setShowRulesTableOrangeHighlight] = useState(true);
+  const [showRulesTableMagentaHighlight, setShowRulesTableMagentaHighlight] = useState(true);
+  const [showWordBankOrangeHighlight, setShowWordBankOrangeHighlight] = useState(true);
+  const [showWordBankMagentaHighlight, setShowWordBankMagentaHighlight] = useState(true);
   const [activeWordBankRowKey, setActiveWordBankRowKey] = useState<string | null>(null);
   const [activePluralExampleKey, setActivePluralExampleKey] = useState<string | null>(null);
   const [activeRulesTableRowKey, setActiveRulesTableRowKey] = useState<string | null>(null);
@@ -312,7 +497,7 @@ export default function FinalSoundSEsPage() {
   const singlePlayRunIdRef = useRef(0);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordBankRowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
-  const pluralExampleRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const pluralExampleRefs = useRef<Array<HTMLDivElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [openSections, setOpenSections] = useState(() => {
@@ -519,6 +704,16 @@ export default function FinalSoundSEsPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.wordBank) {
+        return { ...prev, wordBank: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
+
     const runId = playAllRunIdRef.current + 1;
     playAllRunIdRef.current = runId;
     setIsPlayingWordBankAll(true);
@@ -548,7 +743,7 @@ export default function FinalSoundSEsPage() {
       setIsPlayingWordBankAll(false);
       setActiveWordBankRowKey(null);
     }
-  }, [isPlayingWordBankAll, speakQueuedText, stopWordBankPlayAll]);
+  }, [isPlayingWordBankAll, speakQueuedText, stopWordBankPlayAll, toWordBankTtsText]);
 
   const handlePluralRulesPlayAll = useCallback(async () => {
     if (isPlayingPluralAll) {
@@ -557,6 +752,16 @@ export default function FinalSoundSEsPage() {
     }
 
     if (!isSpeechSynthesisSupported()) return;
+
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.pluralEndings) {
+        return { ...prev, pluralEndings: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
 
     const runId = pluralPlayAllRunIdRef.current + 1;
     pluralPlayAllRunIdRef.current = runId;
@@ -572,6 +777,10 @@ export default function FinalSoundSEsPage() {
         block: 'center',
         inline: 'nearest',
       });
+      await sleep(120);
+      if (runId !== pluralPlayAllRunIdRef.current) break;
+      await speakQueuedText(item.wordBefore, runId, pluralPlayAllRunIdRef);
+      if (runId !== pluralPlayAllRunIdRef.current) break;
       await sleep(120);
       if (runId !== pluralPlayAllRunIdRef.current) break;
       await speakQueuedText(item.word, runId, pluralPlayAllRunIdRef);
@@ -592,6 +801,16 @@ export default function FinalSoundSEsPage() {
     }
 
     if (!isSpeechSynthesisSupported()) return;
+
+    // Open section first if it's collapsed
+    setOpenSections((prev) => {
+      if (!prev.rulesTable) {
+        return { ...prev, rulesTable: true };
+      }
+      return prev;
+    });
+    // Wait for DOM to update before starting playback
+    await sleep(80);
 
     const runId = rulesTablePlayAllRunIdRef.current + 1;
     rulesTablePlayAllRunIdRef.current = runId;
@@ -717,7 +936,12 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section
+          id="pluralEndings"
+          className={`fs-topic-block ${showPluralOrangeHighlight ? '' : 's-es-target-highlight-off'} ${
+            showPluralMagentaHighlight ? '' : 's-es-base-highlight-off'
+          }`}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -753,12 +977,14 @@ export default function FinalSoundSEsPage() {
                 <article key={rule.ending} className="fs-topic-card">
                   <h3 className="fs-topic-card-title">Dibaca {rule.ending}</h3>
                   <p className="fs-topic-card-note">{rule.trigger}</p>
-                  <ul className="fs-topic-example-list s-es-rule-example-list">
+                  <div className="flex flex-col gap-3 mt-3">
                     {rule.examples.map((example) => (
-                      <li
+                      <div
                         key={`${rule.ending}-${example.label}`}
-                        className={`s-es-rule-example-item ${
-                          activePluralExampleKey === `${rule.ending}-${example.label}` ? 'is-speaking' : ''
+                        className={`bg-[#101414] border rounded-lg p-4 transition-all duration-300 flex flex-col gap-3 relative overflow-hidden ${
+                          activePluralExampleKey === `${rule.ending}-${example.label}` 
+                            ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]' 
+                            : 'border-white/15 hover:border-cyan-300/70'
                         }`}
                         ref={(node) => {
                           const flatIndex = S_ES_PLURAL_RULE_EXAMPLES.findIndex(
@@ -769,25 +995,77 @@ export default function FinalSoundSEsPage() {
                           }
                         }}
                       >
-                        <div className="fs-topic-table-example-row s-es-rule-example-row">
-                          <span>
-                            <strong>{example.label}:</strong> {example.word}
-                            {showPluralIpa ? ` ${example.ipa}` : ''}
-                          </span>
-                          <button
-                            type="button"
-                            className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                            aria-label={`Putar ${example.word}`}
-                            title="Putar"
-                            onClick={() => void speakWithBestEnglishVoice(example.word)}
-                          >
-                            <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                            <span className="fs-topic-visually-hidden">Putar</span>
-                          </button>
+                        <div className="font-sans font-bold text-white uppercase text-xs tracking-wider opacity-80 border-b border-white/10 pb-2 mb-1">
+                          {example.label}
                         </div>
-                      </li>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2 text-white/55">
+                            <span className="font-mono text-[10px] uppercase tracking-wider opacity-80 whitespace-nowrap min-w-[45px]">
+                              Before
+                            </span>
+                            <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
+                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                                {renderSEsWordHighlight(
+                                  example.wordBefore,
+                                  'base',
+                                  `plural-${example.wordBefore}-before-word`,
+                                )}
+                                {showPluralIpa ? (
+                                  <span className="font-mono text-xs opacity-70 ml-1">
+                                    {renderSEsIpaHighlight(
+                                      example.ipaBefore,
+                                      'base',
+                                      `plural-${example.wordBefore}-before-ipa`,
+                                    )}
+                                  </span>
+                                ) : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void speakWithBestEnglishVoice(example.wordBefore)}
+                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.wordBefore}`}
+                              >
+                                <Play className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-white/80">
+                            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap min-w-[45px]">
+                              After
+                            </span>
+                            <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                                {renderSEsWordHighlight(
+                                  example.word,
+                                  'withEnding',
+                                  `plural-${example.word}-after-word`,
+                                )}
+                                {showPluralIpa ? (
+                                  <span className="font-mono text-sm opacity-70 ml-1">
+                                    {renderSEsIpaHighlight(
+                                      example.ipa,
+                                      'withEnding',
+                                      `plural-${example.word}-after-ipa`,
+                                    )}
+                                  </span>
+                                ) : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void speakWithBestEnglishVoice(example.word)}
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.word}`}
+                              >
+                                <Play className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </article>
               ))}
               </div>
@@ -795,7 +1073,12 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section
+          id="rulesTable"
+          className={`fs-topic-block ${showRulesTableOrangeHighlight ? '' : 's-es-target-highlight-off'} ${
+            showRulesTableMagentaHighlight ? '' : 's-es-base-highlight-off'
+          }`}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -858,7 +1141,7 @@ export default function FinalSoundSEsPage() {
                           {renderTableExamples(
                             row.after,
                             (word) => void speakWithBestEnglishVoice(word),
-                            { showIpa: showRulesTableIpa },
+                            { showIpa: showRulesTableIpa, highlightMode: 'withEnding' },
                           )}
                         </td>
                       </tr>
@@ -880,7 +1163,13 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block" ref={wordBankSectionRef}>
+        <section
+          id="wordBank"
+          className={`fs-topic-block ${showWordBankOrangeHighlight ? '' : 's-es-target-highlight-off'} ${
+            showWordBankMagentaHighlight ? '' : 's-es-base-highlight-off'
+          }`}
+          ref={wordBankSectionRef}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -941,11 +1230,21 @@ export default function FinalSoundSEsPage() {
                           <td>
                             <div className="fs-topic-table-example-row">
                               <span>
-                                <span className="fs-topic-table-example-word">{item.before}</span>
+                                <span className="fs-topic-table-example-word">
+                                  {renderSEsWordHighlight(
+                                    item.before,
+                                    'base',
+                                    `word-bank-${item.before}-before-word`,
+                                  )}
+                                </span>
                                 {showWordBankIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
-                                    {ipaPair?.before ?? item.sound}
+                                    {renderSEsIpaHighlight(
+                                      ipaPair?.before ?? item.sound,
+                                      'base',
+                                      `word-bank-${item.before}-before-ipa`,
+                                    )}
                                   </span>
                                 ) : null}
                               </span>
@@ -966,11 +1265,21 @@ export default function FinalSoundSEsPage() {
                           <td>
                             <div className="fs-topic-table-example-row">
                               <span>
-                                <span className="fs-topic-table-example-word">{item.after}</span>
+                                <span className="fs-topic-table-example-word">
+                                  {renderSEsWordHighlight(
+                                    item.after,
+                                    'withEnding',
+                                    `word-bank-${item.after}-after-word`,
+                                  )}
+                                </span>
                                 {showWordBankIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
-                                    {ipaPair?.after ?? item.sound}
+                                    {renderSEsIpaHighlight(
+                                      ipaPair?.after ?? item.sound,
+                                      'withEnding',
+                                      `word-bank-${item.after}-after-ipa`,
+                                    )}
                                   </span>
                                 ) : null}
                               </span>
@@ -990,7 +1299,9 @@ export default function FinalSoundSEsPage() {
                           </td>
                           {showWordBankIpa ? (
                             <td>
-                              <span className="fs-topic-table-example-ipa">{item.sound}</span>
+                              <span className="fs-topic-table-example-ipa">
+                                <span className="s-es-hl-target">{item.sound}</span>
+                              </span>
                             </td>
                           ) : null}
                         </tr>
@@ -1089,6 +1400,106 @@ export default function FinalSoundSEsPage() {
           ) : null}
         </section>
       </main>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Plural Rules
+            </span>
+            <PlayStopButton
+              isActive={isPlayingPluralAll}
+              label="PLURAL RULES"
+              sectionId="pluralEndings"
+              onClick={() => void handlePluralRulesPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showPluralIpa}
+              onChange={setShowPluralIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Plural Rules IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showPluralOrangeHighlight}
+              onChange={setShowPluralOrangeHighlight}
+              color="orange"
+              label="Ending S/ES"
+            />
+            <HighlightVisibilityToggle
+              checked={showPluralMagentaHighlight}
+              onChange={setShowPluralMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Rules Table
+            </span>
+            <PlayStopButton
+              isActive={isPlayingRulesTableAll}
+              label="RULES TABLE"
+              sectionId="rulesTable"
+              onClick={() => void handleRulesTablePlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showRulesTableIpa}
+              onChange={setShowRulesTableIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Rules Table IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showRulesTableOrangeHighlight}
+              onChange={setShowRulesTableOrangeHighlight}
+              color="orange"
+              label="Ending S/ES"
+            />
+            <HighlightVisibilityToggle
+              checked={showRulesTableMagentaHighlight}
+              onChange={setShowRulesTableMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Word Bank
+            </span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="WORD BANK"
+              sectionId="wordBank"
+              onClick={() => void handleWordBankPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showWordBankIpa}
+              onChange={setShowWordBankIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Word Bank IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showWordBankOrangeHighlight}
+              onChange={setShowWordBankOrangeHighlight}
+              color="orange"
+              label="Ending S/ES"
+            />
+            <HighlightVisibilityToggle
+              checked={showWordBankMagentaHighlight}
+              onChange={setShowWordBankMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="s-es-recording-anchor"

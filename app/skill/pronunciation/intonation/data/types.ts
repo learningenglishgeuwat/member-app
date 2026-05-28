@@ -48,6 +48,7 @@ export type IntonationExample = {
   contour: string;
   note: string;
   ttsText?: string;
+  ipa?: string;
 } & IntonationLearningMeta;
 
 export type IntonationPairExample = {
@@ -58,6 +59,8 @@ export type IntonationPairExample = {
   note: string;
   statementTts?: string;
   questionTts?: string;
+  statementIpa?: string;
+  questionIpa?: string;
 } & IntonationLearningMeta;
 
 export type IntonationListExample = {
@@ -66,6 +69,7 @@ export type IntonationListExample = {
   chunked: string;
   note: string;
   ttsText?: string;
+  ipa?: string;
 } & IntonationLearningMeta;
 
 export type IntonationEmotionExample = {
@@ -75,6 +79,7 @@ export type IntonationEmotionExample = {
   contour: string;
   note: string;
   ttsText?: string;
+  ipa?: string;
 } & IntonationLearningMeta;
 
 export type IntonationDrillSentence = {
@@ -84,4 +89,5 @@ export type IntonationDrillSentence = {
   targetPattern: string;
   note: string;
   ttsText?: string;
+  ipa?: string;
 } & IntonationLearningMeta;

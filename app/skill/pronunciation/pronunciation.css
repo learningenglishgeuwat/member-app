@@ -1,5 +1,12 @@
 /* Pronunciation Module Specific Styles */
 
+/* Section headings use display font */
+.pronunciation-layout h2,
+.pronunciation-layout h3,
+.pronunciation-layout h4 {
+  font-family: var(--font-display);
+}
+
 /* Glass Panel Effect */
 .glass-panel {
   background: rgba(0, 0, 0, 0.8);
@@ -10,7 +17,8 @@
 
 /* Extended Linguistic Font untuk æ, ø, dan karakter khusus */
 .font-extended-linguistic {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
   letter-spacing: 0.02em;
 }
 

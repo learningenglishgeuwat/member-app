@@ -1,24 +1,47 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import { HelpCircle, Bug, LifeBuoy } from 'lucide-react'
 
+const DASHBOARD_VIEW_EVENT = 'geuwat:dashboard-view'
+
 export default function HelpSupportContent() {
   const reportIssueHref = 'https://forms.gle/ENkpLQVQdPJCpAnd7'
 
+  const openTutorial = () => {
+    try {
+      window.localStorage.setItem('dashboardCurrentView', 'tutorial')
+      window.dispatchEvent(
+        new CustomEvent(DASHBOARD_VIEW_EVENT, {
+          detail: { viewId: 'tutorial' },
+        }),
+      )
+    } catch {
+      // ignore
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-cyan-500/30 bg-slate-900/70 p-6 backdrop-blur-sm">
+      <section className="rounded-2xl border border-cyan-500/30 bg-black/70 p-6 backdrop-blur-sm">
         <div className="mb-3 flex items-center gap-2">
           <HelpCircle className="h-5 w-5 text-cyan-300" />
           <h2 className="font-display text-xl font-bold text-cyan-200">Help &amp; Support</h2>
         </div>
         <p className="text-sm text-slate-300">
-          Find quick solutions if you have problems while using the app.
+          Find{' '}
+          <button
+            type="button"
+            onClick={openTutorial}
+            className="font-semibold text-cyan-300 underline underline-offset-4 transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70"
+          >
+            quick solutions
+          </button>{' '}
+          if you have problems while using the app.
         </p>
       </section>
 
-      <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+      <section className="rounded-2xl border border-slate-700 bg-black/70 p-6">
         <div className="mb-3 flex items-center gap-2">
           <LifeBuoy className="h-5 w-5 text-teal-300" />
           <h3 className="font-display text-lg font-semibold text-white">Common Checks</h3>
@@ -30,7 +53,7 @@ export default function HelpSupportContent() {
         </ul>
       </section>
 
-      <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+      <section className="rounded-2xl border border-slate-700 bg-black/70 p-6">
         <div className="mb-3 flex items-center gap-2">
           <Bug className="h-5 w-5 text-rose-300" />
           <h3 className="font-display text-lg font-semibold text-white">Report an Issue</h3>

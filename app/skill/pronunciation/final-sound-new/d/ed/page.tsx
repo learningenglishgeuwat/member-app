@@ -1,8 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Play } from 'lucide-react';
+import {
+  ControlCenter,
+  HighlightVisibilityToggle,
+  IpaVisibilityToggle,
+  PlayStopButton,
+} from '@/app/components';
 import BackButton from '../../../../components/BackButton';
 import Sidebar from '../../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
@@ -29,27 +35,27 @@ const PAST_ENDING_RULES = [
     ending: '/t/',
     trigger: 'Setelah bunyi voiceless (kecuali /t/).',
     examples: [
-      { word: 'worked', ipa: '/w\u025C\u02D0rkt/' },
-      { word: 'washed', ipa: '/w\u0252\u0283t/' },
-      { word: 'stopped', ipa: '/st\u0252pt/' },
+      { wordBefore: 'work', ipaBefore: '/w\u025C\u02D0rk/', word: 'worked', ipa: '/w\u025C\u02D0rkt/' },
+      { wordBefore: 'wash', ipaBefore: '/w\u0252\u0283/', word: 'washed', ipa: '/w\u0252\u0283t/' },
+      { wordBefore: 'stop', ipaBefore: '/st\u0252p/', word: 'stopped', ipa: '/st\u0252pt/' },
     ],
   },
   {
     ending: '/d/',
     trigger: 'Setelah bunyi voiced (kecuali /d/).',
     examples: [
-      { word: 'played', ipa: '/ple\u026Ad/' },
-      { word: 'cleaned', ipa: '/kli\u02D0nd/' },
-      { word: 'called', ipa: '/k\u0254\u02D0ld/' },
+      { wordBefore: 'play', ipaBefore: '/ple\u026A/', word: 'played', ipa: '/ple\u026Ad/' },
+      { wordBefore: 'clean', ipaBefore: '/kli\u02D0n/', word: 'cleaned', ipa: '/kli\u02D0nd/' },
+      { wordBefore: 'call', ipaBefore: '/k\u0254\u02D0l/', word: 'called', ipa: '/k\u0254\u02D0ld/' },
     ],
   },
   {
     ending: '/\u026Ad/',
     trigger: 'Setelah bunyi /t/ atau /d/.',
     examples: [
-      { word: 'wanted', ipa: '/\u02C8w\u0252nt\u026Ad/' },
-      { word: 'needed', ipa: '/\u02C8ni\u02D0d\u026Ad/' },
-      { word: 'decided', ipa: '/d\u026A\u02C8sa\u026Ad\u026Ad/' },
+      { wordBefore: 'want', ipaBefore: '/w\u0252nt/', word: 'wanted', ipa: '/\u02C8w\u0252nt\u026Ad/' },
+      { wordBefore: 'need', ipaBefore: '/ni\u02D0d/', word: 'needed', ipa: '/\u02C8ni\u02D0d\u026Ad/' },
+      { wordBefore: 'decide', ipaBefore: '/d\u026A\u02C8sa\u026Ad/', word: 'decided', ipa: '/d\u026A\u02C8sa\u026Ad\u026Ad/' },
     ],
   },
 ] as const;
@@ -57,6 +63,7 @@ const PAST_ENDING_RULES = [
 const PAST_ENDING_EXAMPLES_FLAT = PAST_ENDING_RULES.flatMap((rule) =>
   rule.examples.map((example) => ({
     key: `${rule.ending}-${example.word}`,
+    wordBefore: example.wordBefore,
     word: example.word,
   })),
 );
@@ -223,6 +230,8 @@ type ParsedTableExampleItem = {
   rawLabel: string;
 };
 
+type HighlightMode = 'base' | 'withEnding';
+
 function parseTableExampleItems(value: string): ParsedTableExampleItem[] {
   return value
     .split(',')
@@ -239,21 +248,185 @@ function parseTableExampleItems(value: string): ParsedTableExampleItem[] {
     });
 }
 
+const D_ED_BASE_LETTER_PATTERNS = ['tch', 'dge', 'sh', 'ch', 'ck', 'gh', 'ph', 'ss', 'ce', 'ge'];
+const D_ED_BASE_IPA_SYMBOLS = [
+  't\u0283',
+  'd\u0292',
+  '\u0283',
+  '\u0292',
+  '\u03b8',
+  '\u00f0',
+  '\u014b',
+  '\u0261',
+  'g',
+  'p',
+  'b',
+  't',
+  'd',
+  'k',
+  'f',
+  'v',
+  's',
+  'z',
+  'm',
+  'n',
+  'l',
+  'r',
+  'w',
+  'j',
+  'i\u02d0',
+  'u\u02d0',
+  '\u0254\u026a',
+  'a\u026a',
+  'e\u026a',
+  'o\u028a',
+  'a\u028a',
+  '\u00e6',
+  '\u0251',
+  '\u0254',
+  '\u028c',
+  '\u025b',
+  '\u026a',
+  '\u028a',
+  '\u0259',
+  'i',
+  'u',
+].sort((a, b) => b.length - a.length);
+
+function getDEdEndingLength(word: string): number {
+  const lower = word.toLowerCase();
+  if (lower.endsWith('ed')) return 2;
+  if (lower.endsWith('d')) return 1;
+  return 0;
+}
+
+function getBaseFinalLetterRange(base: string) {
+  if (!base) return { start: 0, end: 0 };
+
+  const lower = base.toLowerCase();
+  const matchedPattern = D_ED_BASE_LETTER_PATTERNS.find((pattern) => lower.endsWith(pattern));
+
+  if (matchedPattern) {
+    return { start: base.length - matchedPattern.length, end: base.length };
+  }
+
+  if (lower.endsWith('e') && base.length > 1 && !lower.endsWith('ee')) {
+    return { start: base.length - 2, end: base.length - 1 };
+  }
+
+  return { start: base.length - 1, end: base.length };
+}
+
+function renderDEdWordHighlight(word: string, mode: HighlightMode, keyPrefix: string): ReactNode {
+  const endingLength = mode === 'withEnding' ? getDEdEndingLength(word) : 0;
+  const splitIndex = Math.max(0, word.length - endingLength);
+  const base = word.slice(0, splitIndex);
+  const ending = word.slice(splitIndex);
+  const baseFinalRange = getBaseFinalLetterRange(base);
+
+  return (
+    <>
+      {base.slice(0, baseFinalRange.start)}
+      {baseFinalRange.end > baseFinalRange.start ? (
+        <span className="d-ed-hl-base-final" key={`${keyPrefix}-base-final`}>
+          {base.slice(baseFinalRange.start, baseFinalRange.end)}
+        </span>
+      ) : null}
+      {base.slice(baseFinalRange.end)}
+      {ending ? (
+        <span className="d-ed-hl-target" key={`${keyPrefix}-target`}>
+          {ending}
+        </span>
+      ) : null}
+    </>
+  );
+}
+
+function splitIpaToken(value: string) {
+  const match = value.match(/^([\/()[\]{}.,;:!?'"`]*)(.*?)([\/()[\]{}.,;:!?'"`]*)$/);
+
+  return {
+    leading: match?.[1] ?? '',
+    core: match?.[2] ?? value,
+    trailing: match?.[3] ?? '',
+  };
+}
+
+function getDEdIpaEndingLength(core: string): number {
+  const normalized = core.toLowerCase();
+  if (normalized.endsWith('\u026ad') || normalized.endsWith('id')) return 2;
+  if (normalized.endsWith('t') || normalized.endsWith('d')) return 1;
+  return 0;
+}
+
+function getBaseFinalIpaSymbol(baseCore: string): string {
+  const normalized = baseCore.replace(/[ˈˌ]/g, '').toLowerCase();
+  return D_ED_BASE_IPA_SYMBOLS.find((symbol) => normalized.endsWith(symbol)) ?? '';
+}
+
+function getBaseFinalIpaIndex(baseCore: string, baseFinal: string): number {
+  if (!baseFinal) return baseCore.length;
+
+  const normalizedTarget = baseFinal.toLowerCase();
+  for (let index = baseCore.length - 1; index >= 0; index -= 1) {
+    const normalizedSlice = baseCore.slice(index).replace(/[ˈˌ]/g, '').toLowerCase();
+    if (normalizedSlice === normalizedTarget) return index;
+  }
+
+  return Math.max(0, baseCore.length - baseFinal.length);
+}
+
+function renderDEdIpaHighlight(ipa: string, mode: HighlightMode, keyPrefix: string): ReactNode {
+  const { leading, core, trailing } = splitIpaToken(ipa);
+  const endingLength = mode === 'withEnding' ? getDEdIpaEndingLength(core) : 0;
+  const splitIndex = Math.max(0, core.length - endingLength);
+  const baseCore = core.slice(0, splitIndex);
+  const ending = core.slice(splitIndex);
+  const baseFinal = getBaseFinalIpaSymbol(baseCore);
+  const baseFinalIndex = getBaseFinalIpaIndex(baseCore, baseFinal);
+
+  return (
+    <>
+      {leading}
+      {baseCore.slice(0, baseFinalIndex)}
+      {baseFinal ? (
+        <span className="d-ed-hl-base-final" key={`${keyPrefix}-ipa-base-final`}>
+          {baseCore.slice(baseFinalIndex)}
+        </span>
+      ) : null}
+      {ending ? (
+        <span className="d-ed-hl-target" key={`${keyPrefix}-ipa-target`}>
+          {ending}
+        </span>
+      ) : null}
+      {trailing}
+    </>
+  );
+}
+
 function renderTableExamples(
   value: string,
   onSpeak: (word: string) => void,
-  options?: { showIpa?: boolean },
+  options?: { showIpa?: boolean; highlightMode?: HighlightMode },
 ) {
   const items = parseTableExampleItems(value);
   const showIpa = options?.showIpa ?? true;
+  const highlightMode = options?.highlightMode ?? 'base';
 
   return (
     <ul className="fs-topic-table-example-list fs-topic-table-example-list--chip">
       {items.map((item) => (
         <li key={item.rawLabel} className="fs-topic-table-example-row fs-topic-table-example-row--chip">
           <span>
-            <span className="fs-topic-table-example-word">{item.word}</span>
-            {showIpa && item.ipa ? <span className="fs-topic-table-example-ipa"> {item.ipa}</span> : null}
+            <span className="fs-topic-table-example-word">
+              {renderDEdWordHighlight(item.word, highlightMode, `table-${item.rawLabel}-word`)}
+            </span>
+            {showIpa && item.ipa ? (
+              <span className="fs-topic-table-example-ipa">
+                {' '}
+                {renderDEdIpaHighlight(item.ipa, highlightMode, `table-${item.rawLabel}-ipa`)}
+              </span>
+            ) : null}
           </span>
           <button
             type="button"
@@ -304,6 +477,12 @@ export default function FinalSoundDEdPage() {
   const [showPastEndingsIpa, setShowPastEndingsIpa] = useState(true);
   const [showWordBankIpa, setShowWordBankIpa] = useState(true);
   const [showRulesTableIpa, setShowRulesTableIpa] = useState(true);
+  const [showPastEndingsOrangeHighlight, setShowPastEndingsOrangeHighlight] = useState(true);
+  const [showPastEndingsMagentaHighlight, setShowPastEndingsMagentaHighlight] = useState(true);
+  const [showRulesTableOrangeHighlight, setShowRulesTableOrangeHighlight] = useState(true);
+  const [showRulesTableMagentaHighlight, setShowRulesTableMagentaHighlight] = useState(true);
+  const [showWordBankOrangeHighlight, setShowWordBankOrangeHighlight] = useState(true);
+  const [showWordBankMagentaHighlight, setShowWordBankMagentaHighlight] = useState(true);
   const [activeWordBankRowKey, setActiveWordBankRowKey] = useState<string | null>(null);
   const [activePastEndingKey, setActivePastEndingKey] = useState<string | null>(null);
   const [activeRulesTableRowKey, setActiveRulesTableRowKey] = useState<string | null>(null);
@@ -313,7 +492,7 @@ export default function FinalSoundDEdPage() {
   const singlePlayRunIdRef = useRef(0);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordBankRowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
-  const pastEndingItemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const pastEndingItemRefs = useRef<Array<HTMLDivElement | null>>([]);
   const wordBankSectionRef = useRef<HTMLElement | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [openSections, setOpenSections] = useState(() => {
@@ -520,6 +699,14 @@ export default function FinalSoundDEdPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    setOpenSections((prev) => {
+      if (!prev.wordBank) {
+        return { ...prev, wordBank: true };
+      }
+      return prev;
+    });
+    await sleep(80);
+
     const runId = playAllRunIdRef.current + 1;
     playAllRunIdRef.current = runId;
     setIsPlayingWordBankAll(true);
@@ -573,6 +760,14 @@ export default function FinalSoundDEdPage() {
 
     if (!isSpeechSynthesisSupported()) return;
 
+    setOpenSections((prev) => {
+      if (!prev.pastEndings) {
+        return { ...prev, pastEndings: true };
+      }
+      return prev;
+    });
+    await sleep(80);
+
     const runId = pastEndingsPlayAllRunIdRef.current + 1;
     pastEndingsPlayAllRunIdRef.current = runId;
     setIsPlayingPastEndingsAll(true);
@@ -587,6 +782,10 @@ export default function FinalSoundDEdPage() {
         block: 'center',
         inline: 'nearest',
       });
+      await sleep(120);
+      if (runId !== pastEndingsPlayAllRunIdRef.current) break;
+      await speakQueuedText(item.wordBefore, runId, pastEndingsPlayAllRunIdRef);
+      if (runId !== pastEndingsPlayAllRunIdRef.current) break;
       await sleep(120);
       if (runId !== pastEndingsPlayAllRunIdRef.current) break;
       await speakQueuedText(item.word, runId, pastEndingsPlayAllRunIdRef);
@@ -607,6 +806,14 @@ export default function FinalSoundDEdPage() {
     }
 
     if (!isSpeechSynthesisSupported()) return;
+
+    setOpenSections((prev) => {
+      if (!prev.rulesTable) {
+        return { ...prev, rulesTable: true };
+      }
+      return prev;
+    });
+    await sleep(80);
 
     const runId = rulesTablePlayAllRunIdRef.current + 1;
     rulesTablePlayAllRunIdRef.current = runId;
@@ -732,7 +939,12 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section
+          id="pastEndings"
+          className={`fs-topic-block ${showPastEndingsOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showPastEndingsMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          }`}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -768,11 +980,15 @@ export default function FinalSoundDEdPage() {
                 <article key={rule.ending} className="fs-topic-card">
                   <h3 className="fs-topic-card-title">Dibaca {rule.ending}</h3>
                   <p className="fs-topic-card-note">{rule.trigger}</p>
-                  <ul className="fs-topic-example-list">
+                  <div className="flex flex-col gap-3 mt-3">
                     {rule.examples.map((example) => (
-                      <li
+                      <div
                         key={example.word}
-                        className={activePastEndingKey === `${rule.ending}-${example.word}` ? 'is-speaking' : ''}
+                        className={`bg-[#101414] border rounded-lg p-4 transition-all duration-300 flex flex-col gap-3 relative overflow-hidden ${
+                          activePastEndingKey === `${rule.ending}-${example.word}`
+                            ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
+                            : 'border-white/15 hover:border-cyan-300/70'
+                        }`}
                         ref={(node) => {
                           const flatIndex = PAST_ENDING_EXAMPLES_FLAT.findIndex(
                             (item) => item.key === `${rule.ending}-${example.word}`,
@@ -782,25 +998,77 @@ export default function FinalSoundDEdPage() {
                           }
                         }}
                       >
-                        <div className="fs-topic-table-example-row">
-                          <span>
-                            {example.word}
-                            {showPastEndingsIpa ? ` ${example.ipa}` : ''}
-                          </span>
-                          <button
-                            type="button"
-                            className="fs-topic-mini-btn fs-topic-play-chip-btn"
-                            aria-label={`Putar ${example.word}`}
-                            title="Putar"
-                            onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
-                          >
-                            <span className="fs-topic-play-chip-icon" aria-hidden="true" />
-                            <span className="fs-topic-visually-hidden">Putar</span>
-                          </button>
+                        <div className="font-sans font-bold text-white uppercase text-xs tracking-wider opacity-80 border-b border-white/10 pb-2 mb-1">
+                          {rule.ending} ending
                         </div>
-                      </li>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2 text-white/55">
+                            <span className="font-mono text-[10px] uppercase tracking-wider opacity-80 whitespace-nowrap min-w-[45px]">
+                              Before
+                            </span>
+                            <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
+                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                                {renderDEdWordHighlight(
+                                  example.wordBefore,
+                                  'base',
+                                  `past-${example.wordBefore}-before-word`,
+                                )}
+                                {showPastEndingsIpa ? (
+                                  <span className="font-mono text-xs opacity-70 ml-1">
+                                    {renderDEdIpaHighlight(
+                                      example.ipaBefore,
+                                      'base',
+                                      `past-${example.wordBefore}-before-ipa`,
+                                    )}
+                                  </span>
+                                ) : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void playPastEndingSingle(example.wordBefore, `${rule.ending}-${example.word}`)}
+                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.wordBefore}`}
+                              >
+                                <Play className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-white/80">
+                            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap min-w-[45px]">
+                              After
+                            </span>
+                            <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                                {renderDEdWordHighlight(
+                                  example.word,
+                                  'withEnding',
+                                  `past-${example.word}-after-word`,
+                                )}
+                                {showPastEndingsIpa ? (
+                                  <span className="font-mono text-sm opacity-70 ml-1">
+                                    {renderDEdIpaHighlight(
+                                      example.ipa,
+                                      'withEnding',
+                                      `past-${example.word}-after-ipa`,
+                                    )}
+                                  </span>
+                                ) : ''}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                aria-label={`Putar ${example.word}`}
+                              >
+                                <Play className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </article>
               ))}
               </div>
@@ -808,7 +1076,12 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section
+          id="rulesTable"
+          className={`fs-topic-block ${showRulesTableOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showRulesTableMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          }`}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -868,6 +1141,7 @@ export default function FinalSoundDEdPage() {
                         <td>
                           {renderTableExamples(row.after, (word) => void speakWithBestEnglishVoice(word), {
                             showIpa: showRulesTableIpa,
+                            highlightMode: 'withEnding',
                           })}
                         </td>
                       </tr>
@@ -879,7 +1153,13 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block" ref={wordBankSectionRef}>
+        <section
+          id="wordBank"
+          className={`fs-topic-block ${showWordBankOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showWordBankMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          }`}
+          ref={wordBankSectionRef}
+        >
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -940,11 +1220,21 @@ export default function FinalSoundDEdPage() {
                           <td>
                             <div className="fs-topic-table-example-row">
                               <span>
-                                <span className="fs-topic-table-example-word">{item.before}</span>
+                                <span className="fs-topic-table-example-word">
+                                  {renderDEdWordHighlight(
+                                    item.before,
+                                    'base',
+                                    `word-bank-${item.before}-before-word`,
+                                  )}
+                                </span>
                                 {showWordBankIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
-                                    {ipaPair?.before ?? item.sound}
+                                    {renderDEdIpaHighlight(
+                                      ipaPair?.before ?? item.sound,
+                                      'base',
+                                      `word-bank-${item.before}-before-ipa`,
+                                    )}
                                   </span>
                                 ) : null}
                               </span>
@@ -963,11 +1253,21 @@ export default function FinalSoundDEdPage() {
                           <td>
                             <div className="fs-topic-table-example-row">
                               <span>
-                                <span className="fs-topic-table-example-word">{item.after}</span>
+                                <span className="fs-topic-table-example-word">
+                                  {renderDEdWordHighlight(
+                                    item.after,
+                                    'withEnding',
+                                    `word-bank-${item.after}-after-word`,
+                                  )}
+                                </span>
                                 {showWordBankIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
-                                    {ipaPair?.after ?? item.sound}
+                                    {renderDEdIpaHighlight(
+                                      ipaPair?.after ?? item.sound,
+                                      'withEnding',
+                                      `word-bank-${item.after}-after-ipa`,
+                                    )}
                                   </span>
                                 ) : null}
                               </span>
@@ -985,7 +1285,9 @@ export default function FinalSoundDEdPage() {
                           </td>
                           {showWordBankIpa ? (
                             <td>
-                              <span className="fs-topic-table-example-ipa">{item.sound}</span>
+                              <span className="fs-topic-table-example-ipa">
+                                <span className="d-ed-hl-target">{item.sound}</span>
+                              </span>
                             </td>
                           ) : null}
                         </tr>
@@ -1082,6 +1384,106 @@ export default function FinalSoundDEdPage() {
           ) : null}
         </section>
       </main>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Past Endings
+            </span>
+            <PlayStopButton
+              isActive={isPlayingPastEndingsAll}
+              label="PAST ENDINGS"
+              sectionId="pastEndings"
+              onClick={() => void handlePastEndingsPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showPastEndingsIpa}
+              onChange={setShowPastEndingsIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Past Endings IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showPastEndingsOrangeHighlight}
+              onChange={setShowPastEndingsOrangeHighlight}
+              color="orange"
+              label="Ending D/ED"
+            />
+            <HighlightVisibilityToggle
+              checked={showPastEndingsMagentaHighlight}
+              onChange={setShowPastEndingsMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Rules Table
+            </span>
+            <PlayStopButton
+              isActive={isPlayingRulesTableAll}
+              label="RULES TABLE"
+              sectionId="rulesTable"
+              onClick={() => void handleRulesTablePlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showRulesTableIpa}
+              onChange={setShowRulesTableIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Rules Table IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showRulesTableOrangeHighlight}
+              onChange={setShowRulesTableOrangeHighlight}
+              color="orange"
+              label="Ending D/ED"
+            />
+            <HighlightVisibilityToggle
+              checked={showRulesTableMagentaHighlight}
+              onChange={setShowRulesTableMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Word Bank
+            </span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="WORD BANK"
+              sectionId="wordBank"
+              onClick={() => void handleWordBankPlayAll()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle
+              checked={showWordBankIpa}
+              onChange={setShowWordBankIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Word Bank IPA"
+            />
+            <HighlightVisibilityToggle
+              checked={showWordBankOrangeHighlight}
+              onChange={setShowWordBankOrangeHighlight}
+              color="orange"
+              label="Ending D/ED"
+            />
+            <HighlightVisibilityToggle
+              checked={showWordBankMagentaHighlight}
+              onChange={setShowWordBankMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="d-ed-recording-anchor"

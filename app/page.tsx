@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/MemberAuthContext'
+import { NOTIFICATIONS_VIEW_ID, saveDashboardView } from '@/app/dashboard/dashboardView'
 
 export default function RootRedirect() {
   const { hasSession, loading } = useAuth()
@@ -12,6 +13,7 @@ export default function RootRedirect() {
     if (loading) return
 
     if (hasSession) {
+      saveDashboardView(NOTIFICATIONS_VIEW_ID)
       router.push('/dashboard')
     } else {
       router.push('/login')

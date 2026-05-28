@@ -528,6 +528,28 @@ export const PRONUNCIATION_ROUTE_TARGETS: NavigationPronunciationTarget[] = [
     triggers: ['final sound d/ed', 'final sound d ed', 'd/ed', 'd ed', 'ending d ed'],
   },
   {
+    path: '/skill/pronunciation/contraction',
+    label: 'Contraction',
+    triggers: [
+      'contraction',
+      'contractions',
+      'singkatan',
+      'pelafalan singkatan',
+      'materi contraction',
+    ],
+  },
+  {
+    path: '/skill/pronunciation/linking-word',
+    label: 'Linking Word',
+    triggers: [
+      'linking word',
+      'linking words',
+      'linking',
+      'kata hubung',
+      'materi linking word',
+    ],
+  },
+  {
     path: '/skill/pronunciation/reading-text',
     label: 'Reading Text for Practice',
     triggers: [
@@ -536,6 +558,16 @@ export const PRONUNCIATION_ROUTE_TARGETS: NavigationPronunciationTarget[] = [
       'latihan membaca',
       'baca text',
       'reading text for practice',
+    ],
+  },
+  {
+    path: '/skill/pronunciation/reading-text/tongueTwister',
+    label: 'Tongue Twister Reading Text',
+    triggers: [
+      'tongue twister reading text',
+      'reading text tongue twister',
+      'tongue twister reading',
+      'reading tongue twister',
     ],
   },
   {
@@ -638,6 +670,10 @@ export const NAVIGATION_TYPO_RULES: NavigationTypoRule[] = [
   { pattern: /\barticel\b/g, replacement: 'article' },
   { pattern: /\bcondtional\b/g, replacement: 'conditional' },
   { pattern: /\bpasive\b/g, replacement: 'passive' },
+  { pattern: /\bcontruction\b/g, replacement: 'contraction' },
+  { pattern: /\bcontractions\b/g, replacement: 'contractions' },
+  { pattern: /\blinkingword\b/g, replacement: 'linking word' },
+  { pattern: /\blinkin\b/g, replacement: 'linking' },
 ];
 
 export const applyNavigationTypoRules = (query: string): string =>

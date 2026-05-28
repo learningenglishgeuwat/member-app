@@ -406,10 +406,7 @@ export default function PhoneticSymbolsFlashcardPage() {
             <span className={`vf-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
               <span className="vf-card-face vf-card-face--front">
                 <span className="vf-face-kicker">Symbol</span>
-                <span
-                  className="vf-face-main"
-                  style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}
-                >
+                <span className="vf-face-main font-ipa" data-ipa>
                   {currentCard.symbol}
                 </span>
                 <button

@@ -250,14 +250,24 @@ const allSymbolDescriptions: SymbolDescriptions = {
   ...diphthongDescriptions
 };
 
+function normalizeSymbolKey(symbol: string): string {
+  const s = symbol.trim();
+  if (s === 'dʒ') return 'ʤ';
+  if (s === 'tʃ') return 'ʧ';
+  if (s === 'y') return 'j';
+  return s;
+}
+
 // Helper function to get symbol description
 export function getSymbolDescription(symbol: string): string {
-  return allSymbolDescriptions[symbol]?.description || 'International Phonetic Alphabet Symbol';
+  const normalizedKey = normalizeSymbolKey(symbol);
+  return allSymbolDescriptions[normalizedKey]?.description || 'International Phonetic Alphabet Symbol';
 }
 
 // Helper function to get category display name
 export function getCategoryDisplayName(symbol: string): string {
-  const normalizedSymbol = symbol
+  const normalizedKey = normalizeSymbolKey(symbol);
+  const normalizedSymbol = normalizedKey
     .replace('Ã¦', '\u00e6')
     .replace('Ã°', '\u00f0')
     .replace('Å‹', '\u014b')
@@ -275,7 +285,7 @@ export function getCategoryDisplayName(symbol: string): string {
     .replace('Ê’', '\u0292')
     .replace('Ê¤', '\u02a4');
 
-  const symbolData = allSymbolDescriptions[normalizedSymbol] || allSymbolDescriptions[symbol];
+  const symbolData = allSymbolDescriptions[normalizedSymbol] || allSymbolDescriptions[normalizedKey];
   if (!symbolData) return 'Unknown';
 
   // Explicit category mapping (must match symbol portal grouping)

@@ -133,6 +133,7 @@ export default function AmericanTLessonScaffold({
 
         {sections.map((section) => (
           <section
+            id={section.id}
             key={section.id}
             className="fs-topic-block"
             ref={(node) => {

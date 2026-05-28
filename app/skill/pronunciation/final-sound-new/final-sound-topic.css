@@ -1,6 +1,7 @@
 .fs-topic-page {
   min-height: 100vh;
   color: var(--pronun-text, #f1e9ff);
+  font-family: var(--font-ui);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
 }
@@ -281,8 +282,8 @@
 }
 
 .fs-topic-table-example-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.82rem;
 }
 

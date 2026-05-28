@@ -116,6 +116,7 @@
   font-size: 0.92rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+  border-left: 1px solid rgba(110, 255, 141, 0.18);
 }
 
 .vocab-kpi-table > :nth-child(n + 3) {
@@ -488,10 +489,10 @@
 
 .vocab-ipa {
   margin: 0.28rem 0 0;
-  color: rgba(210, 230, 220, 0.78);
+  color: var(--color-ipa);
   font-size: 0.82rem;
   line-height: 1.45;
-  font-family: 'Noto Sans', 'Segoe UI', 'Arial Unicode MS', 'Noto Sans IPA', sans-serif;
+  font-family: var(--font-ipa);
 }
 
 .vocab-meaning {
@@ -518,11 +519,11 @@
 
 .vocab-example-ipa {
   margin: 0.22rem 0 0;
-  color: #f2fff5;
+  color: var(--color-ipa);
   font-size: 0.85rem;
   font-style: italic;
   line-height: 1.45;
-  font-family: 'Noto Sans', 'Segoe UI', 'Arial Unicode MS', 'Noto Sans IPA', sans-serif;
+  font-family: var(--font-ipa);
 }
 
 .vocab-example-translation {
@@ -1297,4 +1298,45 @@
   .vocab-topic-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+/* Dark background overrides for Vocabulary pages */
+.vocab-page {
+  background: #000 !important;
+}
+.vocab-header {
+  background: linear-gradient(145deg, rgba(0,0,0,0.56), rgba(0,0,0,0.42)) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.24) !important;
+}
+.vocab-kpi {
+  background: rgba(0,0,0,0.35) !important;
+}
+.vocab-kpi-table {
+  background: linear-gradient(155deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)) !important;
+  box-shadow: 0 0 0 1px rgba(110, 255, 141, 0.12), 0 0 15px rgba(0,0,0,0.15) !important;
+}
+.vocab-phase-panel,
+.vocab-phase-head,
+.vocab-action-btn--primary,
+.vocab-control-saved-progress.button-saved-progress,
+.vocab-prompt-card,
+.vocab-prompt-copy,
+.vocab-prompt-toggle-icon,
+.vocab-practice-modal,
+.vocab-practice-chip,
+.vocab-topic-link {
+  background: rgba(0,0,0,0.7) !important;
+}
+.vocab-phase-btn {
+  background: rgba(0,0,0,0.88) !important;
+}
+.vocab-phase-btn.is-active {
+  background: rgba(0,0,0,0.95) !important;
+  box-shadow: 0 0 16px rgba(0,0,0,0.22) !important;
+}
+.vocab-card {
+  background: linear-gradient(155deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)) !important;
+}
+.vocab-topic-link {
+  color: inherit !important;
 }

@@ -6,6 +6,7 @@ import { Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import '../final-sound-new/final-sound-topic.css';
 import './intonation.css';
 import { primeBestEnglishVoice, speakWithBestEnglishVoice } from '../final-sound-new/tts-utils';
@@ -77,6 +78,14 @@ const AUDIO_ITEM_IDS: Record<IntonationAudioSectionKey, string[]> = {
   emphasisFeeling: EMPHASIS_FEELING_EXAMPLES.map((item) => item.id),
   dialogueDrills: DIALOGUE_DRILLS.map((item) => item.id),
 };
+
+const INTONATION_AUDIO_SECTIONS: Array<{ key: IntonationAudioSectionKey; label: string }> = [
+  { key: 'patterns', label: 'PATTERNS' },
+  { key: 'statementsQuestions', label: 'STATEMENTS' },
+  { key: 'listContinuation', label: 'LIST' },
+  { key: 'emphasisFeeling', label: 'EMPHASIS' },
+  { key: 'dialogueDrills', label: 'DIALOGUE' },
+];
 
 const PRONUNCIATION_PROGRESS_KEY = 'pronunciationProgress';
 const DASHBOARD_PROGRESS_KEY = 'dashboardProgress';
@@ -289,10 +298,12 @@ function PatternGrid({
   items,
   activeCardKey,
   onSpeak,
+  showIpa,
 }: {
   items: ReadonlyArray<IntonationExample>;
   activeCardKey: string | null;
   onSpeak: (text: string, cardKey: string) => void;
+  showIpa: boolean;
 }) {
   return (
     <div className="intonation-grid two-col">
@@ -324,6 +335,11 @@ function PatternGrid({
                 <strong>Sentence:</strong>{' '}
                 <ToneSentence sentence={item.sentence} mode={getToneModeFromPattern(item.pattern)} />
               </p>
+              {showIpa && item.ipa && (
+                <p className="intonation-line intonation-detail-card intonation-ipa">
+                  <strong>IPA:</strong> {item.ipa}
+                </p>
+              )}
               <p className="intonation-line intonation-detail-card">
                 <strong>Meaning (ID):</strong> {item.translationId}
               </p>
@@ -358,10 +374,12 @@ function PairGrid({
   items,
   activeCardKey,
   onSpeak,
+  showIpa,
 }: {
   items: ReadonlyArray<IntonationPairExample>;
   activeCardKey: string | null;
   onSpeak: (text: string, cardKey: string) => void;
+  showIpa: boolean;
 }) {
   return (
     <div className="intonation-grid two-col">
@@ -378,10 +396,17 @@ function PairGrid({
             <h3>{item.prompt}</h3>
             <div className="intonation-detail-cards">
               <div className="intonation-pair-row intonation-detail-card intonation-pair-detail-card">
-                <p className="intonation-line">
-                  <strong>Statement:</strong>{' '}
-                  <ToneSentence sentence={item.statement} mode="falling" />
-                </p>
+                <div className="flex-1">
+                  <p className="intonation-line">
+                    <strong>Statement:</strong>{' '}
+                    <ToneSentence sentence={item.statement} mode="falling" />
+                  </p>
+                  {showIpa && item.statementIpa && (
+                    <p className="intonation-line intonation-ipa mt-1">
+                      <strong>IPA:</strong> {item.statementIpa}
+                    </p>
+                  )}
+                </div>
                 <button
                   type="button"
                   className="fs-topic-mini-btn intonation-play-chip-btn"
@@ -394,10 +419,17 @@ function PairGrid({
                 </button>
               </div>
               <div className="intonation-pair-row intonation-detail-card intonation-pair-detail-card">
-                <p className="intonation-line">
-                  <strong>Question:</strong>{' '}
-                  <ToneSentence sentence={item.question} mode="rising" />
-                </p>
+                <div className="flex-1">
+                  <p className="intonation-line">
+                    <strong>Question:</strong>{' '}
+                    <ToneSentence sentence={item.question} mode="rising" />
+                  </p>
+                  {showIpa && item.questionIpa && (
+                    <p className="intonation-line intonation-ipa mt-1">
+                      <strong>IPA:</strong> {item.questionIpa}
+                    </p>
+                  )}
+                </div>
                 <button
                   type="button"
                   className="fs-topic-mini-btn intonation-play-chip-btn"
@@ -440,10 +472,12 @@ function ListToneGrid({
   items,
   activeCardKey,
   onSpeak,
+  showIpa,
 }: {
   items: ReadonlyArray<IntonationListExample>;
   activeCardKey: string | null;
   onSpeak: (text: string, cardKey: string) => void;
+  showIpa: boolean;
 }) {
   return (
     <div className="intonation-grid two-col">
@@ -475,6 +509,11 @@ function ListToneGrid({
                 <strong>Sentence:</strong>{' '}
                 <ToneSentence sentence={item.sentence} mode="continuation" />
               </p>
+              {showIpa && item.ipa && (
+                <p className="intonation-line intonation-detail-card intonation-ipa">
+                  <strong>IPA:</strong> {item.ipa}
+                </p>
+              )}
               <p className="intonation-line intonation-detail-card">
                 <strong>Meaning (ID):</strong> {item.translationId}
               </p>
@@ -509,10 +548,12 @@ function EmotionGrid({
   items,
   activeCardKey,
   onSpeak,
+  showIpa,
 }: {
   items: ReadonlyArray<IntonationEmotionExample>;
   activeCardKey: string | null;
   onSpeak: (text: string, cardKey: string) => void;
+  showIpa: boolean;
 }) {
   return (
     <div className="intonation-grid two-col">
@@ -544,6 +585,11 @@ function EmotionGrid({
                 <strong>Sentence:</strong>{' '}
                 <ToneSentence sentence={item.sentence} mode={getToneModeFromContour(item.contour)} />
               </p>
+              {showIpa && item.ipa && (
+                <p className="intonation-line intonation-detail-card intonation-ipa">
+                  <strong>IPA:</strong> {item.ipa}
+                </p>
+              )}
               <p className="intonation-line intonation-detail-card">
                 <strong>Meaning (ID):</strong> {item.translationId}
               </p>
@@ -578,10 +624,12 @@ function DialogueGrid({
   items,
   activeCardKey,
   onSpeak,
+  showIpa,
 }: {
   items: ReadonlyArray<IntonationDrillSentence>;
   activeCardKey: string | null;
   onSpeak: (text: string, cardKey: string) => void;
+  showIpa: boolean;
 }) {
   const fullDialogueTts = items.map((item) => item.ttsText ?? item.sentence).join(' ');
   const fullDialogueLines = items.map((item) => `Speaker ${item.speaker}: ${item.sentence}`);
@@ -628,6 +676,11 @@ function DialogueGrid({
                 <strong>Sentence:</strong>{' '}
                 <ToneSentence sentence={item.sentence} mode={getToneModeFromTargetPattern(item.targetPattern)} />
               </p>
+              {showIpa && item.ipa && (
+                <p className="intonation-line intonation-detail-card intonation-ipa">
+                  <strong>IPA:</strong> {item.ipa}
+                </p>
+              )}
               <p className="intonation-line intonation-detail-card">
                 <strong>Meaning (ID):</strong> {item.translationId}
               </p>
@@ -689,6 +742,7 @@ function DialogueGrid({
 
 export default function IntonationPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showIpa, setShowIpa] = useState(true);
   const [openSections, setOpenSections] = useState<Record<IntonationSectionKey, boolean>>(() => {
     const initialState = { ...DEFAULT_OPEN_STATE };
     if (typeof window === 'undefined') return initialState;
@@ -795,6 +849,22 @@ export default function IntonationPage() {
     setActiveAudioSection(section);
     void playerRef.current?.playModel(sentences);
   }, []);
+
+  const handleControlCenterPlay = useCallback(
+    (section: IntonationAudioSectionKey) => {
+      if (section === activeAudioSection && playbackState.isPlaying) {
+        handleStopAudio();
+        return;
+      }
+
+      if (!openSections[section]) {
+        setOpenSections((prev) => ({ ...prev, [section]: true }));
+      }
+
+      handlePlayModel(section);
+    },
+    [activeAudioSection, playbackState.isPlaying, handlePlayModel, handleStopAudio, openSections],
+  );
 
   const handleCopyPrompt = useCallback(async () => {
     if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) return;
@@ -961,7 +1031,7 @@ export default function IntonationPage() {
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="patterns" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -989,13 +1059,14 @@ export default function IntonationPage() {
                 items={BASIC_INTONATION_PATTERNS}
                 activeCardKey={activeCardKey}
                 onSpeak={handleSpeakSingle}
+                showIpa={showIpa}
               />
               <LearningGuideBlock guide={INTONATION_SECTION_LEARNING_GUIDES.patterns} />
             </>
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="statementsQuestions" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1023,13 +1094,14 @@ export default function IntonationPage() {
                 items={STATEMENT_QUESTION_PAIRS}
                 activeCardKey={activeCardKey}
                 onSpeak={handleSpeakSingle}
+                showIpa={showIpa}
               />
               <LearningGuideBlock guide={INTONATION_SECTION_LEARNING_GUIDES.statementsQuestions} />
             </>
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="listContinuation" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1057,13 +1129,14 @@ export default function IntonationPage() {
                 items={LIST_CONTINUATION_EXAMPLES}
                 activeCardKey={activeCardKey}
                 onSpeak={handleSpeakSingle}
+                showIpa={showIpa}
               />
               <LearningGuideBlock guide={INTONATION_SECTION_LEARNING_GUIDES.listContinuation} />
             </>
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="emphasisFeeling" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1091,13 +1164,14 @@ export default function IntonationPage() {
                 items={EMPHASIS_FEELING_EXAMPLES}
                 activeCardKey={activeCardKey}
                 onSpeak={handleSpeakSingle}
+                showIpa={showIpa}
               />
               <LearningGuideBlock guide={INTONATION_SECTION_LEARNING_GUIDES.emphasisFeeling} />
             </>
           ) : null}
         </section>
 
-        <section className="fs-topic-block">
+        <section id="dialogueDrills" className="fs-topic-block">
           <h2 className="fs-topic-block-title">
             <button
               type="button"
@@ -1125,6 +1199,7 @@ export default function IntonationPage() {
                 items={DIALOGUE_DRILLS}
                 activeCardKey={activeCardKey}
                 onSpeak={handleSpeakSingle}
+                showIpa={showIpa}
               />
               <LearningGuideBlock guide={INTONATION_SECTION_LEARNING_GUIDES.dialogueDrills} />
             </>
@@ -1223,6 +1298,30 @@ export default function IntonationPage() {
         className="intonation-recording-anchor"
         downloadFileName="intonation-GEUWAT-recording.wav"
       />
+
+      <ControlCenter>
+        <div className="flex flex-col gap-3">
+          {INTONATION_AUDIO_SECTIONS.map((section) => (
+            <PlayStopButton
+              key={section.key}
+              isActive={activeAudioSection === section.key && playbackState.isPlaying}
+              label={section.label}
+              sectionId={section.key}
+              onClick={() => handleControlCenterPlay(section.key)}
+              disabled={AUDIO_SENTENCES[section.key].length === 0}
+              size="sm"
+            />
+          ))}
+          <div className="border-t border-pink-500/20 pt-3 mt-1">
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label="Tampilkan IPA"
+            />
+          </div>
+        </div>
+      </ControlCenter>
     </div>
   );
 }

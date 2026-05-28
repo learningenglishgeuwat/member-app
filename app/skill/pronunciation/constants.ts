@@ -63,6 +63,26 @@ export const TOPICS: Topic[] = [
     bgImage: 'https://picsum.photos/id/50/1920/1080',
   },
   {
+    id: 'linking-word',
+    title: 'Linking Word',
+    shortDesc: 'Connected Speech',
+    description:
+      'Latih linking sound antar kata agar spoken English terdengar lebih natural: liaison, reduction, dan perubahan bunyi saat kata disambung.',
+    icon: 'LW',
+    color: 'from-sky-500 to-cyan-500',
+    bgImage: 'https://picsum.photos/id/55/1920/1080',
+  },
+  {
+    id: 'contraction',
+    title: 'Contraction',
+    shortDesc: 'Short Forms',
+    description:
+      "Pelajari contraction dalam spoken English: I'm, you're, I'll, can't, gonna, dan bentuk pendek lain yang membuat ucapan terdengar lebih natural.",
+    icon: "'",
+    color: 'from-teal-400 to-cyan-500',
+    bgImage: 'https://picsum.photos/id/60/1920/1080',
+  },
+  {
     id: 'text',
     title: 'TEXT',
     shortDesc: 'Baca & Ucapkan',
@@ -82,6 +102,16 @@ export const TOPICS: Topic[] = [
     color: 'from-indigo-400 to-violet-600',
     bgImage: 'https://picsum.photos/id/80/1920/1080',
   },
+  {
+    id: 'tongue-twister',
+    title: 'Tongue Twister',
+    shortDesc: 'Latihan Artikulasi',
+    description:
+      'Latih kecepatan dan ketepatan artikulasi dengan tongue twisters. Tingkatkan muscle memory untuk bunyi-bunyi sulit dan kombinasi konsonan yang challenging.',
+    icon: 'TT',
+    color: 'from-amber-500 to-yellow-600',
+    bgImage: 'https://picsum.photos/id/90/1920/1080',
+  },
 ];
 
 export const LOCKED_TOPIC_IDS: string[] = [];
@@ -93,6 +123,9 @@ export const TOPIC_ROUTES: Record<string, string> = {
   intonation: '/skill/pronunciation/intonation',
   'final-sound': '/skill/pronunciation/final-sound-new',
   'american-t': '/skill/pronunciation/american-t',
+  'linking-word': '/skill/pronunciation/linking-word',
+  contraction: '/skill/pronunciation/contraction',
   text: '/skill/pronunciation/text',
   'reading-text': '/skill/pronunciation/reading-text',
+  'tongue-twister': '/skill/pronunciation/phoneticSymbols/tongue-twister',
 };

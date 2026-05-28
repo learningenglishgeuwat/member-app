@@ -1,6 +1,7 @@
 .sh-page {
   min-height: 100vh;
   color: #fff7ed;
+  font-family: var(--font-ui);
   background:
     radial-gradient(900px 420px at 8% -12%, rgba(251, 191, 36, 0.26), transparent 55%),
     radial-gradient(860px 420px at 92% 112%, rgba(249, 115, 22, 0.18), transparent 57%),

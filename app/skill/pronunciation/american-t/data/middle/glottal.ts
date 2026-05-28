@@ -7,6 +7,7 @@ type GlottalSentenceDrillItem = {
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type GlottalSentenceDrillExample = {
@@ -14,6 +15,7 @@ type GlottalSentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const GLOTTAL_STOP_EXAMPLES: ReadonlyArray<WordExample> = [
@@ -43,8 +45,8 @@ export const GLOTTAL_STOP_EXAMPLES: ReadonlyArray<WordExample> = [
   },
   {
     word: 'curtain',
-    ipa: '/ˈkɝtən/',
-    spoken: '/ˈkɝʔn̩/',
+    ipa: '/ˈkɚtən/',
+    spoken: '/ˈkɚʔn̩/',
     note: 'Contoh tambahan untuk pola T + n pada ritme santai.',
   },
 ];
@@ -100,8 +102,8 @@ export const GLOTTAL_WORD_BANK_IPA: Readonly<Record<string, string>> = {
   button: '/ˈbʌʔn̩/',
   kitten: '/ˈkɪʔn̩/',
   written: '/ˈrɪʔn̩/',
-  curtain: '/ˈkɝʔn̩/',
-  certain: '/ˈsɝʔn̩/',
+  curtain: '/ˈkɚʔn̩/',
+  certain: '/ˈsɚʔn̩/',
   mitten: '/ˈmɪʔn̩/',
   cotton: '/ˈkɑʔn̩/',
   rotten: '/ˈrɑʔn̩/',
@@ -130,12 +132,12 @@ export const GLOTTAL_WORD_BANK_IPA: Readonly<Record<string, string>> = {
   buttons: '/ˈbʌʔn̩z/',
   kittens: '/ˈkɪʔn̩z/',
   mittens: '/ˈmɪʔn̩z/',
-  curtains: '/ˈkɝʔn̩z/',
+  curtains: '/ˈkɚʔn̩z/',
   outfit: '/ˈaʊʔfɪt/',
   outcome: '/ˈaʊʔkʌm/',
   outback: '/ˈaʊʔbæk/',
   outpost: '/ˈaʊʔpoʊst/',
-  outburst: '/ˈaʊʔbɝst/',
+  outburst: '/ˈaʊʔbɚst/',
   hotdog: '/ˈhɑʔdɔɡ/',
   notepad: '/ˈnoʊʔpæd/',
   footnote: '/ˈfʊʔnoʊt/',
@@ -164,13 +166,13 @@ export const GLOTTAL_SENTENCES: ReadonlyArray<GlottalSentenceDrillItem> = [
   },
   {
     text: 'Close the curtain slowly.',
-    ipa: '/kloʊz ðə kɝʔn sloʊli/',
+    ipa: '/kloʊz ðə kɚʔn sloʊli/',
     note: 'Perhatikan glottal ringan di tengah curtain.',
     focusWords: ['curtain'],
   },
   {
     text: 'This cotton shirt is soft.',
-    ipa: '/ðɪs kɑʔn ʃɝt ɪz sɔft/',
+    ipa: '/ðɪs kɑʔn ʃɚt ɪz sɔft/',
     note: 'Latih pola glottal pada cotton.',
     focusWords: ['cotton'],
   },
@@ -204,7 +206,7 @@ export const GLOTTAL_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<GlottalSentenceDr
   {
     id: 'glottal-set-04',
     text: 'Please open the curtain a little.',
-    ipa: '/pliz oʊpən ðə kɝʔn ə lɪɾəl/',
+    ipa: '/pliz oʊpən ðə kɚʔn ə lɪɾəl/',
     focusWords: ['curtain'],
   },
   {
@@ -240,7 +242,7 @@ export const GLOTTAL_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<GlottalSentenceDr
   {
     id: 'glottal-set-10',
     text: 'Let us brighten this corner first.',
-    ipa: '/lɛt ʌs braɪʔn ðɪs kɔrnɚ fɝst/',
+    ipa: '/lɛt ʌs braɪʔn ðɪs kɔrnɚ fɚst/',
     focusWords: ['brighten'],
   },
   {
@@ -270,7 +272,7 @@ export const GLOTTAL_SENTENCE_DRILL_EXAMPLES_15: ReadonlyArray<GlottalSentenceDr
   {
     id: 'glottal-set-15',
     text: 'The curtains are closed now.',
-    ipa: '/ðə kɝʔnz ɑr kloʊzd naʊ/',
+    ipa: '/ðə kɚʔnz ɑr kloʊzd naʊ/',
     focusWords: ['curtains'],
   },
 ];

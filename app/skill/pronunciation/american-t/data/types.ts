@@ -38,6 +38,7 @@ export type SentenceNoteItem = {
   text: string;
   ipa?: string;
   note: string;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export type ClearTExample = {

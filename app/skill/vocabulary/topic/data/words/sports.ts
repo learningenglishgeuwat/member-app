@@ -3,7 +3,7 @@ import type { VocabularyItem } from '../types';
 export const VOCAB_TOPIC_SPORTS_WORDS: VocabularyItem[] = [
   { id: 'sports-w01', topicId: 'sports', word: 'sport', ipa: '/spɔːrt/', meaningId: 'olahraga', exampleEn: 'My favorite sport is badminton.' },
   { id: 'sports-w02', topicId: 'sports', word: 'exercise', ipa: '/ˈɛksərsaɪz/', meaningId: 'olahraga', exampleEn: 'I exercise every morning.' },
-  { id: 'sports-w03', topicId: 'sports', word: 'workout', ipa: '/ˈwɜːrkaʊt/', meaningId: 'latihan fisik', exampleEn: 'We do a short workout before class.' },
+  { id: 'sports-w03', topicId: 'sports', word: 'workout', ipa: '/ˈwɚkaʊt/', meaningId: 'latihan fisik', exampleEn: 'We do a short workout before class.' },
   { id: 'sports-w04', topicId: 'sports', word: 'training', ipa: '/ˈtreɪnɪŋ/', meaningId: 'latihan', exampleEn: 'The team has training tonight.' },
   { id: 'sports-w05', topicId: 'sports', word: 'coach', ipa: '/koʊtʃ/', meaningId: 'pelatih', exampleEn: 'Our coach is very strict.' },
   { id: 'sports-w06', topicId: 'sports', word: 'player', ipa: '/ˈpleɪər/', meaningId: 'pemain', exampleEn: 'She is a good player.' },
@@ -44,7 +44,7 @@ export const VOCAB_TOPIC_SPORTS_WORDS: VocabularyItem[] = [
   { id: 'sports-w41', topicId: 'sports', word: 'stadium', ipa: '/ˈsteɪdiəm/', meaningId: 'stadion', exampleEn: 'The stadium is very big.' },
   { id: 'sports-w42', topicId: 'sports', word: 'gym', ipa: '/dʒɪm/', meaningId: 'gym', exampleEn: 'I go to the gym three times a week.' },
   { id: 'sports-w43', topicId: 'sports', word: 'uniform', ipa: '/ˈjuːnɪfɔːrm/', meaningId: 'seragam', exampleEn: 'Their team uniform is blue.' },
-  { id: 'sports-w44', topicId: 'sports', word: 'jersey', ipa: '/ˈdʒɜːrzi/', meaningId: 'jersey', exampleEn: 'He wears jersey number ten.' },
+  { id: 'sports-w44', topicId: 'sports', word: 'jersey', ipa: '/ˈdʒɚzi/', meaningId: 'jersey', exampleEn: 'He wears jersey number ten.' },
   { id: 'sports-w45', topicId: 'sports', word: 'shoes', ipa: '/ʃuːz/', meaningId: 'sepatu olahraga', exampleEn: 'These shoes are good for running.' },
   { id: 'sports-w46', topicId: 'sports', word: 'ball', ipa: '/bɔːl/', meaningId: 'bola', exampleEn: 'Pass the ball to me.' },
   { id: 'sports-w47', topicId: 'sports', word: 'racket', ipa: '/ˈrækɪt/', meaningId: 'raket', exampleEn: 'My racket is new.' },

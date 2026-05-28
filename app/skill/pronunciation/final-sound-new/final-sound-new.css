@@ -1,6 +1,7 @@
 .fsn-page {
   min-height: 100vh;
   color: var(--pronun-text, #f6ecff);
+  font-family: var(--font-ui);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
 }
@@ -22,6 +23,7 @@
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
+  font-family: var(--font-display);
 }
 
 .fsn-subtitle {

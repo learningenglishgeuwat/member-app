@@ -9,7 +9,7 @@ const SOCIAL_MEDIA_ROWS = [
   { en: 'I created a new account.', id: 'Saya membuat akun baru.', ipa: '/aɪ kriˈeɪtɪd ə nu əˈkaʊnt/' },
   { en: 'Please update your profile photo.', id: 'Tolong perbarui foto profilmu.', ipa: '/pliz ʌpˈdeɪt jʊr ˈproʊfaɪl ˈfoʊtoʊ/' },
   { en: 'My username is easy to remember.', id: 'Nama pengguna saya mudah diingat.', ipa: '/maɪ ˈjuzɚˌneɪm ɪz ˈizi tə rɪˈmɛmbɚ/' },
-  { en: 'Never share your password.', id: 'Jangan pernah membagikan kata sandimu.', ipa: '/ˈnɛvɚ ʃɛr jʊr ˈpæsˌwɝd/' },
+  { en: 'Never share your password.', id: 'Jangan pernah membagikan kata sandimu.', ipa: '/ˈnɛvɚ ʃɛr jʊr ˈpæsˌwɚd/' },
   { en: 'I cannot login to my account.', id: 'Saya tidak bisa masuk ke akun saya.', ipa: '/aɪ ˈkænɑt ˈlɔɡˌɪn tə maɪ əˈkaʊnt/' },
   { en: 'Please logout on public devices.', id: 'Tolong keluar akun di perangkat umum.', ipa: '/pliz ˈlɔɡˌaʊt ɑn ˈpʌblɪk dɪˈvaɪsɪz/' },
   { en: 'She posted a new picture.', id: 'Dia mengunggah foto baru.', ipa: '/ʃi ˈpoʊstɪd ə nu ˈpɪktʃɚ/' },

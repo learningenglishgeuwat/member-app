@@ -3,9 +3,10 @@
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import type { VocabularyItem, VocabularyTopicMeta } from '../topic/data/types';
 import {
   getVocabularyExampleIpa,
@@ -19,6 +20,8 @@ import {
 import VocabularyPracticeMissionModal from './VocabularyPracticeMissionModal';
 import VocabularyWordCarousel from './VocabularyWordCarousel';
 import { useKpiValueColumn } from './useKpiValueColumn';
+import { useHaptic } from '@/lib/haptic/useHaptic';
+import '../topic/shared/vocabulary.css';
 
 type DetailPlayMode = 'words' | 'word-example' | null;
 
@@ -269,6 +272,7 @@ export default function VocabularyTopicDetailPage({
   showCardinalNumber = false,
 }: VocabularyTopicDetailPageProps) {
   const kpiRef = useRef<HTMLDListElement | null>(null);
+  const { triggerHaptic } = useHaptic();
   const [search, setSearch] = useState('');
   const [isPracticeModalOpen, setIsPracticeModalOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
@@ -343,20 +347,27 @@ export default function VocabularyTopicDetailPage({
     });
   }, [search, topicWords]);
 
+  const wordsPerPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
+
   const totalPages = useMemo(() => {
     if (!visibleWords.length) return 1;
-    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
-    return Math.ceil(visibleWords.length / perPage);
-  }, [isMobile, visibleWords.length]);
+    return Math.ceil(visibleWords.length / wordsPerPage);
+  }, [visibleWords.length, wordsPerPage]);
 
   const effectivePage = Math.min(currentPage, totalPages);
 
+  const pageWords = useCallback(
+    (page: number) => {
+      const safePage = Math.min(totalPages, Math.max(1, page));
+      const start = (safePage - 1) * wordsPerPage;
+      return visibleWords.slice(start, start + wordsPerPage);
+    },
+    [visibleWords, totalPages, wordsPerPage],
+  );
+
   const pagedWords = useMemo(() => {
-    const perPage = isMobile ? Math.max(1, visibleWords.length) : WORDS_PER_PAGE;
-    const start = (effectivePage - 1) * perPage;
-    const end = start + perPage;
-    return visibleWords.slice(start, end);
-  }, [effectivePage, isMobile, visibleWords]);
+    return pageWords(effectivePage);
+  }, [effectivePage, pageWords]);
 
   const practiceExample = useMemo(() => {
     const firstItem = topicWords[0];
@@ -417,7 +428,7 @@ export default function VocabularyTopicDetailPage({
   }, []);
 
   const playAllWords = useCallback(async () => {
-    if (!pagedWords.length) return;
+    if (!visibleWords.length) return;
 
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
@@ -425,10 +436,22 @@ export default function VocabularyTopicDetailPage({
     setIsPlayAllRunning(true);
     setPlayMode('words');
 
-    for (const item of pagedWords) {
+    for (let page = effectivePage; page <= totalPages; page += 1) {
       if (playTokenRef.current !== token) break;
-      setPlayingItemId(item.id);
-      await speakVocabularyText(item.word);
+      const items = pageWords(page);
+      if (!items.length) break;
+
+      if (page !== effectivePage) {
+        setCurrentPage(page);
+        setCarouselIndex(0);
+        await new Promise((resolve) => window.requestAnimationFrame(() => resolve(undefined)));
+      }
+
+      for (const item of items) {
+        if (playTokenRef.current !== token) break;
+        setPlayingItemId(item.id);
+        await speakVocabularyText(item.word);
+      }
     }
 
     if (playTokenRef.current === token) {
@@ -436,10 +459,10 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [pagedWords]);
+  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
 
   const playAllWordThenExample = useCallback(async () => {
-    if (!pagedWords.length) return;
+    if (!visibleWords.length) return;
 
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
@@ -447,12 +470,24 @@ export default function VocabularyTopicDetailPage({
     setIsPlayAllRunning(true);
     setPlayMode('word-example');
 
-    for (const item of pagedWords) {
+    for (let page = effectivePage; page <= totalPages; page += 1) {
       if (playTokenRef.current !== token) break;
-      setPlayingItemId(item.id);
-      await speakVocabularyText(item.word);
-      if (playTokenRef.current !== token) break;
-      await speakVocabularyText(item.exampleEn);
+      const items = pageWords(page);
+      if (!items.length) break;
+
+      if (page !== effectivePage) {
+        setCurrentPage(page);
+        setCarouselIndex(0);
+        await new Promise((resolve) => window.requestAnimationFrame(() => resolve(undefined)));
+      }
+
+      for (const item of items) {
+        if (playTokenRef.current !== token) break;
+        setPlayingItemId(item.id);
+        await speakVocabularyText(item.word);
+        if (playTokenRef.current !== token) break;
+        await speakVocabularyText(item.exampleEn);
+      }
     }
 
     if (playTokenRef.current === token) {
@@ -460,7 +495,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [pagedWords]);
+  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
 
   const handleSaveProgress = useCallback(
     async (percentage: number) => {
@@ -525,9 +560,9 @@ export default function VocabularyTopicDetailPage({
   useEffect(() => {
     void primeVocabularyVoice();
     return () => {
-      stopVocabularySpeech();
+      stopPlayback();
     };
-  }, []);
+  }, [stopPlayback]);
 
   useEffect(() => {
     if (!playingItemId || isMobile) return;
@@ -638,22 +673,8 @@ export default function VocabularyTopicDetailPage({
               className="vocab-control-saved-progress"
               topicName={topic.title}
             />
-            <button
-              type="button"
-              className={`vocab-action-btn vocab-action-btn--secondary vocab-control-btn ${showTranslation ? 'is-active' : ''}`}
-              onClick={() => setShowTranslation((prev) => !prev)}
-              aria-pressed={showTranslation}
-            >
-              {showTranslation ? 'Sembunyikan Terjemahan' : 'Tampilkan Terjemahan'}
-            </button>
-            <button
-              type="button"
-              className={`vocab-action-btn vocab-action-btn--secondary vocab-control-btn ${showIpa ? 'is-active' : ''}`}
-              onClick={() => setShowIpa((prev) => !prev)}
-              aria-pressed={showIpa}
-            >
-              {showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-            </button>
+            
+            
             <button
               type="button"
               className="vocab-action-btn vocab-action-btn--primary vocab-control-btn vocab-control-btn--full"
@@ -661,30 +682,9 @@ export default function VocabularyTopicDetailPage({
             >
               Practice
             </button>
-            <button
-              type="button"
-              className="vocab-action-btn vocab-action-btn--primary vocab-control-btn vocab-control-btn--full"
-              onClick={() => void playAllWords()}
-              disabled={!pagedWords.length || isPlayAllRunning}
-            >
-              Play All Words
-            </button>
-            <button
-              type="button"
-              className="vocab-action-btn vocab-action-btn--secondary vocab-control-btn vocab-control-btn--full"
-              onClick={() => void playAllWordThenExample()}
-              disabled={!pagedWords.length || isPlayAllRunning}
-            >
-              Play All Word -&gt; Example
-            </button>
-            <button
-              type="button"
-              className="vocab-action-btn vocab-action-stop vocab-control-btn vocab-control-btn--full"
-              onClick={stopPlayback}
-              disabled={!isPlayAllRunning && !playingItemId}
-            >
-              Stop
-            </button>
+            
+            
+            
           </div>
 
           <section className="vocab-prompt-card" aria-label="Prompt penilaian vocabulary">
@@ -833,6 +833,57 @@ export default function VocabularyTopicDetailPage({
         exampleSentence={practiceExample.sentence}
         exampleMeaning={practiceExample.meaning}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-3 sm:gap-6">
+          <div className="flex flex-col gap-1.5 sm:gap-2">
+             <span className="font-mono text-[9px] sm:text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">VISIBILITY</span>
+             <IpaVisibilityToggle checked={showTranslation} onChange={setShowTranslation} className="w-full flex justify-between mb-1 sm:mb-2 text-[10px] sm:text-xs" label="Translation" />
+             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+          
+          <div className="flex flex-col gap-1.5 sm:gap-2">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1 sm:mb-2 uppercase">AUDIO CONTROLS</span>
+            <PlayStopButton
+              isActive={!!(isPlayAllRunning && playMode === 'words')}
+              label="WORDS"
+              onClick={() => {
+                if (isPlayAllRunning && playMode === 'words') {
+                  stopPlayback();
+                  return;
+                }
+                if (playingItemId) {
+                  // stop current single playback, then immediately start play-all
+                  stopPlayback();
+                  void playAllWords();
+                  return;
+                }
+                void playAllWords();
+              }}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'words' && !playingItemId)}
+              size="sm"
+            />
+            <PlayStopButton
+              isActive={!!(isPlayAllRunning && playMode === 'word-example')}
+              label="W -> EX"
+              onClick={() => {
+                if (isPlayAllRunning && playMode === 'word-example') {
+                  stopPlayback();
+                  return;
+                }
+                if (playingItemId) {
+                  stopPlayback();
+                  void playAllWordThenExample();
+                  return;
+                }
+                void playAllWordThenExample();
+              }}
+              disabled={!pagedWords.length || (isPlayAllRunning && playMode !== 'word-example' && !playingItemId)}
+              size="sm"
+            />
+          </div>
+        </div>
+      </ControlCenter>
       <RecordingControlsButton downloadFileName={`vocabulary-${topic.topicId}-GEUWAT-recording.wav`} />
     </main>
   );

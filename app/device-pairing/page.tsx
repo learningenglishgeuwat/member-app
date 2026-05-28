@@ -212,8 +212,8 @@ export default function DevicePairingPage() {
   const isExpired = expiresAt ? new Date(expiresAt).getTime() < Date.now() : false
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6">
-      <div className="w-full max-w-xl bg-slate-900/40 border border-slate-800 rounded-2xl p-8">
+    <div className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6">
+      <div className="w-full max-w-xl bg-black/40 border border-slate-800 rounded-2xl p-8">
         <h1 className="text-2xl font-bold">Izin Device Baru</h1>
         <p className="mt-2 text-slate-400">
           Akun hanya boleh dipakai di 1 device. Masukkan kode ini di device yang sudah terdaftar.

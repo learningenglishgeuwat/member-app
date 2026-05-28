@@ -10,7 +10,7 @@ export const FormBackground: React.FC<FormBackgroundProps> = ({ isFullyActive })
   return (
     <div className="absolute inset-0 -z-10">
       {/* Main Background Card - Nebula Style */}
-      <div className={`relative bg-slate-900/50 backdrop-blur-xl rounded-2xl transition-all duration-700 ${
+      <div className={`relative bg-black/50 backdrop-blur-xl rounded-2xl transition-all duration-700 ${
         isFullyActive 
           ? 'shadow-neon' 
           : 'shadow-lg shadow-nebula-500/20'

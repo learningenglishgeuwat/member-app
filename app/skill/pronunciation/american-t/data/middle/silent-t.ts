@@ -7,6 +7,7 @@ type SilentTSentenceDrillItem = {
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type SilentTSentenceDrillExample = {
@@ -14,12 +15,13 @@ type SilentTSentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const SILENT_T_EXAMPLES: ReadonlyArray<WordExample> = [
   {
     word: 'internet',
-    ipa: '/ˈɪntɚˌnet/',
+    ipa: '/ˈɪntɚˌnɛt/',
     spoken: '/ˈɪnɚˌnet/',
     note: 'Dalam ucapan kasual American English, /t/ tengah sering melemah atau hilang.',
   },
@@ -43,7 +45,7 @@ export const SILENT_T_EXAMPLES: ReadonlyArray<WordExample> = [
   },
   {
     word: 'center',
-    ipa: '/ˈsentɚ/',
+    ipa: '/ˈsɛntɚ/',
     spoken: '/ˈsenɚ/',
     note: 'Bunyi /t/ tengah bisa hilang sehingga transisi lebih mulus.',
   },
@@ -55,13 +57,13 @@ export const SILENT_T_EXAMPLES: ReadonlyArray<WordExample> = [
   },
   {
     word: 'twenty',
-    ipa: '/ˈtwenti/',
+    ipa: '/ˈtwɛnti/',
     spoken: '/ˈtweni/',
     note: 'Pada percakapan cepat, /t/ tengah sering tidak terdengar jelas.',
   },
   {
     word: 'plenty',
-    ipa: '/ˈplenti/',
+    ipa: '/ˈplɛnti/',
     spoken: '/ˈpleni/',
     note: 'Pola serupa dengan twenty dalam gaya santai.',
   },

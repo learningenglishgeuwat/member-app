@@ -49,6 +49,6 @@ export const VOCAB_TOPIC_KITCHEN_WORDS: VocabularyItem[] = [
   { id: 'kitchen-w46', topicId: 'kitchen', word: 'chop', ipa: '/tʃɑːp/', meaningId: 'mencincang', exampleEn: 'Chop the garlic finely.' },
   { id: 'kitchen-w47', topicId: 'kitchen', word: 'slice', ipa: '/slaɪs/', meaningId: 'mengiris', exampleEn: 'Slice the tomatoes thinly.' },
   { id: 'kitchen-w48', topicId: 'kitchen', word: 'mix', ipa: '/mɪks/', meaningId: 'mencampur', exampleEn: 'Mix all ingredients well.' },
-  { id: 'kitchen-w49', topicId: 'kitchen', word: 'serve', ipa: '/sɜːrv/', meaningId: 'menyajikan', exampleEn: 'Serve the soup while hot.' },
+  { id: 'kitchen-w49', topicId: 'kitchen', word: 'serve', ipa: '/sɚv/', meaningId: 'menyajikan', exampleEn: 'Serve the soup while hot.' },
   { id: 'kitchen-w50', topicId: 'kitchen', word: 'wash dishes', ipa: '/wɑːʃ ˈdɪʃɪz/', meaningId: 'mencuci piring', exampleEn: 'Please wash dishes after dinner.' },
 ];

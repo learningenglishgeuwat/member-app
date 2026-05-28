@@ -1,5 +1,6 @@
 .at-topic-page {
   background: var(--pronun-page-bg);
+  font-family: var(--font-ui);
 }
 
 .at-recording-anchor {
@@ -254,6 +255,13 @@
   font-weight: 700;
   color: #f1d6ff;
   text-transform: capitalize;
+  font-family: var(--font-ui);
+}
+
+.at-topic-concept em,
+.at-example-head h3,
+.at-word-chip-word {
+  font-family: var(--font-ui);
 }
 
 .at-example-head p {
@@ -275,15 +283,41 @@
 
 .at-ipa {
   margin-top: 0.38rem;
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.86rem;
 }
 
+.at-ipa-label,
+.at-ipa .ipa-label {
+  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
+  font-family: var(--font-ui);
+}
+
 .at-ipa-t {
-  color: #f59e0b;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
+}
+
+.at-text-t {
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
+}
+
+.at-highlight-off .at-ipa-t,
+.at-highlight-off .at-text-t {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
+}
+
+.at-highlight-off .at-final-t-highlight {
+  background: transparent;
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
 }
 
 .at-note {
@@ -302,13 +336,11 @@
 }
 
 .at-final-t-highlight {
-  background: rgba(245, 158, 11, 0.28);
-  color: #fff7d6;
-  border: 1px solid rgba(245, 158, 11, 0.6);
-  border-radius: 0.3rem;
-  padding: 0.02rem 0.22rem;
-  margin: 0 0.04rem;
-  font-weight: 700;
+  display: inline;
+  background: transparent;
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .at-sentence-list {
@@ -366,8 +398,8 @@
 }
 
 .at-sentence-focus-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.8rem;
 }
 
@@ -453,8 +485,8 @@
 }
 
 .at-clear-t-chip-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.82rem;
 }
 
@@ -663,4 +695,16 @@
   .at-word-chip-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.at-topic-page .at-word-chip-grid--compact {
+  grid-template-columns: repeat(auto-fit, minmax(8.75rem, max-content));
+  justify-content: start;
+  justify-items: start;
+}
+
+.at-topic-page .at-word-chip-grid--compact .at-word-chip-card {
+  box-sizing: border-box;
+  width: 8.75rem;
+  max-width: 100%;
 }

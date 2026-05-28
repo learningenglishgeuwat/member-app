@@ -1,0 +1,49 @@
+{
+  "route": "/skill/pronunciation/contraction",
+  "label": "Contraction",
+  "scope": "pronunciation",
+  "keywords": [
+    "contraction",
+    "contractions",
+    "singkatan",
+    "pelafalan singkatan",
+    "materi contraction"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-contraction-basics",
+      "title": "Contraction Basics",
+      "route": "/skill/pronunciation/contraction",
+      "keywords": [
+        "apa itu contraction",
+        "jelaskan contraction",
+        "singkatan inggris",
+        "fungsi contraction"
+      ],
+      "shortAnswer": "Contraction adalah penyingkatan dua kata atau lebih dengan membuang huruf dan suara di tengah, lalu menggantinya dengan tanda apostrof ('). Ini sangat sering digunakan dalam percakapan sehari-hari untuk membuat ucapan lebih mengalir dan alami.",
+      "sourceSections": [
+        {
+          "label": "Dasar Contraction"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-contraction-informal",
+      "title": "Informal Contractions",
+      "route": "/skill/pronunciation/contraction",
+      "keywords": [
+        "informal contraction",
+        "wanna gonna gimme",
+        "singkatan tidak resmi",
+        "singkatan gaul english",
+        "apa itu gonna wanna"
+      ],
+      "shortAnswer": "Informal contractions seperti 'wanna' (want to), 'gonna' (going to), 'lemme' (let me), dan 'dunno' (don't know) digunakan secara lisan dalam situasi santai. Meskipun tertulis tanpa apostrof, bentuk ini mencerminkan kecepatan artikulasi dalam percakapan kasual.",
+      "sourceSections": [
+        {
+          "label": "Informal Contractions"
+        }
+      ]
+    }
+  ]
+}

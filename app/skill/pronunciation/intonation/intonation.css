@@ -1,5 +1,11 @@
 .intonation-page {
   background: var(--pronun-page-bg);
+  font-family: var(--font-ui);
+}
+
+.intonation-page .fs-topic-title,
+.intonation-page .fs-topic-block-title {
+  font-family: var(--font-display);
 }
 
 .intonation-page .intonation-recording-anchor {
@@ -76,6 +82,7 @@
   margin: 0.42rem 0 0;
   color: #ffe4f1;
   font-size: 1.02rem;
+  font-family: var(--font-display);
 }
 
 .intonation-roadmap-card p {
@@ -227,6 +234,7 @@
   color: #ffe4f1;
   font-size: 0.92rem;
   font-weight: 700;
+  font-family: var(--font-display);
 }
 
 .intonation-prompt-copy-btn {
@@ -303,6 +311,7 @@
   color: #ffe4f1;
   font-size: 0.98rem;
   font-weight: 700;
+  font-family: var(--font-display);
 }
 
 .intonation-card-head {
@@ -380,22 +389,17 @@
 }
 
 .intonation-example-highlight {
-  display: inline-block;
-  padding: 0.08rem 0.38rem;
-  border-radius: 0.42rem;
-  border: 1px solid rgba(250, 204, 21, 0.42);
-  background: rgba(250, 204, 21, 0.16);
-  color: #fef3c7;
-  font-weight: 700;
+  display: inline;
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .intonation-tone-word.is-rise,
 .intonation-tone-word.is-fall {
-  border-radius: 0.28rem;
-  padding: 0 0.14rem;
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.62);
-  background: rgb(var(--pronun-accent-1-rgb) / 0.16);
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .intonation-note {
@@ -468,6 +472,7 @@
   margin: 0;
   font-size: 0.9rem;
   color: #fce7f3;
+  font-family: var(--font-display);
 }
 
 .intonation-guide-card p {
@@ -523,4 +528,17 @@
   .intonation-roadmap-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.intonation-ipa {
+  border-color: rgba(0, 229, 255, 0.28) !important;
+  background: rgba(12, 44, 52, 0.42) !important;
+  color: #00e5ff !important;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.intonation-ipa strong {
+  color: #a5f3fc !important;
 }

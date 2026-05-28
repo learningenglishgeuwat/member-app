@@ -125,6 +125,7 @@
   border-radius: 0.5rem;
   padding: 0.35rem 0.75rem;
   background: rgb(var(--pronun-panel-rgb) / 0.88);
+  font-family: var(--font-display);
   font-size: 0.76rem;
   font-weight: 700;
   line-height: 1.2;
@@ -135,6 +136,32 @@
   border-color: rgb(var(--pronun-accent-1-rgb) / 0.95);
   color: #fff7ff;
   background: rgb(var(--pronun-panel-rgb) / 0.94);
+}
+
+.s-es-page .s-es-hl-target {
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
+}
+
+.s-es-page .s-es-hl-base-final {
+  color: #e040fb;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(224, 64, 251, 0.95), 0 0 16px rgba(224, 64, 251, 0.6);
+}
+
+.s-es-page .fs-topic-table-example-ipa .s-es-hl-target,
+.s-es-page .fs-topic-table-example-ipa .s-es-hl-base-final {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.s-es-page .s-es-target-highlight-off .s-es-hl-target,
+.s-es-page .s-es-base-highlight-off .s-es-hl-base-final {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
 }
 
 .s-es-page .fs-topic-example-list li.is-speaking {
@@ -235,8 +262,8 @@
 }
 
 .s-es-table-example-ipa {
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', serif;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.82rem;
 }
 
@@ -426,6 +453,11 @@
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
 }
 
+.s-es-process-ipa-card .s-es-process-card-value {
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
+}
+
 .s-es-process-card-value {
   margin: 0.34rem 0 0;
   color: #f6ecff;
@@ -434,9 +466,9 @@
 }
 
 .s-es-process-highlight {
-  color: #ffb84d;
-  font-weight: 800;
-  text-shadow: 0 0 10px rgba(255, 184, 77, 0.42);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6);
 }
 
 .s-es-process-description {
@@ -447,7 +479,7 @@
 
 .s-es-process-code-line {
   margin: 0;
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: var(--font-tech);
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));

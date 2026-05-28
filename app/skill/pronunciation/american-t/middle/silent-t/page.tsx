@@ -2,9 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
+import {
+  renderAmericanTTextHighlight,
+  renderGeneralIpaWithTHighlight,
+  renderSentenceWithHighlights,
+} from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   SILENT_T_EXAMPLES,
   SILENT_T_SENTENCES,
@@ -76,36 +82,69 @@ function deriveBeforeIpaFromSilent(silentIpa: string): string {
   return `/${core}/`;
 }
 
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function renderSilentTTextHighlight(text: string) {
+  const lower = text.toLowerCase();
+
+  // Primary rule: find the t that follows n — this is always the silent /t/ in these words
+  // e.g. in"t"ernet, win"t"er, cen"t"er, prin"t"er, twen"t"y, sev"t"en"t"y...
+  const ntIdx = lower.indexOf('nt');
+  let silentTIdx = ntIdx !== -1 ? ntIdx + 1 : -1;
+
+  if (silentTIdx === -1) {
+    // Fallback for words like ninety / nineties where the silent t is
+    // in a -ty or -ties suffix (no direct nt adjacency)
+    const tyIdx = lower.lastIndexOf('ty');
+    const tiIdx = lower.lastIndexOf('ti');
+    if (tyIdx !== -1 && tyIdx > lower.length - 4) {
+      silentTIdx = tyIdx;
+    } else if (tiIdx !== -1 && tiIdx > lower.length - 5) {
+      silentTIdx = tiIdx;
+    }
+  }
+
+  if (silentTIdx === -1) {
+    return <span>{text}</span>;
+  }
+
+  const before = text.slice(0, silentTIdx);
+  const silentT = text.slice(silentTIdx, silentTIdx + 1);
+  const after = text.slice(silentTIdx + 1);
+
+  return (
+    <>
+      <span>{before}</span>
+      <span className="at-text-t">{silentT}</span>
+      <span>{after}</span>
+    </>
+  );
 }
 
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
+function renderSilentTIpaHighlight(ipa: string) {
+  const chunks = ipa.split(/(t̚|t)/g);
+  let accumulated = '';
 
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
+  return chunks.map((chunk, idx) => {
+    if (chunk === 't' || chunk === 't̚') {
+      const lastChar = accumulated.slice(-1);
+      accumulated += chunk;
+      
+      if (lastChar === 'n') {
+        return (
+          <span key={`${ipa}-t-${idx}`} className="at-ipa-t">
+            {chunk}
+          </span>
+        );
+      } else {
+        return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
+      }
     }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
+
+    accumulated += chunk;
+    return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
   });
 }
+
+
 
 function getSilentTSpeechText(text: string) {
   const normalized = text.trim().toLowerCase();
@@ -164,11 +203,12 @@ export default function SilentTMiddlePage() {
   const [isPlayingSentenceDrillsAll, setIsPlayingSentenceDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    examples: false,
-    'word-bank': false,
-    sentences: false,
-    'sentence-drills-examples': false,
+    examples: true,
+    'word-bank': true,
+    sentences: true,
+    'sentence-drills-examples': true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
 
   const examplesPlayAllTokenRef = useRef(0);
@@ -429,6 +469,7 @@ export default function SilentTMiddlePage() {
       title="Silent /t/ (Casual Speech)"
       subtitle="Pola /t/ tengah yang sering melemah dalam percakapan American English."
       backTo="/skill/pronunciation/american-t"
+      pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
       headerActions={
         <ButtonSavedProgress
           isSaved={isProgressSaved}
@@ -469,28 +510,7 @@ export default function SilentTMiddlePage() {
           title: 'Silent /t/ Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('examples')}
-                >
-                  {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingExamplesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllExamples();
-                  }}
-                >
-                  {isPlayingExamplesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-example-grid">
                 {SILENT_T_EXAMPLES.map((item, index) => (
                   <article
@@ -501,7 +521,7 @@ export default function SilentTMiddlePage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.word}</h3>
+                      <h3>{renderSilentTTextHighlight(item.word)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -520,9 +540,14 @@ export default function SilentTMiddlePage() {
                     </div>
                     {showIpaBySection.examples ? (
                       <>
-                        <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                        <p className="at-ipa">
+                          {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
+                        </p>
                         {item.spoken ? (
-                          <p className="at-ipa">Natural speech: {formatIpaForDisplay(item.spoken)}</p>
+                          <p className="at-ipa">
+                            <span className="at-ipa-label">Natural speech: </span>
+                            {formatIpaForDisplay(item.spoken)}
+                          </p>
                         ) : null}
                       </>
                     ) : null}
@@ -542,28 +567,7 @@ export default function SilentTMiddlePage() {
                 Gunakan bank ini untuk latihan listening dan pronunciation dengan pola silent /t/
                 kasual.
               </p>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('word-bank')}
-                >
-                  {showIpaBySection['word-bank'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingWordBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllWordBank();
-                  }}
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-silent-bank-grid">
                 {SILENT_T_WORD_BANK.map((word, index) => (
                   <article
@@ -574,7 +578,7 @@ export default function SilentTMiddlePage() {
                     }}
                   >
                     <div className="at-silent-bank-head">
-                      <span className="at-silent-bank-word">{word}</span>
+                      <span className="at-silent-bank-word">{renderSilentTTextHighlight(word)}</span>
                       {!showIpaBySection['word-bank'] ? (
                         <button
                           type="button"
@@ -599,7 +603,8 @@ export default function SilentTMiddlePage() {
                         <>
                           <div className="at-silent-bank-ipa-line">
                             <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
-                              Before: {beforeDisplay}
+                              <span className="at-ipa-label">Before: </span>
+                              {renderSilentTIpaHighlight(beforeDisplay)}
                             </p>
                             <button
                               type="button"
@@ -614,7 +619,8 @@ export default function SilentTMiddlePage() {
                           </div>
                           <div className="at-silent-bank-ipa-line">
                             <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
-                              After: {afterDisplay}
+                              <span className="at-ipa-label">After: </span>
+                              {afterDisplay}
                             </p>
                             <button
                               type="button"
@@ -643,28 +649,7 @@ export default function SilentTMiddlePage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentences')}
-                >
-                  {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentencesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentences();
-                  }}
-                >
-                  {isPlayingSentencesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-sentence-list">
                 {SILENT_T_SENTENCES.map((item, index) => (
                   <article
@@ -695,7 +680,9 @@ export default function SilentTMiddlePage() {
                       </button>
                     </div>
                     {showIpaBySection.sentences ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -716,28 +703,7 @@ export default function SilentTMiddlePage() {
                   untuk melatih flow.
                 </p>
               </div>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentence-drills-examples')}
-                >
-                  {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceDrillsExamples();
-                  }}
-                >
-                  {isPlayingSentenceDrillsAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               {SILENT_T_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (
                 <article
                   key={item.id}
@@ -767,7 +733,9 @@ export default function SilentTMiddlePage() {
                     </button>
                   </div>
                   {showIpaBySection['sentence-drills-examples'] ? (
-                    <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                    <p className="at-ipa">
+                      {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
+                    </p>
                   ) : null}
                 </article>
               ))}
@@ -840,6 +808,69 @@ export default function SilentTMiddlePage() {
         },
       ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <PlayStopButton
+              isActive={isPlayingExamplesAll}
+              label="EXAMPLES"
+              sectionId="examples"
+              onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="50 WORDS"
+              sectionId="wordBank"
+              onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['word-bank']} onChange={() => toggleIpaBySection('word-bank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <PlayStopButton
+              isActive={isPlayingSentencesAll}
+              label="SENTENCES"
+              sectionId="sentences"
+              onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
+            <PlayStopButton
+              isActive={isPlayingSentenceDrillsAll}
+              label="DRILLS"
+              sectionId="sentence-drills-examples"
+              onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-silent-middle-GEUWAT-recording.wav"

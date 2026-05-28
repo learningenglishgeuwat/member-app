@@ -8,11 +8,13 @@ import {
   QUICK_SPELLING_WORDS,
 } from './constants';
 import { LetterCard } from './LetterCard';
-import { ChevronRight, Copy, Play, Square } from 'lucide-react';
+import { ChevronRight, Copy, Square, Play } from 'lucide-react';
 import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -58,6 +60,7 @@ const AlphabetPage: React.FC = () => {
   const [currentPlayingLetter, setCurrentPlayingLetter] = useState<string | null>(null);
   const [currentPlayingPracticeCountry, setCurrentPlayingPracticeCountry] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { triggerHaptic } = useHaptic();
   const [savedProgressByTab, setSavedProgressByTab] = useState<Record<AlphabetProgressTabKey, boolean>>({
     alphabet: false,
     alphabet_quick_spelling: false,
@@ -69,12 +72,14 @@ const AlphabetPage: React.FC = () => {
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [showPracticeIpa, setShowPracticeIpa] = useState(true);
+  const [showIpa, setShowIpa] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [spellingInput, setSpellingInput] = useState('');
   const [spellingStatus, setSpellingStatus] = useState<'idle' | 'correct' | 'wrong' | 'empty'>('idle');
   
   const isPlayingRef = useRef(false);
   const isPlayingPracticeRef = useRef(false);
+  const practiceSectionRef = useRef<HTMLElement | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
 
   // Handle hydration
@@ -151,7 +156,12 @@ const AlphabetPage: React.FC = () => {
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
     }
-    if (isPlayingRef.current) return;
+    
+    // Stop play all if active, but continue to play the clicked letter
+    if (isPlayingRef.current) {
+      stopAlphabetPlayAll();
+      stopSpeech();
+    }
     
     try {
       setCurrentPlayingLetter(letter);
@@ -167,6 +177,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handlePlayAll = async () => {
+    triggerHaptic('tap');
+    
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
       stopSpeech();
@@ -236,6 +248,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handlePlayPracticeCountry = async (country: string) => {
+    triggerHaptic('tap');
+    
     try {
       if (isPlayingRef.current) {
         stopAlphabetPlayAll();
@@ -260,12 +274,29 @@ const AlphabetPage: React.FC = () => {
     }
   };
 
+  const scrollToPracticeSection = () => {
+    if (practiceSectionRef.current) {
+      practiceSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const openPracticeSection = () => {
+    setIsPracticeOpen(true);
+    window.setTimeout(() => {
+      scrollToPracticeSection();
+    }, 50);
+  };
+
   const handlePlayAllPracticeCountries = async () => {
+    triggerHaptic('tap');
+    
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
       stopSpeech();
       return;
     }
+
+    openPracticeSection();
 
     if (isPlayingRef.current) {
       stopAlphabetPlayAll();
@@ -424,6 +455,8 @@ const AlphabetPage: React.FC = () => {
   };
 
   const handleCheckSpelling = () => {
+    triggerHaptic('tap');
+    
     const cleanedInput = extractLetterSequence(spellingInput);
 
     if (!cleanedInput) {
@@ -433,11 +466,13 @@ const AlphabetPage: React.FC = () => {
 
     const matchedWord = findMatchedSpellingWord(spellingInput);
     if (matchedWord) {
+      triggerHaptic('success');
       setSpellingStatus('correct');
       void speakWordAndSpelling(matchedWord);
       return;
     }
 
+    triggerHaptic('error');
     setSpellingStatus('wrong');
   };
 
@@ -455,6 +490,7 @@ const AlphabetPage: React.FC = () => {
 
     try {
       await navigator.clipboard.writeText(ALPHABET_EVALUATION_PROMPT);
+      triggerHaptic('success');
       setIsPromptCopied(true);
       if (promptCopyTimeoutRef.current) {
         window.clearTimeout(promptCopyTimeoutRef.current);
@@ -464,6 +500,7 @@ const AlphabetPage: React.FC = () => {
       }, 1800);
     } catch (error) {
       console.error('Failed to copy alphabet prompt:', error);
+      triggerHaptic('error');
       setIsPromptCopied(false);
     }
   };
@@ -476,6 +513,15 @@ const AlphabetPage: React.FC = () => {
     },
     [],
   );
+
+  useEffect(() => {
+    if (currentPlayingPracticeCountry) {
+      const activeItem = document.getElementById(`practice-country-${currentPlayingPracticeCountry.replace(/\s+/g, '-')}`);
+      if (activeItem) {
+        activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [currentPlayingPracticeCountry]);
 
   return (
     <div className="pronunciation-layout pronunciation-theme pronunciation-theme--alphabet alphabet-container">
@@ -542,7 +588,7 @@ const AlphabetPage: React.FC = () => {
         </div>
 
         {/* Alphabet Grid */}
-        <div className="alphabet-grid">
+        <div id="alphabet-grid-section" className="alphabet-grid">
           {ALPHABET_DATA.map((item) => (
             <LetterCard
               key={item.letter}
@@ -550,6 +596,7 @@ const AlphabetPage: React.FC = () => {
               ipa={item.ipa}
               isPlaying={currentPlayingLetter === item.letter}
               onPlay={() => handlePlayLetter(item.letter)}
+              showIpa={showIpa}
             />
           ))}
         </div>
@@ -664,8 +711,10 @@ const AlphabetPage: React.FC = () => {
         </section>
 
         <section
+          ref={practiceSectionRef}
           className={`alphabet-notes-panel ${isPracticeOpen ? '' : 'collapsed'}`}
           aria-labelledby="alphabet-practice-title"
+          id="alphabet-practice-section"
         >
           <button
             type="button"
@@ -723,6 +772,7 @@ const AlphabetPage: React.FC = () => {
                   {PRACTICE_COUNTRIES.map((countryEntry) => (
                     <li
                       key={countryEntry.name}
+                      id={`practice-country-${countryEntry.name.replace(/\s+/g, '-')}`}
                       className={`alphabet-practice-country-item ${
                         currentPlayingPracticeCountry === countryEntry.name ? 'is-playing' : ''
                       }`}
@@ -731,9 +781,13 @@ const AlphabetPage: React.FC = () => {
                         <span>- {countryEntry.name}</span>
                         {showPracticeIpa && (
                           <>
-                            <span className="alphabet-practice-country-ipa">IPA kata: {countryEntry.ipa}</span>
                             <span className="alphabet-practice-country-ipa">
-                              IPA spelling: {getSpellingIpa(countryEntry.name)}
+                              <span className="ipa-label">IPA kata: </span>
+                              {countryEntry.ipa}
+                            </span>
+                            <span className="alphabet-practice-country-ipa">
+                              <span className="ipa-label">IPA spelling: </span>
+                              {getSpellingIpa(countryEntry.name)}
                             </span>
                           </>
                         )}
@@ -799,6 +853,33 @@ const AlphabetPage: React.FC = () => {
           )}
         </section>
       </main>
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Alphabet</span>
+            <PlayStopButton
+              isActive={isPlayingAll}
+              label="ALPHABET"
+              sectionId="alphabet-grid-section"
+              onClick={handlePlayAll}
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-6" label="Show Alphabet IPA" />
+          </div>
+
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Practice</span>
+            <PlayStopButton
+              isActive={isPlayingPracticeAll}
+              label="PRACTICE"
+              sectionId="alphabet-practice-section"
+              onClick={handlePlayAllPracticeCountries}
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showPracticeIpa} onChange={setShowPracticeIpa} className="w-full flex justify-between text-[10px] sm:text-xs" label="Practice IPA" />
+          </div>
+        </div>
+      </ControlCenter>
 
       <RecordingControlsButton
         className="alphabet-recording-anchor"

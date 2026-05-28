@@ -405,11 +405,12 @@
 
 .spk-ipa-text {
   display: block;
-  color: #e7f5ff;
+  color: var(--color-ipa);
   font-size: 0.83rem;
   line-height: 1.42;
   font-style: italic;
   opacity: 0.95;
+  font-family: var(--font-ipa);
 }
 
 .spk-card-footer {
@@ -1225,11 +1226,13 @@
 }
 
 .spk-ipa-text-detail {
-  color: #eef6ff;
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
 }
 
 .spk-dialog-ipa-text {
-  color: #dcefff;
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
 }
 
 .spk-detail-sentence-item.is-speaking {

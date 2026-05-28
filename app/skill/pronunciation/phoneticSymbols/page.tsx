@@ -312,12 +312,6 @@ const PhoneticPortal: React.FC = () => {
     router.push(path);
   };
 
-  const handleTongueTwisterClick = () => {
-    const path = '/skill/pronunciation/phoneticSymbols/tongue-twister';
-    prefetchPath(path);
-    router.push(path);
-  };
-
   const getSymbolsByCategory = (category: string, subcategory?: string) =>
     phoneticSymbols.filter((symbol) => symbol.category === category && (!subcategory || symbol.subcategory === subcategory));
 
@@ -404,13 +398,6 @@ const PhoneticPortal: React.FC = () => {
             className="common-mistakes-btn"
           >
             COMMON MISTAKES
-          </button>
-          <button
-            type="button"
-            onClick={handleTongueTwisterClick}
-            className="common-mistakes-btn"
-          >
-            TONGUE TWISTER
           </button>
           <button
             type="button"

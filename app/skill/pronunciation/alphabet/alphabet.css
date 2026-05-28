@@ -45,6 +45,7 @@
 /* Main Container */
 .alphabet-container {
   min-height: 100vh;
+  font-family: var(--font-ui), system-ui, sans-serif;
   color: var(--pronun-text, #eaf2ff);
   background: var(--pronun-page-bg);
   position: relative;
@@ -140,6 +141,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: futuristicGlow 3s ease-in-out infinite;
+  font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -237,6 +239,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: futuristicGlow 3s ease-in-out infinite;
+  font-family: var(--font-display);
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -324,23 +327,11 @@
 }
 
 /* Quick Spelling Panel */
-.alphabet-quick-spelling-panel {
+.alphabet-quick-spelling-panel,
+.alphabet-notes-panel {
   position: relative;
   margin: 1.5rem 0 0;
   padding: 1rem 1.1rem;
-  border-radius: 14px;
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.45);
-  background: linear-gradient(
-    135deg,
-    rgb(var(--pronun-accent-1-rgb) / 0.12) 0%,
-    rgba(30, 41, 59, 0.86) 55%,
-    rgba(15, 23, 42, 0.92) 100%
-  );
-  box-shadow:
-    0 10px 28px rgba(2, 6, 23, 0.35),
-    0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px) saturate(1.3);
   z-index: 5;
 }
 
@@ -570,22 +561,7 @@
 
 /* Notes Panel */
 .alphabet-notes-panel {
-  position: relative;
-  margin: 1.5rem 0 0;
-  padding: 1rem 1.1rem;
-  border-radius: 14px;
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.35);
-  background: linear-gradient(
-    135deg,
-    rgba(30, 41, 59, 0.72) 0%,
-    rgba(15, 23, 42, 0.9) 100%
-  );
-  box-shadow:
-    0 10px 28px rgba(2, 6, 23, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px) saturate(1.3);
   overflow-wrap: anywhere;
-  z-index: 5;
 }
 
 .alphabet-notes-title {
@@ -620,16 +596,6 @@
 }
 
 .alphabet-note-card {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.32);
-  border-radius: 12px;
-  background: linear-gradient(
-    140deg,
-    rgb(var(--pronun-accent-1-rgb) / 0.12) 0%,
-    rgba(15, 23, 42, 0.88) 100%
-  );
-  box-shadow:
-    0 8px 18px rgba(2, 6, 23, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   padding: 0.72rem 0.78rem;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -661,16 +627,6 @@
 }
 
 .alphabet-practice-task {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.32);
-  border-radius: 12px;
-  background: linear-gradient(
-    140deg,
-    rgb(var(--pronun-accent-1-rgb) / 0.12) 0%,
-    rgba(15, 23, 42, 0.88) 100%
-  );
-  box-shadow:
-    0 8px 18px rgba(2, 6, 23, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   padding: 0.8rem 0.9rem;
 }
 
@@ -753,7 +709,8 @@
 }
 
 .alphabet-practice-country-ipa {
-  color: rgb(var(--pronun-accent-2-rgb) / 0.82);
+  font-family: var(--font-ipa);
+  color: var(--color-ipa);
   font-size: 0.72rem;
   font-style: italic;
   line-height: 1.35;
@@ -787,16 +744,6 @@
 }
 
 .alphabet-prompt-card {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.32);
-  border-radius: 12px;
-  background: linear-gradient(
-    140deg,
-    rgb(var(--pronun-accent-1-rgb) / 0.12) 0%,
-    rgba(15, 23, 42, 0.88) 100%
-  );
-  box-shadow:
-    0 8px 18px rgba(2, 6, 23, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   padding: 0.8rem 0.9rem;
 }
 
@@ -926,8 +873,8 @@
 }
 
 .alphabet-practice-ipa {
-  color: rgb(var(--pronun-accent-2-rgb) / 0.82);
-  font-family: 'Courier New', monospace;
+  color: var(--color-ipa);
+  font-family: var(--font-ipa);
   font-size: 0.72rem;
   line-height: 1.2;
 }
@@ -1030,6 +977,7 @@
 
 /* Letter Display */
 .alphabet-letter {
+  font-family: var(--font-display);
   font-size: 2.4rem;
   font-weight: 900;
   color: #e2e8f0;
@@ -1038,6 +986,8 @@
   z-index: 2;
   position: relative;
 }
+
+/* ensure non-IPA text stays Orbitron but keep explanation text unaffected (no Orbitron) */
 
 .alphabet-letter-card:hover .alphabet-letter {
   color: rgb(var(--pronun-accent-2-rgb) / 0.95);
@@ -1052,10 +1002,10 @@
 
 /* IPA Display */
 .alphabet-ipa {
-  font-family: 'Courier New', monospace;
   font-size: 0.65rem;
   color: #94a3b8;
   letter-spacing: 0.1em;
+  line-height: 1.2;
   transition: all 0.3s ease;
   opacity: 0.8;
   z-index: 2;

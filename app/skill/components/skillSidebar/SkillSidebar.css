@@ -32,7 +32,7 @@
     
     /* Base Colors */
     --dark-bg: #000000;
-    --dark-secondary: #0a0a0a;
+    --dark-secondary: #000000;
     --dark-tertiary: #1a0a1a;
     --ps-gray: #4A4A4A;
     --ps-white: #FFFFFF;
@@ -283,7 +283,7 @@
 
 .sidebar-title {
     color: var(--cyber-cyan);
-    font-family: 'Arial Black', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.125rem; /* text-lg */
     line-height: 1.25rem; /* leading-tight */
     text-transform: uppercase;

@@ -1,10 +1,11 @@
-﻿import type { WordExample } from '../types';
+import type { WordExample } from '../types';
 
 type SentenceDrillItem = {
   text: string;
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<string>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type SentenceDrillExample = {
@@ -12,6 +13,7 @@ type SentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<string>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const FLAP_T_EXAMPLES: ReadonlyArray<WordExample> = [
@@ -29,7 +31,7 @@ export const FLAP_T_EXAMPLES: ReadonlyArray<WordExample> = [
   },
   {
     word: 'better',
-    ipa: '/ˈbetər/',
+    ipa: '/ˈbɛtər/',
     spoken: '/ˈbeɾɚ/',
     note: 'Pola paling umum untuk American T saat berbicara santai.',
   },
@@ -128,8 +130,8 @@ export const FLAP_T_WORD_BANK_IPA: Readonly<Record<string, string>> = {
   pretty: '/ˈprɪɾi/',
   party: '/ˈpɑɹɾi/',
   forty: '/ˈfɔɹɾi/',
-  dirty: '/ˈdɝɾi/',
-  thirty: '/ˈθɝɾi/',
+  dirty: '/ˈdɚɾi/',
+  thirty: '/ˈθɚɾi/',
   eighty: '/ˈeɪɾi/',
   notable: '/ˈnoʊɾəbəl/',
   vital: '/ˈvaɪɾəl/',

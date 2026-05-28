@@ -8,6 +8,7 @@ import {
   speakVocabularyText,
   stopVocabularySpeech,
 } from '../../tts';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 import '../body-parts/flashcard.css';
 
 type FlashcardMode = 'ordered' | 'shuffle';
@@ -122,6 +123,7 @@ export default function VocabularyFlashcardViewer({
   words,
 }: VocabularyFlashcardViewerProps) {
   const router = useRouter();
+  const { triggerHaptic } = useHaptic();
 
   const flashcardItems = useMemo<FlashcardItem[]>(
     () =>
@@ -415,7 +417,9 @@ export default function VocabularyFlashcardViewer({
 
           <div
             className="vf-card-button"
-            onClick={() => setIsFlipped((prev) => !prev)}
+            onClick={() => {
+              setIsFlipped((prev) => !prev);
+            }}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();

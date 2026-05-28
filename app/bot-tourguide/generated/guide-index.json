@@ -76,45 +76,6 @@
       "source": "manifest"
     },
     {
-      "id": "skill-grammar-grammar-for-speaking",
-      "label": "Grammar for Speaking",
-      "path": "/skill/grammar/grammar-for-speaking",
-      "scope": "grammar",
-      "keywords": [
-        "grammar",
-        "for",
-        "speaking",
-        "/skill/grammar/grammar-for-speaking",
-        "goals",
-        "200",
-        "roadmap",
-        "phase",
-        "kalimat",
-        "kunci",
-        "drill",
-        "latihan",
-        "praktis"
-      ],
-      "source": "manifest"
-    },
-    {
-      "id": "skill-grammar-grammar-for-writing",
-      "label": "Grammar for Writing",
-      "path": "/skill/grammar/grammar-for-writing",
-      "scope": "grammar",
-      "keywords": [
-        "grammar",
-        "for",
-        "writing",
-        "/skill/grammar/grammar-for-writing",
-        "struktur",
-        "tulisan",
-        "materi",
-        "untuk"
-      ],
-      "source": "manifest"
-    },
-    {
       "id": "skill-grammar-grammar-resource",
       "label": "Grammar Resource",
       "path": "/skill/grammar/grammar-resource",
@@ -2054,6 +2015,21 @@
       "source": "route-scan"
     },
     {
+      "id": "skill-pronunciation-contraction",
+      "label": "Contraction",
+      "path": "/skill/pronunciation/contraction",
+      "scope": "pronunciation",
+      "keywords": [
+        "contraction",
+        "/skill/pronunciation/contraction",
+        "contractions",
+        "singkatan",
+        "pelafalan",
+        "materi"
+      ],
+      "source": "manifest"
+    },
+    {
       "id": "skill-pronunciation-final-sound-new",
       "label": "Final Sound Hub",
       "path": "/skill/pronunciation/final-sound-new",
@@ -2158,6 +2134,23 @@
       "source": "manifest"
     },
     {
+      "id": "skill-pronunciation-linking-word",
+      "label": "Linking Word",
+      "path": "/skill/pronunciation/linking-word",
+      "scope": "pronunciation",
+      "keywords": [
+        "linking",
+        "word",
+        "/skill/pronunciation/linking-word",
+        "words",
+        "liaison",
+        "gemination",
+        "intrusion",
+        "assimilation"
+      ],
+      "source": "manifest"
+    },
+    {
       "id": "skill-pronunciation-phoneticSymbols",
       "label": "Phonetic Symbols",
       "path": "/skill/pronunciation/phoneticSymbols",
@@ -2242,6 +2235,23 @@
         "latihan",
         "membaca",
         "pronunciation"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-reading-text-tongueTwister",
+      "label": "Tongue Twister",
+      "path": "/skill/pronunciation/reading-text/tongueTwister",
+      "scope": "pronunciation",
+      "keywords": [
+        "tongue",
+        "twister",
+        "/skill/pronunciation/reading-text/tonguetwister",
+        "tonguetwister",
+        "reading",
+        "latihan",
+        "lidah",
+        "artikulasi"
       ],
       "source": "manifest"
     },
@@ -3390,47 +3400,6 @@
       "sourceSections": [
         {
           "label": "Grammar Cards"
-        }
-      ]
-    },
-    {
-      "topicId": "grammar-speaking-practical-goals",
-      "title": "Grammar for Speaking Practical Goals",
-      "route": "/skill/grammar/grammar-for-speaking",
-      "keywords": [
-        "apa isi grammar for speaking",
-        "speaking goals grammar",
-        "kalimat kunci speaking",
-        "drill speaking di mana",
-        "roadmap speaking dari nol",
-        "phase speaking profesional"
-      ],
-      "shortAnswer": "Halaman ini berisi roadmap 200 speaking goals dari level nol sampai profesional. Materi dibagi per fase dan fokus pada daily, work, public service, emergency, legal, dan finance.",
-      "sourceSections": [
-        {
-          "label": "Phase 0 - Zero-to-Speech Starter"
-        },
-        {
-          "label": "Phase 7 - Work Basics"
-        },
-        {
-          "label": "Phase 13 - Legal, Compliance, Finance Professional"
-        }
-      ]
-    },
-    {
-      "topicId": "grammar-for-writing-overview",
-      "title": "Grammar for Writing Overview",
-      "route": "/skill/grammar/grammar-for-writing",
-      "keywords": [
-        "apa itu grammar for writing",
-        "fungsi grammar for writing",
-        "materi writing grammar"
-      ],
-      "shortAnswer": "Grammar for Writing menekankan ketepatan struktur, konsistensi tense, dan kejelasan hubungan ide antar kalimat supaya tulisan lebih rapi dan mudah dibaca.",
-      "sourceSections": [
-        {
-          "label": "Grammar for Writing Main Content"
         }
       ]
     },
@@ -5759,6 +5728,41 @@
       ]
     },
     {
+      "topicId": "pronunciation-contraction-basics",
+      "title": "Contraction Basics",
+      "route": "/skill/pronunciation/contraction",
+      "keywords": [
+        "apa itu contraction",
+        "jelaskan contraction",
+        "singkatan inggris",
+        "fungsi contraction"
+      ],
+      "shortAnswer": "Contraction adalah penyingkatan dua kata atau lebih dengan membuang huruf dan suara di tengah, lalu menggantinya dengan tanda apostrof ('). Ini sangat sering digunakan dalam percakapan sehari-hari untuk membuat ucapan lebih mengalir dan alami.",
+      "sourceSections": [
+        {
+          "label": "Dasar Contraction"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-contraction-informal",
+      "title": "Informal Contractions",
+      "route": "/skill/pronunciation/contraction",
+      "keywords": [
+        "informal contraction",
+        "wanna gonna gimme",
+        "singkatan tidak resmi",
+        "singkatan gaul english",
+        "apa itu gonna wanna"
+      ],
+      "shortAnswer": "Informal contractions seperti 'wanna' (want to), 'gonna' (going to), 'lemme' (let me), dan 'dunno' (don't know) digunakan secara lisan dalam situasi santai. Meskipun tertulis tanpa apostrof, bentuk ini mencerminkan kecepatan artikulasi dalam percakapan kasual.",
+      "sourceSections": [
+        {
+          "label": "Informal Contractions"
+        }
+      ]
+    },
+    {
       "topicId": "final-sound-hub-overview",
       "title": "Final Sound Learning Map",
       "route": "/skill/pronunciation/final-sound-new",
@@ -5872,6 +5876,49 @@
       ]
     },
     {
+      "topicId": "pronunciation-linking-basics",
+      "title": "Linking Word Basics",
+      "route": "/skill/pronunciation/linking-word",
+      "keywords": [
+        "apa itu linking word",
+        "jelaskan linking word",
+        "menghubungkan kata english",
+        "cara bicara menyambung"
+      ],
+      "shortAnswer": "Linking Word (connected speech) adalah teknik menyambungkan suara akhir suatu kata dengan suara awal kata berikutnya agar kalimat terdengar mulus, mengalir, dan tidak terputus-putus seperti robot.",
+      "sourceSections": [
+        {
+          "label": "Liaison / Resyllabification"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-linking-categories",
+      "title": "Linking Word Categories",
+      "route": "/skill/pronunciation/linking-word",
+      "keywords": [
+        "kategori linking",
+        "jenis linking word",
+        "apa itu liaison gemination intrusion",
+        "liaison gemination intrusion assimilation"
+      ],
+      "shortAnswer": "Terdapat 4 kategori utama linking word: 1) Liaison (konsonan ke vokal seperti 'come on'), 2) Gemination (konsonan kembar seperti 'bus stop'), 3) Intrusion (penyisipan suara /y/ atau /w/ seperti 'I am', 'do it'), dan 4) Assimilation (peleburan suara konsonan dengan /j/ seperti 'could you').",
+      "sourceSections": [
+        {
+          "label": "Liaison / Resyllabification"
+        },
+        {
+          "label": "Gemination / Twin Consonants"
+        },
+        {
+          "label": "Intrusion / Glide Insertion"
+        },
+        {
+          "label": "Coalescent Assimilation / Palatalization"
+        }
+      ]
+    },
+    {
       "topicId": "phonetic-symbols-basics",
       "title": "IPA Symbols Basics",
       "route": "/skill/pronunciation/phoneticSymbols",
@@ -5951,6 +5998,23 @@
       "sourceSections": [
         {
           "label": "Reading Text Dropdown"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-tonguetwister-basics",
+      "title": "Tongue Twister Practice",
+      "route": "/skill/pronunciation/reading-text/tongueTwister",
+      "keywords": [
+        "apa itu tongue twister",
+        "jelaskan tongue twister",
+        "fungsi tongue twister",
+        "latihan kelincahan lidah"
+      ],
+      "shortAnswer": "Tongue Twister adalah latihan membaca deretan kata dengan kombinasi bunyi yang mirip dan menantang untuk diucapkan dengan cepat. Latihan ini sangat bagus untuk meningkatkan ketangkasan artikulasi, kejelasan bunyi (clarity), serta melenturkan otot-otot mulut.",
+      "sourceSections": [
+        {
+          "label": "Tongue Twister Focus Sound"
         }
       ]
     },

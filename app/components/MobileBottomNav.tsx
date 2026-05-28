@@ -3,11 +3,19 @@
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useMemo, useState } from 'react'
-import { Menu, X, BarChart2, LayoutGrid, Settings, HelpCircle } from 'lucide-react'
+import { Menu, X, BarChart2, LayoutGrid, Settings, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { useAuth } from '@/contexts/MemberAuthContext'
+import {
+  DASHBOARD_VIEW_STORAGE_KEY,
+  NOTIFICATIONS_VIEW_ID,
+  START_JOURNEY_VIEW_ID,
+  type ViewId,
+} from '@/app/dashboard/dashboardView'
+import './MobileBottomNav.css'
 
 const TOURGUIDE_COLLAPSED_STORAGE_KEY = 'tourguide_collapsed'
 const TOURGUIDE_BOOTSTRAP_EVENT = 'geuwat:tourguide-bootstrap'
-const DASHBOARD_VIEW_STORAGE_KEY = 'dashboardCurrentView'
+const TOURGUIDE_RESET_EVENT = 'geuwat:tourguide-reset'
 
 const PUBLIC_PATHS = new Set(['/login', '/device-pairing', '/forgot-password', '/reset-password'])
 
@@ -19,14 +27,6 @@ function safeSetLocalStorage(key: string, value: string) {
   }
 }
 
-function safeGetLocalStorage(key: string): string | null {
-  try {
-    return window.localStorage.getItem(key)
-  } catch {
-    return null
-  }
-}
-
 function dispatchBootstrapTourGuide() {
   try {
     window.dispatchEvent(new Event(TOURGUIDE_BOOTSTRAP_EVENT))
@@ -35,11 +35,21 @@ function dispatchBootstrapTourGuide() {
   }
 }
 
+function dispatchResetTourGuide() {
+  try {
+    window.dispatchEvent(new Event(TOURGUIDE_RESET_EVENT))
+  } catch {
+    // ignore
+  }
+}
+
 export default function MobileBottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const { user } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const [tourGuideBootstrapped, setTourGuideBootstrapped] = useState(false)
+  const [isNavVisible, setIsNavVisible] = useState(true)
 
   const shouldRender = useMemo(() => {
     if (!pathname) return false
@@ -50,8 +60,11 @@ export default function MobileBottomNav() {
     return true
   }, [pathname])
 
-  const goDashboardView = (viewId: string) => {
-    safeSetLocalStorage(DASHBOARD_VIEW_STORAGE_KEY, viewId)
+  const goDashboardView = (viewId: ViewId) => {
+    const nextView = viewId === START_JOURNEY_VIEW_ID && user?.status !== 'active'
+      ? NOTIFICATIONS_VIEW_ID
+      : viewId
+    safeSetLocalStorage(DASHBOARD_VIEW_STORAGE_KEY, nextView)
     router.push('/dashboard')
   }
 
@@ -61,22 +74,62 @@ export default function MobileBottomNav() {
     dispatchBootstrapTourGuide()
   }
 
+  const resetTourGuide = () => {
+    safeSetLocalStorage(TOURGUIDE_COLLAPSED_STORAGE_KEY, '1')
+    setTourGuideBootstrapped(false)
+    dispatchResetTourGuide()
+  }
+
+  const toggleTourGuide = () => {
+    if (tourGuideBootstrapped) {
+      resetTourGuide()
+      return
+    }
+
+    enableTourGuide()
+  }
+
+  const toggleNavVisibility = () => {
+    setIsNavVisible(!isNavVisible)
+  }
+
   if (!shouldRender) return null
 
   return (
     <>
-      <div className="md:hidden h-28" aria-hidden="true" />
+      <div className="h-28" aria-hidden="true" />
+
+      {/* Toggle Button - Arrow Only */}
+      <button
+        type="button"
+        onClick={toggleNavVisibility}
+        className={`fixed left-1/2 z-[90] -translate-x-1/2 transition-all duration-300 group ${
+          isNavVisible
+            ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
+            : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'
+        }`}
+        aria-label={isNavVisible ? 'Hide navigation' : 'Show navigation'}
+      >
+        {/* Arrow Icon Only - No Circle */}
+        <div className="relative">
+          {isNavVisible ? (
+            <ChevronDown className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+          ) : (
+            <ChevronUp className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+          )}
+        </div>
+      </button>
 
       {menuOpen ? (
         <div
-          className="md:hidden fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
           onClick={() => setMenuOpen(false)}
         />
       ) : null}
 
       {menuOpen ? (
         <aside
-          className="md:hidden fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-slate-950/95 backdrop-blur-xl"
+          className="fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-black/95 backdrop-blur-xl"
           role="dialog"
           aria-label="Menu"
         >
@@ -137,34 +190,39 @@ export default function MobileBottomNav() {
         </aside>
       ) : null}
 
-      <nav className="md:hidden fixed inset-x-0 bottom-0 z-[80]" aria-label="Bottom navigation">
-        <div className="relative w-full rounded-t-2xl border-t border-[rgba(255,255,255,0.06)] bg-gradient-to-b from-slate-900/30 via-slate-950/95 to-black/95 backdrop-blur-xl">
+      <nav
+        className={`geuwat-mobile-nav fixed inset-x-0 bottom-0 z-[80] ${
+          isNavVisible ? '' : 'is-hidden'
+        }`}
+        aria-label="Bottom navigation"
+        aria-hidden={!isNavVisible}
+      >
+        <div className="geuwat-mobile-nav-panel relative mx-auto w-full max-w-2xl rounded-t-2xl md:mb-4 md:rounded-2xl">
           <div
-            className="pointer-events-none absolute inset-0 rounded-t-2xl shadow-[0_0_32px_rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.14)]"
+            className="geuwat-mobile-nav-scan pointer-events-none absolute inset-0 rounded-t-2xl md:rounded-2xl"
             aria-hidden="true"
           />
 
-          <div className="flex items-end justify-between px-6 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)]">
+          <div className="flex items-end justify-between px-6 pt-5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] md:px-8 md:pb-4">
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="group inline-flex w-24 flex-col items-center gap-2 text-slate-200 transition hover:text-white"
+              className="geuwat-mobile-nav-action group inline-flex w-24 flex-col items-center gap-2"
               aria-label="Open menu"
             >
-              <Menu className="h-6 w-6 text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.75)] transition group-hover:text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.95)]" />
-              <span
-                className="text-[11px] font-semibold tracking-[0.24em] text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.70)] group-hover:text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.92)]"
-              >
+              <Menu className="h-6 w-6 transition" />
+              <span className="text-[11px] font-semibold tracking-[0.24em]">
                 MENU
               </span>
             </button>
 
             <button
               type="button"
-              onClick={tourGuideBootstrapped ? undefined : enableTourGuide}
-              disabled={tourGuideBootstrapped}
-              className="inline-flex -mt-10 h-[74px] w-[74px] items-center justify-center rounded-full border border-[rgba(255,255,255,0.10)] bg-slate-950/70 shadow-[0_0_0_8px_rgba(255,255,255,0.04),0_0_34px_rgba(0,0,0,0.55)] backdrop-blur-md transition hover:shadow-[0_0_0_10px_rgba(255,255,255,0.06),0_0_40px_rgba(0,0,0,0.62)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(255,255,255,0.35)] disabled:opacity-90"
-              aria-label={tourGuideBootstrapped ? 'Tour Guide enabled' : 'Enable Tour Guide'}
+              onClick={toggleTourGuide}
+              className={`geuwat-mobile-avatar inline-flex -mt-10 h-[74px] w-[74px] items-center justify-center rounded-full ${
+                tourGuideBootstrapped ? 'is-active' : ''
+              }`}
+              aria-label={tourGuideBootstrapped ? 'Return Tour Guide to bottom navigation' : 'Enable Tour Guide'}
             >
               {!tourGuideBootstrapped ? (
                 <Image
@@ -172,28 +230,22 @@ export default function MobileBottomNav() {
                   alt="Tour Guide"
                   width={56}
                   height={56}
-                  className="h-14 w-14 rounded-full object-cover opacity-90 grayscale saturate-50 brightness-95"
+                  className="geuwat-mobile-avatar-image h-14 w-14 object-contain"
                   priority
                 />
               ) : (
-                <span
-                  className="h-3 w-3 rounded-full bg-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.85)] shadow-[0_0_18px_rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.55)]"
-                />
+                <span className="geuwat-mobile-active-dot h-3 w-3 rounded-full" />
               )}
             </button>
 
             <button
               type="button"
               onClick={() => goDashboardView('progress')}
-              className="group inline-flex w-24 flex-col items-center gap-2 text-slate-200 transition hover:text-white"
+              className="geuwat-mobile-nav-action group inline-flex w-24 flex-col items-center gap-2"
               aria-label="View progress"
             >
-              <BarChart2
-                className="h-6 w-6 text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.75)] transition group-hover:text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.95)]"
-              />
-              <span
-                className="text-[11px] font-semibold tracking-[0.18em] text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.70)] group-hover:text-[rgba(var(--geuwat-nav-accent-rgb,34,211,238),0.92)]"
-              >
+              <BarChart2 className="h-6 w-6 transition" />
+              <span className="text-[11px] font-semibold tracking-[0.18em]">
                 PROGRESS
               </span>
             </button>

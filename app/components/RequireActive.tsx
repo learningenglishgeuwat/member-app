@@ -63,7 +63,7 @@ export default function RequireActive({ children }: RequireActiveProps) {
   if (!hasSession) {
     if (authIssue) {
       return (
-        <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-300">
+        <div className="flex items-center justify-center min-h-screen bg-black text-slate-300">
           <div className="text-center space-y-3">
             <div>Gagal memuat sesi.</div>
             <div className="text-xs text-amber-300">{authIssue}</div>
@@ -79,7 +79,7 @@ export default function RequireActive({ children }: RequireActiveProps) {
       )
     }
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-300">
+      <div className="flex items-center justify-center min-h-screen bg-black text-slate-300">
         <div className="text-center space-y-3">
           <div>Sesi tidak ditemukan.</div>
           {connectionHint && <div className="text-xs text-amber-300">{connectionHint}</div>}
@@ -111,7 +111,7 @@ export default function RequireActive({ children }: RequireActiveProps) {
   if (!user) {
     if (authIssue) {
       return (
-        <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-300">
+        <div className="flex items-center justify-center min-h-screen bg-black text-slate-300">
           <div className="text-center space-y-3">
             <div>Gagal memuat data akun.</div>
             <div className="text-xs text-amber-300">{authIssue}</div>

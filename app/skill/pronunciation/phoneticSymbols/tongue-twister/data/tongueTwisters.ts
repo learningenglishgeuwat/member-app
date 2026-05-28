@@ -79,8 +79,8 @@ export const TONGUE_TWISTERS: TwisterItem[] = [
     text:
       'Thirty-three thieves thought that they thrilled the throne throughout Thursday. They thought that Thursday was the day they would thrill the throne the most.',
     ipaLines: [
-      '/ˈθɜːrti θriː θiːvz θɔːt ðæt ðeɪ θrɪld ðə θroʊn θruːˈaʊt ˈθɜːrzdeɪ/',
-      '/ðeɪ θɔːt ðæt ˈθɜːrzdeɪ wəz ðə deɪ ðeɪ wʊd θrɪl ðə θroʊn ðə moʊst/',
+      '/ˈθɚti θriː θiːvz θɔːt ðæt ðeɪ θrɪld ðə θroʊn θruːˈaʊt ˈθɚzdeɪ/',
+      '/ðeɪ θɔːt ðæt ˈθɚzdeɪ wəz ðə deɪ ðeɪ wʊd θrɪl ðə θroʊn ðə moʊst/',
     ],
     focus: '/θ/ and /ð/',
     level: 'Advanced',

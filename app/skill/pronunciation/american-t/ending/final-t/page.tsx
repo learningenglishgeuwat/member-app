@@ -2,13 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   extractFocusPhrase,
+  renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
   renderSentenceWithFocusHighlight,
+  renderSentenceWithHighlights,
+  renderAmericanTIpaSymbolHighlight,
 } from '../../components/AmericanTHelpers';
 import {
   COMMON_MISTAKES,
@@ -51,37 +55,6 @@ const FINAL_T_DRILL_HIGHLIGHTS: Readonly<Record<string, ReadonlyArray<string>>> 
   'We need to start right now, no delay.': ['right now'],
   'Take a breath, then get ready to speak.': ['get ready'],
 };
-
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
-
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
-    }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
-  });
-}
 
 function formatIpaForDisplay(ipa: string): string {
   const trimmed = ipa.trim();
@@ -130,10 +103,11 @@ export default function FinalTEndingPage() {
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    phraseExamples: false,
-    sentenceBank: false,
-    drills: false,
+    phraseExamples: true,
+    sentenceBank: true,
+    drills: true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
 
   const phrasePlayAllTokenRef = useRef(0);
   const sentenceBankPlayAllTokenRef = useRef(0);
@@ -363,6 +337,7 @@ export default function FinalTEndingPage() {
       title="Final T Before Consonant"
       subtitle="Latihan final /t/ saat bertemu konsonan berikutnya."
       backTo="/skill/pronunciation/american-t"
+      pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
       headerActions={
         <ButtonSavedProgress
           isSaved={isProgressSaved}
@@ -424,7 +399,7 @@ export default function FinalTEndingPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.phrase}</h3>
+                      <h3>{renderAmericanTTextHighlight(item.phrase)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -439,9 +414,13 @@ export default function FinalTEndingPage() {
                     {showIpaBySection.phraseExamples ? (
                       <>
                         <p className="at-ipa">
-                          General IPA: {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                          <span className="at-ipa-label">General IPA: </span>
+                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                         </p>
-                        <p className="at-ipa">Bunyi santai: {formatIpaForDisplay(item.spoken)}</p>
+                        <p className="at-ipa">
+                          <span className="at-ipa-label">Bunyi santai: </span>
+                          {formatIpaForDisplay(item.spoken)}
+                        </p>
                       </>
                     ) : null}
                     <p className="at-note">{item.note}</p>
@@ -569,7 +548,12 @@ export default function FinalTEndingPage() {
                       </button>
                     </div>
                     {showIpaBySection.drills && item.ipa ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderAmericanTIpaSymbolHighlight(
+                          formatIpaForDisplay(item.ipa),
+                          item.ipaHighlightSymbols ?? ['t̚', 'ʔ', 't']
+                        )}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -646,6 +630,56 @@ export default function FinalTEndingPage() {
         },
       ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
+            <PlayStopButton
+              isActive={isPlayingPhraseAll}
+              label="PHRASES"
+              sectionId="phraseExamples"
+              onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.phraseExamples} onChange={() => toggleIpaBySection('phraseExamples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
+            <PlayStopButton
+              isActive={isPlayingSentenceBankAll}
+              label="SENTENCE BANK"
+              sectionId="sentenceBank"
+              onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.sentenceBank} onChange={() => toggleIpaBySection('sentenceBank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <PlayStopButton
+              isActive={isPlayingDrillsAll}
+              label="DRILLS"
+              sectionId="drills"
+              onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.drills} onChange={() => toggleIpaBySection('drills')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-final-before-consonant-GEUWAT-recording.wav"

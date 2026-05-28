@@ -22,7 +22,7 @@ export const VOCAB_TOPIC_PHYSICAL_APPEARANCE_WORDS: VocabularyItem[] = [
   { id: 'physical-appearance-w19', topicId: 'physical-appearance', word: 'short hair', ipa: '/ʃɔːrt hɛr/', meaningId: 'rambut pendek', exampleEn: 'I have short hair.' },
   { id: 'physical-appearance-w20', topicId: 'physical-appearance', word: 'long hair', ipa: '/lɔːŋ hɛr/', meaningId: 'rambut panjang', exampleEn: 'She has long hair.' },
   { id: 'physical-appearance-w21', topicId: 'physical-appearance', word: 'straight hair', ipa: '/streɪt hɛr/', meaningId: 'rambut lurus', exampleEn: 'Her straight hair is very shiny.' },
-  { id: 'physical-appearance-w22', topicId: 'physical-appearance', word: 'curly hair', ipa: '/ˈkɜːrli hɛr/', meaningId: 'rambut keriting', exampleEn: 'He has curly hair.' },
+  { id: 'physical-appearance-w22', topicId: 'physical-appearance', word: 'curly hair', ipa: '/ˈkɚli hɛr/', meaningId: 'rambut keriting', exampleEn: 'He has curly hair.' },
   { id: 'physical-appearance-w23', topicId: 'physical-appearance', word: 'wavy hair', ipa: '/ˈweɪvi hɛr/', meaningId: 'rambut bergelombang', exampleEn: 'She has wavy hair.' },
   { id: 'physical-appearance-w24', topicId: 'physical-appearance', word: 'black hair', ipa: '/blæk hɛr/', meaningId: 'rambut hitam', exampleEn: 'He has black hair.' },
   { id: 'physical-appearance-w25', topicId: 'physical-appearance', word: 'brown hair', ipa: '/braʊn hɛr/', meaningId: 'rambut cokelat', exampleEn: 'She has brown hair.' },

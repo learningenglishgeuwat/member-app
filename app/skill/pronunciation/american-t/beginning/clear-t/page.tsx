@@ -2,9 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
+import {
+  renderAmericanTTextHighlight,
+  renderGeneralIpaWithTHighlight,
+  renderSentenceWithHighlights,
+  renderAmericanTIpaSymbolHighlight,
+} from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   CLEAR_T_BEGINNING_COMMON_MISTAKES,
   CLEAR_T_BEGINNING_EXAMPLES,
@@ -36,37 +43,6 @@ const RELEASED_T_BEGINNING_EVALUATION_PROMPT =
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
-  });
-}
-
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
-
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
-    }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
   });
 }
 
@@ -117,11 +93,12 @@ export default function ClearTBeginningPage() {
   const [isPlayingSentenceDrillsAll, setIsPlayingSentenceDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    examples: false,
-    'word-bank-50': false,
-    sentences: false,
-    'sentence-drills-examples': false,
+    examples: true,
+    'word-bank-50': true,
+    sentences: true,
+    'sentence-drills-examples': true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const examplesPlayAllTokenRef = useRef(0);
   const wordBankPlayAllTokenRef = useRef(0);
@@ -389,6 +366,7 @@ export default function ClearTBeginningPage() {
         title="Released /t/ - Beginning"
         subtitle="Latihan bunyi /t/ yang jelas pada posisi awal kata."
         backTo="/skill/pronunciation/american-t"
+        pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
         headerActions={
           <ButtonSavedProgress
             isSaved={isProgressSaved}
@@ -455,7 +433,7 @@ export default function ClearTBeginningPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.text}</h3>
+                      <h3>{renderAmericanTTextHighlight(item.text)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -470,7 +448,9 @@ export default function ClearTBeginningPage() {
                       </button>
                     </div>
                     {showIpaBySection.examples ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -506,7 +486,7 @@ export default function ClearTBeginningPage() {
                   {isPlayingWordBankAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
-              <div className="at-word-chip-grid">
+              <div className="at-word-chip-grid at-word-chip-grid--compact">
                 {CLEAR_T_BEGINNING_WORD_BANK_50.map((item, index) => (
                   <article
                     key={item.text}
@@ -516,7 +496,7 @@ export default function ClearTBeginningPage() {
                     }}
                   >
                     <div className="at-word-chip-head">
-                      <p className="at-word-chip-word">{item.text}</p>
+                      <p className="at-word-chip-word">{renderAmericanTTextHighlight(item.text)}</p>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -534,7 +514,9 @@ export default function ClearTBeginningPage() {
                       </button>
                     </div>
                     {showIpaBySection['word-bank-50'] ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
+                      </p>
                     ) : null}
                   </article>
                 ))}
@@ -594,7 +576,9 @@ export default function ClearTBeginningPage() {
                       </button>
                     </div>
                     {showIpaBySection.sentences ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderAmericanTIpaSymbolHighlight(formatIpaForDisplay(item.ipa), ['t'])}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -670,7 +654,12 @@ export default function ClearTBeginningPage() {
                     </button>
                   </div>
                   {showIpaBySection['sentence-drills-examples'] ? (
-                    <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                    <p className="at-ipa">
+                      {renderAmericanTIpaSymbolHighlight(
+                        formatIpaForDisplay(item.ipa),
+                        item.ipaHighlightSymbols ?? ['t']
+                      )}
+                    </p>
                   ) : null}
                 </article>
               ))}
@@ -751,6 +740,69 @@ export default function ClearTBeginningPage() {
         },
         ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-3 sm:gap-6">
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <PlayStopButton
+              isActive={isPlayingExamplesAll}
+              label="EXAMPLES"
+              sectionId="examples"
+              onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="50 WORDS"
+              sectionId="word-bank-50"
+              onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['word-bank-50']} onChange={() => toggleIpaBySection('word-bank-50')} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <PlayStopButton
+              isActive={isPlayingSentencesAll}
+              label="SENTENCES"
+              sectionId="sentences"
+              onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
+            <PlayStopButton
+              isActive={isPlayingSentenceDrillsAll}
+              label="DRILLS"
+              sectionId="sentence-drills-examples"
+              onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+          <hr className="border-white/10" />
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-released-beginning-GEUWAT-recording.wav"

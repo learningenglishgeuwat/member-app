@@ -125,6 +125,7 @@
   color: #fff4ea;
   background: linear-gradient(145deg, rgba(255, 140, 74, 0.3), rgba(53, 27, 79, 0.86));
   padding: 0.4rem 0.74rem;
+  font-family: var(--font-display);
   font-size: 0.84rem;
   cursor: pointer;
   transition:
@@ -391,8 +392,9 @@
 }
 
 .vf-face-ipa {
+  font-family: var(--font-ipa);
   font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: rgba(244, 233, 255, 0.95);
+  color: var(--color-ipa);
   text-align: center;
 }
 

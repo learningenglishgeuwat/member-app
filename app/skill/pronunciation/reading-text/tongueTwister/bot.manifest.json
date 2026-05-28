@@ -1,0 +1,30 @@
+{
+  "route": "/skill/pronunciation/reading-text/tongueTwister",
+  "label": "Tongue Twister",
+  "scope": "pronunciation",
+  "keywords": [
+    "tongue twister",
+    "reading tongue twister",
+    "latihan lidah",
+    "artikulasi"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-tonguetwister-basics",
+      "title": "Tongue Twister Practice",
+      "route": "/skill/pronunciation/reading-text/tongueTwister",
+      "keywords": [
+        "apa itu tongue twister",
+        "jelaskan tongue twister",
+        "fungsi tongue twister",
+        "latihan kelincahan lidah"
+      ],
+      "shortAnswer": "Tongue Twister adalah latihan membaca deretan kata dengan kombinasi bunyi yang mirip dan menantang untuk diucapkan dengan cepat. Latihan ini sangat bagus untuk meningkatkan ketangkasan artikulasi, kejelasan bunyi (clarity), serta melenturkan otot-otot mulut.",
+      "sourceSections": [
+        {
+          "label": "Tongue Twister Focus Sound"
+        }
+      ]
+    }
+  ]
+}

@@ -68,11 +68,13 @@ export const SYMBOL_SPEECH_MAP: Record<string, SymbolSpeechProfile> = {
 };
 
 export function hasSymbolSpeechProfile(symbol: string): boolean {
-  return Boolean(SYMBOL_SPEECH_MAP[symbol]);
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  return Boolean(SYMBOL_SPEECH_MAP[normalizedKey]);
 }
 
 export function getSymbolSpeechProfile(symbol: string): SymbolSpeechProfile {
-  const mapped = SYMBOL_SPEECH_MAP[symbol];
+  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  const mapped = SYMBOL_SPEECH_MAP[normalizedKey];
   if (mapped) {
     return {
       ...DEFAULT_SYMBOL_SPEECH_PROFILE,

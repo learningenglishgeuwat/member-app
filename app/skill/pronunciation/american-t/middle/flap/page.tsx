@@ -2,10 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Highlighter, Play, Pause, Square } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
-import { renderGeneralIpaWithTHighlight } from '../../components/AmericanTHelpers';
+import {
+  renderAmericanTTextHighlight,
+  renderGeneralIpaWithTHighlight,
+  renderSentenceWithHighlights,
+  renderAmericanTIpaSymbolHighlight,
+} from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   FLAP_T_EXAMPLES,
   FLAP_T_SENTENCES,
@@ -53,42 +59,32 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
-
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
-    }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
-  });
-}
 
 function formatIpaForDisplay(ipa: string): string {
   const trimmed = ipa.trim();
   if (!trimmed) return '';
   const core = trimmed.replace(/^\/+|\/+$/g, '');
   return `/${core}/`;
+}
+
+function formatFlapIpaForLearner(ipa: string): string {
+  return formatIpaForDisplay(ipa).replace(/ɾ/g, 'd');
+}
+
+function renderFlapIpaForLearnerHighlight(ipa: string) {
+  const chunks = formatIpaForDisplay(ipa).split(/(ɾ)/g);
+
+  return chunks.map((chunk, idx) => {
+    if (chunk === 'ɾ') {
+      return (
+        <span key={`${ipa}-flap-${idx}`} className="at-ipa-t">
+          d
+        </span>
+      );
+    }
+
+    return <span key={`${ipa}-plain-${idx}`}>{chunk}</span>;
+  });
 }
 
 function deriveGeneralIpaFromNatural(naturalIpa: string): string {
@@ -148,11 +144,12 @@ export default function FlapTPage() {
   const [isPlayingSentenceDrillsAll, setIsPlayingSentenceDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    examples: false,
-    'word-bank': false,
-    sentences: false,
-    'sentence-drills-examples': false,
+    examples: true,
+    'word-bank': true,
+    sentences: true,
+    'sentence-drills-examples': true,
   });
+  const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
 
   const examplesPlayAllTokenRef = useRef(0);
@@ -417,6 +414,7 @@ export default function FlapTPage() {
       title="Flap T /ɾ/"
       subtitle="Pola American T saat /t/ berubah menjadi bunyi flap cepat di tengah kata."
       backTo="/skill/pronunciation/american-t"
+      pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
       headerActions={
         <ButtonSavedProgress
           isSaved={isProgressSaved}
@@ -457,26 +455,23 @@ export default function FlapTPage() {
           title: 'Flap T Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
+              <div className="mb-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
+                <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T Examples</span>
                 <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('examples')}
+                  onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
+                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
                 >
-                  {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingExamplesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllExamples();
-                  }}
-                >
-                  {isPlayingExamplesAll ? 'Stop' : 'Play All'}
+                  {isPlayingExamplesAll ? (
+                    <>
+                      <Pause size={12} />
+                      <span>Stop All</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play size={12} />
+                      <span>Play All</span>
+                    </>
+                  )}
                 </button>
               </div>
               <div className="at-example-grid">
@@ -489,7 +484,7 @@ export default function FlapTPage() {
                     }}
                   >
                     <div className="at-example-head">
-                      <h3>{item.word}</h3>
+                      <h3>{renderAmericanTTextHighlight(item.word)}</h3>
                       <button
                         type="button"
                         className="fs-topic-mini-btn at-play-chip-btn"
@@ -504,11 +499,14 @@ export default function FlapTPage() {
                     {showIpaBySection.examples ? (
                       <>
                         <p className="at-ipa">
-                          BrE (released /t/):{' '}
+                          <span className="at-ipa-label">BrE (released /t/): </span>
                           {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                         </p>
                         {item.spoken ? (
-                          <p className="at-ipa">AmE (flap /ɾ/): {formatIpaForDisplay(item.spoken)}</p>
+                          <p className="at-ipa">
+                            <span className="at-ipa-label">AmE (flap /d/): </span>
+                            {renderFlapIpaForLearnerHighlight(item.spoken)}
+                          </p>
                         ) : null}
                       </>
                     ) : null}
@@ -534,26 +532,23 @@ export default function FlapTPage() {
                   (flap T).
                 </p>
               </div>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
+              <div className="mb-4 mt-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
+                <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T (List of Examples)</span>
                 <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('word-bank')}
+                  onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
+                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
                 >
-                  {showIpaBySection['word-bank'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingWordBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllWordBank();
-                  }}
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
+                  {isPlayingWordBankAll ? (
+                    <>
+                      <Pause size={12} />
+                      <span>Stop All</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play size={12} />
+                      <span>Play All</span>
+                    </>
+                  )}
                 </button>
               </div>
               <div className="at-flap-bank-grid">
@@ -566,12 +561,12 @@ export default function FlapTPage() {
                     }}
                   >
                     <div className="at-flap-bank-head">
-                      <span className="at-flap-bank-word">{word}</span>
+                      <span className="at-flap-bank-word">{renderAmericanTTextHighlight(word)}</span>
                     </div>
                     {showIpaBySection['word-bank'] ? (() => {
                       const naturalIpa = FLAP_T_WORD_BANK_IPA[word.toLowerCase()] ?? '';
                       const naturalSpeechDisplay = naturalIpa
-                        ? formatIpaForDisplay(naturalIpa)
+                        ? renderFlapIpaForLearnerHighlight(naturalIpa)
                         : '-';
                       const generalIpaDisplay = naturalIpa
                         ? deriveGeneralIpaFromNatural(naturalIpa)
@@ -581,7 +576,7 @@ export default function FlapTPage() {
                         <>
                           <div className="at-flap-bank-ipa-row">
                             <p className="at-ipa at-flap-bank-ipa-text">
-                              BrE (released /t/):{' '}
+                              <span className="at-ipa-label">BrE (released /t/): </span>
                               {generalIpaDisplay === '-'
                                 ? '-'
                                 : renderGeneralIpaWithTHighlight(generalIpaDisplay)}
@@ -598,7 +593,10 @@ export default function FlapTPage() {
                             </button>
                           </div>
                           <div className="at-flap-bank-ipa-row">
-                            <p className="at-ipa at-flap-bank-ipa-text">AmE (flap /ɾ/): {naturalSpeechDisplay}</p>
+                            <p className="at-ipa at-flap-bank-ipa-text">
+                              <span className="at-ipa-label">AmE (flap /d/): </span>
+                              {naturalSpeechDisplay}
+                            </p>
                             <button
                               type="button"
                               className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
@@ -624,28 +622,7 @@ export default function FlapTPage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentences')}
-                >
-                  {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentencesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentences();
-                  }}
-                >
-                  {isPlayingSentencesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-sentence-list">
                 {FLAP_T_SENTENCES.map((item, index) => (
                   <article
@@ -671,7 +648,9 @@ export default function FlapTPage() {
                       </button>
                     </div>
                     {showIpaBySection.sentences ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderFlapIpaForLearnerHighlight(item.ipa)}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -685,28 +664,7 @@ export default function FlapTPage() {
           title: 'Sentence Drill Examples (15)',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentence-drills-examples')}
-                >
-                  {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceDrillsExamples();
-                  }}
-                >
-                  {isPlayingSentenceDrillsAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               {FLAP_T_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (
                 <article
                   key={item.id}
@@ -733,7 +691,9 @@ export default function FlapTPage() {
                     </button>
                   </div>
                   {showIpaBySection['sentence-drills-examples'] ? (
-                    <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                    <p className="at-ipa">
+                      {renderFlapIpaForLearnerHighlight(item.ipa)}
+                    </p>
                   ) : null}
                 </article>
               ))}
@@ -810,6 +770,69 @@ export default function FlapTPage() {
         },
       ]}
       />
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <PlayStopButton
+              isActive={isPlayingExamplesAll}
+              label="EXAMPLES"
+              sectionId="examples"
+              onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
+            <PlayStopButton
+              isActive={isPlayingWordBankAll}
+              label="50 WORDS"
+              sectionId="wordBank"
+              onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['word-bank']} onChange={() => toggleIpaBySection('word-bank')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <PlayStopButton
+              isActive={isPlayingSentencesAll}
+              label="SENTENCES"
+              sectionId="sentences"
+              onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <div>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
+            <PlayStopButton
+              isActive={isPlayingSentenceDrillsAll}
+              label="DRILLS"
+              sectionId="sentence-drills-examples"
+              onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
+              size="sm"
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between" />
+          </div>
+          <hr className="border-white/10" />
+          <HighlightVisibilityToggle
+            checked={isHighlightEnabled}
+            onChange={setIsHighlightEnabled}
+            color="orange"
+            label="Highlight American T"
+          />
+        </div>
+      </ControlCenter>
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-flap-middle-GEUWAT-recording.wav"

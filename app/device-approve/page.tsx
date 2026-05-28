@@ -50,9 +50,9 @@ export default function DeviceApprovePage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6">
       <div
-        className="w-full max-w-xl bg-slate-900/40 border border-slate-800 rounded-2xl p-8 relative"
+        className="w-full max-w-xl bg-black/40 border border-slate-800 rounded-2xl p-8 relative"
         data-tour="device-approve-form"
       >
         <button
@@ -77,7 +77,7 @@ export default function DeviceApprovePage() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="123-456"
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-emerald-400"
+            className="w-full rounded-lg border border-slate-700 bg-black px-4 py-3 text-slate-100 outline-none focus:border-emerald-400"
           />
           <button
             type="submit"
@@ -97,7 +97,7 @@ export default function DeviceApprovePage() {
             <button
               type="button"
               onClick={() => router.push('/dashboard')}
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 hover:border-emerald-400 transition-colors"
+              className="w-full rounded-lg border border-slate-700 bg-black px-4 py-3 text-slate-100 hover:border-emerald-400 transition-colors"
             >
               Kembali ke Dashboard
             </button>

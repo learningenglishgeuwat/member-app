@@ -45,7 +45,7 @@ export const VOCAB_TOPIC_SHOPPING_WORDS: VocabularyItem[] = [
   { id: 'shopping-w42', topicId: 'shopping', word: 'fit', ipa: '/fɪt/', meaningId: 'pas', exampleEn: 'This shirt fits me well.' },
   { id: 'shopping-w43', topicId: 'shopping', word: 'try on', ipa: '/traɪ ɑːn/', meaningId: 'mencoba', exampleEn: 'Can I try on this jacket?' },
   { id: 'shopping-w44', topicId: 'shopping', word: 'refund', ipa: '/ˈriːfʌnd/', meaningId: 'pengembalian dana', exampleEn: 'Can I get a refund?' },
-  { id: 'shopping-w45', topicId: 'shopping', word: 'return', ipa: '/rɪˈtɜːrn/', meaningId: 'mengembalikan barang', exampleEn: 'I want to return this product.' },
+  { id: 'shopping-w45', topicId: 'shopping', word: 'return', ipa: '/rɪˈtɚn/', meaningId: 'mengembalikan barang', exampleEn: 'I want to return this product.' },
   { id: 'shopping-w46', topicId: 'shopping', word: 'exchange', ipa: '/ɪksˈtʃeɪndʒ/', meaningId: 'tukar barang', exampleEn: 'Can I exchange this size?' },
   { id: 'shopping-w47', topicId: 'shopping', word: 'delivery', ipa: '/dɪˈlɪvəri/', meaningId: 'pengiriman', exampleEn: 'Delivery takes two days.' },
   { id: 'shopping-w48', topicId: 'shopping', word: 'shipping fee', ipa: '/ˈʃɪpɪŋ fiː/', meaningId: 'ongkir', exampleEn: 'The shipping fee is free today.' },

@@ -70,12 +70,12 @@
 
 /* Tech Font */
 .font-tech {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-tech);
 }
 
 /* Neon Font */
 .font-neon {
-  font-family: 'Arial Black', sans-serif;
+  font-family: var(--font-display);
   text-shadow: 0 0 10px currentColor;
 }
 

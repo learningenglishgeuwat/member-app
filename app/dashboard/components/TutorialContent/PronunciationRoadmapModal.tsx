@@ -7,6 +7,7 @@ import {
   PRONUNCIATION_ROADMAP_ITEMS,
   PRONUNCIATION_ROADMAP_TOTAL_DAYS,
 } from './roadmap-data/pronunciation-roadmap'
+import { useHaptic } from '@/lib/haptic/useHaptic'
 
 type PronunciationRoadmapModalProps = {
   isOpen: boolean
@@ -138,6 +139,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
   onClose,
   zIndex = 200,
 }) => {
+  const { triggerHaptic } = useHaptic()
   const [checkedById, setCheckedById] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {}
     try {
@@ -305,17 +307,17 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
       style={{ zIndex }}
     >
       <div
-        className="w-full max-w-[96vw] sm:max-w-5xl bg-slate-950 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
+        className="w-full max-w-[96vw] sm:max-w-5xl bg-black border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
         {lessonDetailPopup ? (
           <div className="fixed inset-0 flex items-center justify-center p-4" style={{ zIndex: zIndex + 10 }}>
-            <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm" onClick={closeLessonDetailPopup} />
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeLessonDetailPopup} />
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="lesson-detail-popup-title"
-              className="relative w-full max-w-lg rounded-2xl border border-slate-700/60 bg-slate-900/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] overflow-hidden"
+              className="relative w-full max-w-lg rounded-2xl border border-slate-700/60 bg-black/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] overflow-hidden"
               onClick={(event) => event.stopPropagation()}
             >
               <div className="flex items-start justify-between gap-3 p-4 border-b border-slate-700/50">
@@ -345,7 +347,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                   <button
                     type="button"
                     onClick={() => navigateLessonDetailPopup(-1)}
-                    className="px-2 py-1 rounded-md border border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
+                    className="px-2 py-1 rounded-md border border-slate-700/60 bg-black/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
                     aria-label="Previous category"
                   >
                     Prev
@@ -361,7 +363,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                   <button
                     type="button"
                     onClick={() => navigateLessonDetailPopup(1)}
-                    className="px-2 py-1 rounded-md border border-slate-700/60 bg-slate-900/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
+                    className="px-2 py-1 rounded-md border border-slate-700/60 bg-black/40 text-slate-200 hover:bg-slate-800/60 transition-colors text-xs"
                     aria-label="Next category"
                   >
                     Next
@@ -442,7 +444,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
 
         <div className="overflow-x-auto geuwat-table-scroll border border-slate-700/60 rounded-xl">
           <table className="min-w-full geuwat-table-responsive text-xs sm:text-sm">
-            <thead className="bg-slate-900/70 text-slate-200">
+            <thead className="bg-black/70 text-slate-200">
               <tr>
                 <th className="px-3 sm:px-4 py-3 text-left font-semibold">No</th>
                 <th className="px-3 sm:px-4 py-3 text-left font-semibold">Materi</th>
@@ -500,7 +502,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
           </table>
         </div>
 
-        <div className="mt-4 rounded-lg border border-slate-700/60 bg-slate-900/50 p-3 text-[11px] sm:text-xs text-slate-300 space-y-1">
+        <div className="mt-4 rounded-lg border border-slate-700/60 bg-black/50 p-3 text-[11px] sm:text-xs text-slate-300 space-y-1">
           <p className="font-semibold text-slate-200">Catatan</p>
           <p>1. Estimasi dihitung untuk ritme belajar 30 menit per hari.</p>
           <p>2. Estimasi bisa berubah tergantung konsistensi latihan harian yang terbentuk.</p>

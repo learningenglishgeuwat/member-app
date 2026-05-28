@@ -8,6 +8,7 @@ import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -15,7 +16,8 @@ import {
   waitForVoices,
 } from '@/lib/tts/speech';
 import type { WordExample } from '../data/wordExamples/wordExamples';
-import type { CommonLetter } from '../data/commonLetters/CommonLetters';
+import { getAllCommonLetters, type CommonLetter } from '../data/commonLetters/CommonLetters';
+import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
@@ -23,6 +25,123 @@ const RecordingControlsButton = dynamic(() => import('../../../components/Record
 const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal'), {
   ssr: false,
 });
+
+const ALL_COMMON_LETTERS = getAllCommonLetters();
+const COMMON_LETTER_SYMBOL_ALIASES: Record<string, string[]> = {
+  // E / Eh / Ash / etc.
+  e: ['ɛ'],
+  'ɛ': ['e'],
+  
+  // Diphthongs & Rhotic variants
+  'eə': ['ɛr', 'ɛə'],
+  'ɛə': ['eə', 'ɛr'],
+  'ɛr': ['eə', 'ɛə'],
+  
+  'ɪə': ['ɪr', 'iə'],
+  'ɪr': ['ɪə', 'iə'],
+  'iə': ['ɪə', 'ɪr'],
+  
+  'ʊə': ['ʊr'],
+  'ʊr': ['ʊə'],
+  
+  'əʊ': ['oʊ'],
+  'oʊ': ['əʊ'],
+  
+  // Affricates
+  'tʃ': ['ʧ'],
+  'ʧ': ['tʃ'],
+  'dʒ': ['ʤ'],
+  'ʤ': ['dʒ'],
+  
+  // Glides
+  y: ['j'],
+  j: ['y'],
+};
+
+const BRITISH_NOTE_COUNTERPARTS: Record<string, string[]> = {
+  'ɔ': ['ɑ'],
+  'ɑ': ['ɔ'],
+  'ɚ': ['ə'],
+  'ə': ['ɚ'],
+  'ɒ': ['ɑ', 'ɔ'],
+};
+
+const SYMBOL_HIGHLIGHT_PATTERNS: Record<string, string[]> = {
+  // Lax Vowels
+  'ʌ': ['ou', 'oo', 'oe', 'u', 'o'],
+  'ɪ': ['ui', 'ie', 'ee', 'ei', 'i', 'y', 'e', 'u'],
+  'ʊ': ['oo', 'ou', 'u', 'o'],
+  'ɛ': ['ea', 'ie', 'ai', 'ue', 'e', 'a'],
+  'ə': ['ion', 'ian', 'ou', 'io', 'ia', 'a', 'e', 'o', 'u', 'i'],
+  'ɚ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
+  'ɝ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'ɜ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'ɜr': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
+  'əɹ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
+  
+  // Tense Vowels
+  'ɑ': ['al', 'au', 'o', 'a'],
+  'ɑr': ['ear', 'ar', 'al', 'r'],
+  'ɒ': ['ock', 'od', 'og', 'op', 'o'],
+  'i': ['ee', 'ea', 'ie', 'ei', 'ey', 'e', 'y', 'i'],
+  'u': ['oo', 'ue', 'ew', 'ou', 'ui', 'u', 'o'],
+  'æ': ['adge', 'ank', 'ai', 'au', 'a'],
+  'ɔ': ['aw', 'au', 'al', 'ough', 'o', 'a'],
+  'ɔr': ['oor', 'oar', 'our', 'ore', 'or', 'ar', 'r'],
+
+  // Diphthongs
+  'aɪ': ['igh', 'ie', 'uy', 'ai', 'i', 'y'],
+  'eɪ': ['ai', 'ay', 'ei', 'ea', 'ey', 'a', 'e'],
+  'ɔɪ': ['oi', 'oy'],
+  'ɪr': ['ear', 'eer', 'ere', 'eard', 'ier', 'ir', 'r'],
+  'ɪə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
+  'iə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
+  'ɛr': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'ɛə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'eə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
+  'ʊr': ['ure', 'our', 'oor', 'ur', 'r'],
+  'ʊə': ['ure', 'our', 'oor', 'ur', 'r'],
+  'oʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
+  'əʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
+  'aʊ': ['ou', 'ow', 'ough'],
+
+  // Consonants Voiceless
+  'p': ['pp', 'p'],
+  't': ['tt', 'ed', 't'],
+  'k': ['ck', 'ch', 'qu', 'k', 'c', 'q'],
+  'f': ['ff', 'ph', 'gh', 'f'],
+  'θ': ['th'],
+  's': ['ss', 'sc', 'ce', 's', 'c'],
+  'ʃ': ['sh', 'ti', 'ci', 'si', 'ch', 's'],
+  'tʃ': ['tch', 'ch', 't'],
+  'ʧ': ['tch', 'ch', 't'],
+  'h': ['wh', 'h'],
+
+  // Consonants Voiced
+  'b': ['bb', 'b'],
+  'd': ['dd', 'ed', 'd'],
+  'g': ['gg', 'gh', 'gu', 'g'],
+  'v': ['vv', 've', 'v', 'f'],
+  'ð': ['th'],
+  'z': ['zz', 'se', 'z', 's', 'x'],
+  'ʒ': ['si', 'ge', 'su', 's', 'z'],
+  'ʤ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
+  'dʒ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
+  'l': ['ll', 'le', 'al', 'l'],
+  'm': ['mm', 'mb', 'm'],
+  'n': ['nn', 'kn', 'gn', 'pn', 'n'],
+  'ŋ': ['ng', 'n'],
+  'r': ['rr', 'wr', 'rh', 'r'],
+  'w': ['wh', 'qu', 'w', 'u'],
+  'y': ['y', 'i', 'u', 'eu', 'ew'],
+  'j': ['y', 'i', 'u', 'eu', 'ew'],
+};
+
+const highlightLetterStyle: React.CSSProperties = {
+  color: '#fb923c',
+  fontWeight: 900,
+  textShadow: '0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6)',
+};
 
 const VOWEL_LAX_SYMBOLS = ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'] as const;
 const VOWEL_TENSE_SYMBOLS = ['\u0251', 'i', 'u', '\u00e6', '\u0254'] as const;
@@ -86,15 +205,35 @@ type SymbolDetailSectionState = {
 
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
-    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British. TTS American biasanya memakai vokal lebih ke /?/.',
+    description: 'Beberapa kata contoh di simbol ini sering ditulis/terdengar gaya British; di banyak dialek AmE vokal ini terdengar lebih ke /ɑ/.',
     items: [
-      { word: 'hot', britishIpa: '/h?t/', americanIpa: '/h?t/' },
-      { word: 'not', britishIpa: '/n?t/', americanIpa: '/n?t/' },
-      { word: 'lot', britishIpa: '/l?t/', americanIpa: '/l?t/' },
-      { word: 'top', britishIpa: '/t?p/', americanIpa: '/t?p/' },
-      { word: 'shop', britishIpa: '/??p/', americanIpa: '/??p/' },
-      { word: 'box', britishIpa: '/b?ks/', americanIpa: '/b?ks/' },
-      { word: 'fox', britishIpa: '/f?ks/', americanIpa: '/f?ks/' },
+      { word: 'dog', britishIpa: '/dɔg/', americanIpa: '/dɑg/' },
+      { word: 'long', britishIpa: '/lɔŋ/', americanIpa: '/lɑŋ/' },
+      { word: 'song', britishIpa: '/sɔŋ/', americanIpa: '/sɑŋ/' },
+      { word: 'strong', britishIpa: '/strɔŋ/', americanIpa: '/strɑŋ/' },
+      { word: 'wrong', britishIpa: '/rɔŋ/', americanIpa: '/rɑŋ/' },
+      { word: 'off', britishIpa: '/ɔf/', americanIpa: '/ɑf/' },
+      { word: 'soft', britishIpa: '/sɔft/', americanIpa: '/sɑft/' },
+      { word: 'boss', britishIpa: '/bɔs/', americanIpa: '/bɑs/' },
+      { word: 'loss', britishIpa: '/lɔs/', americanIpa: '/lɑs/' },
+      { word: 'cross', britishIpa: '/krɔs/', americanIpa: '/krɑs/' },
+      { word: 'cost', britishIpa: '/kɔst/', americanIpa: '/kɑst/' },
+      { word: 'hot', britishIpa: '/hɔt/', americanIpa: '/hɑt/' },
+      { word: 'not', britishIpa: '/nɔt/', americanIpa: '/nɑt/' },
+      { word: 'lot', britishIpa: '/lɔt/', americanIpa: '/lɑt/' },
+      { word: 'top', britishIpa: '/tɔp/', americanIpa: '/tɑp/' },
+      { word: 'shop', britishIpa: '/ʃɔp/', americanIpa: '/ʃɑp/' },
+      { word: 'stop', britishIpa: '/stɔp/', americanIpa: '/stɑp/' },
+      { word: 'clock', britishIpa: '/klɔk/', americanIpa: '/klɑk/' },
+      { word: 'rock', britishIpa: '/rɔk/', americanIpa: '/rɑk/' },
+      { word: 'box', britishIpa: '/bɔks/', americanIpa: '/bɑks/' },
+      { word: 'fox', britishIpa: '/fɔks/', americanIpa: '/fɑks/' },
+      { word: 'job', britishIpa: '/ʤɔb/', americanIpa: '/ʤɑb/' },
+      { word: 'odd', britishIpa: '/ɔd/', americanIpa: '/ɑd/' },
+      { word: 'body', britishIpa: '/ˈbɔdi/', americanIpa: '/ˈbɑdi/' },
+      { word: 'coffee', britishIpa: '/ˈkɔfi/', americanIpa: '/ˈkɑfi/' },
+      { word: 'office', britishIpa: '/ˈɔfɪs/', americanIpa: '/ˈɑfɪs/' },
+      { word: 'often', britishIpa: '/ˈɔfən/', americanIpa: '/ˈɑfən/' },
     ],
   },
   h: {
@@ -111,12 +250,12 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
     ],
   },
   '\u025a': {
-    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /?/ atau /?r/.',
+    description: 'Akhiran -er pada daftar ini kadang ditulis non-rhotic (gaya British). American biasanya memakai /ɚ/ atau /əɹ/.',
     items: [
-      { word: 'teacher', britishIpa: "/'ti?t??/", americanIpa: "/'ti?t??/" },
-      { word: 'doctor', britishIpa: "/'d?kt?/", americanIpa: "/'d?kt?/" },
-      { word: 'water', britishIpa: "/'w??t?/", americanIpa: "/'w???/" },
-      { word: 'later', britishIpa: "/'le?t?/", americanIpa: "/'le???/" },
+      { word: 'teacher', britishIpa: "/'tiːtʃə/", americanIpa: "/'tiːtʃɚ/" },
+      { word: 'doctor', britishIpa: "/'dɒktə/", americanIpa: "/'dɑktɚ/" },
+      { word: 'water', britishIpa: "/'wɔːtə/", americanIpa: "/'wɔtɚ/" },
+      { word: 'later', britishIpa: "/'leɪtə/", americanIpa: "/'leɪɾɚ/" },
     ],
   },
   'e\u0259': {
@@ -209,10 +348,15 @@ const SymbolDetailPage: React.FC = () => {
   const [activeWord, setActiveWord] = useState<string | null>(null);
   const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
   const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
+  const [showBritishNoteHighlight, setShowBritishNoteHighlight] = useState(true);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
-  const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(null);
+  const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(() => ALL_COMMON_LETTERS);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
   const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
@@ -264,6 +408,10 @@ const SymbolDetailPage: React.FC = () => {
       router.replace('/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols');
     }
   }, [router, shouldRedirectToSummary]);
+
+  useEffect(() => {
+    setShowHighlight(true);
+  }, [decodedSymbol]);
 
   // Handle hydration
   useEffect(() => {
@@ -318,7 +466,180 @@ const SymbolDetailPage: React.FC = () => {
     isSectionStateHydrated,
     sectionStateStorageKey,
   ]);
-  
+
+  const symbolAliasCandidates = useMemo(() => {
+    const base = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
+    return Array.from(new Set(base.filter(Boolean)));
+  }, [decodedSymbol]);
+
+  const currentSymbolCommonLetters = useMemo(() => {
+    if (SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol]) {
+      return SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol];
+    }
+    const foundLetters = ALL_COMMON_LETTERS
+      .filter(c => symbolAliasCandidates.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate))
+      .flatMap((c) => c.letter.split(',').map((s) => s.trim().replace(/^-|-$/g, '')));
+
+    return Array.from(new Set(foundLetters.filter(Boolean)));
+  }, [decodedSymbol, symbolAliasCandidates]);
+
+  const renderWord = (word: string) => {
+    if (!showHighlight) return word;
+    
+    const lowerWord = word.toLowerCase();
+    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    if (patterns.length === 0) return word;
+    
+    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    
+    const parts = word.split(regex);
+    let matchedCount = 0;
+    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
+    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
+    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
+    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
+    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
+    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
+    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
+    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
+    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
+    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
+    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
+    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (i % 2 === 1) {
+            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
+              ? matchedCount === 1
+              : animalSecondMatch
+                ? matchedCount === 1 || matchedCount === 2
+                : bananaOneThreeMatch
+                  ? matchedCount === 0 || matchedCount === 2
+                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
+                    ? matchedCount === 0
+                    : tomorrowAlphaMatch
+                      ? matchedCount === 1
+                      : true;
+            matchedCount += 1;
+            if (shouldHighlight) {
+              return (
+                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                  {part}
+                </span>
+              );
+            }
+          }
+          return <React.Fragment key={i}>{part}</React.Fragment>;
+        })}
+      </>
+    );
+  };
+
+  const renderBritishNoteWord = (word: string) => {
+    if (!showBritishNoteHighlight) return word;
+    
+    const lowerWord = word.toLowerCase();
+    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    if (patterns.length === 0) return word;
+    
+    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    
+    const parts = word.split(regex);
+    let matchedCount = 0;
+    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
+    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
+    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
+    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
+    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
+    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
+    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
+    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
+    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
+    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
+    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
+    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (i % 2 === 1) {
+            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
+              ? matchedCount === 1
+              : animalSecondMatch
+                ? matchedCount === 1 || matchedCount === 2
+                : bananaOneThreeMatch
+                  ? matchedCount === 0 || matchedCount === 2
+                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
+                    ? matchedCount === 0
+                    : tomorrowAlphaMatch
+                      ? matchedCount === 1
+                      : true;
+            matchedCount += 1;
+            if (shouldHighlight) {
+              return (
+                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                  {part}
+                </span>
+              );
+            }
+          }
+          return <React.Fragment key={i}>{part}</React.Fragment>;
+        })}
+      </>
+    );
+  };
+
+  const renderIpa = (ipa?: string, isBritishNoteOrAlternative = false) => {
+    if (!ipa) return '';
+    if (!showHighlight || symbolAliasCandidates.length === 0) return ipa;
+    
+    const allowedSymbols = isBritishNoteOrAlternative
+      ? [...symbolAliasCandidates, ...(BRITISH_NOTE_COUNTERPARTS[decodedSymbol] ?? [])]
+      : symbolAliasCandidates;
+
+    const escapedSymbols = allowedSymbols
+      .map(symbol => symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .filter(Boolean);
+    const regex = new RegExp(`(${escapedSymbols.join('|')})`, 'g');
+    
+    if (regex.test(ipa)) {
+      const parts = ipa.split(regex);
+      return (
+        <>
+          {parts.map((part, i) => {
+            if (i % 2 === 1) {
+              return (
+                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
+                  {part}
+                </span>
+              );
+            }
+            return <React.Fragment key={i}>{part}</React.Fragment>;
+          })}
+        </>
+      );
+    }
+    return ipa;
+  };
+
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
   const playSessionRef = useRef(0);
@@ -405,6 +726,7 @@ const SymbolDetailPage: React.FC = () => {
         playNextTimeoutRef.current = null;
       }
       setIsPlayingAll(false);
+      setIsPlayingAllBritishNotes(false);
       setActiveWord(null);
       setActiveWordIndex(null);
       stopSpeech();
@@ -429,6 +751,7 @@ const SymbolDetailPage: React.FC = () => {
     }
     stopSpeech();
     setIsPlayingAll(false);
+    setIsPlayingAllBritishNotes(false);
     setActiveWord(null);
     setActiveWordIndex(null);
   };
@@ -473,6 +796,50 @@ const SymbolDetailPage: React.FC = () => {
 
       if (currentSession === playSessionRef.current) {
         setIsPlayingAll(false);
+        setActiveWord(null);
+        setActiveWordIndex(null);
+      }
+    })();
+  };
+
+  const handlePlayAllBritishNotes = () => {
+    if (!isSpeechSynthesisSupported() || !britishNote || britishNote.items.length === 0) return;
+
+    if (isPlayingAllBritishNotes) {
+      stopPlayAllWords();
+      return;
+    }
+
+    stopPlayAllWords();
+    const currentSession = playSessionRef.current;
+    setIsPlayingAllBritishNotes(true);
+
+    void (async () => {
+      for (let currentIndex = 0; currentIndex < britishNote.items.length; currentIndex++) {
+        if (currentSession !== playSessionRef.current) return;
+
+        const item = britishNote.items[currentIndex];
+        setActiveWord(item.word);
+        setActiveWordIndex(null);
+
+        // Play BrE
+        await speakWithBritishSymbolDetailVoice(item.word);
+        
+        if (currentSession !== playSessionRef.current) return;
+        await new Promise((resolve) => window.setTimeout(resolve, 400));
+        
+        if (currentSession !== playSessionRef.current) return;
+        // Play AmE
+        await speakWithSymbolDetailVoice(item.word);
+
+        if (currentSession !== playSessionRef.current) return;
+        if (currentIndex < britishNote.items.length - 1) {
+          await new Promise((resolve) => window.setTimeout(resolve, 800));
+        }
+      }
+
+      if (currentSession === playSessionRef.current) {
+        setIsPlayingAllBritishNotes(false);
         setActiveWord(null);
         setActiveWordIndex(null);
       }
@@ -710,7 +1077,7 @@ const SymbolDetailPage: React.FC = () => {
 
                 <div className="z-10 text-center">
                     <p className="font-mono text-purple-400/60 text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">TARGET_PHONEME</p>
-                    <h2 className="text-6xl md:text-8xl font-display font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}>
+                    <h2 className="text-6xl md:text-8xl font-ipa font-bold drop-shadow-[0_0_10px_rgba(0,243,255,0.8)]" data-ipa>
                         /{decodedSymbol}/
                     </h2>
                     <div className="mt-2 px-2 py-0.5 md:px-3 md:py-1 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[10px] md:text-xs">
@@ -831,12 +1198,22 @@ const SymbolDetailPage: React.FC = () => {
                     }`}></div>
 
                     <div className="flex flex-col items-center justify-center h-full z-10 relative px-1">
-                      <span className={`font-sans font-bold text-base md:text-lg tracking-wide transition-colors truncate w-full text-center ${isActive ? 'text-purple-400' : 'text-white group-hover:text-purple-400'}`}>
-                        {example.word}
+                      <span className="word-text font-sans font-bold text-base md:text-lg tracking-wide text-white transition-colors truncate w-full text-center">
+                        {renderWord(example.word)}
                       </span>
-                      <span className={`text-[10px] md:text-xs font-mono mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'text-white/80' : 'text-purple-400/60'}`} style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}>
-                        [{example.ipa}]
-                      </span>
+                      {showIpa && (
+                        <span className={`word-ipa text-cyan-300 text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'opacity-90' : 'opacity-60'}`} data-ipa>
+                          {example.britishIpa ? (
+                            <>
+                              <span className="text-cyan-300/80">BrE {renderIpa(example.britishIpa, true)}</span>
+                              {' '}&rarr;{' '}
+                              <span className="text-cyan-300 font-bold">AmE {renderIpa(example.americanIpa || example.ipa, true)}</span>
+                            </>
+                          ) : (
+                            <>[{renderIpa(example.americanIpa || example.ipa)}]</>
+                          )}
+                        </span>
+                      )}
                     </div>
                   </button>
                 );
@@ -846,21 +1223,41 @@ const SymbolDetailPage: React.FC = () => {
         </div>
 
         {britishNote && (
-          <div className="w-full max-w-4xl mx-auto mt-2 mb-2">
+          <div id="britishNote" className="w-full max-w-4xl mx-auto mt-2 mb-2">
             <div className="bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]">
-              <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30">
+              <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
                 <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
+                <button
+                  onClick={handlePlayAllBritishNotes}
+                  className="inline-flex items-center gap-1 rounded border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[10px] md:text-xs font-mono text-amber-300 hover:bg-amber-400/20 transition-colors"
+                >
+                  {isPlayingAllBritishNotes ? (
+                    <>
+                      <Pause size={12} />
+                      <span>Stop All</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play size={12} />
+                      <span>Play All</span>
+                    </>
+                  )}
+                </button>
               </div>
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
                 <div className="space-y-2">
-                  {britishNote.items.map((item) => (
-                    <div key={item.word} className="rounded-md border border-amber-300/20 bg-amber-400/5 px-3 py-2">
-                      <div className="font-semibold text-amber-200">{item.word}</div>
-                      <div className="text-gray-300">
-                        BrE <span className="font-mono text-amber-200">{item.britishIpa}</span>
-                        {' '}&rarr; AmE <span className="font-mono text-cyan-300">{item.americanIpa}</span>
-                      </div>
+                  {britishNote.items.map((item) => {
+                    const isItemActive = activeWord === item.word;
+                    return (
+                    <div key={item.word} className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}>
+                      <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
+                      {showBritishNoteIpa && (
+                        <div className="text-cyan-300/60 font-mono text-xs">
+                          BrE <span className="text-cyan-300/80 font-medium">{renderIpa(item.britishIpa, true)}</span>
+                          {' '}&rarr; AmE <span className="text-cyan-300 font-bold">{renderIpa(item.americanIpa, true)}</span>
+                        </div>
+                      )}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
                           onClick={() => handlePlayBritishNoteWord(item.word)}
@@ -880,7 +1277,7 @@ const SymbolDetailPage: React.FC = () => {
                         </button>
                       </div>
                     </div>
-                  ))}
+                  )})}
                 </div>
               </div>
             </div>
@@ -1161,7 +1558,7 @@ const SymbolDetailPage: React.FC = () => {
                                 ? 'border-purple-300 bg-purple-800/35 text-white cursor-default'
                                 : 'border-purple-500/35 bg-black/45 text-purple-200 hover:bg-purple-900/30 hover:border-purple-400'
                             }`}
-                            style={{ fontFamily: 'Lucida Sans Unicode, Arial Unicode MS, Times New Roman, serif' }}
+                            data-ipa
                           >
                             {item}
                           </button>
@@ -1178,6 +1575,59 @@ const SymbolDetailPage: React.FC = () => {
       </main>
 
       {/* Floating Control Button */}
+      
+      <ControlCenter>
+        <div className="flex flex-col gap-6">
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <PlayStopButton
+              isActive={isPlayingAll}
+              label="WORDS"
+              onClick={handlePlayAllWords}
+              disabled={symbolLoading || symbolData.examples.length === 0}
+              className="mb-2 sm:mb-3"
+            />
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
+            <IpaVisibilityToggle
+              checked={showHighlight}
+              onChange={setShowHighlight}
+              className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+              label="Highlight Letters"
+              activeClass="text-orange-200"
+              activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+              activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+            />
+          </div>
+          {britishNote && (
+            <div>
+              <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-amber-400/80 block mb-1.5 sm:mb-2 uppercase">Catatan (UK vs US)</span>
+              <PlayStopButton
+                isActive={isPlayingAllBritishNotes}
+                label="BRITISH NOTES"
+                sectionId="britishNote"
+                onClick={handlePlayAllBritishNotes}
+                disabled={!britishNote || britishNote.items.length === 0}
+                className="mb-2 sm:mb-3"
+              />
+              <IpaVisibilityToggle
+                checked={showBritishNoteIpa}
+                onChange={setShowBritishNoteIpa}
+                className="w-full flex justify-between text-[10px] sm:text-xs mb-2"
+                label="IPA"
+              />
+              <IpaVisibilityToggle
+                checked={showBritishNoteHighlight}
+                onChange={setShowBritishNoteHighlight}
+                className="w-full flex justify-between text-[10px] sm:text-xs"
+                label="Highlight Letters"
+                activeClass="text-orange-200"
+                activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+                activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+              />
+            </div>
+          )}
+        </div>
+      </ControlCenter>
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
 
 

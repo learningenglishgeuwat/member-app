@@ -14,22 +14,24 @@ const SKILL_TYPE_BY_PATH_PREFIX: Array<{ prefix: string; skillType: string }> = 
 ]
 
 const DEFAULT_PAGE_BG = '#000000'
-const DASHBOARD_PAGE_BG = 'rgb(15 23 42)' // slate-900
-const SKILL_MENU_BG = 'rgb(2 6 23)' // slate-950
+const DASHBOARD_PAGE_BG = '#000000'
+const DASHBOARD_PATH = '/dashboard'
+const SKILL_MENU_BG = '#000000'
+const SKILL_GAME_LINKS_PATH = '/skill/game-links'
 
 function buildPronunPageBg(glow1: string, glow2: string, base: string) {
   return `radial-gradient(900px 420px at 10% -12%, ${glow1}, transparent 55%), radial-gradient(860px 420px at 92% 112%, ${glow2}, transparent 57%), ${base}`
 }
 
-const PRONUN_PAGE_BG_DEFAULT = buildPronunPageBg('rgba(168, 85, 247, 0.26)', 'rgba(217, 70, 239, 0.18)', '#0a0a0a')
-const PRONUN_PAGE_BG_ALPHABET = buildPronunPageBg('rgba(59, 130, 246, 0.26)', 'rgba(6, 182, 212, 0.18)', '#050b19')
-const PRONUN_PAGE_BG_STRESSING = buildPronunPageBg('rgba(250, 204, 21, 0.26)', 'rgba(249, 115, 22, 0.18)', '#120a06')
-const PRONUN_PAGE_BG_INTONATION = buildPronunPageBg('rgba(236, 72, 153, 0.24)', 'rgba(225, 29, 72, 0.18)', '#1a0612')
-const PRONUN_PAGE_BG_FINAL_SOUND = buildPronunPageBg('rgba(34, 211, 238, 0.26)', 'rgba(8, 145, 178, 0.18)', '#031116')
-const PRONUN_PAGE_BG_AMERICAN_T = buildPronunPageBg('rgba(11, 74, 166, 0.22)', 'rgba(0, 40, 104, 0.2)', '#020b1e')
-const PRONUN_PAGE_BG_TEXT = buildPronunPageBg('rgba(52, 211, 153, 0.22)', 'rgba(22, 163, 74, 0.18)', '#04140a')
-const PRONUN_PAGE_BG_READING_TEXT = buildPronunPageBg('rgba(129, 140, 248, 0.26)', 'rgba(124, 58, 237, 0.18)', '#080a18')
-const PRONUN_PAGE_BG_PORTAL = '#0a0a0a'
+const PRONUN_PAGE_BG_DEFAULT = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_ALPHABET = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_STRESSING = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_INTONATION = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_FINAL_SOUND = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_AMERICAN_T = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_TEXT = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_READING_TEXT = DEFAULT_PAGE_BG
+const PRONUN_PAGE_BG_PORTAL = DEFAULT_PAGE_BG
 
 function resolvePronunBgFromPathname(pathname: string) {
   if (pathname.startsWith('/skill/pronunciation/phoneticSymbols')) return PRONUN_PAGE_BG_PORTAL
@@ -42,12 +44,9 @@ function resolvePronunBgFromPathname(pathname: string) {
   if (pathname.startsWith('/skill/pronunciation/reading-text')) return PRONUN_PAGE_BG_READING_TEXT
   return PRONUN_PAGE_BG_DEFAULT
 }
-const VOCAB_PAGE_BG =
-  'radial-gradient(circle at 14% 10%, rgba(57, 255, 20, 0.18), transparent 42%), radial-gradient(circle at 84% 8%, rgba(0, 204, 102, 0.16), transparent 40%), radial-gradient(circle at 50% 100%, rgba(24, 95, 53, 0.24), transparent 55%), #06110b'
-const GRAMMAR_PAGE_BG =
-  'radial-gradient(900px 500px at 10% -20%, rgba(34, 211, 238, 0.12), transparent 60%), radial-gradient(900px 500px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%), #020617'
-const SPEAKING_PAGE_BG =
-  'radial-gradient(circle at 15% 12%, rgba(255, 0, 186, 0.14), transparent 46%), radial-gradient(circle at 88% 8%, rgba(244, 114, 182, 0.12), transparent 42%), #08101f'
+const VOCAB_PAGE_BG = DEFAULT_PAGE_BG
+const GRAMMAR_PAGE_BG = DEFAULT_PAGE_BG
+const SPEAKING_PAGE_BG = DEFAULT_PAGE_BG
 
 const ACCENT_HEX_BY_SKILL_TYPE: Record<string, string> = {
   P: '#bc13fe', // purple
@@ -99,7 +98,7 @@ function applyPageSurface(bg: string, fg?: string) {
 }
 
 function buildSkillBackground(rgbTuple: string) {
-  return `radial-gradient(900px 420px at 10% -12%, rgba(${rgbTuple},0.22), transparent 55%), radial-gradient(860px 420px at 92% 112%, rgba(${rgbTuple},0.14), transparent 57%), ${SKILL_MENU_BG}`
+  return SKILL_MENU_BG
 }
 
 export default function SkillThemeSync() {
@@ -107,6 +106,20 @@ export default function SkillThemeSync() {
 
   useEffect(() => {
     if (typeof window === 'undefined' || !pathname) return
+
+    if (pathname === DASHBOARD_PATH || pathname.startsWith(`${DASHBOARD_PATH}/`)) {
+      const rgbTuple = hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
+      applyNavAccent(rgbTuple)
+      applyPageSurface(DASHBOARD_PAGE_BG)
+      return
+    }
+
+    if (pathname === SKILL_GAME_LINKS_PATH || pathname === `${SKILL_GAME_LINKS_PATH}/`) {
+      const rgbTuple = hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
+      applyNavAccent(rgbTuple)
+      applyPageSurface(buildSkillBackground(rgbTuple))
+      return
+    }
 
     const skillTypeFromPath = resolveSkillTypeFromPathname(pathname)
     const skillTypeFromStorage = (() => {
@@ -122,11 +135,6 @@ export default function SkillThemeSync() {
     const rgbTuple = hexToRgbTuple(hex) ?? hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
 
     applyNavAccent(rgbTuple)
-
-    if (pathname === '/dashboard' || pathname.startsWith('/dashboard/')) {
-      applyPageSurface(DASHBOARD_PAGE_BG)
-      return
-    }
 
     if (pathname === '/skill' || pathname === '/skill/') {
       applyPageSurface(SKILL_MENU_BG)

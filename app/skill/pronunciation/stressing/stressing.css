@@ -3,6 +3,7 @@
   color: var(--pronun-text, #f1e9ff);
   background: var(--pronun-page-bg);
   padding: 1.5rem;
+  font-family: var(--font-ui);
 }
 
 .stress-page .stress-recording-anchor {
@@ -24,14 +25,17 @@
 }
 
 .stress-title {
-  font-size: 2rem;
-  line-height: 1.15;
-  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 .stress-subtitle {
   margin-top: 0.5rem;
   color: var(--pronun-muted, #d8c8f8);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .stress-progress-actions {
@@ -51,9 +55,11 @@
 }
 
 .stress-block-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.125rem;
+  font-family: inherit;
+  font-weight: 500;
   color: var(--pronun-text, #e9d5ff);
+  line-height: 1.2;
 }
 
 .stress-section-toggle {
@@ -114,7 +120,8 @@
 .stress-text {
   margin-top: 0.55rem;
   color: var(--pronun-muted, #e9defe);
-  line-height: 1.55;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .stress-grid {
@@ -155,10 +162,11 @@
 }
 
 .stress-word {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--pronun-text, #e9d5ff);
   letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
 .stress-example-chip {
@@ -188,34 +196,49 @@
 }
 
 .stress-example-chip .stress-inline-highlight {
-  background: rgb(var(--pronun-accent-1-rgb) / 0.22);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6);
+  background: none;
 }
 
 .stress-inline-highlight {
-  background: rgb(var(--pronun-accent-2-rgb) / 0.28);
-  border-radius: 0.3rem;
-  padding: 0 0.12rem;
-  color: var(--pronun-text, #fff7ff);
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6);
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.stress-highlight-off .stress-inline-highlight,
+.stress-highlight-off .stress-example-chip .stress-inline-highlight,
+.stress-highlight-off .stress-token-strong {
+  color: inherit;
+  font-weight: inherit;
+  text-shadow: none;
 }
 
 .stress-ipa {
   margin-top: 0.2rem;
-  color: var(--pronun-muted, #c4b5fd);
-  font-size: 0.84rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  color: var(--color-ipa);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-family: var(--font-ipa);
 }
 
 .stress-card-type {
   margin-top: 0.35rem;
   color: var(--pronun-muted, #c4b5fd);
-  font-size: 0.86rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
 .stress-card-note {
   margin-top: 0.35rem;
   color: var(--pronun-muted, #d8c8f8);
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .stress-syllable-meta {
@@ -250,7 +273,8 @@
 
 .stress-sentence {
   color: var(--pronun-text, #f4edff);
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .stress-token {
@@ -261,12 +285,13 @@
 }
 
 .stress-token-strong {
-  color: #fff7ff;
-  background: rgb(var(--pronun-accent-2-rgb) / 0.22);
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.55);
-  border-radius: 0.35rem;
-  padding: 0.02rem 0.28rem;
-  font-weight: 700;
+  color: #fb923c;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6);
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .stress-token-weak {
@@ -276,7 +301,8 @@
 .stress-note {
   margin-top: 0.3rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  line-height: 1.45;
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
 .stress-list-item .stress-sentence {
@@ -352,6 +378,7 @@
   border-radius: 0.62rem;
   padding: 0.28rem 0.68rem;
   background: rgb(var(--pronun-panel-rgb) / 0.86);
+  font-family: inherit;
   font-size: 0.79rem;
   font-weight: 700;
   line-height: 1.25;
@@ -470,6 +497,7 @@
 .stress-bullets {
   margin-top: 0.7rem;
   padding-left: 1rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
 }
@@ -504,13 +532,16 @@
 
 .stress-bank-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
   margin-bottom: 0.45rem;
 }
 
 .stress-bank-list {
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  line-height: 1.55;
+  font-size: 0.875rem;
+  line-height: 1.6;
   padding-left: 1rem;
 }
 
@@ -552,24 +583,30 @@
 
 .stress-mark-label {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .stress-mark-note {
   margin-top: 0.2rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .stress-rule-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .stress-rule-note {
   margin-top: 0.3rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .stress-rule-examples {
@@ -657,8 +694,9 @@
 
 .stress-prompt-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .stress-prompt-copy-btn {
@@ -669,8 +707,8 @@
   border-radius: 999px;
   background: rgb(var(--pronun-accent-2-rgb) / 0.16);
   color: #f5e9ff;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 500;
   line-height: 1;
   padding: 0.35rem 0.62rem;
   transition: border-color 0.2s ease, transform 0.2s ease;
@@ -691,8 +729,8 @@
 .stress-prompt-quote {
   margin-top: 0.6rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  line-height: 1.55;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 @media (min-width: 768px) {
@@ -701,7 +739,83 @@
   }
 
   .stress-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+
+  .stress-subtitle {
+    font-size: 1rem;
+  }
+
+  .stress-block-title {
+    font-size: 1.25rem;
+  }
+
+  .stress-text {
+    font-size: 1rem;
+  }
+
+  .stress-word {
+    font-size: 1.125rem;
+  }
+
+  .stress-ipa {
+    font-size: 0.875rem;
+  }
+
+  .stress-card-type {
+    font-size: 0.875rem;
+  }
+
+  .stress-card-note {
+    font-size: 1rem;
+  }
+
+  .stress-sentence {
+    font-size: 1rem;
+  }
+
+  .stress-note {
+    font-size: 0.875rem;
+  }
+
+  .stress-bullets {
+    font-size: 1rem;
+  }
+
+  .stress-bank-title {
+    font-size: 1.125rem;
+  }
+
+  .stress-bank-list {
+    font-size: 1rem;
+  }
+
+  .stress-mark-label {
+    font-size: 1.125rem;
+  }
+
+  .stress-mark-note {
+    font-size: 1rem;
+  }
+
+  .stress-rule-title {
+    font-size: 1.125rem;
+  }
+
+  .stress-rule-note {
+    font-size: 1rem;
+  }
+
+  .stress-prompt-title {
+    font-size: 1.125rem;
+  }
+
+  .stress-prompt-copy-btn {
+    font-size: 0.875rem;
+  }
+
+  .stress-prompt-quote {
+    font-size: 1rem;
   }
 
   .stress-grid,

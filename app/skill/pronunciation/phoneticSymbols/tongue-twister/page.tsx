@@ -1,9 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode } from 'react';
 import BackButton from '../../../components/BackButton';
+import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
+import { Highlight } from '../../reading-text/tongueTwister/components/Highlight';
 import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
@@ -12,6 +15,8 @@ export default function TongueTwisterPage() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [focusDropdownOpen, setFocusDropdownOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const speakSessionRef = useRef(0);
@@ -171,6 +176,40 @@ export default function TongueTwisterPage() {
     [handleStopSpeak, selectedFocus],
   );
 
+  // Extract IPA symbols from focus string for highlighting
+  const focusIPASymbols = useMemo(() => {
+    if (!activeTwister.focus) return [];
+    const matches = activeTwister.focus.match(/\/[^\/]+\//g);
+    return matches || [];
+  }, [activeTwister.focus]);
+
+  // Helper function to highlight IPA symbols
+  const highlightIPA = useCallback((ipaLine: string): ReactNode => {
+    if (!showHighlight || focusIPASymbols.length === 0) {
+      return ipaLine;
+    }
+
+    const ipaChars = focusIPASymbols.map(s => s.replace(/\//g, ''));
+    const ipaRegex = new RegExp(`(${ipaChars.join('|')})`, 'g');
+
+    const ipaParts: ReactNode[] = [];
+    const ipaSegments = ipaLine.split(ipaRegex);
+
+    ipaSegments.forEach((segment, i) => {
+      if (!segment) return;
+
+      const isMatch = ipaChars.some(char => segment === char);
+
+      if (isMatch) {
+        ipaParts.push(<Highlight key={`ipa-${i}`}>{segment}</Highlight>);
+      } else {
+        ipaParts.push(segment);
+      }
+    });
+
+    return <>{ipaParts}</>;
+  }, [showHighlight, focusIPASymbols]);
+
   return (
     <main className="tt-page">
       <div className="tt-back">
@@ -273,19 +312,7 @@ export default function TongueTwisterPage() {
             <span className="tt-pill">Level: {activeTwister.level}</span>
             <span className="tt-pill">Focus: {activeTwister.focus}</span>
           </div>
-          <div className="tt-tts-actions">
-            <button
-              type="button"
-              className="tt-tts-toggle"
-              onClick={isSpeaking ? handleStopSpeak : handleSpeakTwister}
-              aria-label={isSpeaking ? 'Stop TTS' : 'Play TTS'}
-              title={isSpeaking ? 'Stop TTS' : 'Play TTS'}
-            >
-              <span className="tt-tts-icon" aria-hidden="true">
-                {isSpeaking ? '■' : '▶'}
-              </span>
-            </button>
-          </div>
+          
           <div className="tt-card-text">
             {twisterLines.map((line, index) => (
               <p key={`${activeTwister.id}-${index}`} className="tt-line">
@@ -298,8 +325,12 @@ export default function TongueTwisterPage() {
               <p className="tt-ipa-label">IPA</p>
               <ul className="tt-ipa-list">
                 {activeTwister.ipaLines.map((line, index) => (
-                  <li key={`${activeTwister.id}-ipa-${index}`} className="tt-ipa-item">
-                    {line}
+                  <li
+                    key={`${activeTwister.id}-ipa-${index}`}
+                    className="tt-ipa-item font-ipa"
+                    data-ipa
+                  >
+                    {highlightIPA(line)}
                   </li>
                 ))}
               </ul>
@@ -307,7 +338,9 @@ export default function TongueTwisterPage() {
           ) : (
             <div className="tt-ipa-box">
               <p className="tt-ipa-label">IPA</p>
-              <p className="tt-ipa-text">IPA per kalimat belum tersedia untuk item ini.</p>
+              <p className="tt-ipa-text font-ipa" data-ipa>
+                IPA per kalimat belum tersedia untuk item ini.
+              </p>
             </div>
           )}
         </article>
@@ -331,6 +364,35 @@ export default function TongueTwisterPage() {
           </ul>
         </article>
       </section>
+
+      <ControlCenter>
+        <div className="flex flex-col gap-3">
+          <PlayStopButton
+            isActive={isSpeaking}
+            label="PLAY"
+            onClick={handleSpeakTwister}
+            size="sm"
+          />
+          <IpaVisibilityToggle
+            checked={showIpa}
+            onChange={setShowIpa}
+            label="Show IPA"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
+          />
+          <IpaVisibilityToggle
+            checked={showHighlight}
+            onChange={setShowHighlight}
+            label="Common Letters"
+            activeClass="text-orange-200"
+            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+            className="w-full flex justify-between text-[10px] sm:text-xs"
+          />
+        </div>
+      </ControlCenter>
     </main>
   );
 }

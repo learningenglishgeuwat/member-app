@@ -334,7 +334,7 @@ const NotificationContent: React.FC = () => {
           <select
             id="notification-sort-order"
             name="notificationSortOrder"
-            className="bg-slate-900/70 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+            className="bg-black/70 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
           >
@@ -346,15 +346,15 @@ const NotificationContent: React.FC = () => {
 
       {/* Notification Stats */}
       <div className="grid grid-cols-3 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
-        <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
+        <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
           <div className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">{totalCount}</div>
           <div className="text-xs sm:text-sm text-slate-400">Total Notifications</div>
         </div>
-        <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
+        <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
           <div className="text-2xl sm:text-3xl font-bold text-blue-400 mb-1 sm:mb-2">{unreadCount}</div>
           <div className="text-xs sm:text-sm text-slate-400">Unread</div>
         </div>
-        <div className="bg-slate-900/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
+        <div className="bg-black/50 border border-purple-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm text-center">
           <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1 sm:mb-2">{readCount}</div>
           <div className="text-xs sm:text-sm text-slate-400">Read</div>
         </div>
@@ -363,17 +363,17 @@ const NotificationContent: React.FC = () => {
       {/* Notification List */}
       <div className="space-y-3 sm:space-y-4">
         {loading && (
-          <div className="bg-slate-900/50 border border-slate-800 p-4 sm:p-6 rounded-xl text-slate-400 text-sm">
+          <div className="bg-black/50 border border-slate-800 p-4 sm:p-6 rounded-xl text-slate-400 text-sm">
             Memuat notifikasi...
           </div>
         )}
         {!loading && error && (
-          <div className="bg-slate-900/50 border border-red-500/30 p-4 sm:p-6 rounded-xl text-red-400 text-sm">
+          <div className="bg-black/50 border border-red-500/30 p-4 sm:p-6 rounded-xl text-red-400 text-sm">
             {error}
           </div>
         )}
         {!loading && !error && mergedFeedNewest.length === 0 && (
-          <div className="bg-slate-900/50 border border-slate-800 p-4 sm:p-6 rounded-xl text-slate-400 text-sm">
+          <div className="bg-black/50 border border-slate-800 p-4 sm:p-6 rounded-xl text-slate-400 text-sm">
             Belum ada notifikasi.
           </div>
         )}
@@ -392,7 +392,7 @@ const NotificationContent: React.FC = () => {
               <div
                 key={item.id}
                 className={`
-                  relative bg-slate-900/50 border p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm transition-all duration-300
+                  relative bg-black/50 border p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm transition-all duration-300
                   ${isRead ? `${getNotificationBorder(type)} opacity-75` : `${getNotificationBorder(type)}`}
                 `}
               >

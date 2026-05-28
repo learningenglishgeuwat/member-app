@@ -1,0 +1,58 @@
+{
+  "route": "/skill/pronunciation/linking-word",
+  "label": "Linking Word",
+  "scope": "pronunciation",
+  "keywords": [
+    "linking word",
+    "linking words",
+    "liaison",
+    "gemination",
+    "intrusion",
+    "assimilation"
+  ],
+  "qa": [
+    {
+      "topicId": "pronunciation-linking-basics",
+      "title": "Linking Word Basics",
+      "route": "/skill/pronunciation/linking-word",
+      "keywords": [
+        "apa itu linking word",
+        "jelaskan linking word",
+        "menghubungkan kata english",
+        "cara bicara menyambung"
+      ],
+      "shortAnswer": "Linking Word (connected speech) adalah teknik menyambungkan suara akhir suatu kata dengan suara awal kata berikutnya agar kalimat terdengar mulus, mengalir, dan tidak terputus-putus seperti robot.",
+      "sourceSections": [
+        {
+          "label": "Liaison / Resyllabification"
+        }
+      ]
+    },
+    {
+      "topicId": "pronunciation-linking-categories",
+      "title": "Linking Word Categories",
+      "route": "/skill/pronunciation/linking-word",
+      "keywords": [
+        "kategori linking",
+        "jenis linking word",
+        "apa itu liaison gemination intrusion",
+        "liaison gemination intrusion assimilation"
+      ],
+      "shortAnswer": "Terdapat 4 kategori utama linking word: 1) Liaison (konsonan ke vokal seperti 'come on'), 2) Gemination (konsonan kembar seperti 'bus stop'), 3) Intrusion (penyisipan suara /y/ atau /w/ seperti 'I am', 'do it'), dan 4) Assimilation (peleburan suara konsonan dengan /j/ seperti 'could you').",
+      "sourceSections": [
+        {
+          "label": "Liaison / Resyllabification"
+        },
+        {
+          "label": "Gemination / Twin Consonants"
+        },
+        {
+          "label": "Intrusion / Glide Insertion"
+        },
+        {
+          "label": "Coalescent Assimilation / Palatalization"
+        }
+      ]
+    }
+  ]
+}

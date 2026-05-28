@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation'
 import { signIn } from '@/lib/auth'
 import { supabaseLoose } from '@/lib/supabase'
 import { getDeviceId } from '@/lib/device'
+import { NOTIFICATIONS_VIEW_ID, saveDashboardView } from '@/app/dashboard/dashboardView'
 import { FormBackground } from './ui/FormBackground'
 import { LoginHeader } from './ui/LoginHeader'
 import { GearInputRow } from './form/GearInputRow'
 import { LoginButton } from './form/LoginButton'
 import { LoginErrorPopup } from './form/LoginErrorPopup'
+import { useHaptic } from '@/lib/haptic/useHaptic'
 
 interface LoginFormProps {
   onLogin?: () => void
@@ -17,6 +19,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const router = useRouter()
+  const { triggerHaptic } = useHaptic()
   
   const [isLoading, setIsLoading] = React.useState(false)
   const [formData, setFormData] = React.useState({
@@ -63,6 +66,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     if (e) e.preventDefault()
 
     if (!isFullyActive) {
+      triggerHaptic('error')
       setErrorMessage('Please activate both security gears first!')
       setShowErrorPopup(true)
       return
@@ -76,6 +80,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       
       if (!result.success) {
         console.error('❌ Supabase auth error:', result.error)
+        triggerHaptic('error')
         const isInvalidCredentials = result.error === 'Invalid login credentials'
         const baseMessage = isInvalidCredentials
           ? 'Email atau kata sandi salah.'
@@ -129,11 +134,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       }
 
       console.log('✅ Login successful')
+      triggerHaptic('success')
       onLogin?.()
+      saveDashboardView(NOTIFICATIONS_VIEW_ID)
       router.push('/dashboard')
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Terjadi kesalahan saat masuk.'
       console.error('❌ Unexpected login error:', err)
+      triggerHaptic('error')
       setErrorMessage(message)
       setShowErrorPopup(true)
     } finally {

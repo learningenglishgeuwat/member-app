@@ -17,7 +17,7 @@ const VocabularyGuideModal: React.FC<VocabularyGuideModalProps> = ({ isOpen, onC
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[90vw] sm:max-w-2xl bg-slate-950 border border-green-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(57,255,20,0.2)]"
+        className="w-full max-w-[90vw] sm:max-w-2xl bg-black border border-green-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(57,255,20,0.2)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 mb-4">
@@ -40,7 +40,7 @@ const VocabularyGuideModal: React.FC<VocabularyGuideModalProps> = ({ isOpen, onC
         </div>
 
         <div className="space-y-3 sm:space-y-4 text-slate-200 text-xs sm:text-sm">
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Yang ada di menu Vocabulary:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Search topic untuk cari topik lebih cepat</div>
@@ -50,7 +50,7 @@ const VocabularyGuideModal: React.FC<VocabularyGuideModalProps> = ({ isOpen, onC
             </div>
           </div>
 
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Cara belajar yang disarankan:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Pilih satu topik (contoh: Color, Family, Daily Routines)</div>
@@ -61,7 +61,7 @@ const VocabularyGuideModal: React.FC<VocabularyGuideModalProps> = ({ isOpen, onC
             </div>
           </div>
 
-          <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
+          <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
             <div className="font-semibold text-white mb-2">Tips cepat:</div>
             <div className="space-y-2 text-slate-300">
               <div>1. Fokus 1 topik per sesi supaya retention lebih kuat</div>

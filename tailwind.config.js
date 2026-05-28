@@ -8,30 +8,27 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+        sans: ['var(--font-ui)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-tech)', 'monospace'],
+        ipa: ['var(--font-ipa)', 'sans-serif'], // ← BARU
         futuristic: [
-          'Segoe UI',
-          'Roboto',
-          '-apple-system',
-          'BlinkMacSystemFont',
+          'var(--font-display)',
+          'system-ui',
           'sans-serif',
         ],
         tech: [
-          'IBM Plex Mono',
-          'Courier New',
+          'var(--font-tech)',
           'monospace',
         ],
         modern: [
-          'Inter',
-          'Helvetica Neue',
-          'Arial',
+          'var(--font-ui)',
+          'system-ui',
           'sans-serif',
         ],
         geometric: [
-          'Trebuchet MS',
-          'Lucida Grande',
+          'var(--font-display)',
+          'system-ui',
           'sans-serif',
         ],
       },
