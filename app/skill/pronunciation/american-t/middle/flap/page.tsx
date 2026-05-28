@@ -7,6 +7,8 @@ import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import {
   renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
+  renderSentenceWithHighlights,
+  renderAmericanTIpaSymbolHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
@@ -57,36 +59,6 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
-
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
-    }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
-  });
-}
 
 function formatIpaForDisplay(ipa: string): string {
   const trimmed = ipa.trim();
@@ -484,7 +456,7 @@ export default function FlapTPage() {
           content: (
             <div className="at-word-chip-wrap">
               <div className="mb-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
-                <span className="font-mono text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T Examples</span>
+                <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T Examples</span>
                 <button
                   onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
                   className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
@@ -561,7 +533,7 @@ export default function FlapTPage() {
                 </p>
               </div>
               <div className="mb-4 mt-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
-                <span className="font-mono text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T (List of Examples)</span>
+                <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T (List of Examples)</span>
                 <button
                   onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
                   className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
@@ -676,7 +648,9 @@ export default function FlapTPage() {
                       </button>
                     </div>
                     {showIpaBySection.sentences ? (
-                      <p className="at-ipa">{formatFlapIpaForLearner(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderFlapIpaForLearnerHighlight(item.ipa)}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -717,7 +691,9 @@ export default function FlapTPage() {
                     </button>
                   </div>
                   {showIpaBySection['sentence-drills-examples'] ? (
-                    <p className="at-ipa">{formatFlapIpaForLearner(item.ipa)}</p>
+                    <p className="at-ipa">
+                      {renderFlapIpaForLearnerHighlight(item.ipa)}
+                    </p>
                   ) : null}
                 </article>
               ))}
@@ -798,7 +774,7 @@ export default function FlapTPage() {
       <ControlCenter>
         <div className="flex flex-col gap-6">
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
             <PlayStopButton
               isActive={isPlayingExamplesAll}
               label="EXAMPLES"
@@ -811,7 +787,7 @@ export default function FlapTPage() {
           </div>
           <hr className="border-white/10" />
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
             <PlayStopButton
               isActive={isPlayingWordBankAll}
               label="50 WORDS"
@@ -824,7 +800,7 @@ export default function FlapTPage() {
           </div>
           <hr className="border-white/10" />
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
             <PlayStopButton
               isActive={isPlayingSentencesAll}
               label="SENTENCES"
@@ -837,7 +813,7 @@ export default function FlapTPage() {
           </div>
           <hr className="border-white/10" />
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
             <PlayStopButton
               isActive={isPlayingSentenceDrillsAll}
               label="DRILLS"

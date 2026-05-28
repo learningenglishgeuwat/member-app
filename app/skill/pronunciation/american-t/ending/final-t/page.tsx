@@ -11,6 +11,8 @@ import {
   renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
   renderSentenceWithFocusHighlight,
+  renderSentenceWithHighlights,
+  renderAmericanTIpaSymbolHighlight,
 } from '../../components/AmericanTHelpers';
 import {
   COMMON_MISTAKES,
@@ -53,37 +55,6 @@ const FINAL_T_DRILL_HIGHLIGHTS: Readonly<Record<string, ReadonlyArray<string>>> 
   'We need to start right now, no delay.': ['right now'],
   'Take a breath, then get ready to speak.': ['get ready'],
 };
-
-function escapeRegex(text: string): string {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
-  if (!focusWords.length) return text;
-
-  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
-  if (!uniqueWords.length) return text;
-
-  const pattern = uniqueWords
-    .sort((a, b) => b.length - a.length)
-    .map((word) => escapeRegex(word))
-    .join('|');
-
-  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
-  const parts = text.split(regex);
-
-  return parts.map((part, index) => {
-    const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
-    if (matched) {
-      return (
-        <mark key={`${text}-match-${index}`} className="at-final-t-highlight">
-          {part}
-        </mark>
-      );
-    }
-    return <span key={`${text}-plain-${index}`}>{part}</span>;
-  });
-}
 
 function formatIpaForDisplay(ipa: string): string {
   const trimmed = ipa.trim();
@@ -577,7 +548,12 @@ export default function FinalTEndingPage() {
                       </button>
                     </div>
                     {showIpaBySection.drills && item.ipa ? (
-                      <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
+                      <p className="at-ipa">
+                        {renderAmericanTIpaSymbolHighlight(
+                          formatIpaForDisplay(item.ipa),
+                          item.ipaHighlightSymbols ?? ['t̚', 'ʔ', 't']
+                        )}
+                      </p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
                   </article>
@@ -658,7 +634,7 @@ export default function FinalTEndingPage() {
       <ControlCenter>
         <div className="flex flex-col gap-6">
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
             <PlayStopButton
               isActive={isPlayingPhraseAll}
               label="PHRASES"
@@ -671,7 +647,7 @@ export default function FinalTEndingPage() {
           </div>
           <hr className="border-white/10" />
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
             <PlayStopButton
               isActive={isPlayingSentenceBankAll}
               label="SENTENCE BANK"
@@ -684,7 +660,7 @@ export default function FinalTEndingPage() {
           </div>
           <hr className="border-white/10" />
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
             <PlayStopButton
               isActive={isPlayingDrillsAll}
               label="DRILLS"

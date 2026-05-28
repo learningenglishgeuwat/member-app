@@ -1,10 +1,11 @@
-﻿import type { WordExample } from '../types';
+import type { WordExample } from '../types';
 
 type SentenceDrillItem = {
   text: string;
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<string>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type SentenceDrillExample = {
@@ -12,6 +13,7 @@ type SentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<string>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const FLAP_T_EXAMPLES: ReadonlyArray<WordExample> = [

@@ -961,7 +961,6 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
       : DEFAULT_SUGGESTION_PROMPTS;
   const hasInteractiveActions = !isThinking && activeResult.actions.length > 0;
   const hasInteractiveSources = !isThinking && Boolean(activeResult.sources?.length);
-  const hasPendingModeChange = pendingMode !== mode;
   const shouldShowSuggestions =
     !isThinking &&
     !activeResult.confirmation &&
@@ -1058,45 +1057,21 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
           }}
         />
       ) : (
-        <aside className="tg-panel" role="dialog" aria-label="Tour Guide Widget">
-          <header className="tg-panel-header">
-            <button
-              type="button"
-              aria-label="Collapse Tour Guide"
-              className={`tg-panel-avatar-button ${isBotActive ? 'is-active' : ''} ${isAvatarNavigating ? 'is-navigating' : ''}`}
-              onClick={() => setCollapsed(true)}
-            >
-              <Image
-                src="/Kepala1.png"
-                alt="Tour Guide"
-                width={40}
-                height={40}
-                className={`tg-avatar-image ${isBotActive ? 'tg-avatar-image--active' : 'tg-avatar-image--idle'}`}
-              />
-            </button>
-            <div className="tg-panel-title-wrap">
-              <h3 className="tg-panel-title">GEUWAT</h3>
-              <p className="tg-panel-subtitle">Mode: {modeTitle}</p>
-            </div>
-            <button
-              type="button"
-              className="tg-hide-button"
-              onClick={() => setCollapsed(true)}
-              aria-label="Hide"
-            >
-              Hide
-            </button>
-          </header>
-
-          <div className="tg-mode-switcher" aria-label="Mode Tour Guide">
-            <label className="tg-mode-select-wrap">
-              <span className="tg-mode-select-label">Mode</span>
+        <div className="tg-widget-wrapper">
+          <div className="tg-mode-outer-container">
+            <div className="tg-mode-outer-circle" title="Pilih Mode Belajar">
+              <span className="tg-mode-outer-text">MODE</span>
               <select
-                id="tg-mode-select"
-                name="tgMode"
-                className="tg-mode-select"
-                value={pendingMode}
-                onChange={(event) => setPendingMode(event.target.value as GuideMode)}
+                id="tg-mode-select-outer"
+                name="tgModeOuter"
+                className="tg-mode-select-outer"
+                value={mode}
+                onChange={(event) => {
+                  const val = event.target.value as GuideMode;
+                  handleModeChange(val);
+                  setPendingMode(val);
+                }}
+                aria-label="Pilih Mode Belajar"
               >
                 {availableModes.map((item) => (
                   <option key={item} value={item}>
@@ -1104,205 +1079,228 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                   </option>
                 ))}
               </select>
-            </label>
-            <button
-              type="button"
-              className={`tg-mode-switch-button ${hasPendingModeChange ? 'is-pending' : ''}`}
-              onClick={() => handleModeChange(pendingMode)}
-              disabled={!hasPendingModeChange}
-            >
-              Switch
-            </button>
+            </div>
           </div>
 
-          {mode === 'flashcard' ? (
-            <div className="tg-flashcard-picker" aria-label="Pilih target flashcard">
-              <label className="tg-flashcard-picker-wrap">
-                <span className="tg-mode-select-label">Flashcard</span>
-                <select
-                  id="tg-flashcard-select"
-                  name="tgFlashcardPath"
-                  className="tg-flashcard-select"
-                  value={selectedFlashcardPath}
-                  onChange={(event) => setSelectedFlashcardPath(event.target.value)}
-                >
-                  {FLASHCARD_QUICK_OPTIONS.map((option) => (
-                    <option key={option.path} value={option.path}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
+          <aside className="tg-panel" role="dialog" aria-label="Tour Guide Widget">
+            <header className="tg-panel-header">
               <button
                 type="button"
-                className="tg-flashcard-open-button"
-                onClick={handleFlashcardDropdownOpen}
+                aria-label="Collapse Tour Guide"
+                className={`tg-panel-avatar-button ${isBotActive ? 'is-active' : ''} ${isAvatarNavigating ? 'is-navigating' : ''}`}
+                onClick={() => setCollapsed(true)}
               >
-                Buka
+                <Image
+                  src="/Kepala1.png"
+                  alt="Tour Guide"
+                  width={40}
+                  height={40}
+                  className={`tg-avatar-image ${isBotActive ? 'tg-avatar-image--active' : 'tg-avatar-image--idle'}`}
+                />
               </button>
-            </div>
-          ) : mode === 'simulation' ? (
-            <div className="tg-flashcard-picker" aria-label="Pilih simulasi">
-              <label className="tg-flashcard-picker-wrap">
-                <span className="tg-mode-select-label">Simulasi</span>
-                <select
-                  id="tg-simulation-select"
-                  name="tgSimulationTopic"
-                  className="tg-flashcard-select"
-                  value={selectedSimulationTopic}
-                  onChange={(event) =>
-                    setSelectedSimulationTopic(event.target.value as GuideSimulationTopic)
-                  }
+              <div className="tg-panel-title-wrap">
+                <h3 className="tg-panel-title">GEUWAT</h3>
+                <p className="tg-panel-subtitle">Mode: {modeTitle}</p>
+              </div>
+              <button
+                type="button"
+                className="tg-hide-button"
+                onClick={() => setCollapsed(true)}
+                aria-label="Hide"
+              >
+                Hide
+              </button>
+            </header>
+
+            {mode === 'flashcard' ? (
+              <div className="tg-flashcard-picker" aria-label="Pilih target flashcard">
+                <label className="tg-flashcard-picker-wrap">
+                  <span className="tg-mode-select-label">Flashcard</span>
+                  <select
+                    id="tg-flashcard-select"
+                    name="tgFlashcardPath"
+                    className="tg-flashcard-select"
+                    value={selectedFlashcardPath}
+                    onChange={(event) => setSelectedFlashcardPath(event.target.value)}
+                  >
+                    {FLASHCARD_QUICK_OPTIONS.map((option) => (
+                      <option key={option.path} value={option.path}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  className="tg-flashcard-open-button"
+                  onClick={handleFlashcardDropdownOpen}
+                >
+                  Buka
+                </button>
+              </div>
+            ) : mode === 'simulation' ? (
+              <div className="tg-flashcard-picker" aria-label="Pilih simulasi">
+                <label className="tg-flashcard-picker-wrap">
+                  <span className="tg-mode-select-label">Simulasi</span>
+                  <select
+                    id="tg-simulation-select"
+                    name="tgSimulationTopic"
+                    className="tg-flashcard-select"
+                    value={selectedSimulationTopic}
+                    onChange={(event) =>
+                      setSelectedSimulationTopic(event.target.value as GuideSimulationTopic)
+                    }
+                    disabled={!SIMULATION_QUICK_OPTIONS.length}
+                  >
+                    {SIMULATION_QUICK_OPTIONS.map((option) => (
+                      <option key={option.topicId} value={option.topicId}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  className="tg-flashcard-open-button"
+                  onClick={handleSimulationDropdownOpen}
                   disabled={!SIMULATION_QUICK_OPTIONS.length}
                 >
-                  {SIMULATION_QUICK_OPTIONS.map((option) => (
-                    <option key={option.topicId} value={option.topicId}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button
-                type="button"
-                className="tg-flashcard-open-button"
-                onClick={handleSimulationDropdownOpen}
-                disabled={!SIMULATION_QUICK_OPTIONS.length}
-              >
-                Buka
-              </button>
-            </div>
-          ) : null}
-
-          <div className={`tg-reply ${isThinking ? 'is-thinking' : ''}`}>{activeReply}</div>
-
-          {activeChips.length ? (
-            <div className="tg-meta-chip-wrap" aria-label="Kategori jawaban bot">
-              <p className="tg-section-label">Kategori jawaban</p>
-              {activeChips.map((chip) => (
-                <span key={chip.key} className={`tg-meta-chip tg-meta-chip--${chip.tone}`}>
-                  {chip.label}
-                </span>
-              ))}
-            </div>
-          ) : null}
-
-          {!isThinking && activeResult.confirmation ? (
-            <div className="tg-confirm-chip-wrap" aria-label="Guide confirmation">
-              <p className="tg-section-label">Konfirmasi</p>
-              <button
-                type="button"
-                className="tg-confirm-chip"
-                onClick={() => void handleConfirmation(true)}
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                className="tg-confirm-chip"
-                onClick={() => void handleConfirmation(false)}
-              >
-                No
-              </button>
-            </div>
-          ) : null}
-
-          {!isThinking && activeResult.clarification ? (
-            <div className="tg-clarify-wrap">
-              <p className="tg-clarify-title">{activeResult.clarification.question}</p>
-              <p className="tg-section-label tg-section-label--inside">Pilih satu opsi</p>
-              <div className="tg-clarify-chip-wrap">
-                {activeResult.clarification.options.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    className="tg-clarify-chip"
-                    onClick={() => handleClarificationOptionClick(option)}
-                  >
-                    {option}
-                  </button>
-                ))}
+                  Buka
+                </button>
               </div>
-            </div>
-          ) : null}
+            ) : null}
 
-          {!isThinking && activeResult.sources?.length ? (
-            <div className="tg-source-list">
-              <p className="tg-source-title">Buka sumber materi:</p>
-              {activeResult.sources.map((source) => (
+            <div className="tg-action-list">
+              {hasInteractiveActions ? <p className="tg-source-title">Aksi cepat:</p> : null}
+              {(isThinking ? [] : activeResult.actions).map((action) => (
                 <button
-                  key={`${source.path}-${source.label}`}
-                  type="button"
-                  className="tg-source-button"
-                  onClick={() =>
-                    handleActionClick({ kind: 'route', label: source.label, path: source.path })
+                  key={
+                    action.kind === 'route'
+                      ? `${action.kind}-${action.path}`
+                      : action.kind === 'dashboard-view'
+                        ? `${action.kind}-${action.viewId}`
+                        : action.kind === 'logout'
+                          ? action.kind
+                          : `${action.kind}-${action.simulationTopic}`
                   }
+                  type="button"
+                  className="tg-action-button"
+                  onClick={() => handleActionClick(action)}
                 >
-                  {source.label}
+                  {action.label}
                 </button>
               ))}
             </div>
-          ) : null}
 
-          <div className="tg-action-list">
-            {hasInteractiveActions ? <p className="tg-source-title">Aksi cepat:</p> : null}
-            {(isThinking ? [] : activeResult.actions).map((action) => (
-              <button
-                key={
-                  action.kind === 'route'
-                    ? `${action.kind}-${action.path}`
-                    : action.kind === 'dashboard-view'
-                      ? `${action.kind}-${action.viewId}`
-                      : action.kind === 'logout'
-                        ? action.kind
-                        : `${action.kind}-${action.simulationTopic}`
-                }
-                type="button"
-                className="tg-action-button"
-                onClick={() => handleActionClick(action)}
-              >
-                {action.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="tg-suggestion-wrap">
-            {visibleSuggestions.length ? (
-              <p className="tg-source-title">Contoh pertanyaan:</p>
+            {activeChips.length ? (
+              <div className="tg-meta-chip-wrap" aria-label="Kategori jawaban bot">
+                <p className="tg-section-label">Kategori jawaban</p>
+                {activeChips.map((chip) => (
+                  <span key={chip.key} className={`tg-meta-chip tg-meta-chip--${chip.tone}`}>
+                    {chip.label}
+                  </span>
+                ))}
+              </div>
             ) : null}
-            {visibleSuggestions.map((suggestion) => (
-              <button
-                key={suggestion}
-                type="button"
-                className="tg-suggestion-chip"
-                onClick={() => handleSuggestionClick(suggestion)}
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
 
-          <form className="tg-form" onSubmit={handleSubmit}>
-            <input
-              id="tg-query-input"
-              name="tgQuery"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder={
-                mode === 'navigation'
-                  ? 'Contoh: "buka pronunciation"'
-                  : mode === 'simulation'
-                    ? 'Contoh: "simulasi final sound s/es" atau "simulasi final sound d/ed"'
-                    : mode === 'flashcard'
-                      ? 'Contoh: "flashcard kitchen"'
-                      : 'Contoh: "apa itu american t?"'
-              }
-              className="tg-input"
-            />
-            <button type="submit" className="tg-send-button" aria-label="Kirim">
-              Kirim
-            </button>
-          </form>
-        </aside>
+            {!isThinking && activeResult.confirmation ? (
+              <div className="tg-confirm-chip-wrap" aria-label="Guide confirmation">
+                <p className="tg-section-label">Konfirmasi</p>
+                <button
+                  type="button"
+                  className="tg-confirm-chip"
+                  onClick={() => void handleConfirmation(true)}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className="tg-confirm-chip"
+                  onClick={() => void handleConfirmation(false)}
+                >
+                  No
+                </button>
+              </div>
+            ) : null}
+
+            {!isThinking && activeResult.clarification ? (
+              <div className="tg-clarify-wrap">
+                <p className="tg-clarify-title">{activeResult.clarification.question}</p>
+                <p className="tg-section-label tg-section-label--inside">Pilih satu opsi</p>
+                <div className="tg-clarify-chip-wrap">
+                  {activeResult.clarification.options.map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      className="tg-clarify-chip"
+                      onClick={() => handleClarificationOptionClick(option)}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {!isThinking && activeResult.sources?.length ? (
+              <div className="tg-source-list">
+                <p className="tg-source-title">Buka sumber materi:</p>
+                {activeResult.sources.map((source) => (
+                  <button
+                    key={`${source.path}-${source.label}`}
+                    type="button"
+                    className="tg-source-button"
+                    onClick={() =>
+                      handleActionClick({ kind: 'route', label: source.label, path: source.path })
+                    }
+                  >
+                    {source.label}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <div className="tg-suggestion-wrap">
+              {visibleSuggestions.length ? (
+                <p className="tg-source-title">Contoh pertanyaan:</p>
+              ) : null}
+              {visibleSuggestions.map((suggestion) => (
+                <button
+                  key={suggestion}
+                  type="button"
+                  className="tg-suggestion-chip"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+
+            <div className={`tg-reply ${isThinking ? 'is-thinking' : ''}`}>{activeReply}</div>
+
+            <form className="tg-form" onSubmit={handleSubmit}>
+              <input
+                id="tg-query-input"
+                name="tgQuery"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={
+                  mode === 'navigation'
+                    ? 'Contoh: "buka pronunciation"'
+                    : mode === 'simulation'
+                      ? 'Contoh: "simulasi final sound s/es" atau "simulasi final sound d/ed"'
+                      : mode === 'flashcard'
+                        ? 'Contoh: "flashcard kitchen"'
+                        : 'Contoh: "apa itu american t?"'
+                }
+                className="tg-input"
+              />
+              <button type="submit" className="tg-send-button" aria-label="Kirim">
+                Kirim
+              </button>
+            </form>
+          </aside>
+        </div>
       )}
 
       {activeSimulation ? (

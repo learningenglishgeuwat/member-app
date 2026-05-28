@@ -24,12 +24,14 @@
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: 0.01em;
+  font-family: var(--font-display);
 }
 
 .at-hub-subtitle {
   max-width: 52rem;
   color: var(--pronun-muted, #d8c8f8);
   line-height: 1.6;
+  font-family: var(--font-ui);
 }
 
 .at-hub-canvas-wrap {

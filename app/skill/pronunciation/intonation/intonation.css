@@ -3,6 +3,11 @@
   font-family: var(--font-ui);
 }
 
+.intonation-page .fs-topic-title,
+.intonation-page .fs-topic-block-title {
+  font-family: var(--font-display);
+}
+
 .intonation-page .intonation-recording-anchor {
   right: max(1.5rem, env(safe-area-inset-right));
   bottom: max(1.5rem, env(safe-area-inset-bottom));

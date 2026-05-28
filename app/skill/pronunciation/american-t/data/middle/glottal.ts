@@ -7,6 +7,7 @@ type GlottalSentenceDrillItem = {
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type GlottalSentenceDrillExample = {
@@ -14,6 +15,7 @@ type GlottalSentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const GLOTTAL_STOP_EXAMPLES: ReadonlyArray<WordExample> = [

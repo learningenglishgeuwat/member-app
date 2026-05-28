@@ -7,6 +7,7 @@ type SilentTSentenceDrillItem = {
   ipa: string;
   note: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 type SilentTSentenceDrillExample = {
@@ -14,6 +15,7 @@ type SilentTSentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const SILENT_T_EXAMPLES: ReadonlyArray<WordExample> = [

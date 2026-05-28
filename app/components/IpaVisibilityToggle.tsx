@@ -20,28 +20,28 @@ export function IpaVisibilityToggle({
   onChange,
   label = 'IPA',
   activeClass = 'text-cyan-200',
-  activeTrackClass = 'bg-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.6)]',
-  activeDotClass = 'bg-[#00f0ff] shadow-[0_0_6px_#00f0ff]',
+  activeTrackClass = 'bg-[#00f0ff] shadow-[0_0_6px_rgba(0,240,255,0.6)]',
+  activeDotClass = 'bg-[#00f0ff] shadow-[0_0_3px_#00f0ff]',
   className = '',
   disabled = false,
 }: IpaVisibilityToggleProps) {
   return (
     <label
       className={cx(
-        'inline-flex items-center gap-3 group',
+        'inline-flex items-center gap-1 group',
         disabled ? 'cursor-not-allowed opacity-55' : 'cursor-pointer',
         className,
       )}
     >
       <span
         className={cx(
-          'font-mono text-xs sm:text-sm tracking-widest text-white/55 uppercase transition-colors',
+          'font-mono text-[7px] sm:text-[8.5px] tracking-wider text-white/55 uppercase transition-colors',
           checked ? activeClass : !disabled && 'group-hover:text-cyan-100',
         )}
       >
         {label}
       </span>
-      <span className="relative flex items-center">
+      <span className="relative flex items-center shrink-0">
         <input
           type="checkbox"
           role="switch"
@@ -53,22 +53,22 @@ export function IpaVisibilityToggle({
         />
         <span
           className={cx(
-            'block h-6 w-12 rounded-full transition-all duration-300',
+            'block h-3 w-6 rounded-full transition-all duration-300',
             checked
               ? activeTrackClass
-              : 'border-2 border-white/20 bg-[#1a1f24]',
+              : 'border border-white/20 bg-[#1a1f24]',
           )}
         />
         <span
           className={cx(
-            'absolute left-[3px] top-[3px] flex h-[18px] w-[18px] items-center justify-center rounded-full transition-transform duration-300',
-            checked ? 'translate-x-6 bg-[#101414] shadow-md' : 'translate-x-0 bg-white/40',
+            'absolute left-[1.5px] top-[1.5px] flex h-[9px] w-[9px] items-center justify-center rounded-full transition-transform duration-300',
+            checked ? 'translate-x-3 bg-[#101414] shadow-sm' : 'translate-x-0 bg-white/40',
           )}
         >
           <span
             className={cx(
               'rounded-full transition-all duration-300',
-              checked ? cx('h-[10px] w-[10px]', activeDotClass) : 'h-0 w-0 bg-transparent',
+              checked ? cx('h-[4px] w-[4px]', activeDotClass) : 'h-0 w-0 bg-transparent',
             )}
           />
         </span>

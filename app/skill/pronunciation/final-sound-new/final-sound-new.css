@@ -23,6 +23,7 @@
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
+  font-family: var(--font-display);
 }
 
 .fsn-subtitle {

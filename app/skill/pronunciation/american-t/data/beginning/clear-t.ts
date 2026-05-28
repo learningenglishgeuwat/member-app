@@ -1,4 +1,4 @@
-﻿import type { ClearTExample } from '../types';
+import type { ClearTExample } from '../types';
 
 type SentenceDrillFocusWord = string;
 
@@ -20,6 +20,7 @@ type SentenceDrillExample = {
   text: string;
   ipa: string;
   focusWords: ReadonlyArray<SentenceDrillFocusWord>;
+  ipaHighlightSymbols?: ReadonlyArray<string>;
 };
 
 export const CLEAR_T_BEGINNING_EXAMPLES: ReadonlyArray<ClearTExample> = [

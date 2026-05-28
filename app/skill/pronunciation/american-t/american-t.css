@@ -255,6 +255,13 @@
   font-weight: 700;
   color: #f1d6ff;
   text-transform: capitalize;
+  font-family: var(--font-ui);
+}
+
+.at-topic-concept em,
+.at-example-head h3,
+.at-word-chip-word {
+  font-family: var(--font-ui);
 }
 
 .at-example-head p {

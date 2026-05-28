@@ -56,7 +56,7 @@
 
 .stress-block-title {
   font-size: 1.125rem;
-  font-family: var(--font-display);
+  font-family: inherit;
   font-weight: 500;
   color: var(--pronun-text, #e9d5ff);
   line-height: 1.2;
@@ -378,7 +378,7 @@
   border-radius: 0.62rem;
   padding: 0.28rem 0.68rem;
   background: rgb(var(--pronun-panel-rgb) / 0.86);
-  font-family: var(--font-display);
+  font-family: inherit;
   font-size: 0.79rem;
   font-weight: 700;
   line-height: 1.25;

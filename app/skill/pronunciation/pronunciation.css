@@ -1,5 +1,12 @@
 /* Pronunciation Module Specific Styles */
 
+/* Section headings use display font */
+.pronunciation-layout h2,
+.pronunciation-layout h3,
+.pronunciation-layout h4 {
+  font-family: var(--font-display);
+}
+
 /* Glass Panel Effect */
 .glass-panel {
   background: rgba(0, 0, 0, 0.8);

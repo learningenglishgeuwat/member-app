@@ -96,3 +96,35 @@ export function renderSentenceWithFocusHighlight(sentence: string, focusPhrase: 
     return <span key={`${sentence}-text-${idx}`}>{part}</span>;
   });
 }
+
+export function renderSentenceWithHighlights(text: string, focusWords: ReadonlyArray<string>) {
+  if (!focusWords.length) return <>{text}</>;
+
+  const uniqueWords = Array.from(new Set(focusWords.map((word) => word.trim()).filter(Boolean)));
+  if (!uniqueWords.length) return <>{text}</>;
+
+  const pattern = uniqueWords
+    .sort((a, b) => b.length - a.length)
+    .map((word) => escapeRegexForHighlight(word))
+    .join('|');
+
+  const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
+  const parts = text.split(regex);
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        const matched = uniqueWords.some((word) => word.toLowerCase() === part.toLowerCase());
+        if (matched) {
+          return (
+            <span key={`${text}-match-${index}`} className="at-final-t-word-match">
+              {renderAmericanTTextHighlight(part)}
+            </span>
+          );
+        }
+        return <span key={`${text}-plain-${index}`}>{part}</span>;
+      })}
+    </>
+  );
+}
+

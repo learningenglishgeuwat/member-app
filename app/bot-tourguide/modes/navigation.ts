@@ -71,6 +71,11 @@ const PRONUNCIATION_CONTEXT_TOKENS = [
   's/es',
   'd/ed',
   'text pronunciation',
+  'contraction',
+  'contractions',
+  'linking word',
+  'linking words',
+  'linking',
 ];
 
 const SPEAKING_CONTEXT_TOKENS = [
@@ -280,6 +285,8 @@ const getNavigationSuggestions = (pathname?: string): string[] => {
       'buka final sound s/es',
       'buka flap t',
       'buka pronunciation text',
+      'buka contraction',
+      'buka linking word',
     ];
   }
 

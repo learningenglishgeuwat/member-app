@@ -934,7 +934,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
   function renderSectionHeader(key: SectionKey, title: string) {
     const isOpen = openSections[key];
     return (
-      <h2 className="stress-block-title font-display">
+      <h2 className="stress-block-title">
         <button
           type="button"
           className="stress-section-toggle"
@@ -1107,7 +1107,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     >
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
-                        <h3 className="stress-word font-display">
+                        <h3 className="stress-word">
                           <span className="stress-example-chip">
                             {renderStressHighlight(item.word)}
                           </span>
@@ -1155,7 +1155,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                 <article key={item.mark + item.label} className="stress-mark-card">
                   <div className="stress-mark">{item.mark}</div>
                   <div>
-                    <p className="stress-mark-label font-display">{item.label}</p>
+                    <p className="stress-mark-label">{item.label}</p>
                     <p className="stress-mark-note font-sans">{item.note}</p>
                   </div>
                 </article>
@@ -1182,7 +1182,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`aturanCepat-${ruleIndex}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                  <h3 className="stress-rule-title font-display">{item.title}</h3>
+                  <h3 className="stress-rule-title">{item.title}</h3>
                   <p className="stress-rule-note font-sans">{item.note}</p>
                   <div className="stress-rule-examples">
                     {item.examples.map((example, exampleIndex) => {
@@ -1249,7 +1249,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     >
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
-                        <h3 className="stress-word font-display">
+                        <h3 className="stress-word">
                           <span className="stress-example-chip">
                             {renderStressHighlight(item.word)}
                           </span>
@@ -1306,7 +1306,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`kontrasNounVerb-${item.base}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title font-display">{item.base.toUpperCase()}</h3>
+                    <h3 className="stress-rule-title">{item.base.toUpperCase()}</h3>
                     <p className="stress-rule-note font-sans">{item.note}</p>
                     <div className="stress-rule-examples">
                       <div
@@ -1407,7 +1407,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith(`bankKata-${groupIndex}-`) ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-bank-title font-display">{group.title}</h3>
+                    <h3 className="stress-bank-title">{group.title}</h3>
                     <ul className="stress-bank-list font-sans">
                       {group.items.map((item, itemIndex) => {
                         const itemKey = `bankKata-${groupIndex}-${itemIndex}`;
@@ -1532,7 +1532,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       className={`stress-rule-card ${isSpeaking ? 'is-speaking' : ''}`}
                       ref={(node) => setItemRef(itemKey, node)}
                     >
-                  <h3 className="stress-rule-title font-display">{item.title}</h3>
+                  <h3 className="stress-rule-title">{item.title}</h3>
                   <p className="stress-rule-note font-sans">{item.note}</p>
                   <ul className="stress-bullets font-sans">
                     {item.points.map((point) => (
@@ -1650,7 +1650,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith('practice-word-') ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title font-display">4 Kata (Posisi Stress Berbeda)</h3>
+                    <h3 className="stress-rule-title">4 Kata (Posisi Stress Berbeda)</h3>
                     <div className="stress-rule-examples">
                       {PRACTICE_WORD_STRESS_SET.map((item, index) => {
                         const itemKey = `practice-word-${index}`;
@@ -1691,7 +1691,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                       activeTtsItemKey?.startsWith('practice-sentence-') ? 'is-speaking' : ''
                     }`}
                   >
-                    <h3 className="stress-rule-title font-display">3 Kalimat Latihan</h3>
+                    <h3 className="stress-rule-title">3 Kalimat Latihan</h3>
                     <div className="stress-rule-examples">
                       {PRACTICE_SENTENCE_SET.map((item, index) => {
                         const itemKey = `practice-sentence-${index}`;

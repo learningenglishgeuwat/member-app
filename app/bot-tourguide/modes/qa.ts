@@ -278,6 +278,11 @@ const PRONUNCIATION_COACHING_FOCUS: Record<string, string> = {
   'stressing-word-stress-rules': 'menentukan suku kata yang harus ditekan',
   'stressing-sentence-stress-overview': 'menentukan kata yang harus ditekan dalam kalimat',
   'pronunciation-text-how-to-use': 'menerapkan teori bunyi ke bacaan utuh',
+  'pronunciation-contraction-basics': 'pelafalan apostrof dengan melenyapkan vokal/konsonan tengah',
+  'pronunciation-contraction-informal': 'kelancaran pengucapan informal contractions (wanna, gonna, dll) di percakapan santai',
+  'pronunciation-linking-basics': 'kelancaran transisi antar kata agar mengalir natural',
+  'pronunciation-linking-categories': 'menguasai 4 kategori connected speech secara bertahap',
+  'pronunciation-tonguetwister-basics': 'ketangkasan artikulasi otot mulut pada deretan suara menantang',
 };
 
 const PRONUNCIATION_COACHING_STEPS: Record<string, string> = {
@@ -317,6 +322,16 @@ const PRONUNCIATION_COACHING_STEPS: Record<string, string> = {
     'Tandai content words di kalimat, ucapkan lebih kuat dan lebih panjang, lalu ringankan function words.',
   'pronunciation-text-how-to-use':
     'Baca origin text dulu untuk flow, lalu cek tab transcription untuk koreksi detail bunyi.',
+  'pronunciation-contraction-basics':
+    'Latih penyingkatan to-be dan auxiliaries dasar, bandingkan sebelum vs sesudah disingkat.',
+  'pronunciation-contraction-informal':
+    'Gunakan hanya untuk situasi kasual/lisan, hindari pemakaian di tulisan formal.',
+  'pronunciation-linking-basics':
+    'Sambungkan konsonan akhir kata dengan vokal awal kata berikutnya secara langsung.',
+  'pronunciation-linking-categories':
+    'Latih satu kategori connected speech per hari (liaison, gemination, dll) agar tidak bingung.',
+  'pronunciation-tonguetwister-basics':
+    'Ucapkan perlahan dan jelas dulu, naikkan kecepatan bertahap tanpa mengorbankan artikulasi.',
 };
 
 const QA_LOW_CONFIDENCE_SCORE = 52;
@@ -360,6 +375,16 @@ const QA_TOPIC_DEFINITION_LEADS: Record<string, string> = {
     'Plural adalah bentuk jamak untuk menyatakan jumlah lebih dari satu.',
   'american-t-flap-vs-glottal':
     'American T adalah variasi pengucapan bunyi /t/ dalam aksen Amerika, terutama pada posisi tengah dan akhir kata.',
+  'pronunciation-contraction-basics':
+    'Contraction adalah penyingkatan kata yang menghilangkan sebagian huruf dan suara.',
+  'pronunciation-contraction-informal':
+    'Informal Contractions adalah penyingkatan kata tidak resmi yang sering digunakan dalam bahasa lisan.',
+  'pronunciation-linking-basics':
+    'Linking Word adalah teknik menyambung pengucapan antar kata agar percakapan terdengar mulus.',
+  'pronunciation-linking-categories':
+    'Linking Word terbagi menjadi 4 kategori connected speech utama.',
+  'pronunciation-tonguetwister-basics':
+    'Tongue Twister adalah rangkaian kata dengan bunyi mirip yang melatih kelincahan artikulasi.',
 };
 
 const QA_DIRECT_TOPIC_OVERRIDES: Array<{ phrases: string[]; topicId: string }> = [
@@ -481,6 +506,57 @@ const QA_DIRECT_TOPIC_OVERRIDES: Array<{ phrases: string[]; topicId: string }> =
   {
     phrases: ['american t', 'apa itu american t', 'jelaskan american t', 't american'],
     topicId: 'american-t-flap-vs-glottal',
+  },
+  {
+    phrases: [
+      'contraction',
+      'contractions',
+      'apa itu contraction',
+      'apa itu contractions',
+      'jelaskan contraction',
+      'singkatan inggris',
+      'singkatan'
+    ],
+    topicId: 'pronunciation-contraction-basics'
+  },
+  {
+    phrases: [
+      'informal contraction',
+      'informal contractions',
+      'wanna gonna gimme',
+      'singkatan tidak resmi',
+      'apa itu gonna wanna'
+    ],
+    topicId: 'pronunciation-contraction-informal'
+  },
+  {
+    phrases: [
+      'linking word',
+      'linking words',
+      'apa itu linking word',
+      'apa itu linking words',
+      'jelaskan linking word',
+      'connected speech'
+    ],
+    topicId: 'pronunciation-linking-basics'
+  },
+  {
+    phrases: [
+      'kategori linking',
+      'jenis linking word',
+      "liaison gemination intrusion assimilation",
+      "apa itu liaison gemination intrusion"
+    ],
+    topicId: 'pronunciation-linking-categories'
+  },
+  {
+    phrases: [
+      'tongue twister',
+      'apa itu tongue twister',
+      'jelaskan tongue twister',
+      'latihan lidah'
+    ],
+    topicId: 'pronunciation-tonguetwister-basics'
   },
 ];
 

@@ -71,8 +71,8 @@ export function PlayStopButton({
   scrollItemKey,
 }: PlayStopButtonPropsExtended) {
   const iconSize = size === 'sm'
-    ? 'w-3 h-3 sm:w-4 sm:h-4'
-    : 'w-4 h-4 sm:w-5 sm:h-5';
+    ? 'w-2 h-2 sm:w-2.5 sm:h-2.5'
+    : 'w-2.5 h-2.5 sm:w-3 sm:h-3';
   const navigator = useSectionNavigator()
 
   const handleClick = () => {
@@ -111,9 +111,9 @@ export function PlayStopButton({
       onClick={handleClick}
       disabled={disabled}
       className={[
-        'w-full border px-2 py-1.5 sm:px-4 sm:py-3',
-        'font-mono text-[8px] sm:text-xs uppercase',
-        'rounded-lg sm:rounded-xl',
+        'w-full border px-1 py-0.5 sm:px-2 sm:py-1',
+        'font-mono text-[7px] sm:text-[8.5px] uppercase',
+        'rounded-sm sm:rounded-md',
         'flex items-center justify-between',
         'transition-all group',
         'disabled:opacity-50 disabled:cursor-not-allowed',

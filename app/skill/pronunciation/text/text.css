@@ -187,10 +187,7 @@
   font-size: 0.92rem;
   color: #f1e8ff;
   font-weight: 700;
-}
-
-.text-pronunciation-prompt .text-pronunciation-section-toggle-title {
-  color: #fce7f3;
+  font-family: var(--font-display);
 }
 
 .text-pronunciation-section-toggle-icon-wrap {
