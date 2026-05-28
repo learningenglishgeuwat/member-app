@@ -42,10 +42,6 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
   description: "Personalized English learning dashboard for GEUWAT members",
-  icons: {
-    icon: '/icon.png',
-    apple: '/apple-icon.png',
-  },
 };
 
 export const viewport = {
