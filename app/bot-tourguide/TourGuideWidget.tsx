@@ -1017,12 +1017,13 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
           onClick={() => setCollapsed(false)}
         >
           <Image
-            src="/Kepala1.png"
+            src="/Kepala1.png?v=20260528"
             alt="Tour Guide"
             width={48}
             height={48}
             className="tg-avatar-image tg-avatar-image--idle"
             priority
+            unoptimized
           />
         </button>
       ) : mode === 'tutorial' && isTutorialModeAllowed ? (
@@ -1091,11 +1092,12 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 onClick={() => setCollapsed(true)}
               >
                 <Image
-                  src="/Kepala1.png"
+                  src="/Kepala1.png?v=20260528"
                   alt="Tour Guide"
                   width={40}
                   height={40}
                   className={`tg-avatar-image ${isBotActive ? 'tg-avatar-image--active' : 'tg-avatar-image--idle'}`}
+                  unoptimized
                 />
               </button>
               <div className="tg-panel-title-wrap">

@@ -284,11 +284,12 @@ const SettingsContent: React.FC = () => {
                 <div className="rounded-xl border border-slate-700/40 bg-black/30 overflow-hidden">
                   <div className="relative w-full aspect-[16/9] flex items-center justify-center p-4">
                     <Image
-                      src="/ChibiLogin.webp"
+                      src="/ChibiLogin.webp?v=20260528"
                       alt="GEUWAT Tower Hero"
                       width={720}
                       height={405}
                       className={imageClassName}
+                      unoptimized
                     />
                     {isShadow ? (
                       <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35" />

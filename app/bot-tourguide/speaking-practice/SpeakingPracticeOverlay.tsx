@@ -166,11 +166,12 @@ export default function SpeakingPracticeOverlay({
         <div className="tg-spk-shell">
           <div className="tg-spk-avatar-orb">
             <Image
-              src="/Kepala1.png"
+              src="/Kepala1.png?v=20260528"
               alt="GEUWAT Coach"
               width={58}
               height={58}
               className="tg-spk-avatar"
+              unoptimized
             />
           </div>
 
