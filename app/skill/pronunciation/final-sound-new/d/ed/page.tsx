@@ -958,21 +958,13 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.pastEndings ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
+              <div className="d-ed-word-bank-controls">
                 <button
                   type="button"
                   className="d-ed-word-bank-play-all-btn"
                   onClick={() => setShowPastEndingsIpa((prev) => !prev)}
                 >
                   {showPastEndingsIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handlePastEndingsPlayAll()}
-                  aria-label={isPlayingPastEndingsAll ? 'Stop play all past endings' : 'Play all past endings'}
-                >
-                  {isPlayingPastEndingsAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
               <div className="fs-topic-grid">
@@ -1095,21 +1087,13 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.rulesTable ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
+              <div className="d-ed-word-bank-controls">
                 <button
                   type="button"
                   className="d-ed-word-bank-play-all-btn"
                   onClick={() => setShowRulesTableIpa((prev) => !prev)}
                 >
                   {showRulesTableIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handleRulesTablePlayAll()}
-                  aria-label={isPlayingRulesTableAll ? 'Stop play all final sound rules table' : 'Play all final sound rules table'}
-                >
-                  {isPlayingRulesTableAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
@@ -1173,7 +1157,7 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.wordBank ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
+              <div className="d-ed-word-bank-controls">
                 <button
                   type="button"
                   className="d-ed-word-bank-play-all-btn"
@@ -1181,20 +1165,7 @@ export default function FinalSoundDEdPage() {
                 >
                   {showWordBankIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
                 </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handleWordBankPlayAll()}
-                  aria-label={
-                    isPlayingWordBankAll
-                      ? 'Stop play all before and after words'
-                      : 'Play all before and after words'
-                  }
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
-                </button>
               </div>
-
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
                 <table className="fs-topic-rules-table fs-topic-before-after-table geuwat-table-responsive">
                   <thead>

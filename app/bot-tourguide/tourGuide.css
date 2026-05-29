@@ -917,26 +917,62 @@
 }
 
 @media (max-width: 768px) {
-  .tg-avatar-button,
-  .tg-widget-wrapper {
+  .tg-avatar-button {
     right: 10px;
     top: calc(env(safe-area-inset-top, 0px) + 12px);
   }
 
-  .tg-avatar-image {
+  .tg-widget-wrapper {
+    right: 8px;
+    top: calc(env(safe-area-inset-top, 0px) + 10px);
+  }
+
+  .tg-avatar-button .tg-avatar-image {
     width: 42px;
     height: 42px;
   }
 
+  .tg-panel-avatar-button .tg-avatar-image {
+    width: 34px;
+    height: 34px;
+  }
+
   .tg-panel {
-    width: min(95vw, 360px);
-    max-height: calc(100dvh - 104px);
-    padding: 10px;
+    width: min(88vw, 320px);
+    max-height: calc(100dvh - 96px);
+    padding: 8px;
   }
 
   .tg-panel-header {
-    margin-bottom: 10px;
-    padding-bottom: 8px;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 8px 8px 7px;
+  }
+
+  .tg-panel-title {
+    font-size: 12px;
+  }
+
+  .tg-panel-subtitle,
+  .tg-input,
+  .tg-reply,
+  .tg-action-button,
+  .tg-flashcard-select,
+  .tg-flashcard-open-button {
+    font-size: 11px;
+  }
+
+  .tg-hide-button,
+  .tg-send-button {
+    width: 36px;
+  }
+
+  .tg-hide-button {
+    height: 26px;
+  }
+
+  .tg-form {
+    gap: 6px;
   }
 
   .tg-mode-switcher,
@@ -948,7 +984,15 @@
   .tg-source-list,
   .tg-action-list,
   .tg-suggestion-wrap {
-    padding: 8px;
+    padding: 7px;
+  }
+
+  .tg-input {
+    padding: 7px 8px;
+  }
+
+  .tg-reply {
+    padding: 8px 8px 8px 16px;
   }
 
   .tg-sim-overlay {

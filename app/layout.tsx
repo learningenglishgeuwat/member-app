@@ -9,6 +9,7 @@ import SkillThemeSync from "@/app/components/SkillThemeSync";
 import { GlobalHaptic } from "@/app/components/haptic";
 import ScrollToHashMount from '@/app/components/ScrollToHashMount'
 import GlobalScrollToItemMount from '@/app/components/GlobalScrollToItemMount'
+import SkillGameButton from '@/app/skill/components/SkillGameButton'
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -47,8 +48,8 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -62,6 +63,7 @@ export default function RootLayout({
         <AuthProvider>
           <GlobalHaptic>
             {children}
+            <SkillGameButton />
             <ScrollToHashMount />
             <GlobalScrollToItemMount />
             <SkillThemeSync />

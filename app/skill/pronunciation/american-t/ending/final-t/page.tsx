@@ -378,15 +378,9 @@ export default function FinalTEndingPage() {
                 <button
                   type="button"
                   className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingPhraseAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllPhraseExamples();
-                  }}
+                  onClick={() => toggleIpaBySection('phraseExamples')}
                 >
-                  {isPlayingPhraseAll ? 'Stop' : 'Play All'}
+                  {showIpaBySection.phraseExamples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
                 </button>
               </div>
               <div className="at-example-grid">
@@ -443,19 +437,6 @@ export default function FinalTEndingPage() {
                 >
                   {showIpaBySection.sentenceBank ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
                 </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceBank();
-                  }}
-                >
-                  {isPlayingSentenceBankAll ? 'Stop' : 'Play All'}
-                </button>
               </div>
               <div className="at-sentence-list">
                 {FINAL_T_SENTENCE_BANK.map((item, index) => (
@@ -505,19 +486,6 @@ export default function FinalTEndingPage() {
                   onClick={() => toggleIpaBySection('drills')}
                 >
                   {showIpaBySection.drills ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllDrills();
-                  }}
-                >
-                  {isPlayingDrillsAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
               <div className="at-sentence-list">

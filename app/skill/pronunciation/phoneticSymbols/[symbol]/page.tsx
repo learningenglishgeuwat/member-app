@@ -1085,16 +1085,6 @@ const SymbolDetailPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Interactive Trigger (Main Action Button) */}
-                <button 
-                  onClick={handlePlayAllWords}
-                  disabled={symbolLoading || symbolData.examples.length === 0}
-                  data-tour="symbol-detail-play-all"
-                  className="absolute -bottom-5 md:-bottom-6 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(190,41,236,0.4)] z-20 group-hover:scale-110 bg-cyber-cyan text-black hover:bg-white"
-                  title={isPlayingAll ? "Stop All Words" : "Play All Words"}
-                >
-                    {isPlayingAll ? <Pause className="md:w-5 md:h-5 fill-current" /> : <Play className="md:w-5 md:h-5 fill-current" />}
-                </button>
              </div>
           </div>
         </div>
@@ -1224,25 +1214,12 @@ const SymbolDetailPage: React.FC = () => {
 
         {britishNote && (
           <div id="britishNote" className="w-full max-w-4xl mx-auto mt-2 mb-2">
-            <div className="bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]">
+            <div 
+              className="symbol-detail-collapsible-panel bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]"
+              style={{ '--panel-glow-rgb': '251, 191, 36' } as React.CSSProperties}
+            >
               <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
                 <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
-                <button
-                  onClick={handlePlayAllBritishNotes}
-                  className="inline-flex items-center gap-1 rounded border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[10px] md:text-xs font-mono text-amber-300 hover:bg-amber-400/20 transition-colors"
-                >
-                  {isPlayingAllBritishNotes ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
@@ -1300,8 +1277,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Tips Section */}
         <div className="tips-section w-full max-w-4xl mx-auto mt-6 mb-10">
-          <div className="bg-black/80 border border-cyber-pink/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(255,0,255,0.15)]">
-                    
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/80 border border-cyber-pink/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(255,0,255,0.15)]"
+            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
+          >
             {/* Terminal Header */}
             <div className="bg-cyber-pink/10 px-4 py-2 flex justify-between items-center border-b border-cyber-pink/30">
               <div className="flex items-center gap-2">
@@ -1352,8 +1331,10 @@ const SymbolDetailPage: React.FC = () => {
         {/* YouTube Video Section */}
         {symbolData.videoId && (
           <div data-video-section className="w-full max-w-4xl mx-auto mt-6">
-            <div className="bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]">
-                      
+            <div 
+              className="symbol-detail-collapsible-panel bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+              style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
+            >
               {/* Terminal Header */}
               <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
                 <div className="flex items-center gap-2">
@@ -1417,7 +1398,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Practice Section (below VIDEO_TUTORIAL) */}
         <div className="w-full max-w-4xl mx-auto mt-6">
-          <div className="bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]">
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]"
+            style={{ '--panel-glow-rgb': '6, 182, 212' } as React.CSSProperties}
+          >
             <button
               type="button"
               onClick={() => setIsPracticeOpen(prev => !prev)}
@@ -1483,7 +1467,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Prompt Section (below PRACTICE) */}
         <div className="w-full max-w-4xl mx-auto mt-6">
-          <div className="bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]">
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]"
+            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
+          >
             <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <HelpCircle className="text-cyber-pink" size={16} />

@@ -220,6 +220,30 @@
   }
 }
 
+@media (max-width: 767px) {
+  .tree-folder-label {
+    font-size: 0.82rem;
+  }
+
+  .tree-topic-label {
+    font-size: 0.78rem;
+  }
+
+  .tree-card {
+    padding: 0.48rem 0.65rem;
+  }
+
+  .tree-caret {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .tree-caret::before {
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+}
+
 @keyframes tree-flow-across {
   0% {
     left: -0.55rem;

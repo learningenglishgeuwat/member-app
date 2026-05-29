@@ -155,3 +155,23 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+@media (max-width: 767px) {
+  .std-card-title {
+    font-size: 0.82rem;
+  }
+
+  .std-card-summary {
+    padding: 0.55rem 0.7rem;
+  }
+
+  .std-card-caret {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .std-card-caret::before {
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+}

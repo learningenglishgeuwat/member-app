@@ -552,29 +552,6 @@ const AlphabetPage: React.FC = () => {
           </p>
         </div>
         
-        {/* Play All Button */}
-        <div className="flex justify-center mb-6 sm:mb-8 md:mb-12">
-          <button 
-            onClick={handlePlayAll}
-            data-tour="alphabet-play-all"
-            className={`alphabet-play-all-btn flex items-center gap-3 md:gap-4 ${
-              isPlayingAll ? 'playing' : ''
-            }`}
-          >
-            {isPlayingAll ? (
-              <>
-                <Square className="w-5 h-5 md:w-6 md:h-6" />
-                <span>Stop All</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-5 h-5 md:w-6 md:h-6" />
-                <span>Play All</span>
-              </>
-            )}
-          </button>
-        </div>
-
         {/* Save Progress Button */}
         <div className="flex justify-center mb-6 sm:mb-8 md:mb-12">
           <ButtonSavedProgress
@@ -746,23 +723,6 @@ const AlphabetPage: React.FC = () => {
                     >
                       {showPracticeIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
                     </button>
-                    <button
-                      type="button"
-                      onClick={handlePlayAllPracticeCountries}
-                      className={`alphabet-practice-playall-btn ${isPlayingPracticeAll ? 'playing' : ''}`}
-                    >
-                      {isPlayingPracticeAll ? (
-                        <>
-                          <Square size={14} />
-                          <span>Stop</span>
-                        </>
-                      ) : (
-                        <>
-                          <Play size={14} />
-                          <span>Play All</span>
-                        </>
-                      )}
-                    </button>
                   </div>
                 </div>
                 <p className="alphabet-practice-task-text">
@@ -863,6 +823,7 @@ const AlphabetPage: React.FC = () => {
               sectionId="alphabet-grid-section"
               onClick={handlePlayAll}
               className="mb-2 sm:mb-3"
+              data-tour="alphabet-play-all"
             />
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-6" label="Show Alphabet IPA" />
           </div>

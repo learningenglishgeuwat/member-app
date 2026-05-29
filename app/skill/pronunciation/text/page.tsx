@@ -1530,16 +1530,6 @@ export default function PronunciationTextPage() {
             </section>
 
             <article className='text-pronunciation-reading-card' ref={readingCardRef}>
-              <div className='text-pronunciation-tts-toolbar'>
-                <button
-                  type='button'
-                  className={`text-pronunciation-tts-btn ${activeSpeechGroup === 'main' ? 'is-active' : ''}`}
-                  onClick={toggleMainPlayAll}
-                >
-                  {activeSpeechGroup === 'main' ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-
               <div className='text-pronunciation-reading-group'>
                 {paragraphs.map((paragraph, index) => {
                   const speechItem = mainSpeechItems[index];

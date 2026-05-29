@@ -384,19 +384,6 @@ export default function ClearTEndingPage() {
                 >
                   {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
                 </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingExamplesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllExamples();
-                  }}
-                >
-                  {isPlayingExamplesAll ? 'Stop' : 'Play All'}
-                </button>
               </div>
               <div className="at-example-grid">
                 {CLEAR_T_ENDING_EXAMPLES.map((item, index) => (
@@ -449,19 +436,6 @@ export default function ClearTEndingPage() {
                   onClick={() => toggleIpaBySection('sentences')}
                 >
                   {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentencesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentences();
-                  }}
-                >
-                  {isPlayingSentencesAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
               <div className="at-sentence-list">
@@ -521,19 +495,6 @@ export default function ClearTEndingPage() {
                   onClick={() => toggleIpaBySection('sentence-drills-examples')}
                 >
                   {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceDrillsExamples();
-                  }}
-                >
-                  {isPlayingSentenceDrillsAll ? 'Stop' : 'Play All'}
                 </button>
               </div>
               {CLEAR_T_ENDING_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (

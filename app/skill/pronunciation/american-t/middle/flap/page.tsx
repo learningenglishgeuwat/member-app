@@ -457,22 +457,6 @@ export default function FlapTPage() {
             <div className="at-word-chip-wrap">
               <div className="mb-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
                 <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T Examples</span>
-                <button
-                  onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
-                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
-                >
-                  {isPlayingExamplesAll ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="at-example-grid">
                 {FLAP_T_EXAMPLES.map((item, index) => (
@@ -534,22 +518,6 @@ export default function FlapTPage() {
               </div>
               <div className="mb-4 mt-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
                 <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T (List of Examples)</span>
-                <button
-                  onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
-                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
-                >
-                  {isPlayingWordBankAll ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="at-flap-bank-grid">
                 {FLAP_T_WORD_BANK.map((word, index) => (

@@ -654,6 +654,25 @@
     padding: 8px;
     min-height: 52px;
   }
+
+  .minimal-card h3 {
+    font-size: 0.76rem;
+    margin-bottom: 0;
+  }
+
+  .minimal-section-toggle {
+    width: 26px;
+    height: 26px;
+  }
+
+  .minimal-section-toggle svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .minimal-section-head {
+    margin-bottom: 6px;
+  }
 }
 
 @media (max-width: 420px) {

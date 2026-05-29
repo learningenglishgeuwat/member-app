@@ -920,13 +920,6 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         ) : (
           <span aria-hidden="true" />
         )}
-        <button
-          type="button"
-          className="stress-playall-btn font-semibold tracking-wider"
-          onClick={() => void playAllBySection(sectionKey)}
-        >
-          {isPlaying ? 'Stop' : 'Play All'}
-        </button>
       </div>
     );
   }

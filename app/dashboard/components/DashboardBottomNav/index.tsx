@@ -40,23 +40,22 @@ const DashboardBottomNav: React.FC<DashboardBottomNavProps> = ({
 
   return (
     <>
-      {/* Toggle Button - Arrow Only */}
+      {/* Toggle Button */}
       <button
         type="button"
         onClick={toggleNavVisibility}
-        className={`fixed left-1/2 z-[1310] -translate-x-1/2 transition-all duration-300 group ${
+        className={`fixed left-1/2 z-[1310] -translate-x-1/2 bg-[#101314] border border-b-0 border-white/10 p-1.5 rounded-t-md text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
           isNavVisible
             ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
             : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'
         }`}
         aria-label={isNavVisible ? 'Hide navigation' : 'Show navigation'}
       >
-        {/* Arrow Icon Only - No Circle */}
         <div className="relative">
           {isNavVisible ? (
-            <ChevronDown className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+            <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
           ) : (
-            <ChevronUp className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+            <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
           )}
         </div>
       </button>
