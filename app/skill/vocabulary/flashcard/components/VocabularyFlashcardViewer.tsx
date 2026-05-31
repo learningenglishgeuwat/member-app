@@ -8,7 +8,6 @@ import {
   speakVocabularyText,
   stopVocabularySpeech,
 } from '../../tts';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 import '../body-parts/flashcard.css';
 
 type FlashcardMode = 'ordered' | 'shuffle';
@@ -123,7 +122,6 @@ export default function VocabularyFlashcardViewer({
   words,
 }: VocabularyFlashcardViewerProps) {
   const router = useRouter();
-  const { triggerHaptic } = useHaptic();
 
   const flashcardItems = useMemo<FlashcardItem[]>(
     () =>

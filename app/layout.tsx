@@ -2,20 +2,13 @@ import type { Metadata } from "next";
 import { Noto_Sans, Orbitron, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import "./globals.css";
 import "./styles/scrollbar.css";
-import { AuthProvider } from "@/contexts/MemberAuthContext";
-import { TourGuideMount } from "@/app/bot-tourguide";
-import MobileBottomNav from "@/app/components/MobileBottomNav";
-import SkillThemeSync from "@/app/components/SkillThemeSync";
-import { GlobalHaptic } from "@/app/components/haptic";
-import ScrollToHashMount from '@/app/components/ScrollToHashMount'
-import GlobalScrollToItemMount from '@/app/components/GlobalScrollToItemMount'
-import SkillGameButton from '@/app/skill/components/SkillGameButton'
+import AppClientShell from "@/app/components/AppClientShell";
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '700'],
   display: 'swap',
-  preload: true,
+  preload: false,
   variable: '--font-noto', // variable baru, tidak tabrak --font-ipa
 });
 
@@ -23,6 +16,7 @@ const orbitron = Orbitron({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
+  preload: true,
   variable: '--font-display',
 });
 
@@ -37,6 +31,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '700'],
   display: 'swap',
+  preload: false,
   variable: '--font-tech',
 });
 
@@ -60,17 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${notoSans.variable} ${orbitron.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased">
-        <AuthProvider>
-          <GlobalHaptic>
-            {children}
-            <SkillGameButton />
-            <ScrollToHashMount />
-            <GlobalScrollToItemMount />
-            <SkillThemeSync />
-            <MobileBottomNav />
-            <TourGuideMount />
-          </GlobalHaptic>
-        </AuthProvider>
+        <AppClientShell>{children}</AppClientShell>
       </body>
     </html>
   );

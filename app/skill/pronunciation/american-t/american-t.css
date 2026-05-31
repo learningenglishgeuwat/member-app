@@ -454,46 +454,6 @@
   padding: 0.7rem;
 }
 
-.at-clear-t-chip-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.at-clear-t-chip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  background: rgba(245, 158, 11, 0.1);
-  border-radius: 0.68rem;
-  padding: 0.32rem 0.42rem;
-}
-
-.at-clear-t-chip-main {
-  display: flex;
-  align-items: center;
-  gap: 0.34rem;
-  min-width: 0;
-}
-
-.at-clear-t-chip-word {
-  color: #ffe8b3;
-  font-weight: 700;
-  text-transform: lowercase;
-}
-
-.at-clear-t-chip-ipa {
-  color: var(--color-ipa);
-  font-family: var(--font-ipa);
-  font-size: 0.82rem;
-}
-
-.at-clear-t-chip-btn {
-  flex-shrink: 0;
-}
-
 .at-topic-page .fs-topic-mini-btn {
   padding: 0.14rem 0.52rem;
 }

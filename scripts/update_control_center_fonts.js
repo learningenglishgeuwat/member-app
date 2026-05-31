@@ -30,9 +30,6 @@ const replaceIcon = 'w-3 h-3 sm:w-4 sm:h-4 transition-colors';
 const searchLabel = 'text-[10px] tracking-widest text-cyan-400/80 block mb-2 uppercase';
 const replaceLabel = 'text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase';
 
-const searchToggle = 'w-full flex justify-between';
-const replaceToggle = 'w-full flex justify-between text-[10px] sm:text-xs';
-
 let updatedFiles = 0;
 
 files.forEach(file => {

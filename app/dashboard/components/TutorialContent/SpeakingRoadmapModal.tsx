@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   SPEAKING_ROADMAP_ITEMS,
   SPEAKING_ROADMAP_TOTAL_DAYS,
@@ -14,7 +14,6 @@ import {
   writeSpeakingGoalCompletionMap,
   type SpeakingGoalCompletionMap,
 } from '../../../skill/speaking/data/progress'
-import { useHaptic } from '@/lib/haptic/useHaptic'
 
 type SpeakingRoadmapModalProps = {
   isOpen: boolean
@@ -96,7 +95,6 @@ const SpeakingRoadmapModal: React.FC<SpeakingRoadmapModalProps> = ({
     if (typeof window === 'undefined') return {}
     return readSpeakingGoalCompletionMap()
   })
-  const { triggerHaptic } = useHaptic()
 
   const [lessonDetailPopup, setLessonDetailPopup] = useState<null | { config: LessonDetailConfig; activeGroupIndex: number }>(
     null,

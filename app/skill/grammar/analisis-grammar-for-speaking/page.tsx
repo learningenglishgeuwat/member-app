@@ -11,7 +11,6 @@ import type { TopicGapSeverity } from '../data/grammarTypes';
 import { buildGapReport, computeGoalReadiness } from './data/logic';
 import { TOPIC_RUBRIC_MAP } from './data/rubric';
 import { SPEAKING_GOALS } from './data/speakingGoals';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 import './grammar-for-speaking.css';
 
 type TabKey = 'workflow' | 'audit';
@@ -56,7 +55,6 @@ export default function GrammarSpeakingPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('workflow');
   const [completedGoals, setCompletedGoals] = useState<string[]>([]);
   const [isProgressRestored, setIsProgressRestored] = useState(false);
-  const { triggerHaptic } = useHaptic();
   const restoreProgressTimerRef = useRef<number | null>(null);
 
   useEffect(() => {

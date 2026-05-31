@@ -556,17 +556,6 @@
     height: 0.45rem !important;
   }
 
-  /* 7. Intonation Page Elements & Cards */
-  .intonation-roadmap-card {
-    padding: 0.55rem 0.7rem !important;
-  }
-  .intonation-roadmap-card h3 {
-    font-size: 0.85rem !important;
-  }
-  .intonation-roadmap-card p,
-  .intonation-roadmap-check {
-    font-size: 0.78rem !important;
-  }
   .intonation-card {
     padding: 0.55rem 0.7rem !important;
   }

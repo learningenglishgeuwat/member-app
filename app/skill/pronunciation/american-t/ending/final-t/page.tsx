@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play, Square } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';

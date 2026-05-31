@@ -19,10 +19,6 @@ const DASHBOARD_PATH = '/dashboard'
 const SKILL_MENU_BG = '#000000'
 const SKILL_GAME_LINKS_PATH = '/skill/game-links'
 
-function buildPronunPageBg(glow1: string, glow2: string, base: string) {
-  return `radial-gradient(900px 420px at 10% -12%, ${glow1}, transparent 55%), radial-gradient(860px 420px at 92% 112%, ${glow2}, transparent 57%), ${base}`
-}
-
 const PRONUN_PAGE_BG_DEFAULT = DEFAULT_PAGE_BG
 const PRONUN_PAGE_BG_ALPHABET = DEFAULT_PAGE_BG
 const PRONUN_PAGE_BG_STRESSING = DEFAULT_PAGE_BG
@@ -97,7 +93,7 @@ function applyPageSurface(bg: string, fg?: string) {
   }
 }
 
-function buildSkillBackground(rgbTuple: string) {
+function buildSkillBackground() {
   return SKILL_MENU_BG
 }
 
@@ -117,7 +113,7 @@ export default function SkillThemeSync() {
     if (pathname === SKILL_GAME_LINKS_PATH || pathname === `${SKILL_GAME_LINKS_PATH}/`) {
       const rgbTuple = hexToRgbTuple(ACCENT_HEX_BY_SKILL_TYPE.default)!
       applyNavAccent(rgbTuple)
-      applyPageSurface(buildSkillBackground(rgbTuple))
+      applyPageSurface(buildSkillBackground())
       return
     }
 
@@ -162,7 +158,7 @@ export default function SkillThemeSync() {
     }
 
     if (pathname.startsWith('/skill/')) {
-      applyPageSurface(buildSkillBackground(rgbTuple))
+      applyPageSurface(buildSkillBackground())
       return
     }
 

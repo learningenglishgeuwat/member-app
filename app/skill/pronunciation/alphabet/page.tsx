@@ -8,7 +8,7 @@ import {
   QUICK_SPELLING_WORDS,
 } from './constants';
 import { LetterCard } from './LetterCard';
-import { ChevronRight, Copy, Square, Play } from 'lucide-react';
+import { ChevronRight, Copy, Play } from 'lucide-react';
 import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';

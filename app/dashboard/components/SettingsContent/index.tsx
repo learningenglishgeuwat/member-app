@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/MemberAuthContext';
 import { updateUserPassword } from '@/lib/userOperations';
 import { createExtensionRequest, getLatestExtensionRequest, type ExtensionRequestStatus } from '@/lib/extensionRequests';
 import { HapticSettings } from './HapticSettings';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 
 const EXTENSION_REQUEST_LOCKED = true;
 
@@ -36,7 +35,6 @@ const readLocalStorageObject = <T,>(key: string, fallback: T): T => {
 
 const SettingsContent: React.FC = () => {
   const { user } = useAuth();
-  const { triggerHaptic } = useHaptic();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

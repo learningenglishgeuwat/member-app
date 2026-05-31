@@ -204,38 +204,6 @@
   line-height: 1.5;
 }
 
-.tt-tts-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.7rem;
-}
-
-.tt-tts-toggle {
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(84, 180, 242, 0.55);
-  border-radius: 999px;
-  background: rgba(26, 50, 83, 0.6);
-  color: #e8f7ff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.15s ease;
-}
-
-.tt-tts-toggle:hover {
-  background: rgba(40, 74, 120, 0.62);
-  border-color: rgba(130, 211, 255, 0.8);
-}
-
-.tt-tts-icon {
-  font-size: 0.9rem;
-  line-height: 1;
-}
-
-
 .tt-line {
   margin: 0;
 }

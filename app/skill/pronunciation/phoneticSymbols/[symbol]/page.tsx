@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Pause, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
+import { Play, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
 import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
@@ -64,77 +64,6 @@ const BRITISH_NOTE_COUNTERPARTS: Record<string, string[]> = {
   'ɚ': ['ə'],
   'ə': ['ɚ'],
   'ɒ': ['ɑ', 'ɔ'],
-};
-
-const SYMBOL_HIGHLIGHT_PATTERNS: Record<string, string[]> = {
-  // Lax Vowels
-  'ʌ': ['ou', 'oo', 'oe', 'u', 'o'],
-  'ɪ': ['ui', 'ie', 'ee', 'ei', 'i', 'y', 'e', 'u'],
-  'ʊ': ['oo', 'ou', 'u', 'o'],
-  'ɛ': ['ea', 'ie', 'ai', 'ue', 'e', 'a'],
-  'ə': ['ion', 'ian', 'ou', 'io', 'ia', 'a', 'e', 'o', 'u', 'i'],
-  'ɚ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
-  'ɝ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'ɜ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'ɜr': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'əɹ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
-  
-  // Tense Vowels
-  'ɑ': ['al', 'au', 'o', 'a'],
-  'ɑr': ['ear', 'ar', 'al', 'r'],
-  'ɒ': ['ock', 'od', 'og', 'op', 'o'],
-  'i': ['ee', 'ea', 'ie', 'ei', 'ey', 'e', 'y', 'i'],
-  'u': ['oo', 'ue', 'ew', 'ou', 'ui', 'u', 'o'],
-  'æ': ['adge', 'ank', 'ai', 'au', 'a'],
-  'ɔ': ['aw', 'au', 'al', 'ough', 'o', 'a'],
-  'ɔr': ['oor', 'oar', 'our', 'ore', 'or', 'ar', 'r'],
-
-  // Diphthongs
-  'aɪ': ['igh', 'ie', 'uy', 'ai', 'i', 'y'],
-  'eɪ': ['ai', 'ay', 'ei', 'ea', 'ey', 'a', 'e'],
-  'ɔɪ': ['oi', 'oy'],
-  'ɪr': ['ear', 'eer', 'ere', 'eard', 'ier', 'ir', 'r'],
-  'ɪə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
-  'iə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
-  'ɛr': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'ɛə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'eə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'ʊr': ['ure', 'our', 'oor', 'ur', 'r'],
-  'ʊə': ['ure', 'our', 'oor', 'ur', 'r'],
-  'oʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
-  'əʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
-  'aʊ': ['ou', 'ow', 'ough'],
-
-  // Consonants Voiceless
-  'p': ['pp', 'p'],
-  't': ['tt', 'ed', 't'],
-  'k': ['ck', 'ch', 'qu', 'k', 'c', 'q'],
-  'f': ['ff', 'ph', 'gh', 'f'],
-  'θ': ['th'],
-  's': ['ss', 'sc', 'ce', 's', 'c'],
-  'ʃ': ['sh', 'ti', 'ci', 'si', 'ch', 's'],
-  'tʃ': ['tch', 'ch', 't'],
-  'ʧ': ['tch', 'ch', 't'],
-  'h': ['wh', 'h'],
-
-  // Consonants Voiced
-  'b': ['bb', 'b'],
-  'd': ['dd', 'ed', 'd'],
-  'g': ['gg', 'gh', 'gu', 'g'],
-  'v': ['vv', 've', 'v', 'f'],
-  'ð': ['th'],
-  'z': ['zz', 'se', 'z', 's', 'x'],
-  'ʒ': ['si', 'ge', 'su', 's', 'z'],
-  'ʤ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
-  'dʒ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
-  'l': ['ll', 'le', 'al', 'l'],
-  'm': ['mm', 'mb', 'm'],
-  'n': ['nn', 'kn', 'gn', 'pn', 'n'],
-  'ŋ': ['ng', 'n'],
-  'r': ['rr', 'wr', 'rh', 'r'],
-  'w': ['wh', 'qu', 'w', 'u'],
-  'y': ['y', 'i', 'u', 'eu', 'ew'],
-  'j': ['y', 'i', 'u', 'eu', 'ew'],
 };
 
 const highlightLetterStyle: React.CSSProperties = {
@@ -471,17 +400,6 @@ const SymbolDetailPage: React.FC = () => {
     const base = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
     return Array.from(new Set(base.filter(Boolean)));
   }, [decodedSymbol]);
-
-  const currentSymbolCommonLetters = useMemo(() => {
-    if (SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol]) {
-      return SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol];
-    }
-    const foundLetters = ALL_COMMON_LETTERS
-      .filter(c => symbolAliasCandidates.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate))
-      .flatMap((c) => c.letter.split(',').map((s) => s.trim().replace(/^-|-$/g, '')));
-
-    return Array.from(new Set(foundLetters.filter(Boolean)));
-  }, [decodedSymbol, symbolAliasCandidates]);
 
   const renderWord = (word: string) => {
     if (!showHighlight) return word;

@@ -6,7 +6,7 @@ import { Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { ControlCenter, PlayStopButton } from '@/app/components';
+import { ControlCenter } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { READING_TEXT_MATERIALS, type ReadingTextMaterial } from './data/readingTexts';

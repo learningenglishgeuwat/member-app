@@ -15,7 +15,7 @@ export default function TongueTwisterPage() {
   const [twisterDropdownOpen, setTwisterDropdownOpen] = useState(false);
   const [activeLineId, setActiveLineId] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showIpa, setShowIpa] = useState(true);
+  const showIpa = true;
   
   const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const twisterDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -142,7 +142,7 @@ export default function TongueTwisterPage() {
       const focusIPASymbols = highlightedPositions.map(p => p.char);
       
       letterMappings.forEach((mapping, idx) => {
-        const { letters, positions, ipa } = mapping;
+        const { positions, ipa } = mapping;
         
         if (positions.length === 0) return;
         

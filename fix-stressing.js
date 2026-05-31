@@ -36,7 +36,6 @@ for (const [lineIdxStr, section] of Object.entries(replacements)) {
 }
 
 // Add imports for Play and Square if missing
-let importLine = -1;
 for(let i=0; i<lines.length; i++) {
   if(lines[i].startsWith('import { Copy') && lines[i].includes('lucide-react')) {
     if (!lines[i].includes('Square')) {

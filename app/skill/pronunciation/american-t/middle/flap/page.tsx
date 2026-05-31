@@ -2,13 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play, Pause, Square } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import {
   renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
   renderSentenceWithHighlights,
-  renderAmericanTIpaSymbolHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
@@ -65,10 +64,6 @@ function formatIpaForDisplay(ipa: string): string {
   if (!trimmed) return '';
   const core = trimmed.replace(/^\/+|\/+$/g, '');
   return `/${core}/`;
-}
-
-function formatFlapIpaForLearner(ipa: string): string {
-  return formatIpaForDisplay(ipa).replace(/ɾ/g, 'd');
 }
 
 function renderFlapIpaForLearnerHighlight(ipa: string) {

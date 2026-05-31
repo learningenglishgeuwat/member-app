@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronDown, Gauge, Volume2, Play } from 'lucide-react';
+import { Volume2, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';

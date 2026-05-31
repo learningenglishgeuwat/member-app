@@ -55,7 +55,7 @@ export function ControlCenter({
         window.dispatchEvent(new CustomEvent('at-lesson-jump-to-section', {
           detail: { sectionId: id },
         }))
-      } catch (err) {
+      } catch {
         // ignore event dispatch failures
       }
     }

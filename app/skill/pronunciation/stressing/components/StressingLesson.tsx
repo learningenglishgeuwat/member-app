@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Square, Play } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
@@ -650,7 +650,6 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
     tekananKalimat: true,
     kataKontenFungsi: true,
   });
-  const [showIpa, setShowIpa] = useState(true);
   const [showContrastTranslation, setShowContrastTranslation] = useState(false);
   const [activePlayAllSection, setActivePlayAllSection] = useState<AudioPlaySectionKey | null>(
     null,
@@ -893,7 +892,6 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
       hideLabel: string;
     },
   ) {
-    const isPlaying = activePlayAllSection === sectionKey;
     const showIpa = ipaSectionKey ? showIpaBySection[ipaSectionKey] : false;
     return (
       <div className="stress-toolbar stress-toolbar--split">

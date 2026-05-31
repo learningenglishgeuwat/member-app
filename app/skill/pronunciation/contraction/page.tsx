@@ -6,7 +6,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Volume2 } from "lucide-react";
 import BackButton from "../../components/BackButton";
 import Sidebar from "../../components/skillSidebar/SkillSidebar";
-import { IpaText } from "@/app/components/IpaText";
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from "@/app/components";
 import { speakText, stopSpeech, waitForVoices } from "@/lib/tts/speech";
 import "./contraction.css";

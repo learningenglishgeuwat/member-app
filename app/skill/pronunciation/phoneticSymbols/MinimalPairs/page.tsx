@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import { Play, Pause, ChevronDown, Square } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import './styles/minimalPairs.css';
 import BackButton from '../../../components/BackButton';
@@ -10,7 +10,6 @@ import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { categoryLabelMap, minimalPairCategories } from './data/index';
-import { getAllCommonLetters } from '../data/commonLetters/CommonLetters';
 import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
@@ -121,8 +120,6 @@ const MinimalPairsPage: React.FC = () => {
     router.push('/skill/pronunciation/phoneticSymbols');
   };
 
-  const commonLetters = useMemo(() => getAllCommonLetters(), []);
-
   const selectedPairSymbols = useMemo(() => {
     if (!selectedPair?.pairLabel) return { a: '', b: '' };
     const [left = '', right = ''] = selectedPair.pairLabel.split('↔');
@@ -138,22 +135,6 @@ const MinimalPairsPage: React.FC = () => {
       b: normalizeSymbol(right),
     };
   }, [selectedPair?.pairLabel]);
-
-  const selectedPairCommonLetters = useMemo(() => {
-    const getPatterns = (symbol: string) => {
-      if (!symbol) return [];
-      const found = commonLetters.find(
-        (item) => item.ipaSymbol === `/${symbol}/` || item.ipaSymbol === symbol,
-      );
-      if (!found) return [];
-      return found.letter.split(',').map((item) => item.trim().replace(/^-|-$/g, ''));
-    };
-
-    return {
-      a: getPatterns(selectedPairSymbols.a),
-      b: getPatterns(selectedPairSymbols.b),
-    };
-  }, [commonLetters, selectedPairSymbols]);
 
   const selectedPairWordIpa = useMemo(() => {
     const entries: Record<string, string> = {};

@@ -85,7 +85,7 @@ export function PlayStopButton({
     if (resolvedSectionId && navigator?.openSection) {
       try {
         navigator.openSection(resolvedSectionId, targetPath)
-      } catch (err) {
+      } catch {
         // ignore
       }
       // delay calling onClick slightly to allow scroll/open to happen
