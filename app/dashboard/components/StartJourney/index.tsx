@@ -134,7 +134,10 @@ export function buildPronunciationCalendarPrompt(options: {
 
 const StartJourney: React.FC = () => {
   const router = useRouter()
-  const [goal, setGoal] = useState('')
+  const [goal, setGoal] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return localStorage.getItem(STORAGE_KEY) ?? ''
+  })
   const [loading, setLoading] = useState(false)
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
   const [initiating, setInitiating] = useState(false)
@@ -169,13 +172,6 @@ const StartJourney: React.FC = () => {
       selectedCalendarDays,
     ],
   )
-
-  useEffect(() => {
-    const savedGoal = localStorage.getItem(STORAGE_KEY)
-    if (savedGoal) {
-      setGoal(savedGoal)
-    }
-  }, [])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, goal)

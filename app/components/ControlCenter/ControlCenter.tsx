@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Gauge, ChevronDown } from 'lucide-react';
 import { getGlobalPlaybackSpeed, setGlobalPlaybackSpeed } from '@/lib/tts/speech';
@@ -25,13 +25,9 @@ export function ControlCenter({
   defaultOpen = false,
 }: ControlCenterProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [speed, setSpeed] = useState<number>(1);
+  const [speed, setSpeed] = useState<number>(() => getGlobalPlaybackSpeed());
   const router = useRouter()
   const pathname = usePathname()
-
-  useEffect(() => {
-    setSpeed(getGlobalPlaybackSpeed());
-  }, []);
 
   const handleSpeedChange = (val: number) => {
     setSpeed(val);

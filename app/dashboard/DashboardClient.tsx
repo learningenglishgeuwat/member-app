@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/MemberAuthContext'
@@ -98,7 +98,7 @@ export default function DashboardClient() {
     handleViewChange(START_JOURNEY_VIEW_ID)
   }
 
-  const handleViewChange = useCallback((nextView: string) => {
+  const handleViewChange = (nextView: string) => {
     const safeView = resolveDashboardView(nextView, canAccessStartJourney)
     if (!safeView) return
 
@@ -110,7 +110,7 @@ export default function DashboardClient() {
     })
 
     setCurrentView(safeView)
-  }, [canAccessStartJourney])
+  }
 
   useEffect(() => {
     if (hasRestoredViewRef.current) return

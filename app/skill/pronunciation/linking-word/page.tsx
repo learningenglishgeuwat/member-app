@@ -416,8 +416,9 @@ export default function LinkingWordPage() {
               <PhraseCard
                 key={`item-${index}`}
                 item={item}
-                id={index}
-                cardRefs={cardRefs}
+                onCardRef={(node) => {
+                  cardRefs.current[String(index)] = node;
+                }}
                 isPlayingBefore={playingId === `${activeTab}-${index}-before`}
                 isPlayingAfter={playingId === `${activeTab}-${index}-after`}
                 showIpa={showIpa}
@@ -459,8 +460,9 @@ export default function LinkingWordPage() {
                       <PhraseCard
                         key={id}
                         item={item}
-                        id={id}
-                        cardRefs={cardRefs}
+                        onCardRef={(node) => {
+                          cardRefs.current[String(id)] = node;
+                        }}
                         isPlayingBefore={playingId === `${activeTab}-${id}-before`}
                         isPlayingAfter={playingId === `${activeTab}-${id}-after`}
                         showIpa={showIpa}
@@ -507,8 +509,7 @@ function SubTabButton({
 
 function PhraseCard({
   item,
-  id,
-  cardRefs,
+  onCardRef,
   isPlayingBefore,
   isPlayingAfter,
   showIpa,
@@ -518,8 +519,7 @@ function PhraseCard({
   onPlayAfter,
 }: {
   item: LinkingWordItem;
-  id: string | number;
-  cardRefs: React.MutableRefObject<Record<string, HTMLDivElement | null>>;
+  onCardRef: (node: HTMLDivElement | null) => void;
   isPlayingBefore: boolean;
   isPlayingAfter: boolean;
   showIpa: boolean;
@@ -532,9 +532,7 @@ function PhraseCard({
 
   return (
     <div
-      ref={(node) => {
-        cardRefs.current[String(id)] = node;
-      }}
+      ref={onCardRef}
       className={cx(
         'bg-[#101414] border rounded-lg p-6 transition-all duration-300 group flex flex-col gap-4 relative overflow-hidden',
         isPlaying

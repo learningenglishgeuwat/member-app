@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     ".d/**",
     ".x/**",
     "backups/**",
+    "contraction-prototype/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
@@ -21,6 +22,18 @@ const eslintConfig = defineConfig([
     "jest.setup.js",
     "test-connection.js",
   ]),
+  {
+    files: ["*.js", "scripts/**/*.js", "app/**/*.test.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

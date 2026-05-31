@@ -21,15 +21,11 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
   const [recordedAudio, setRecordedAudio] = useState<string | null>(null);
   const [isPlayingRecording, setIsPlayingRecording] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = typeof document !== 'undefined';
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     return () => {

@@ -134,7 +134,7 @@ const MinimalPairsPage: React.FC = () => {
       a: normalizeSymbol(left),
       b: normalizeSymbol(right),
     };
-  }, [selectedPair?.pairLabel]);
+  }, [selectedPair]);
 
   const selectedPairWordIpa = useMemo(() => {
     const entries: Record<string, string> = {};
