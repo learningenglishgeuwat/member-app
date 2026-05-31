@@ -892,28 +892,18 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
       hideLabel: string;
     },
   ) {
-    const showIpa = ipaSectionKey ? showIpaBySection[ipaSectionKey] : false;
     return (
       <div className="stress-toolbar stress-toolbar--split">
-        {ipaSectionKey || translationToggle ? (
+        {translationToggle ? (
           <div className="stress-toolbar-left">
-            {ipaSectionKey ? (
-              <IpaVisibilityToggle
-                checked={showIpa}
-                onChange={() => toggleIpaBySection(ipaSectionKey)}
-                className="stress-ipa-toggle-btn"
-              />
-            ) : null}
-            {translationToggle ? (
-              <button
-                type="button"
-                className={`stress-ipa-toggle-btn font-sans font-semibold tracking-wider ${translationToggle.show ? 'is-active' : ''}`}
-                onClick={translationToggle.onToggle}
-                aria-pressed={translationToggle.show}
-              >
-                {translationToggle.show ? translationToggle.hideLabel : translationToggle.showLabel}
-              </button>
-            ) : null}
+            <button
+              type="button"
+              className={`stress-ipa-toggle-btn font-sans font-semibold tracking-wider ${translationToggle.show ? 'is-active' : ''}`}
+              onClick={translationToggle.onToggle}
+              aria-pressed={translationToggle.show}
+            >
+              {translationToggle.show ? translationToggle.hideLabel : translationToggle.showLabel}
+            </button>
           </div>
         ) : (
           <span aria-hidden="true" />
@@ -1761,7 +1751,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="dasarSukuKata"
                     onClick={() => void playAllBySection('dasarSukuKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.dasarSukuKata} onChange={() => toggleIpaBySection('dasarSukuKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Dasar Suku Kata" />
+                  <IpaVisibilityToggle checked={showIpaBySection.dasarSukuKata} onChange={() => toggleIpaBySection('dasarSukuKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.dasarSukuKata ? 'Sembunyikan IPA Dasar Suku Kata' : 'Tampilkan IPA Dasar Suku Kata'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.dasarSukuKata} onChange={() => toggleHighlightBySection('dasarSukuKata')} color="orange" label="Highlight Suku Kata" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1771,7 +1761,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="aturanCepat"
                     onClick={() => void playAllBySection('aturanCepat')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.aturanCepat} onChange={() => toggleIpaBySection('aturanCepat')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Aturan Cepat" />
+                  <IpaVisibilityToggle checked={showIpaBySection.aturanCepat} onChange={() => toggleIpaBySection('aturanCepat')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.aturanCepat ? 'Sembunyikan IPA Aturan Cepat' : 'Tampilkan IPA Aturan Cepat'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.aturanCepat} onChange={() => toggleHighlightBySection('aturanCepat')} color="orange" label="Highlight Aturan" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1781,7 +1771,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="tekananKata"
                     onClick={() => void playAllBySection('tekananKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.tekananKata} onChange={() => toggleIpaBySection('tekananKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Tekanan Kata" />
+                  <IpaVisibilityToggle checked={showIpaBySection.tekananKata} onChange={() => toggleIpaBySection('tekananKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.tekananKata ? 'Sembunyikan IPA Tekanan Kata' : 'Tampilkan IPA Tekanan Kata'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.tekananKata} onChange={() => toggleHighlightBySection('tekananKata')} color="orange" label="Highlight Tekanan Kata" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1791,7 +1781,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="kontrasNounVerb"
                     onClick={() => void playAllBySection('kontrasNounVerb')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.kontrasNounVerb} onChange={() => toggleIpaBySection('kontrasNounVerb')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Kontras Noun and Verb" />
+                  <IpaVisibilityToggle checked={showIpaBySection.kontrasNounVerb} onChange={() => toggleIpaBySection('kontrasNounVerb')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.kontrasNounVerb ? 'Sembunyikan IPA Kontras Noun and Verb' : 'Tampilkan IPA Kontras Noun and Verb'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.kontrasNounVerb} onChange={() => toggleHighlightBySection('kontrasNounVerb')} color="orange" label="Highlight Kontras N & V" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1801,7 +1791,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="bankKata"
                     onClick={() => void playAllBySection('bankKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.bankKata} onChange={() => toggleIpaBySection('bankKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Bank Kata" />
+                  <IpaVisibilityToggle checked={showIpaBySection.bankKata} onChange={() => toggleIpaBySection('bankKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.bankKata ? 'Sembunyikan IPA Bank Kata' : 'Tampilkan IPA Bank Kata'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.bankKata} onChange={() => toggleHighlightBySection('bankKata')} color="orange" label="Highlight Bank Kata" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -1811,7 +1801,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="practice"
                     onClick={() => void playAllBySection('practice')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Practice" />
+                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.practice ? 'Sembunyikan IPA Practice' : 'Tampilkan IPA Practice'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.practice} onChange={() => toggleHighlightBySection('practice')} color="orange" label="Highlight Latihan" />
                 </div>
               </>
@@ -1825,7 +1815,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="tekananKalimat"
                     onClick={() => void playAllBySection('tekananKalimat')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.tekananKalimat} onChange={() => toggleIpaBySection('tekananKalimat')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Tekanan Kalimat" />
+                  <IpaVisibilityToggle checked={showIpaBySection.tekananKalimat} onChange={() => toggleIpaBySection('tekananKalimat')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.tekananKalimat ? 'Sembunyikan IPA Tekanan Kalimat' : 'Tampilkan IPA Tekanan Kalimat'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.tekananKalimat} onChange={() => toggleHighlightBySection('tekananKalimat')} color="orange" label="Highlight Tekanan Kalimat" />
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1835,7 +1825,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="kataKontenFungsi"
                     onClick={() => void playAllBySection('kataKontenFungsi')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.kataKontenFungsi} onChange={() => toggleIpaBySection('kataKontenFungsi')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Konten & Fungsi" />
+                  <IpaVisibilityToggle checked={showIpaBySection.kataKontenFungsi} onChange={() => toggleIpaBySection('kataKontenFungsi')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.kataKontenFungsi ? 'Sembunyikan IPA Konten & Fungsi' : 'Tampilkan IPA Konten & Fungsi'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.kataKontenFungsi} onChange={() => toggleHighlightBySection('kataKontenFungsi')} color="orange" label="Highlight Konten & Fungsi" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -1845,7 +1835,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="practice"
                     onClick={() => void playAllBySection('practice')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label="IPA Practice" />
+                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.practice ? 'Sembunyikan IPA Practice' : 'Tampilkan IPA Practice'} />
                   <HighlightVisibilityToggle checked={showHighlightBySection.practice} onChange={() => toggleHighlightBySection('practice')} color="orange" label="Highlight Latihan" />
                 </div>
               </>

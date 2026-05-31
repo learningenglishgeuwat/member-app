@@ -714,16 +714,6 @@ const AlphabetPage: React.FC = () => {
               <div className="alphabet-practice-task">
                 <div className="alphabet-practice-task-header">
                   <p className="alphabet-practice-task-title">Mission:</p>
-                  <div className="alphabet-practice-task-actions">
-                    <button
-                      type="button"
-                      onClick={() => setShowPracticeIpa((prev) => !prev)}
-                      className={`alphabet-practice-toggle-btn ${showPracticeIpa ? 'active' : ''}`}
-                      aria-pressed={showPracticeIpa}
-                    >
-                      {showPracticeIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                    </button>
-                  </div>
                 </div>
                 <p className="alphabet-practice-task-text">
                   Eja semua huruf alfabet A-Z, lalu eja 5 nama negara berikut:
@@ -825,7 +815,12 @@ const AlphabetPage: React.FC = () => {
               className="mb-2 sm:mb-3"
               data-tour="alphabet-play-all"
             />
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-6" label="Show Alphabet IPA" />
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs mb-6"
+              label={showIpa ? 'Sembunyikan Alphabet IPA' : 'Tampilkan Alphabet IPA'}
+            />
           </div>
 
           <div>
@@ -837,7 +832,12 @@ const AlphabetPage: React.FC = () => {
               onClick={handlePlayAllPracticeCountries}
               className="mb-2 sm:mb-3"
             />
-            <IpaVisibilityToggle checked={showPracticeIpa} onChange={setShowPracticeIpa} className="w-full flex justify-between text-[10px] sm:text-xs" label="Practice IPA" />
+            <IpaVisibilityToggle
+              checked={showPracticeIpa}
+              onChange={setShowPracticeIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              label={showPracticeIpa ? 'Sembunyikan Practice IPA' : 'Tampilkan Practice IPA'}
+            />
           </div>
         </div>
       </ControlCenter>

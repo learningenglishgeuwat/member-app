@@ -376,15 +376,6 @@ export default function ClearTEndingPage() {
           title: 'Word/Phrase Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('examples')}
-                >
-                  {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-              </div>
               <div className="at-example-grid">
                 {CLEAR_T_ENDING_EXAMPLES.map((item, index) => (
                   <article
@@ -429,15 +420,6 @@ export default function ClearTEndingPage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentences')}
-                >
-                  {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-              </div>
               <div className="at-sentence-list">
                 {CLEAR_T_ENDING_SENTENCES.map((item, index) => (
                   <article
@@ -487,15 +469,6 @@ export default function ClearTEndingPage() {
                   Latih per kalimat dengan <strong>Putar</strong> dulu, lalu pakai{' '}
                   <strong>Play All</strong> untuk ritme.
                 </p>
-              </div>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentence-drills-examples')}
-                >
-                  {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
               </div>
               {CLEAR_T_ENDING_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (
                 <article

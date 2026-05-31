@@ -955,15 +955,6 @@ export default function FinalSoundSEsPage() {
           </h2>
           {openSections.pluralEndings ? (
             <div>
-              <div className="s-es-word-bank-controls">
-                <button
-                  type="button"
-                  className="s-es-word-bank-play-all-btn"
-                  onClick={() => setShowPluralIpa((prev) => !prev)}
-                >
-                  {showPluralIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-              </div>
               <div className="fs-topic-grid">
               {S_ES_USAGE_RULES.map((rule) => (
                 <article key={rule.ending} className="fs-topic-card">
@@ -1084,15 +1075,6 @@ export default function FinalSoundSEsPage() {
           </h2>
           {openSections.rulesTable ? (
             <>
-              <div className="s-es-word-bank-controls">
-                <button
-                  type="button"
-                  className="s-es-word-bank-play-all-btn"
-                  onClick={() => setShowRulesTableIpa((prev) => !prev)}
-                >
-                  {showRulesTableIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-              </div>
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
                 <table className="fs-topic-rules-table geuwat-table-responsive">
                   <thead>
@@ -1167,15 +1149,6 @@ export default function FinalSoundSEsPage() {
           </h2>
           {openSections.wordBank ? (
             <div>
-              <div className="s-es-word-bank-controls">
-                <button
-                  type="button"
-                  className="s-es-word-bank-play-all-btn"
-                  onClick={() => setShowWordBankIpa((prev) => !prev)}
-                >
-                  {showWordBankIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-              </div>
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
                 <table className="fs-topic-rules-table fs-topic-before-after-table geuwat-table-responsive">
                   <thead>
