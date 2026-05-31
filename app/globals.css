@@ -58,10 +58,6 @@
     color: var(--app-page-fg) !important;
   }
 
-  .font-display-ui {
-    font-family: var(--font-display);
-  }
-
   section h2,
   section h3,
   section h4,
@@ -70,14 +66,6 @@
   .fs-topic-title,
   .fs-topic-block-title {
     font-family: var(--font-display);
-  }
-
-  .font-body-ui {
-    font-family: var(--font-ui);
-  }
-
-  .font-tech-ui {
-    font-family: var(--font-tech);
   }
 
   /* Judul card boleh pakai Orbitron, TETAPI harus diisolasi dari `[data-ipa]` */
@@ -94,21 +82,6 @@
   [class*="playall-btn"] {
     font-family: var(--font-display);
   }
-}
-
-/* Shared UI primitives for pages that are still using classic CSS files. */
-.ui-display-title {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.ui-body-text {
-  font-family: var(--font-ui);
-}
-
-.ui-tech-text {
-  font-family: var(--font-tech);
 }
 
 /* Page Layout Base Classes - Prevent CSS Conflicts */
@@ -238,8 +211,6 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
-  .pronun-panel,
-  .pronun-card,
   .glass-panel,
   .pronunciation-topic-card-body,
   .alphabet-main-title,
@@ -264,10 +235,8 @@
   .stress-prompt-card,
   .at-hub-canvas-wrap,
   .at-hub-node-lesson-card,
-  .at-hub-summary-card,
-  .at-hub-group-card,
-  .text-pronunciation-panel,
-  .rt-panel
+  .rt-reading-card,
+  .rt-options-panel
 ) {
   border-color: rgb(var(--pronun-accent-1-rgb) / 0.38);
   border-radius: 14px;
@@ -283,8 +252,6 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
-  .pronun-card,
-  .pronun-interactive,
   .pronunciation-topic-card-body,
   .alphabet-letter-card,
   .fs-topic-card,
@@ -304,20 +271,15 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
-  .pronun-action-button,
-  .alphabet-play-all-btn,
   .alphabet-quick-spelling-btn,
   .alphabet-practice-toggle-btn,
-  .alphabet-practice-playall-btn,
   .alphabet-prompt-copy-btn
 ) {
   font-family: var(--font-display);
 }
 
 .pronunciation-layout.pronunciation-theme :where(
-  .pronun-icon-button,
   .alphabet-practice-country-play,
-  .alphabet-practice-letter-play,
   .alphabet-section-toggle-icon-wrap
 ) {
   display: inline-flex;
@@ -330,9 +292,7 @@
 }
 
 .pronunciation-layout.pronunciation-theme :where(
-  .pronun-icon-button,
   .alphabet-practice-country-play,
-  .alphabet-practice-letter-play,
   .alphabet-section-toggle-icon-wrap
 ):hover {
   border-color: rgb(var(--pronun-accent-2-rgb) / 0.9);
@@ -364,18 +324,6 @@
   .pronunciation-layout {
     min-height: 100dvh;
   }
-}
-
-/* Layout Reset - Force Clean State */
-.layout-reset {
-  all: initial;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-  position: relative;
 }
 
 /* ==========================================================================

@@ -153,34 +153,6 @@
   margin: 0;
 }
 
-.sps-play-all-btn {
-  border: 1px solid rgba(92, 193, 248, 0.52);
-  border-radius: 999px;
-  background: rgba(18, 51, 76, 0.5);
-  color: #dcf4ff;
-  width: 30px;
-  height: 30px;
-  font-family: var(--font-display);
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0;
-  cursor: pointer;
-  transition: 0.15s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sps-play-all-btn:hover {
-  border-color: rgba(157, 223, 255, 0.9);
-  background: rgba(26, 76, 112, 0.6);
-}
-
-.sps-play-all-btn.is-playing {
-  border-color: rgba(249, 165, 249, 0.86);
-  background: rgba(94, 38, 120, 0.58);
-}
-
 .sps-symbol-list {
   display: grid;
   gap: 0.5rem;

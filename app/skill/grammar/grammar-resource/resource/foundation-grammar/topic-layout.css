@@ -15,30 +15,6 @@
   gap: 1.15rem;
 }
 
-.gr-topic-header {
-  margin-bottom: 0.35rem;
-}
-
-.gr-topic-title {
-  font-size: 2rem;
-  line-height: 1.15;
-  font-weight: 700;
-}
-
-.gr-topic-subtitle {
-  margin-top: 0.5rem;
-}
-
-.gr-topic-block {
-  border-radius: 0.85rem;
-  padding: 1.05rem;
-}
-
-.gr-topic-block-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
 .gr-topic-page::-webkit-scrollbar,
 .gr-topic-page *::-webkit-scrollbar {
   width: 0;
@@ -100,9 +76,6 @@
     padding: 2.5rem;
   }
 
-  .gr-topic-title {
-    font-size: 2.45rem;
-  }
 }
 
 @media (max-width: 767px) {

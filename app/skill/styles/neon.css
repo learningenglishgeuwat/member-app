@@ -68,27 +68,10 @@
   100% { background-position: 0 10px; }
 }
 
-/* Tech Font */
-.font-tech {
-  font-family: var(--font-tech);
-}
-
 /* Neon Font */
 .font-neon {
   font-family: var(--font-display);
   text-shadow: 0 0 10px currentColor;
-}
-
-/* Tech Button Clip */
-.clip-tech-button {
-  clip-path: polygon(
-    0 0,
-    calc(100% - 8px) 0,
-    100% 8px,
-    100% 100%,
-    8px 100%,
-    0 calc(100% - 8px)
-  );
 }
 
 /* Tech Panel Clip */

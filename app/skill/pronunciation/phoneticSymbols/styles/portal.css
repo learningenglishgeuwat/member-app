@@ -355,12 +355,6 @@
   padding: 14px 16px 16px;
 }
 
-.futuristic-portal-container .symbol-table-modal-note {
-  color: rgba(199, 231, 255, 0.84);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
 .futuristic-portal-container .symbol-table-modal-note-row {
   display: flex;
   align-items: center;

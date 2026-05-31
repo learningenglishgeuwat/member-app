@@ -372,25 +372,6 @@
   box-shadow: 0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.2);
 }
 
-.stress-playall-btn {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.6);
-  color: #f4e8ff;
-  border-radius: 0.62rem;
-  padding: 0.28rem 0.68rem;
-  background: rgb(var(--pronun-panel-rgb) / 0.86);
-  font-family: inherit;
-  font-size: 0.79rem;
-  font-weight: 700;
-  line-height: 1.25;
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-}
-
-.stress-playall-btn:hover {
-  border-color: rgb(var(--pronun-accent-1-rgb) / 0.95);
-  color: #fff7ff;
-  background: rgb(var(--pronun-panel-rgb) / 0.94);
-}
-
 .stress-play-chip-btn {
   display: inline-flex;
   align-items: center;

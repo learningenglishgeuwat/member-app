@@ -33,68 +33,6 @@
   pointer-events: none;
 }
 
-/* Symbol Display Section - SCOPED */
-.symbol-detail-container .symbol-display-section {
-  position: relative;
-  padding: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32vh;
-}
-
-.symbol-detail-container .symbol-circle {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: rgba(139, 92, 246, 0.1);
-  border: 2px solid #be29ec;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-}
-
-.symbol-detail-container .symbol-circle::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #06b6d4, #be29ec, #ec4899);
-  z-index: -1;
-  animation: spin 3s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.symbol-detail-container .symbol-text {
-  font-size: clamp(1.5rem, 6vw, 3rem); /* 24px mobile - 48px desktop (H1) */
-  font-weight: bold;
-  color: var(--color-ipa);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-  font-family: var(--font-ipa);
-}
-
-.symbol-detail-container .symbol-category {
-  position: absolute;
-  bottom: -32px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(139, 92, 246, 0.2);
-  border: 1px solid #be29ec;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
-  color: #be29ec;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 .symbol-detail-container .symbol-letter-highlight {
   display: inline !important;
   padding: 0 !important;
@@ -107,55 +45,6 @@
   text-shadow:
     0 0 8px rgba(251, 146, 60, 0.88),
     0 0 16px rgba(251, 146, 60, 0.46) !important;
-}
-
-/* Video Section - SCOPED */
-.symbol-detail-container .video-section {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1.25rem;
-}
-
-.symbol-detail-container .video-container {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #be29ec;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
-}
-
-.symbol-detail-container .video-header {
-  background: rgba(139, 92, 246, 0.1);
-  padding: 0.75rem;
-  border-bottom: 1px solid #be29ec;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.symbol-detail-container .video-title {
-  color: #be29ec;
-  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.symbol-detail-container .video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-}
-
-.symbol-detail-container .video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 8px;
 }
 
 /* Word Examples Section - SCOPED */
@@ -173,17 +62,6 @@
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid #be29ec;
-}
-
-.symbol-detail-container .word-examples-title {
-  color: #be29ec;
-  font-size: clamp(1.125rem, 2.5vw, 1.5rem); /* 18px mobile - 24px desktop (H3) */
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .symbol-detail-container .word-grid {
@@ -381,67 +259,6 @@
   opacity: 1;
 }
 
-/* Recording Section - SCOPED */
-.symbol-detail-container .recording-section {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1.25rem;
-}
-
-.symbol-detail-container .recording-controls {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #ec4899;
-  border-radius: 12px;
-  padding: 1.25rem;
-  text-align: center;
-}
-
-.symbol-detail-container .record-button {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 2px solid #ec4899;
-  background: rgba(236, 72, 153, 0.1);
-  color: #ec4899;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-}
-
-.symbol-detail-container .record-button:hover {
-  background: rgba(236, 72, 153, 0.2);
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
-}
-
-.symbol-detail-container .record-button.recording {
-  background: #ec4899;
-  color: white;
-  animation: gameSelectPulse 1s infinite;
-}
-
-@keyframes gameSelectPulse {
-  0%, 100% { 
-    transform: scale(1);
-    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
-  }
-  50% { 
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(255, 0, 255, 0.6);
-  }
-}
-
-.symbol-detail-container .recording-status {
-  color: #ec4899;
-  font-size: clamp(0.75rem, 1.8vw, 0.875rem); /* 12px mobile - 14px desktop (Small Text) */
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 /* Tips Section - SCOPED */
 .symbol-detail-container .tips-section {
   max-width: 800px;
@@ -450,56 +267,10 @@
   margin-bottom: 2rem;
 }
 
-.symbol-detail-container .tips-container {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #ec4899;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.symbol-detail-container .tips-header {
-  background: rgba(236, 72, 153, 0.1);
-  padding: 0.75rem;
-  border-bottom: 1px solid #ec4899;
-  color: #ec4899;
-  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.symbol-detail-container .tips-content {
-  padding: 1rem;
-}
-
-.symbol-detail-container .tip-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
-  background: rgba(236, 72, 153, 0.05);
-  border-radius: 8px;
-  border-left: 3px solid #ec4899;
-}
-
-.symbol-detail-container .tip-icon {
-  color: #ec4899;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
 .symbol-detail-container .tip-text {
   color: white;
   font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
   line-height: 1.6;
-}
-
-/* Progress Section - SCOPED */
-.symbol-detail-container .progress-section {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.25rem;
 }
 
 /* Ensure top spacing on mobile is visible */
@@ -507,46 +278,6 @@
   .symbol-detail-container .symbol-detail-main {
     padding-top: 6.5rem !important;
   }
-}
-
-.symbol-detail-container .progress-container {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #10b981;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-}
-
-.symbol-detail-container .progress-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  color: #10b981;
-  font-weight: bold;
-}
-
-.symbol-detail-container .progress-text {
-  color: white;
-  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
-  margin-bottom: 1rem;
-}
-
-.symbol-detail-container .save-progress-button {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.symbol-detail-container .save-progress-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .common-letters-chevron {
@@ -637,12 +368,7 @@
   transform: rotate(180deg);
 }
 
-.symbol-detail-container .video-container,
 .symbol-detail-container .word-card,
-.symbol-detail-container .tips-container,
-.symbol-detail-container .recording-controls,
-.symbol-detail-container .progress-container,
-.symbol-detail-container .common-letters-panel,
 .symbol-detail-container .symbol-detail-chevron-toggle {
   border-color: rgba(6, 182, 212, 0.38) !important;
   border-radius: 14px !important;
@@ -668,20 +394,8 @@
 
 /* Responsive Design - SCOPED */
 @media (max-width: 768px) {
-  .symbol-detail-container .symbol-circle {
-    width: 120px;
-    height: 120px;
-  }
-  
-  /* Ukuran teks sudah diatur dengan clamp(), tidak perlu override lagi */
-  
   .symbol-detail-container .word-card {
     padding: 0.75rem;
-  }
-  
-  .symbol-detail-container .record-button {
-    width: 52px;
-    height: 52px;
   }
 }
 
