@@ -51,7 +51,6 @@ export default function DashboardClient() {
 
   const toggleSidebar = (e?: React.MouseEvent) => {
     e?.stopPropagation()
-    console.log('Toggle sidebar clicked! Current state:', isSidebarOpen, '-> New state:', !isSidebarOpen)
     setIsSidebarOpen(!isSidebarOpen)
   }
 
@@ -120,10 +119,16 @@ export default function DashboardClient() {
     const fallbackView = canAccessStartJourney ? START_JOURNEY_VIEW_ID : NOTIFICATIONS_VIEW_ID
     const nextView = savedView ?? fallbackView
     const timerId = window.setTimeout(() => {
-      handleViewChange(nextView)
+      setMountedViews(prev => {
+        if (prev.has(nextView)) return prev
+        const next = new Set(prev)
+        next.add(nextView)
+        return next
+      })
+      setCurrentView(nextView)
     }, 0)
     return () => window.clearTimeout(timerId)
-  }, [canAccessStartJourney, handleViewChange, hasSession, loading, user])
+  }, [canAccessStartJourney, hasSession, loading, user])
 
   useEffect(() => {
     if (currentView && isDashboardViewId(currentView)) {
@@ -136,12 +141,20 @@ export default function DashboardClient() {
       const customEvent = event as CustomEvent<{ viewId?: string }>
       const nextView = customEvent.detail?.viewId
       if (!nextView || !isDashboardViewId(nextView)) return
-      handleViewChange(nextView)
+      const safeView = resolveDashboardView(nextView, canAccessStartJourney)
+      if (!safeView) return
+      setMountedViews(prev => {
+        if (prev.has(safeView)) return prev
+        const next = new Set(prev)
+        next.add(safeView)
+        return next
+      })
+      setCurrentView(safeView)
     }
 
     window.addEventListener(DASHBOARD_VIEW_EVENT, onDashboardViewEvent as EventListener)
     return () => window.removeEventListener(DASHBOARD_VIEW_EVENT, onDashboardViewEvent as EventListener)
-  }, [handleViewChange])
+  }, [canAccessStartJourney])
 
   useEffect(() => {
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' })

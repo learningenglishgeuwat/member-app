@@ -16,6 +16,13 @@ import {
   waitForVoices,
 } from '@/lib/tts/speech';
 import type { WordExample } from '../data/wordExamples/wordExamples';
+import {
+  getCategoryDisplayName,
+  getPronunciationTips,
+  getSymbolDescription,
+  getVideoIdBySymbol,
+  getWordExamples,
+} from '../data';
 import { getAllCommonLetters, type CommonLetter } from '../data/commonLetters/CommonLetters';
 import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
 
@@ -131,6 +138,41 @@ type SymbolDetailSectionState = {
   video?: boolean;
   prompt?: boolean;
 };
+
+type SymbolDetailData = {
+  description: string;
+  category: string;
+  examples: WordExample[];
+  tips: string[];
+  videoId?: string;
+};
+
+function getDefaultSymbolDetailData(): SymbolDetailData {
+  return {
+    description: 'International Phonetic Alphabet Symbol',
+    category: 'Unknown',
+    examples: [],
+    tips: [],
+    videoId: undefined,
+  };
+}
+
+function getSymbolDetailData(symbol: string): SymbolDetailData {
+  if (!symbol) return getDefaultSymbolDetailData();
+
+  try {
+    return {
+      description: getSymbolDescription(symbol),
+      category: getCategoryDisplayName(symbol),
+      examples: getWordExamples(symbol),
+      tips: getPronunciationTips(symbol),
+      videoId: getVideoIdBySymbol(symbol),
+    };
+  } catch (error) {
+    console.error('Failed to resolve symbol data:', error);
+    return getDefaultSymbolDetailData();
+  }
+}
 
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
@@ -278,7 +320,6 @@ const SymbolDetailPage: React.FC = () => {
   const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
-  const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
   const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
@@ -299,19 +340,7 @@ const SymbolDetailPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isProgressSaved, setIsProgressSaved] = useState(false); // Start with false to match server
   const [isClient, setIsClient] = useState(false);
-  const [symbolData, setSymbolData] = useState<{
-    description: string;
-    category: string;
-    examples: WordExample[];
-    tips: string[];
-    videoId?: string;
-  }>({
-    description: 'International Phonetic Alphabet Symbol',
-    category: 'Unknown',
-    examples: [],
-    tips: [],
-    videoId: undefined,
-  });
+  const symbolData = useMemo(() => getSymbolDetailData(decodedSymbol), [decodedSymbol]);
   const symbolNavGroups = useMemo(() => getSymbolNavGroups(symbolData.category), [symbolData.category]);
   const britishNote = useMemo(
     () => BRITISH_NOTES_BY_SYMBOL[decodedSymbol] ?? null,
@@ -565,60 +594,6 @@ const SymbolDetailPage: React.FC = () => {
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
   
-  useEffect(() => {
-    let active = true;
-    if (!decodedSymbol) {
-      setSymbolData({
-        description: 'International Phonetic Alphabet Symbol',
-        category: 'Unknown',
-        examples: [],
-        tips: [],
-        videoId: undefined,
-      });
-      return () => {
-        active = false;
-      };
-    }
-
-    setSymbolLoading(true);
-    (async () => {
-      try {
-        const [wordExamplesModule, descriptionModule, tipsModule, videoModule] = await Promise.all([
-          import('../data/wordExamples/wordExamples'),
-          import('../data/symbolDescriptions'),
-          import('../data/pronunciationTips/PronunciationTips'),
-          import('../data/videoIds'),
-        ]);
-
-        if (!active) return;
-
-        setSymbolData({
-          description: descriptionModule.getSymbolDescription(decodedSymbol),
-          category: descriptionModule.getCategoryDisplayName(decodedSymbol),
-          examples: wordExamplesModule.getWordExamples(decodedSymbol),
-          tips: tipsModule.getPronunciationTips(decodedSymbol),
-          videoId: videoModule.getVideoIdBySymbol(decodedSymbol),
-        });
-      } catch (error) {
-        console.error('Failed to load symbol data:', error);
-        if (!active) return;
-        setSymbolData({
-          description: 'International Phonetic Alphabet Symbol',
-          category: 'Unknown',
-          examples: [],
-          tips: [],
-          videoId: undefined,
-        });
-      } finally {
-        if (active) setSymbolLoading(false);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [decodedSymbol]);
-
   // Manual scroll to word examples
   const scrollToWordExamples = () => {
     if (wordExamplesRef.current) {
@@ -675,7 +650,7 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const handlePlayAllWords = () => {
-    if (!isSpeechSynthesisSupported() || symbolLoading || symbolData.examples.length === 0) return;
+    if (!isSpeechSynthesisSupported() || symbolData.examples.length === 0) return;
 
     if (isPlayingAll) {
       stopPlayAllWords();
@@ -1489,7 +1464,7 @@ const SymbolDetailPage: React.FC = () => {
               isActive={isPlayingAll}
               label="WORDS"
               onClick={handlePlayAllWords}
-              disabled={symbolLoading || symbolData.examples.length === 0}
+              disabled={symbolData.examples.length === 0}
               className="mb-2 sm:mb-3"
             />
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
