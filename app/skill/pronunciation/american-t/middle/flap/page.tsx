@@ -406,7 +406,7 @@ export default function FlapTPage() {
   return (
     <>
       <AmericanTLessonScaffold
-      title="Flap T /ɾ/"
+      title="Flap T /d/"
       subtitle="Pola American T saat /t/ berubah menjadi bunyi flap cepat di tengah kata."
       backTo="/skill/pronunciation/american-t"
       pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
@@ -417,7 +417,7 @@ export default function FlapTPage() {
           onUnsave={handleUnsaveProgress}
           size="small"
           variant="primary"
-          topicName="Flap T /ɾ/"
+          topicName="Flap T /d/"
         />
       }
       sections={[
@@ -711,7 +711,7 @@ export default function FlapTPage() {
           content: (
             <div className="at-prompt-card">
               <div className="at-prompt-header">
-                <p className="at-prompt-title">Prompt Penilaian Flap T /ɾ/</p>
+                <p className="at-prompt-title">Prompt Penilaian Flap T /d/</p>
                 <button
                   type="button"
                   onClick={() => void handleCopyPrompt()}

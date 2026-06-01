@@ -16,12 +16,8 @@
 
 .spk-header {
   border-radius: 1rem;
-  border: 1px solid rgba(244, 114, 182, 0.32);
-  background: linear-gradient(
-    150deg,
-    rgba(62, 12, 43, 0.88),
-    rgba(34, 10, 30, 0.92)
-  );
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  background: rgba(0, 0, 0, 0.85);
   box-shadow: 0 0 24px rgba(255, 0, 214, 0.13);
   padding: 1.2rem;
 }
@@ -65,9 +61,9 @@
 }
 
 .spk-phase-panel {
-  border: 1px solid rgba(244, 114, 182, 0.28);
+  border: 1px solid rgba(244, 114, 182, 0.35);
   border-radius: 0.95rem;
-  background: rgba(60, 14, 42, 0.88);
+  background: rgba(0, 0, 0, 0.85);
   padding: 0.85rem;
   box-shadow: 0 0 18px rgba(255, 0, 214, 0.14);
 }
@@ -89,9 +85,9 @@
 
 .spk-phase-btn {
   width: 100%;
-  border: 1px solid rgba(244, 114, 182, 0.32);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.7rem;
-  background: rgba(86, 20, 58, 0.88);
+  background: rgba(0, 0, 0, 0.8);
   color: #ffe6f5;
   padding: 0.65rem 0.7rem;
   text-align: left;
@@ -127,9 +123,9 @@
 }
 
 .spk-phase-head {
-  border: 1px solid rgba(244, 114, 182, 0.26);
+  border: 1px solid rgba(244, 114, 182, 0.35);
   border-radius: 0.9rem;
-  background: rgba(76, 18, 54, 0.88);
+  background: rgba(0, 0, 0, 0.85);
   padding: 1rem;
 }
 
@@ -166,9 +162,9 @@
 
 .spk-tools {
   margin-top: 0.8rem;
-  border: 1px solid rgba(244, 114, 182, 0.26);
+  border: 1px solid rgba(244, 114, 182, 0.35);
   border-radius: 0.85rem;
-  background: rgba(68, 15, 48, 0.87);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.8rem;
 }
 
@@ -221,9 +217,9 @@
 
 .spk-search-input {
   width: 100%;
-  border: 1px solid rgba(244, 114, 182, 0.4);
+  border: 1px solid rgba(244, 114, 182, 0.5);
   border-radius: 0.6rem;
-  background: rgba(46, 11, 33, 0.95);
+  background: rgba(0, 0, 0, 0.9);
   color: #fff0ff;
   padding: 0.55rem 0.65rem;
   outline: none;
@@ -266,13 +262,9 @@
 
 .spk-card {
   min-width: 0;
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.9rem;
-  background: linear-gradient(
-    160deg,
-    rgba(96, 21, 66, 0.58),
-    rgba(37, 15, 31, 0.52)
-  );
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(10px) saturate(1.1);
   padding: 0.9rem;
   box-shadow: 0 0 16px rgba(236, 72, 153, 0.16);
@@ -494,9 +486,9 @@
 }
 
 .spk-detail-header {
-  border: 1px solid rgba(244, 114, 182, 0.36);
+  border: 1px solid rgba(244, 114, 182, 0.45);
   border-radius: 1rem;
-  background: linear-gradient(140deg, rgba(82, 15, 56, 0.92), rgba(34, 12, 30, 0.93));
+  background: rgba(0, 0, 0, 0.9);
   padding: 1.1rem;
   box-shadow: 0 0 22px rgba(236, 72, 153, 0.2);
 }
@@ -674,9 +666,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.7rem;
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.85rem;
-  background: rgba(69, 16, 49, 0.9);
+  background: rgba(0, 0, 0, 0.85);
   padding: 0.8rem;
 }
 
@@ -694,18 +686,18 @@
 
 .spk-detail-selector-item select {
   width: 100%;
-  border: 1px solid rgba(244, 114, 182, 0.42);
+  border: 1px solid rgba(244, 114, 182, 0.5);
   border-radius: 0.55rem;
-  background: rgba(42, 10, 30, 0.95);
+  background: rgba(0, 0, 0, 0.9);
   color: #fff3ff;
   padding: 0.55rem 0.6rem;
 }
 
 .spk-detail-section {
   margin-top: 0.9rem;
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.9rem;
-  background: rgba(60, 16, 42, 0.88);
+  background: rgba(0, 0, 0, 0.85);
   padding: 0.95rem;
 }
 
@@ -824,9 +816,9 @@
 
 .spk-detail-dialog-block {
   margin-top: 0.65rem;
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.72rem;
-  background: rgba(84, 23, 57, 0.86);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.75rem;
 }
 
@@ -1104,9 +1096,9 @@
 }
 
 .spk-detail-mini-card {
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.72rem;
-  background: rgba(84, 23, 57, 0.86);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.7rem;
 }
 
@@ -1202,9 +1194,9 @@
 }
 
 .spk-detail-sentence-item {
-  border: 1px solid rgba(244, 114, 182, 0.34);
+  border: 1px solid rgba(244, 114, 182, 0.45);
   border-radius: 0.55rem;
-  background: rgba(79, 21, 53, 0.86);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.55rem 0.6rem;
   display: flex;
   align-items: center;

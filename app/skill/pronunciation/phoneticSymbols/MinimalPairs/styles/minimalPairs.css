@@ -69,8 +69,8 @@
   grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
   gap: 12px;
   align-items: end;
-  background: rgba(5, 10, 20, 0.8);
-  border: 1px solid rgba(0, 255, 255, 0.25);
+  background: rgba(5, 10, 20, 0.95);
+  border: 1px solid rgba(0, 255, 255, 0.4);
   border-radius: 14px;
   padding: 12px;
   backdrop-filter: blur(7px);
@@ -93,8 +93,8 @@
 .minimal-control select {
   height: 40px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  background: rgba(8, 16, 32, 0.9);
+  border: 1px solid rgba(0, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.85);
   color: #f6f9ff;
   padding: 0 10px;
 }
@@ -102,8 +102,8 @@
 .minimal-pair-info,
 .minimal-card {
   margin-top: 14px;
-  background: rgba(4, 8, 18, 0.84);
-  border: 1px solid rgba(0, 255, 255, 0.2);
+  background: rgba(4, 8, 18, 0.95);
+  border: 1px solid rgba(0, 255, 255, 0.35);
   border-radius: 14px;
   padding: 14px;
   backdrop-filter: blur(6px);
@@ -145,14 +145,14 @@
 .minimal-pair-info,
 .minimal-card,
 .minimal-word-card {
-  border-color: rgba(6, 182, 212, 0.38);
+  border-color: rgba(6, 182, 212, 0.5);
   border-radius: 14px;
   background:
-    linear-gradient(165deg, rgba(18, 13, 35, 0.9), rgba(2, 8, 23, 0.96)),
+    linear-gradient(165deg, rgba(18, 13, 35, 0.98), rgba(2, 8, 23, 0.98)),
     radial-gradient(circle at 18% 12%, rgba(6, 182, 212, 0.14), transparent 58%);
   box-shadow:
     0 16px 32px rgba(0, 0, 0, 0.34),
-    0 0 0 1px rgba(6, 182, 212, 0.1),
+    0 0 0 1px rgba(6, 182, 212, 0.2),
     0 0 34px rgba(190, 41, 236, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
@@ -257,8 +257,8 @@
   align-items: center;
   padding: 9px;
   border-radius: 10px;
-  border: 1px solid rgba(190, 41, 236, 0.25);
-  background: rgba(9, 12, 24, 0.65);
+  border: 1px solid rgba(190, 41, 236, 0.4);
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .minimal-compare-row {
@@ -284,8 +284,8 @@
   gap: 8px;
   padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(190, 41, 236, 0.38);
-  background: rgba(190, 41, 236, 0.09);
+  border: 1px solid rgba(190, 41, 236, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   color: inherit;
   transition: all 0.2s ease;
 }
@@ -299,14 +299,14 @@
 }
 
 .minimal-example-button:hover {
-  background: rgba(190, 41, 236, 0.18);
-  border-color: rgba(190, 41, 236, 0.6);
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(190, 41, 236, 0.7);
 }
 
 .minimal-example-button.active {
-  border-color: rgba(190, 41, 236, 0.75);
-  box-shadow: 0 0 14px rgba(190, 41, 236, 0.35);
-  background: rgba(190, 41, 236, 0.14);
+  border-color: rgba(190, 41, 236, 0.85);
+  box-shadow: 0 0 14px rgba(190, 41, 236, 0.45);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 
@@ -318,8 +318,8 @@
   justify-content: center;
   min-width: 40px;
   border-radius: 8px;
-  border: 1px solid rgba(190, 41, 236, 0.5);
-  background: rgba(190, 41, 236, 0.12);
+  border: 1px solid rgba(190, 41, 236, 0.65);
+  background: rgba(190, 41, 236, 0.22);
   color: #f0bbff;
   font-size: 0.74rem;
   font-weight: 700;
@@ -410,8 +410,8 @@
   gap: 8px;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid rgba(190, 41, 236, 0.25);
-  background: rgba(9, 12, 24, 0.65);
+  border: 1px solid rgba(190, 41, 236, 0.4);
+  background: rgba(0, 0, 0, 0.85);
   padding: 9px;
 }
 

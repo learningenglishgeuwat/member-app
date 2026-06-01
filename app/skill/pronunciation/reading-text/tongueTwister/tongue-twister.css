@@ -17,9 +17,9 @@
 .tt-shell {
   width: min(760px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(164, 98, 236, 0.38);
+  border: 1px solid rgba(164, 98, 236, 0.5);
   border-radius: 16px;
-  background: rgba(22, 10, 40, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   padding: 1.2rem;
 }
 
@@ -60,9 +60,9 @@
 .tt-select {
   width: 100%;
   min-height: 44px;
-  border: 1px solid rgba(169, 107, 236, 0.5);
+  border: 1px solid rgba(169, 107, 236, 0.6);
   border-radius: 10px;
-  background: rgba(38, 16, 62, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   color: #f4ecff;
   padding: 0.55rem 0.75rem;
   margin-bottom: 0.95rem;
@@ -140,9 +140,9 @@
   margin: 0;
   padding: 0.35rem;
   list-style: none;
-  border: 1px solid rgba(169, 107, 236, 0.5);
+  border: 1px solid rgba(169, 107, 236, 0.6);
   border-radius: 10px;
-  background: rgba(20, 10, 35, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -159,7 +159,7 @@
 }
 
 .tt-dropdown-item:hover {
-  background: rgba(110, 53, 168, 0.4);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .tt-dropdown-item.is-active {
@@ -168,9 +168,9 @@
 }
 
 .tt-card {
-  border: 1px solid rgba(87, 180, 242, 0.35);
+  border: 1px solid rgba(87, 180, 242, 0.45);
   border-radius: 12px;
-  background: rgba(16, 19, 43, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   padding: 0.9rem;
 }
 
@@ -190,12 +190,12 @@
 .tt-pill {
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(170, 103, 235, 0.45);
+  border: 1px solid rgba(170, 103, 235, 0.55);
   border-radius: 999px;
   padding: 0.2rem 0.55rem;
   font-size: 0.77rem;
   color: #e7d8ff;
-  background: rgba(65, 30, 102, 0.45);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .tt-card-text {
@@ -214,9 +214,9 @@
 
 .tt-ipa-box {
   margin-top: 0.65rem;
-  border: 1px solid rgba(140, 123, 239, 0.45);
+  border: 1px solid rgba(140, 123, 239, 0.55);
   border-radius: 10px;
-  background: rgba(33, 25, 62, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   padding: 0.5rem 0.6rem;
 }
 
