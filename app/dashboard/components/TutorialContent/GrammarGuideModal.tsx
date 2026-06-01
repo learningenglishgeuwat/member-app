@@ -17,7 +17,7 @@ const GrammarGuideModal: React.FC<GrammarGuideModalProps> = ({ isOpen, onClose }
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[90vw] sm:max-w-2xl bg-black border border-teal-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(20,184,166,0.2)]"
+        className="w-full max-w-[90vw] sm:max-w-2xl bg-black border border-cyan-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(6,182,212,0.2)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 mb-4">
@@ -74,13 +74,13 @@ const GrammarGuideModal: React.FC<GrammarGuideModalProps> = ({ isOpen, onClose }
         <div className="mt-5 sm:mt-6 flex justify-end gap-2">
           <Link
             href="/skill/grammar"
-            className="px-3 sm:px-4 py-2 rounded-lg bg-teal-500/20 border border-teal-500/40 text-teal-200 hover:bg-teal-500/30 transition-colors text-xs sm:text-sm"
+            className="px-3 sm:px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-200 hover:bg-cyan-500/30 transition-colors text-xs sm:text-sm"
             onClick={onClose}
           >
             Go to Grammar Menu
           </Link>
           <button
-            className="px-3 sm:px-4 py-2 rounded-lg bg-teal-500/20 border border-teal-500/40 text-teal-200 hover:bg-teal-500/30 transition-colors text-xs sm:text-sm"
+            className="px-3 sm:px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-200 hover:bg-cyan-500/30 transition-colors text-xs sm:text-sm"
             onClick={onClose}
             type="button"
           >

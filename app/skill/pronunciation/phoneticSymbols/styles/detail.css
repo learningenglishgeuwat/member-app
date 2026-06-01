@@ -61,7 +61,7 @@
   justify-content: space-between;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #be29ec;
+  border-bottom: 1px solid #9333ea;
 }
 
 .symbol-detail-container .word-grid {
@@ -94,7 +94,7 @@
   position: relative !important;
   padding: 0.75rem !important;
   background: rgba(0, 0, 0, 0.6) !important;
-  border: 1px solid #be29ec !important;
+  border: 1px solid #9333ea !important;
   border-radius: 12px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
@@ -128,7 +128,7 @@
   position: relative !important;
   padding: 0.75rem !important;
   background: rgba(0, 0, 0, 0.6) !important;
-  border: 1px solid #be29ec !important;
+  border: 1px solid #9333ea !important;
   border-radius: 12px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
@@ -147,17 +147,17 @@
 }
 
 .symbol-detail-container .word-card:hover {
-  background: rgba(139, 92, 246, 0.2);
+  background: rgba(147, 51, 234, 0.2);
   border-color: #06b6d4;
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
 }
 
 .symbol-detail-container .word-card.active {
-  background: rgba(139, 92, 246, 0.4);
-  border-color: #be29ec;
+  background: rgba(147, 51, 234, 0.4);
+  border-color: #9333ea;
   transform: scale(1.1);
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
 }
 
 .symbol-detail-container .word-grid button.word-card.is-speaking {
@@ -165,14 +165,14 @@
   border-width: 1.5px !important;
   background: linear-gradient(
     145deg,
-    rgba(88, 28, 135, 0.62) 0%,
-    rgba(126, 34, 206, 0.46) 48%,
-    rgba(59, 7, 100, 0.72) 100%
+    rgba(147, 51, 234, 0.62) 0%,
+    rgba(217, 70, 239, 0.46) 48%,
+    rgba(147, 51, 234, 0.72) 100%
   ) !important;
   box-shadow:
     0 0 0 1px rgba(233, 213, 255, 0.45),
-    0 0 24px rgba(190, 41, 236, 0.58),
-    0 0 44px rgba(168, 85, 247, 0.36),
+    0 0 24px rgba(147, 51, 234, 0.58),
+    0 0 44px rgba(217, 70, 239, 0.36),
     inset 0 0 18px rgba(233, 213, 255, 0.22) !important;
   animation: symbolWordCardSpeakingPulse 0.9s ease-in-out infinite !important;
 }
@@ -233,7 +233,7 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  border: 2px solid #be29ec;
+  border: 2px solid #9333ea;
   opacity: 0;
   transition: opacity 0.3s ease;
 }

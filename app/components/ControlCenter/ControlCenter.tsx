@@ -68,7 +68,10 @@ export function ControlCenter({
       {/* Toggle Tab */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full bg-[#101314] border border-r-0 border-white/10 p-1 sm:p-1.5 rounded-l-md text-cyan-400 hover:text-cyan-300 transition-colors shadow-[-4px_0_10px_rgba(0,0,0,0.3)]"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full bg-[#101314] border border-r-0 border-white/10 p-1 sm:p-1.5 rounded-l-md transition-colors shadow-[-4px_0_10px_rgba(0,0,0,0.3)]"
+        style={{ color: 'var(--color-cyan-primary)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-cyan-hover)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-cyan-primary)'; }}
         aria-label={isOpen ? 'Close Control Center' : 'Open Control Center'}
       >
         {isOpen ? <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <ChevronLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}

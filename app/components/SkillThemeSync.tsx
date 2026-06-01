@@ -47,7 +47,7 @@ const SPEAKING_PAGE_BG = DEFAULT_PAGE_BG
 const ACCENT_HEX_BY_SKILL_TYPE: Record<string, string> = {
   P: '#bc13fe', // purple
   V: '#39ff14', // green
-  G: '#14b8a6', // teal
+  G: '#06b6d4', // cyan
   S: '#ff00ff', // pink
   default: '#00f3ff', // cyan
 }

@@ -990,14 +990,14 @@ export default function FinalSoundDEdPage() {
                               Before
                             </span>
                             <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
-                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                              <span className="font-sans text-sm mr-1 text-white">
                                 {renderDEdWordHighlight(
                                   example.wordBefore,
                                   'base',
                                   `past-${example.wordBefore}-before-word`,
                                 )}
                                 {showPastEndingsIpa ? (
-                                  <span className="font-mono text-xs opacity-70 ml-1">
+                                  <span className="font-ipa text-xs opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipaBefore,
                                       'base',
@@ -1009,7 +1009,7 @@ export default function FinalSoundDEdPage() {
                               <button
                                 type="button"
                                 onClick={() => void playPastEndingSingle(example.wordBefore, `${rule.ending}-${example.word}`)}
-                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.wordBefore}`}
                               >
                                 <Play className="w-3.5 h-3.5" />
@@ -1022,14 +1022,14 @@ export default function FinalSoundDEdPage() {
                               After
                             </span>
                             <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
-                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                              <span className="font-sans text-lg mr-2 font-bold text-white">
                                 {renderDEdWordHighlight(
                                   example.word,
                                   'withEnding',
                                   `past-${example.word}-after-word`,
                                 )}
                                 {showPastEndingsIpa ? (
-                                  <span className="font-mono text-sm opacity-70 ml-1">
+                                  <span className="font-ipa text-sm opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipa,
                                       'withEnding',
@@ -1041,7 +1041,7 @@ export default function FinalSoundDEdPage() {
                               <button
                                 type="button"
                                 onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
-                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.word}`}
                               >
                                 <Play className="w-4 h-4" />

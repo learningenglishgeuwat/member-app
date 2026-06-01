@@ -79,7 +79,7 @@ export const TOPICS: Topic[] = [
     description:
       "Pelajari contraction dalam spoken English: I'm, you're, I'll, can't, gonna, dan bentuk pendek lain yang membuat ucapan terdengar lebih natural.",
     icon: "'",
-    color: 'from-teal-400 to-cyan-500',
+    color: 'from-cyan-400 to-cyan-500',
     bgImage: 'https://picsum.photos/id/60/1920/1080',
   },
   {

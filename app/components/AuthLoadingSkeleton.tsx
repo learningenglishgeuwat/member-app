@@ -84,13 +84,13 @@ export default function AuthLoadingSkeleton({ hint, variant }: AuthLoadingSkelet
     return (
       <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,#10212e_0%,#04070a_48%,#010203_100%)] text-slate-200">
         <div className="pointer-events-none fixed inset-0 opacity-20 [background-image:linear-gradient(rgba(20,184,166,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.12)_1px,transparent_1px)] [background-size:42px_42px]" />
-        <div className="relative z-10 border-b border-teal-400/25 bg-black/30 px-5 py-4 backdrop-blur-sm" />
+        <div className="relative z-10 border-b border-cyan-400/25 bg-black/30 px-5 py-4 backdrop-blur-sm" />
         <main className="relative z-10 mx-auto w-[min(960px,92vw)] px-2 pb-12 pt-10">
           <div className="mx-auto w-[220px] animate-pulse space-y-3">
             <div className="h-3 rounded bg-slate-700/70" />
             <div className="h-8 rounded bg-slate-700/70" />
           </div>
-          <div className="mx-auto mt-8 h-[250px] w-[min(620px,88vw)] animate-pulse rounded-2xl border border-teal-300/25 bg-black/65" />
+          <div className="mx-auto mt-8 h-[250px] w-[min(620px,88vw)] animate-pulse rounded-2xl border border-cyan-300/25 bg-black/65" />
           <div className="mx-auto mt-6 w-[min(620px,88vw)] animate-pulse space-y-3 rounded-xl border border-white/10 bg-black/35 p-5">
             <div className="h-5 w-52 rounded bg-slate-700/70" />
             <div className="h-3 w-full rounded bg-slate-800/80" />
@@ -107,7 +107,7 @@ export default function AuthLoadingSkeleton({ hint, variant }: AuthLoadingSkelet
     return (
       <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_14%_0%,#11323a_0%,#081118_48%,#04070a_100%)] text-slate-200">
         <div className="pointer-events-none fixed inset-0 opacity-15 [background-image:linear-gradient(rgba(20,184,166,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.16)_1px,transparent_1px)] [background-size:36px_36px]" />
-        <div className="relative z-10 border-b border-teal-400/25 bg-black/30 px-5 py-4 backdrop-blur-sm" />
+        <div className="relative z-10 border-b border-cyan-400/25 bg-black/30 px-5 py-4 backdrop-blur-sm" />
         <main className="relative z-10 mx-auto w-[min(1280px,96vw)] px-2 pb-8 pt-6">
           <div className="mb-4 flex animate-pulse items-start justify-between gap-4">
             <div className="space-y-3">
@@ -115,11 +115,11 @@ export default function AuthLoadingSkeleton({ hint, variant }: AuthLoadingSkelet
               <div className="h-8 w-72 rounded bg-slate-700/70" />
               <div className="h-3 w-80 rounded bg-slate-800/80" />
             </div>
-            <div className="h-20 w-36 rounded-xl border border-teal-300/25 bg-black/65" />
+            <div className="h-20 w-36 rounded-xl border border-cyan-300/25 bg-black/65" />
           </div>
           <div className="grid min-h-[60vh] grid-cols-[320px_minmax(0,1fr)] grid-rows-[auto_1fr] gap-4 max-[980px]:grid-cols-1 max-[980px]:grid-rows-none">
-            <div className="col-span-2 h-20 animate-pulse rounded-xl border border-teal-300/25 bg-black/65 max-[980px]:col-span-1" />
-            <div className="animate-pulse rounded-xl border border-teal-300/25 bg-black/65 p-4">
+            <div className="col-span-2 h-20 animate-pulse rounded-xl border border-cyan-300/25 bg-black/65 max-[980px]:col-span-1" />
+            <div className="animate-pulse rounded-xl border border-cyan-300/25 bg-black/65 p-4">
               <div className="h-20 rounded-lg bg-slate-800/70" />
               <div className="mt-3 space-y-2">
                 <div className="h-10 rounded-lg bg-slate-800/70" />
@@ -127,7 +127,7 @@ export default function AuthLoadingSkeleton({ hint, variant }: AuthLoadingSkelet
                 <div className="h-10 rounded-lg bg-slate-800/70" />
               </div>
             </div>
-            <div className="animate-pulse rounded-xl border border-teal-300/25 bg-black/65 p-4">
+            <div className="animate-pulse rounded-xl border border-cyan-300/25 bg-black/65 p-4">
               <div className="h-24 rounded-lg bg-slate-800/70" />
               <div className="mt-3 h-28 rounded-lg bg-slate-800/70" />
               <div className="mt-3 h-24 rounded-lg bg-slate-800/70" />

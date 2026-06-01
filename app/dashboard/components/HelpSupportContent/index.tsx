@@ -43,7 +43,7 @@ export default function HelpSupportContent() {
 
       <section className="rounded-2xl border border-slate-700 bg-black/70 p-6">
         <div className="mb-3 flex items-center gap-2">
-          <LifeBuoy className="h-5 w-5 text-teal-300" />
+          <LifeBuoy className="h-5 w-5 text-cyan-300" />
           <h3 className="font-display text-lg font-semibold text-white">Common Checks</h3>
         </div>
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-300">

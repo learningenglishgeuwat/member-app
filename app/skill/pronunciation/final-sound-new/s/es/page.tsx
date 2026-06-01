@@ -987,14 +987,14 @@ export default function FinalSoundSEsPage() {
                               Before
                             </span>
                             <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
-                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                              <span className="font-sans text-sm mr-1 text-white">
                                 {renderSEsWordHighlight(
                                   example.wordBefore,
                                   'base',
                                   `plural-${example.wordBefore}-before-word`,
                                 )}
                                 {showPluralIpa ? (
-                                  <span className="font-mono text-xs opacity-70 ml-1">
+                                  <span className="font-ipa text-xs opacity-70 ml-1">
                                     {renderSEsIpaHighlight(
                                       example.ipaBefore,
                                       'base',
@@ -1006,7 +1006,7 @@ export default function FinalSoundSEsPage() {
                               <button
                                 type="button"
                                 onClick={() => void speakWithBestEnglishVoice(example.wordBefore)}
-                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.wordBefore}`}
                               >
                                 <Play className="w-3.5 h-3.5" />
@@ -1015,18 +1015,18 @@ export default function FinalSoundSEsPage() {
                           </div>
 
                           <div className="flex items-center gap-2 text-white/80">
-                            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-100 whitespace-nowrap min-w-[45px]">
+                            <span className="font-mono text-[10px] uppercase tracking-wider text-white/90 whitespace-nowrap min-w-[45px]">
                               After
                             </span>
                             <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
-                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                              <span className="font-sans text-lg mr-2 font-bold text-white">
                                 {renderSEsWordHighlight(
                                   example.word,
                                   'withEnding',
                                   `plural-${example.word}-after-word`,
                                 )}
                                 {showPluralIpa ? (
-                                  <span className="font-mono text-sm opacity-70 ml-1">
+                                  <span className="font-ipa text-sm opacity-70 ml-1">
                                     {renderSEsIpaHighlight(
                                       example.ipa,
                                       'withEnding',
@@ -1038,7 +1038,7 @@ export default function FinalSoundSEsPage() {
                               <button
                                 type="button"
                                 onClick={() => void speakWithBestEnglishVoice(example.word)}
-                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.word}`}
                               >
                                 <Play className="w-4 h-4" />
@@ -1348,7 +1348,7 @@ export default function FinalSoundSEsPage() {
       <ControlCenter>
         <div className="flex flex-col gap-6">
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest block mb-1.5 sm:mb-2 uppercase" style={{ color: 'var(--color-cyan-primary)', opacity: 0.8 }}>
               Plural Rules
             </span>
             <PlayStopButton
@@ -1380,7 +1380,7 @@ export default function FinalSoundSEsPage() {
           </div>
 
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest block mb-1.5 sm:mb-2 uppercase" style={{ color: 'var(--color-cyan-primary)', opacity: 0.8 }}>
               Rules Table
             </span>
             <PlayStopButton
@@ -1412,7 +1412,7 @@ export default function FinalSoundSEsPage() {
           </div>
 
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest block mb-1.5 sm:mb-2 uppercase" style={{ color: 'var(--color-cyan-primary)', opacity: 0.8 }}>
               Word Bank
             </span>
             <PlayStopButton

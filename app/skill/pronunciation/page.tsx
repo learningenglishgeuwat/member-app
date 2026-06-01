@@ -71,12 +71,12 @@ const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
     hintKicker: 'text-cyan-300',
   },
   contraction: {
-    detailBorderLeft: 'border-l-teal-400',
-    detailBorder: 'border-teal-400/30',
-    hintBg: 'bg-teal-950/35',
-    hintBorder: 'border-teal-400/30',
-    hintIcon: 'text-teal-300',
-    hintKicker: 'text-teal-200',
+    detailBorderLeft: 'border-l-cyan-400',
+    detailBorder: 'border-cyan-400/30',
+    hintBg: 'bg-cyan-950/35',
+    hintBorder: 'border-cyan-400/30',
+    hintIcon: 'text-cyan-300',
+    hintKicker: 'text-cyan-200',
   },
   text: {
     detailBorderLeft: 'border-l-slate-500',

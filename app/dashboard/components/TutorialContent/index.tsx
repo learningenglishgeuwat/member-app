@@ -134,7 +134,7 @@ const TutorialContent: React.FC = () => {
     <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
       <header className="space-y-2">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
-          TUTORIAL <span className="text-teal-400">LIBRARY</span>
+          TUTORIAL <span className="text-cyan-400">LIBRARY</span>
         </h2>
         <p className="text-slate-400 font-mono text-xs sm:text-sm">Learn English with our comprehensive tutorial collection.</p>
       </header>
@@ -159,10 +159,10 @@ const TutorialContent: React.FC = () => {
                     : isVocabularyGuide
                       ? 'bg-green-900/20 border-green-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(57,255,20,0.22)] hover:shadow-[0_0_34px_rgba(57,255,20,0.35)]'
                       : isGrammarGuide
-                        ? 'bg-teal-900/20 border-teal-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(20,184,166,0.22)] hover:shadow-[0_0_34px_rgba(20,184,166,0.35)]'
+                        ? 'bg-cyan-900/20 border-cyan-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(6,182,212,0.22)] hover:shadow-[0_0_34px_rgba(6,182,212,0.35)]'
                         : isSpeakingGuide
                           ? 'bg-pink-900/20 border-pink-500/40 hover:scale-105 cursor-pointer shadow-[0_0_22px_rgba(255,0,255,0.22)] hover:shadow-[0_0_34px_rgba(255,0,255,0.35)]'
-                          : 'bg-teal-900/20 border-teal-500/30 hover:scale-105 cursor-pointer'
+                          : 'bg-cyan-900/20 border-cyan-500/30 hover:scale-105 cursor-pointer'
                 }
               `}
             >
@@ -191,10 +191,10 @@ const TutorialContent: React.FC = () => {
                       : isVocabularyGuide
                         ? 'bg-gradient-to-br from-green-500 to-emerald-600'
                         : isGrammarGuide
-                          ? 'bg-gradient-to-br from-teal-500 to-cyan-600'
+                          ? 'bg-gradient-to-br from-cyan-500 to-cyan-600'
                           : isSpeakingGuide
                             ? 'bg-gradient-to-br from-pink-500 to-fuchsia-600'
-                            : 'bg-gradient-to-br from-teal-500 to-teal-600'
+                            : 'bg-gradient-to-br from-cyan-500 to-cyan-600'
                   }
                 `}>
                   <Icon className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${tutorial.locked ? 'text-gray-500' : 'text-white'}`} />
@@ -243,10 +243,10 @@ const TutorialContent: React.FC = () => {
                         : isVocabularyGuide
                           ? 'bg-green-500/20 border border-green-500/40 text-green-200 hover:bg-green-500/30'
                           : isGrammarGuide
-                            ? 'bg-teal-500/20 border border-teal-500/40 text-teal-200 hover:bg-teal-500/30'
+                            ? 'bg-cyan-500/20 border border-cyan-500/40 text-cyan-200 hover:bg-cyan-500/30'
                             : isSpeakingGuide
                               ? 'bg-pink-500/20 border border-pink-500/40 text-pink-200 hover:bg-pink-500/30'
-                              : 'bg-teal-500/20 border border-teal-500/30 text-teal-300 hover:bg-teal-500/30'
+                              : 'bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/30'
                     }
                   `}
                 >

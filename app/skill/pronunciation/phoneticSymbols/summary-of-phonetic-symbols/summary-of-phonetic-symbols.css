@@ -88,10 +88,10 @@
 .sps-note {
   margin: 0 0 0.8rem;
   padding: 0.55rem 0.7rem;
-  border: 1px solid rgba(86, 189, 248, 0.45);
+  border: 1px solid rgba(217, 70, 239, 0.45);
   border-radius: 8px;
-  background: rgba(14, 116, 144, 0.15);
-  color: #d9f4ff;
+  background: rgba(144, 14, 144, 0.15);
+  color: #ffd9ff;
   font-size: 0.84rem;
 }
 
@@ -230,11 +230,11 @@
 }
 
 .sps-example-card.is-speaking {
-  border-color: rgba(125, 211, 252, 0.92);
-  background: rgba(9, 64, 97, 0.58);
+  border-color: rgba(217, 70, 239, 0.92);
+  background: rgba(97, 9, 97, 0.58);
   box-shadow:
-    0 0 0 1px rgba(125, 211, 252, 0.45),
-    0 0 14px rgba(56, 189, 248, 0.32);
+    0 0 0 1px rgba(217, 70, 239, 0.45),
+    0 0 14px rgba(192, 38, 211, 0.32);
 }
 
 .sps-example-card:active {

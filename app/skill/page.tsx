@@ -19,7 +19,7 @@ type SkillType = typeof SkillType[keyof typeof SkillType];
 interface SkillConfig {
   type: SkillType;
   label: string;
-  color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal';
+  color: 'cyan' | 'pink' | 'purple' | 'green';
   description: string;
   available: boolean;
 }
@@ -35,7 +35,7 @@ const SKILL_ROUTE_BY_TYPE: Record<SkillType, string> = {
 const SKILLS: SkillConfig[] = [
   { type: SkillType.PRONUNCIATION, label: 'PRONUNCIATION', color: 'purple', description: 'Master your accent', available: true },
   { type: SkillType.VOCABULARY, label: 'VOCABULARY', color: 'green', description: 'Expand your word bank', available: true },
-  { type: SkillType.GRAMMAR, label: 'GRAMMAR', color: 'teal', description: 'Perfect your structure', available: true },
+  { type: SkillType.GRAMMAR, label: 'GRAMMAR', color: 'cyan', description: 'Perfect your structure', available: true },
   { type: SkillType.SPEAKING, label: 'SPEAKING', color: 'pink', description: 'Converse with confidence', available: true },
 ];
 
@@ -62,7 +62,7 @@ function writeActiveSkillToStorage(next: SkillType) {
 }
 
 // Color configuration function - defined once
-const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal') => {
+const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green') => {
   switch(color) {
     case 'cyan': return { 
       text: 'text-neon-cyan', 
@@ -95,14 +95,6 @@ const getColorConfig = (color: 'cyan' | 'pink' | 'purple' | 'green' | 'teal') =>
       bg: 'bg-neon-green',
       softBg: 'bg-green-900/20',
       hex: '#39ff14'
-    };
-    case 'teal': return { 
-      text: 'text-neon-teal', 
-      border: 'border-neon-teal', 
-      glow: 'shadow-neon-teal', 
-      bg: 'bg-neon-teal',
-      softBg: 'bg-teal-900/20',
-      hex: '#14b8a6'
     };
   }
 };
@@ -257,7 +249,7 @@ function SkillMenuContent() {
           </h1>
           {/* Decorative lines under title */}
           <div className="w-24 h-1 bg-gray-800 mx-auto mt-4 relative overflow-hidden">
-             <div className={`absolute top-0 left-0 w-full h-full ${activeConfig.color === 'cyan' ? 'bg-neon-cyan' : activeConfig.color === 'pink' ? 'bg-neon-pink' : activeConfig.color === 'green' ? 'bg-neon-green' : activeConfig.color === 'teal' ? 'bg-neon-teal' : 'bg-neon-purple'} animate-scan`}></div>
+             <div className={`absolute top-0 left-0 w-full h-full ${activeConfig.color === 'cyan' ? 'bg-neon-cyan' : activeConfig.color === 'pink' ? 'bg-neon-pink' : activeConfig.color === 'green' ? 'bg-neon-green' : 'bg-neon-purple'} animate-scan`}></div>
           </div>
         </div>
 
@@ -420,7 +412,7 @@ function SkillMenuContent() {
 
              {/* Footer Status */}
              <div className="mt-12 flex items-center gap-3 opacity-60">
-                 <div className={`w-4 h-4 ${activeConfig.color === 'cyan' ? 'bg-neon-cyan' : activeConfig.color === 'pink' ? 'bg-neon-pink' : activeConfig.color === 'green' ? 'bg-neon-green' : activeConfig.color === 'teal' ? 'bg-neon-teal' : 'bg-neon-purple'} rounded-full animate-pulse`}></div>
+                 <div className={`w-4 h-4 ${activeConfig.color === 'cyan' ? 'bg-neon-cyan' : activeConfig.color === 'pink' ? 'bg-neon-pink' : activeConfig.color === 'green' ? 'bg-neon-green' : 'bg-neon-purple'} rounded-full animate-pulse`}></div>
                  <span className="font-mono text-xs tracking-widest uppercase">
                     System Processing: {activeConfig.label}
                  </span>

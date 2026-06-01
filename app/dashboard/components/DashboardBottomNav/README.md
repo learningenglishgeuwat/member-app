@@ -26,7 +26,7 @@ Komponen navbar bawah khusus untuk halaman Dashboard.
   
 - **MobileBottomNav**: Untuk halaman lain (skill modules, dll)
   - 3 tombol: MENU, Tour Guide Avatar, PROGRESS
-  - Styling: geuwat-nav theme (cyan/teal)
+  - Styling: geuwat-nav theme (cyan)
   - Tidak muncul di `/dashboard`, `/skill`, dan public paths
 
 ## Styling
