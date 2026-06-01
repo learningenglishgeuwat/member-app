@@ -8,7 +8,7 @@ export const TOPICS: Topic[] = [
     description:
       'Kuasai 26 huruf English alphabet, nama tiap huruf, dan bunyi dasarnya. Ini adalah fondasi utama semua komunikasi.',
     icon: 'A',
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-blue-700 to-blue-500',
     bgImage: 'https://picsum.photos/id/10/1920/1080',
   },
   {
@@ -18,7 +18,7 @@ export const TOPICS: Topic[] = [
     description:
       'Pelajari International Phonetic Alphabet (IPA). Latih membaca pronunciation key dan menghasilkan bunyi dengan lebih tepat.',
     icon: 'IPA',
-    color: 'from-purple-500 to-fuchsia-500',
+    color: 'from-purple-600 to-fuchsia-500',
     bgImage: 'https://picsum.photos/id/20/1920/1080',
     cssClass: 'font-extended-linguistic',
   },
@@ -49,7 +49,7 @@ export const TOPICS: Topic[] = [
     description:
       'Bunyi akhir yang jelas sangat penting untuk grammar (past tense -ed, plural -s). Jangan menelan bunyi akhir kata.',
     icon: 'END',
-    color: 'from-cyan-400 to-cyan-600',
+    color: 'from-lime-400 to-green-500',
     bgImage: 'https://picsum.photos/id/40/1920/1080',
   },
   {
@@ -69,7 +69,7 @@ export const TOPICS: Topic[] = [
     description:
       'Latih linking sound antar kata agar spoken English terdengar lebih natural: liaison, reduction, dan perubahan bunyi saat kata disambung.',
     icon: 'LW',
-    color: 'from-sky-500 to-cyan-500',
+    color: 'from-cyan-500 to-cyan-400',
     bgImage: 'https://picsum.photos/id/55/1920/1080',
   },
   {
@@ -89,7 +89,7 @@ export const TOPICS: Topic[] = [
     description:
       'Latih pronunciation lewat membaca teks pendek dengan fokus pada rhythm, stress, dan clarity.',
     icon: 'TXT',
-    color: 'from-emerald-400 to-green-600',
+    color: 'from-slate-500 to-gray-400',
     bgImage: 'https://picsum.photos/id/70/1920/1080',
   },
   {
@@ -99,7 +99,7 @@ export const TOPICS: Topic[] = [
     description:
       'Bacaan pendek untuk melatih flow, clarity, dan konsistensi bunyi saat membaca paragraf utuh.',
     icon: 'READ',
-    color: 'from-indigo-400 to-violet-600',
+    color: 'from-[#1E293B] to-slate-700',
     bgImage: 'https://picsum.photos/id/80/1920/1080',
   },
   {
@@ -109,7 +109,7 @@ export const TOPICS: Topic[] = [
     description:
       'Latih kecepatan dan ketepatan artikulasi dengan tongue twisters. Tingkatkan muscle memory untuk bunyi-bunyi sulit dan kombinasi konsonan yang challenging.',
     icon: 'TT',
-    color: 'from-amber-500 to-yellow-600',
+    color: 'from-fuchsia-500 to-pink-500',
     bgImage: 'https://picsum.photos/id/90/1920/1080',
   },
 ];
