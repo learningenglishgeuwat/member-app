@@ -67,7 +67,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
     if (!isFullyActive) {
       triggerHaptic('error')
-      setErrorMessage('Please activate both security gears first!')
+      setErrorMessage('Silakan aktifkan kedua roda gigi keamanan terlebih dahulu!')
       setShowErrorPopup(true)
       return
     }
@@ -81,15 +81,29 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       if (!result.success) {
         console.error('❌ Supabase auth error:', result.error)
         triggerHaptic('error')
-        const isInvalidCredentials = result.error === 'Invalid login credentials'
-        const baseMessage = isInvalidCredentials
-          ? 'Email atau kata sandi salah.'
-          : `Gagal login: ${result.error}`
-        setErrorMessage(baseMessage)
-        setShowForgotPassword(isInvalidCredentials)
+        
+        // Handle different error types with appropriate messages
+        let displayMessage = ''
+        let shouldShowForgotPassword = false
+        let shouldRetry = false
+        
+        if (result.errorType === 'credentials') {
+          displayMessage = 'Email atau kata sandi salah. Silakan periksa kembali.'
+          shouldShowForgotPassword = true
+        } else if (result.errorType === 'network') {
+          displayMessage = 'Koneksi internet bermasalah. Periksa koneksi Anda dan coba lagi.'
+          shouldRetry = retryCount < 1
+        } else {
+          displayMessage = `Gagal login: ${result.error}`
+        }
+        
+        setErrorMessage(displayMessage)
+        setShowForgotPassword(shouldShowForgotPassword)
         setShowErrorPopup(true)
         setIsLoading(false)
-        if (result.error?.toLowerCase().includes('koneksi lambat') && retryCount < 1) {
+        
+        // Auto-retry for network errors
+        if (shouldRetry) {
           setRetryCount((prev) => prev + 1)
           setTimeout(() => {
             handleSubmit()
@@ -188,7 +202,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             variant="right"
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder="Alamat Email"
             value={formData.email}
             isActive={activationState.emailActive}
             onToggle={toggleEmailGear}
@@ -204,7 +218,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             variant="left"
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Kata Sandi"
             value={formData.password}
             isActive={activationState.passwordActive}
             onToggle={togglePasswordGear}

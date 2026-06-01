@@ -60,17 +60,67 @@ export async function signIn(email: string, password: string) {
     })
 
     if (error) {
-      return { success: false, error: error.message }
+      // Categorize error types
+      const errorMessage = error.message.toLowerCase()
+      
+      // Check for network/connection errors
+      if (
+        errorMessage.includes('fetch') ||
+        errorMessage.includes('network') ||
+        errorMessage.includes('timeout') ||
+        errorMessage.includes('connection') ||
+        error.status === 0
+      ) {
+        return { 
+          success: false, 
+          error: error.message,
+          errorType: 'network' as const
+        }
+      }
+      
+      // Check for invalid credentials
+      if (
+        errorMessage.includes('invalid login credentials') ||
+        errorMessage.includes('invalid email or password') ||
+        error.status === 400
+      ) {
+        return { 
+          success: false, 
+          error: error.message,
+          errorType: 'credentials' as const
+        }
+      }
+      
+      // Other errors
+      return { 
+        success: false, 
+        error: error.message,
+        errorType: 'unknown' as const
+      }
     }
 
     if (data.user) {
       return { success: true, userId: data.user.id }
     }
 
-    return { success: false, error: 'Unknown error occurred' }
+    return { success: false, error: 'Unknown error occurred', errorType: 'unknown' as const }
   } catch (error) {
     console.error('Sign in error:', error)
-    return { success: false, error: 'An unexpected error occurred' }
+    
+    // Check if it's a network error
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      return { 
+        success: false, 
+        error: 'Koneksi internet bermasalah. Periksa koneksi Anda.',
+        errorType: 'network' as const
+      }
+    }
+    
+    return { 
+      success: false, 
+      error: 'Terjadi kesalahan yang tidak terduga',
+      errorType: 'unknown' as const
+    }
   }
 }
 

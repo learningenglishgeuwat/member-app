@@ -112,7 +112,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Overlay - covers entire screen including navbar area */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[1250] pointer-events-auto"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[1350] pointer-events-auto"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
@@ -121,7 +121,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Sidebar Container */}
       <aside 
         className={`
-          fixed top-0 left-0 z-[1260] min-h-screen h-[100dvh] w-60 sm:w-64 bg-black/90 border-r border-purple-900/30 backdrop-blur-xl 
+          fixed top-0 left-0 z-[1360] min-h-screen h-[100dvh] w-60 sm:w-64 bg-black/90 border-r border-purple-900/30 backdrop-blur-xl 
           transform transition-transform duration-300 ease-in-out flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom)+16px)]
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}

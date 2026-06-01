@@ -28,7 +28,7 @@ export default function LoginPage() {
         <LoginForm />
         
         <div className="mt-8 text-center text-sm text-slate-400">
-          <p className="mt-2 text-xs">Click the gears to activate form fields!</p>
+          <p className="mt-2 text-xs">Klik roda gigi untuk memasukkan email dan kata sandi!</p>
         </div>
       </div>
     </div>
