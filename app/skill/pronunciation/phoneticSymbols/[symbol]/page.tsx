@@ -589,6 +589,7 @@ const SymbolDetailPage: React.FC = () => {
 
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
+  const britishNoteItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const playSessionRef = useRef(0);
   const playNextTimeoutRef = useRef<number | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
@@ -715,6 +716,15 @@ const SymbolDetailPage: React.FC = () => {
         setActiveWord(item.word);
         setActiveWordIndex(null);
 
+        // Scroll to current British note item
+        if (britishNoteItemRefs.current[currentIndex]) {
+          britishNoteItemRefs.current[currentIndex]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+
         // Play BrE
         await speakWithBritishSymbolDetailVoice(item.word);
         
@@ -757,13 +767,22 @@ const SymbolDetailPage: React.FC = () => {
     })();
   };
 
-  const handlePlayBritishNoteWord = (word: string) => {
+  const handlePlayBritishNoteWord = (word: string, itemIndex?: number) => {
     if (!isSpeechSynthesisSupported()) return;
 
     stopPlayAllWords();
     stopSpeech();
     setActiveWord(word);
     setActiveWordIndex(null);
+
+    // Scroll to the British note item if index is provided
+    if (typeof itemIndex === 'number' && britishNoteItemRefs.current[itemIndex]) {
+      britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      });
+    }
 
     const currentSession = playSessionRef.current;
     void (async () => {
@@ -1117,10 +1136,14 @@ const SymbolDetailPage: React.FC = () => {
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
                 <div className="space-y-2">
-                  {britishNote.items.map((item) => {
+                  {britishNote.items.map((item, itemIndex) => {
                     const isItemActive = activeWord === item.word;
                     return (
-                    <div key={item.word} className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}>
+                    <div 
+                      key={item.word} 
+                      ref={(el) => { britishNoteItemRefs.current[itemIndex] = el; }}
+                      className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}
+                    >
                       <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
                       {showBritishNoteIpa && (
                         <div className="text-cyan-300/60 font-mono text-xs">
@@ -1130,7 +1153,7 @@ const SymbolDetailPage: React.FC = () => {
                       )}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
-                          onClick={() => handlePlayBritishNoteWord(item.word)}
+                          onClick={() => handlePlayBritishNoteWord(item.word, itemIndex)}
                           className="inline-flex items-center gap-1 rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[11px] text-amber-200 hover:bg-amber-400/20 transition-colors"
                           title={`Play BrE: ${item.word}`}
                         >
@@ -1138,7 +1161,30 @@ const SymbolDetailPage: React.FC = () => {
                           <span>BrE</span>
                         </button>
                         <button
-                          onClick={() => handlePlayWord(item.word)}
+                          onClick={() => {
+                            if (!isSpeechSynthesisSupported()) return;
+                            stopPlayAllWords();
+                            stopSpeech();
+                            setActiveWord(item.word);
+                            setActiveWordIndex(null);
+                            
+                            // Scroll to the British note item
+                            if (britishNoteItemRefs.current[itemIndex]) {
+                              britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                                inline: 'center',
+                              });
+                            }
+                            
+                            const currentSession = playSessionRef.current;
+                            void (async () => {
+                              await speakWithSymbolDetailVoice(item.word);
+                              if (currentSession !== playSessionRef.current) return;
+                              setActiveWord(null);
+                              setActiveWordIndex(null);
+                            })();
+                          }}
                           className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
                           title={`Play AmE: ${item.word}`}
                         >

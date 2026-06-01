@@ -71,7 +71,6 @@ const AlphabetPage: React.FC = () => {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
-  const [showPracticeIpa, setShowPracticeIpa] = useState(true);
   const [showIpa, setShowIpa] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [spellingInput, setSpellingInput] = useState('');
@@ -729,7 +728,7 @@ const AlphabetPage: React.FC = () => {
                       >
                       <div className="alphabet-practice-country-main">
                         <span>- {countryEntry.name}</span>
-                        {showPracticeIpa && (
+                        {showIpa && (
                           <>
                             <span className="alphabet-practice-country-ipa">
                               <span className="ipa-label">IPA kata: </span>
@@ -819,7 +818,7 @@ const AlphabetPage: React.FC = () => {
               checked={showIpa}
               onChange={setShowIpa}
               className="w-full flex justify-between text-[10px] sm:text-xs mb-6"
-              label={showIpa ? 'Sembunyikan Alphabet IPA' : 'Tampilkan Alphabet IPA'}
+              label={showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
             />
           </div>
 
@@ -831,12 +830,6 @@ const AlphabetPage: React.FC = () => {
               sectionId="alphabet-practice-section"
               onClick={handlePlayAllPracticeCountries}
               className="mb-2 sm:mb-3"
-            />
-            <IpaVisibilityToggle
-              checked={showPracticeIpa}
-              onChange={setShowPracticeIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs"
-              label={showPracticeIpa ? 'Sembunyikan Practice IPA' : 'Tampilkan Practice IPA'}
             />
           </div>
         </div>
