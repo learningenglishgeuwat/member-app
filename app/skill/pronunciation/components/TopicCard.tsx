@@ -6,23 +6,25 @@ interface TopicCardProps {
   topic: Topic;
   isActive: boolean;
   onClick: () => void;
+  style?: React.CSSProperties;
 }
 
-const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick }) => {
+const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick, style }) => {
   const isDisabled = LOCKED_TOPIC_IDS.includes(topic.id);
   
   return (
     <div 
       onClick={isDisabled ? undefined : onClick}
       data-tour={`pronunciation-topic-${topic.id}`}
+      style={style}
       className={`
         pronunciation-topic-card
-        relative flex-shrink-0 transition-all duration-500 ease-out snap-center
+        absolute left-1/2 bottom-0 flex-shrink-0 transition-all duration-500 ease-out
         ${isDisabled 
           ? 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 opacity-40 cursor-not-allowed grayscale mt-6 sm:mt-12 md:mt-16 lg:mt-20' 
           : isActive 
             ? 'w-40 h-56 sm:w-52 sm:h-72 md:w-56 md:h-72 lg:w-64 lg:h-80 cursor-pointer' 
-            : 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 opacity-60 hover:opacity-80 cursor-pointer mt-6 sm:mt-12 md:mt-16 lg:mt-20'
+            : 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 hover:opacity-80 cursor-pointer mt-6 sm:mt-12 md:mt-16 lg:mt-20'
         }
       `}
     >

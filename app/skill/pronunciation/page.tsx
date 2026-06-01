@@ -140,32 +140,35 @@ const Page: React.FC = () => {
     setSelectedIndex(prev => {
       let newIndex = prev;
       
+      // Circular navigation - wrap around from end to start and vice versa
       if (direction === 'left') {
-        newIndex = prev === 0 ? prev : prev - 1;
+        newIndex = prev === 0 ? TOPICS.length - 1 : prev - 1;
       } else {
-        newIndex = prev === TOPICS.length - 1 ? prev : prev + 1;
+        newIndex = prev === TOPICS.length - 1 ? 0 : prev + 1;
       }
       
-      // Skip locked topics during navigation.
+      // Skip locked topics during navigation with circular logic
       const newTopic = TOPICS[newIndex];
       if (lockedTopics.includes(newTopic.id)) {
-        // Try next available topic
-        if (direction === 'left') {
-          // Find previous unlocked topic
-          for (let i = newIndex - 1; i >= 0; i--) {
-            if (!lockedTopics.includes(TOPICS[i].id)) {
-              return i;
-            }
+        // Try next available topic in circular manner
+        let attempts = 0;
+        const maxAttempts = TOPICS.length;
+        
+        while (attempts < maxAttempts) {
+          if (direction === 'left') {
+            newIndex = newIndex === 0 ? TOPICS.length - 1 : newIndex - 1;
+          } else {
+            newIndex = newIndex === TOPICS.length - 1 ? 0 : newIndex + 1;
           }
-        } else {
-          // Find next unlocked topic
-          for (let i = newIndex + 1; i < TOPICS.length; i++) {
-            if (!lockedTopics.includes(TOPICS[i].id)) {
-              return i;
-            }
+          
+          if (!lockedTopics.includes(TOPICS[newIndex].id)) {
+            return newIndex;
           }
+          
+          attempts++;
         }
-        // If no unlocked topic found, stay at current
+        
+        // If all topics are locked (shouldn't happen), stay at current
         return prev;
       }
       
@@ -173,27 +176,14 @@ const Page: React.FC = () => {
     });
   }, [lockedTopics]);
 
-  // Scroll active item into view
-  useEffect(() => {
-    if (!carouselRef.current) return;
-
-    const isDesktopViewport = window.matchMedia('(min-width: 1280px)').matches;
-
-    // On desktop/laptop keep track layout stable (no forced centering per selected item).
-    if (isDesktopViewport) {
-      carouselRef.current.scrollTo({ left: 0, behavior: 'auto' });
-      return;
-    }
-
-    const nodes = carouselRef.current.children;
-    if (nodes[selectedIndex]) {
-      (nodes[selectedIndex] as HTMLElement).scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-      });
-    }
-  }, [selectedIndex]);
+  // Calculate circular offset for carousel positioning (like game-links)
+  const getCircularOffset = useCallback((index: number, selectedIndex: number, total: number) => {
+    let offset = index - selectedIndex;
+    const half = Math.floor(total / 2);
+    if (offset > half) offset -= total;
+    if (offset < -half) offset += total;
+    return offset;
+  }, []);
 
   const handleStartLearning = useCallback(() => {
     // Check if topic is locked before navigation.
@@ -295,20 +285,32 @@ const Page: React.FC = () => {
             <div className="mx-auto w-full max-w-[1400px]">
               <div
                   ref={carouselRef}
-                  className="flex items-center justify-start xl:justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 overflow-x-auto no-scrollbar-mobile md:custom-scrollbar pb-3 sm:pb-6 md:pb-8 lg:pb-12 snap-x snap-mandatory"
-                  style={{ scrollBehavior: 'smooth', scrollPaddingLeft: '50vw', scrollPaddingRight: '50vw' }}
+                  className="relative flex items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 pb-3 sm:pb-6 md:pb-8 lg:pb-12 h-[200px] sm:h-[220px] md:h-[240px]"
                   data-tour="pronunciation-carousel"
               >
-                  {TOPICS.map((topic, index) => (
-                      <TopicCard 
-                          key={topic.id}
-                          topic={topic}
-                          isActive={index === selectedIndex}
-                          onClick={() => {
-                              setSelectedIndex(index);
-                          }}
-                      />
-                  ))}
+                  {TOPICS.map((topic, index) => {
+                      const offset = getCircularOffset(index, selectedIndex, TOPICS.length);
+                      const depth = Math.abs(offset);
+                      const isActive = index === selectedIndex;
+                      
+                      return (
+                          <TopicCard 
+                              key={topic.id}
+                              topic={topic}
+                              isActive={isActive}
+                              onClick={() => {
+                                  setSelectedIndex(index);
+                              }}
+                              style={{
+                                  '--offset': String(offset),
+                                  '--depth': String(depth),
+                                  '--scale': isActive ? '1' : String(Math.max(0.75, 1 - depth * 0.15)),
+                                  '--z': String(isActive ? 40 : 20 - depth),
+                                  '--op': isActive ? '1' : String(Math.max(0.4, 1 - depth * 0.25)),
+                              } as React.CSSProperties}
+                          />
+                      );
+                  })}
               </div>
             </div>
             
