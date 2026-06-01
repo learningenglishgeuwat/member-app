@@ -14,6 +14,7 @@ interface JourneyPlan {
 }
 
 const STORAGE_KEY = 'dashboard-mission-goal'
+const READY_PHASES_STORAGE_KEY = 'dashboard-ready-phases'
 const DASHBOARD_VIEW_EVENT = 'geuwat:dashboard-view'
 const DEPLOYED_APP_URL = 'https://learningenglishgeuwat-ten.vercel.app'
 const DAY_OPTIONS = [
@@ -141,7 +142,20 @@ const StartJourney: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
   const [initiating, setInitiating] = useState(false)
-  const [activePhases, setActivePhases] = useState<Set<number>>(new Set())
+  const [activePhases, setActivePhases] = useState<Set<number>>(() => {
+    // Load saved ready phases from localStorage
+    if (typeof window === 'undefined') return new Set()
+    try {
+      const saved = localStorage.getItem(READY_PHASES_STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        return new Set(Array.isArray(parsed) ? parsed : [])
+      }
+    } catch {
+      // Ignore parse errors
+    }
+    return new Set()
+  })
   const [showEmptyWarning, setShowEmptyWarning] = useState(false)
   const [isPronunciationRoadmapOpen, setIsPronunciationRoadmapOpen] = useState(false)
   const [isPhaseTwoPopupOpen, setIsPhaseTwoPopupOpen] = useState(false)
@@ -176,6 +190,16 @@ const StartJourney: React.FC = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, goal)
   }, [goal])
+
+  // Save ready phases to localStorage whenever they change
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.setItem(READY_PHASES_STORAGE_KEY, JSON.stringify(Array.from(activePhases)))
+    } catch {
+      // Ignore storage errors
+    }
+  }, [activePhases])
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
