@@ -1,5 +1,30 @@
+/* Global white text for d-ed page */
+.d-ed-page {
+  color: #ffffff !important;
+}
+
+.d-ed-page p,
+.d-ed-page span,
+.d-ed-page div,
+.d-ed-page li,
+.d-ed-page td,
+.d-ed-page th,
+.d-ed-page h1,
+.d-ed-page h2,
+.d-ed-page h3,
+.d-ed-page h4,
+.d-ed-page h5,
+.d-ed-page h6,
+.d-ed-page strong {
+  color: inherit;
+}
+
 .d-ed-page .fs-topic-title {
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
+}
+
+.d-ed-page .fs-topic-subtitle {
+  color: #ffffff !important;
 }
 
 .d-ed-page .d-ed-recording-anchor {
@@ -9,7 +34,23 @@
 }
 
 .d-ed-page .fs-topic-block-title {
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
+}
+
+.d-ed-page .fs-topic-text {
+  color: #ffffff !important;
+}
+
+.d-ed-page .fs-topic-card-title {
+  color: #ffffff !important;
+}
+
+.d-ed-page .fs-topic-card-note {
+  color: #ffffff !important;
+}
+
+.d-ed-page .fs-topic-section-button span {
+  color: #ffffff !important;
 }
 
 .d-ed-progress-actions {
@@ -30,6 +71,7 @@
 
 .d-ed-practice-mission {
   margin-top: 0.6rem;
+  color: #ffffff !important;
 }
 
 .d-ed-inline-jump-btn {
@@ -68,7 +110,7 @@
 
 .d-ed-prompt-title {
   margin: 0;
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -235,7 +277,7 @@
   list-style: disc;
   display: grid;
   gap: 0.44rem;
-  color: #f1e9ff;
+  color: #ffffff !important;
   line-height: 1.52;
 }
 
