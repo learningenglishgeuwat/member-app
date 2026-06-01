@@ -75,6 +75,21 @@
     opacity 280ms ease,
     width 500ms ease,
     height 500ms ease;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: auto;
+}
+
+/* Improve touch interaction */
+[data-tour="pronunciation-carousel"] {
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: grab;
+}
+
+[data-tour="pronunciation-carousel"]:active {
+  cursor: grabbing;
 }
 
 @media (max-width: 768px) {

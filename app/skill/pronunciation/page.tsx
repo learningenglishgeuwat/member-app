@@ -120,6 +120,10 @@ const Page: React.FC = () => {
   
   // Ref for carousel container to handle scrolling
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Touch/swipe handling
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   const selectedTopic = TOPICS[selectedIndex];
   const detailTheme = TOPIC_DETAIL_THEMES[selectedTopic?.id] ?? DEFAULT_DETAIL_THEME;
@@ -184,6 +188,34 @@ const Page: React.FC = () => {
     if (offset < -half) offset += total;
     return offset;
   }, []);
+
+  // Handle touch/swipe gestures
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const swipeThreshold = 50; // minimum distance for swipe
+    const diff = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left, go to next (right)
+        handleNav('right');
+      } else {
+        // Swiped right, go to previous (left)
+        handleNav('left');
+      }
+    }
+
+    // Reset
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  }, [handleNav]);
 
   const handleStartLearning = useCallback(() => {
     // Check if topic is locked before navigation.
@@ -258,11 +290,11 @@ const Page: React.FC = () => {
                 <div className="flex items-start gap-2 sm:gap-3">
                     <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
                     <div>
-                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>GEUWAT Protocol</h4>
+                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>How to Start</h4>
                         <p className="text-sm md:text-base text-white/90 leading-relaxed">
                           {isTopicLocked 
-                            ? `${selectedTopic.title} module is currently locked. Please complete available modules first.`
-                            : `Activate ${selectedTopic.title.toLowerCase()} training module to begin GEUWAT enhancement sequence`
+                            ? `Modul ${selectedTopic.title} saat ini terkunci. Silakan selesaikan modul yang tersedia terlebih dahulu.`
+                            : `Klik ikon CPU di bawah untuk membuka halaman latihan ${selectedTopic.title.toLowerCase()}`
                           }
                         </p>
                     </div>
@@ -285,7 +317,10 @@ const Page: React.FC = () => {
             <div className="mx-auto w-full max-w-[1400px]">
               <div
                   ref={carouselRef}
-                  className="relative flex items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 pb-3 sm:pb-6 md:pb-8 lg:pb-12 h-[200px] sm:h-[220px] md:h-[240px]"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  className="relative flex items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 pb-3 sm:pb-6 md:pb-8 lg:pb-12 h-[200px] sm:h-[220px] md:h-[240px] touch-pan-y"
                   data-tour="pronunciation-carousel"
               >
                   {TOPICS.map((topic, index) => {
