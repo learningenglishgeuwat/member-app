@@ -1089,9 +1089,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
                         <h3 className="stress-word">
-                          <span className="stress-example-chip">
-                            {renderStressHighlight(item.word)}
-                          </span>
+                          {renderStressHighlight(item.word)}
                         </h3>
                         {showIpaBySection.dasarSukuKata ? (
                           <p className="stress-ipa">{item.ipa}</p>
@@ -1176,7 +1174,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                           ref={(node) => setItemRef(itemKey, node)}
                         >
                           <div className="stress-rule-example-text">
-                            <span className="stress-example-chip">
+                            <span>
                               {renderStressHighlight(example.text)}
                             </span>
                             {showIpaBySection.aturanCepat ? (
@@ -1231,9 +1229,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     <div className="stress-card-top">
                       <div className="stress-word-wrap">
                         <h3 className="stress-word">
-                          <span className="stress-example-chip">
-                            {renderStressHighlight(item.word)}
-                          </span>
+                          {renderStressHighlight(item.word)}
                         </h3>
                         {showIpaBySection.tekananKata ? (
                           <p className="stress-ipa">{item.ipa}</p>
@@ -1297,9 +1293,9 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         ref={(node) => setItemRef(`kontrasNounVerb-${item.base}-noun`, node)}
                       >
                         <div className="stress-rule-example-text">
-                          <span className="stress-example-chip-row">
-                            <span className="stress-example-chip-label">Noun:</span>
-                            <span className="stress-example-chip">
+                          <span>
+                            <span className="stress-example-chip-label">Noun:</span>{' '}
+                            <span>
                               {renderStressHighlight(item.noun)}
                             </span>
                           </span>
@@ -1331,9 +1327,9 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         ref={(node) => setItemRef(`kontrasNounVerb-${item.base}-verb`, node)}
                       >
                         <div className="stress-rule-example-text">
-                          <span className="stress-example-chip-row">
-                            <span className="stress-example-chip-label">Verb:</span>
-                            <span className="stress-example-chip">
+                          <span>
+                            <span className="stress-example-chip-label">Verb:</span>{' '}
+                            <span>
                               {renderStressHighlight(item.verb)}
                             </span>
                           </span>
@@ -1402,7 +1398,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                               ref={(node) => setItemRef(itemKey, node)}
                             >
                               <div className="stress-bank-item-main">
-                                <span className="stress-bank-item-word stress-example-chip">
+                                <span className="stress-bank-item-word">
                                   {renderStressHighlight(word)}
                                 </span>
                                 {showIpaBySection.bankKata && ipaText ? (
@@ -1643,7 +1639,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                             ref={(node) => setItemRef(itemKey, node)}
                           >
                             <div className="stress-rule-example-text">
-                              <span className="stress-example-chip">
+                              <span>
                                 {renderStressHighlight(item.word)}
                               </span>
                               {showIpaBySection.practice ? (

@@ -137,18 +137,6 @@
   line-height: 1.45;
 }
 
-.fs-topic-example-list {
-  margin-top: 0.6rem;
-  padding-left: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.38rem;
-}
-
-.fs-topic-example-list li {
-  color: #e9defe;
-}
-
 .fs-topic-rules-table-wrap {
   display: block;
   margin-top: 0.8rem;
@@ -390,13 +378,6 @@
 
 .fs-topic-table-note-list li::before {
   content: '- ';
-}
-
-.fs-topic-list {
-  margin-top: 0.55rem;
-  padding-left: 1rem;
-  color: #e9defe;
-  line-height: 1.6;
 }
 
 @media (max-width: 1024px) {

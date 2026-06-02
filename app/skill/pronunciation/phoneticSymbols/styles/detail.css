@@ -267,12 +267,6 @@
   margin-bottom: 2rem;
 }
 
-.symbol-detail-container .tip-text {
-  color: white;
-  font-size: clamp(0.875rem, 2vw, 1rem); /* 14px mobile - 16px desktop (Body Text) */
-  line-height: 1.6;
-}
-
 /* Ensure top spacing on mobile is visible */
 @media (max-width: 640px) {
   .symbol-detail-container .symbol-detail-main {

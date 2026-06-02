@@ -153,28 +153,6 @@
   overflow-x: auto;
 }
 
-.contraction-page .nav-tab {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding: 14px 20px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.contraction-page .nav-tab:hover { color: var(--cyan); }
-.contraction-page .nav-tab.active {
-  color: var(--cyan);
-  border-bottom-color: var(--cyan);
-  text-shadow: 0 0 10px var(--cyan);
-}
-
 /* ─── MAIN LAYOUT ───────────────────────────────── */
 .contraction-page .main-content { 
   position: relative; z-index: 1;

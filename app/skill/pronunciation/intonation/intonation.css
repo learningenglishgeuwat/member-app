@@ -71,7 +71,7 @@
   margin-top: 0.58rem;
   border: 1px solid rgba(249, 168, 212, 0.38);
   border-radius: 0.68rem;
-  background: rgba(30, 11, 43, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   padding: 0.55rem 0.7rem;
 }
 
@@ -109,7 +109,7 @@
   margin-top: 0.72rem;
   border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.75rem;
-  background: linear-gradient(145deg, rgba(20, 8, 32, 0.95), rgba(44, 12, 56, 0.82));
+  background: rgba(0, 0, 0, 0.9);
   padding: 0.8rem 0.9rem;
 }
 
@@ -172,7 +172,7 @@
 .intonation-card {
   border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.78rem;
-  background: linear-gradient(145deg, rgba(22, 8, 34, 0.95), rgba(45, 12, 58, 0.78));
+  background: rgba(0, 0, 0, 0.9);
   padding: 0.85rem;
   box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.12);
 }
@@ -265,14 +265,14 @@
   margin-top: 0 !important;
   border: 1px solid rgba(249, 168, 212, 0.28);
   border-radius: 0.56rem;
-  background: rgba(34, 11, 49, 0.62);
+  background: rgba(0, 0, 0, 0.75);
   padding: 0.45rem 0.55rem;
   box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.08);
 }
 
 .intonation-detail-card-note {
   border-color: rgba(249, 168, 212, 0.22);
-  background: rgba(45, 13, 64, 0.56);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .intonation-detail-card-self-check {
@@ -343,7 +343,7 @@
   line-height: 1.5;
   border: 1px solid rgba(249, 168, 212, 0.24);
   border-radius: 0.56rem;
-  background: rgba(33, 11, 48, 0.6);
+  background: rgba(0, 0, 0, 0.75);
   padding: 0.42rem 0.55rem;
 }
 
@@ -357,7 +357,7 @@
   border: 1px solid rgba(249, 168, 212, 0.32);
   border-radius: 0.68rem;
   padding: 0.55rem 0.65rem;
-  background: rgba(33, 11, 48, 0.8);
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .intonation-guide-card h4 {
@@ -403,7 +403,7 @@
 .intonation-list li {
   border: 1px solid rgba(244, 114, 182, 0.3);
   border-radius: 0.62rem;
-  background: rgba(24, 8, 34, 0.72);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.6rem 0.7rem;
   color: #f3d9e9;
   line-height: 1.5;
