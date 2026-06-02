@@ -457,7 +457,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
 
   const playAllWordThenExample = useCallback(async () => {
     if (!visibleWords.length) return;
@@ -493,7 +493,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
 
   const handleSaveProgress = useCallback(
     async (percentage: number) => {
