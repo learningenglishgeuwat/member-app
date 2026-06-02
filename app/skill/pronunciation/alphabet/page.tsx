@@ -547,7 +547,7 @@ const AlphabetPage: React.FC = () => {
             <span className="highlight">English</span> Alphabet
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
-            Master the fundamentals of English pronunciation with interactive alphabet learning
+            Kuasai dasar-dasar pengucapan bahasa Inggris dengan pembelajaran alfabet interaktif
           </p>
         </div>
         
@@ -589,7 +589,7 @@ const AlphabetPage: React.FC = () => {
             aria-controls="alphabet-quick-spelling-content"
             onClick={() => setIsQuickSpellingOpen((prev) => !prev)}
           >
-            <span className="alphabet-quick-spelling-title">Latihan Quick Spelling</span>
+            <span className="alphabet-quick-spelling-title">Latihan Mengeja</span>
             <span className="alphabet-section-toggle-icon-wrap" aria-hidden="true">
               <ChevronRight
                 className={`alphabet-section-toggle-icon ${isQuickSpellingOpen ? 'open' : ''}`}
@@ -600,7 +600,7 @@ const AlphabetPage: React.FC = () => {
           {isQuickSpellingOpen && (
             <div id="alphabet-quick-spelling-content" className="alphabet-section-content">
               <p className="alphabet-quick-spelling-hint">
-                Tulis ejaan kata langsung dari input teks. Kamu bisa pakai format <strong>C-A-T</strong> atau <strong>CAT</strong>.
+                Ketik ejaan kata dari contoh tersedia. Kamu bisa pakai format <strong>C-A-T</strong> atau <strong>CAT</strong>.
               </p>
 
               <div className="alphabet-quick-spelling-word-wrap">
