@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function renderGeneralIpaWithTHighlight(ipa: string) {
   const chunks = ipa.split(/(t̚|t)/g);
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { CommonLetter } from '../../data/commonLetters/CommonLetters'
 
 type CanonicalCategory = CommonLetter['category']

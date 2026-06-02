@@ -214,7 +214,7 @@ export default function ReadingTextForPracticePage() {
       }
       void playSingleParagraph(text, key);
     },
-    [activeParagraphKey, activeSpeechMode, playSingleParagraph, stopAllSpeech],
+    [activeParagraphKey, playSingleParagraph, stopAllSpeech],
   );
 
   const handleSelect = useCallback((nextId: string) => {

@@ -880,11 +880,9 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
       console.error('Failed to copy stressing prompt:', error);
       setIsPromptCopied(false);
     }
-  }, []);
+  }, [evaluationPrompt]);
 
   function renderAudioToolbar(
-    sectionKey: AudioPlaySectionKey,
-    ipaSectionKey?: IpaToggleSectionKey,
     translationToggle?: {
       show: boolean;
       onToggle: () => void;
@@ -1075,7 +1073,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                 diucapkan. Sebelum belajar tekanan, kenali dulu jumlah suku kata dan
                 pemenggalannya.
               </p>
-              {renderAudioToolbar('dasarSukuKata', 'dasarSukuKata')}
+              {renderAudioToolbar()}
               <div className="stress-syllable-grid">
                 {SYLLABLE_EXAMPLES.map((item, index) => {
                   const itemKey = `dasarSukuKata-${index}`;
@@ -1152,7 +1150,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('aturanCepat', 'Word Stress Rules')}
           {openSections.aturanCepat && (
             <>
-              {renderAudioToolbar('aturanCepat', 'aturanCepat')}
+              {renderAudioToolbar()}
               <div className="stress-rule-grid">
                 {QUICK_RULES.map((item, ruleIndex) => (
                   <article
@@ -1211,7 +1209,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('tekananKata', 'Word Stress Examples')}
           {openSections.tekananKata && (
             <>
-              {renderAudioToolbar('tekananKata', 'tekananKata')}
+              {renderAudioToolbar()}
               <p className="stress-text font-sans">
                 Fokuskan latihan pada posisi tekanan utama. Perhatikan juga kontras kata benda-kata
                 kerja seperti <strong>REcord</strong> vs <strong>reCORD</strong>.
@@ -1265,7 +1263,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('kontrasNounVerb', 'Noun-Verb Stress Contrast')}
           {openSections.kontrasNounVerb && (
             <>
-              {renderAudioToolbar('kontrasNounVerb', 'kontrasNounVerb', {
+              {renderAudioToolbar({
                 show: showContrastTranslation,
                 onToggle: toggleContrastTranslation,
                 showLabel: 'Tampilkan Terjemah',
@@ -1371,7 +1369,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('bankKata', 'Practice Bank by Stress Position')}
           {openSections.bankKata && (
             <>
-              {renderAudioToolbar('bankKata', 'bankKata')}
+              {renderAudioToolbar()}
               <p className="stress-text font-sans">
                 Berikut bank kata untuk latihan membedakan posisi tekanan utama pada suku kata
                 pertama, kedua, ketiga, dan keempat.
@@ -1436,7 +1434,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('tekananKalimat', 'Sentence Stress and Meaning Focus')}
           {openSections.tekananKalimat && (
             <>
-              {renderAudioToolbar('tekananKalimat')}
+              {renderAudioToolbar()}
               <div className="stress-list-wrap">
                 {SENTENCE_STRESS_EXAMPLES.map((item, index) => {
                   const itemKey = `tekananKalimat-${index}`;
@@ -1498,7 +1496,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('kataKontenFungsi', 'Content vs Function Words')}
           {openSections.kataKontenFungsi && (
             <>
-              {renderAudioToolbar('kataKontenFungsi')}
+              {renderAudioToolbar()}
               <div className="stress-rule-grid">
                 {CONTENT_FUNCTION_EXAMPLES.map((item, index) => {
                   const itemKey = `kataKontenFungsi-${index}`;
@@ -1611,7 +1609,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
           {renderSectionHeader('practice', 'Practice')}
           {openSections.practice && (
             <>
-              {renderAudioToolbar('practice', 'practice')}
+              {renderAudioToolbar()}
               <p className="stress-text font-sans">
                 <strong>Mission:</strong>
                 <br />
