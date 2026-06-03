@@ -8,7 +8,7 @@ import {
   QUICK_SPELLING_WORDS,
 } from './constants';
 import { LetterCard } from './LetterCard';
-import { ChevronRight, Copy, Play } from 'lucide-react';
+import { ChevronRight, Copy, Play, Volume2 } from 'lucide-react';
 import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
@@ -717,41 +717,72 @@ const AlphabetPage: React.FC = () => {
                 <p className="alphabet-practice-task-text">
                   Eja semua huruf alfabet A-Z, lalu eja 5 nama negara berikut:
                 </p>
-                <ul className="alphabet-practice-country-list">
-                  {PRACTICE_COUNTRIES.map((countryEntry) => (
-                    <li
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                {PRACTICE_COUNTRIES.map((countryEntry) => {
+                  const isPlaying = currentPlayingPracticeCountry === countryEntry.name;
+                  return (
+                    <div
                       key={countryEntry.name}
                       id={`practice-country-${countryEntry.name.replace(/\s+/g, '-')}`}
-                      className={`alphabet-practice-country-item ${
-                        currentPlayingPracticeCountry === countryEntry.name ? 'is-playing' : ''
+                      className={`bg-[#101414] border rounded-lg p-6 transition-all duration-300 group flex flex-col gap-4 relative overflow-hidden ${
+                        isPlaying
+                          ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
+                          : 'border-white/15 hover:border-cyan-300/70'
                       }`}
-                      >
-                      <div className="alphabet-practice-country-main">
-                        <span>- {countryEntry.name}</span>
-                        {showIpa && (
-                          <>
-                            <span className="alphabet-practice-country-ipa">
-                              <span className="ipa-label">IPA kata: </span>
-                              {countryEntry.ipa}
-                            </span>
-                            <span className="alphabet-practice-country-ipa">
-                              <span className="ipa-label">IPA spelling: </span>
-                              {getSpellingIpa(countryEntry.name)}
-                            </span>
-                          </>
-                        )}
+                    >
+                      {isPlaying && <div className="absolute inset-0 bg-cyan-300/5 pointer-events-none" />}
+                      
+                      <div className="flex justify-between items-start relative z-10 gap-4">
+                        <div className="min-w-0">
+                          <div className="font-sans text-2xl font-bold text-white break-words">
+                            {countryEntry.name}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => void handlePlayPracticeCountry(countryEntry.name)}
+                          className={`transition-transform shrink-0 ${
+                            isPlaying 
+                              ? 'text-cyan-200 scale-110' 
+                              : 'text-white/40 group-hover:text-cyan-200 hover:scale-110'
+                          }`}
+                          aria-label={`Play ${countryEntry.name}`}
+                          title={`Play ${countryEntry.name}`}
+                        >
+                          <Volume2 className={`w-8 h-8 ${isPlaying ? 'fill-current' : ''}`} />
+                        </button>
                       </div>
-                      <button
-                        type="button"
-                        className="alphabet-practice-country-play"
-                        onClick={() => void handlePlayPracticeCountry(countryEntry.name)}
-                        aria-label={`Putar ${countryEntry.name}`}
-                      >
-                        <Play size={12} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+
+                      {showIpa && (
+                        <div className="flex flex-col gap-3 border-t border-white/10 pt-4 relative z-10 w-full overflow-hidden">
+                          <div className="flex flex-col gap-2">
+                            <span className="font-mono text-xs text-white/40 uppercase tracking-widest">IPA kata</span>
+                            <div className="bg-black/30 border border-white/15 rounded px-3 py-2">
+                              <span className="font-sans text-base text-cyan-200">
+                                {countryEntry.ipa}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-col gap-2">
+                            <span className="font-mono text-xs text-white/40 uppercase tracking-widest">IPA spelling</span>
+                            <div className="bg-white/5 rounded shadow-inner border border-white/10 px-3 py-2">
+                              <span className="font-sans text-base text-cyan-200">
+                                {getSpellingIpa(countryEntry.name)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {isPlaying && (
+                        <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-cyan-100 to-cyan-300 animate-pulse w-full" />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
             </div>

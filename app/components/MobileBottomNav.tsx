@@ -252,11 +252,11 @@ export default function MobileBottomNav() {
             >
               {!tourGuideBootstrapped ? (
                 <Image
-                  src="/Kepala.png?v=20260528"
+                  src="/kondisi_off_2K_202606030939.webp"
                   alt="Tour Guide"
                   width={56}
                   height={56}
-                  className="geuwat-mobile-avatar-image h-14 w-14 object-contain"
+                  className="geuwat-mobile-avatar-image h-14 w-14"
                   priority
                   unoptimized
                 />

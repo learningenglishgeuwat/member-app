@@ -38,6 +38,14 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
   description: "Personalized English learning dashboard for GEUWAT members",
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+    ],
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 };
 
 export const viewport = {

@@ -351,7 +351,7 @@ const PhoneticPortal: React.FC = () => {
                 </div>
               </div>
               <h2 className="card-title">VOWELS</h2>
-              <p className="card-description">Explore vowel sounds</p>
+              <p className="card-description">Jelajahi bunyi vokal</p>
             </div>
           </div>
 
@@ -363,7 +363,7 @@ const PhoneticPortal: React.FC = () => {
                 </div>
               </div>
               <h2 className="card-title">DIPHTHONGS</h2>
-              <p className="card-description">Explore diphthong sounds</p>
+              <p className="card-description">Jelajahi bunyi diftong</p>
             </div>
           </div>
 
@@ -375,7 +375,7 @@ const PhoneticPortal: React.FC = () => {
                 </div>
               </div>
               <h2 className="card-title">CONSONANTS</h2>
-              <p className="card-description">Explore consonant sounds</p>
+              <p className="card-description">Jelajahi bunyi konsonan</p>
             </div>
           </div>
         </div>
@@ -387,7 +387,7 @@ const PhoneticPortal: React.FC = () => {
             className="symbol-table-trigger-btn"
             aria-label="Open Phonetic Symbol Chart"
           >
-            PHONETIC SYMBOL CHART
+            TABEL SIMBOL FONETIK
           </button>
         </div>
 
@@ -397,14 +397,14 @@ const PhoneticPortal: React.FC = () => {
             onClick={handleMinimalPairsClick}
             className="common-mistakes-btn"
           >
-            COMMON MISTAKES
+            KESALAHAN UMUM
           </button>
           <button
             type="button"
             onClick={handleSummaryClick}
             className="common-mistakes-btn"
           >
-            SUMMARY
+            RANGKUMAN
           </button>
         </div>
 
@@ -422,7 +422,7 @@ const PhoneticPortal: React.FC = () => {
               onClick={(event) => event.stopPropagation()}
             >
               <header className="symbol-table-modal-header">
-                <h3 className="symbol-table-modal-title">PHONETIC SYMBOL CHART</h3>
+                <h3 className="symbol-table-modal-title">TABEL SIMBOL FONETIK</h3>
                 <button
                   type="button"
                   className="symbol-table-modal-close"

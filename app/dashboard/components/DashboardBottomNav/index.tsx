@@ -104,11 +104,11 @@ const DashboardBottomNav: React.FC<DashboardBottomNavProps> = ({
           >
             {!isTourGuideBootstrapped ? (
               <Image
-                src="/Kepala.png?v=20260528"
+                src="/kondisi_off_2K_202606030939.webp"
                 alt="Tour Guide"
                 width={56}
                 height={56}
-                className="dashboard-tour-avatar-image h-14 w-14 object-contain"
+                className="dashboard-tour-avatar-image h-14 w-14"
                 priority
                 unoptimized
               />
