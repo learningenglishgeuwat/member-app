@@ -14,6 +14,7 @@ interface JourneyPlan {
 }
 
 const STORAGE_KEY = 'dashboard-mission-goal'
+const READY_PHASES_STORAGE_KEY = 'dashboard-ready-phases'
 const DASHBOARD_VIEW_EVENT = 'geuwat:dashboard-view'
 const DEPLOYED_APP_URL = 'https://learningenglishgeuwat-ten.vercel.app'
 const DAY_OPTIONS = [
@@ -134,11 +135,27 @@ export function buildPronunciationCalendarPrompt(options: {
 
 const StartJourney: React.FC = () => {
   const router = useRouter()
-  const [goal, setGoal] = useState('')
+  const [goal, setGoal] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return localStorage.getItem(STORAGE_KEY) ?? ''
+  })
   const [loading, setLoading] = useState(false)
   const [plan, setPlan] = useState<JourneyPlan | null>(null)
   const [initiating, setInitiating] = useState(false)
-  const [activePhases, setActivePhases] = useState<Set<number>>(new Set())
+  const [activePhases, setActivePhases] = useState<Set<number>>(() => {
+    // Load saved ready phases from localStorage
+    if (typeof window === 'undefined') return new Set()
+    try {
+      const saved = localStorage.getItem(READY_PHASES_STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        return new Set(Array.isArray(parsed) ? parsed : [])
+      }
+    } catch {
+      // Ignore parse errors
+    }
+    return new Set()
+  })
   const [showEmptyWarning, setShowEmptyWarning] = useState(false)
   const [isPronunciationRoadmapOpen, setIsPronunciationRoadmapOpen] = useState(false)
   const [isPhaseTwoPopupOpen, setIsPhaseTwoPopupOpen] = useState(false)
@@ -171,15 +188,18 @@ const StartJourney: React.FC = () => {
   )
 
   useEffect(() => {
-    const savedGoal = localStorage.getItem(STORAGE_KEY)
-    if (savedGoal) {
-      setGoal(savedGoal)
-    }
-  }, [])
-
-  useEffect(() => {
     localStorage.setItem(STORAGE_KEY, goal)
   }, [goal])
+
+  // Save ready phases to localStorage whenever they change
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.setItem(READY_PHASES_STORAGE_KEY, JSON.stringify(Array.from(activePhases)))
+    } catch {
+      // Ignore storage errors
+    }
+  }, [activePhases])
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -397,6 +417,7 @@ const StartJourney: React.FC = () => {
               <button
                 type="button"
                 onClick={closePhaseTwoPopups}
+                data-tour="dashboard-phase-2-close-popup"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/10 hover:text-white"
                 aria-label="Close Latihan Terarah"
               >
@@ -404,25 +425,27 @@ const StartJourney: React.FC = () => {
               </button>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={handleOpenFoundationRoadmap}
+                data-tour="dashboard-phase-2-roadmap-strategis"
                 className="rounded-xl border border-cyan-500/25 bg-cyan-500/10 p-4 text-left transition hover:border-cyan-300/60 hover:bg-cyan-500/15"
               >
                 <Target className="mb-3 h-5 w-5 text-cyan-200" />
-                <div className="font-display text-sm font-bold text-white">Roadmap Strategis</div>
-                <div className="mt-1 text-xs text-slate-300">Pahami Fondasi yang perlu dipelajari</div>
+                <div className="font-display text-[10px] font-bold text-white leading-tight">Roadmap Strategis</div>
+                <div className="mt-1 text-[9px] text-slate-300 leading-snug">Pahami Fondasi yang perlu dipelajari</div>
               </button>
 
               <button
                 type="button"
                 onClick={handleOpenViewProgress}
+                data-tour="dashboard-phase-2-status-pencapaian"
                 className="rounded-xl border border-purple-500/25 bg-purple-500/10 p-4 text-left transition hover:border-purple-300/60 hover:bg-purple-500/15"
               >
                 <BarChart2 className="mb-3 h-5 w-5 text-purple-200" />
-                <div className="font-display text-sm font-bold text-white">Status &amp; Pencapaian</div>
-                <div className="mt-1 text-xs text-slate-300">Pahami View Progress</div>
+                <div className="font-display text-[10px] font-bold text-white leading-tight">Status &amp; Pencapaian</div>
+                <div className="mt-1 text-[9px] text-slate-300 leading-snug">Pahami View Progress</div>
               </button>
 
               <button
@@ -431,11 +454,12 @@ const StartJourney: React.FC = () => {
                   setIsReferencePopupOpen(true)
                   setIsCalendarPromptOpen(false)
                 }}
+                data-tour="dashboard-phase-2-referensi"
                 className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-left transition hover:border-emerald-300/60 hover:bg-emerald-500/15"
               >
                 <BookOpen className="mb-3 h-5 w-5 text-emerald-200" />
-                <div className="font-display text-sm font-bold text-white">Referensi</div>
-                <div className="mt-1 text-xs text-slate-300">Pahami Alat Tempur</div>
+                <div className="font-display text-[10px] font-bold text-white leading-tight">Referensi</div>
+                <div className="mt-1 text-[9px] text-slate-300 leading-snug">Pahami Alat Tempur</div>
               </button>
 
               <button
@@ -444,11 +468,12 @@ const StartJourney: React.FC = () => {
                   setIsCalendarPromptOpen(true)
                   setIsReferencePopupOpen(false)
                 }}
+                data-tour="dashboard-phase-2-sinkronisasi-jadwal"
                 className="rounded-xl border border-amber-500/25 bg-amber-500/10 p-4 text-left transition hover:border-amber-300/60 hover:bg-amber-500/15"
               >
                 <CalendarDays className="mb-3 h-5 w-5 text-amber-200" />
-                <div className="font-display text-sm font-bold text-white">Sinkronisasi Jadwal</div>
-                <div className="mt-1 text-xs text-slate-300">Atur pengingat ke Gemini pada Google Calendar</div>
+                <div className="font-display text-[10px] font-bold text-white leading-tight">Sinkronisasi Jadwal</div>
+                <div className="mt-1 text-[9px] text-slate-300 leading-snug">Atur pengingat ke Gemini pada Google Calendar</div>
               </button>
             </div>
           </div>
@@ -475,6 +500,7 @@ const StartJourney: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsReferencePopupOpen(false)}
+                data-tour="dashboard-phase-2-close-referensi"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/10 hover:text-white"
                 aria-label="Close Referensi"
               >
@@ -509,49 +535,50 @@ const StartJourney: React.FC = () => {
           aria-label="Prompt Gemini Google Calendar"
         >
           <div
-            className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-amber-400/30 bg-black p-4 shadow-[0_0_34px_rgba(245,158,11,0.22)] sm:p-6"
+            className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-amber-400/30 bg-black p-4 shadow-[0_0_34px_rgba(245,158,11,0.22)] sm:p-6 text-[11px] sm:text-[12px]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
+                <h3 className="font-display text-lg font-bold text-white sm:text-xl">
                   Prompt Gemini untuk Google Calendar
                 </h3>
-                <p className="mt-1 text-xs text-slate-400 sm:text-sm">
+                <p className="mt-1 text-[10px] text-slate-400">
                   Atur jadwal pronunciation, lalu salin prompt ke Gemini.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsCalendarPromptOpen(false)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/10 hover:text-white"
+                data-tour="dashboard-phase-2-close-sinkronisasi-jadwal"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-white/10 hover:text-white"
                 aria-label="Close Prompt Calendar"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="space-y-4 rounded-xl border border-slate-700/70 bg-slate-950/70 p-4">
-                <label className="block text-xs font-semibold uppercase tracking-widest text-amber-200">
+            <div className="grid gap-3 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="space-y-3 rounded-xl border border-slate-700/70 bg-slate-950/70 p-3">
+                <label className="block text-[10px] font-semibold uppercase tracking-widest text-amber-200">
                   Tanggal mulai
                   <input
                     type="date"
                     value={calendarStartDate}
                     onChange={(event) => setCalendarStartDate(event.target.value)}
-                    className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none focus:border-amber-300"
+                    className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-2.5 py-1.5 text-[11px] text-white outline-none focus:border-amber-300"
                   />
                 </label>
 
                 <div>
-                  <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-amber-200">
+                  <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-amber-200">
                     Pilih hari
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     {DAY_OPTIONS.map((day) => (
                       <label
                         key={day.value}
-                        className="flex items-center gap-2 rounded-lg border border-slate-700 bg-black/60 px-3 py-2 text-xs text-slate-200"
+                        className="flex items-center gap-2 rounded-lg border border-slate-700 bg-black/60 px-2.5 py-2 text-[10px] text-slate-200"
                       >
                         <input
                           type="checkbox"
@@ -565,35 +592,35 @@ const StartJourney: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="block text-xs font-semibold uppercase tracking-widest text-amber-200">
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-amber-200">
                     Mulai
                     <input
                       type="time"
                       value={calendarStartTime}
                       onChange={(event) => setCalendarStartTime(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none focus:border-amber-300"
+                      className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-2.5 py-1.5 text-[11px] text-white outline-none focus:border-amber-300"
                     />
                   </label>
-                  <label className="block text-xs font-semibold uppercase tracking-widest text-amber-200">
+                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-amber-200">
                     Selesai
                     <input
                       type="time"
                       value={calendarEndTime}
                       onChange={(event) => setCalendarEndTime(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none focus:border-amber-300"
+                      className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-2.5 py-1.5 text-[11px] text-white outline-none focus:border-amber-300"
                     />
                   </label>
                 </div>
 
-                <label className="block text-xs font-semibold uppercase tracking-widest text-amber-200">
+                <label className="block text-[10px] font-semibold uppercase tracking-widest text-amber-200">
                   Notif sebelum waktu
                   <input
                     type="number"
                     min="0"
                     value={calendarNotificationMinutes}
                     onChange={(event) => setCalendarNotificationMinutes(event.target.value)}
-                    className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none focus:border-amber-300"
+                    className="mt-2 w-full rounded-lg border border-slate-700 bg-black px-2.5 py-1.5 text-[11px] text-white outline-none focus:border-amber-300"
                   />
                 </label>
               </div>
@@ -602,14 +629,14 @@ const StartJourney: React.FC = () => {
                 <textarea
                   readOnly
                   value={calendarPrompt}
-                  className="min-h-[420px] w-full resize-y rounded-xl border border-slate-700 bg-slate-950 p-4 font-mono text-xs leading-relaxed text-slate-100 outline-none"
+                  className="min-h-[360px] w-full resize-y rounded-xl border border-slate-700 bg-slate-950 p-3 font-mono text-[10px] leading-snug text-slate-100 outline-none"
                   aria-label="Prompt Google Calendar"
                 />
                 <div className="flex justify-end">
                   <button
                     type="button"
                     onClick={handleCopyCalendarPrompt}
-                    className="inline-flex items-center gap-2 rounded-lg bg-amber-300 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-200"
+                    className="inline-flex items-center gap-2 rounded-lg bg-amber-300 px-3 py-2 text-[10px] font-bold text-slate-950 hover:bg-amber-200"
                   >
                     <Copy className="h-4 w-4" />
                     {hasCopiedCalendarPrompt ? 'Tersalin' : 'Salin Prompt'}
@@ -660,6 +687,7 @@ const StartJourney: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setIsPronunciationRoadmapOpen(true)}
+                      data-tour="dashboard-phase-1-bangun-fondasi"
                       className="font-semibold text-cyan-200 underline underline-offset-4 decoration-cyan-400/80 hover:text-cyan-100 transition-colors"
                     >
                       Bangun Fondasi

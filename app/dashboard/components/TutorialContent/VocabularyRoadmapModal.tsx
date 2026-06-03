@@ -7,7 +7,6 @@ import {
   VOCABULARY_ROADMAP_TOTAL_DAYS,
   VOCABULARY_ROADMAP_TOTAL_WORDS,
 } from './roadmap-data/vocabulary-roadmap'
-import { useHaptic } from '@/lib/haptic/useHaptic'
 
 type VocabularyRoadmapModalProps = {
   isOpen: boolean
@@ -22,7 +21,6 @@ const VocabularyRoadmapModal: React.FC<VocabularyRoadmapModalProps> = ({
   onClose,
   zIndex = 200,
 }) => {
-  const { triggerHaptic } = useHaptic()
   const [checkedById, setCheckedById] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {}
     try {

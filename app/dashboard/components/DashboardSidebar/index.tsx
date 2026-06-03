@@ -112,7 +112,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Overlay - covers entire screen including navbar area */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[1250] pointer-events-auto"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[1350] pointer-events-auto"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
@@ -121,7 +121,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Sidebar Container */}
       <aside 
         className={`
-          fixed top-0 left-0 z-[1260] min-h-screen h-[100dvh] w-60 sm:w-64 bg-black/90 border-r border-purple-900/30 backdrop-blur-xl 
+          fixed top-0 left-0 z-[1360] min-h-screen h-[100dvh] w-60 sm:w-64 bg-black/90 border-r border-purple-900/30 backdrop-blur-xl 
           transform transition-transform duration-300 ease-in-out flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom)+16px)]
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
@@ -172,7 +172,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                     }}
                     disabled={isLocked}
                     className={`
-                      w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base
+                      w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-[10px] sm:text-xs
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/60 focus-visible:ring-offset-0
                       ${isLocked
                         ? 'text-slate-500 bg-black/40 border border-slate-800/60 cursor-not-allowed'
@@ -207,7 +207,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 type="button"
                 disabled={isLoggingOut}
                 data-tour="dashboard-sidebar-item-logout"
-                className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-sm sm:text-base border ${
+                className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 font-display text-[10px] sm:text-xs border ${
                   isLoggingOut
                     ? 'text-slate-500 cursor-not-allowed bg-black/40 border-slate-800/60'
                     : 'text-red-300 hover:text-red-200 bg-red-500/10 hover:bg-red-500/20 border-red-500/30'

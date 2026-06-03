@@ -58,7 +58,7 @@ const HUB_NODES: ReadonlyArray<HubNode> = [
 const NODE_LESSONS: Record<HubNode['id'], ReadonlyArray<NodeLesson>> = {
   beginning: [{ title: 'Released /t/', href: '/skill/pronunciation/american-t/beginning/clear-t' }],
   middle: [
-    { title: 'Flap T /?/', href: '/skill/pronunciation/american-t/middle/flap' },
+    { title: 'Flap T /d/', href: '/skill/pronunciation/american-t/middle/flap' },
     { title: 'Silent /t/ (Casual Speech)', href: '/skill/pronunciation/american-t/middle/silent-t' },
     { title: 'Glottal Stop /?/', href: '/skill/pronunciation/american-t/middle/glottal' },
   ],

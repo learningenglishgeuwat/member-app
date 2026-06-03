@@ -4,8 +4,8 @@
   font-family: var(--font-ui);
   padding: 2.25rem 1.25rem;
   background:
-    radial-gradient(circle at 20% 18%, rgba(190, 41, 236, 0.2), transparent 42%),
-    radial-gradient(circle at 82% 72%, rgba(6, 182, 212, 0.16), transparent 44%),
+    radial-gradient(circle at 20% 18%, rgba(217, 70, 239, 0.2), transparent 42%),
+    radial-gradient(circle at 82% 72%, rgba(232, 121, 249, 0.16), transparent 44%),
     #07030f;
   color: #f3ebff;
 }
@@ -17,9 +17,9 @@
 .tt-shell {
   width: min(760px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(164, 98, 236, 0.38);
+  border: 1px solid rgba(217, 70, 239, 0.38);
   border-radius: 16px;
-  background: rgba(22, 10, 40, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   padding: 1.2rem;
 }
 
@@ -60,9 +60,9 @@
 .tt-select {
   width: 100%;
   min-height: 44px;
-  border: 1px solid rgba(169, 107, 236, 0.5);
+  border: 1px solid rgba(217, 70, 239, 0.5);
   border-radius: 10px;
-  background: rgba(38, 16, 62, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   color: #f4ecff;
   padding: 0.55rem 0.75rem;
   margin-bottom: 0.95rem;
@@ -97,11 +97,11 @@
   justify-content: center;
   flex-shrink: 0;
   border-radius: 999px;
-  border: 1px solid rgba(167, 139, 250, 0.62);
+  border: 1px solid rgba(232, 121, 249, 0.62);
   background: linear-gradient(
     135deg,
-    rgba(139, 92, 246, 0.33) 0%,
-    rgba(167, 139, 250, 0.16) 45%,
+    rgba(217, 70, 239, 0.33) 0%,
+    rgba(232, 121, 249, 0.16) 45%,
     rgba(15, 23, 42, 0.52) 100%
   );
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -123,10 +123,10 @@
 }
 
 .tt-select:hover .tt-caret {
-  border-color: rgba(167, 139, 250, 0.95);
+  border-color: rgba(232, 121, 249, 0.95);
   box-shadow:
-    0 0 0 1px rgba(167, 139, 250, 0.25),
-    0 8px 16px rgba(139, 92, 246, 0.3);
+    0 0 0 1px rgba(232, 121, 249, 0.25),
+    0 8px 16px rgba(217, 70, 239, 0.3);
 }
 
 .tt-dropdown-list {
@@ -140,9 +140,9 @@
   margin: 0;
   padding: 0.35rem;
   list-style: none;
-  border: 1px solid rgba(169, 107, 236, 0.5);
+  border: 1px solid rgba(217, 70, 239, 0.5);
   border-radius: 10px;
-  background: rgba(20, 10, 35, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -159,24 +159,24 @@
 }
 
 .tt-dropdown-item:hover {
-  background: rgba(110, 53, 168, 0.4);
+  background: rgba(168, 53, 168, 0.4);
 }
 
 .tt-dropdown-item.is-active {
-  background: rgba(77, 148, 214, 0.3);
+  background: rgba(217, 70, 239, 0.3);
   color: #ffffff;
 }
 
 .tt-card {
-  border: 1px solid rgba(87, 180, 242, 0.35);
+  border: 1px solid rgba(217, 70, 239, 0.35);
   border-radius: 12px;
-  background: rgba(16, 19, 43, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   padding: 0.9rem;
 }
 
 .tt-card-title {
   margin: 0 0 0.45rem;
-  color: #7dd3fc;
+  color: #f0a3fc;
   font-size: 1.05rem;
 }
 
@@ -190,12 +190,12 @@
 .tt-pill {
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(170, 103, 235, 0.45);
+  border: 1px solid rgba(232, 121, 249, 0.45);
   border-radius: 999px;
   padding: 0.2rem 0.55rem;
   font-size: 0.77rem;
   color: #e7d8ff;
-  background: rgba(65, 30, 102, 0.45);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .tt-card-text {
@@ -203,38 +203,6 @@
   font-size: 1.02rem;
   line-height: 1.5;
 }
-
-.tt-tts-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.7rem;
-}
-
-.tt-tts-toggle {
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(84, 180, 242, 0.55);
-  border-radius: 999px;
-  background: rgba(26, 50, 83, 0.6);
-  color: #e8f7ff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.15s ease;
-}
-
-.tt-tts-toggle:hover {
-  background: rgba(40, 74, 120, 0.62);
-  border-color: rgba(130, 211, 255, 0.8);
-}
-
-.tt-tts-icon {
-  font-size: 0.9rem;
-  line-height: 1;
-}
-
 
 .tt-line {
   margin: 0;
@@ -246,9 +214,9 @@
 
 .tt-ipa-box {
   margin-top: 0.65rem;
-  border: 1px solid rgba(140, 123, 239, 0.45);
+  border: 1px solid rgba(232, 121, 249, 0.45);
   border-radius: 10px;
-  background: rgba(33, 25, 62, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   padding: 0.5rem 0.6rem;
 }
 

@@ -87,11 +87,11 @@ export const getCachedTierConfigSnapshot = (): Tier[] | null => {
   return MOCK_TIER_CONFIG
 }
 
-export async function getTierConfig(_options?: { forceRefresh?: boolean }): Promise<Tier[] | null> {
+export async function getTierConfig(): Promise<Tier[] | null> {
   return MOCK_TIER_CONFIG
 }
 
-export async function getReferralStats(_userId: string): Promise<ReferralStats> {
+export async function getReferralStats(): Promise<ReferralStats> {
   // Keep this predictable for mockups; you can wire it to real tables later.
   return { totalReferrals: 0, totalEarnings: 0 }
 }
@@ -131,6 +131,7 @@ export async function getLatestWithdrawRequest(userId: string): Promise<Withdraw
   const latest = rows[0] ?? null
   if (!latest) return null
 
-  const { created_at_ms: _ignore, ...rest } = latest
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { created_at_ms, ...rest } = latest
   return rest
 }

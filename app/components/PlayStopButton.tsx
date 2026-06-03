@@ -55,6 +55,7 @@ interface PlayStopButtonPropsExtended extends PlayStopButtonProps {
   sectionId?: string;
   targetPath?: string;
   scrollItemKey?: string;
+  'data-tour'?: string;
 }
 
 import { useSectionNavigator } from './ControlCenter/ControlCenter'
@@ -69,6 +70,7 @@ export function PlayStopButton({
   sectionId,
   targetPath,
   scrollItemKey,
+  'data-tour': dataTour,
 }: PlayStopButtonPropsExtended) {
   const iconSize = size === 'sm'
     ? 'w-2 h-2 sm:w-2.5 sm:h-2.5'
@@ -83,7 +85,7 @@ export function PlayStopButton({
     if (resolvedSectionId && navigator?.openSection) {
       try {
         navigator.openSection(resolvedSectionId, targetPath)
-      } catch (err) {
+      } catch {
         // ignore
       }
       // delay calling onClick slightly to allow scroll/open to happen
@@ -110,6 +112,7 @@ export function PlayStopButton({
     <button
       onClick={handleClick}
       disabled={disabled}
+      data-tour={dataTour}
       className={[
         'w-full border px-1 py-0.5 sm:px-2 sm:py-1',
         'font-mono text-[7px] sm:text-[8.5px] uppercase',

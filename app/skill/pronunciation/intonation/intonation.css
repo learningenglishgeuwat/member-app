@@ -23,88 +23,6 @@
   background: rgb(var(--pronun-panel-rgb) / 0.8);
 }
 
-.intonation-roadmap-wrap {
-  margin-bottom: 1rem;
-}
-
-.intonation-roadmap-grid {
-  margin-top: 0.85rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.intonation-roadmap-card {
-  border: 1px solid rgba(244, 114, 182, 0.35);
-  border-radius: 0.85rem;
-  background: linear-gradient(145deg, rgba(25, 9, 37, 0.96), rgba(52, 16, 66, 0.82));
-  padding: 0.82rem;
-}
-
-.intonation-roadmap-card.is-done {
-  border-color: rgba(134, 239, 172, 0.65);
-  box-shadow: inset 0 1px 0 rgba(220, 252, 231, 0.22);
-}
-
-.intonation-roadmap-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.intonation-roadmap-step {
-  margin: 0;
-  font-size: 0.8rem;
-  color: #fbcfe8;
-  letter-spacing: 0.03em;
-}
-
-.intonation-roadmap-badge {
-  border-radius: 999px;
-  padding: 0.15rem 0.55rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-.intonation-roadmap-badge.is-done {
-  background: rgba(22, 163, 74, 0.22);
-  border: 1px solid rgba(134, 239, 172, 0.55);
-  color: #bbf7d0;
-}
-
-.intonation-roadmap-badge.is-pending {
-  background: rgba(225, 29, 72, 0.2);
-  border: 1px solid rgba(251, 113, 133, 0.45);
-  color: #fecdd3;
-}
-
-.intonation-roadmap-card h3 {
-  margin: 0.42rem 0 0;
-  color: #ffe4f1;
-  font-size: 1.02rem;
-  font-family: var(--font-display);
-}
-
-.intonation-roadmap-card p {
-  margin: 0.42rem 0 0;
-  color: #f7deec;
-  line-height: 1.5;
-}
-
-.intonation-roadmap-check {
-  margin-top: 0.58rem;
-  display: flex;
-  align-items: center;
-  gap: 0.48rem;
-  color: #f9d4e7;
-  font-weight: 600;
-}
-
-.intonation-roadmap-check input {
-  inline-size: 1rem;
-  block-size: 1rem;
-}
-
 .intonation-concept {
   margin-top: 0.75rem;
   display: grid;
@@ -149,37 +67,11 @@
   background: rgb(var(--pronun-accent-2-rgb) / 0.16);
 }
 
-.intonation-audio-wrap {
-  margin-top: 0.75rem;
-}
-
-.intonation-audio-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
-
-.intonation-audio-btn {
-  border: 1px solid rgba(249, 168, 212, 0.42);
-  background: rgba(41, 12, 56, 0.82);
-  color: #fce7f3;
-  border-radius: 0.62rem;
-  padding: 0.45rem 0.65rem;
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
-.intonation-audio-btn.is-stop {
-  border-color: rgba(252, 165, 165, 0.46);
-  color: #fecaca;
-}
-
 .intonation-shadowing-prompt {
   margin-top: 0.58rem;
   border: 1px solid rgba(249, 168, 212, 0.38);
   border-radius: 0.68rem;
-  background: rgba(30, 11, 43, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   padding: 0.55rem 0.7rem;
 }
 
@@ -217,7 +109,7 @@
   margin-top: 0.72rem;
   border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.75rem;
-  background: linear-gradient(145deg, rgba(20, 8, 32, 0.95), rgba(44, 12, 56, 0.82));
+  background: rgba(0, 0, 0, 0.9);
   padding: 0.8rem 0.9rem;
 }
 
@@ -280,7 +172,7 @@
 .intonation-card {
   border: 1px solid rgba(244, 114, 182, 0.4);
   border-radius: 0.78rem;
-  background: linear-gradient(145deg, rgba(22, 8, 34, 0.95), rgba(45, 12, 58, 0.78));
+  background: rgba(0, 0, 0, 0.9);
   padding: 0.85rem;
   box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.12);
 }
@@ -373,14 +265,14 @@
   margin-top: 0 !important;
   border: 1px solid rgba(249, 168, 212, 0.28);
   border-radius: 0.56rem;
-  background: rgba(34, 11, 49, 0.62);
+  background: rgba(0, 0, 0, 0.75);
   padding: 0.45rem 0.55rem;
   box-shadow: inset 0 1px 0 rgba(251, 207, 232, 0.08);
 }
 
 .intonation-detail-card-note {
   border-color: rgba(249, 168, 212, 0.22);
-  background: rgba(45, 13, 64, 0.56);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .intonation-detail-card-self-check {
@@ -451,7 +343,7 @@
   line-height: 1.5;
   border: 1px solid rgba(249, 168, 212, 0.24);
   border-radius: 0.56rem;
-  background: rgba(33, 11, 48, 0.6);
+  background: rgba(0, 0, 0, 0.75);
   padding: 0.42rem 0.55rem;
 }
 
@@ -465,7 +357,7 @@
   border: 1px solid rgba(249, 168, 212, 0.32);
   border-radius: 0.68rem;
   padding: 0.55rem 0.65rem;
-  background: rgba(33, 11, 48, 0.8);
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .intonation-guide-card h4 {
@@ -511,7 +403,7 @@
 .intonation-list li {
   border: 1px solid rgba(244, 114, 182, 0.3);
   border-radius: 0.62rem;
-  background: rgba(24, 8, 34, 0.72);
+  background: rgba(0, 0, 0, 0.8);
   padding: 0.6rem 0.7rem;
   color: #f3d9e9;
   line-height: 1.5;
@@ -524,8 +416,7 @@
 
 @media (min-width: 900px) {
   .intonation-grid.two-col,
-  .intonation-guide-grid,
-  .intonation-roadmap-grid {
+  .intonation-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

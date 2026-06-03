@@ -60,12 +60,12 @@ Navbar PVGS sekarang menggunakan bentuk card yang sama dengan DashboardBottomNav
 | Rounded Corners | `rounded-t-2xl md:rounded-2xl` ✅ | `rounded-t-2xl md:rounded-2xl` ✅ |
 | Desktop Margin | `md:mb-4` ✅ | `md:mb-4` ✅ |
 | Padding | `px-6 pt-5 pb-[calc(...)] md:px-8 md:pb-4` ✅ | `px-6 pt-5 pb-[calc(...)] md:px-8 md:pb-4` ✅ |
-| Theme Color | Cyan/Teal | Purple/Indigo |
+| Theme Color | Cyan | Purple/Indigo |
 | Z-Index | 80 | 1300 |
 
 ## Theme Colors
 
-### PVGS (Cyan/Teal)
+### PVGS (Cyan)
 ```css
 --geuwat-nav-accent-rgb: 34, 211, 238
 ```

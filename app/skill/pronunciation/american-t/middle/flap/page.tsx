@@ -2,13 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play, Pause, Square } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import {
   renderAmericanTTextHighlight,
   renderGeneralIpaWithTHighlight,
   renderSentenceWithHighlights,
-  renderAmericanTIpaSymbolHighlight,
 } from '../../components/AmericanTHelpers';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
@@ -65,10 +64,6 @@ function formatIpaForDisplay(ipa: string): string {
   if (!trimmed) return '';
   const core = trimmed.replace(/^\/+|\/+$/g, '');
   return `/${core}/`;
-}
-
-function formatFlapIpaForLearner(ipa: string): string {
-  return formatIpaForDisplay(ipa).replace(/ɾ/g, 'd');
 }
 
 function renderFlapIpaForLearnerHighlight(ipa: string) {
@@ -411,7 +406,7 @@ export default function FlapTPage() {
   return (
     <>
       <AmericanTLessonScaffold
-      title="Flap T /ɾ/"
+      title="Flap T /d/"
       subtitle="Pola American T saat /t/ berubah menjadi bunyi flap cepat di tengah kata."
       backTo="/skill/pronunciation/american-t"
       pageClassName={isHighlightEnabled ? undefined : 'at-highlight-off'}
@@ -422,7 +417,7 @@ export default function FlapTPage() {
           onUnsave={handleUnsaveProgress}
           size="small"
           variant="primary"
-          topicName="Flap T /ɾ/"
+          topicName="Flap T /d/"
         />
       }
       sections={[
@@ -457,22 +452,6 @@ export default function FlapTPage() {
             <div className="at-word-chip-wrap">
               <div className="mb-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
                 <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T Examples</span>
-                <button
-                  onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
-                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
-                >
-                  {isPlayingExamplesAll ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="at-example-grid">
                 {FLAP_T_EXAMPLES.map((item, index) => (
@@ -534,22 +513,6 @@ export default function FlapTPage() {
               </div>
               <div className="mb-4 mt-4 flex items-center justify-between border-b border-purple-500/30 pb-2">
                 <span className="font-sans text-[10px] md:text-xs text-purple-400 tracking-wider">Flap T (List of Examples)</span>
-                <button
-                  onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
-                  className="inline-flex items-center gap-1 rounded border border-purple-500/40 bg-purple-900/20 px-2 py-1 text-[10px] md:text-xs font-mono text-purple-400 hover:bg-purple-900/40 transition-colors"
-                >
-                  {isPlayingWordBankAll ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="at-flap-bank-grid">
                 {FLAP_T_WORD_BANK.map((word, index) => (
@@ -748,7 +711,7 @@ export default function FlapTPage() {
           content: (
             <div className="at-prompt-card">
               <div className="at-prompt-header">
-                <p className="at-prompt-title">Prompt Penilaian Flap T /ɾ/</p>
+                <p className="at-prompt-title">Prompt Penilaian Flap T /d/</p>
                 <button
                   type="button"
                   onClick={() => void handleCopyPrompt()}

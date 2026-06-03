@@ -60,7 +60,7 @@ export const WORD_HIGHLIGHT_OVERRIDES: Record<string, Record<string, string[]>> 
     'break': ["ea"],     'case': ["a", "e"],     'change': ["a", "e"],     'date': ["a", "e"],     'day': ["ay"],
     'face': ["a", "e"],     'game': ["a", "e"],     'gate': ["a", "e"],     'gray': ["ay"],     'great': ["ea"],
     'late': ["a", "e"],     'lay': ["ay"],     'main': ["ai"],     'make': ["a", "e"],     'may': ["ay"],
-    'name': ["a", "e"],     'place': ["a", "e"],     'plate': ["a", "e"],     'play': ["ay"],
+    'name': ["a", "e"],     'pay': ["ay"],     'place': ["a", "e"],     'plate': ["a", "e"],     'play': ["ay"],
     'rain': ["ai"],     'same': ["a", "e"],     'say': ["ay"],     'shake': ["a", "e"],     'state': ["a", "e"],
     'stay': ["ay"],     'take': ["a", "e"],     'train': ["ai"],     'wake': ["a", "e"],     'way': ["ay"]
   },

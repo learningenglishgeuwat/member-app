@@ -114,6 +114,7 @@ const nextConfig = {
   // Cache optimization
   experimental: {
     optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
   },
   onDemandEntries: {
     // Keep compiled pages longer in dev to reduce recompilation while learning on mobile.

@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
-import { Check, Copy, Play, Square } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
@@ -20,7 +20,6 @@ import {
 import VocabularyPracticeMissionModal from './VocabularyPracticeMissionModal';
 import VocabularyWordCarousel from './VocabularyWordCarousel';
 import { useKpiValueColumn } from './useKpiValueColumn';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 import '../topic/shared/vocabulary.css';
 
 type DetailPlayMode = 'words' | 'word-example' | null;
@@ -272,7 +271,6 @@ export default function VocabularyTopicDetailPage({
   showCardinalNumber = false,
 }: VocabularyTopicDetailPageProps) {
   const kpiRef = useRef<HTMLDListElement | null>(null);
-  const { triggerHaptic } = useHaptic();
   const [search, setSearch] = useState('');
   const [isPracticeModalOpen, setIsPracticeModalOpen] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
@@ -459,7 +457,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
 
   const playAllWordThenExample = useCallback(async () => {
     if (!visibleWords.length) return;
@@ -495,7 +493,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, stopVocabularySpeech, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
 
   const handleSaveProgress = useCallback(
     async (percentage: number) => {

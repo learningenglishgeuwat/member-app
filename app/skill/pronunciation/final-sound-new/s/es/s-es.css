@@ -1,5 +1,30 @@
+/* Global white text for s-es page */
+.s-es-page {
+  color: #ffffff !important;
+}
+
+.s-es-page p,
+.s-es-page span,
+.s-es-page div,
+.s-es-page li,
+.s-es-page td,
+.s-es-page th,
+.s-es-page h1,
+.s-es-page h2,
+.s-es-page h3,
+.s-es-page h4,
+.s-es-page h5,
+.s-es-page h6,
+.s-es-page strong {
+  color: inherit;
+}
+
 .s-es-page .fs-topic-title {
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
+}
+
+.s-es-page .fs-topic-subtitle {
+  color: #ffffff !important;
 }
 
 .s-es-page .s-es-recording-anchor {
@@ -9,7 +34,23 @@
 }
 
 .s-es-page .fs-topic-block-title {
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
+}
+
+.s-es-page .fs-topic-text {
+  color: #ffffff !important;
+}
+
+.s-es-page .fs-topic-card-title {
+  color: #ffffff !important;
+}
+
+.s-es-page .fs-topic-card-note {
+  color: #ffffff !important;
+}
+
+.s-es-page .fs-topic-section-button span {
+  color: #ffffff !important;
 }
 
 .s-es-progress-actions {
@@ -35,7 +76,7 @@
   background: rgb(var(--pronun-panel-rgb) / 0.66);
   box-shadow: inset 0 1px 0 rgb(var(--pronun-accent-1-rgb) / 0.1);
   padding: 0.58rem 0.7rem;
-  color: #f1e9ff;
+  color: #ffffff !important;
   line-height: 1.52;
 }
 
@@ -75,7 +116,7 @@
 
 .s-es-prompt-title {
   margin: 0;
-  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+  color: #ffffff !important;
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -165,10 +206,10 @@
 }
 
 .s-es-page .fs-topic-example-list li.is-speaking {
-  border: 1px solid rgba(34, 211, 238, 0.38);
+  border: 1px solid rgba(6, 182, 212, 0.38);
   border-radius: 0.5rem;
   padding: 0.32rem 0.4rem;
-  background: rgba(34, 211, 238, 0.12);
+  background: rgba(6, 182, 212, 0.12);
   animation: fs-topic-tts-row-pulse 1.15s ease-in-out infinite;
 }
 
@@ -186,7 +227,7 @@
   background: rgb(var(--pronun-panel-rgb) / 0.64);
   box-shadow: inset 0 1px 0 rgb(var(--pronun-accent-1-rgb) / 0.1);
   padding: 0.56rem 0.66rem;
-  color: #f1e9ff;
+  color: #ffffff !important;
   line-height: 1.52;
 }
 
@@ -204,7 +245,7 @@
   list-style: disc;
   display: grid;
   gap: 0.44rem;
-  color: #f1e9ff;
+  color: #ffffff !important;
   line-height: 1.52;
 }
 
@@ -259,6 +300,7 @@
 
 .s-es-table-example-word {
   font-weight: 700;
+  color: #ffffff;
 }
 
 .s-es-table-example-ipa {
@@ -311,7 +353,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pan-y;
+  touch-action: pan-x pan-y pinch-zoom;
   scrollbar-width: thin !important;
   scrollbar-color: rgb(var(--pronun-accent-1-rgb) / 0.65) rgba(255, 255, 255, 0.06);
 }

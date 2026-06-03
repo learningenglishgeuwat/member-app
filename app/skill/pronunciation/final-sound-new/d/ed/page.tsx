@@ -958,23 +958,6 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.pastEndings ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => setShowPastEndingsIpa((prev) => !prev)}
-                >
-                  {showPastEndingsIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handlePastEndingsPlayAll()}
-                  aria-label={isPlayingPastEndingsAll ? 'Stop play all past endings' : 'Play all past endings'}
-                >
-                  {isPlayingPastEndingsAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
               <div className="fs-topic-grid">
               {PAST_ENDING_RULES.map((rule) => (
                 <article key={rule.ending} className="fs-topic-card">
@@ -1007,14 +990,14 @@ export default function FinalSoundDEdPage() {
                               Before
                             </span>
                             <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
-                              <span className="font-sans text-sm mr-1 text-cyan-200">
+                              <span className="font-sans text-sm mr-1 text-white">
                                 {renderDEdWordHighlight(
                                   example.wordBefore,
                                   'base',
                                   `past-${example.wordBefore}-before-word`,
                                 )}
                                 {showPastEndingsIpa ? (
-                                  <span className="font-mono text-xs opacity-70 ml-1">
+                                  <span className="font-ipa text-xs opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipaBefore,
                                       'base',
@@ -1026,7 +1009,7 @@ export default function FinalSoundDEdPage() {
                               <button
                                 type="button"
                                 onClick={() => void playPastEndingSingle(example.wordBefore, `${rule.ending}-${example.word}`)}
-                                className="p-1 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.wordBefore}`}
                               >
                                 <Play className="w-3.5 h-3.5" />
@@ -1039,14 +1022,14 @@ export default function FinalSoundDEdPage() {
                               After
                             </span>
                             <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
-                              <span className="font-sans text-lg mr-2 text-cyan-200 font-bold">
+                              <span className="font-sans text-lg mr-2 font-bold text-white">
                                 {renderDEdWordHighlight(
                                   example.word,
                                   'withEnding',
                                   `past-${example.word}-after-word`,
                                 )}
                                 {showPastEndingsIpa ? (
-                                  <span className="font-mono text-sm opacity-70 ml-1">
+                                  <span className="font-ipa text-sm opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipa,
                                       'withEnding',
@@ -1058,7 +1041,7 @@ export default function FinalSoundDEdPage() {
                               <button
                                 type="button"
                                 onClick={() => void playPastEndingSingle(example.word, `${rule.ending}-${example.word}`)}
-                                className="p-1.5 rounded transition-colors text-white/40 hover:text-cyan-200 hover:bg-white/5 flex items-center justify-center"
+                                className="p-1.5 rounded transition-colors text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center"
                                 aria-label={`Putar ${example.word}`}
                               >
                                 <Play className="w-4 h-4" />
@@ -1095,23 +1078,6 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.rulesTable ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => setShowRulesTableIpa((prev) => !prev)}
-                >
-                  {showRulesTableIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handleRulesTablePlayAll()}
-                  aria-label={isPlayingRulesTableAll ? 'Stop play all final sound rules table' : 'Play all final sound rules table'}
-                >
-                  {isPlayingRulesTableAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
                 <table className="fs-topic-rules-table geuwat-table-responsive">
                   <thead>
@@ -1173,28 +1139,6 @@ export default function FinalSoundDEdPage() {
           </h2>
           {openSections.wordBank ? (
             <div>
-              <div className="d-ed-word-bank-controls d-ed-word-bank-controls--split">
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => setShowWordBankIpa((prev) => !prev)}
-                >
-                  {showWordBankIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="d-ed-word-bank-play-all-btn"
-                  onClick={() => void handleWordBankPlayAll()}
-                  aria-label={
-                    isPlayingWordBankAll
-                      ? 'Stop play all before and after words'
-                      : 'Play all before and after words'
-                  }
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-
               <div className="fs-topic-rules-table-wrap geuwat-table-scroll">
                 <table className="fs-topic-rules-table fs-topic-before-after-table geuwat-table-responsive">
                   <thead>

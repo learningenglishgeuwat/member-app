@@ -23,12 +23,12 @@ type TopicDetailTheme = {
 // "phonetic" intentionally falls back to fuchsia (ignore per request).
 const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
   alphabet: {
-    detailBorderLeft: 'border-l-blue-500',
-    detailBorder: 'border-blue-500/30',
-    hintBg: 'bg-blue-900/35',
-    hintBorder: 'border-blue-500/30',
-    hintIcon: 'text-blue-400',
-    hintKicker: 'text-blue-300',
+    detailBorderLeft: 'border-l-blue-700',
+    detailBorder: 'border-blue-700/30',
+    hintBg: 'bg-blue-950/40',
+    hintBorder: 'border-blue-700/30',
+    hintIcon: 'text-blue-500',
+    hintKicker: 'text-blue-400',
   },
   stressing: {
     detailBorderLeft: 'border-l-orange-500',
@@ -47,12 +47,12 @@ const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
     hintKicker: 'text-pink-300',
   },
   'final-sound': {
-    detailBorderLeft: 'border-l-cyan-400',
-    detailBorder: 'border-cyan-400/30',
-    hintBg: 'bg-cyan-950/35',
-    hintBorder: 'border-cyan-400/30',
-    hintIcon: 'text-cyan-300',
-    hintKicker: 'text-cyan-200',
+    detailBorderLeft: 'border-l-lime-400',
+    detailBorder: 'border-lime-400/30',
+    hintBg: 'bg-lime-950/40',
+    hintBorder: 'border-lime-400/30',
+    hintIcon: 'text-lime-400',
+    hintKicker: 'text-lime-300',
   },
   'american-t': {
     detailBorderLeft: 'border-l-[#0b4aa6]',
@@ -63,54 +63,54 @@ const TOPIC_DETAIL_THEMES: Record<string, TopicDetailTheme> = {
     hintKicker: 'text-[#9bd2ff]',
   },
   'linking-word': {
-    detailBorderLeft: 'border-l-sky-400',
-    detailBorder: 'border-sky-400/30',
-    hintBg: 'bg-sky-950/35',
-    hintBorder: 'border-sky-400/30',
-    hintIcon: 'text-sky-300',
-    hintKicker: 'text-sky-200',
+    detailBorderLeft: 'border-l-cyan-500',
+    detailBorder: 'border-cyan-500/30',
+    hintBg: 'bg-cyan-950/40',
+    hintBorder: 'border-cyan-500/30',
+    hintIcon: 'text-cyan-400',
+    hintKicker: 'text-cyan-300',
   },
   contraction: {
-    detailBorderLeft: 'border-l-teal-400',
-    detailBorder: 'border-teal-400/30',
-    hintBg: 'bg-teal-950/35',
-    hintBorder: 'border-teal-400/30',
-    hintIcon: 'text-teal-300',
-    hintKicker: 'text-teal-200',
+    detailBorderLeft: 'border-l-cyan-400',
+    detailBorder: 'border-cyan-400/30',
+    hintBg: 'bg-cyan-950/35',
+    hintBorder: 'border-cyan-400/30',
+    hintIcon: 'text-cyan-300',
+    hintKicker: 'text-cyan-200',
   },
   text: {
-    detailBorderLeft: 'border-l-emerald-400',
-    detailBorder: 'border-emerald-400/30',
-    hintBg: 'bg-emerald-950/35',
-    hintBorder: 'border-emerald-400/30',
-    hintIcon: 'text-emerald-300',
-    hintKicker: 'text-emerald-200',
+    detailBorderLeft: 'border-l-slate-500',
+    detailBorder: 'border-slate-500/30',
+    hintBg: 'bg-slate-900/50',
+    hintBorder: 'border-slate-500/30',
+    hintIcon: 'text-slate-400',
+    hintKicker: 'text-slate-300',
   },
   'reading-text': {
-    detailBorderLeft: 'border-l-indigo-400',
-    detailBorder: 'border-indigo-400/30',
-    hintBg: 'bg-indigo-950/35',
-    hintBorder: 'border-indigo-400/30',
-    hintIcon: 'text-indigo-300',
-    hintKicker: 'text-indigo-200',
+    detailBorderLeft: 'border-l-[#1E293B]',
+    detailBorder: 'border-slate-700/30',
+    hintBg: 'bg-[#0f172a]/60',
+    hintBorder: 'border-slate-700/30',
+    hintIcon: 'text-slate-400',
+    hintKicker: 'text-slate-300',
   },
   'tongue-twister': {
-    detailBorderLeft: 'border-l-amber-500',
-    detailBorder: 'border-amber-500/30',
-    hintBg: 'bg-amber-900/30',
-    hintBorder: 'border-amber-500/30',
-    hintIcon: 'text-amber-400',
-    hintKicker: 'text-amber-300',
+    detailBorderLeft: 'border-l-fuchsia-500',
+    detailBorder: 'border-fuchsia-500/30',
+    hintBg: 'bg-fuchsia-950/40',
+    hintBorder: 'border-fuchsia-500/30',
+    hintIcon: 'text-fuchsia-400',
+    hintKicker: 'text-fuchsia-300',
   },
 };
 
 const DEFAULT_DETAIL_THEME: TopicDetailTheme = {
-  detailBorderLeft: 'border-l-fuchsia-500',
-  detailBorder: 'border-fuchsia-500/30',
-  hintBg: 'bg-fuchsia-900/40',
-  hintBorder: 'border-fuchsia-500/30',
-  hintIcon: 'text-fuchsia-400',
-  hintKicker: 'text-fuchsia-300',
+  detailBorderLeft: 'border-l-purple-500',
+  detailBorder: 'border-purple-500/30',
+  hintBg: 'bg-purple-950/40',
+  hintBorder: 'border-purple-500/30',
+  hintIcon: 'text-purple-400',
+  hintKicker: 'text-purple-300',
 };
 
 const Page: React.FC = () => {
@@ -120,6 +120,10 @@ const Page: React.FC = () => {
   
   // Ref for carousel container to handle scrolling
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Touch/swipe handling
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   const selectedTopic = TOPICS[selectedIndex];
   const detailTheme = TOPIC_DETAIL_THEMES[selectedTopic?.id] ?? DEFAULT_DETAIL_THEME;
@@ -140,32 +144,35 @@ const Page: React.FC = () => {
     setSelectedIndex(prev => {
       let newIndex = prev;
       
+      // Circular navigation - wrap around from end to start and vice versa
       if (direction === 'left') {
-        newIndex = prev === 0 ? prev : prev - 1;
+        newIndex = prev === 0 ? TOPICS.length - 1 : prev - 1;
       } else {
-        newIndex = prev === TOPICS.length - 1 ? prev : prev + 1;
+        newIndex = prev === TOPICS.length - 1 ? 0 : prev + 1;
       }
       
-      // Skip locked topics during navigation.
+      // Skip locked topics during navigation with circular logic
       const newTopic = TOPICS[newIndex];
       if (lockedTopics.includes(newTopic.id)) {
-        // Try next available topic
-        if (direction === 'left') {
-          // Find previous unlocked topic
-          for (let i = newIndex - 1; i >= 0; i--) {
-            if (!lockedTopics.includes(TOPICS[i].id)) {
-              return i;
-            }
+        // Try next available topic in circular manner
+        let attempts = 0;
+        const maxAttempts = TOPICS.length;
+        
+        while (attempts < maxAttempts) {
+          if (direction === 'left') {
+            newIndex = newIndex === 0 ? TOPICS.length - 1 : newIndex - 1;
+          } else {
+            newIndex = newIndex === TOPICS.length - 1 ? 0 : newIndex + 1;
           }
-        } else {
-          // Find next unlocked topic
-          for (let i = newIndex + 1; i < TOPICS.length; i++) {
-            if (!lockedTopics.includes(TOPICS[i].id)) {
-              return i;
-            }
+          
+          if (!lockedTopics.includes(TOPICS[newIndex].id)) {
+            return newIndex;
           }
+          
+          attempts++;
         }
-        // If no unlocked topic found, stay at current
+        
+        // If all topics are locked (shouldn't happen), stay at current
         return prev;
       }
       
@@ -173,27 +180,42 @@ const Page: React.FC = () => {
     });
   }, [lockedTopics]);
 
-  // Scroll active item into view
-  useEffect(() => {
-    if (!carouselRef.current) return;
+  // Calculate circular offset for carousel positioning (like game-links)
+  const getCircularOffset = useCallback((index: number, selectedIndex: number, total: number) => {
+    let offset = index - selectedIndex;
+    const half = Math.floor(total / 2);
+    if (offset > half) offset -= total;
+    if (offset < -half) offset += total;
+    return offset;
+  }, []);
 
-    const isDesktopViewport = window.matchMedia('(min-width: 1280px)').matches;
+  // Handle touch/swipe gestures
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
 
-    // On desktop/laptop keep track layout stable (no forced centering per selected item).
-    if (isDesktopViewport) {
-      carouselRef.current.scrollTo({ left: 0, behavior: 'auto' });
-      return;
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const swipeThreshold = 50; // minimum distance for swipe
+    const diff = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left, go to next (right)
+        handleNav('right');
+      } else {
+        // Swiped right, go to previous (left)
+        handleNav('left');
+      }
     }
 
-    const nodes = carouselRef.current.children;
-    if (nodes[selectedIndex]) {
-      (nodes[selectedIndex] as HTMLElement).scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-      });
-    }
-  }, [selectedIndex]);
+    // Reset
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  }, [handleNav]);
 
   const handleStartLearning = useCallback(() => {
     // Check if topic is locked before navigation.
@@ -268,11 +290,11 @@ const Page: React.FC = () => {
                 <div className="flex items-start gap-2 sm:gap-3">
                     <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
                     <div>
-                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>GEUWAT Protocol</h4>
+                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>How to Start</h4>
                         <p className="text-sm md:text-base text-white/90 leading-relaxed">
                           {isTopicLocked 
-                            ? `${selectedTopic.title} module is currently locked. Please complete available modules first.`
-                            : `Activate ${selectedTopic.title.toLowerCase()} training module to begin GEUWAT enhancement sequence`
+                            ? `Modul ${selectedTopic.title} saat ini terkunci. Silakan selesaikan modul yang tersedia terlebih dahulu.`
+                            : `Klik ikon CPU di bawah untuk membuka halaman latihan ${selectedTopic.title.toLowerCase()}`
                           }
                         </p>
                     </div>
@@ -295,20 +317,35 @@ const Page: React.FC = () => {
             <div className="mx-auto w-full max-w-[1400px]">
               <div
                   ref={carouselRef}
-                  className="flex items-center justify-start xl:justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 overflow-x-auto no-scrollbar-mobile md:custom-scrollbar pb-3 sm:pb-6 md:pb-8 lg:pb-12 snap-x snap-mandatory"
-                  style={{ scrollBehavior: 'smooth', scrollPaddingLeft: '50vw', scrollPaddingRight: '50vw' }}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  className="relative flex items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-8 md:px-12 lg:px-16 pb-3 sm:pb-6 md:pb-8 lg:pb-12 h-[200px] sm:h-[220px] md:h-[240px] touch-pan-y"
                   data-tour="pronunciation-carousel"
               >
-                  {TOPICS.map((topic, index) => (
-                      <TopicCard 
-                          key={topic.id}
-                          topic={topic}
-                          isActive={index === selectedIndex}
-                          onClick={() => {
-                              setSelectedIndex(index);
-                          }}
-                      />
-                  ))}
+                  {TOPICS.map((topic, index) => {
+                      const offset = getCircularOffset(index, selectedIndex, TOPICS.length);
+                      const depth = Math.abs(offset);
+                      const isActive = index === selectedIndex;
+                      
+                      return (
+                          <TopicCard 
+                              key={topic.id}
+                              topic={topic}
+                              isActive={isActive}
+                              onClick={() => {
+                                  setSelectedIndex(index);
+                              }}
+                              style={{
+                                  '--offset': String(offset),
+                                  '--depth': String(depth),
+                                  '--scale': isActive ? '1' : String(Math.max(0.75, 1 - depth * 0.15)),
+                                  '--z': String(isActive ? 40 : 20 - depth),
+                                  '--op': isActive ? '1' : String(Math.max(0.4, 1 - depth * 0.25)),
+                              } as React.CSSProperties}
+                          />
+                      );
+                  })}
               </div>
             </div>
             

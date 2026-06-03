@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play, Square } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import {
   renderAmericanTTextHighlight,
@@ -401,29 +401,7 @@ export default function ClearTBeginningPage() {
           title: 'Word Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('examples')}
-                >
-                  {showIpaBySection.examples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingExamplesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllExamples();
-                  }}
-                >
-                  {isPlayingExamplesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-              <div className="at-example-grid">
+                  <div className="at-example-grid">
                 {CLEAR_T_BEGINNING_EXAMPLES.map((item, index) => (
                   <article
                     key={item.text}
@@ -464,29 +442,7 @@ export default function ClearTBeginningPage() {
           title: '50 Word Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('word-bank-50')}
-                >
-                  {showIpaBySection['word-bank-50'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingWordBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllWordBank();
-                  }}
-                >
-                  {isPlayingWordBankAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-              <div className="at-word-chip-grid at-word-chip-grid--compact">
+                  <div className="at-word-chip-grid at-word-chip-grid--compact">
                 {CLEAR_T_BEGINNING_WORD_BANK_50.map((item, index) => (
                   <article
                     key={item.text}
@@ -529,29 +485,7 @@ export default function ClearTBeginningPage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentences')}
-                >
-                  {showIpaBySection.sentences ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentencesAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentences();
-                  }}
-                >
-                  {isPlayingSentencesAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-              <div className="at-sentence-list">
+                  <div className="at-sentence-list">
                 {CLEAR_T_BEGINNING_SENTENCES.map((item, index) => (
                   <article
                     key={item.text}
@@ -602,28 +536,6 @@ export default function ClearTBeginningPage() {
                   Catatan khusus <strong>to</strong>: di percakapan natural biasanya jadi weak form
                   <strong> /tuh/</strong>, jadi tidak perlu memaksa letupan <strong>/t/</strong> yang terlalu keras.
                 </p>
-              </div>
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentence-drills-examples')}
-                >
-                  {showIpaBySection['sentence-drills-examples'] ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceDrillsExamples();
-                  }}
-                >
-                  {isPlayingSentenceDrillsAll ? 'Stop' : 'Play All'}
-                </button>
               </div>
               {CLEAR_T_BEGINNING_SENTENCE_DRILL_EXAMPLES_15.map((item, index) => (
                 <article

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ChevronDown, Copy, Play } from 'lucide-react';
+import { ChevronDown, Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
@@ -314,9 +314,6 @@ const highlightSEndingsByRule = (text: string, keyPrefix: string) => {
 
 const stripPhoneticTokenEdges = (token: string): string =>
   token.replace(/^[\/()[\]{}.,;:!?'"`]+/, '').replace(/[\/()[\]{}.,;:!?'"`]+$/, '');
-
-const getWordOrdinalAtCharIndex = (text: string, charIndex: number): number =>
-  (text.slice(0, charIndex).match(/[A-Za-z']+/g) ?? []).length;
 
 const getOriginTargetWordOrdinals = (
   originParagraph: string,
@@ -1530,16 +1527,6 @@ export default function PronunciationTextPage() {
             </section>
 
             <article className='text-pronunciation-reading-card' ref={readingCardRef}>
-              <div className='text-pronunciation-tts-toolbar'>
-                <button
-                  type='button'
-                  className={`text-pronunciation-tts-btn ${activeSpeechGroup === 'main' ? 'is-active' : ''}`}
-                  onClick={toggleMainPlayAll}
-                >
-                  {activeSpeechGroup === 'main' ? 'Stop' : 'Play All'}
-                </button>
-              </div>
-
               <div className='text-pronunciation-reading-group'>
                 {paragraphs.map((paragraph, index) => {
                   const speechItem = mainSpeechItems[index];

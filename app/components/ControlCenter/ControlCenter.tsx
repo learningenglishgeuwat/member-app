@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Gauge, ChevronDown } from 'lucide-react';
 import { getGlobalPlaybackSpeed, setGlobalPlaybackSpeed } from '@/lib/tts/speech';
@@ -25,13 +25,9 @@ export function ControlCenter({
   defaultOpen = false,
 }: ControlCenterProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [speed, setSpeed] = useState<number>(1);
+  const [speed, setSpeed] = useState<number>(() => getGlobalPlaybackSpeed());
   const router = useRouter()
   const pathname = usePathname()
-
-  useEffect(() => {
-    setSpeed(getGlobalPlaybackSpeed());
-  }, []);
 
   const handleSpeedChange = (val: number) => {
     setSpeed(val);
@@ -55,7 +51,7 @@ export function ControlCenter({
         window.dispatchEvent(new CustomEvent('at-lesson-jump-to-section', {
           detail: { sectionId: id },
         }))
-      } catch (err) {
+      } catch {
         // ignore event dispatch failures
       }
     }
@@ -65,14 +61,17 @@ export function ControlCenter({
     <SectionNavigatorContext.Provider value={{ openSection }}>
       <div
       className={cx(
-        'fixed right-0 top-1/2 -translate-y-1/2 z-50 transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)]',
+        'fixed right-0 top-1/2 -translate-y-1/2 z-[100] transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)]',
         isOpen ? 'translate-x-0' : 'translate-x-full'
       )}
     >
       {/* Toggle Tab */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full bg-[#101314] border border-r-0 border-white/10 p-1 sm:p-1.5 rounded-l-md text-cyan-400 hover:text-cyan-300 transition-colors shadow-[-4px_0_10px_rgba(0,0,0,0.3)]"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full bg-[#101314] border border-r-0 border-white/10 p-1 sm:p-1.5 rounded-l-md transition-colors shadow-[-4px_0_10px_rgba(0,0,0,0.3)]"
+        style={{ color: 'var(--color-cyan-primary)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-cyan-hover)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-cyan-primary)'; }}
         aria-label={isOpen ? 'Close Control Center' : 'Open Control Center'}
       >
         {isOpen ? <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <ChevronLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}

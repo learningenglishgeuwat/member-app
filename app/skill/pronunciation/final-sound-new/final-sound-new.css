@@ -26,12 +26,6 @@
   font-family: var(--font-display);
 }
 
-.fsn-subtitle {
-  margin-top: 0.45rem;
-  color: var(--pronun-muted, #ddcdfa);
-  line-height: 1.5;
-}
-
 .fsn-orbit-stage {
   --orbit-radius: clamp(6.4rem, 10.5vw, 9.6rem);
   --orbit-speed: 10s;

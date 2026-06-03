@@ -52,23 +52,6 @@
   line-height: 1.58;
 }
 
-.vocab-kpis {
-  margin-top: 0.85rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.vocab-kpi {
-  margin: 0;
-  border-radius: 999px;
-  border: 1px solid rgba(110, 255, 141, 0.52);
-  background: rgba(8, 28, 13, 0.34);
-  color: #f4fff6;
-  font-size: 0.88rem;
-  padding: 0.3rem 0.62rem;
-}
-
 .vocab-kpi-table {
   margin: 0.95rem 0 0;
   display: grid;
@@ -142,26 +125,11 @@
   }
 }
 
-.vocab-layout {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
 .vocab-phase-panel {
   border: 1px solid rgba(103, 240, 255, 0.28);
   border-radius: 0.95rem;
   background: rgba(14, 39, 55, 0.9);
   padding: 0.82rem;
-}
-
-.vocab-panel-title {
-  margin: 0;
-  color: #bdf4ff;
-  text-transform: uppercase;
-  font-size: 0.88rem;
-  letter-spacing: 0.08em;
 }
 
 .vocab-phase-list {
@@ -199,10 +167,6 @@
   margin-top: 0.18rem;
   color: #acefff;
   font-size: 0.8rem;
-}
-
-.vocab-content {
-  min-width: 0;
 }
 
 .vocab-phase-head {
@@ -283,27 +247,6 @@
   border-radius: 0.85rem;
   background: rgba(8, 24, 12, 0.38);
   padding: 0.8rem;
-}
-
-.vocab-filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.42rem;
-}
-
-.vocab-filter-chip {
-  border: 1px solid rgba(120, 236, 255, 0.44);
-  border-radius: 999px;
-  background: rgba(19, 70, 93, 0.85);
-  color: #cff8ff;
-  font-size: 0.8rem;
-  padding: 0.25rem 0.62rem;
-}
-
-.vocab-filter-chip.is-active {
-  border-color: rgba(188, 250, 255, 0.95);
-  background: #b9f6ff;
-  color: #073240;
 }
 
 .vocab-search-wrap {
@@ -550,20 +493,9 @@
   padding: 0.28rem 0.62rem;
 }
 
-.vocab-detail-btn {
-  border-color: rgba(202, 255, 171, 0.78);
-  background: rgba(54, 93, 34, 0.76);
-  color: #ecffdc;
-}
-
 @media (min-width: 768px) {
   .vocab-page {
     padding: 6rem 1.2rem 2.3rem;
-  }
-
-  .vocab-layout {
-    grid-template-columns: 300px minmax(0, 1fr);
-    align-items: start;
   }
 
   .vocab-phase-panel {
@@ -1307,9 +1239,6 @@
 .vocab-header {
   background: linear-gradient(145deg, rgba(0,0,0,0.56), rgba(0,0,0,0.42)) !important;
   box-shadow: 0 0 20px rgba(0,0,0,0.24) !important;
-}
-.vocab-kpi {
-  background: rgba(0,0,0,0.35) !important;
 }
 .vocab-kpi-table {
   background: linear-gradient(155deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)) !important;

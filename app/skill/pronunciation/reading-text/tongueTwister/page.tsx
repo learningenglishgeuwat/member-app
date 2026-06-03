@@ -7,6 +7,7 @@ import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { speakText, stopSpeech, isSpeechSynthesisSupported } from '@/lib/tts/speech';
 import { TwisterCard, TwisterLine } from './components/TwisterCard';
 import { Highlight } from './components/Highlight';
+import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
   const [selectedFocus, setSelectedFocus] = useState<string>('all');
@@ -15,7 +16,7 @@ export default function TongueTwisterPage() {
   const [twisterDropdownOpen, setTwisterDropdownOpen] = useState(false);
   const [activeLineId, setActiveLineId] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showIpa, setShowIpa] = useState(true);
+  const showIpa = true;
   
   const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const twisterDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -36,12 +37,16 @@ export default function TongueTwisterPage() {
   useEffect(() => {
     if (filteredTwisters.some((item) => item.id === selectedId)) return;
     const next = filteredTwisters[0]?.id ?? TONGUE_TWISTERS[0]?.id;
-    if (next) {
+    if (!next) return;
+
+    const timerId = window.setTimeout(() => {
       stopSpeech();
       setSelectedId(next);
       setActiveLineId(null);
       setIsPlaying(false);
-    }
+    }, 0);
+
+    return () => window.clearTimeout(timerId);
   }, [filteredTwisters, selectedId]);
 
   // Get active twister
@@ -49,6 +54,54 @@ export default function TongueTwisterPage() {
     () => filteredTwisters.find((item) => item.id === selectedId) ?? filteredTwisters[0] ?? TONGUE_TWISTERS[0],
     [filteredTwisters, selectedId],
   );
+
+  // Helper function to highlight text based on IPA alignment
+  function highlightTextBasedOnIPA(
+    text: string,
+    highlightedPositions: Array<{char: string, index: number}>,
+    lineIndex: number,
+    letterMappings?: Array<{letters: string, positions: number[], ipa: string}>
+  ): ReactNode {
+    if (letterMappings && letterMappings.length > 0) {
+      const parts: ReactNode[] = [];
+      let lastPos = 0;
+
+      const focusIPASymbols = highlightedPositions.map(p => p.char);
+
+      letterMappings.forEach((mapping, idx) => {
+        const { positions, ipa } = mapping;
+
+        if (positions.length === 0) return;
+
+        const startPos = positions[0];
+        const endPos = positions[positions.length - 1] + 1;
+
+        if (startPos > lastPos) {
+          parts.push(text.substring(lastPos, startPos));
+        }
+
+        const shouldHighlight = focusIPASymbols.some(focusIPA => ipa === focusIPA);
+
+        const segment = text.substring(startPos, endPos);
+
+        if (shouldHighlight && segment.trim()) {
+          parts.push(<Highlight key={`text-${lineIndex}-${idx}`}>{segment}</Highlight>);
+        } else {
+          parts.push(segment);
+        }
+
+        lastPos = endPos;
+      });
+
+      if (lastPos < text.length) {
+        parts.push(text.substring(lastPos));
+      }
+
+      return <>{parts}</>;
+    }
+
+    return <>{text}</>;
+  }
 
   // Parse text to lines with intelligent highlighting based on IPA alignment
   const parseTextToLines = useCallback((twister: typeof activeTwister): TwisterLine[] => {
@@ -62,7 +115,7 @@ export default function TongueTwisterPage() {
     
     return lines.map((line, index) => {
       let textNode: ReactNode = <>{line}</>;
-      let ipaNode: ReactNode = <span className="text-gray-500">IPA not available</span>;
+      let ipaNode: ReactNode = <span className="tt-ipa-unavailable">IPA not available</span>;
       
       // Get IPA line for this text line
       const ipaLine = twister.ipaLines?.[index] || '';
@@ -106,7 +159,7 @@ export default function TongueTwisterPage() {
         // Use letterMappings if available for accurate highlighting
         const letterMappings = twister.letterMappings?.[index];
         try {
-          textNode = highlightTextBasedOnIPA(line, ipaLine, highlightedIPAPositions, index, letterMappings);
+          textNode = highlightTextBasedOnIPA(line, highlightedIPAPositions, index, letterMappings);
         } catch (error) {
           // If alignment fails, just show plain text
           console.warn('Text-IPA alignment failed:', error);
@@ -123,62 +176,6 @@ export default function TongueTwisterPage() {
         rawText: line
       };
     });
-  }, []);
-
-  // Helper function to highlight text based on IPA alignment
-  const highlightTextBasedOnIPA = useCallback((
-    text: string,
-    ipa: string,
-    highlightedPositions: Array<{char: string, index: number}>,
-    lineIndex: number,
-    letterMappings?: Array<{letters: string, positions: number[], ipa: string}>
-  ): ReactNode => {
-    // If we have letter mappings, use them for accurate highlighting
-    if (letterMappings && letterMappings.length > 0) {
-      const parts: ReactNode[] = [];
-      let lastPos = 0;
-      
-      // Extract IPA symbols that should be highlighted (without slashes)
-      const focusIPASymbols = highlightedPositions.map(p => p.char);
-      
-      letterMappings.forEach((mapping, idx) => {
-        const { letters, positions, ipa } = mapping;
-        
-        if (positions.length === 0) return;
-        
-        const startPos = positions[0];
-        const endPos = positions[positions.length - 1] + 1;
-        
-        // Add any text between last position and this mapping
-        if (startPos > lastPos) {
-          parts.push(text.substring(lastPos, startPos));
-        }
-        
-        // Check if this mapping's IPA matches any focus symbol
-        const shouldHighlight = focusIPASymbols.some(focusIPA => ipa === focusIPA);
-        
-        const segment = text.substring(startPos, endPos);
-        
-        if (shouldHighlight && segment.trim()) {
-          parts.push(<Highlight key={`text-${lineIndex}-${idx}`}>{segment}</Highlight>);
-        } else {
-          parts.push(segment);
-        }
-        
-        lastPos = endPos;
-      });
-      
-      // Add any remaining text
-      if (lastPos < text.length) {
-        parts.push(text.substring(lastPos));
-      }
-      
-      return <>{parts}</>;
-    }
-    
-    // If no mapping data, return plain text
-    // This is safer than guessing with pattern matching
-    return <>{text}</>;
   }, []);
 
   // Get lines for active twister
@@ -280,53 +277,53 @@ export default function TongueTwisterPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-[#e3e2e8] pb-24 md:pb-32">
+    <div className="tt-page">
       {/* Back Button */}
-      <div className="fixed top-4 left-4 z-30">
+      <div className="tt-back-button">
         <BackButton to="/skill/pronunciation/reading-text" />
       </div>
 
       {/* Main Content */}
-      <main className="relative z-10 flex flex-col items-center pt-20 px-4 md:px-8">
-        <div className="w-full max-w-[1200px] mx-auto">
+      <main className="tt-main">
+        <div className="tt-container">
           
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-[#00f3ff] mb-8 text-center" style={{ textShadow: '0 0 20px rgba(0, 243, 255, 0.5)' }}>
+          <h1 className="tt-title">
             TONGUE TWISTER
           </h1>
 
           {/* Dropdowns Container */}
-          <div className="flex flex-col md:flex-row gap-4 mb-10">
+          <div className="tt-dropdowns">
             
             {/* Focus Sound Filter */}
-            <div className="flex-1">
-              <label className="block mb-2 text-sm font-bold text-gray-400 uppercase tracking-wider">
+            <div className="tt-dropdown-group">
+              <label className="tt-label">
                 Focus Sound
               </label>
-              <div className="relative" ref={focusDropdownRef}>
+              <div className="tt-dropdown" ref={focusDropdownRef}>
                 <button
                   type="button"
-                  className="w-full min-h-[44px] bg-[#121317] border border-[rgba(0,243,255,0.3)] rounded-lg px-4 py-2 flex items-center justify-between text-left hover:border-[#00f3ff] transition-all"
+                  className="tt-select"
                   onClick={() => {
                     setFocusDropdownOpen(!focusDropdownOpen);
                     setTwisterDropdownOpen(false);
                   }}
                 >
-                  <span className="text-[#e3e2e8]">
+                  <span>
                     {selectedFocus === 'all' ? 'All Focus Sounds' : selectedFocus}
                   </span>
                   <ChevronDown 
                     size={20} 
-                    className={`text-[#00f3ff] transition-transform duration-300 ${focusDropdownOpen ? 'rotate-180' : ''}`} 
+                    className={`tt-select-icon ${focusDropdownOpen ? 'is-open' : ''}`} 
                   />
                 </button>
 
                 {focusDropdownOpen && (
-                  <ul className="absolute top-full left-0 right-0 mt-2 bg-[#121317] border border-[rgba(0,243,255,0.3)] rounded-lg max-h-[280px] overflow-y-auto z-40 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                  <ul className="tt-dropdown-list">
                     <li>
                       <button
                         type="button"
-                        className={`w-full px-4 py-2 text-left hover:bg-[rgba(0,243,255,0.1)] transition-colors ${selectedFocus === 'all' ? 'bg-[rgba(0,243,255,0.2)] text-[#00f3ff]' : 'text-[#e3e2e8]'}`}
+                        className={`tt-dropdown-item ${selectedFocus === 'all' ? 'is-active' : ''}`}
                         onClick={() => handleSelectFocus('all')}
                       >
                         All Focus Sounds
@@ -336,7 +333,7 @@ export default function TongueTwisterPage() {
                       <li key={focus}>
                         <button
                           type="button"
-                          className={`w-full px-4 py-2 text-left hover:bg-[rgba(0,243,255,0.1)] transition-colors ${focus === selectedFocus ? 'bg-[rgba(0,243,255,0.2)] text-[#00f3ff]' : 'text-[#e3e2e8]'}`}
+                          className={`tt-dropdown-item ${focus === selectedFocus ? 'is-active' : ''}`}
                           onClick={() => handleSelectFocus(focus)}
                         >
                           {focus}
@@ -349,33 +346,33 @@ export default function TongueTwisterPage() {
             </div>
 
             {/* Twister Selector */}
-            <div className="flex-1">
-              <label className="block mb-2 text-sm font-bold text-gray-400 uppercase tracking-wider">
+            <div className="tt-dropdown-group">
+              <label className="tt-label">
                 Select Tongue Twister
               </label>
-              <div className="relative" ref={twisterDropdownRef}>
+              <div className="tt-dropdown" ref={twisterDropdownRef}>
                 <button
                   type="button"
-                  className="w-full min-h-[44px] bg-[#121317] border border-[rgba(0,243,255,0.3)] rounded-lg px-4 py-2 flex items-center justify-between text-left hover:border-[#00f3ff] transition-all"
+                  className="tt-select"
                   onClick={() => {
                     setTwisterDropdownOpen(!twisterDropdownOpen);
                     setFocusDropdownOpen(false);
                   }}
                 >
-                  <span className="text-[#e3e2e8]">{activeTwister.label}</span>
+                  <span>{activeTwister.label}</span>
                   <ChevronDown 
                     size={20} 
-                    className={`text-[#00f3ff] transition-transform duration-300 ${twisterDropdownOpen ? 'rotate-180' : ''}`} 
+                    className={`tt-select-icon ${twisterDropdownOpen ? 'is-open' : ''}`} 
                   />
                 </button>
 
                 {twisterDropdownOpen && (
-                  <ul className="absolute top-full left-0 right-0 mt-2 bg-[#121317] border border-[rgba(0,243,255,0.3)] rounded-lg max-h-[280px] overflow-y-auto z-40 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                  <ul className="tt-dropdown-list">
                     {filteredTwisters.map((item) => (
                       <li key={item.id}>
                         <button
                           type="button"
-                          className={`w-full px-4 py-2 text-left hover:bg-[rgba(0,243,255,0.1)] transition-colors ${item.id === selectedId ? 'bg-[rgba(0,243,255,0.2)] text-[#00f3ff]' : 'text-[#e3e2e8]'}`}
+                          className={`tt-dropdown-item ${item.id === selectedId ? 'is-active' : ''}`}
                           onClick={() => handleSelectTwister(item.id)}
                         >
                           {item.label}
@@ -389,7 +386,7 @@ export default function TongueTwisterPage() {
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 gap-6">
+          <div className="tt-cards-grid">
             {twisterLines.map((line) => (
               <TwisterCard
                 key={line.id}

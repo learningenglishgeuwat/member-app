@@ -6,10 +6,7 @@ interface HighlightProps {
 
 export function Highlight({ children }: HighlightProps) {
   return (
-    <span
-      className="text-[#fb923c] font-bold"
-      style={{ textShadow: '0 0 8px rgba(251, 146, 60, 0.95), 0 0 16px rgba(251, 146, 60, 0.6)' }}
-    >
+    <span className="tt-highlight">
       {children}
     </span>
   );

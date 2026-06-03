@@ -13,7 +13,6 @@ import {
 } from './data/progress';
 import {
   readSpeakingShowTranslation,
-  writeSpeakingShowTranslation,
 } from './data/translation-preference';
 import { assertSpeakingDatasetInDev } from './data/quality';
 import type {

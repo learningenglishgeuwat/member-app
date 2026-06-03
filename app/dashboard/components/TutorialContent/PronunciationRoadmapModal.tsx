@@ -7,7 +7,6 @@ import {
   PRONUNCIATION_ROADMAP_ITEMS,
   PRONUNCIATION_ROADMAP_TOTAL_DAYS,
 } from './roadmap-data/pronunciation-roadmap'
-import { useHaptic } from '@/lib/haptic/useHaptic'
 
 type PronunciationRoadmapModalProps = {
   isOpen: boolean
@@ -139,7 +138,6 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
   onClose,
   zIndex = 200,
 }) => {
-  const { triggerHaptic } = useHaptic()
   const [checkedById, setCheckedById] = useState<Record<string, boolean>>(() => {
     if (typeof window === 'undefined') return {}
     try {
@@ -436,6 +434,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
             className="text-slate-400 hover:text-white transition-colors text-sm"
             onClick={onClose}
             type="button"
+            data-tour="dashboard-roadmap-modal-close"
             aria-label="Close"
           >
             x
@@ -523,6 +522,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
             className="px-3 sm:px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-200 hover:bg-purple-500/30 transition-colors text-xs sm:text-sm"
             onClick={onClose}
             type="button"
+            data-tour="dashboard-roadmap-modal-close"
           >
             Close
           </button>

@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { SpinningWheel } from '../../../ui/SpinningWheel'
 import { Eye, EyeOff } from 'lucide-react'
-import { useHaptic } from '@/lib/haptic/useHaptic'
 
 interface GearInputRowProps {
   variant: 'left' | 'right'
@@ -36,7 +35,6 @@ export const GearInputRow: React.FC<GearInputRowProps> = ({
   const isRight = variant === 'right'
   const [showPassword, setShowPassword] = useState(false)
   const isPasswordField = type === 'password'
-  const { triggerHaptic } = useHaptic()
 
   return (
     <div

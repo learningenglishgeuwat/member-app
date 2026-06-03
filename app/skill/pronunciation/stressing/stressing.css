@@ -169,37 +169,12 @@
   line-height: 1.5;
 }
 
-.stress-example-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.18rem;
-  max-width: 100%;
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.52);
-  border-radius: 999px;
-  background: rgb(var(--pronun-panel-rgb) / 0.56);
-  color: var(--pronun-text, #f7ecff);
-  padding: 0.08rem 0.52rem;
-  line-height: 1.35;
-}
 
-.stress-example-chip-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.38rem;
-  flex-wrap: wrap;
-}
 
 .stress-example-chip-label {
   color: var(--pronun-muted, #d8c8f8);
   font-size: 0.8rem;
   font-weight: 700;
-}
-
-.stress-example-chip .stress-inline-highlight {
-  color: #fb923c;
-  font-weight: 900;
-  text-shadow: 0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6);
-  background: none;
 }
 
 .stress-inline-highlight {
@@ -212,7 +187,6 @@
 }
 
 .stress-highlight-off .stress-inline-highlight,
-.stress-highlight-off .stress-example-chip .stress-inline-highlight,
 .stress-highlight-off .stress-token-strong {
   color: inherit;
   font-weight: inherit;
@@ -372,25 +346,6 @@
   box-shadow: 0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.2);
 }
 
-.stress-playall-btn {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.6);
-  color: #f4e8ff;
-  border-radius: 0.62rem;
-  padding: 0.28rem 0.68rem;
-  background: rgb(var(--pronun-panel-rgb) / 0.86);
-  font-family: inherit;
-  font-size: 0.79rem;
-  font-weight: 700;
-  line-height: 1.25;
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-}
-
-.stress-playall-btn:hover {
-  border-color: rgb(var(--pronun-accent-1-rgb) / 0.95);
-  color: #fff7ff;
-  background: rgb(var(--pronun-panel-rgb) / 0.94);
-}
-
 .stress-play-chip-btn {
   display: inline-flex;
   align-items: center;
@@ -472,27 +427,7 @@
   box-shadow: 0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.2);
 }
 
-.stress-fix-grid {
-  margin-top: 0.8rem;
-  display: grid;
-  gap: 0.7rem;
-}
 
-.stress-fix-card {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.32);
-  border-radius: 0.7rem;
-  background: rgb(var(--pronun-panel-rgb) / 0.84);
-  padding: 0.75rem 0.8rem;
-}
-
-.stress-fix-wrong {
-  color: #fecaca;
-}
-
-.stress-fix-correct {
-  margin-top: 0.35rem;
-  color: #bbf7d0;
-}
 
 .stress-bullets {
   margin-top: 0.7rem;
@@ -820,7 +755,6 @@
 
   .stress-grid,
   .stress-syllable-grid,
-  .stress-fix-grid,
   .stress-mark-grid,
   .stress-rule-grid,
   .stress-bank-grid {

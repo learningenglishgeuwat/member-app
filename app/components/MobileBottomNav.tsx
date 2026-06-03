@@ -51,6 +51,11 @@ export default function MobileBottomNav() {
   const [tourGuideBootstrapped, setTourGuideBootstrapped] = useState(false)
   const [isNavVisible, setIsNavVisible] = useState(true)
 
+  const isPronunciationPage = useMemo(() => {
+    if (!pathname) return false
+    return pathname.replace(/\/$/, '') === '/skill/pronunciation'
+  }, [pathname])
+
   const shouldRender = useMemo(() => {
     if (!pathname) return false
     if (PUBLIC_PATHS.has(pathname)) return false
@@ -99,23 +104,22 @@ export default function MobileBottomNav() {
     <>
       <div className="h-28" aria-hidden="true" />
 
-      {/* Toggle Button - Arrow Only */}
+      {/* Toggle Button */}
       <button
         type="button"
         onClick={toggleNavVisibility}
-        className={`fixed left-1/2 z-[90] -translate-x-1/2 transition-all duration-300 group ${
+        className={`fixed left-1/2 z-[90] -translate-x-1/2 bg-[#101314] border border-b-0 border-white/10 p-1.5 rounded-t-md text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
           isNavVisible
             ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
             : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'
         }`}
         aria-label={isNavVisible ? 'Hide navigation' : 'Show navigation'}
       >
-        {/* Arrow Icon Only - No Circle */}
         <div className="relative">
           {isNavVisible ? (
-            <ChevronDown className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+            <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
           ) : (
-            <ChevronUp className="w-6 h-6 text-cyan-300 drop-shadow-[0_2px_8px_rgba(34,211,238,0.6)] group-hover:text-cyan-200 transition-colors" />
+            <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
           )}
         </div>
       </button>
@@ -129,61 +133,83 @@ export default function MobileBottomNav() {
 
       {menuOpen ? (
         <aside
-          className="fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-black/95 backdrop-blur-xl"
+          className="fixed inset-x-0 bottom-0 z-[95] rounded-t-2xl border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]"
           role="dialog"
           aria-label="Menu"
         >
-          <div className="flex items-center justify-between px-5 py-4">
-            <div className="text-sm font-semibold text-white">Menu</div>
+          <div className={`flex items-center justify-between ${isPronunciationPage ? 'px-4 py-2.5' : 'px-5 py-4'}`}>
+            <div className={`font-semibold text-white ${isPronunciationPage ? 'text-xs' : 'text-sm'}`}>Menu</div>
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 hover:bg-white/10 hover:text-white"
+              className={`inline-flex items-center justify-center rounded-lg text-slate-300 hover:bg-white/10 hover:text-white ${
+                isPronunciationPage ? 'h-8 w-8' : 'h-10 w-10'
+              }`}
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 px-5 pb-[calc(env(safe-area-inset-bottom,0px)+18px)]">
+          <div className={`grid grid-cols-2 ${isPronunciationPage ? 'gap-2 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+12px)]' : 'gap-3 px-5 pb-[calc(env(safe-area-inset-bottom,0px)+18px)]'}`}>
             <button
               type="button"
               onClick={() => goDashboardView('dashboard')}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/10"
+              className={`flex items-center text-left text-slate-200 bg-white/5 border border-white/10 hover:bg-white/10 transition-all ${
+                isPronunciationPage
+                  ? 'gap-2 rounded-lg px-3 py-2 text-xs font-medium'
+                  : 'gap-3 rounded-xl px-4 py-3 text-sm'
+              }`}
             >
-              <LayoutGrid className="h-5 w-5" />
+              <LayoutGrid className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
               Dashboard
             </button>
             <button
               type="button"
               onClick={() => goDashboardView('progress')}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/10"
+              className={`flex items-center text-left text-slate-200 bg-white/5 border border-white/10 hover:bg-white/10 transition-all ${
+                isPronunciationPage
+                  ? 'gap-2 rounded-lg px-3 py-2 text-xs font-medium'
+                  : 'gap-3 rounded-xl px-4 py-3 text-sm'
+              }`}
             >
-              <BarChart2 className="h-5 w-5" />
+              <BarChart2 className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
               View Progress
             </button>
             <button
               type="button"
               onClick={() => router.push('/skill')}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/10"
+              className={`flex items-center text-left text-slate-200 bg-white/5 border border-white/10 hover:bg-white/10 transition-all ${
+                isPronunciationPage
+                  ? 'gap-2 rounded-lg px-3 py-2 text-xs font-medium'
+                  : 'gap-3 rounded-xl px-4 py-3 text-sm'
+              }`}
             >
-              <LayoutGrid className="h-5 w-5" />
+              <LayoutGrid className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
               Skill
             </button>
             <button
               type="button"
               onClick={() => goDashboardView('settings')}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/10"
+              className={`flex items-center text-left text-slate-200 bg-white/5 border border-white/10 hover:bg-white/10 transition-all ${
+                isPronunciationPage
+                  ? 'gap-2 rounded-lg px-3 py-2 text-xs font-medium'
+                  : 'gap-3 rounded-xl px-4 py-3 text-sm'
+              }`}
             >
-              <Settings className="h-5 w-5" />
+              <Settings className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
               Settings
             </button>
             <button
               type="button"
               onClick={() => goDashboardView('help-support')}
-              className="col-span-2 flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-200 hover:bg-white/10"
+              className={`col-span-2 flex items-center text-left text-slate-200 bg-white/5 border border-white/10 hover:bg-white/10 transition-all ${
+                isPronunciationPage
+                  ? 'gap-2 rounded-lg px-3 py-2 text-xs font-medium'
+                  : 'gap-3 rounded-xl px-4 py-3 text-sm'
+              }`}
             >
-              <HelpCircle className="h-5 w-5" />
+              <HelpCircle className={isPronunciationPage ? 'h-4 w-4' : 'h-5 w-5'} />
               Help &amp; Support
             </button>
           </div>
@@ -226,11 +252,11 @@ export default function MobileBottomNav() {
             >
               {!tourGuideBootstrapped ? (
                 <Image
-                  src="/Kepala.png?v=20260528"
+                  src="/kondisi_off_2K_202606030939.webp"
                   alt="Tour Guide"
                   width={56}
                   height={56}
-                  className="geuwat-mobile-avatar-image h-14 w-14 object-contain"
+                  className="geuwat-mobile-avatar-image h-14 w-14"
                   priority
                   unoptimized
                 />

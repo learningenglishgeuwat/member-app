@@ -29,7 +29,6 @@ import type {
   GuideSimulationTopic,
   TutorialDeviceProfile,
 } from './types';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 import './tourGuide.css';
 
 type TourGuideWidgetProps = {
@@ -262,8 +261,6 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   const [selectedFlashcardPath, setSelectedFlashcardPath] = useState<string>(FLASHCARD_DEFAULT_ROUTE);
   const [selectedSimulationTopic, setSelectedSimulationTopic] =
     useState<GuideSimulationTopic>(SIMULATION_DEFAULT_TOPIC);
-  const { triggerHaptic } = useHaptic();
-
   const startTutorialTransition = useCallback((durationMs = 320) => {
     setIsTutorialPageTransition(true);
     if (tutorialTransitionTimerRef.current !== null) {
@@ -1017,7 +1014,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
           onClick={() => setCollapsed(false)}
         >
           <Image
-            src="/Kepala1.png?v=20260528"
+            src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
             alt="Tour Guide"
             width={48}
             height={48}
@@ -1092,7 +1089,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 onClick={() => setCollapsed(true)}
               >
                 <Image
-                  src="/Kepala1.png?v=20260528"
+                  src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
                   alt="Tour Guide"
                   width={40}
                   height={40}

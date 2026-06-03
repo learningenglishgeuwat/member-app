@@ -47,14 +47,14 @@ export const LoginErrorPopup: React.FC<LoginErrorPopupProps> = ({
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-medium transition-all shadow-lg shadow-red-900/20 hover:shadow-red-700/30 active:scale-95"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Try Again</span>
+              <span>Coba Lagi</span>
             </button>
             {showForgotPassword && (
               <a
                 href="/forgot-password"
                 className="block text-xs text-amber-300 hover:text-amber-200 underline underline-offset-4"
               >
-                Forgot password?
+                Lupa kata sandi?
               </a>
             )}
           </div>

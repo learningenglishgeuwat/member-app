@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy, Highlighter, Play, Square } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import AmericanTLessonScaffold from '../../components/AmericanTLessonScaffold';
 import ButtonSavedProgress from '../../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
@@ -367,28 +367,7 @@ export default function FinalTEndingPage() {
           title: 'Phrase Examples',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('phraseExamples')}
-                >
-                  {showIpaBySection.phraseExamples ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingPhraseAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllPhraseExamples();
-                  }}
-                >
-                  {isPlayingPhraseAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-example-grid">
                 {FINAL_T_BEFORE_CONSONANT.map((item, index) => (
                   <article
@@ -435,28 +414,7 @@ export default function FinalTEndingPage() {
           title: 'Final T Sentence Bank (30)',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('sentenceBank')}
-                >
-                  {showIpaBySection.sentenceBank ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingSentenceBankAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllSentenceBank();
-                  }}
-                >
-                  {isPlayingSentenceBankAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-sentence-list">
                 {FINAL_T_SENTENCE_BANK.map((item, index) => (
                   <article
@@ -498,28 +456,7 @@ export default function FinalTEndingPage() {
           title: 'Sentence Drills',
           content: (
             <div className="at-word-chip-wrap">
-              <div className="at-word-chip-toolbar at-word-chip-toolbar--split">
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => toggleIpaBySection('drills')}
-                >
-                  {showIpaBySection.drills ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-                </button>
-                <button
-                  type="button"
-                  className="fs-topic-mini-btn"
-                  onClick={() => {
-                    if (isPlayingDrillsAll) {
-                      stopAllPlayAll();
-                      return;
-                    }
-                    void playAllDrills();
-                  }}
-                >
-                  {isPlayingDrillsAll ? 'Stop' : 'Play All'}
-                </button>
-              </div>
+              
               <div className="at-sentence-list">
                 {SENTENCE_DRILLS.map((item, index) => (
                   <article

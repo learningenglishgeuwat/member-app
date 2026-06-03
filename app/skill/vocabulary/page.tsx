@@ -46,7 +46,6 @@ import type { VocabularyTopicId } from './topic/data/types';
 import { TOTAL_VOCABULARY_WORDS, getVocabularyWordsByTopic } from './topic/data/words';
 import TopicCarousel from './components/TopicCarousel';
 import { useKpiValueColumn } from './components/useKpiValueColumn';
-import { useHaptic } from '@/lib/haptic/useHaptic';
 import './topic/shared/vocabulary.css';
 
 const TOPICS_PER_PAGE = 6;
@@ -120,7 +119,6 @@ if (process.env.NODE_ENV !== 'production') {
 export default function VocabularyPage() {
   const topicChipLabelMap = buildTopicChipLabelMap();
   const kpiRef = useRef<HTMLDListElement | null>(null);
-  const { triggerHaptic } = useHaptic();
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobile, setIsMobile] = useState(() => {

@@ -94,7 +94,9 @@
 .tg-tutorial-coach-avatar {
   width: 58px;
   height: 58px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
+  transform: scale(1.8) translateY(7px);
 }
 
 .tg-tutorial-oval {

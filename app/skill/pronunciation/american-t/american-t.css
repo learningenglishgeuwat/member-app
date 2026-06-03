@@ -27,14 +27,6 @@
   gap: 0.25rem;
 }
 
-.at-flap-wrap {
-  margin-top: 0.2rem;
-}
-
-.at-silent-wrap {
-  margin-top: 0.2rem;
-}
-
 .at-flap-note {
   margin-top: 0.6rem;
   border: 1px solid rgba(245, 158, 11, 0.45);
@@ -63,10 +55,6 @@
   line-height: 1.45;
 }
 
-.at-glottal-wrap {
-  margin-top: 0.2rem;
-}
-
 .at-glottal-note {
   margin-top: 0.6rem;
   border: 1px solid rgba(45, 212, 191, 0.45);
@@ -79,18 +67,6 @@
   margin: 0;
   color: #a5f3fc;
   line-height: 1.45;
-}
-
-.at-glottal-bank-wrap {
-  margin-top: 0.7rem;
-}
-
-.at-flap-bank-wrap {
-  margin-top: 0.7rem;
-}
-
-.at-silent-bank-wrap {
-  margin-top: 0.7rem;
 }
 
 .at-glottal-bank-grid {
@@ -379,30 +355,6 @@
   margin-top: 0.35rem;
 }
 
-.at-sentence-focus-list {
-  margin-top: 0.56rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.42rem;
-}
-
-.at-sentence-focus-chip {
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  background: rgba(245, 158, 11, 0.1);
-  border-radius: 999px;
-  padding: 0.14rem 0.54rem;
-  color: #ffe8b3;
-  font-size: 0.84rem;
-  line-height: 1.45;
-  white-space: nowrap;
-}
-
-.at-sentence-focus-ipa {
-  color: var(--color-ipa);
-  font-family: var(--font-ipa);
-  font-size: 0.8rem;
-}
-
 .at-word-chip-wrap {
   margin-top: 0.75rem;
 }
@@ -452,46 +404,6 @@
 
 .at-word-chip-card--drill {
   padding: 0.7rem;
-}
-
-.at-clear-t-chip-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.at-clear-t-chip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  background: rgba(245, 158, 11, 0.1);
-  border-radius: 0.68rem;
-  padding: 0.32rem 0.42rem;
-}
-
-.at-clear-t-chip-main {
-  display: flex;
-  align-items: center;
-  gap: 0.34rem;
-  min-width: 0;
-}
-
-.at-clear-t-chip-word {
-  color: #ffe8b3;
-  font-weight: 700;
-  text-transform: lowercase;
-}
-
-.at-clear-t-chip-ipa {
-  color: var(--color-ipa);
-  font-family: var(--font-ipa);
-  font-size: 0.82rem;
-}
-
-.at-clear-t-chip-btn {
-  flex-shrink: 0;
 }
 
 .at-topic-page .fs-topic-mini-btn {

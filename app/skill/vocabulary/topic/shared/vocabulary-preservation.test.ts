@@ -53,15 +53,6 @@ function extractRGB(rgbaString: string): { r: number; g: number; b: number } | n
   };
 }
 
-/**
- * Helper function to extract opacity/alpha from rgba() string
- */
-function extractOpacity(rgbaString: string): number | null {
-  const match = rgbaString.match(/rgba?\(\d+,\s*\d+,\s*\d+(?:,\s*([\d.]+))?/);
-  if (!match) return null;
-  return match[1] ? parseFloat(match[1]) : 1.0;
-}
-
 describe('Vocabulary Card Preservation Property Tests', () => {
   describe('Property 2.1: RGB Values Preserved (Only Opacity Changes)', () => {
     /**

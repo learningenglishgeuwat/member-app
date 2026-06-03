@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Pause, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
+import { Play, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
 import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
@@ -16,6 +16,13 @@ import {
   waitForVoices,
 } from '@/lib/tts/speech';
 import type { WordExample } from '../data/wordExamples/wordExamples';
+import {
+  getCategoryDisplayName,
+  getPronunciationTips,
+  getSymbolDescription,
+  getVideoIdBySymbol,
+  getWordExamples,
+} from '../data';
 import { getAllCommonLetters, type CommonLetter } from '../data/commonLetters/CommonLetters';
 import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
 
@@ -64,77 +71,6 @@ const BRITISH_NOTE_COUNTERPARTS: Record<string, string[]> = {
   'ɚ': ['ə'],
   'ə': ['ɚ'],
   'ɒ': ['ɑ', 'ɔ'],
-};
-
-const SYMBOL_HIGHLIGHT_PATTERNS: Record<string, string[]> = {
-  // Lax Vowels
-  'ʌ': ['ou', 'oo', 'oe', 'u', 'o'],
-  'ɪ': ['ui', 'ie', 'ee', 'ei', 'i', 'y', 'e', 'u'],
-  'ʊ': ['oo', 'ou', 'u', 'o'],
-  'ɛ': ['ea', 'ie', 'ai', 'ue', 'e', 'a'],
-  'ə': ['ion', 'ian', 'ou', 'io', 'ia', 'a', 'e', 'o', 'u', 'i'],
-  'ɚ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
-  'ɝ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'ɜ': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'ɜr': ['ear', 'ir', 'ur', 'or', 'er', 'r'],
-  'əɹ': ['er', 'or', 'ar', 'ur', 'ir', 'r'],
-  
-  // Tense Vowels
-  'ɑ': ['al', 'au', 'o', 'a'],
-  'ɑr': ['ear', 'ar', 'al', 'r'],
-  'ɒ': ['ock', 'od', 'og', 'op', 'o'],
-  'i': ['ee', 'ea', 'ie', 'ei', 'ey', 'e', 'y', 'i'],
-  'u': ['oo', 'ue', 'ew', 'ou', 'ui', 'u', 'o'],
-  'æ': ['adge', 'ank', 'ai', 'au', 'a'],
-  'ɔ': ['aw', 'au', 'al', 'ough', 'o', 'a'],
-  'ɔr': ['oor', 'oar', 'our', 'ore', 'or', 'ar', 'r'],
-
-  // Diphthongs
-  'aɪ': ['igh', 'ie', 'uy', 'ai', 'i', 'y'],
-  'eɪ': ['ai', 'ay', 'ei', 'ea', 'ey', 'a', 'e'],
-  'ɔɪ': ['oi', 'oy'],
-  'ɪr': ['ear', 'eer', 'ere', 'eard', 'ier', 'ir', 'r'],
-  'ɪə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
-  'iə': ['ear', 'eer', 'ere', 'eard', 'ier', 'ia', 'ea', 'io', 'ir', 'r'],
-  'ɛr': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'ɛə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'eə': ['air', 'are', 'ear', 'ere', 'aer', 'er', 'r'],
-  'ʊr': ['ure', 'our', 'oor', 'ur', 'r'],
-  'ʊə': ['ure', 'our', 'oor', 'ur', 'r'],
-  'oʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
-  'əʊ': ['oa', 'ow', 'oe', 'ou', 'o'],
-  'aʊ': ['ou', 'ow', 'ough'],
-
-  // Consonants Voiceless
-  'p': ['pp', 'p'],
-  't': ['tt', 'ed', 't'],
-  'k': ['ck', 'ch', 'qu', 'k', 'c', 'q'],
-  'f': ['ff', 'ph', 'gh', 'f'],
-  'θ': ['th'],
-  's': ['ss', 'sc', 'ce', 's', 'c'],
-  'ʃ': ['sh', 'ti', 'ci', 'si', 'ch', 's'],
-  'tʃ': ['tch', 'ch', 't'],
-  'ʧ': ['tch', 'ch', 't'],
-  'h': ['wh', 'h'],
-
-  // Consonants Voiced
-  'b': ['bb', 'b'],
-  'd': ['dd', 'ed', 'd'],
-  'g': ['gg', 'gh', 'gu', 'g'],
-  'v': ['vv', 've', 'v', 'f'],
-  'ð': ['th'],
-  'z': ['zz', 'se', 'z', 's', 'x'],
-  'ʒ': ['si', 'ge', 'su', 's', 'z'],
-  'ʤ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
-  'dʒ': ['dge', 'dj', 'ge', 'j', 'g', 'd'],
-  'l': ['ll', 'le', 'al', 'l'],
-  'm': ['mm', 'mb', 'm'],
-  'n': ['nn', 'kn', 'gn', 'pn', 'n'],
-  'ŋ': ['ng', 'n'],
-  'r': ['rr', 'wr', 'rh', 'r'],
-  'w': ['wh', 'qu', 'w', 'u'],
-  'y': ['y', 'i', 'u', 'eu', 'ew'],
-  'j': ['y', 'i', 'u', 'eu', 'ew'],
 };
 
 const highlightLetterStyle: React.CSSProperties = {
@@ -202,6 +138,41 @@ type SymbolDetailSectionState = {
   video?: boolean;
   prompt?: boolean;
 };
+
+type SymbolDetailData = {
+  description: string;
+  category: string;
+  examples: WordExample[];
+  tips: string[];
+  videoId?: string;
+};
+
+function getDefaultSymbolDetailData(): SymbolDetailData {
+  return {
+    description: 'International Phonetic Alphabet Symbol',
+    category: 'Unknown',
+    examples: [],
+    tips: [],
+    videoId: undefined,
+  };
+}
+
+function getSymbolDetailData(symbol: string): SymbolDetailData {
+  if (!symbol) return getDefaultSymbolDetailData();
+
+  try {
+    return {
+      description: getSymbolDescription(symbol),
+      category: getCategoryDisplayName(symbol),
+      examples: getWordExamples(symbol),
+      tips: getPronunciationTips(symbol),
+      videoId: getVideoIdBySymbol(symbol),
+    };
+  } catch (error) {
+    console.error('Failed to resolve symbol data:', error);
+    return getDefaultSymbolDetailData();
+  }
+}
 
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
@@ -349,7 +320,6 @@ const SymbolDetailPage: React.FC = () => {
   const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
-  const [symbolLoading, setSymbolLoading] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
   const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
@@ -370,19 +340,7 @@ const SymbolDetailPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isProgressSaved, setIsProgressSaved] = useState(false); // Start with false to match server
   const [isClient, setIsClient] = useState(false);
-  const [symbolData, setSymbolData] = useState<{
-    description: string;
-    category: string;
-    examples: WordExample[];
-    tips: string[];
-    videoId?: string;
-  }>({
-    description: 'International Phonetic Alphabet Symbol',
-    category: 'Unknown',
-    examples: [],
-    tips: [],
-    videoId: undefined,
-  });
+  const symbolData = useMemo(() => getSymbolDetailData(decodedSymbol), [decodedSymbol]);
   const symbolNavGroups = useMemo(() => getSymbolNavGroups(symbolData.category), [symbolData.category]);
   const britishNote = useMemo(
     () => BRITISH_NOTES_BY_SYMBOL[decodedSymbol] ?? null,
@@ -471,17 +429,6 @@ const SymbolDetailPage: React.FC = () => {
     const base = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
     return Array.from(new Set(base.filter(Boolean)));
   }, [decodedSymbol]);
-
-  const currentSymbolCommonLetters = useMemo(() => {
-    if (SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol]) {
-      return SYMBOL_HIGHLIGHT_PATTERNS[decodedSymbol];
-    }
-    const foundLetters = ALL_COMMON_LETTERS
-      .filter(c => symbolAliasCandidates.some(candidate => c.ipaSymbol === `/${candidate}/` || c.ipaSymbol === candidate))
-      .flatMap((c) => c.letter.split(',').map((s) => s.trim().replace(/^-|-$/g, '')));
-
-    return Array.from(new Set(foundLetters.filter(Boolean)));
-  }, [decodedSymbol, symbolAliasCandidates]);
 
   const renderWord = (word: string) => {
     if (!showHighlight) return word;
@@ -642,65 +589,12 @@ const SymbolDetailPage: React.FC = () => {
 
   const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
+  const britishNoteItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const playSessionRef = useRef(0);
   const playNextTimeoutRef = useRef<number | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
   
-  useEffect(() => {
-    let active = true;
-    if (!decodedSymbol) {
-      setSymbolData({
-        description: 'International Phonetic Alphabet Symbol',
-        category: 'Unknown',
-        examples: [],
-        tips: [],
-        videoId: undefined,
-      });
-      return () => {
-        active = false;
-      };
-    }
-
-    setSymbolLoading(true);
-    (async () => {
-      try {
-        const [wordExamplesModule, descriptionModule, tipsModule, videoModule] = await Promise.all([
-          import('../data/wordExamples/wordExamples'),
-          import('../data/symbolDescriptions'),
-          import('../data/pronunciationTips/PronunciationTips'),
-          import('../data/videoIds'),
-        ]);
-
-        if (!active) return;
-
-        setSymbolData({
-          description: descriptionModule.getSymbolDescription(decodedSymbol),
-          category: descriptionModule.getCategoryDisplayName(decodedSymbol),
-          examples: wordExamplesModule.getWordExamples(decodedSymbol),
-          tips: tipsModule.getPronunciationTips(decodedSymbol),
-          videoId: videoModule.getVideoIdBySymbol(decodedSymbol),
-        });
-      } catch (error) {
-        console.error('Failed to load symbol data:', error);
-        if (!active) return;
-        setSymbolData({
-          description: 'International Phonetic Alphabet Symbol',
-          category: 'Unknown',
-          examples: [],
-          tips: [],
-          videoId: undefined,
-        });
-      } finally {
-        if (active) setSymbolLoading(false);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [decodedSymbol]);
-
   // Manual scroll to word examples
   const scrollToWordExamples = () => {
     if (wordExamplesRef.current) {
@@ -757,7 +651,7 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const handlePlayAllWords = () => {
-    if (!isSpeechSynthesisSupported() || symbolLoading || symbolData.examples.length === 0) return;
+    if (!isSpeechSynthesisSupported() || symbolData.examples.length === 0) return;
 
     if (isPlayingAll) {
       stopPlayAllWords();
@@ -822,6 +716,15 @@ const SymbolDetailPage: React.FC = () => {
         setActiveWord(item.word);
         setActiveWordIndex(null);
 
+        // Scroll to current British note item
+        if (britishNoteItemRefs.current[currentIndex]) {
+          britishNoteItemRefs.current[currentIndex]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+
         // Play BrE
         await speakWithBritishSymbolDetailVoice(item.word);
         
@@ -864,13 +767,22 @@ const SymbolDetailPage: React.FC = () => {
     })();
   };
 
-  const handlePlayBritishNoteWord = (word: string) => {
+  const handlePlayBritishNoteWord = (word: string, itemIndex?: number) => {
     if (!isSpeechSynthesisSupported()) return;
 
     stopPlayAllWords();
     stopSpeech();
     setActiveWord(word);
     setActiveWordIndex(null);
+
+    // Scroll to the British note item if index is provided
+    if (typeof itemIndex === 'number' && britishNoteItemRefs.current[itemIndex]) {
+      britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      });
+    }
 
     const currentSession = playSessionRef.current;
     void (async () => {
@@ -1085,16 +997,6 @@ const SymbolDetailPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Interactive Trigger (Main Action Button) */}
-                <button 
-                  onClick={handlePlayAllWords}
-                  disabled={symbolLoading || symbolData.examples.length === 0}
-                  data-tour="symbol-detail-play-all"
-                  className="absolute -bottom-5 md:-bottom-6 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(190,41,236,0.4)] z-20 group-hover:scale-110 bg-cyber-cyan text-black hover:bg-white"
-                  title={isPlayingAll ? "Stop All Words" : "Play All Words"}
-                >
-                    {isPlayingAll ? <Pause className="md:w-5 md:h-5 fill-current" /> : <Play className="md:w-5 md:h-5 fill-current" />}
-                </button>
              </div>
           </div>
         </div>
@@ -1224,33 +1126,24 @@ const SymbolDetailPage: React.FC = () => {
 
         {britishNote && (
           <div id="britishNote" className="w-full max-w-4xl mx-auto mt-2 mb-2">
-            <div className="bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]">
+            <div 
+              className="symbol-detail-collapsible-panel bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]"
+              style={{ '--panel-glow-rgb': '251, 191, 36' } as React.CSSProperties}
+            >
               <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
                 <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
-                <button
-                  onClick={handlePlayAllBritishNotes}
-                  className="inline-flex items-center gap-1 rounded border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[10px] md:text-xs font-mono text-amber-300 hover:bg-amber-400/20 transition-colors"
-                >
-                  {isPlayingAllBritishNotes ? (
-                    <>
-                      <Pause size={12} />
-                      <span>Stop All</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} />
-                      <span>Play All</span>
-                    </>
-                  )}
-                </button>
               </div>
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
                 <div className="space-y-2">
-                  {britishNote.items.map((item) => {
+                  {britishNote.items.map((item, itemIndex) => {
                     const isItemActive = activeWord === item.word;
                     return (
-                    <div key={item.word} className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}>
+                    <div 
+                      key={item.word} 
+                      ref={(el) => { britishNoteItemRefs.current[itemIndex] = el; }}
+                      className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}
+                    >
                       <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
                       {showBritishNoteIpa && (
                         <div className="text-cyan-300/60 font-mono text-xs">
@@ -1260,7 +1153,7 @@ const SymbolDetailPage: React.FC = () => {
                       )}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
-                          onClick={() => handlePlayBritishNoteWord(item.word)}
+                          onClick={() => handlePlayBritishNoteWord(item.word, itemIndex)}
                           className="inline-flex items-center gap-1 rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[11px] text-amber-200 hover:bg-amber-400/20 transition-colors"
                           title={`Play BrE: ${item.word}`}
                         >
@@ -1268,7 +1161,30 @@ const SymbolDetailPage: React.FC = () => {
                           <span>BrE</span>
                         </button>
                         <button
-                          onClick={() => handlePlayWord(item.word)}
+                          onClick={() => {
+                            if (!isSpeechSynthesisSupported()) return;
+                            stopPlayAllWords();
+                            stopSpeech();
+                            setActiveWord(item.word);
+                            setActiveWordIndex(null);
+                            
+                            // Scroll to the British note item
+                            if (britishNoteItemRefs.current[itemIndex]) {
+                              britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                                inline: 'center',
+                              });
+                            }
+                            
+                            const currentSession = playSessionRef.current;
+                            void (async () => {
+                              await speakWithSymbolDetailVoice(item.word);
+                              if (currentSession !== playSessionRef.current) return;
+                              setActiveWord(null);
+                              setActiveWordIndex(null);
+                            })();
+                          }}
                           className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
                           title={`Play AmE: ${item.word}`}
                         >
@@ -1300,8 +1216,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Tips Section */}
         <div className="tips-section w-full max-w-4xl mx-auto mt-6 mb-10">
-          <div className="bg-black/80 border border-cyber-pink/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(255,0,255,0.15)]">
-                    
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/80 border border-cyber-pink/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(255,0,255,0.15)]"
+            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
+          >
             {/* Terminal Header */}
             <div className="bg-cyber-pink/10 px-4 py-2 flex justify-between items-center border-b border-cyber-pink/30">
               <div className="flex items-center gap-2">
@@ -1352,8 +1270,10 @@ const SymbolDetailPage: React.FC = () => {
         {/* YouTube Video Section */}
         {symbolData.videoId && (
           <div data-video-section className="w-full max-w-4xl mx-auto mt-6">
-            <div className="bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]">
-                      
+            <div 
+              className="symbol-detail-collapsible-panel bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+              style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
+            >
               {/* Terminal Header */}
               <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
                 <div className="flex items-center gap-2">
@@ -1417,7 +1337,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Practice Section (below VIDEO_TUTORIAL) */}
         <div className="w-full max-w-4xl mx-auto mt-6">
-          <div className="bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]">
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]"
+            style={{ '--panel-glow-rgb': '6, 182, 212' } as React.CSSProperties}
+          >
             <button
               type="button"
               onClick={() => setIsPracticeOpen(prev => !prev)}
@@ -1483,7 +1406,10 @@ const SymbolDetailPage: React.FC = () => {
 
         {/* Prompt Section (below PRACTICE) */}
         <div className="w-full max-w-4xl mx-auto mt-6">
-          <div className="bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]">
+          <div 
+            className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]"
+            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
+          >
             <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <HelpCircle className="text-cyber-pink" size={16} />
@@ -1584,7 +1510,7 @@ const SymbolDetailPage: React.FC = () => {
               isActive={isPlayingAll}
               label="WORDS"
               onClick={handlePlayAllWords}
-              disabled={symbolLoading || symbolData.examples.length === 0}
+              disabled={symbolData.examples.length === 0}
               className="mb-2 sm:mb-3"
             />
             <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />

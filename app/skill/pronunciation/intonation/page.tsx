@@ -257,43 +257,6 @@ function LearningGuideBlock({ guide }: { guide: IntonationLearningGuide }) {
   );
 }
 
-function SectionAudioControls({
-  section,
-  activeSection,
-  playback,
-  onPlayAll,
-  onStop,
-}: {
-  section: IntonationAudioSectionKey;
-  activeSection: IntonationAudioSectionKey | null;
-  playback: IntonationPlaybackState;
-  onPlayAll: (section: IntonationAudioSectionKey) => void;
-  onStop: () => void;
-}) {
-  const isActive = activeSection === section && playback.isPlaying;
-
-  return (
-    <div className="intonation-audio-wrap">
-      <div className="intonation-audio-controls">
-        <button
-          type="button"
-          className="intonation-audio-btn"
-          onClick={() => {
-            if (isActive) {
-              onStop();
-              return;
-            }
-            onPlayAll(section);
-          }}
-          aria-label="Play all model"
-        >
-          {isActive ? 'Stop' : 'Play All'}
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function PatternGrid({
   items,
   activeCardKey,
@@ -1048,13 +1011,6 @@ export default function IntonationPage() {
               <p className="fs-topic-text">
                 Mulai dari tiga pola inti: falling, rising, dan fall-rise. Dengarkan bedanya, tirukan, lalu cek hasilmu.
               </p>
-              <SectionAudioControls
-                section="patterns"
-                activeSection={activeAudioSection}
-                playback={playbackState}
-                onPlayAll={handlePlayModel}
-                onStop={handleStopAudio}
-              />
               <PatternGrid
                 items={BASIC_INTONATION_PATTERNS}
                 activeCardKey={activeCardKey}
@@ -1083,13 +1039,6 @@ export default function IntonationPage() {
               <p className="fs-topic-text">
                 Latih perbedaan statement vs question dengan grammar form yang benar, lalu fokuskan intonation sebagai pembeda makna.
               </p>
-              <SectionAudioControls
-                section="statementsQuestions"
-                activeSection={activeAudioSection}
-                playback={playbackState}
-                onPlayAll={handlePlayModel}
-                onStop={handleStopAudio}
-              />
               <PairGrid
                 items={STATEMENT_QUESTION_PAIRS}
                 activeCardKey={activeCardKey}
@@ -1118,13 +1067,6 @@ export default function IntonationPage() {
               <p className="fs-topic-text">
                 Pada list, nada biasanya naik ringan di item non-final dan turun pada item terakhir.
               </p>
-              <SectionAudioControls
-                section="listContinuation"
-                activeSection={activeAudioSection}
-                playback={playbackState}
-                onPlayAll={handlePlayModel}
-                onStop={handleStopAudio}
-              />
               <ListToneGrid
                 items={LIST_CONTINUATION_EXAMPLES}
                 activeCardKey={activeCardKey}
@@ -1153,13 +1095,6 @@ export default function IntonationPage() {
               <p className="fs-topic-text">
                 Kalimat yang sama bisa terdengar netral, sopan, tegas, atau ragu tergantung kontur nadanya.
               </p>
-              <SectionAudioControls
-                section="emphasisFeeling"
-                activeSection={activeAudioSection}
-                playback={playbackState}
-                onPlayAll={handlePlayModel}
-                onStop={handleStopAudio}
-              />
               <EmotionGrid
                 items={EMPHASIS_FEELING_EXAMPLES}
                 activeCardKey={activeCardKey}
@@ -1188,13 +1123,6 @@ export default function IntonationPage() {
               <p className="fs-topic-text">
                 Latih dialog pendek A/B. Fokuskan pitch di akhir kalimat sesuai target pattern.
               </p>
-              <SectionAudioControls
-                section="dialogueDrills"
-                activeSection={activeAudioSection}
-                playback={playbackState}
-                onPlayAll={handlePlayModel}
-                onStop={handleStopAudio}
-              />
               <DialogueGrid
                 items={DIALOGUE_DRILLS}
                 activeCardKey={activeCardKey}

@@ -53,11 +53,8 @@ export default function TourGuideMount() {
   
   // Hide TourGuide on dashboard (already in navbar for all screen sizes)
   if (pathname === DASHBOARD_PATH) {
-    console.log('[TourGuideMount] Hiding on dashboard, pathname:', pathname);
     return null;
   }
-
-  console.log('[TourGuideMount] Showing TourGuide, pathname:', pathname);
 
   if (!isWidgetBootstrapped) return null;
 
