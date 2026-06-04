@@ -534,7 +534,7 @@ function PhraseCard({
     <div
       ref={onCardRef}
       className={cx(
-        'bg-[#101414] border rounded-lg p-6 transition-all duration-300 group flex flex-col gap-4 relative overflow-hidden',
+        'bg-[#101414] border rounded-lg p-3 sm:p-6 transition-all duration-300 group flex flex-col gap-2.5 sm:gap-4 relative overflow-hidden',
         isPlaying
           ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
           : 'border-white/15 hover:border-cyan-300/70',
@@ -545,13 +545,13 @@ function PhraseCard({
       <div className="flex justify-between items-start relative z-10 gap-4">
         <div className="min-w-0">
           <div
-            className="font-sans text-2xl font-bold text-white break-words"
+            className="font-sans text-base sm:text-2xl font-bold text-white break-words"
             dangerouslySetInnerHTML={{
               __html: highlightZone && item.highlightedText ? item.highlightedText : item.text,
             }}
           />
           {item.translation && (
-            <div className="text-white/55 mt-1 text-sm">
+            <div className="text-white/55 mt-1 text-[11px] sm:text-sm">
               {item.translation}
             </div>
           )}
@@ -571,16 +571,16 @@ function PhraseCard({
       </div>
 
       {showIpa && (
-        <div className="flex flex-col gap-2 border-t border-white/10 pt-4 relative z-10 w-full overflow-hidden">
+        <div className="flex flex-col gap-2 border-t border-white/10 pt-3 sm:pt-4 relative z-10 w-full overflow-hidden">
           <span className="font-mono text-xs text-white/40 uppercase tracking-widest leading-none">IPA</span>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 flex-wrap">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-wrap">
             {item.ipaBefore && (
               <div className="flex items-center gap-2 text-white/55">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 opacity-80 whitespace-nowrap">
                   Before
                 </span>
-                <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
-                  <span className="font-sans text-sm mr-1 text-cyan-200">
+                <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2 pr-1 py-0.5 sm:pl-2.5 sm:py-1">
+                  <span className="font-sans text-[11px] sm:text-sm mr-1 text-cyan-200">
                     {item.ipaBefore}
                   </span>
                   <button
@@ -607,9 +607,9 @@ function PhraseCard({
                 <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 whitespace-nowrap">
                   After
                 </span>
-                <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-2.5 pr-1 py-1 sm:pl-3 sm:py-1.5">
                   <span
-                    className="font-sans text-lg mr-2 text-cyan-200"
+                    className="font-sans text-sm sm:text-lg mr-2 text-cyan-200"
                     dangerouslySetInnerHTML={{
                       __html: highlightZone && item.highlightedIpa ? item.highlightedIpa : item.ipa,
                     }}
