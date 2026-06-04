@@ -80,6 +80,10 @@ export function PlayStopButton({
   const handleClick = () => {
     if (disabled) return
 
+    if (navigator?.closeControlCenter) {
+      navigator.closeControlCenter()
+    }
+
     const resolvedSectionId = sectionId ?? label.toLowerCase().replace(/[^a-z0-9-_]/gi, '')
 
     if (resolvedSectionId && navigator?.openSection) {

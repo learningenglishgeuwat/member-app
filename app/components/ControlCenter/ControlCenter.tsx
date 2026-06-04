@@ -12,7 +12,10 @@ interface ControlCenterProps {
 }
 
 // Section navigator type + context — exported so other components can consume it
-export type SectionNavigator = { openSection: (id: string, path?: string) => void };
+export type SectionNavigator = { 
+  openSection: (id: string, path?: string) => void;
+  closeControlCenter: () => void;
+};
 export const SectionNavigatorContext = createContext<SectionNavigator | null>(null);
 
 function cx(...values: Array<string | false | null | undefined>) {
@@ -34,9 +37,11 @@ export function ControlCenter({
     setGlobalPlaybackSpeed(val);
   };
 
+  const closeControlCenter = () => setIsOpen(false);
+
   // Provide openSection to children
   const openSection = (id: string, path?: string) => {
-    setIsOpen(true)
+    setIsOpen(false) // also close when opening a section
     try {
       const base = (path ?? pathname) || '/'
       const target = `${base.replace(/\/$/, '')}#${id}`
@@ -58,7 +63,7 @@ export function ControlCenter({
   }
 
   return (
-    <SectionNavigatorContext.Provider value={{ openSection }}>
+    <SectionNavigatorContext.Provider value={{ openSection, closeControlCenter }}>
       <div
       className={cx(
         'fixed right-0 top-1/2 -translate-y-1/2 z-[100] transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)]',
