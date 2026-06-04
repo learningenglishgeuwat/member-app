@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Orbitron, DM_Sans, JetBrains_Mono } from 'next/font/google';
+import { Noto_Sans, Orbitron, DM_Sans } from 'next/font/google';
 import "./globals.css";
 import "./styles/scrollbar.css";
 import AppClientShell from "@/app/components/AppClientShell";
@@ -27,13 +27,7 @@ const dmSans = DM_Sans({
   variable: '--font-ui',
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-  preload: false,
-  variable: '--font-tech',
-});
+
 
 export const metadata: Metadata = {
   title: "GEUWAT Member - Learn English",
@@ -61,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSans.variable} ${orbitron.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${notoSans.variable} ${orbitron.variable} ${dmSans.variable}`}>
       <body className="font-sans antialiased">
         <AppClientShell>{children}</AppClientShell>
       </body>

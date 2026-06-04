@@ -281,7 +281,7 @@
 }
 
 .rt-inline-code {
-  font-family: var(--font-tech);
+  font-family: monospace;
   font-size: 0.95em;
   color: inherit;
   font-weight: normal;
