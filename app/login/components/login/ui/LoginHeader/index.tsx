@@ -24,7 +24,7 @@ export const LoginHeader: React.FC<LoginHeaderProps> = ({
 
         {/* Logo Image - Transparent 3D Icon with Dynamic Effects */}
         <Image
-          src="/rasio_1_1_2K_202606030906.webp"
+          src="/login_logo.webp"
           alt="GEUWAT Logo"
           width={128}
           height={128}

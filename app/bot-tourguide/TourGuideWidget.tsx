@@ -1014,7 +1014,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
           onClick={() => setCollapsed(false)}
         >
           <Image
-            src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
+            src="/tour_guide_avatar.webp"
             alt="Tour Guide"
             width={48}
             height={48}
@@ -1089,7 +1089,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 onClick={() => setCollapsed(true)}
               >
                 <Image
-                  src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
+                  src="/tour_guide_avatar.webp"
                   alt="Tour Guide"
                   width={40}
                   height={40}

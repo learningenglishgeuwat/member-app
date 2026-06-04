@@ -35,7 +35,7 @@ export default function LearningPathOverlay({ activeResult, onClose }: LearningP
         <div className="tg-lp-shell">
           <div className="tg-lp-avatar-orb">
             <Image
-              src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
+              src="/tour_guide_avatar.webp"
               alt="GEUWAT Coach"
               width={58}
               height={58}
