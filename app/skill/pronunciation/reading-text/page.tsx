@@ -389,8 +389,14 @@ export default function ReadingTextForPracticePage() {
                         className={`rt-paragraph-play ${isActive ? 'is-active' : ''}`}
                         onClick={() => toggleSinglePlay(speechText, key)}
                         aria-pressed={isActive}
+                        aria-label={isActive ? 'Stop reading' : 'Play reading'}
+                        title={isActive ? 'Stop reading' : 'Play reading'}
                       >
-                        {isActive ? 'Stop' : 'Play'}
+                        {isActive ? (
+                          <Square size={12} fill="currentColor" />
+                        ) : (
+                          <Play size={12} fill="currentColor" className="ml-0.5" />
+                        )}
                       </button>
                       <p className="rt-paragraph">{renderInlineCode(paragraph)}</p>
                     </div>
@@ -413,9 +419,14 @@ export default function ReadingTextForPracticePage() {
                         onClick={() => toggleSinglePlay(originText, key)}
                         aria-pressed={isActive}
                         disabled={disabled}
-                        title={disabled ? 'Origin text not found for this paragraph.' : 'Play origin text'}
+                        aria-label={isActive ? 'Stop reading' : 'Play reading'}
+                        title={disabled ? 'Origin text not found for this paragraph.' : (isActive ? 'Stop reading' : 'Play reading')}
                       >
-                        {isActive ? 'Stop' : 'Play'}
+                        {isActive ? (
+                          <Square size={12} fill="currentColor" />
+                        ) : (
+                          <Play size={12} fill="currentColor" className="ml-0.5" />
+                        )}
                       </button>
                       <p className="rt-paragraph rt-phonetic">{paragraph}</p>
                     </div>
