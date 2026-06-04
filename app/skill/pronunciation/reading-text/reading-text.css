@@ -30,7 +30,7 @@
   margin-top: 0.45rem;
   color: rgba(224, 231, 255, 0.86);
   line-height: 1.5;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
 }
 
 .rt-progress-actions {
@@ -176,6 +176,9 @@
   border-radius: 0.9rem;
   font-weight: 800;
   cursor: pointer;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .rt-tab:hover {

@@ -334,6 +334,71 @@ const PRONUNCIATION_COACHING_STEPS: Record<string, string> = {
     'Ucapkan perlahan dan jelas dulu, naikkan kecepatan bertahap tanpa mengorbankan artikulasi.',
 };
 
+const PRONUNCIATION_EXAMPLES: Record<string, string> = {
+  'american-t-flap-vs-glottal':
+    'Contoh cepat: water sering memakai flap /t/ seperti soft d, sedangkan button bisa memakai glottal stop pada speech casual.',
+  'american-t-ending-patterns':
+    'Contoh cepat: pada right now, final /t/ bisa ditahan ringan sebelum /n/; pada right away, /t/ lebih mudah terdengar karena bertemu vokal.',
+  'final-sound-d-ed-rules':
+    'Contoh cepat: watched -> /t/, played -> /d/, wanted -> /Id/. Kuncinya dengar bunyi akhir verb dasar.',
+  'final-sound-s-es-core-rules':
+    'Contoh cepat: cats -> /s/, dogs -> /z/, watches -> /Iz/. Jangan pilih dari huruf terakhir saja; pilih dari bunyi terakhir.',
+  'final-sound-s-es-practice':
+    'Contoh latihan: cats, dogs, watches; lalu masukkan ke frasa pendek seperti two cats, three dogs, and five watches.',
+  'intonation-overview':
+    'Contoh cepat: You are ready. biasanya falling; Are you ready? sering rising di akhir.',
+  'minimal-pairs-purpose':
+    'Contoh cepat: ship vs sheep atau bat vs bet. Satu bunyi kecil berubah, makna ikut berubah.',
+  'stressing-word-stress-rules':
+    'Contoh cepat: PREsent sebagai noun/adjective, preSENT sebagai verb. Stress mengubah ritme dan kadang fungsi kata.',
+  'stressing-sentence-stress-overview':
+    'Contoh cepat: I WANT tea menekan want; I want TEA menekan tea. Fokus informasi berubah.',
+  'pronunciation-contraction-basics':
+    'Contoh cepat: I am -> I\'m, do not -> don\'t, we are -> we\'re. Apostrof menandai bagian yang dipendekkan.',
+  'pronunciation-contraction-informal':
+    'Contoh cepat: going to -> gonna, want to -> wanna, give me -> gimme. Pakai untuk lisan santai, bukan tulisan formal.',
+  'pronunciation-linking-basics':
+    'Contoh cepat: an apple terdengar lebih menyambung seperti a-napple karena konsonan akhir bertemu vokal awal.',
+  'pronunciation-linking-categories':
+    'Contoh cepat: go on bisa memakai linking antarvokal, sedangkan this song melatih sambungan konsonan ke konsonan.',
+  'pronunciation-tonguetwister-basics':
+    'Contoh cepat: mulai dari frasa pendek berulang, ucapkan bersih dulu, baru percepat sedikit demi sedikit.',
+};
+
+const PRONUNCIATION_COMPARISONS: Record<string, string> = {
+  'american-t-flap-vs-glottal':
+    'Bedanya: flap /t/ adalah ketukan lidah cepat seperti soft d, sedangkan glottal stop adalah hentian singkat di tenggorokan. Flap biasanya terasa mengalir di antara bunyi vokal; glottal lebih terasa seperti jeda mikro.',
+  'american-t-ending-patterns':
+    'Bedanya: released t dilepas jelas, unreleased t ditahan tanpa letupan penuh, dan linking ke vokal membuat /t/ akhir lebih mudah terdengar. Pilih berdasarkan bunyi setelah kata, bukan berdasarkan ejaan saja.',
+  'final-sound-d-ed-rules':
+    'Bedanya: /t/ muncul setelah bunyi voiceless, /d/ setelah bunyi voiced, dan /Id/ setelah /t/ atau /d/. Jadi watched, played, dan wanted masuk tiga pola berbeda.',
+  'final-sound-s-es-core-rules':
+    'Bedanya: /s/ dipakai setelah bunyi voiceless, /z/ setelah bunyi voiced, dan /Iz/ setelah bunyi sibilant seperti /s/, /z/, /sh/, /ch/. Cats, dogs, dan watches adalah pola pembeda utamanya.',
+  'stressing-hub-overview':
+    'Bedanya: word stress menentukan tekanan dalam satu kata, sedangkan sentence stress menentukan kata penting dalam satu kalimat. Mulai dari word stress dulu agar kata jelas, lalu naik ke sentence stress untuk ritme.',
+  'pronunciation-linking-categories':
+    'Bedanya: linking dasar menyambung kata agar tidak patah, sementara kategori seperti liaison, gemination, intrusion, dan assimilation menjelaskan jenis sambungan yang lebih spesifik.',
+};
+
+const PRONUNCIATION_PITFALLS: Record<string, string> = {
+  'american-t-flap-vs-glottal':
+    'Kesalahan umum: semua huruf t dibaca keras. Dalam American English, posisi dan bunyi sekitar /t/ sangat menentukan.',
+  'final-sound-d-ed-rules':
+    'Kesalahan umum: semua -ed dibaca /ed/. Yang benar, sebagian besar -ed hanya menjadi /t/ atau /d/.',
+  'final-sound-s-es-core-rules':
+    'Kesalahan umum: semua -s dibaca /s/. Untuk kata seperti dogs, ending-nya /z/, bukan /s/.',
+  'final-sound-s-es-practice':
+    'Kesalahan umum: latihan terlalu cepat sebelum bunyi akhir stabil. Perlambat tempo dulu supaya /s/, /z/, dan /Iz/ tidak tertukar.',
+  'stressing-word-stress-rules':
+    'Kesalahan umum: semua suku kata ditekan sama kuat. English butuh satu stress utama agar kata terdengar natural.',
+  'stressing-sentence-stress-overview':
+    'Kesalahan umum: function words seperti to, a, the ikut ditekan terlalu kuat sehingga ritme terdengar kaku.',
+  'pronunciation-contraction-basics':
+    'Kesalahan umum: apostrof dibaca sebagai jeda. Contraction justru membuat kata lebih menyatu dan ringan.',
+  'pronunciation-linking-basics':
+    'Kesalahan umum: berhenti di setiap spasi. Dalam speech natural, spasi tulisan tidak selalu berarti jeda suara.',
+};
+
 const QA_LOW_CONFIDENCE_SCORE = 52;
 const QA_STRONG_SCORE = 84;
 const QA_AMBIGUOUS_GAP = 18;
@@ -566,7 +631,11 @@ const toSearchTokens = (text: string): string[] =>
 const isPronunciationQaEntry = (entry: GuideQaEntry): boolean =>
   entry.route.startsWith(PRONUNCIATION_ROUTE_PREFIX);
 
-const buildPronunciationCoachingCore = (entry: GuideQaEntry, baseAnswer: string): string => {
+const buildPronunciationCoachingCore = (
+  entry: GuideQaEntry,
+  baseAnswer: string,
+  parsed?: ParsedQuery,
+): string => {
   const focus =
     PRONUNCIATION_COACHING_FOCUS[entry.topicId] ??
     'kontrol bunyi utama, ritme, dan kejelasan saat bicara natural';
@@ -574,7 +643,32 @@ const buildPronunciationCoachingCore = (entry: GuideQaEntry, baseAnswer: string)
     PRONUNCIATION_COACHING_STEPS[entry.topicId] ??
     'Latih dari unit kecil (kata/frasa), rekam singkat, lalu evaluasi satu target bunyi per sesi.';
 
-  return `${baseAnswer} Fokus coaching: ${focus}. Cara latih cepat: ${step}`;
+  const example = PRONUNCIATION_EXAMPLES[entry.topicId];
+  const comparison = PRONUNCIATION_COMPARISONS[entry.topicId];
+  const pitfall = PRONUNCIATION_PITFALLS[entry.topicId];
+  const segments = [baseAnswer];
+
+  if (parsed?.intent === 'comparison' && comparison) {
+    segments.push(comparison);
+  } else {
+    segments.push(`Fokus coaching: ${focus}.`);
+  }
+
+  if (parsed?.intent === 'how_to') {
+    segments.push(`Cara latihan detail: 1) dengarkan contoh target, 2) ucapkan pelan dalam kata/frasa, 3) rekam 10-20 detik, 4) cek satu target bunyi saja sebelum ulang. ${step}`);
+  } else {
+    segments.push(`Cara latih cepat: ${step}`);
+  }
+
+  if (parsed?.intent === 'example_request' || parsed?.intent === 'comparison') {
+    if (example) segments.push(example);
+  }
+
+  if (pitfall && parsed?.intent !== 'example_request') {
+    segments.push(pitfall);
+  }
+
+  return segments.join(' ');
 };
 
 const buildPronunciationSuggestions = (entry: GuideQaEntry): string[] => {
@@ -1116,7 +1210,7 @@ export const resolveQaMode = (
     : bestEntry.shortAnswer;
   const isPronunciationEntry = isPronunciationQaEntry(bestEntry);
   const coreAnswer = isPronunciationEntry
-    ? buildPronunciationCoachingCore(bestEntry, baseCoreAnswer)
+    ? buildPronunciationCoachingCore(bestEntry, baseCoreAnswer, parsed)
     : baseCoreAnswer;
 
   const composed = composeQaReply({

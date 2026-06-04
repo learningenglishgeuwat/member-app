@@ -59,6 +59,7 @@
   color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-family: var(--font-display);
 }
 
 .tt-dropdown {

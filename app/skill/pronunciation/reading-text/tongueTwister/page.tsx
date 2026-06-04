@@ -348,7 +348,7 @@ export default function TongueTwisterPage() {
             {/* Twister Selector */}
             <div className="tt-dropdown-group">
               <label className="tt-label">
-                Select Tongue Twister
+                Pilih Tongue Twister
               </label>
               <div className="tt-dropdown" ref={twisterDropdownRef}>
                 <button

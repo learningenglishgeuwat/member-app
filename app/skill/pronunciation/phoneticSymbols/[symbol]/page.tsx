@@ -1131,7 +1131,7 @@ const SymbolDetailPage: React.FC = () => {
               style={{ '--panel-glow-rgb': '251, 191, 36' } as React.CSSProperties}
             >
               <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
-                <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
+                <span className="font-display text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
               </div>
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
@@ -1224,7 +1224,7 @@ const SymbolDetailPage: React.FC = () => {
             <div className="bg-cyber-pink/10 px-4 py-2 flex justify-between items-center border-b border-cyber-pink/30">
               <div className="flex items-center gap-2">
                 <Lightbulb className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -1278,8 +1278,8 @@ const SymbolDetailPage: React.FC = () => {
               <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
                 <div className="flex items-center gap-2">
                   <Play className="text-purple-400" size={16} />
-                  <span className="ml-2 font-mono text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
-                  <span className="text-xs text-white/60">Symbol: /{decodedSymbol}/</span>
+                  <span className="ml-2 font-display text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
+                  <span className="text-xs font-display text-white/60">Symbol:{' '}<span className="font-ipa" data-ipa>/{decodedSymbol}/</span></span>
                 </div>
                 <button
                   type="button"
@@ -1350,7 +1350,7 @@ const SymbolDetailPage: React.FC = () => {
             >
               <div className="flex items-center gap-2">
                 <Database className="text-cyber-cyan" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-cyan tracking-wider">PRACTICE</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-cyan tracking-wider">PRACTICE</span>
               </div>
               <span className="symbol-detail-chevron-toggle text-cyber-cyan">
                 <ChevronDown
@@ -1413,7 +1413,7 @@ const SymbolDetailPage: React.FC = () => {
             <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <HelpCircle className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
               </div>
               <div className="flex items-center gap-2">
                 <button

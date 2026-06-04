@@ -228,11 +228,13 @@
 }
 
 .alphabet-quick-spelling-title {
+  font-family: var(--font-display);
   margin: 0;
   color: #e2e8f0;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .alphabet-quick-spelling-hint {
@@ -388,11 +390,13 @@
 }
 
 .alphabet-notes-title {
+  font-family: var(--font-display);
   margin: 0;
   color: #e2e8f0;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 

@@ -264,7 +264,7 @@ const Page: React.FC = () => {
       <div className="relative min-h-full flex flex-col pt-4 md:pt-8 pb-6 md:pb-12">
         
         {/* Upper Content Area */}
-        <div className="flex-shrink-0 flex flex-col px-3 sm:px-6 md:px-12 lg:px-24 justify-center max-w-4xl z-10 py-3 sm:py-4">
+        <div className="flex-shrink-0 flex flex-col px-3 sm:px-6 md:px-12 lg:px-24 justify-center w-full z-10 py-3 sm:py-4">
           
           <div className="h-6 sm:h-7 md:h-8 mb-2 sm:mb-3 md:mb-4 mt-1 md:mt-0" />
 
@@ -275,31 +275,33 @@ const Page: React.FC = () => {
             {selectedTopic.title}
           </h1>
 
-          <div
-            className={`glass-panel p-2.5 sm:p-4 md:p-5 rounded-xl max-w-full md:max-w-2xl border border-transparent border-l-4 ${detailTheme.detailBorderLeft} ${detailTheme.detailBorder} mb-3 sm:mb-4 md:mb-6 animate-fade-in-up`}
-          >
-             <p className="text-sm md:text-base text-slate-200 font-light leading-relaxed">
-               {selectedTopic.description}
-             </p>
-          </div>
-
-          {/* Learning Instructions Area */}
-          <div
-            className={`mt-2 sm:mt-3 md:mt-4 p-2.5 sm:p-4 ${detailTheme.hintBg} border ${detailTheme.hintBorder} rounded-lg max-w-full md:max-w-xl`}
-          >
-                <div className="flex items-start gap-2 sm:gap-3">
-                    <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
-                    <div>
-                        <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>How to Start</h4>
-                        <p className="text-sm md:text-base text-white/90 leading-relaxed">
-                          {isTopicLocked 
-                            ? `Modul ${selectedTopic.title} saat ini terkunci. Silakan selesaikan modul yang tersedia terlebih dahulu.`
-                            : `Klik ikon CPU di bawah untuk membuka halaman latihan ${selectedTopic.title.toLowerCase()}`
-                          }
-                        </p>
-                    </div>
-                </div>
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full items-stretch mb-4 md:mb-6">
+            <div
+              className={`glass-panel flex-1 p-2.5 sm:p-4 md:p-5 rounded-xl border border-transparent border-l-4 ${detailTheme.detailBorderLeft} ${detailTheme.detailBorder} animate-fade-in-up`}
+            >
+               <p className="text-sm md:text-base text-slate-200 font-light leading-relaxed h-full flex items-center">
+                 {selectedTopic.description}
+               </p>
             </div>
+
+            {/* Learning Instructions Area */}
+            <div
+              className={`flex-1 p-2.5 sm:p-4 ${detailTheme.hintBg} border ${detailTheme.hintBorder} rounded-lg`}
+            >
+                  <div className="flex items-start gap-2 sm:gap-3 h-full">
+                      <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
+                      <div className="flex flex-col justify-center">
+                          <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>How to Start</h4>
+                          <p className="text-sm md:text-base text-white/90 leading-relaxed">
+                            {isTopicLocked 
+                              ? `Modul ${selectedTopic.title} saat ini terkunci. Silakan selesaikan modul yang tersedia terlebih dahulu.`
+                              : `Klik ikon CPU di bawah untuk membuka halaman latihan ${selectedTopic.title.toLowerCase()}`
+                            }
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
 
         {/* Navigation Arrows (Visible on mobile/tablet mainly) */}
