@@ -27,11 +27,11 @@ export const metadata: Metadata = {
   description: "Personalized English learning dashboard for GEUWAT members",
   icons: {
     icon: [
-      { url: '/icon.png', type: 'image/png' },
-      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.webp', type: 'image/webp' },
+      { url: '/favicon.webp', sizes: '32x32', type: 'image/webp' },
     ],
-    shortcut: '/icon.png',
-    apple: '/apple-icon.png',
+    shortcut: '/icon.webp',
+    apple: '/apple-icon.webp',
   },
 };
 
