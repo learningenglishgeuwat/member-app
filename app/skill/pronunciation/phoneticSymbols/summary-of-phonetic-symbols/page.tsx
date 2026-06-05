@@ -160,11 +160,6 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
 
 function renderWordHighlight(word: string, symbol: string, showHighlight: boolean): React.ReactNode {
   if (!showHighlight) return word;
-  
-  if (word === 'quick' || word === 'music') {
-    return <span className="symbol-letter-highlight" style={highlightLetterStyle}>{word}</span>;
-  }
-
   const patterns = SYMBOL_WORD_LETTERS[symbol];
   if (!patterns || patterns.length === 0) return word;
   const sorted = [...patterns].sort((a, b) => b.length - a.length);

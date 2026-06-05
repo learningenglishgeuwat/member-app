@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    /* Mapping font-ipa ke font-noto dari Next.js loader */
-    --font-ipa: var(--font-noto);
+    /* Mapping font-ipa ke system/generic sans-serif */
+    --font-ipa: sans-serif;
     --color-ipa: #06b6d4; /* Warna Cyan untuk teks IPA */
     --color-cyan-primary: #06b6d4; /* Cyan 500 - untuk UI elements */
     --color-cyan-hover: #67e8f9; /* Cyan 300 - untuk hover states */
@@ -410,7 +410,6 @@
     0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.3) !important;
 }
 
-
 /* ==========================================================================
    GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
    ========================================================================== */
@@ -679,7 +678,3 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-
-
-
-
