@@ -21,6 +21,7 @@ const eslintConfig = defineConfig([
     "jest.config.js",
     "jest.setup.js",
     "test-connection.js",
+    "AI/**",
   ]),
   {
     files: ["*.js", "scripts/**/*.js", "app/**/*.test.js"],
