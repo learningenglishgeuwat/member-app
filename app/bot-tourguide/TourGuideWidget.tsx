@@ -29,6 +29,7 @@ import type {
   GuideSimulationTopic,
   TutorialDeviceProfile,
 } from './types';
+import React from 'react';
 import './tourGuide.css';
 
 const TypewriterText = React.memo(({ text, isThinking }: { text: string; isThinking: boolean }) => {

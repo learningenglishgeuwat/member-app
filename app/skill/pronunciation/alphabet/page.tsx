@@ -849,7 +849,6 @@ const AlphabetPage: React.FC = () => {
               checked={showIpa}
               onChange={setShowIpa}
               className="w-full flex justify-between text-[10px] sm:text-xs mb-6"
-              label={showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
             />
           </div>
 

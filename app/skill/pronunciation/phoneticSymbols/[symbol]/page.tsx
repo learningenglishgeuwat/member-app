@@ -322,9 +322,7 @@ const SymbolDetailPage: React.FC = () => {
   const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
-  const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
-  const [showBritishNoteHighlight, setShowBritishNoteHighlight] = useState(true);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
   const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(() => ALL_COMMON_LETTERS);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
@@ -494,7 +492,7 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const renderBritishNoteWord = (word: string) => {
-    if (!showBritishNoteHighlight) return word;
+    if (!showHighlight) return word;
     
     const lowerWord = word.toLowerCase();
     const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
@@ -1180,7 +1178,7 @@ const SymbolDetailPage: React.FC = () => {
                       className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}
                     >
                       <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
-                      {showBritishNoteIpa && (
+                      {showIpa && (
                         <div className="text-cyan-300/60 font-mono text-xs">
                           BrE <span className="text-cyan-300/80 font-medium">{renderIpa(item.britishIpa, true)}</span>
                           {' '}&rarr; AmE <span className="text-cyan-300 font-bold">{renderIpa(item.americanIpa, true)}</span>
@@ -1546,22 +1544,6 @@ const SymbolDetailPage: React.FC = () => {
                 sectionId="britishNote"
                 onClick={handlePlayAllBritishNotes}
                 disabled={!britishNote || britishNote.items.length === 0}
-                className="mb-2 sm:mb-3"
-              />
-              <IpaVisibilityToggle
-                checked={showBritishNoteIpa}
-                onChange={setShowBritishNoteIpa}
-                className="w-full flex justify-between text-[10px] sm:text-xs mb-2"
-                label="IPA"
-              />
-              <IpaVisibilityToggle
-                checked={showBritishNoteHighlight}
-                onChange={setShowBritishNoteHighlight}
-                className="w-full flex justify-between text-[10px] sm:text-xs"
-                label="Highlight Letters"
-                activeClass="text-orange-200"
-                activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
-                activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
               />
             </div>
           )}

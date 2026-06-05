@@ -18,13 +18,15 @@ function cx(...values: Array<string | false | null | undefined>) {
 export function IpaVisibilityToggle({
   checked,
   onChange,
-  label = 'IPA',
+  label,
   activeClass = 'text-cyan-200',
   activeTrackClass = 'bg-[#00f0ff] shadow-[0_0_6px_rgba(0,240,255,0.6)]',
   activeDotClass = 'bg-[#00f0ff] shadow-[0_0_3px_#00f0ff]',
   className = '',
   disabled = false,
 }: IpaVisibilityToggleProps) {
+  const displayLabel = label ?? (checked ? 'Sembunyikan IPA' : 'Tampilkan IPA');
+
   return (
     <label
       className={cx(
@@ -39,13 +41,13 @@ export function IpaVisibilityToggle({
           checked ? activeClass : !disabled && 'group-hover:text-cyan-100',
         )}
       >
-        {label}
+        {displayLabel}
       </span>
       <span className="relative flex items-center shrink-0">
         <input
           type="checkbox"
           role="switch"
-          aria-label={`${label} visibility`}
+          aria-label={`${typeof displayLabel === 'string' ? displayLabel : 'IPA'} visibility`}
           className="sr-only peer"
           checked={checked}
           disabled={disabled}

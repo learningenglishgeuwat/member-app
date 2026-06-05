@@ -92,12 +92,7 @@ export default function ClearTBeginningPage() {
   const [isPlayingSentencesAll, setIsPlayingSentencesAll] = useState(false);
   const [isPlayingSentenceDrillsAll, setIsPlayingSentenceDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
-  const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    examples: true,
-    'word-bank-50': true,
-    sentences: true,
-    'sentence-drills-examples': true,
-  });
+  const [showIpa, setShowIpa] = useState(true);
   const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const examplesPlayAllTokenRef = useRef(0);
@@ -305,12 +300,6 @@ export default function ClearTBeginningPage() {
     await playSingleCardTts(text, activeCardKey);
   };
 
-  const toggleIpaBySection = (sectionId: IpaSectionId) => {
-    setShowIpaBySection((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId],
-    }));
-  };
 
   const jumpToSection = useCallback((sectionId: 'word-bank-50' | 'sentence-drills-examples') => {
     if (typeof window === 'undefined') return;
@@ -425,7 +414,7 @@ export default function ClearTBeginningPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection.examples ? (
+                    {showIpa ? (
                       <p className="at-ipa">
                         {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                       </p>
@@ -469,7 +458,7 @@ export default function ClearTBeginningPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection['word-bank-50'] ? (
+                    {showIpa ? (
                       <p className="at-ipa">
                         {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                       </p>
@@ -509,7 +498,7 @@ export default function ClearTBeginningPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection.sentences ? (
+                    {showIpa ? (
                       <p className="at-ipa">
                         {renderAmericanTIpaSymbolHighlight(formatIpaForDisplay(item.ipa), ['t'])}
                       </p>
@@ -565,7 +554,7 @@ export default function ClearTBeginningPage() {
                       <span className="at-visually-hidden">Putar</span>
                     </button>
                   </div>
-                  {showIpaBySection['sentence-drills-examples'] ? (
+                  {showIpa ? (
                     <p className="at-ipa">
                       {renderAmericanTIpaSymbolHighlight(
                         formatIpaForDisplay(item.ipa),
@@ -654,65 +643,48 @@ export default function ClearTBeginningPage() {
       />
       
       <ControlCenter>
-        <div className="flex flex-col gap-3 sm:gap-6">
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
-            <PlayStopButton
-              isActive={isPlayingExamplesAll}
-              label="EXAMPLES"
-              sectionId="examples"
-              onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
             />
-            <IpaVisibilityToggle checked={showIpaBySection.examples} onChange={() => toggleIpaBySection('examples')} className="w-full flex justify-between text-[10px] sm:text-xs" />
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">50 Word Bank</span>
-            <PlayStopButton
-              isActive={isPlayingWordBankAll}
-              label="50 WORDS"
-              sectionId="word-bank-50"
-              onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+            <HighlightVisibilityToggle
+              checked={isHighlightEnabled}
+              onChange={setIsHighlightEnabled}
+              color="orange"
+              label="Highlight American T"
             />
-            <IpaVisibilityToggle checked={showIpaBySection['word-bank-50']} onChange={() => toggleIpaBySection('word-bank-50')} className="w-full flex justify-between text-[10px] sm:text-xs" />
           </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+
+          <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
             <PlayStopButton
-              isActive={isPlayingSentencesAll}
-              label="SENTENCES"
-              sectionId="sentences"
-              onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+            isActive={isPlayingExamplesAll}
+            label="EXAMPLES"
+            sectionId="examples"
+            onClick={() => isPlayingExamplesAll ? stopAllPlayAll() : playAllExamples()}
             />
-            <IpaVisibilityToggle checked={showIpaBySection.sentences} onChange={() => toggleIpaBySection('sentences')} className="w-full flex justify-between text-[10px] sm:text-xs" />
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Drill Examples (15)</span>
             <PlayStopButton
-              isActive={isPlayingSentenceDrillsAll}
-              label="DRILLS"
-              sectionId="sentence-drills-examples"
-              onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+            isActive={isPlayingWordBankAll}
+            label="50 WORDS"
+            sectionId="word-bank-50"
+            onClick={() => isPlayingWordBankAll ? stopAllPlayAll() : playAllWordBank()}
             />
-            <IpaVisibilityToggle checked={showIpaBySection['sentence-drills-examples']} onChange={() => toggleIpaBySection('sentence-drills-examples')} className="w-full flex justify-between text-[10px] sm:text-xs" />
+            <PlayStopButton
+            isActive={isPlayingSentencesAll}
+            label="SENTENCES"
+            sectionId="sentences"
+            onClick={() => isPlayingSentencesAll ? stopAllPlayAll() : playAllSentences()}
+            />
+            <PlayStopButton
+            isActive={isPlayingSentenceDrillsAll}
+            label="DRILLS"
+            sectionId="sentence-drills-examples"
+            onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
+            />
           </div>
-          <hr className="border-white/10" />
-          <HighlightVisibilityToggle
-            checked={isHighlightEnabled}
-            onChange={setIsHighlightEnabled}
-            color="orange"
-            label="Highlight American T"
-          />
         </div>
       </ControlCenter>
       <RecordingControlsButton

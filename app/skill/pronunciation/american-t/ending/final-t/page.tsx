@@ -102,11 +102,7 @@ export default function FinalTEndingPage() {
   const [isPlayingDrillsAll, setIsPlayingDrillsAll] = useState(false);
   const [activeTtsCardKey, setActiveTtsCardKey] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
-  const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaSectionId, boolean>>({
-    phraseExamples: true,
-    sentenceBank: true,
-    drills: true,
-  });
+  const [showIpa, setShowIpa] = useState(true);
   const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
 
   const phrasePlayAllTokenRef = useRef(0);
@@ -277,12 +273,6 @@ export default function FinalTEndingPage() {
     }
   };
 
-  const toggleIpaBySection = (sectionId: IpaSectionId) => {
-    setShowIpaBySection((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId],
-    }));
-  };
 
   const jumpToSection = useCallback((sectionId: JumpSectionId) => {
     if (typeof window === 'undefined') return;
@@ -390,7 +380,7 @@ export default function FinalTEndingPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection.phraseExamples ? (
+                    {showIpa ? (
                       <>
                         <p className="at-ipa">
                           <span className="at-ipa-label">General IPA: </span>
@@ -441,7 +431,7 @@ export default function FinalTEndingPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection.sentenceBank && item.ipa ? (
+                    {showIpa && item.ipa ? (
                       <p className="at-ipa">{formatIpaForDisplay(item.ipa)}</p>
                     ) : null}
                     <p className="at-note">{item.note}</p>
@@ -484,7 +474,7 @@ export default function FinalTEndingPage() {
                         <span className="at-visually-hidden">Putar</span>
                       </button>
                     </div>
-                    {showIpaBySection.drills && item.ipa ? (
+                    {showIpa && item.ipa ? (
                       <p className="at-ipa">
                         {renderAmericanTIpaSymbolHighlight(
                           formatIpaForDisplay(item.ipa),
@@ -570,51 +560,41 @@ export default function FinalTEndingPage() {
       
       <ControlCenter>
         <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Phrase Examples</span>
-            <PlayStopButton
-              isActive={isPlayingPhraseAll}
-              label="PHRASES"
-              sectionId="phraseExamples"
-              onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
             />
-            <IpaVisibilityToggle checked={showIpaBySection.phraseExamples} onChange={() => toggleIpaBySection('phraseExamples')} className="w-full flex justify-between" />
-          </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Final T Sentence Bank (30)</span>
-            <PlayStopButton
-              isActive={isPlayingSentenceBankAll}
-              label="SENTENCE BANK"
-              sectionId="sentenceBank"
-              onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+            <HighlightVisibilityToggle
+              checked={isHighlightEnabled}
+              onChange={setIsHighlightEnabled}
+              color="orange"
+              label="Highlight American T"
             />
-            <IpaVisibilityToggle checked={showIpaBySection.sentenceBank} onChange={() => toggleIpaBySection('sentenceBank')} className="w-full flex justify-between" />
           </div>
-          <hr className="border-white/10" />
-          <div>
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentence Drills</span>
+
+          <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
             <PlayStopButton
-              isActive={isPlayingDrillsAll}
-              label="DRILLS"
-              sectionId="drills"
-              onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()}
-              size="sm"
-              className="mb-2 sm:mb-3"
+            isActive={isPlayingPhraseAll}
+            label="PHRASES"
+            sectionId="phraseExamples"
+            onClick={() => isPlayingPhraseAll ? stopAllPlayAll() : playAllPhraseExamples()}
             />
-            <IpaVisibilityToggle checked={showIpaBySection.drills} onChange={() => toggleIpaBySection('drills')} className="w-full flex justify-between" />
+            <PlayStopButton
+            isActive={isPlayingSentenceBankAll}
+            label="SENTENCE BANK"
+            sectionId="sentenceBank"
+            onClick={() => isPlayingSentenceBankAll ? stopAllPlayAll() : playAllSentenceBank()}
+            />
+            <PlayStopButton
+            isActive={isPlayingDrillsAll}
+            label="DRILLS"
+            sectionId="drills"
+            onClick={() => isPlayingDrillsAll ? stopAllPlayAll() : playAllDrills()}
+            />
           </div>
-          <hr className="border-white/10" />
-          <HighlightVisibilityToggle
-            checked={isHighlightEnabled}
-            onChange={setIsHighlightEnabled}
-            color="orange"
-            label="Highlight American T"
-          />
         </div>
       </ControlCenter>
       <RecordingControlsButton

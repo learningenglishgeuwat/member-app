@@ -376,7 +376,6 @@ export default function TongueTwisterPage() {
           <IpaVisibilityToggle
             checked={showIpa}
             onChange={setShowIpa}
-            label="Show IPA"
             activeClass="text-orange-200"
             activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
             activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"

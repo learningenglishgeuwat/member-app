@@ -1245,7 +1245,6 @@ export default function IntonationPage() {
               checked={showIpa}
               onChange={setShowIpa}
               className="w-full flex justify-between text-[10px] sm:text-xs"
-              label="Tampilkan IPA"
             />
           </div>
         </div>

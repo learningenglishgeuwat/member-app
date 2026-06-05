@@ -637,19 +637,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
     INITIAL_SECTION_STATE,
   );
   const [sectionStateReady, setSectionStateReady] = useState(false);
-  const [showIpaBySection, setShowIpaBySection] = useState<Record<IpaToggleSectionKey, boolean>>(
-    INITIAL_IPA_TOGGLE_STATE,
-  );
-  const [showHighlightBySection, setShowHighlightBySection] = useState<Record<string, boolean>>({
-    dasarSukuKata: true,
-    aturanCepat: true,
-    tekananKata: true,
-    kontrasNounVerb: true,
-    bankKata: true,
-    practice: true,
-    tekananKalimat: true,
-    kataKontenFungsi: true,
-  });
+  const [showIpa, setShowIpa] = useState(true);
+  const [showHighlight, setShowHighlight] = useState(true);
   const [showContrastTranslation, setShowContrastTranslation] = useState(false);
   const [activePlayAllSection, setActivePlayAllSection] = useState<AudioPlaySectionKey | null>(
     null,
@@ -846,19 +835,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
   }
 
-  function toggleIpaBySection(sectionKey: IpaToggleSectionKey) {
-    setShowIpaBySection((prev) => ({
-      ...prev,
-      [sectionKey]: !prev[sectionKey],
-    }));
-  }
 
-  function toggleHighlightBySection(sectionKey: string) {
-    setShowHighlightBySection((prev) => ({
-      ...prev,
-      [sectionKey]: !prev[sectionKey],
-    }));
-  }
 
   function toggleContrastTranslation() {
     setShowContrastTranslation((prev) => !prev);
@@ -1063,7 +1040,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {isWord ? (
         <section
           id="dasarSukuKata"
-          className={`stress-block ${showHighlightBySection.dasarSukuKata ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('dasarSukuKata', 'Syllable Basics and Beat')}
           {openSections.dasarSukuKata && (
@@ -1089,7 +1066,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         <h3 className="stress-word">
                           {renderStressHighlight(item.word)}
                         </h3>
-                        {showIpaBySection.dasarSukuKata ? (
+                        {showIpa ? (
                           <p className="stress-ipa">{item.ipa}</p>
                         ) : null}
                       </div>
@@ -1145,7 +1122,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {isWord ? (
         <section
           id="aturanCepat"
-          className={`stress-block ${showHighlightBySection.aturanCepat ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('aturanCepat', 'Word Stress Rules')}
           {openSections.aturanCepat && (
@@ -1175,7 +1152,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                             <span>
                               {renderStressHighlight(example.text)}
                             </span>
-                            {showIpaBySection.aturanCepat ? (
+                            {showIpa ? (
                               <p className="stress-ipa stress-ipa--inline">{example.ipa}</p>
                             ) : null}
                           </div>
@@ -1204,7 +1181,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {isWord ? (
         <section
           id="tekananKata"
-          className={`stress-block ${showHighlightBySection.tekananKata ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('tekananKata', 'Word Stress Examples')}
           {openSections.tekananKata && (
@@ -1229,7 +1206,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                         <h3 className="stress-word">
                           {renderStressHighlight(item.word)}
                         </h3>
-                        {showIpaBySection.tekananKata ? (
+                        {showIpa ? (
                           <p className="stress-ipa">{item.ipa}</p>
                         ) : null}
                       </div>
@@ -1258,7 +1235,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {isWord ? (
         <section
           id="kontrasNounVerb"
-          className={`stress-block ${showHighlightBySection.kontrasNounVerb ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('kontrasNounVerb', 'Noun-Verb Stress Contrast')}
           {openSections.kontrasNounVerb && (
@@ -1297,7 +1274,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                               {renderStressHighlight(item.noun)}
                             </span>
                           </span>
-                          {showIpaBySection.kontrasNounVerb ? (
+                          {showIpa ? (
                             <p className="stress-ipa stress-ipa--inline">{item.nounIpa}</p>
                           ) : null}
                           <p className="stress-rule-example-sentence font-sans">{item.nounPlain}</p>
@@ -1331,7 +1308,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                               {renderStressHighlight(item.verb)}
                             </span>
                           </span>
-                          {showIpaBySection.kontrasNounVerb ? (
+                          {showIpa ? (
                             <p className="stress-ipa stress-ipa--inline">{item.verbIpa}</p>
                           ) : null}
                           <p className="stress-rule-example-sentence font-sans">{item.verbPlain}</p>
@@ -1364,7 +1341,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {isWord ? (
         <section
           id="bankKata"
-          className={`stress-block ${showHighlightBySection.bankKata ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('bankKata', 'Practice Bank by Stress Position')}
           {openSections.bankKata && (
@@ -1399,7 +1376,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                                 <span className="stress-bank-item-word">
                                   {renderStressHighlight(word)}
                                 </span>
-                                {showIpaBySection.bankKata && ipaText ? (
+                                {showIpa && ipaText ? (
                                   <p className="stress-ipa stress-ipa--inline">{ipaText}</p>
                                 ) : null}
                               </div>
@@ -1429,7 +1406,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {!isWord ? (
         <section
           id="tekananKalimat"
-          className={`stress-block ${showHighlightBySection.tekananKalimat ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('tekananKalimat', 'Sentence Stress and Meaning Focus')}
           {openSections.tekananKalimat && (
@@ -1462,7 +1439,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                             </span>
                           ))}
                         </p>
-                        {showIpaBySection.tekananKalimat ? (
+                        {showIpa ? (
                           <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                         ) : null}
                         <p className="stress-note font-sans">{item.note}</p>
@@ -1491,7 +1468,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         {!isWord ? (
         <section
           id="kataKontenFungsi"
-          className={`stress-block ${showHighlightBySection.kataKontenFungsi ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('kataKontenFungsi', 'Content vs Function Words')}
           {openSections.kataKontenFungsi && (
@@ -1532,7 +1509,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                           </span>
                         ))}
                       </p>
-                      {showIpaBySection.kataKontenFungsi ? (
+                      {showIpa ? (
                         <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                       ) : null}
                       <button
@@ -1604,7 +1581,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
 
         <section
           id="practice"
-          className={`stress-block ${showHighlightBySection.practice ? '' : 'stress-highlight-off'}`}
+          className={`stress-block ${showHighlight ? '' : 'stress-highlight-off'}`}
         >
           {renderSectionHeader('practice', 'Practice')}
           {openSections.practice && (
@@ -1640,7 +1617,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                               <span>
                                 {renderStressHighlight(item.word)}
                               </span>
-                              {showIpaBySection.practice ? (
+                              {showIpa ? (
                                 <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                               ) : null}
                               <p className="stress-rule-example-sentence font-sans">{item.position}</p>
@@ -1679,7 +1656,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                           >
                             <div className="stress-rule-example-text">
                               <p className="stress-sentence font-sans">{renderStressHighlight(item.sentence)}</p>
-                              {showIpaBySection.practice ? (
+                              {showIpa ? (
                                 <p className="stress-ipa stress-ipa--inline">{item.ipa}</p>
                               ) : null}
                             </div>
@@ -1736,6 +1713,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" />
+            <HighlightVisibilityToggle checked={showHighlight} onChange={setShowHighlight} color="orange" label={isWord ? "Highlight Suku Kata" : "Highlight Tekanan Kalimat"} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" />
             {isWord && (
               <>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
@@ -1745,8 +1724,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="dasarSukuKata"
                     onClick={() => void playAllBySection('dasarSukuKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.dasarSukuKata} onChange={() => toggleIpaBySection('dasarSukuKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.dasarSukuKata ? 'Sembunyikan IPA Dasar Suku Kata' : 'Tampilkan IPA Dasar Suku Kata'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.dasarSukuKata} onChange={() => toggleHighlightBySection('dasarSukuKata')} color="orange" label="Highlight Suku Kata" />
+                  
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
                   <PlayStopButton
@@ -1755,8 +1733,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="aturanCepat"
                     onClick={() => void playAllBySection('aturanCepat')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.aturanCepat} onChange={() => toggleIpaBySection('aturanCepat')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.aturanCepat ? 'Sembunyikan IPA Aturan Cepat' : 'Tampilkan IPA Aturan Cepat'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.aturanCepat} onChange={() => toggleHighlightBySection('aturanCepat')} color="orange" label="Highlight Aturan" />
+                  
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
                   <PlayStopButton
@@ -1765,8 +1742,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="tekananKata"
                     onClick={() => void playAllBySection('tekananKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.tekananKata} onChange={() => toggleIpaBySection('tekananKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.tekananKata ? 'Sembunyikan IPA Tekanan Kata' : 'Tampilkan IPA Tekanan Kata'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.tekananKata} onChange={() => toggleHighlightBySection('tekananKata')} color="orange" label="Highlight Tekanan Kata" />
+                  
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
                   <PlayStopButton
@@ -1775,8 +1751,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="kontrasNounVerb"
                     onClick={() => void playAllBySection('kontrasNounVerb')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.kontrasNounVerb} onChange={() => toggleIpaBySection('kontrasNounVerb')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.kontrasNounVerb ? 'Sembunyikan IPA Kontras Noun and Verb' : 'Tampilkan IPA Kontras Noun and Verb'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.kontrasNounVerb} onChange={() => toggleHighlightBySection('kontrasNounVerb')} color="orange" label="Highlight Kontras N & V" />
+                  
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
                   <PlayStopButton
@@ -1785,8 +1760,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="bankKata"
                     onClick={() => void playAllBySection('bankKata')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.bankKata} onChange={() => toggleIpaBySection('bankKata')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.bankKata ? 'Sembunyikan IPA Bank Kata' : 'Tampilkan IPA Bank Kata'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.bankKata} onChange={() => toggleHighlightBySection('bankKata')} color="orange" label="Highlight Bank Kata" />
+                  
                 </div>
                 <div className="flex flex-col gap-2">
                   <PlayStopButton
@@ -1795,8 +1769,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="practice"
                     onClick={() => void playAllBySection('practice')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.practice ? 'Sembunyikan IPA Practice' : 'Tampilkan IPA Practice'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.practice} onChange={() => toggleHighlightBySection('practice')} color="orange" label="Highlight Latihan" />
+                  
                 </div>
               </>
             )}
@@ -1809,8 +1782,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="tekananKalimat"
                     onClick={() => void playAllBySection('tekananKalimat')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.tekananKalimat} onChange={() => toggleIpaBySection('tekananKalimat')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.tekananKalimat ? 'Sembunyikan IPA Tekanan Kalimat' : 'Tampilkan IPA Tekanan Kalimat'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.tekananKalimat} onChange={() => toggleHighlightBySection('tekananKalimat')} color="orange" label="Highlight Tekanan Kalimat" />
+                  
                 </div>
                 <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
                   <PlayStopButton
@@ -1819,8 +1791,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="kataKontenFungsi"
                     onClick={() => void playAllBySection('kataKontenFungsi')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.kataKontenFungsi} onChange={() => toggleIpaBySection('kataKontenFungsi')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.kataKontenFungsi ? 'Sembunyikan IPA Konten & Fungsi' : 'Tampilkan IPA Konten & Fungsi'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.kataKontenFungsi} onChange={() => toggleHighlightBySection('kataKontenFungsi')} color="orange" label="Highlight Konten & Fungsi" />
+                  
                 </div>
                 <div className="flex flex-col gap-2">
                   <PlayStopButton
@@ -1829,8 +1800,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
                     sectionId="practice"
                     onClick={() => void playAllBySection('practice')}
                   />
-                  <IpaVisibilityToggle checked={showIpaBySection.practice} onChange={() => toggleIpaBySection('practice')} className="w-full flex justify-between text-[10px] sm:text-xs" label={showIpaBySection.practice ? 'Sembunyikan IPA Practice' : 'Tampilkan IPA Practice'} />
-                  <HighlightVisibilityToggle checked={showHighlightBySection.practice} onChange={() => toggleHighlightBySection('practice')} color="orange" label="Highlight Latihan" />
+                  
                 </div>
               </>
             )}
