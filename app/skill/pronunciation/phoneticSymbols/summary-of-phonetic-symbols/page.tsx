@@ -55,8 +55,8 @@ const SYMBOL_WORD_LETTERS: Record<string, string[]> = {
   'n': ['nn', 'n'],
   'ŋ': ['ng', 'n'],
   'r': ['wr', 'rr', 'r'],
-  'w': ['wh', 'w'],
-  'y': ['y'],
+  'w': ['wh', 'w', 'u'],
+  'y': ['y', 'u'],
 };
 
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
