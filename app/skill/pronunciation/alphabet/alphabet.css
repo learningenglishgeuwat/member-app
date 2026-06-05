@@ -228,11 +228,13 @@
 }
 
 .alphabet-quick-spelling-title {
+  font-family: var(--font-display);
   margin: 0;
   color: #e2e8f0;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .alphabet-quick-spelling-hint {
@@ -388,11 +390,13 @@
 }
 
 .alphabet-notes-title {
+  font-family: var(--font-display);
   margin: 0;
   color: #e2e8f0;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 
@@ -811,7 +815,7 @@
   }
 
   .alphabet-quick-spelling-title {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .alphabet-quick-spelling-hint {
@@ -828,7 +832,7 @@
   }
 
   .alphabet-notes-title {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
   .alphabet-notes-card-grid {
     grid-template-columns: 1fr;
@@ -955,6 +959,31 @@
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .alphabet-quick-spelling-title,
+  .alphabet-notes-title {
+    font-size: 0.78rem;
+  }
+}
+
+/* Scanline animation used by LetterCard.scanline-effect */
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.scanline-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgb(var(--pronun-accent-2-rgb) / 0.18) 50%, transparent 100%);
+  animation: scan 2s linear infinite;
+  pointer-events: none;
+  z-index: 3;
 }
 
 /* Scanline animation used by LetterCard.scanline-effect */

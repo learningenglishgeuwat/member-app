@@ -521,7 +521,7 @@
 
 .s-es-process-code-line {
   margin: 0;
-  font-family: var(--font-tech);
+  font-family: monospace;
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));

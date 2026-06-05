@@ -10,7 +10,7 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-ui)', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-tech)', 'monospace'],
+        mono: ['monospace'],
         ipa: ['var(--font-ipa)', 'sans-serif'], // ← BARU
         futuristic: [
           'var(--font-display)',

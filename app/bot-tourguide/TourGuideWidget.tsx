@@ -29,7 +29,56 @@ import type {
   GuideSimulationTopic,
   TutorialDeviceProfile,
 } from './types';
+import React from 'react';
 import './tourGuide.css';
+
+const TypewriterText = React.memo(({ text, isThinking }: { text: string; isThinking: boolean }) => {
+  const [typed, setTyped] = useState('');
+
+  useEffect(() => {
+    let bootstrapTimeout: number | undefined;
+
+    if (isThinking) {
+      bootstrapTimeout = window.setTimeout(() => {
+        setTyped('');
+      }, 0);
+      return () => {
+        if (bootstrapTimeout) window.clearTimeout(bootstrapTimeout);
+      };
+    }
+
+    const fullText = text;
+    const shouldType = BOT_AI_STYLE_V1 && fullText.length > 0;
+    if (!shouldType) {
+      bootstrapTimeout = window.setTimeout(() => {
+        setTyped(fullText);
+      }, 0);
+      return () => {
+        if (bootstrapTimeout) window.clearTimeout(bootstrapTimeout);
+      };
+    }
+
+    bootstrapTimeout = window.setTimeout(() => {
+      setTyped('');
+    }, 0);
+
+    let index = 0;
+    const interval = window.setInterval(() => {
+      index = Math.min(fullText.length, index + 3);
+      setTyped(fullText.slice(0, index));
+      if (index >= fullText.length) {
+        window.clearInterval(interval);
+      }
+    }, 14);
+
+    return () => {
+      if (bootstrapTimeout) window.clearTimeout(bootstrapTimeout);
+      window.clearInterval(interval);
+    };
+  }, [text, isThinking]);
+
+  return <>{typed}</>;
+});
 
 type TourGuideWidgetProps = {
   currentPath: string;
@@ -257,7 +306,6 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   const [displayResult, setDisplayResult] = useState<GuideModeResult>(() =>
     getInitialGuideResult('navigation', { pathname: currentPath }),
   );
-  const [typedReply, setTypedReply] = useState(displayResult.reply);
   const [selectedFlashcardPath, setSelectedFlashcardPath] = useState<string>(FLASHCARD_DEFAULT_ROUTE);
   const [selectedSimulationTopic, setSelectedSimulationTopic] =
     useState<GuideSimulationTopic>(SIMULATION_DEFAULT_TOPIC);
@@ -553,54 +601,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
     };
   }, [result, submittedRequest.query]);
 
-  useEffect(() => {
-    let bootstrapTimeout: number | undefined;
 
-    if (isThinking) {
-      bootstrapTimeout = window.setTimeout(() => {
-        setTypedReply('');
-      }, 0);
-      return () => {
-        if (bootstrapTimeout) {
-          window.clearTimeout(bootstrapTimeout);
-        }
-      };
-    }
-
-    const fullText = displayResult.reply;
-    const shouldType =
-      BOT_AI_STYLE_V1 && displayResult.mode === 'qa' && submittedRequest.query.trim().length > 0;
-    if (!shouldType) {
-      bootstrapTimeout = window.setTimeout(() => {
-        setTypedReply(fullText);
-      }, 0);
-      return () => {
-        if (bootstrapTimeout) {
-          window.clearTimeout(bootstrapTimeout);
-        }
-      };
-    }
-
-    bootstrapTimeout = window.setTimeout(() => {
-      setTypedReply('');
-    }, 0);
-
-    let index = 0;
-    const interval = window.setInterval(() => {
-      index = Math.min(fullText.length, index + 3);
-      setTypedReply(fullText.slice(0, index));
-      if (index >= fullText.length) {
-        window.clearInterval(interval);
-      }
-    }, 14);
-
-    return () => {
-      if (bootstrapTimeout) {
-        window.clearTimeout(bootstrapTimeout);
-      }
-      window.clearInterval(interval);
-    };
-  }, [displayResult, isThinking, submittedRequest.query]);
 
   useEffect(() => {
     if (!activeSimulation) return;
@@ -947,10 +948,10 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
     currentPath,
   );
   const activeReply = isNavigating
-    ? 'Membuka halaman tujuan...'
-    : isThinking
-      ? 'GEUWAT sedang menyusun jawaban...'
-      : typedReply || activeResult.reply;
+      ? 'Membuka halaman tujuan...'
+      : isThinking
+        ? 'GEUWAT sedang menyusun jawaban...'
+        : (BOT_AI_STYLE_V1 && activeResult.mode === 'qa' && submittedRequest.query.trim().length > 0) ? <TypewriterText text={activeResult.reply} isThinking={isThinking} /> : activeResult.reply;
   const activeSuggestions = isThinking
     ? DEFAULT_SUGGESTION_PROMPTS
     : activeResult.suggestions.length
@@ -1014,7 +1015,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
           onClick={() => setCollapsed(false)}
         >
           <Image
-            src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
+            src="/tour_guide_avatar.webp"
             alt="Tour Guide"
             width={48}
             height={48}
@@ -1089,7 +1090,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 onClick={() => setCollapsed(true)}
               >
                 <Image
-                  src="/saya_butuh_kepalanya_saja_2K_202606030940.png"
+                  src="/tour_guide_avatar.webp"
                   alt="Tour Guide"
                   width={40}
                   height={40}

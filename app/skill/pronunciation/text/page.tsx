@@ -1656,19 +1656,9 @@ export default function PronunciationTextPage() {
           </section>
         </main>
       </div>
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
-              Text
-            </span>
-            <PlayStopButton
-              isActive={activeSpeechGroup === 'main'}
-              label="TEXT"
-              onClick={toggleMainPlayAll}
-              size="sm"
-              className="mb-2 sm:mb-3"
-            />
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3">
             <IpaVisibilityToggle
               checked={highlightMapEnabled.ipa}
               onChange={(val) => setHighlightMapEnabled((prev) => ({ ...prev, ipa: val }))}
@@ -1693,8 +1683,21 @@ export default function PronunciationTextPage() {
               />
             )}
           </div>
-        </div>
-      </ControlCenter>
+        }
+        bottomControls={
+          <div>
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
+              Text
+            </span>
+            <PlayStopButton
+              isActive={activeSpeechGroup === 'main'}
+              label="TEXT"
+              onClick={toggleMainPlayAll}
+              size="sm"
+            />
+          </div>
+        }
+      />
       <RecordingControlsButton
         className='text-recording-anchor'
         downloadFileName='applied-pronunciation-text-GEUWAT-recording.wav'

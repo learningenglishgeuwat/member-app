@@ -15,6 +15,10 @@ const getSourceBonus = (entry: WordKnowledgeEntry): number => {
 };
 
 const LEADING_PATTERNS = [
+  /^contoh kata\s+/,
+  /^contoh\s+/,
+  /^example of\s+/,
+  /^example\s+/,
   /^apa arti\s+/,
   /^artinya\s+/,
   /^arti kata\s+/,
@@ -32,6 +36,7 @@ const TRAILING_PATTERNS = [/\s+itu apa$/, /\s+means what$/, /\?$/];
 
 const isLikelyWordIntent = (parsed: ParsedQuery): boolean => {
   if (parsed.intent === 'word_explanation') return true;
+  if (parsed.intent === 'comparison' || parsed.intent === 'how_to') return false;
   if (parsed.intent === 'example_request' && parsed.entities.length <= 3) return true;
   if (parsed.isFollowUp) return true;
 

@@ -595,7 +595,6 @@ export default function SpeakingGoalDetailPage({
           <IpaVisibilityToggle
             checked={showIpa}
             onChange={setShowIpa}
-            label="Show IPA"
             className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
           />
           <IpaVisibilityToggle

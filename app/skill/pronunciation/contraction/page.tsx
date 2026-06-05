@@ -647,130 +647,132 @@ export default function ContractionPage() {
         <BackButton to="/skill/pronunciation" />
       </div>
 
-      <ControlCenter>
-        <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} />
-        {activeTab !== 0 && (
-          <div className="mt-4 flex flex-col gap-2">
-            <p className='font-mono text-[8px] sm:text-[10px] uppercase tracking-widest text-white/45 mb-1'>
-              Play All
-            </p>
-            {activeTab === 1 && (
-              <>
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternIs'}
-                  label="'S = IS, HAS"
-                  onClick={() => void playPillGroup('patternIs', patternIs.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternAre'}
-                  label="'RE = ARE"
-                  onClick={() => void playPillGroup('patternAre', patternAre.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternAm'}
-                  label="'M = AM"
-                  onClick={() => void playPillGroup('patternAm', patternAm.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activeSequence === 'sec1'}
-                  label="SENTENCES"
-                  onClick={() => playSequence('sec1', sec1Examples.map((item: any, idx: number) => ({ id: `sec1-${idx}`, texts: [item.en, item.contract, item.after] })))}
-                  size="sm"
-                />
-              </>
-            )}
-            {activeTab === 2 && (
-              <>
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternWill'}
-                  label="'LL = WILL"
-                  onClick={() => void playPillGroup('patternWill', patternWill.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternHave'}
-                  label="'VE = HAVE"
-                  onClick={() => void playPillGroup('patternHave', patternHave.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'patternWould'}
-                  label="'D = WOULD, HAD"
-                  onClick={() => void playPillGroup('patternWould', patternWould.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activeSequence === 'sec2'}
-                  label="SENTENCES"
-                  onClick={() => playSequence('sec2', sec2Examples.map((item: any, idx: number) => ({ id: `sec2-${idx}`, texts: [item.en, item.contract, item.after] })))}
-                  size="sm"
-                />
-              </>
-            )}
-            {activeTab === 3 && (
-              <>
-                <PlayStopButton
-                  isActive={activePillGroup === 'negPresent'}
-                  label="N'T PRESENT"
-                  onClick={() => void playPillGroup('negPresent', negPresent.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'negPast'}
-                  label="N'T PAST"
-                  onClick={() => void playPillGroup('negPast', negPast.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'negModal'}
-                  label="N'T MODAL"
-                  onClick={() => void playPillGroup('negModal', negModal.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activePillGroup === 'negHave'}
-                  label="N'T HAVE"
-                  onClick={() => void playPillGroup('negHave', negHave.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activeSequence === 'sec3'}
-                  label="SENTENCES"
-                  onClick={() => playSequence('sec3', sec3Examples.map((item: any, idx: number) => ({ id: `sec3-${idx}`, texts: [item.en, item.contract, item.after] })))}
-                  size="sm"
-                />
-              </>
-            )}
-            {activeTab === 4 && (
-              <>
-                <PlayStopButton
-                  isActive={activePillGroup === 'informalWords'}
-                  label="WORDS"
-                  onClick={() => void playPillGroup('informalWords', informalWords.map(i => i.word))}
-                  size="sm"
-                />
-                <PlayStopButton
-                  isActive={activeSequence === 'informal'}
-                  label="SENTENCES"
-                  onClick={() => playSequence('informal', informalSentences.map((item: any, idx: number) => ({ id: `inf-${idx}`, texts: [item.formal, item.contract, item.informal] })))}
-                  size="sm"
-                />
-              </>
-            )}
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-4">
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+            <HighlightVisibilityToggle
+              checked={isHighlightEnabled}
+              onChange={setIsHighlightEnabled}
+              color="orange"
+              label="Highlight Contraction"
+            />
           </div>
-        )}
-        <HighlightVisibilityToggle
-          checked={isHighlightEnabled}
-          onChange={setIsHighlightEnabled}
-          color="orange"
-          label="Highlight Contraction"
-        />
+        }
+        bottomControls={
+          activeTab !== 0 && (
+            <div className="flex flex-col gap-2">
 
-
-      </ControlCenter>
+              {activeTab === 1 && (
+                <>
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternIs'}
+                    label="'S = IS, HAS"
+                    onClick={() => void playPillGroup('patternIs', patternIs.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternAre'}
+                    label="'RE = ARE"
+                    onClick={() => void playPillGroup('patternAre', patternAre.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternAm'}
+                    label="'M = AM"
+                    onClick={() => void playPillGroup('patternAm', patternAm.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activeSequence === 'sec1'}
+                    label="SENTENCES"
+                    onClick={() => playSequence('sec1', sec1Examples.map((item: any, idx: number) => ({ id: `sec1-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                    size="sm"
+                  />
+                </>
+              )}
+              {activeTab === 2 && (
+                <>
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternWill'}
+                    label="'LL = WILL"
+                    onClick={() => void playPillGroup('patternWill', patternWill.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternHave'}
+                    label="'VE = HAVE"
+                    onClick={() => void playPillGroup('patternHave', patternHave.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'patternWould'}
+                    label="'D = WOULD, HAD"
+                    onClick={() => void playPillGroup('patternWould', patternWould.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activeSequence === 'sec2'}
+                    label="SENTENCES"
+                    onClick={() => playSequence('sec2', sec2Examples.map((item: any, idx: number) => ({ id: `sec2-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                    size="sm"
+                  />
+                </>
+              )}
+              {activeTab === 3 && (
+                <>
+                  <PlayStopButton
+                    isActive={activePillGroup === 'negPresent'}
+                    label="N'T PRESENT"
+                    onClick={() => void playPillGroup('negPresent', negPresent.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'negPast'}
+                    label="N'T PAST"
+                    onClick={() => void playPillGroup('negPast', negPast.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'negModal'}
+                    label="N'T MODAL"
+                    onClick={() => void playPillGroup('negModal', negModal.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activePillGroup === 'negHave'}
+                    label="N'T HAVE"
+                    onClick={() => void playPillGroup('negHave', negHave.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activeSequence === 'sec3'}
+                    label="SENTENCES"
+                    onClick={() => playSequence('sec3', sec3Examples.map((item: any, idx: number) => ({ id: `sec3-${idx}`, texts: [item.en, item.contract, item.after] })))}
+                    size="sm"
+                  />
+                </>
+              )}
+              {activeTab === 4 && (
+                <>
+                  <PlayStopButton
+                    isActive={activePillGroup === 'informalWords'}
+                    label="WORDS"
+                    onClick={() => void playPillGroup('informalWords', informalWords.map(i => i.word))}
+                    size="sm"
+                  />
+                  <PlayStopButton
+                    isActive={activeSequence === 'informal'}
+                    label="SENTENCES"
+                    onClick={() => playSequence('informal', informalSentences.map((item: any, idx: number) => ({ id: `inf-${idx}`, texts: [item.formal, item.contract, item.informal] })))}
+                    size="sm"
+                  />
+                </>
+              )}
+            </div>
+          )
+        }
+      />
 
       <Sidebar
         isOpen={sidebarOpen}

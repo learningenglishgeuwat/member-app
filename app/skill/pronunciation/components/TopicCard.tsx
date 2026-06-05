@@ -23,7 +23,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick, style }
         ${isDisabled 
           ? 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 opacity-40 cursor-not-allowed grayscale mt-6 sm:mt-12 md:mt-16 lg:mt-20' 
           : isActive 
-            ? 'w-40 h-56 sm:w-52 sm:h-72 md:w-56 md:h-72 lg:w-64 lg:h-80 cursor-pointer' 
+            ? 'w-32 h-44 sm:w-40 sm:h-52 md:w-44 md:h-60 lg:w-48 lg:h-64 cursor-pointer' 
             : 'w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 hover:opacity-80 cursor-pointer mt-6 sm:mt-12 md:mt-16 lg:mt-20'
         }
       `}
@@ -60,7 +60,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick, style }
           </div>
 <h3 className={`orbitron-card-title 
             font-display font-bold uppercase tracking-wider
-            ${isActive ? 'text-xs sm:text-base md:text-lg lg:text-xl text-white' : 'text-[10px] text-gray-400'}
+            ${isActive ? 'text-[10px] sm:text-sm md:text-base lg:text-lg text-white' : 'text-[10px] text-gray-400'}
             ${isDisabled ? 'text-gray-500' : ''}
           `}>
             {topic.title}

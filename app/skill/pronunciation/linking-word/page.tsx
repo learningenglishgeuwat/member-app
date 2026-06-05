@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Volume2, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton, HighlightVisibilityToggle } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -36,63 +36,7 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(' ');
 }
 
-function Toggle({
-  checked,
-  onChange,
-  label,
-  activeClass = 'text-cyan-200',
-}: {
-  checked: boolean;
-  onChange: (value: boolean) => void;
-  label: string;
-  activeClass?: string;
-}) {
-  return (
-    <label className="flex w-full justify-between items-center gap-3 cursor-pointer group">
-      <span
-        className={cx(
-          'font-mono text-[9px] sm:text-[10px] tracking-widest text-white/55 uppercase transition-colors',
-          checked ? activeClass : 'group-hover:text-orange-200',
-        )}
-      >
-        {label}
-      </span>
-      <span className="relative flex items-center">
-        <input
-          type="checkbox"
-          className="sr-only peer"
-          checked={checked}
-          onChange={(event) => onChange(event.target.checked)}
-        />
-        <span
-          className={cx(
-            'block w-12 h-6 rounded-full transition-all duration-300',
-            checked 
-              ? 'bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.6)]' 
-              : 'bg-[#1a1f24] border-2 border-white/20'
-          )}
-        />
-        <span
-          className={cx(
-            'absolute left-[3px] top-[3px] w-[18px] h-[18px] rounded-full transition-transform duration-300 flex items-center justify-center',
-            checked 
-              ? 'translate-x-6 bg-[#101414] shadow-md' 
-              : 'translate-x-0 bg-white/40'
-          )}
-        >
-          <span
-            className={cx(
-              'rounded-full transition-all duration-300',
-              checked 
-                ? 'w-[10px] h-[10px] bg-orange-500 shadow-[0_0_6px_#f97316]' 
-                : 'w-0 h-0 bg-transparent'
-            )}
-          />
-        </span>
-      </span>
-    </label>
-  );
-}
+
 
 function buildBeforePhaseText(text: string): string {
   return text.replace(/\[[A-Za-z]+\]/g, '').split(/[\s-]+/).join(', ');
@@ -350,26 +294,26 @@ export default function LinkingWordPage() {
         </div>
       </nav>
 
-      <ControlCenter>
-        <PlayStopButton
-          isActive={!!playingId}
-          label="ALL"
-          onClick={() => playingId ? cancelPlayback() : void playAll(false)}
-          className="mb-2 sm:mb-4"
-        />
-
-        <hr className="border-white/10 my-2 sm:my-4" />
-
-        <div className="flex flex-col gap-3 sm:gap-6">
-          <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
-          <Toggle
-            label="HIGHLIGHT LINKING ZONE"
-            checked={highlightZone}
-            onChange={setHighlightZone}
-            activeClass="text-orange-400"
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3 sm:gap-6">
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+            <HighlightVisibilityToggle
+              label="Highlight Linking Zone"
+              checked={highlightZone}
+              onChange={setHighlightZone}
+              color="orange"
+            />
+          </div>
+        }
+        bottomControls={
+          <PlayStopButton
+            isActive={!!playingId}
+            label="ALL"
+            onClick={() => playingId ? cancelPlayback() : void playAll(false)}
           />
-        </div>
-      </ControlCenter>
+        }
+      />
 
       <main className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <header className="mb-10 sm:mb-12">
@@ -534,7 +478,7 @@ function PhraseCard({
     <div
       ref={onCardRef}
       className={cx(
-        'bg-[#101414] border rounded-lg p-6 transition-all duration-300 group flex flex-col gap-4 relative overflow-hidden',
+        'bg-[#101414] border rounded-lg p-3 sm:p-6 transition-all duration-300 group flex flex-col gap-2.5 sm:gap-4 relative overflow-hidden',
         isPlaying
           ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
           : 'border-white/15 hover:border-cyan-300/70',
@@ -545,13 +489,13 @@ function PhraseCard({
       <div className="flex justify-between items-start relative z-10 gap-4">
         <div className="min-w-0">
           <div
-            className="font-sans text-2xl font-bold text-white break-words"
+            className="font-sans text-base sm:text-2xl font-bold text-white break-words"
             dangerouslySetInnerHTML={{
               __html: highlightZone && item.highlightedText ? item.highlightedText : item.text,
             }}
           />
           {item.translation && (
-            <div className="text-white/55 mt-1 text-sm">
+            <div className="text-white/55 mt-1 text-[11px] sm:text-sm">
               {item.translation}
             </div>
           )}
@@ -571,16 +515,16 @@ function PhraseCard({
       </div>
 
       {showIpa && (
-        <div className="flex flex-col gap-2 border-t border-white/10 pt-4 relative z-10 w-full overflow-hidden">
+        <div className="flex flex-col gap-2 border-t border-white/10 pt-3 sm:pt-4 relative z-10 w-full overflow-hidden">
           <span className="font-mono text-xs text-white/40 uppercase tracking-widest leading-none">IPA</span>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 flex-wrap">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-wrap">
             {item.ipaBefore && (
               <div className="flex items-center gap-2 text-white/55">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 opacity-80 whitespace-nowrap">
                   Before
                 </span>
-                <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2.5 pr-1 py-1">
-                  <span className="font-sans text-sm mr-1 text-cyan-200">
+                <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2 pr-1 py-0.5 sm:pl-2.5 sm:py-1">
+                  <span className="font-sans text-[11px] sm:text-sm mr-1 text-cyan-200">
                     {item.ipaBefore}
                   </span>
                   <button
@@ -607,9 +551,9 @@ function PhraseCard({
                 <span className="font-mono text-[10px] uppercase tracking-wider text-white/55 whitespace-nowrap">
                   After
                 </span>
-                <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-3 pr-1 py-1.5">
+                <div className="flex items-center gap-1 bg-white/5 rounded shadow-inner border border-white/10 pl-2.5 pr-1 py-1 sm:pl-3 sm:py-1.5">
                   <span
-                    className="font-sans text-lg mr-2 text-cyan-200"
+                    className="font-sans text-sm sm:text-lg mr-2 text-cyan-200"
                     dangerouslySetInnerHTML={{
                       __html: highlightZone && item.highlightedIpa ? item.highlightedIpa : item.ipa,
                     }}

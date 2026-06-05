@@ -322,15 +322,14 @@ const SymbolDetailPage: React.FC = () => {
   const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
-  const [showBritishNoteIpa, setShowBritishNoteIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
-  const [showBritishNoteHighlight, setShowBritishNoteHighlight] = useState(true);
   const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
   const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(() => ALL_COMMON_LETTERS);
   const [commonLettersLoading, setCommonLettersLoading] = useState(false);
   const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [isWordExamplesCopied, setIsWordExamplesCopied] = useState(false);
+  const [isMissionCopied, setIsMissionCopied] = useState(false);
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isTipsOpen, setIsTipsOpen] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -493,7 +492,7 @@ const SymbolDetailPage: React.FC = () => {
   };
 
   const renderBritishNoteWord = (word: string) => {
-    if (!showBritishNoteHighlight) return word;
+    if (!showHighlight) return word;
     
     const lowerWord = word.toLowerCase();
     const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
@@ -594,6 +593,7 @@ const SymbolDetailPage: React.FC = () => {
   const playNextTimeoutRef = useRef<number | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
+  const missionCopyTimeoutRef = useRef<number | null>(null);
   
   // Manual scroll to word examples
   const scrollToWordExamples = () => {
@@ -880,6 +880,36 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
+  const handleCopyMission = async () => {
+    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
+      return;
+    }
+
+    const words = symbolData.examples
+      .map(example => example.word?.trim())
+      .filter((word): word is string => !!word);
+
+    if (words.length === 0) {
+      return;
+    }
+
+    const textToCopy = `Kata:\n${words.join(', ')}\n\nPrompt:\n${accentEvaluationPrompt}`;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setIsMissionCopied(true);
+      if (missionCopyTimeoutRef.current) {
+        window.clearTimeout(missionCopyTimeoutRef.current);
+      }
+      missionCopyTimeoutRef.current = window.setTimeout(() => {
+        setIsMissionCopied(false);
+      }, 1800);
+    } catch (error) {
+      console.error('Failed to copy mission:', error);
+      setIsMissionCopied(false);
+    }
+  };
+
   const handleCopyPrompt = async () => {
     if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
       return;
@@ -936,6 +966,9 @@ const SymbolDetailPage: React.FC = () => {
       }
       if (wordExamplesCopyTimeoutRef.current) {
         window.clearTimeout(wordExamplesCopyTimeoutRef.current);
+      }
+      if (missionCopyTimeoutRef.current) {
+        window.clearTimeout(missionCopyTimeoutRef.current);
       }
     };
   }, []);
@@ -1131,7 +1164,7 @@ const SymbolDetailPage: React.FC = () => {
               style={{ '--panel-glow-rgb': '251, 191, 36' } as React.CSSProperties}
             >
               <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
-                <span className="font-mono text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
+                <span className="font-display text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
               </div>
               <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
                 <p className="mb-3">{britishNote.description}</p>
@@ -1145,7 +1178,7 @@ const SymbolDetailPage: React.FC = () => {
                       className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}
                     >
                       <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
-                      {showBritishNoteIpa && (
+                      {showIpa && (
                         <div className="text-cyan-300/60 font-mono text-xs">
                           BrE <span className="text-cyan-300/80 font-medium">{renderIpa(item.britishIpa, true)}</span>
                           {' '}&rarr; AmE <span className="text-cyan-300 font-bold">{renderIpa(item.americanIpa, true)}</span>
@@ -1224,7 +1257,7 @@ const SymbolDetailPage: React.FC = () => {
             <div className="bg-cyber-pink/10 px-4 py-2 flex justify-between items-center border-b border-cyber-pink/30">
               <div className="flex items-center gap-2">
                 <Lightbulb className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -1278,8 +1311,8 @@ const SymbolDetailPage: React.FC = () => {
               <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
                 <div className="flex items-center gap-2">
                   <Play className="text-purple-400" size={16} />
-                  <span className="ml-2 font-mono text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
-                  <span className="text-xs text-white/60">Symbol: /{decodedSymbol}/</span>
+                  <span className="ml-2 font-display text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
+                  <span className="text-xs font-display text-white/60">Symbol:{' '}<span className="font-ipa" data-ipa>/{decodedSymbol}/</span></span>
                 </div>
                 <button
                   type="button"
@@ -1350,7 +1383,7 @@ const SymbolDetailPage: React.FC = () => {
             >
               <div className="flex items-center gap-2">
                 <Database className="text-cyber-cyan" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-cyan tracking-wider">PRACTICE</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-cyan tracking-wider">PRACTICE</span>
               </div>
               <span className="symbol-detail-chevron-toggle text-cyber-cyan">
                 <ChevronDown
@@ -1364,39 +1397,17 @@ const SymbolDetailPage: React.FC = () => {
                  <p>
                    <strong>Mission:</strong>
                    <br />
-                   Baca semua kata di{' '}
-                   <button
-                     type="button"
-                     onClick={handleCopyWordExamples}
-                     className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
-                     title="Salin semua Word Examples (tanpa IPA)"
-                   >
-                     Word_Examples
-                   </button>
-                   .
+                   Buka AI assistant seperti <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors">Gemini</a>, rekam ucapan untuk semua kata di Word_Examples, dan berikan prompt di bawah untuk dinilai.
                  </p>
-                 <div className="mt-2 flex flex-wrap items-center gap-2">
-                   <span className="font-mono text-[10px] md:text-xs text-cyber-cyan/80 tracking-wider uppercase">
-                     Salin:
-                   </span>
+                 <div className="mt-4 flex flex-wrap items-center gap-2">
                    <button
                      type="button"
-                     onClick={handleCopyWordExamples}
-                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
-                     title="Salin semua Word Examples (tanpa IPA)"
+                     onClick={handleCopyMission}
+                     className="inline-flex items-center gap-1.5 rounded border border-cyber-cyan/40 bg-cyber-cyan/10 px-3 py-1.5 text-[11px] md:text-sm font-mono text-cyber-cyan hover:bg-cyber-cyan/20 transition-colors"
+                     title="Salin Words dan Prompt"
                    >
-                     <Copy size={12} />
-                     <span>{isWordExamplesCopied ? 'Word Examples (Tersalin)' : 'Word Examples'}</span>
-                   </button>
-                   <span className="text-gray-400/80">dan</span>
-                   <button
-                     type="button"
-                     onClick={handleCopyPrompt}
-                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-pink hover:text-white underline decoration-cyber-pink/50 underline-offset-2 transition-colors"
-                     title="Salin prompt"
-                   >
-                     <Copy size={12} />
-                     <span>{isPromptCopied ? 'Prompt (Tersalin)' : 'Prompt'}</span>
+                     <Copy size={14} />
+                     <span>{isMissionCopied ? 'Tersalin!' : 'Salin Words & Prompt'}</span>
                    </button>
                  </div>
                </div>
@@ -1413,7 +1424,7 @@ const SymbolDetailPage: React.FC = () => {
             <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <HelpCircle className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-mono text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
+                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -1502,48 +1513,14 @@ const SymbolDetailPage: React.FC = () => {
 
       {/* Floating Control Button */}
       
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
-            <PlayStopButton
-              isActive={isPlayingAll}
-              label="WORDS"
-              onClick={handlePlayAllWords}
-              disabled={symbolData.examples.length === 0}
-              className="mb-2 sm:mb-3"
-            />
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
-            <IpaVisibilityToggle
-              checked={showHighlight}
-              onChange={setShowHighlight}
-              className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
-              label="Highlight Letters"
-              activeClass="text-orange-200"
-              activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
-              activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
-            />
-          </div>
-          {britishNote && (
-            <div>
-              <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-amber-400/80 block mb-1.5 sm:mb-2 uppercase">Catatan (UK vs US)</span>
-              <PlayStopButton
-                isActive={isPlayingAllBritishNotes}
-                label="BRITISH NOTES"
-                sectionId="britishNote"
-                onClick={handlePlayAllBritishNotes}
-                disabled={!britishNote || britishNote.items.length === 0}
-                className="mb-2 sm:mb-3"
-              />
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-4">
+            <div className="border-b border-white/10 pb-3 mb-1">
+              <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3 text-[10px] sm:text-xs" />
               <IpaVisibilityToggle
-                checked={showBritishNoteIpa}
-                onChange={setShowBritishNoteIpa}
-                className="w-full flex justify-between text-[10px] sm:text-xs mb-2"
-                label="IPA"
-              />
-              <IpaVisibilityToggle
-                checked={showBritishNoteHighlight}
-                onChange={setShowBritishNoteHighlight}
+                checked={showHighlight}
+                onChange={setShowHighlight}
                 className="w-full flex justify-between text-[10px] sm:text-xs"
                 label="Highlight Letters"
                 activeClass="text-orange-200"
@@ -1551,9 +1528,28 @@ const SymbolDetailPage: React.FC = () => {
                 activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
               />
             </div>
-          )}
-        </div>
-      </ControlCenter>
+          </div>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
+            <PlayStopButton
+              isActive={isPlayingAll}
+              label="WORD EXAMPLES"
+              onClick={handlePlayAllWords}
+              disabled={symbolData.examples.length === 0}
+            />
+            {britishNote && (
+              <PlayStopButton
+                isActive={isPlayingAllBritishNotes}
+                label="CATATAN (UK VS US)"
+                sectionId="britishNote"
+                onClick={handlePlayAllBritishNotes}
+                disabled={!britishNote || britishNote.items.length === 0}
+              />
+            )}
+          </div>
+        }
+      />
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
 
 

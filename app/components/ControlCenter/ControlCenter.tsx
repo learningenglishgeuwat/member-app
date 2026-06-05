@@ -6,13 +6,18 @@ import { ChevronLeft, ChevronRight, Gauge, ChevronDown } from 'lucide-react';
 import { getGlobalPlaybackSpeed, setGlobalPlaybackSpeed } from '@/lib/tts/speech';
 
 interface ControlCenterProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  topControls?: React.ReactNode;
+  bottomControls?: React.ReactNode;
   title?: string;
   defaultOpen?: boolean;
 }
 
 // Section navigator type + context — exported so other components can consume it
-export type SectionNavigator = { openSection: (id: string, path?: string) => void };
+export type SectionNavigator = { 
+  openSection: (id: string, path?: string) => void;
+  closeControlCenter: () => void;
+};
 export const SectionNavigatorContext = createContext<SectionNavigator | null>(null);
 
 function cx(...values: Array<string | false | null | undefined>) {
@@ -21,6 +26,8 @@ function cx(...values: Array<string | false | null | undefined>) {
 
 export function ControlCenter({
   children,
+  topControls,
+  bottomControls,
   title = 'CONTROL CENTER',
   defaultOpen = false,
 }: ControlCenterProps) {
@@ -34,9 +41,11 @@ export function ControlCenter({
     setGlobalPlaybackSpeed(val);
   };
 
+  const closeControlCenter = () => setIsOpen(false);
+
   // Provide openSection to children
   const openSection = (id: string, path?: string) => {
-    setIsOpen(true)
+    setIsOpen(false) // also close when opening a section
     try {
       const base = (path ?? pathname) || '/'
       const target = `${base.replace(/\/$/, '')}#${id}`
@@ -58,7 +67,7 @@ export function ControlCenter({
   }
 
   return (
-    <SectionNavigatorContext.Provider value={{ openSection }}>
+    <SectionNavigatorContext.Provider value={{ openSection, closeControlCenter }}>
       <div
       className={cx(
         'fixed right-0 top-1/2 -translate-y-1/2 z-[100] transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)]',
@@ -84,8 +93,15 @@ export function ControlCenter({
         </h3>
         
         <div className="flex flex-col gap-2 sm:gap-3">
+          {(topControls || children) && (
+            <div className="flex flex-col gap-1.5 sm:gap-2">
+              {topControls}
+              {children}
+            </div>
+          )}
+
           {/* SPEED CONTROL */}
-          <div className="flex items-center justify-between gap-1 sm:gap-2 pb-1.5 sm:pb-2.5 border-b border-white/10">
+          <div className="flex items-center justify-between gap-1 sm:gap-2 pt-1.5 sm:pt-2.5 border-t border-white/10 mt-1">
             <span className="font-mono text-[7px] sm:text-[8.5px] tracking-wider text-white/45">SPEED</span>
             <div className="flex items-center gap-0.5 sm:gap-1 border border-white/10 rounded px-0.5 py-0 sm:px-1 sm:py-0.5 bg-[#1a1f24] hover:border-cyan-500/30 transition-colors">
               <Gauge className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white/45" />
@@ -105,9 +121,11 @@ export function ControlCenter({
             </div>
           </div>
 
-          <div className="flex flex-col gap-1.5 sm:gap-2">
-            {children}
-          </div>
+          {bottomControls && (
+            <div className="flex flex-col gap-1.5 sm:gap-2 pt-1.5 sm:pt-2.5 border-t border-white/10 mt-1">
+              {bottomControls}
+            </div>
+          )}
         </div>
       </div>
     </div>

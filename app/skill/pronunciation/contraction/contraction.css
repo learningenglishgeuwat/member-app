@@ -19,7 +19,7 @@
   --amber: #ffb800;
   --border: rgba(0,245,255,0.12);
   --border-bright: rgba(0,245,255,0.35);
-  --mono: var(--font-tech);
+  --mono: monospace;
   --head: var(--font-display);
   --body: var(--font-ui);
 }

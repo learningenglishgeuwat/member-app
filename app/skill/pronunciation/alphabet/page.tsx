@@ -833,38 +833,34 @@ const AlphabetPage: React.FC = () => {
           )}
         </section>
       </main>
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
+      <ControlCenter
+        topControls={
           <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Alphabet</span>
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+            />
+          </div>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             <PlayStopButton
               isActive={isPlayingAll}
               label="ALPHABET"
               sectionId="alphabet-grid-section"
               onClick={handlePlayAll}
-              className="mb-2 sm:mb-3"
               data-tour="alphabet-play-all"
             />
-            <IpaVisibilityToggle
-              checked={showIpa}
-              onChange={setShowIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs mb-6"
-              label={showIpa ? 'Sembunyikan IPA' : 'Tampilkan IPA'}
-            />
-          </div>
-
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Practice</span>
             <PlayStopButton
               isActive={isPlayingPracticeAll}
               label="PRACTICE"
               sectionId="alphabet-practice-section"
               onClick={handlePlayAllPracticeCountries}
-              className="mb-2 sm:mb-3"
             />
           </div>
-        </div>
-      </ControlCenter>
+        }
+      />
 
       <RecordingControlsButton
         className="alphabet-recording-anchor"

@@ -474,15 +474,9 @@ export default function FinalSoundDEdPage() {
   const [isPlayingWordBankAll, setIsPlayingWordBankAll] = useState(false);
   const [isPlayingPastEndingsAll, setIsPlayingPastEndingsAll] = useState(false);
   const [isPlayingRulesTableAll, setIsPlayingRulesTableAll] = useState(false);
-  const [showPastEndingsIpa, setShowPastEndingsIpa] = useState(true);
-  const [showWordBankIpa, setShowWordBankIpa] = useState(true);
-  const [showRulesTableIpa, setShowRulesTableIpa] = useState(true);
-  const [showPastEndingsOrangeHighlight, setShowPastEndingsOrangeHighlight] = useState(true);
-  const [showPastEndingsMagentaHighlight, setShowPastEndingsMagentaHighlight] = useState(true);
-  const [showRulesTableOrangeHighlight, setShowRulesTableOrangeHighlight] = useState(true);
-  const [showRulesTableMagentaHighlight, setShowRulesTableMagentaHighlight] = useState(true);
-  const [showWordBankOrangeHighlight, setShowWordBankOrangeHighlight] = useState(true);
-  const [showWordBankMagentaHighlight, setShowWordBankMagentaHighlight] = useState(true);
+  const [showIpa, setShowIpa] = useState(true);
+  const [showOrangeHighlight, setShowOrangeHighlight] = useState(true);
+  const [showMagentaHighlight, setShowMagentaHighlight] = useState(true);
   const [activeWordBankRowKey, setActiveWordBankRowKey] = useState<string | null>(null);
   const [activePastEndingKey, setActivePastEndingKey] = useState<string | null>(null);
   const [activeRulesTableRowKey, setActiveRulesTableRowKey] = useState<string | null>(null);
@@ -941,8 +935,8 @@ export default function FinalSoundDEdPage() {
 
         <section
           id="pastEndings"
-          className={`fs-topic-block ${showPastEndingsOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
-            showPastEndingsMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          className={`fs-topic-block ${showOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showMagentaHighlight ? '' : 'd-ed-base-highlight-off'
           }`}
         >
           <h2 className="fs-topic-block-title">
@@ -996,7 +990,7 @@ export default function FinalSoundDEdPage() {
                                   'base',
                                   `past-${example.wordBefore}-before-word`,
                                 )}
-                                {showPastEndingsIpa ? (
+                                {showIpa ? (
                                   <span className="font-ipa text-xs opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipaBefore,
@@ -1028,7 +1022,7 @@ export default function FinalSoundDEdPage() {
                                   'withEnding',
                                   `past-${example.word}-after-word`,
                                 )}
-                                {showPastEndingsIpa ? (
+                                {showIpa ? (
                                   <span className="font-ipa text-sm opacity-70 ml-1">
                                     {renderDEdIpaHighlight(
                                       example.ipa,
@@ -1061,8 +1055,8 @@ export default function FinalSoundDEdPage() {
 
         <section
           id="rulesTable"
-          className={`fs-topic-block ${showRulesTableOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
-            showRulesTableMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          className={`fs-topic-block ${showOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showMagentaHighlight ? '' : 'd-ed-base-highlight-off'
           }`}
         >
           <h2 className="fs-topic-block-title">
@@ -1101,12 +1095,12 @@ export default function FinalSoundDEdPage() {
                         <td>{renderUseAfter(row.useAfter)}</td>
                         <td>
                           {renderTableExamples(row.before, (word) => void speakWithBestEnglishVoice(word), {
-                            showIpa: showRulesTableIpa,
+                            showIpa: showIpa,
                           })}
                         </td>
                         <td>
                           {renderTableExamples(row.after, (word) => void speakWithBestEnglishVoice(word), {
-                            showIpa: showRulesTableIpa,
+                            showIpa: showIpa,
                             highlightMode: 'withEnding',
                           })}
                         </td>
@@ -1121,8 +1115,8 @@ export default function FinalSoundDEdPage() {
 
         <section
           id="wordBank"
-          className={`fs-topic-block ${showWordBankOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
-            showWordBankMagentaHighlight ? '' : 'd-ed-base-highlight-off'
+          className={`fs-topic-block ${showOrangeHighlight ? '' : 'd-ed-target-highlight-off'} ${
+            showMagentaHighlight ? '' : 'd-ed-base-highlight-off'
           }`}
           ref={wordBankSectionRef}
         >
@@ -1146,7 +1140,7 @@ export default function FinalSoundDEdPage() {
                       <th>No.</th>
                       <th>Before</th>
                       <th>After</th>
-                      {showWordBankIpa ? <th>Sound</th> : null}
+                      {showIpa ? <th>Sound</th> : null}
                     </tr>
                   </thead>
                   <tbody>
@@ -1171,7 +1165,7 @@ export default function FinalSoundDEdPage() {
                                     `word-bank-${item.before}-before-word`,
                                   )}
                                 </span>
-                                {showWordBankIpa ? (
+                                {showIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
                                     {renderDEdIpaHighlight(
@@ -1204,7 +1198,7 @@ export default function FinalSoundDEdPage() {
                                     `word-bank-${item.after}-after-word`,
                                   )}
                                 </span>
-                                {showWordBankIpa ? (
+                                {showIpa ? (
                                   <span className="fs-topic-table-example-ipa">
                                     {' '}
                                     {renderDEdIpaHighlight(
@@ -1227,7 +1221,7 @@ export default function FinalSoundDEdPage() {
                               </button>
                             </div>
                           </td>
-                          {showWordBankIpa ? (
+                          {showIpa ? (
                             <td>
                               <span className="fs-topic-table-example-ipa">
                                 <span className="d-ed-hl-target">{item.sound}</span>
@@ -1329,105 +1323,51 @@ export default function FinalSoundDEdPage() {
         </section>
       </main>
 
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
-              Past Endings
-            </span>
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-4">
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+            />
+            <HighlightVisibilityToggle
+              checked={showOrangeHighlight}
+              onChange={setShowOrangeHighlight}
+              color="orange"
+              label="Ending D/ED"
+            />
+            <HighlightVisibilityToggle
+              checked={showMagentaHighlight}
+              onChange={setShowMagentaHighlight}
+              color="magenta"
+              label="Base Final Sound"
+            />
+          </div>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             <PlayStopButton
               isActive={isPlayingPastEndingsAll}
               label="PAST ENDINGS"
               sectionId="pastEndings"
               onClick={() => void handlePastEndingsPlayAll()}
-              size="sm"
-              className="mb-2 sm:mb-3"
             />
-            <IpaVisibilityToggle
-              checked={showPastEndingsIpa}
-              onChange={setShowPastEndingsIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs"
-              label="Past Endings IPA"
-            />
-            <HighlightVisibilityToggle
-              checked={showPastEndingsOrangeHighlight}
-              onChange={setShowPastEndingsOrangeHighlight}
-              color="orange"
-              label="Ending D/ED"
-            />
-            <HighlightVisibilityToggle
-              checked={showPastEndingsMagentaHighlight}
-              onChange={setShowPastEndingsMagentaHighlight}
-              color="magenta"
-              label="Base Final Sound"
-            />
-          </div>
-
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
-              Rules Table
-            </span>
             <PlayStopButton
               isActive={isPlayingRulesTableAll}
               label="RULES TABLE"
               sectionId="rulesTable"
               onClick={() => void handleRulesTablePlayAll()}
-              size="sm"
-              className="mb-2 sm:mb-3"
             />
-            <IpaVisibilityToggle
-              checked={showRulesTableIpa}
-              onChange={setShowRulesTableIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs"
-              label="Rules Table IPA"
-            />
-            <HighlightVisibilityToggle
-              checked={showRulesTableOrangeHighlight}
-              onChange={setShowRulesTableOrangeHighlight}
-              color="orange"
-              label="Ending D/ED"
-            />
-            <HighlightVisibilityToggle
-              checked={showRulesTableMagentaHighlight}
-              onChange={setShowRulesTableMagentaHighlight}
-              color="magenta"
-              label="Base Final Sound"
-            />
-          </div>
-
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">
-              Word Bank
-            </span>
             <PlayStopButton
               isActive={isPlayingWordBankAll}
               label="WORD BANK"
               sectionId="wordBank"
               onClick={() => void handleWordBankPlayAll()}
-              size="sm"
-              className="mb-2 sm:mb-3"
-            />
-            <IpaVisibilityToggle
-              checked={showWordBankIpa}
-              onChange={setShowWordBankIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs"
-              label="Word Bank IPA"
-            />
-            <HighlightVisibilityToggle
-              checked={showWordBankOrangeHighlight}
-              onChange={setShowWordBankOrangeHighlight}
-              color="orange"
-              label="Ending D/ED"
-            />
-            <HighlightVisibilityToggle
-              checked={showWordBankMagentaHighlight}
-              onChange={setShowWordBankMagentaHighlight}
-              color="magenta"
-              label="Base Final Sound"
             />
           </div>
-        </div>
-      </ControlCenter>
+        }
+      />
 
       <RecordingControlsButton
         className="d-ed-recording-anchor"

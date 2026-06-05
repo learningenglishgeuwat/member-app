@@ -1227,29 +1227,34 @@ export default function IntonationPage() {
         downloadFileName="intonation-GEUWAT-recording.wav"
       />
 
-      <ControlCenter>
-        <div className="flex flex-col gap-3">
-          {INTONATION_AUDIO_SECTIONS.map((section) => (
-            <PlayStopButton
-              key={section.key}
-              isActive={activeAudioSection === section.key && playbackState.isPlaying}
-              label={section.label}
-              sectionId={section.key}
-              onClick={() => handleControlCenterPlay(section.key)}
-              disabled={AUDIO_SENTENCES[section.key].length === 0}
-              size="sm"
-            />
-          ))}
-          <div className="border-t border-pink-500/20 pt-3 mt-1">
-            <IpaVisibilityToggle
-              checked={showIpa}
-              onChange={setShowIpa}
-              className="w-full flex justify-between text-[10px] sm:text-xs"
-              label="Tampilkan IPA"
-            />
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3">
+            <div className="border-b border-pink-500/20 pb-3 mb-1">
+              <IpaVisibilityToggle
+                checked={showIpa}
+                onChange={setShowIpa}
+                className="w-full flex justify-between text-[10px] sm:text-xs"
+              />
+            </div>
           </div>
-        </div>
-      </ControlCenter>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-3">
+            {INTONATION_AUDIO_SECTIONS.map((section) => (
+              <PlayStopButton
+                key={section.key}
+                isActive={activeAudioSection === section.key && playbackState.isPlaying}
+                label={section.label}
+                sectionId={section.key}
+                onClick={() => handleControlCenterPlay(section.key)}
+                disabled={AUDIO_SENTENCES[section.key].length === 0}
+                size="sm"
+              />
+            ))}
+          </div>
+        }
+      />
     </div>
   );
 }

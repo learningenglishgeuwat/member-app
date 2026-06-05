@@ -64,4 +64,51 @@ describe('resolveQaMode', () => {
       ]),
     );
   });
+
+  it('should answer pronunciation comparisons with concrete contrast and pitfall', () => {
+    const result = resolveQaMode('beda flap dan glottal');
+
+    expect(result.mode).toBe('qa');
+    expect(result.meta?.answerType).toBe('comparison');
+    expect(result.reply.toLowerCase()).toContain('ketukan lidah cepat');
+    expect(result.reply.toLowerCase()).toContain('hentian singkat');
+    expect(result.reply.toLowerCase()).toContain('kesalahan umum');
+    expect(result.actions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: 'route',
+          path: '/skill/pronunciation/american-t',
+        }),
+      ]),
+    );
+  });
+
+  it('should answer pronunciation how-to questions with a detailed practice routine', () => {
+    const result = resolveQaMode('cara latihan s es');
+
+    expect(result.mode).toBe('qa');
+    expect(result.meta?.answerType).toBe('how_to');
+    expect(result.reply.toLowerCase()).toContain('cara latihan detail');
+    expect(result.reply.toLowerCase()).toContain('rekam 10-20 detik');
+    expect(result.reply.toLowerCase()).toContain('kesalahan umum');
+    expect(result.actions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: 'route',
+          path: '/skill/pronunciation/final-sound-new/s/es',
+        }),
+      ]),
+    );
+  });
+
+  it('should answer pronunciation term examples with concrete sound patterns', () => {
+    const result = resolveQaMode('contoh final sound s/es');
+
+    expect(result.mode).toBe('qa');
+    expect(result.meta?.answerType).toBe('word_explanation');
+    expect(result.reply.toLowerCase()).toContain('cats');
+    expect(result.reply.toLowerCase()).toContain('dogs');
+    expect(result.reply.toLowerCase()).toContain('watches');
+    expect(result.reply.toLowerCase()).toContain('pola latihan aman');
+  });
 });

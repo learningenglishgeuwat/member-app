@@ -58,6 +58,46 @@ export const isDisplayableIpa = (value?: string): boolean => {
   return true;
 };
 
+const getPronunciationFallbackExample = (entry: WordKnowledgeEntry): string => {
+  const key = `${entry.id} ${entry.term} ${entry.aliases.join(' ')}`.toLowerCase();
+
+  if (key.includes('s-es') || key.includes('final sound s') || key.includes('plural s')) {
+    return 'Contoh cepat: cats -> /s/, dogs -> /z/, watches -> /Iz/. Pilih ending dari bunyi akhir kata dasar, bukan dari huruf terakhir saja.';
+  }
+  if (key.includes('ed-ending') || key.includes('final sound d') || key.includes('past ending')) {
+    return 'Contoh cepat: watched -> /t/, played -> /d/, wanted -> /Id/. Kelompokkan verb ke tiga pola ini saat latihan.';
+  }
+  if (key.includes('flap')) {
+    return 'Contoh cepat: water dan better sering memakai flap t, yaitu ketukan lidah cepat yang terdengar seperti soft d.';
+  }
+  if (key.includes('glottal')) {
+    return 'Contoh cepat: button bisa memakai glottal stop pada speech casual, seperti ada hentian mikro di tenggorokan.';
+  }
+  if (key.includes('unreleased')) {
+    return 'Contoh cepat: pada right now, final /t/ bisa ditahan ringan sebelum /n/ tanpa letupan penuh.';
+  }
+  if (key.includes('intonation')) {
+    return 'Contoh cepat: You are ready. biasanya falling, sedangkan Are you ready? sering rising di akhir.';
+  }
+  if (key.includes('word stress')) {
+    return 'Contoh cepat: PREsent dan preSENT punya tekanan berbeda, sehingga ritme dan fungsi katanya ikut berubah.';
+  }
+  if (key.includes('sentence stress')) {
+    return 'Contoh cepat: I WANT tea dan I want TEA menekan informasi yang berbeda.';
+  }
+  if (key.includes('linking')) {
+    return 'Contoh cepat: an apple terdengar lebih menyambung karena konsonan akhir bertemu vokal awal.';
+  }
+  if (key.includes('contraction')) {
+    return 'Contoh cepat: I am -> I\'m, do not -> don\'t, going to -> gonna untuk konteks lisan santai.';
+  }
+  if (key.includes('minimal pair')) {
+    return 'Contoh cepat: ship vs sheep. Satu bunyi kecil berubah, makna ikut berubah.';
+  }
+
+  return '';
+};
+
 const composePronunciationReply = (entry: WordKnowledgeEntry): WordComposedResult => {
   const opening = pickVariant(entry.id, [
     `Sederhananya, "${entry.term}" itu`,
@@ -75,12 +115,17 @@ const composePronunciationReply = (entry: WordKnowledgeEntry): WordComposedResul
     ? ensureSentence(`Biar cepat kebayang, coba gini: ${entry.coachingTipId}`)
     : ensureSentence('Mulai pelan dulu, lalu naikkan tempo setelah bunyi utamanya stabil');
 
+  const fallbackExample = getPronunciationFallbackExample(entry);
   const sentence3 =
     entry.exampleEn && entry.exampleTranslation
       ? ensureSentence(`Contoh cepat: "${entry.exampleEn}" (${entry.exampleTranslation})`)
       : entry.exampleEn
         ? ensureSentence(`Contoh cepat: "${entry.exampleEn}"`)
-        : '';
+        : fallbackExample;
+
+  const sentence4 = ensureSentence(
+    'Pola latihan aman: dengarkan target, tirukan pelan, rekam singkat, lalu koreksi satu bunyi saja',
+  );
 
   const suggestions = [
     `cara latihan ${entry.term}`,
@@ -96,7 +141,7 @@ const composePronunciationReply = (entry: WordKnowledgeEntry): WordComposedResul
   );
 
   return {
-    reply: [sentence1, sentence2, sentence3].filter(Boolean).join(' '),
+    reply: [sentence1, sentence2, sentence3, sentence4].filter(Boolean).join(' '),
     suggestions,
     actions,
     sources: entry.route ? [{ label: `Pronunciation: ${entry.term}`, path: entry.route }] : undefined,
