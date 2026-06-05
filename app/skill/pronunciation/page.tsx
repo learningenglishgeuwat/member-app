@@ -351,13 +351,10 @@ const Page: React.FC = () => {
               </div>
             </div>
             
-            <div className="absolute bottom-1 md:bottom-4 left-0 right-0 text-center text-xs md:text-sm text-slate-500 font-mono hidden sm:block">
-                USE <span className="text-white bg-slate-800 px-1 rounded mx-1">&lt;-</span> <span className="text-white bg-slate-800 px-1 rounded mx-1">-&gt;</span> TO NAVIGATE • <span className="text-white bg-slate-800 px-1 rounded mx-1">ENTER</span> TO ENGAGE
-            </div>
         </div>
 
         {/* Start Learning Button (below selected topic grid) */}
-        <div className="mt-3 sm:mt-4 md:mt-6 flex justify-center">
+        <div className="mt-3 sm:mt-4 md:mt-6 flex flex-col items-center justify-center gap-4">
             <button
               onClick={handleStartLearning}
               disabled={isTopicLocked}
@@ -370,6 +367,10 @@ const Page: React.FC = () => {
            >
               <Cpu className="w-7 h-7 sm:w-8 sm:h-8 text-white/70" />
             </button>
+            
+            <div className="text-center text-[10px] text-slate-500 font-mono hidden sm:block opacity-60">
+                USE <span className="text-white/80 bg-slate-800/80 px-1 py-0.5 rounded mx-1">&lt;-</span> <span className="text-white/80 bg-slate-800/80 px-1 py-0.5 rounded mx-1">-&gt;</span> TO NAVIGATE • <span className="text-white/80 bg-slate-800/80 px-1 py-0.5 rounded mx-1">ENTER</span> TO ENGAGE
+            </div>
         </div>
       </div>
       
