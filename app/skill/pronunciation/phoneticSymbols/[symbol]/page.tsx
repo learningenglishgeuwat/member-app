@@ -1513,42 +1513,43 @@ const SymbolDetailPage: React.FC = () => {
 
       {/* Floating Control Button */}
       
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Word Examples</span>
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-4">
+            <div className="border-b border-white/10 pb-3 mb-1">
+              <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3 text-[10px] sm:text-xs" />
+              <IpaVisibilityToggle
+                checked={showHighlight}
+                onChange={setShowHighlight}
+                className="w-full flex justify-between text-[10px] sm:text-xs"
+                label="Highlight Letters"
+                activeClass="text-orange-200"
+                activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+                activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
+              />
+            </div>
+          </div>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             <PlayStopButton
               isActive={isPlayingAll}
-              label="WORDS"
+              label="WORD EXAMPLES"
               onClick={handlePlayAllWords}
               disabled={symbolData.examples.length === 0}
-              className="mb-2 sm:mb-3"
             />
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between mb-3" />
-            <IpaVisibilityToggle
-              checked={showHighlight}
-              onChange={setShowHighlight}
-              className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
-              label="Highlight Letters"
-              activeClass="text-orange-200"
-              activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
-              activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
-            />
-          </div>
-          {britishNote && (
-            <div>
-              <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-amber-400/80 block mb-1.5 sm:mb-2 uppercase">Catatan (UK vs US)</span>
+            {britishNote && (
               <PlayStopButton
                 isActive={isPlayingAllBritishNotes}
-                label="BRITISH NOTES"
+                label="CATATAN (UK VS US)"
                 sectionId="britishNote"
                 onClick={handlePlayAllBritishNotes}
                 disabled={!britishNote || britishNote.items.length === 0}
               />
-            </div>
-          )}
-        </div>
-      </ControlCenter>
+            )}
+          </div>
+        }
+      />
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
 
 

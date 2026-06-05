@@ -527,42 +527,47 @@ const MinimalPairsPage: React.FC = () => {
         )}
       </main>
 
-      
-      <ControlCenter>
-        <div className="flex flex-col gap-3">
-          <PlayStopButton
-            isActive={isPlayingWords}
-            label="WORDS"
-            onClick={handlePlayAllWords}
-            disabled={isCategoryLoading}
-            size="sm"
-          />
-          <IpaVisibilityToggle
-            checked={showIpa}
-            onChange={setShowIpa}
-            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
-          />
-          <IpaVisibilityToggle
-            checked={showHighlight}
-            onChange={setShowHighlight}
-            label="Highlight Letters"
-            className="w-full flex justify-between text-[10px] sm:text-xs mb-3"
-            activeClass="text-orange-200"
-            activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
-            activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
-          />
-          <div className="pt-3 border-t border-white/10">
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block mb-1.5 sm:mb-2 uppercase">Sentences</span>
-            <PlayStopButton
-              isActive={isPlayingSentences}
-              label="SENTENCES"
-              onClick={handlePlayAllSentences}
-              disabled={isCategoryLoading}
-              size="sm"
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3">
+            <IpaVisibilityToggle
+              checked={showIpa}
+              onChange={setShowIpa}
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+            />
+            <IpaVisibilityToggle
+              checked={showHighlight}
+              onChange={setShowHighlight}
+              label="Highlight Letters"
+              className="w-full flex justify-between text-[10px] sm:text-xs"
+              activeClass="text-orange-200"
+              activeTrackClass="bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.62)]"
+              activeDotClass="bg-orange-300 shadow-[0_0_6px_rgba(253,186,116,0.95)]"
             />
           </div>
-        </div>
-      </ControlCenter>
+        }
+        bottomControls={
+          <div>
+            <div className="flex flex-col gap-2">
+              <PlayStopButton
+                isActive={isPlayingWords}
+                label="WORDS"
+                onClick={handlePlayAllWords}
+                disabled={isCategoryLoading}
+                size="sm"
+              />
+              <PlayStopButton
+                isActive={isPlayingSentences}
+                label="SENTENCES"
+                onClick={handlePlayAllSentences}
+                disabled={isCategoryLoading}
+                size="sm"
+              />
+            </div>
+          </div>
+        }
+      />
+
       <RecordingControlsButton downloadFileName={`minimal-pairs-${selectedPairId || 'practice'}-GEUWAT-recording.wav`} />
     </div>
   );

@@ -642,10 +642,9 @@ export default function ClearTBeginningPage() {
         ]}
       />
       
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
+      <ControlCenter
+        topControls={
           <div className="flex flex-col gap-4">
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
             <IpaVisibilityToggle
               checked={showIpa}
               onChange={setShowIpa}
@@ -658,8 +657,9 @@ export default function ClearTBeginningPage() {
               label="Highlight American T"
             />
           </div>
-
-          <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             <PlayStopButton
             isActive={isPlayingExamplesAll}
             label="EXAMPLES"
@@ -685,8 +685,8 @@ export default function ClearTBeginningPage() {
             onClick={() => isPlayingSentenceDrillsAll ? stopAllPlayAll() : playAllSentenceDrillsExamples()}
             />
           </div>
-        </div>
-      </ControlCenter>
+        }
+      />
       <RecordingControlsButton
         className="at-recording-anchor"
         downloadFileName="american-t-released-beginning-GEUWAT-recording.wav"

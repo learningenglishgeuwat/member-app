@@ -1323,10 +1323,9 @@ export default function FinalSoundDEdPage() {
         </section>
       </main>
 
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
+      <ControlCenter
+        topControls={
           <div className="flex flex-col gap-4">
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
             <IpaVisibilityToggle
               checked={showIpa}
               onChange={setShowIpa}
@@ -1345,8 +1344,9 @@ export default function FinalSoundDEdPage() {
               label="Base Final Sound"
             />
           </div>
-
-          <div className="flex flex-col gap-2 border-t border-white/5 pt-4">
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             <PlayStopButton
               isActive={isPlayingPastEndingsAll}
               label="PAST ENDINGS"
@@ -1366,8 +1366,8 @@ export default function FinalSoundDEdPage() {
               onClick={() => void handleWordBankPlayAll()}
             />
           </div>
-        </div>
-      </ControlCenter>
+        }
+      />
 
       <RecordingControlsButton
         className="d-ed-recording-anchor"

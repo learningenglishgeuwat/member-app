@@ -1709,104 +1709,80 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
       </main>
 
       
-      <ControlCenter>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">Actions</span>
-            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" />
-            <HighlightVisibilityToggle checked={showHighlight} onChange={setShowHighlight} color="orange" label={isWord ? "Highlight Suku Kata" : "Highlight Tekanan Kalimat"} className="w-full flex justify-between text-[10px] sm:text-xs mb-3" />
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3">
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+            <HighlightVisibilityToggle checked={showHighlight} onChange={setShowHighlight} color="orange" label={isWord ? "Highlight Suku Kata" : "Highlight Tekanan Kalimat"} className="w-full flex justify-between text-[10px] sm:text-xs" />
+          </div>
+        }
+        bottomControls={
+          <div className="flex flex-col gap-2">
             {isWord && (
               <>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'dasarSukuKata'}
-                    label="DASAR SUKU KATA"
-                    sectionId="dasarSukuKata"
-                    onClick={() => void playAllBySection('dasarSukuKata')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'aturanCepat'}
-                    label="ATURAN CEPAT"
-                    sectionId="aturanCepat"
-                    onClick={() => void playAllBySection('aturanCepat')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'tekananKata'}
-                    label="TEKANAN KATA"
-                    sectionId="tekananKata"
-                    onClick={() => void playAllBySection('tekananKata')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'kontrasNounVerb'}
-                    label="KONTRAS N & V"
-                    sectionId="kontrasNounVerb"
-                    onClick={() => void playAllBySection('kontrasNounVerb')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'bankKata'}
-                    label="BANK KATA"
-                    sectionId="bankKata"
-                    onClick={() => void playAllBySection('bankKata')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'practice'}
-                    label="PRACTICE"
-                    sectionId="practice"
-                    onClick={() => void playAllBySection('practice')}
-                  />
-                  
-                </div>
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'dasarSukuKata'}
+                  label="DASAR SUKU KATA"
+                  sectionId="dasarSukuKata"
+                  onClick={() => void playAllBySection('dasarSukuKata')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'aturanCepat'}
+                  label="ATURAN CEPAT"
+                  sectionId="aturanCepat"
+                  onClick={() => void playAllBySection('aturanCepat')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'tekananKata'}
+                  label="TEKANAN KATA"
+                  sectionId="tekananKata"
+                  onClick={() => void playAllBySection('tekananKata')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'kontrasNounVerb'}
+                  label="KONTRAS N & V"
+                  sectionId="kontrasNounVerb"
+                  onClick={() => void playAllBySection('kontrasNounVerb')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'bankKata'}
+                  label="BANK KATA"
+                  sectionId="bankKata"
+                  onClick={() => void playAllBySection('bankKata')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'practice'}
+                  label="PRACTICE"
+                  sectionId="practice"
+                  onClick={() => void playAllBySection('practice')}
+                />
               </>
             )}
             {!isWord && (
               <>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'tekananKalimat'}
-                    label="TEKANAN KALIMAT"
-                    sectionId="tekananKalimat"
-                    onClick={() => void playAllBySection('tekananKalimat')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2 border-b border-white/5 pb-3">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'kataKontenFungsi'}
-                    label="KATA KONTEN & FUNGSI"
-                    sectionId="kataKontenFungsi"
-                    onClick={() => void playAllBySection('kataKontenFungsi')}
-                  />
-                  
-                </div>
-                <div className="flex flex-col gap-2">
-                  <PlayStopButton
-                    isActive={activePlayAllSection === 'practice'}
-                    label="PRACTICE"
-                    sectionId="practice"
-                    onClick={() => void playAllBySection('practice')}
-                  />
-                  
-                </div>
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'tekananKalimat'}
+                  label="TEKANAN KALIMAT"
+                  sectionId="tekananKalimat"
+                  onClick={() => void playAllBySection('tekananKalimat')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'kataKontenFungsi'}
+                  label="KATA KONTEN & FUNGSI"
+                  sectionId="kataKontenFungsi"
+                  onClick={() => void playAllBySection('kataKontenFungsi')}
+                />
+                <PlayStopButton
+                  isActive={activePlayAllSection === 'practice'}
+                  label="PRACTICE"
+                  sectionId="practice"
+                  onClick={() => void playAllBySection('practice')}
+                />
               </>
             )}
           </div>
-        </div>
-      </ControlCenter>
+        }
+      />
       <RecordingControlsButton
         className="stress-recording-anchor"
         downloadFileName={recordingFileName}

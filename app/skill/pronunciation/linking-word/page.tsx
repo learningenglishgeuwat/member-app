@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Volume2, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton, HighlightVisibilityToggle } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -36,63 +36,7 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(' ');
 }
 
-function Toggle({
-  checked,
-  onChange,
-  label,
-  activeClass = 'text-cyan-200',
-}: {
-  checked: boolean;
-  onChange: (value: boolean) => void;
-  label: string;
-  activeClass?: string;
-}) {
-  return (
-    <label className="flex w-full justify-between items-center gap-3 cursor-pointer group">
-      <span
-        className={cx(
-          'font-mono text-[9px] sm:text-[10px] tracking-widest text-white/55 uppercase transition-colors',
-          checked ? activeClass : 'group-hover:text-orange-200',
-        )}
-      >
-        {label}
-      </span>
-      <span className="relative flex items-center">
-        <input
-          type="checkbox"
-          className="sr-only peer"
-          checked={checked}
-          onChange={(event) => onChange(event.target.checked)}
-        />
-        <span
-          className={cx(
-            'block w-12 h-6 rounded-full transition-all duration-300',
-            checked 
-              ? 'bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.6)]' 
-              : 'bg-[#1a1f24] border-2 border-white/20'
-          )}
-        />
-        <span
-          className={cx(
-            'absolute left-[3px] top-[3px] w-[18px] h-[18px] rounded-full transition-transform duration-300 flex items-center justify-center',
-            checked 
-              ? 'translate-x-6 bg-[#101414] shadow-md' 
-              : 'translate-x-0 bg-white/40'
-          )}
-        >
-          <span
-            className={cx(
-              'rounded-full transition-all duration-300',
-              checked 
-                ? 'w-[10px] h-[10px] bg-orange-500 shadow-[0_0_6px_#f97316]' 
-                : 'w-0 h-0 bg-transparent'
-            )}
-          />
-        </span>
-      </span>
-    </label>
-  );
-}
+
 
 function buildBeforePhaseText(text: string): string {
   return text.replace(/\[[A-Za-z]+\]/g, '').split(/[\s-]+/).join(', ');
@@ -350,26 +294,26 @@ export default function LinkingWordPage() {
         </div>
       </nav>
 
-      <ControlCenter>
-        <PlayStopButton
-          isActive={!!playingId}
-          label="ALL"
-          onClick={() => playingId ? cancelPlayback() : void playAll(false)}
-          className="mb-2 sm:mb-4"
-        />
-
-        <hr className="border-white/10 my-2 sm:my-4" />
-
-        <div className="flex flex-col gap-3 sm:gap-6">
-          <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
-          <Toggle
-            label="HIGHLIGHT LINKING ZONE"
-            checked={highlightZone}
-            onChange={setHighlightZone}
-            activeClass="text-orange-400"
+      <ControlCenter
+        topControls={
+          <div className="flex flex-col gap-3 sm:gap-6">
+            <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
+            <HighlightVisibilityToggle
+              label="Highlight Linking Zone"
+              checked={highlightZone}
+              onChange={setHighlightZone}
+              color="orange"
+            />
+          </div>
+        }
+        bottomControls={
+          <PlayStopButton
+            isActive={!!playingId}
+            label="ALL"
+            onClick={() => playingId ? cancelPlayback() : void playAll(false)}
           />
-        </div>
-      </ControlCenter>
+        }
+      />
 
       <main className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <header className="mb-10 sm:mb-12">

@@ -440,22 +440,22 @@ export default function ReadingTextForPracticePage() {
         </article>
       </main>
 
-      <ControlCenter>
-        <button
-          type="button"
-          className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
-            activeSpeechMode === 'all' ? 'is-active' : ''
-          }`}
-          onClick={togglePlayAll}
-        >
-          <span className="tracking-widest font-bold">
-            {activeSpeechMode === 'all' ? 'STOP TEXT' : 'PLAY TEXT'}
-          </span>
-          {(activeSpeechMode === 'all') ? <Square className="w-3 h-3 sm:w-4 sm:h-4 transition-colors" style={{ fill: '#E53935', stroke: '#E53935', color: '#E53935' }} /> : <Play className="w-3 h-3 sm:w-4 sm:h-4 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
-        </button>
-
-        
-      </ControlCenter>
+      <ControlCenter
+        bottomControls={
+          <button
+            type="button"
+            className={`w-full bg-[#1a1f24] border border-white/10 text-white/80 px-2 py-1.5 sm:px-4 sm:py-3 font-mono text-[8px] sm:text-xs uppercase rounded-lg sm:rounded-xl flex items-center justify-between hover:bg-cyan-900/20 hover:border-cyan-500/30 transition-all group ${
+              activeSpeechMode === 'all' ? 'is-active' : ''
+            }`}
+            onClick={togglePlayAll}
+          >
+            <span className="tracking-widest font-bold">
+              {activeSpeechMode === 'all' ? 'STOP TEXT' : 'PLAY TEXT'}
+            </span>
+            {(activeSpeechMode === 'all') ? <Square className="w-3 h-3 sm:w-4 sm:h-4 transition-colors" style={{ fill: '#E53935', stroke: '#E53935', color: '#E53935' }} /> : <Play className="w-3 h-3 sm:w-4 sm:h-4 transition-colors fill-transparent stroke-current group-hover:fill-cyan-400 group-hover:stroke-cyan-400 group-hover:text-cyan-400" />}
+          </button>
+        }
+      />
 
       <RecordingControlsButton
         className="rt-recording-anchor"
