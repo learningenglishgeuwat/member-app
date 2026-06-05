@@ -11,6 +11,7 @@
     --color-cyan-hover: #67e8f9; /* Cyan 300 - untuk hover states */
 
     /* Alias untuk backward compatibility */
+    --font-ui: var(--font-noto);
 
     /* Default page surface (used by RootLayout/body, nav spacer, overscroll). */
     --app-page-bg: #000000;

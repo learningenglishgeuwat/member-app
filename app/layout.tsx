@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Orbitron, DM_Sans } from 'next/font/google';
+import { Noto_Sans, Orbitron } from 'next/font/google';
 import "./globals.css";
 import "./styles/scrollbar.css";
 import AppClientShell from "@/app/components/AppClientShell";
@@ -18,13 +18,6 @@ const orbitron = Orbitron({
   display: 'swap',
   preload: true,
   variable: '--font-display',
-});
-
-const dmSans = DM_Sans({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-  variable: '--font-ui',
 });
 
 
@@ -55,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSans.variable} ${orbitron.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${notoSans.variable} ${orbitron.variable}`}>
       <body className="font-sans antialiased">
         <AppClientShell>{children}</AppClientShell>
       </body>
