@@ -116,7 +116,7 @@ export default function DashboardClient() {
     if (loading || !hasSession || !user) return
     hasRestoredViewRef.current = true
     const savedView = resolveSavedDashboardView(canAccessStartJourney)
-    const fallbackView = NOTIFICATIONS_VIEW_ID
+    const fallbackView = canAccessStartJourney ? START_JOURNEY_VIEW_ID : NOTIFICATIONS_VIEW_ID
     const nextView = savedView ?? fallbackView
     const timerId = window.setTimeout(() => {
       setMountedViews(prev => {

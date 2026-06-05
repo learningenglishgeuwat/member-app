@@ -410,6 +410,9 @@
     0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.3) !important;
 }
 
+
+}
+
 /* ==========================================================================
    GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
    ========================================================================== */
@@ -678,3 +681,267 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* ==========================================================================
+   GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* 1. Grammar Topic Pages & Accordions */
+  .gr-topic-page [class*='-card-title'] {
+    font-size: 0.82rem !important;
+  }
+  .gr-topic-page [class*='-card-summary'] {
+    padding: 0.55rem 0.7rem !important;
+  }
+  .gr-topic-page [class*='-card-caret'] {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+  }
+  .gr-topic-page [class*='-card-caret']::before {
+    width: 0.45rem !important;
+    height: 0.45rem !important;
+  }
+
+  /* 2. Grammar Resource Tree Directory */
+  .tree-folder-label {
+    font-size: 0.82rem !important;
+  }
+  .tree-topic-label {
+    font-size: 0.78rem !important;
+  }
+  .tree-card {
+    padding: 0.48rem 0.65rem !important;
+  }
+  .tree-caret {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+  }
+  .tree-caret::before {
+    width: 0.45rem !important;
+    height: 0.45rem !important;
+  }
+
+  /* 3. Alphabet & Pronunciation Collapsible Panels */
+  .alphabet-quick-spelling-title,
+  .alphabet-notes-title {
+    font-size: 0.82rem !important;
+  }
+  .alphabet-practice-task-title {
+    font-size: 0.78rem !important;
+  }
+  .alphabet-section-toggle-icon-wrap {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+  }
+  .alphabet-section-toggle-icon {
+    width: 0.78rem !important;
+    height: 0.78rem !important;
+  }
+  .alphabet-quick-spelling-panel,
+  .alphabet-notes-panel {
+    padding: 0.7rem 0.8rem !important;
+  }
+
+  /* 4. Minimal Pairs Accordion Headings */
+  .minimal-card h3 {
+    font-size: 0.76rem !important;
+    margin-bottom: 0 !important;
+  }
+  .minimal-section-toggle {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .minimal-section-toggle svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .minimal-section-head {
+    margin-bottom: 6px !important;
+  }
+
+  /* 5. Word Stress & Sentence Stress Accordion Toggles & Cards */
+  .stress-block {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .stress-block-title {
+    font-size: 0.82rem !important;
+  }
+  .stress-section-toggle span {
+    font-size: 0.82rem !important;
+  }
+  .stress-section-indicator {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+  }
+  .stress-section-indicator::before {
+    width: 0.45rem !important;
+    height: 0.45rem !important;
+  }
+  .stress-card,
+  .stress-syllable-card,
+  .stress-rule-card,
+  .stress-bank-card,
+  .stress-prompt-card,
+  .stress-fix-card,
+  .stress-list-item {
+    padding: 0.55rem 0.7rem !important;
+  }
+  .stress-word {
+    font-size: 0.85rem !important;
+  }
+  .stress-bank-title,
+  .stress-rule-title,
+  .stress-mark-label,
+  .stress-prompt-title {
+    font-size: 0.85rem !important;
+  }
+  .stress-sentence {
+    font-size: 0.8rem !important;
+  }
+  .stress-note,
+  .stress-rule-example-sentence,
+  .stress-rule-example-translation,
+  .stress-bank-list {
+    font-size: 0.74rem !important;
+  }
+
+  /* 6. Intonation, Final Sound & American T Accordion Toggles (Shared fs-topic-block) */
+  .fs-topic-block {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .fs-topic-block-title {
+    font-size: 0.82rem !important;
+  }
+  .fs-topic-section-button > span:first-child {
+    font-size: 0.82rem !important;
+  }
+  .fs-topic-section-icon {
+    width: 1.45rem !important;
+    height: 1.45rem !important;
+  }
+  .fs-topic-section-icon::before {
+    width: 0.45rem !important;
+    height: 0.45rem !important;
+  }
+
+  .intonation-card {
+    padding: 0.55rem 0.7rem !important;
+  }
+  .intonation-card h3 {
+    font-size: 0.85rem !important;
+  }
+  .intonation-detail-card {
+    padding: 0.35rem 0.45rem !important;
+  }
+  .intonation-line {
+    font-size: 0.8rem !important;
+  }
+  .intonation-note,
+  .intonation-self-check {
+    font-size: 0.74rem !important;
+  }
+  .intonation-dialogue-sample p {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.45rem !important;
+  }
+  .intonation-list li {
+    padding: 0.45rem 0.55rem !important;
+    font-size: 0.78rem !important;
+  }
+  .intonation-guide-card {
+    padding: 0.45rem 0.55rem !important;
+  }
+  .intonation-guide-card h4 {
+    font-size: 0.8rem !important;
+  }
+  .intonation-guide-card p,
+  .intonation-guide-card ol {
+    font-size: 0.75rem !important;
+  }
+  .intonation-prompt-card {
+    padding: 0.55rem 0.7rem !important;
+  }
+  .intonation-prompt-title {
+    font-size: 0.82rem !important;
+  }
+  .intonation-prompt-quote {
+    font-size: 0.78rem !important;
+  }
+
+  /* 8. Final Sound d/ed & s/es Page Elements, Prompts, & Process Simulation Player */
+  .d-ed-prompt-card,
+  .s-es-prompt-card {
+    padding: 0.55rem 0.7rem !important;
+  }
+  .d-ed-prompt-title,
+  .s-es-prompt-title {
+    font-size: 0.82rem !important;
+  }
+  .d-ed-prompt-quote,
+  .s-es-prompt-quote {
+    font-size: 0.78rem !important;
+  }
+  .d-ed-common-mistakes-list,
+  .s-es-common-mistakes-list {
+    font-size: 0.78rem !important;
+    gap: 0.35rem !important;
+  }
+  .d-ed-process-player,
+  .s-es-process-player {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .d-ed-process-header h3,
+  .s-es-process-header h3 {
+    font-size: 0.85rem !important;
+  }
+  .d-ed-process-focus-card,
+  .d-ed-process-word-card,
+  .d-ed-process-ipa-card,
+  .d-ed-process-rule-card,
+  .s-es-process-focus-card,
+  .s-es-process-word-card,
+  .s-es-process-ipa-card,
+  .s-es-process-rule-card {
+    padding: 0.45rem 0.55rem !important;
+  }
+  .d-ed-process-focus-card strong,
+  .s-es-process-focus-card strong {
+    font-size: 0.88rem !important;
+  }
+  .d-ed-process-card-value,
+  .s-es-process-card-value {
+    font-size: 0.88rem !important;
+  }
+  .d-ed-process-description,
+  .s-es-process-description {
+    font-size: 0.78rem !important;
+  }
+  .d-ed-process-code-line,
+  .s-es-process-code-line {
+    font-size: 0.76rem !important;
+    padding: 0.35rem 0.5rem !important;
+  }
+  .d-ed-process-rule-note,
+  .s-es-process-rule-note {
+    font-size: 0.78rem !important;
+  }
+  .d-ed-process-scene-card,
+  .s-es-process-scene-card {
+    padding: 0.4rem 0.5rem !important;
+  }
+  .d-ed-process-scene-title,
+  .s-es-process-scene-title {
+    font-size: 0.8rem !important;
+  }
+  .s-es-practice-mission {
+    padding: 0.45rem 0.55rem !important;
+    font-size: 0.78rem !important;
+  }
+  .fs-topic-list li {
+    padding: 0.45rem 0.55rem !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+
+
