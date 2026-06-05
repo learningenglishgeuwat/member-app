@@ -331,6 +331,7 @@ const SymbolDetailPage: React.FC = () => {
   const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
   const [isPromptCopied, setIsPromptCopied] = useState(false);
   const [isWordExamplesCopied, setIsWordExamplesCopied] = useState(false);
+  const [isMissionCopied, setIsMissionCopied] = useState(false);
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
   const [isTipsOpen, setIsTipsOpen] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -594,6 +595,7 @@ const SymbolDetailPage: React.FC = () => {
   const playNextTimeoutRef = useRef<number | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
   const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
+  const missionCopyTimeoutRef = useRef<number | null>(null);
   
   // Manual scroll to word examples
   const scrollToWordExamples = () => {
@@ -880,6 +882,36 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
+  const handleCopyMission = async () => {
+    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
+      return;
+    }
+
+    const words = symbolData.examples
+      .map(example => example.word?.trim())
+      .filter((word): word is string => !!word);
+
+    if (words.length === 0) {
+      return;
+    }
+
+    const textToCopy = `Kata:\n${words.join(', ')}\n\nPrompt:\n${accentEvaluationPrompt}`;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setIsMissionCopied(true);
+      if (missionCopyTimeoutRef.current) {
+        window.clearTimeout(missionCopyTimeoutRef.current);
+      }
+      missionCopyTimeoutRef.current = window.setTimeout(() => {
+        setIsMissionCopied(false);
+      }, 1800);
+    } catch (error) {
+      console.error('Failed to copy mission:', error);
+      setIsMissionCopied(false);
+    }
+  };
+
   const handleCopyPrompt = async () => {
     if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
       return;
@@ -936,6 +968,9 @@ const SymbolDetailPage: React.FC = () => {
       }
       if (wordExamplesCopyTimeoutRef.current) {
         window.clearTimeout(wordExamplesCopyTimeoutRef.current);
+      }
+      if (missionCopyTimeoutRef.current) {
+        window.clearTimeout(missionCopyTimeoutRef.current);
       }
     };
   }, []);
@@ -1364,39 +1399,17 @@ const SymbolDetailPage: React.FC = () => {
                  <p>
                    <strong>Mission:</strong>
                    <br />
-                   Baca semua kata di{' '}
-                   <button
-                     type="button"
-                     onClick={handleCopyWordExamples}
-                     className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
-                     title="Salin semua Word Examples (tanpa IPA)"
-                   >
-                     Word_Examples
-                   </button>
-                   .
+                   Buka AI assistant seperti <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors">Gemini</a>, rekam ucapan untuk semua kata di Word_Examples, dan berikan prompt di bawah untuk dinilai.
                  </p>
-                 <div className="mt-2 flex flex-wrap items-center gap-2">
-                   <span className="font-mono text-[10px] md:text-xs text-cyber-cyan/80 tracking-wider uppercase">
-                     Salin:
-                   </span>
+                 <div className="mt-4 flex flex-wrap items-center gap-2">
                    <button
                      type="button"
-                     onClick={handleCopyWordExamples}
-                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors"
-                     title="Salin semua Word Examples (tanpa IPA)"
+                     onClick={handleCopyMission}
+                     className="inline-flex items-center gap-1.5 rounded border border-cyber-cyan/40 bg-cyber-cyan/10 px-3 py-1.5 text-[11px] md:text-sm font-mono text-cyber-cyan hover:bg-cyber-cyan/20 transition-colors"
+                     title="Salin Words dan Prompt"
                    >
-                     <Copy size={12} />
-                     <span>{isWordExamplesCopied ? 'Word Examples (Tersalin)' : 'Word Examples'}</span>
-                   </button>
-                   <span className="text-gray-400/80">dan</span>
-                   <button
-                     type="button"
-                     onClick={handleCopyPrompt}
-                     className="inline-flex items-center gap-1 font-mono text-[10px] md:text-xs text-cyber-pink hover:text-white underline decoration-cyber-pink/50 underline-offset-2 transition-colors"
-                     title="Salin prompt"
-                   >
-                     <Copy size={12} />
-                     <span>{isPromptCopied ? 'Prompt (Tersalin)' : 'Prompt'}</span>
+                     <Copy size={14} />
+                     <span>{isMissionCopied ? 'Tersalin!' : 'Salin Words & Prompt'}</span>
                    </button>
                  </div>
                </div>
