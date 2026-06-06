@@ -300,25 +300,25 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+      className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 pt-12 sm:pt-4 overflow-y-auto"
       onClick={onClose}
       style={{ zIndex }}
     >
       <div
-        className="w-full max-w-[96vw] sm:max-w-5xl bg-black border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
+        className="w-full max-w-[96vw] sm:max-w-5xl max-h-[calc(100vh-6rem)] sm:max-h-[90vh] overflow-y-auto bg-black border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_30px_rgba(168,85,247,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
         {lessonDetailPopup ? (
-          <div className="fixed inset-0 flex items-center justify-center p-4" style={{ zIndex: zIndex + 10 }}>
+          <div className="fixed inset-0 flex items-start sm:items-center justify-center p-4 pt-12 sm:pt-4 overflow-y-auto" style={{ zIndex: zIndex + 10 }}>
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeLessonDetailPopup} />
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="lesson-detail-popup-title"
-              className="relative w-full max-w-lg rounded-2xl border border-slate-700/60 bg-black/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] overflow-hidden"
+              className="relative w-full max-w-lg max-h-[calc(100vh-6rem)] sm:max-h-[85vh] overflow-hidden rounded-2xl border border-slate-700/60 bg-black/90 shadow-[0_30px_120px_rgba(0,0,0,0.55)] flex flex-col"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-3 p-4 border-b border-slate-700/50">
+              <div className="flex items-start justify-between gap-3 p-4 border-b border-slate-700/50 shrink-0">
                 <div className="min-w-0">
                   <div
                     id="lesson-detail-popup-title"
@@ -341,7 +341,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
               </div>
 
               {lessonDetailPopup.config.groups.length > 1 ? (
-                <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-slate-700/40">
+                <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-slate-700/40 shrink-0">
                   <button
                     type="button"
                     onClick={() => navigateLessonDetailPopup(-1)}
@@ -369,14 +369,14 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                 </div>
               ) : null}
 
-              <div className="overflow-hidden">
+              <div className="overflow-y-auto flex-1 min-h-0">
                 <div
-                  className="flex transition-transform duration-300 ease-out"
+                  className="flex transition-transform duration-300 ease-out h-full"
                   style={{ transform: `translateX(-${lessonDetailPopup.activeGroupIndex * 100}%)` }}
                 >
                   {lessonDetailPopup.config.groups.map((group) => (
                     <div key={group.id} className="w-full shrink-0 p-4">
-                      <div className="max-h-[55vh] overflow-y-auto space-y-3 pr-1 flex flex-col items-center">
+                      <div className="space-y-3 pr-1 flex flex-col items-center">
                         {group.items.map((item) => {
                           const checkboxId = `${lessonDetailPopup.config.topicId}-${item.id}`
                           const checked = Boolean(syncedCheckedById[toLessonDetailKey(item.id)])

@@ -48,6 +48,11 @@
     p, span, div, a, button, input, textarea, label, li, td, th {
       font-size: 0.75rem !important;
     }
+
+    /* SAFEGUARD: Hanya huruf alphabet yang tetap besar 3.75rem */
+    .alphabet-letter {
+      font-size: 3.75rem !important;
+    }
   }
 
 
