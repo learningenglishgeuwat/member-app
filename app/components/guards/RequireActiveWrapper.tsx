@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import RequireActive from '@/app/components/RequireActive'
+import RequireActive from '@/app/components/guards/RequireActive'
 
 const publicPaths = new Set(['/login', '/device-pairing', '/forgot-password', '/reset-password'])
 

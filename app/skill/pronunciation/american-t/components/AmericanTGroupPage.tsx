@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from '../../../../components/HoverPrefetchLink';
+import Link from '../../../../components/ui/links/HoverPrefetchLink';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import '../american-t-hub.css';

@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useAuth } from '@/contexts/MemberAuthContext'
-import AuthLoadingSkeleton, { getAuthSkeletonVariant } from './AuthLoadingSkeleton'
+import AuthLoadingSkeleton, { getAuthSkeletonVariant } from '../ui/loading/AuthLoadingSkeleton'
 
 type RequireActiveProps = {
   children: React.ReactNode

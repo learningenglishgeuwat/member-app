@@ -1,4 +1,4 @@
-import RequireActive from '../components/RequireActive'
+import RequireActive from '../components/guards/RequireActive'
 import SkillGameButton from './components/SkillGameButton'
 
 export default function SkillLayout({ children }: { children: React.ReactNode }) {

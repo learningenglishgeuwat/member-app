@@ -1,4 +1,4 @@
-import { IpaVisibilityToggle } from './IpaVisibilityToggle';
+import { IpaVisibilityToggle } from '../pronunciation/IpaVisibilityToggle';
 
 type HighlightVisibilityToggleColor = 'orange' | 'magenta';
 

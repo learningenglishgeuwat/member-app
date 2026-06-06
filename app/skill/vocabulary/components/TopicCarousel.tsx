@@ -1,6 +1,6 @@
 'use client';
 
-import Link from '../../../components/HoverPrefetchLink';
+import Link from '../../../components/ui/links/HoverPrefetchLink';
 import type { LucideIcon } from 'lucide-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';

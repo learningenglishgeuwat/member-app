@@ -1,6 +1,6 @@
 'use client'
 
-import Link from '../../components/HoverPrefetchLink'
+import Link from '../../components/ui/links/HoverPrefetchLink'
 import { usePathname } from 'next/navigation'
 import { Gamepad2 } from 'lucide-react'
 

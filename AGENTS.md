@@ -1,0 +1,1 @@
+Ketika commit push, pesan commit gunakan pesan dari perubahan code

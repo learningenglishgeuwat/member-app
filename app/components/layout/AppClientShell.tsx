@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { AuthProvider } from '@/contexts/MemberAuthContext'
 
-const MobileBottomNav = dynamic(() => import('@/app/components/MobileBottomNav'), {
+const MobileBottomNav = dynamic(() => import('@/app/components/features/navigation/MobileBottomNav/MobileBottomNav'), {
   ssr: false,
 })
 
@@ -14,21 +14,21 @@ const TourGuideMount = dynamic(() => import('@/app/bot-tourguide/TourGuideMount'
 })
 
 const GlobalHaptic = dynamic(
-  () => import('@/app/components/haptic').then((mod) => mod.GlobalHaptic),
+  () => import('@/app/components/features/haptic').then((mod) => mod.GlobalHaptic),
   {
     ssr: false,
   },
 )
 
-const SkillThemeSync = dynamic(() => import('@/app/components/SkillThemeSync'), {
+const SkillThemeSync = dynamic(() => import('@/app/components/layout/SkillThemeSync'), {
   ssr: false,
 })
 
-const ScrollToHashMount = dynamic(() => import('@/app/components/ScrollToHashMount'), {
+const ScrollToHashMount = dynamic(() => import('@/app/components/effects/ScrollToHashMount'), {
   ssr: false,
 })
 
-const GlobalScrollToItemMount = dynamic(() => import('@/app/components/GlobalScrollToItemMount'), {
+const GlobalScrollToItemMount = dynamic(() => import('@/app/components/effects/GlobalScrollToItemMount'), {
   ssr: false,
 })
 

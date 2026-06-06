@@ -31,7 +31,7 @@
 @import './styles/components/tables.css';
 
 /* Card Components (new shared library) */
-@import './components/cards/BaseCard.css';
+@import './components/ui/cards/BaseCard.css';
 
 /* Utilities */
 @import './styles/utilities/effects.css';

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from '../../../components/HoverPrefetchLink';
+import Link from '../../../components/ui/links/HoverPrefetchLink';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../components/BackButton';
 import {

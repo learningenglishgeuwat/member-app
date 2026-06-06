@@ -1,4 +1,4 @@
-import Link from '../../components/HoverPrefetchLink';
+import Link from '../../components/ui/links/HoverPrefetchLink';
 import BackButton from '../components/BackButton';
 import './grammar.css';
 

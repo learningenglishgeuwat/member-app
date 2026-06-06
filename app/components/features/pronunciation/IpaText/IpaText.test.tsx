@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { IpaText } from '../IpaText';
+import { IpaText } from './IpaText';
 
 describe('IpaText', () => {
   it('renders children correctly', () => {

@@ -58,7 +58,7 @@ interface PlayStopButtonPropsExtended extends PlayStopButtonProps {
   'data-tour'?: string;
 }
 
-import { useSectionNavigator } from './ControlCenter/ControlCenter'
+import { useSectionNavigator } from '../../features/control-center/ControlCenter'
 
 export function PlayStopButton({
   isActive,

@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { useHaptic } from '@/lib/haptic/useHaptic';
-import { IpaText } from '@/app/components/IpaText';
+import { IpaText } from '@/app/components/features/pronunciation/IpaText/IpaText';
 
 interface LetterCardProps {
   letter: string;

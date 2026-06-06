@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
-import RequireActiveWrapper from '../RequireActiveWrapper'
+import RequireActiveWrapper from '../guards/RequireActiveWrapper'
 import { usePathname } from 'next/navigation'
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }))
 
-jest.mock('@/app/components/RequireActive', () => ({
+jest.mock('@/app/components/guards/RequireActive', () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="require-active">{children}</div>

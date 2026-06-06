@@ -1,7 +1,7 @@
 'use client'
 
 import { type CSSProperties, useMemo, useState } from 'react'
-import Link from '../../components/HoverPrefetchLink'
+import Link from '../../components/ui/links/HoverPrefetchLink'
 import { ArrowUpRight, Crosshair } from 'lucide-react'
 import BackButton from '../components/BackButton'
 import './game-links.css'

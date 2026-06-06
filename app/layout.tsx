@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Noto_Sans, Orbitron } from 'next/font/google';
 import "./globals.css";
 import "./styles/base/scrollbar.css";
-import AppClientShell from "@/app/components/AppClientShell";
-import TTSInitButton from "@/app/components/TTSInitButton";
+import AppClientShell from "@/app/components/layout/AppClientShell";
+import TTSInitButton from "@/app/components/ui/buttons/TTSInitButton";
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
