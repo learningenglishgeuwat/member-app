@@ -1,8 +1,6 @@
-// lib/tts/speech.ts
+// lib/tts/index.ts
 // ============================================================
-// TTS Engine — Backward Compatibility Re-export
-// This file maintains backward compatibility with existing imports.
-// All functionality has been refactored into modular files.
+// TTS Engine — Barrel Export
 // ============================================================
 
 // Types
