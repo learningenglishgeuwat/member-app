@@ -3,17 +3,11 @@
    Imports organized styles from app/styles/
    ========================================================================== */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* All @import must be at the top before any rules */
 
 /* Base Styles */
 @import './styles/base/variables.css';
-
-@layer base {
-  /* Typography rules are defined in separate file but need @layer base */
-  @import './styles/base/typography.css';
-}
+@import './styles/base/typography.css';
 
 /* Layouts */
 @import './styles/layouts/auth-layout.css';
@@ -42,3 +36,8 @@
 /* Utilities */
 @import './styles/utilities/effects.css';
 @import './styles/utilities/responsive.css';
+
+/* Tailwind Directives - Must be after @import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
