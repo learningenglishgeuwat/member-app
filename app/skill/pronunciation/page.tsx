@@ -279,7 +279,7 @@ const Page: React.FC = () => {
             <div
               className={`glass-panel flex-1 p-2.5 sm:p-4 md:p-5 rounded-xl border border-transparent border-l-4 ${detailTheme.detailBorderLeft} ${detailTheme.detailBorder} animate-fade-in-up`}
             >
-               <p className="text-sm md:text-base text-slate-200 font-light leading-relaxed h-full flex items-center">
+               <p className="text-[0.75rem] sm:text-sm md:text-base text-slate-200 font-light leading-relaxed h-full flex items-center">
                  {selectedTopic.description}
                </p>
             </div>
@@ -292,7 +292,7 @@ const Page: React.FC = () => {
                       <Info className={`${detailTheme.hintIcon} flex-shrink-0 mt-0.5 sm:mt-1`} size={16} />
                       <div className="flex flex-col justify-center">
                           <h4 className={`font-display text-xs md:text-sm ${detailTheme.hintKicker} uppercase tracking-widest mb-1 font-medium`}>How to Start</h4>
-                          <p className="text-sm md:text-base text-white/90 leading-relaxed">
+                          <p className="text-[0.75rem] sm:text-sm md:text-base text-white/90 leading-relaxed">
                             {isTopicLocked 
                               ? `Modul ${selectedTopic.title} saat ini terkunci. Silakan selesaikan modul yang tersedia terlebih dahulu.`
                               : `Klik ikon CPU di bawah untuk membuka halaman latihan ${selectedTopic.title.toLowerCase()}`

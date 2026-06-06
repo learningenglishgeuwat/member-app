@@ -96,6 +96,7 @@ const CONTENT_TYPE_RATE: Record<ContentType, number> = {
 /**
  * American English voices — ordered by quality.
  * Natural/Online voices > Desktop > Generic.
+ * Includes Android/Xiaomi specific voices.
  */
 const HIGH_QUALITY_EN_US_VOICE_NAMES = [
   // Windows / Edge (highest quality online natural voices)
@@ -110,9 +111,17 @@ const HIGH_QUALITY_EN_US_VOICE_NAMES = [
   'Microsoft David Desktop - English (United States)',
   'Microsoft Zira Desktop',
   'Microsoft David Desktop',
-  // Chrome / Android
+  // Chrome / Android / Xiaomi
   'Google US English',
   'Google US English Male',
+  'Google US English Female',
+  'en-US-language',
+  'en-us-x-iob-network',
+  'en-us-x-iob-local',
+  'en-us-x-iom-network',
+  'en-us-x-iom-local',
+  'en-us-x-iol-network',
+  'en-us-x-iol-local',
   // macOS / iOS
   'Samantha',
   'Alex',
@@ -332,7 +341,7 @@ function pickEnglishVoiceFromCandidates(
 }
 
 // ─────────────────────────────────────────────
-// PUBLIC: SUPPORT CHECK
+// PUBLIC: SUPPORT CHECK & DEBUG
 // ─────────────────────────────────────────────
 
 export function isSpeechSynthesisSupported(): boolean {
@@ -341,6 +350,116 @@ export function isSpeechSynthesisSupported(): boolean {
     typeof window.SpeechSynthesisUtterance !== 'undefined' &&
     'speechSynthesis' in window
   );
+}
+
+/**
+ * Debug function to get device and TTS info.
+ * Useful for troubleshooting device-specific issues (e.g., Xiaomi).
+ */
+export async function getDebugInfo(): Promise<{
+  isSupported: boolean;
+  userAgent: string;
+  isXiaomi: boolean;
+  isIOS: boolean;
+  isSafari: boolean;
+  voicesCount: number;
+  voices: { name: string; lang: string; default: boolean }[];
+}> {
+  const isSupported = isSpeechSynthesisSupported();
+  
+  if (!isSupported) {
+    return {
+      isSupported: false,
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'N/A',
+      isXiaomi: false,
+      isIOS: false,
+      isSafari: false,
+      voicesCount: 0,
+      voices: [],
+    };
+  }
+
+  await waitForVoices();
+  const voices = window.speechSynthesis.getVoices();
+
+  return {
+    isSupported: true,
+    userAgent: navigator.userAgent,
+    isXiaomi: isXiaomi(),
+    isIOS: isIOS(),
+    isSafari: isSafari(),
+    voicesCount: voices.length,
+    voices: voices.map(v => ({
+      name: v.name,
+      lang: v.lang,
+      default: v.default,
+    })),
+  };
+}
+
+// ─────────────────────────────────────────────
+// TTS INITIALIZATION STATE
+// ─────────────────────────────────────────────
+
+let ttsInitialized = false;
+
+/**
+ * Initialize TTS with a dummy utterance.
+ * Required on some Android devices (Xiaomi, Samsung) to "wake up" the TTS engine.
+ * Must be called from a user gesture (click, touch).
+ */
+export async function initializeTTS(): Promise<boolean> {
+  if (!isSpeechSynthesisSupported()) return false;
+  if (ttsInitialized) return true;
+
+  try {
+    await waitForVoices(5000);
+    
+    const synth = window.speechSynthesis;
+    const voices = synth.getVoices();
+    
+    console.log('[TTS Init] Voices available:', voices.length);
+    
+    if (voices.length === 0) {
+      console.warn('[TTS Init] No voices available after waiting');
+      return false;
+    }
+
+    // Create a silent dummy utterance to initialize the engine
+    const dummyUtterance = new SpeechSynthesisUtterance('');
+    dummyUtterance.volume = 0; // Silent
+    
+    return new Promise((resolve) => {
+      let resolved = false;
+      
+      const finish = (success: boolean) => {
+        if (resolved) return;
+        resolved = true;
+        ttsInitialized = success;
+        synth.cancel(); // Clean up
+        console.log('[TTS Init]', success ? 'Success' : 'Failed');
+        resolve(success);
+      };
+
+      dummyUtterance.onend = () => finish(true);
+      dummyUtterance.onerror = () => finish(false);
+      
+      // Timeout after 2 seconds
+      setTimeout(() => finish(true), 2000); // Consider it success even if no callback
+      
+      synth.speak(dummyUtterance);
+    });
+  } catch (error) {
+    console.error('[TTS Init] Error:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if TTS has been initialized
+ */
+export function isTTSInitialized(): boolean {
+  return ttsInitialized;
 }
 
 // ─────────────────────────────────────────────
@@ -354,10 +473,11 @@ export function isSpeechSynthesisSupported(): boolean {
  * - Chrome/Edge: async — fires `voiceschanged` event, getVoices() starts empty
  * - Firefox: sync — getVoices() already populated on first call
  * - Safari/iOS: `voiceschanged` may never fire — we poll + timeout as fallback
+ * - Xiaomi/MIUI: May have delayed voice loading — increased timeout and aggressive polling
  *
- * Increased timeout to 3000ms + retry polling every 300ms for slow devices.
+ * Increased timeout to 5000ms + retry polling every 150ms for slow devices (Xiaomi).
  */
-export function waitForVoices(timeoutMs = 3000): Promise<void> {
+export function waitForVoices(timeoutMs = 5000): Promise<void> {
   if (!isSpeechSynthesisSupported()) return Promise.resolve();
 
   const synth = window.speechSynthesis;
@@ -390,11 +510,12 @@ export function waitForVoices(timeoutMs = 3000): Promise<void> {
 
     synth.addEventListener('voiceschanged', onVoicesChanged);
 
-    // Polling fallback for Safari/iOS where voiceschanged may not fire
+    // Polling fallback for Safari/iOS/Xiaomi where voiceschanged may not fire or be delayed
+    // More aggressive polling (150ms) for slower devices like Xiaomi
     pollInterval = setInterval(() => {
       synth.getVoices(); // trigger lazy load
       if (synth.getVoices().length > 0) finish();
-    }, 300);
+    }, 150);
 
     // Hard timeout — resolve even if no voices found (handles unsupported devices)
     window.setTimeout(finish, timeoutMs);
@@ -490,15 +611,46 @@ export function createUtterance(
 // ─────────────────────────────────────────────
 
 /**
+ * Detects Xiaomi devices based on user agent
+ */
+function isXiaomi(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  return /xiaomi|mi\s|redmi|poco/i.test(navigator.userAgent);
+}
+
+/**
+ * Force resume speech synthesis (required on some Xiaomi devices).
+ * MIUI browser sometimes pauses speechSynthesis internally.
+ */
+function forceResumeSpeech(): void {
+  if (typeof window === 'undefined' || !window.speechSynthesis) return;
+  
+  const synth = window.speechSynthesis;
+  
+  // Force resume if paused
+  if (synth.paused) {
+    console.log('[TTS] Speech was paused, resuming...');
+    synth.resume();
+  }
+  
+  // Some Xiaomi devices need this to "wake up" the engine
+  if (isXiaomi() && !synth.speaking && !synth.pending) {
+    // Trigger getVoices to wake up the engine
+    synth.getVoices();
+  }
+}
+
+/**
  * Cancels speech and waits for a safe delay before the next speak call.
  *
  * Safari/iOS: cancel() is asynchronous internally — speaking immediately
  * after cancel causes the new utterance to be silently dropped.
- * Delay: 80ms on iOS/Safari, 20ms on others (still catches Chrome edge cases).
+ * Xiaomi/MIUI: Similar async cancel behavior — needs longer delay.
+ * Delay: 150ms on iOS/Safari/Xiaomi, 20ms on others (still catches Chrome edge cases).
  */
 async function safeCancelAndWait(): Promise<void> {
   window.speechSynthesis.cancel();
-  const delayMs = isIOS() || isSafari() ? 120 : 20;
+  const delayMs = isIOS() || isSafari() || isXiaomi() ? 150 : 20;
   await new Promise((resolve) => setTimeout(resolve, delayMs));
 }
 
@@ -510,9 +662,11 @@ async function safeCancelAndWait(): Promise<void> {
  * Main speak function.
  *
  * Features:
+ * - Auto-initialization for Android/Xiaomi devices
  * - Always cancels before speaking (prevents queue buildup on Android/iOS)
- * - Safe cancel delay for Safari/iOS
- * - Per-utterance timeout (15s) prevents stuck playback
+ * - Safe cancel delay for Safari/iOS/Xiaomi
+ * - Per-utterance timeout (20s) prevents stuck playback
+ * - Retry mechanism for Xiaomi devices that fail on first attempt
  * - Error logging without breaking the caller
  * - Cross-browser voice loading handled via waitForVoices()
  */
@@ -523,12 +677,23 @@ export async function speakText(
   if (!isSpeechSynthesisSupported()) return;
   if (!isNonEmptyText(text)) return;
 
+  // Auto-initialize TTS for Xiaomi/Android devices
+  if (!ttsInitialized && isXiaomi()) {
+    console.log('[TTS] Auto-initializing for Xiaomi device...');
+    await initializeTTS();
+  }
+
   await waitForVoices();
 
   const utterance = createUtterance(text, options);
   if (!utterance) return;
 
   const synth = window.speechSynthesis;
+
+  // Force resume for Xiaomi devices (MIUI sometimes pauses speech internally)
+  if (isXiaomi()) {
+    forceResumeSpeech();
+  }
 
   // Always cancel before speak — prevents queue buildup on Android / rapid clicks
   // cancelBeforeSpeak: false is intentionally NOT supported to avoid OS-level bugs
@@ -537,19 +702,21 @@ export async function speakText(
     await safeCancelAndWait();
   }
 
-  // Per-utterance timeout — 15s covers even the slowest multi-word utterances.
-  // If the engine hangs (Android WebView, Samsung Internet), we resolve without cancel
+  // Per-utterance timeout — 20s covers even the slowest multi-word utterances on slower devices (Xiaomi).
+  // If the engine hangs (Android WebView, Samsung Internet, MIUI), we resolve without cancel
   // to avoid cutting off utterances that are still playing.
-  const MAX_UTTERANCE_MS = 15_000;
+  const MAX_UTTERANCE_MS = 20_000;
 
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let isResolved = false;
+  let didSpeak = false;
 
-  await Promise.race([
-    new Promise<void>((resolve) => {
+  const attemptSpeak = () => {
+    return new Promise<void>((resolve) => {
       utterance.onend = () => {
         if (isResolved) return;
         isResolved = true;
+        didSpeak = true;
         if (timeoutId) clearTimeout(timeoutId);
         resolve();
       };
@@ -563,19 +730,75 @@ export async function speakText(
         }
         resolve();
       };
+      
+      // Add onstart handler to detect if speech actually started
+      utterance.onstart = () => {
+        didSpeak = true;
+        console.log('[TTS] Speech started:', text.substring(0, 30));
+      };
+      
       synth.speak(utterance);
-    }),
+    });
+  };
+
+  await Promise.race([
+    attemptSpeak(),
     new Promise<void>((resolve) => {
       timeoutId = setTimeout(() => {
         if (isResolved) return;
         isResolved = true;
         console.warn('[TTS] Utterance timed out after', MAX_UTTERANCE_MS, 'ms — resolving without cancel to avoid cutting off speech.');
-        // ✅ PERBAIKAN: Tidak cancel di sini, biarkan utterance selesai natural
-        // Hanya resolve promise agar caller bisa lanjut
         resolve();
       }, MAX_UTTERANCE_MS);
     }),
   ]);
+
+  // Retry once for Xiaomi devices if speech didn't start
+  if (!didSpeak && isXiaomi()) {
+    console.log('[TTS] Speech did not start on Xiaomi, retrying after delay...');
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Reset flags for retry
+    isResolved = false;
+    didSpeak = false;
+    timeoutId = null;
+    
+    // Create new utterance for retry
+    const retryUtterance = createUtterance(text, options);
+    if (retryUtterance) {
+      await Promise.race([
+        new Promise<void>((resolve) => {
+          retryUtterance.onend = () => {
+            if (isResolved) return;
+            isResolved = true;
+            if (timeoutId) clearTimeout(timeoutId);
+            resolve();
+          };
+          retryUtterance.onerror = (event) => {
+            if (isResolved) return;
+            isResolved = true;
+            if (timeoutId) clearTimeout(timeoutId);
+            if (event.error !== 'interrupted' && event.error !== 'canceled') {
+              console.error('[TTS] Retry error:', event.error);
+            }
+            resolve();
+          };
+          retryUtterance.onstart = () => {
+            console.log('[TTS] Retry speech started successfully');
+          };
+          synth.speak(retryUtterance);
+        }),
+        new Promise<void>((resolve) => {
+          timeoutId = setTimeout(() => {
+            if (isResolved) return;
+            isResolved = true;
+            console.warn('[TTS] Retry also timed out');
+            resolve();
+          }, MAX_UTTERANCE_MS);
+        }),
+      ]);
+    }
+  }
 }
 
 // ─────────────────────────────────────────────

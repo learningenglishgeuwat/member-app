@@ -227,7 +227,7 @@
 
 .at-example-head h3 {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #f1d6ff;
   text-transform: capitalize;
@@ -620,3 +620,24 @@
   width: 8.75rem;
   max-width: 100%;
 }
+
+@media (max-width: 768px) {
+  /* Apply mobile UI variable to all elements */
+  .at-topic-page * {
+    font-size: var(--font-size-ui);
+    line-height: 1.35;
+  }
+
+  /* Set the page title size to display variable */
+  .at-topic-page .fs-topic-title {
+    font-size: var(--font-size-display);
+    line-height: 1.35;
+  }
+
+  /* Set IPA elements to IPA variable */
+  .at-topic-page .at-ipa {
+    font-size: var(--font-size-ipa);
+    line-height: 1.35;
+  }
+}
+

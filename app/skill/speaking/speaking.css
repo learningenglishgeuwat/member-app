@@ -50,7 +50,7 @@
   border: 1px solid rgba(255, 162, 244, 0.38);
   background: rgba(138, 16, 88, 0.3);
   color: #ffe8ff;
-  font-size: 0.91rem;
+  font-size: 0.75rem;
 }
 
 .spk-layout {
@@ -70,7 +70,7 @@
 
 .spk-panel-title {
   margin: 0;
-  font-size: 0.93rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   color: #ffd7ff;
   text-transform: uppercase;
@@ -115,7 +115,7 @@
   display: block;
   margin-top: 0.2rem;
   color: #f9c9e5;
-  font-size: 0.81rem;
+  font-size: 0.75rem;
 }
 
 .spk-content {
@@ -144,7 +144,7 @@
 .spk-phase-target {
   margin: 0.55rem 0 0;
   color: #9eeeff;
-  font-size: 0.93rem;
+  font-size: 0.75rem;
 }
 
 .spk-phase-link-row {
@@ -156,7 +156,7 @@
   border-radius: 0.56rem;
   background: rgba(131, 24, 94, 0.66);
   color: #ffe6f5;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding: 0.32rem 0.68rem;
 }
 
@@ -180,7 +180,7 @@
   align-items: center;
   gap: 0.45rem;
   color: #d7f4ff;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
 }
 
 .spk-translation-toggle input {
@@ -193,7 +193,7 @@
   padding: 0.32rem 0.66rem;
   background: rgba(100, 20, 72, 0.86);
   color: #fbe9ff;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
@@ -211,7 +211,7 @@
 .spk-search-label {
   display: block;
   color: #f9c9e5;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   margin-bottom: 0.25rem;
 }
 
@@ -241,7 +241,7 @@
 .spk-visible-note {
   margin: 0.74rem 0 0;
   color: #f9c9e5;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 .spk-empty {
@@ -293,7 +293,7 @@
 }
 
 .spk-order {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #ffd3ff;
   border: 1px solid rgba(244, 114, 182, 0.42);
   background: rgba(121, 26, 79, 0.68);
@@ -345,7 +345,7 @@
 .spk-card-goal {
   margin: 0.66rem 0 0;
   color: #fff3ff;
-  font-size: 1rem;
+  font-size: 0.75rem;
   line-height: 1.42;
 }
 
@@ -391,14 +391,14 @@
 .spk-translation-text {
   display: block;
   color: #b4f1ff;
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   line-height: 1.45;
 }
 
 .spk-ipa-text {
   display: block;
   color: var(--color-ipa);
-  font-size: 0.83rem;
+  font-size: 0.75rem;
   line-height: 1.42;
   font-style: italic;
   opacity: 0.95;
@@ -420,7 +420,7 @@
   color: #9ef3ff;
   border-radius: 0.45rem;
   padding: 0.24rem 0.55rem;
-  font-size: 0.79rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -431,7 +431,7 @@
   align-items: center;
   gap: 0.35rem;
   color: #ffdcec;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
 }
 
 .spk-card-complete-toggle input {
@@ -440,7 +440,7 @@
 
 .spk-card-disabled-note {
   color: #f8c5e6;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .spk-pagination {
@@ -467,7 +467,7 @@
 
 .spk-page-label {
   color: #f9c9e5;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 .spk-detail-page {
@@ -495,7 +495,7 @@
 
 .spk-detail-kicker {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #9fefff;
@@ -525,7 +525,7 @@
   border-radius: 999px;
   padding: 0.18rem 0.5rem;
   color: #fce7ff;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -545,7 +545,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.87rem;
+  font-size: 0.75rem;
   color: #ffdcec;
 }
 
@@ -578,7 +578,7 @@
   background: rgba(44, 12, 34, 0.62);
   color: #ffe6f5;
   padding: 0.9rem 0.95rem;
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.1;
@@ -627,7 +627,7 @@
   .spk-control-btn {
     padding: 0.82rem 0.9rem;
     border-radius: 0.75rem;
-    font-size: 0.82rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -656,7 +656,7 @@
   border-radius: 0.5rem;
   background: rgba(131, 24, 94, 0.64);
   color: #ffe6f5;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   padding: 0.3rem 0.66rem;
   text-decoration: none;
 }
@@ -680,7 +680,7 @@
 
 .spk-detail-selector-item span {
   color: #ffdcec;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
 }
 
@@ -704,7 +704,7 @@
 .spk-detail-section h2 {
   margin: 0;
   color: #a5f1ff;
-  font-size: 1.02rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
 }
 
@@ -794,7 +794,7 @@
 .spk-detail-section h3 {
   margin: 0.24rem 0 0;
   color: #fff2ff;
-  font-size: 0.96rem;
+  font-size: 0.75rem;
 }
 
 .spk-detail-section p {
@@ -922,7 +922,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: 0.3rem;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
 }
 
 .spk-dialog-tts-speaker {
@@ -981,7 +981,7 @@
   border: 1px solid rgba(149, 245, 255, 0.35);
   border-radius: 999px;
   padding: 0.2rem 0.55rem;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #d7f8ff;
   background: rgba(17, 44, 68, 0.56);
 }
@@ -989,7 +989,7 @@
 .spk-turn-practice-head h4 {
   margin: 0;
   color: #f4fbff;
-  font-size: 0.94rem;
+  font-size: 0.75rem;
 }
 
 .spk-turn-practice-head p {
@@ -1008,7 +1008,7 @@
   border: 1px solid rgba(149, 245, 255, 0.38);
   border-radius: 999px;
   padding: 0.2rem 0.52rem;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   line-height: 1.3;
   color: #d6f8ff;
   background: rgba(18, 46, 74, 0.62);
@@ -1109,7 +1109,7 @@
 .spk-detail-mini-label {
   margin: 0;
   color: #9feeff;
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
@@ -1117,7 +1117,7 @@
 
 .spk-detail-target {
   color: #ffeaaf;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
 }
 
 .spk-detail-example {
@@ -1126,7 +1126,7 @@
   border-radius: 0.52rem;
   background: rgba(20, 48, 76, 0.5);
   color: #dff8ff;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   padding: 0.46rem 0.56rem;
 }
@@ -1169,7 +1169,7 @@
   border-radius: 0.5rem;
   background: rgba(27, 58, 89, 0.75);
   color: #cbf8ff;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding: 0.3rem 0.62rem;
 }
 
@@ -1242,7 +1242,7 @@
   border-radius: 0.45rem;
   background: rgba(20, 56, 84, 0.72);
   color: #ccf8ff;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   padding: 0.22rem 0.52rem;
   white-space: nowrap;
 }
@@ -1255,7 +1255,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.94rem;
+  font-size: 0.75rem;
   line-height: 1;
   font-weight: 700;
   box-shadow: 0 0 0 1px rgba(149, 245, 255, 0.16);
@@ -1275,7 +1275,7 @@
 .spk-detail-tts-note {
   margin: 0.58rem 0 0;
   color: #ffd9d9;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 @media (max-width: 767.98px) {

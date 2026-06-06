@@ -167,7 +167,7 @@
 }
 
 .at-hub-node-detail-title {
-  font-size: 0.84rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: var(--pronun-text, #f3e8ff);
 }
@@ -273,7 +273,7 @@
   flex-wrap: wrap;
   gap: 0.35rem;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
 }
 
@@ -342,7 +342,7 @@
 
 .at-group-card-title {
   margin-top: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
@@ -358,7 +358,7 @@
   border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.58);
   border-radius: 0.5rem;
   padding: 0.2rem 0.56rem;
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.03em;
 }
@@ -460,12 +460,12 @@
   }
 
   .at-hub-title {
-    font-size: clamp(2rem, 8.2vw, 2.4rem);
-    line-height: 1.05;
+    font-size: var(--font-size-display);
+    line-height: 1.35;
   }
 
   .at-hub-subtitle {
-    font-size: 0.82rem;
+    font-size: var(--font-size-ui);
     line-height: 1.45;
   }
 
@@ -597,7 +597,7 @@
   }
 
   .at-hub-node-detail-title {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
   }
 
   .at-hub-node-detail-desc {

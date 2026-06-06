@@ -415,50 +415,7 @@
   }
 }
 
-.s-es-process-player {
-  margin-top: 0.8rem;
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.44);
-  border-radius: 0.8rem;
-  background:
-    linear-gradient(160deg, rgb(var(--pronun-panel-rgb) / 0.9), rgb(var(--pronun-surface-rgb) / 0.95)),
-    radial-gradient(circle at 15% 10%, rgb(var(--pronun-accent-1-rgb) / 0.14), transparent 48%);
-  padding: 0.85rem;
-  box-shadow: inset 0 1px 0 rgb(var(--pronun-accent-1-rgb) / 0.2);
-}
 
-.s-es-process-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.65rem;
-}
-
-.s-es-process-header h3 {
-  margin: 0;
-  font-size: 1rem;
-  color: #f0defe;
-}
-
-.s-es-process-header span {
-  font-size: 0.78rem;
-  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  white-space: nowrap;
-}
-
-.s-es-process-screen {
-  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.34);
-  border-radius: 0.68rem;
-  background: rgb(var(--pronun-surface-rgb) / 0.82);
-  padding: 0.8rem;
-}
-
-.s-es-process-preview-stack {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.s-es-process-focus-card,
 .s-es-process-word-card,
 .s-es-process-ipa-card,
 .s-es-process-rule-card {
@@ -709,3 +666,18 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+
+@media (max-width: 768px) {
+  /* Apply mobile UI variable to all elements */
+  .s-es-page * {
+    font-size: var(--font-size-ui);
+    line-height: 1.35;
+  }
+
+  /* Set the S/ES page title size to display variable - S/ES Final Sound */
+  .s-es-page .fs-topic-title {
+    font-size: var(--font-size-display);
+    line-height: 1.35;
+  }
+}
+
