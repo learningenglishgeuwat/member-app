@@ -1,0 +1,63 @@
+/* ==========================================================================
+   BUTTON COMPONENTS - Reusable Button Styles
+   ========================================================================== */
+
+/* Base Play Button Style - Reusable across all pronunciation pages */
+.play-btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.58);
+  background: rgb(var(--pronun-panel-rgb) / 0.9);
+  color: #f4e8ff;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.play-btn-base:hover {
+  border-color: rgb(var(--pronun-accent-1-rgb) / 0.95);
+  box-shadow:
+    0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.25),
+    0 8px 18px rgb(var(--pronun-accent-2-rgb) / 0.3);
+  transform: translateY(-1px);
+}
+
+.play-btn-base:active {
+  transform: translateY(0);
+}
+
+/* Play Icon Triangle */
+.play-icon-triangle {
+  width: 0;
+  height: 0;
+  border-top: 0.34rem solid transparent;
+  border-bottom: 0.34rem solid transparent;
+  border-left: 0.54rem solid currentColor;
+  margin-left: 0.08rem;
+}
+
+/* Prompt Card Copy Button */
+.prompt-card-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.58);
+  border-radius: 999px;
+  background: rgb(var(--pronun-accent-2-rgb) / 0.15);
+  color: #f5e9ff;
+  font-size: var(--font-size-ui);
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.35rem 0.62rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.prompt-card-copy-btn:hover {
+  border-color: rgb(var(--pronun-accent-1-rgb) / 0.9);
+}
+
+.prompt-card-copy-btn:active {
+  transform: translateY(1px);
+}

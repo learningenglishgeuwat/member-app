@@ -1,0 +1,122 @@
+/* ==========================================================================
+   PRONUNCIATION BASE THEME - Shared Variables & Styles
+   ========================================================================== */
+
+.pronunciation-theme {
+  --pronun-text: rgba(255, 255, 255, 0.96);
+  --pronun-muted: rgba(255, 255, 255, 0.78);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 168 85 247;
+  --pronun-accent-2-rgb: 217 70 239;
+}
+
+/* ==========================================================================
+   PRONUNCIATION COMPONENT STYLES - Cards, Panels, Buttons
+   ========================================================================== */
+
+/* Glass Panel & Card Styles */
+.pronunciation-layout.pronunciation-theme :where(
+  .glass-panel,
+  .pronunciation-topic-card-body,
+  .alphabet-main-title,
+  .alphabet-quick-spelling-panel,
+  .alphabet-notes-panel,
+  .alphabet-note-card,
+  .alphabet-practice-task,
+  .alphabet-prompt-card,
+  .alphabet-letter-card,
+  .fsn-orbit-stage,
+  .sh-card,
+  .fs-topic-block,
+  .fs-topic-card,
+  .fs-topic-rules-table-wrap,
+  .stress-block,
+  .stress-card,
+  .stress-syllable-card,
+  .stress-rule-card,
+  .stress-bank-card,
+  .stress-mark-card,
+  .stress-fix-card,
+  .stress-prompt-card,
+  .at-hub-canvas-wrap,
+  .at-hub-node-lesson-card,
+  .rt-reading-card,
+  .rt-options-panel
+) {
+  border-color: rgb(var(--pronun-accent-1-rgb) / 0.38);
+  border-radius: 14px;
+  background:
+    linear-gradient(165deg, rgb(var(--pronun-panel-rgb) / 0.95), rgb(var(--pronun-surface-rgb) / 0.98)),
+    radial-gradient(circle at 18% 12%, rgb(var(--pronun-accent-1-rgb) / 0.14), transparent 58%);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgb(var(--pronun-accent-1-rgb) / 0.15);
+}
+
+/* Card Hover States */
+.pronunciation-layout.pronunciation-theme :where(
+  .pronunciation-topic-card-body,
+  .alphabet-letter-card,
+  .fs-topic-card,
+  .stress-card,
+  .stress-syllable-card,
+  .stress-rule-card,
+  .stress-bank-card,
+  .sh-card,
+  .at-hub-node-lesson-card
+):hover {
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.62);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.2);
+}
+
+/* Button Styles */
+.pronunciation-layout.pronunciation-theme :where(
+  .alphabet-quick-spelling-btn,
+  .alphabet-practice-toggle-btn,
+  .alphabet-prompt-copy-btn
+) {
+  font-family: var(--font-display);
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .alphabet-practice-country-play,
+  .alphabet-section-toggle-icon-wrap
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.62);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.16);
+  color: var(--pronun-text, rgba(255, 255, 255, 0.96));
+}
+
+.pronunciation-layout.pronunciation-theme :where(
+  .alphabet-practice-country-play,
+  .alphabet-section-toggle-icon-wrap
+):hover {
+  border-color: rgb(var(--pronun-accent-2-rgb) / 0.9);
+  background: rgb(var(--pronun-accent-1-rgb) / 0.22);
+}
+
+/* Topic Ring & Visual Elements */
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-ring {
+  border: 2px dotted rgb(var(--pronun-accent-2-rgb) / 0.78);
+  box-shadow: 0 0 22px rgb(var(--pronun-accent-2-rgb) / 0.32);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-card-desc {
+  color: rgb(var(--pronun-accent-2-rgb) / 0.9);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-dot {
+  background: rgb(var(--pronun-accent-2-rgb) / 0.92);
+  box-shadow: 0 0 10px rgb(var(--pronun-accent-2-rgb) / 0.58);
+}
+
+.pronunciation-layout.pronunciation-theme .pronunciation-topic-line {
+  background: linear-gradient(to bottom, rgb(var(--pronun-accent-2-rgb) / 0.9), transparent);
+}

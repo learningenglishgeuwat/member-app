@@ -1,0 +1,186 @@
+/* Neon Cyberpunk Theme Styles */
+
+/* Custom CSS Variables for Neon Colors */
+:root {
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #39ff14;
+}
+
+/* Neon Color Classes */
+.text-neon-cyan { color: var(--neon-cyan); }
+.text-neon-pink { color: var(--neon-pink); }
+.text-neon-purple { color: var(--neon-purple); }
+.text-neon-green { color: var(--neon-green); }
+
+.border-neon-cyan { border-color: var(--neon-cyan); }
+.border-neon-pink { border-color: var(--neon-pink); }
+.border-neon-purple { border-color: var(--neon-purple); }
+.border-neon-green { border-color: var(--neon-green); }
+
+.bg-neon-cyan { background-color: var(--neon-cyan); }
+.bg-neon-pink { background-color: var(--neon-pink); }
+.bg-neon-purple { background-color: var(--neon-purple); }
+.bg-neon-green { background-color: var(--neon-green); }
+
+/* Neon Glow Effects */
+.shadow-neon-cyan { box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-cyan); }
+.shadow-neon-pink { box-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink), 0 0 60px var(--neon-pink); }
+.shadow-neon-purple { box-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-purple), 0 0 60px var(--neon-purple); }
+.shadow-neon-green { box-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green), 0 0 60px var(--neon-green); }
+
+/* Tech Grid Background */
+.bg-tech-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Tech Panel Background */
+.bg-tech-panel {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(20, 20, 20, 0.8) 50%, 
+    rgba(0, 0, 0, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scanline Effect */
+.tech-scanline {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(255, 255, 255, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  animation: scanlines 8s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 10px; }
+}
+
+/* Neon Font */
+.font-neon {
+  font-family: var(--font-display);
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* Tech Panel Clip */
+.clip-tech-panel {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
+}
+
+/* Scan Animation */
+.animate-scan {
+  animation: scan 2s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+/* Slow Spin Animation */
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Reverse Spin Animation */
+.animate-spin-reverse {
+  animation: spin-reverse 6s linear infinite;
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Perspective for 3D effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.skill-execute-card-glow {
+  animation: skillExecuteCardPulse 1.7s ease-in-out infinite;
+}
+
+.skill-execute-outer-glow {
+  border-radius: 18px;
+  animation: skillExecuteOuterPulse 1.6s ease-in-out infinite;
+}
+
+.skill-execute-edge-line {
+  border: 1px solid transparent;
+  border-radius: inherit;
+  animation: skillExecuteEdgePulse 1.3s ease-in-out infinite;
+}
+
+.skill-status-active-glow {
+  color: #b6ffc6;
+  text-shadow: 0 0 8px rgba(182, 255, 198, 0.55);
+}
+
+.skill-execute-text-glow {
+  text-shadow: 0 0 10px currentColor, 0 0 22px currentColor;
+  animation: skillExecuteTextPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skillExecuteCardPulse {
+  0%,
+  100% {
+    filter: saturate(1);
+  }
+  50% {
+    filter: saturate(1.18);
+  }
+}
+
+@keyframes skillExecuteOuterPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes skillExecuteEdgePulse {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes skillExecuteTextPulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}

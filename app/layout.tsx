@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Orbitron } from 'next/font/google';
 import "./globals.css";
-import "./styles/scrollbar.css";
+import "./styles/base/scrollbar.css";
 import AppClientShell from "@/app/components/AppClientShell";
 import TTSInitButton from "@/app/components/TTSInitButton";
 

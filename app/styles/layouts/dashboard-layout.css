@@ -1,0 +1,14 @@
+/* ==========================================================================
+   DASHBOARD LAYOUT
+   ========================================================================== */
+
+.dashboard-layout {
+  @apply min-h-screen bg-black text-white overflow-x-hidden;
+  @apply selection:bg-blue-500/30 selection:text-blue-200;
+}
+
+@supports (height: 100dvh) {
+  .dashboard-layout {
+    min-height: 100dvh;
+  }
+}

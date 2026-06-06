@@ -1,0 +1,38 @@
+/* ==========================================================================
+   CARD COMPONENTS - Reusable Card Styles
+   ========================================================================== */
+
+/* Base Prompt Card Style - Reusable across pronunciation pages */
+.prompt-card-base {
+  margin-top: 0.7rem;
+  border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.4);
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    145deg,
+    rgb(var(--pronun-panel-rgb) / 0.95),
+    rgb(var(--pronun-surface-rgb) / 0.85)
+  );
+  padding: 0.8rem 0.9rem;
+}
+
+.prompt-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.prompt-card-title {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: var(--font-size-display);
+  font-weight: 700;
+}
+
+.prompt-card-quote {
+  margin-top: 0.6rem;
+  color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
+  line-height: 1.55;
+  font-size: var(--font-size-ui);
+}

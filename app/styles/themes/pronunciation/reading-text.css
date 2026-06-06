@@ -1,0 +1,16 @@
+/* ==========================================================================
+   PRONUNCIATION THEME - READING TEXT
+   ========================================================================== */
+
+.pronunciation-theme--reading-text {
+  --pronun-base: #000000;
+  --pronun-glow-1: rgba(51, 65, 85, 0.26);
+  --pronun-glow-2: rgba(71, 85, 105, 0.18);
+  --pronun-selection-bg: rgba(51, 65, 85, 0.35);
+  --pronun-text: rgba(241, 245, 249, 0.97);
+  --pronun-muted: rgba(226, 232, 240, 0.84);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 51 65 85;
+  --pronun-accent-2-rgb: 71 85 105;
+}

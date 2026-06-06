@@ -1,0 +1,16 @@
+/* ==========================================================================
+   PRONUNCIATION THEME - AMERICAN T
+   ========================================================================== */
+
+.pronunciation-theme--american-t {
+  --pronun-base: #000000;
+  --pronun-glow-1: rgba(11, 74, 166, 0.22);
+  --pronun-glow-2: rgba(0, 40, 104, 0.2);
+  --pronun-selection-bg: rgba(11, 74, 166, 0.38);
+  --pronun-text: rgba(236, 244, 255, 0.97);
+  --pronun-muted: rgba(201, 221, 255, 0.82);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 11 74 166;
+  --pronun-accent-2-rgb: 0 40 104;
+}

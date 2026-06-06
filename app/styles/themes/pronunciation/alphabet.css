@@ -1,0 +1,16 @@
+/* ==========================================================================
+   PRONUNCIATION THEME - ALPHABET
+   ========================================================================== */
+
+.pronunciation-theme--alphabet {
+  --pronun-base: #000000;
+  --pronun-glow-1: rgba(29, 78, 216, 0.26);
+  --pronun-glow-2: rgba(59, 130, 246, 0.18);
+  --pronun-selection-bg: rgba(59, 130, 246, 0.35);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 29 78 216;
+  --pronun-accent-2-rgb: 59 130 246;
+  /* Ensure IPA font size is 0.75rem on Alphabet pages */
+  --font-size-ipa: 0.75rem;
+}
