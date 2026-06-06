@@ -244,7 +244,7 @@ const Page: React.FC = () => {
   }, [handleNav, selectedTopic, isTopicLocked, handleStartLearning]);
 
   return (
-    <div className="pronunciation-layout">
+    <div className="pronunciation-layout pronunciation-theme">
       <Background topic={selectedTopic} />
       
       {/* Back Button */}

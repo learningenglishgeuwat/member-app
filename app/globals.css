@@ -30,13 +30,30 @@
       --font-size-display: 0.75rem;
       --font-size-ipa: 0.75rem;
     }
+
+    /* Global font size override untuk semua elemen pada mobile */
+    * {
+      font-size: 0.75rem !important;
+    }
+
+    /* Reset heading sizes untuk mobile */
+    h1 { font-size: 0.75rem !important; }
+    h2 { font-size: 0.75rem !important; }
+    h3 { font-size: 0.75rem !important; }
+    h4 { font-size: 0.75rem !important; }
+    h5 { font-size: 0.75rem !important; }
+    h6 { font-size: 0.75rem !important; }
+
+    /* Reset paragraph, span, div, dan elemen teks lainnya */
+    p, span, div, a, button, input, textarea, label, li, td, th {
+      font-size: 0.75rem !important;
+    }
   }
 
-  }
 
   /* ==========================================================================
-     GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
-     ========================================================================== */
+    GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
+    ========================================================================== */
   @media (max-width: 767px) {
     /* 1. Grammar Topic Pages & Accordions */
     .gr-topic-page [class*='-card-title'] {
@@ -63,7 +80,7 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
-  }
+  
 
   .ipa-label,
   .font-ipa .ipa-label,
@@ -116,7 +133,7 @@
 
 .pronunciation-layout {
   @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white;
-  background: #000000;
+  background: #000000 !important;
   @apply selection:bg-fuchsia-500 selection:text-white;
 }
 
@@ -423,11 +440,9 @@
     0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.3) !important;
 }
 
-<<<<<<< HEAD
-
 /* ==========================================================================
-   GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
-   ========================================================================== */
+  GLOBAL RESPONSIVE ACCORDION & COLLAPSIBLE STYLING FOR MOBILE SCREENS
+  ========================================================================== */
 @media (max-width: 767px) {
   /* 1. Grammar Topic Pages & Accordions */
   .gr-topic-page [class*='-card-title'] {
@@ -444,8 +459,69 @@
     width: 0.45rem !important;
     height: 0.45rem !important;
   }
-=======
->>>>>>> 080c891 (refactor(pronunciation): update styles and layout; tweak TTS speech implementation)
+
+  /* 2. Vocabulary - Teks Penjelasan dan Contoh Kata */
+  .vocab-example,
+  .vocab-example-ipa,
+  .vocab-example-translation,
+  .vocab-practice-example-label,
+  .vocab-practice-example-value {
+    font-size: 0.80rem !important;
+  }
+
+  /* 3. Pronunciation - Alphabet */
+  .alphabet-letter-card [class*='example'],
+  .alphabet-practice-example,
+  .alphabet-prompt-example {
+    font-size: 0.80rem !important;
+  }
+
+  /* 4. Pronunciation - Stressing */
+  .stress-example-chip-label,
+  .stress-rule-example-sentence,
+  .stress-rule-example-translation,
+  .stress-bank-example {
+    font-size: 0.80rem !important;
+  }
+
+  /* 5. Pronunciation - Phonetic Symbols */
+  .sps-example-card,
+  .sps-example-card [class*='word'],
+  .sps-example-card [class*='ipa'],
+  .minimal-example-button,
+  .minimal-word-row [class*='text'],
+  .minimal-sentence-row [class*='text'] {
+    font-size: 0.80rem !important;
+  }
+
+  /* 6. Pronunciation - Final Sound */
+  .fs-topic-table-example-word,
+  .fs-topic-table-example-ipa,
+  .fs-topic-example-list li,
+  .s-es-rule-example-row span,
+  .s-es-table-example-word,
+  .s-es-table-example-ipa,
+  .d-ed-rule-example-row span {
+    font-size: 0.80rem !important;
+  }
+
+  /* 7. Pronunciation - Intonation */
+  .intonation-example,
+  .intonation-example-highlight,
+  .intonation-card [class*='example'] {
+    font-size: 0.80rem !important;
+  }
+
+  /* 8. Generic Example & Explanation Classes */
+  [class*='example-text'],
+  [class*='example-sentence'],
+  [class*='example-translation'],
+  [class*='explanation'],
+  [class*='penjelasan'],
+  [class*='contoh'] {
+    font-size: 0.80rem !important;
+  }
+}
 
 
 /* ==========================================================================

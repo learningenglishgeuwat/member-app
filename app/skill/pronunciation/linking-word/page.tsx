@@ -12,6 +12,7 @@ import {
   waitForVoices,
 } from '@/lib/tts/speech';
 import { data } from './data';
+import './linking-word.css';
 
 type LinkingWordItem = {
   text: string;
@@ -261,7 +262,7 @@ export default function LinkingWordPage() {
   if (!currentCategory) return null;
 
   return (
-    <div className="min-h-screen text-white pt-16 sm:pt-20">
+    <div className="linking-word-page min-h-screen text-white pt-16 sm:pt-20">
       <div className="fixed top-4 left-4 z-50">
         <BackButton to="/skill/pronunciation" />
       </div>
@@ -478,10 +479,8 @@ function PhraseCard({
     <div
       ref={onCardRef}
       className={cx(
-        'bg-[#101414] border rounded-lg p-3 sm:p-6 transition-all duration-300 group flex flex-col gap-2.5 sm:gap-4 relative overflow-hidden',
-        isPlaying
-          ? 'border-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
-          : 'border-white/15 hover:border-cyan-300/70',
+        'phrase-card bg-black rounded-lg p-3 sm:p-6 transition-all duration-300 group flex flex-col gap-2.5 sm:gap-4 relative overflow-hidden',
+        isPlaying && 'phrase-card-playing',
       )}
     >
       {isPlaying && <div className="absolute inset-0 bg-cyan-300/5 pointer-events-none" />}

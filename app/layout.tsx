@@ -50,7 +50,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${notoSans.variable} ${orbitron.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-black text-slate-200">
         <AppClientShell>{children}</AppClientShell>
         <TTSInitButton />
       </body>
