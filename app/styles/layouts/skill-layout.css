@@ -1,0 +1,14 @@
+/* ==========================================================================
+   SKILL LAYOUT - Main Skill Selection & Skill Pages
+   ========================================================================== */
+
+.skill-layout {
+  @apply min-h-screen bg-black text-white overflow-x-hidden;
+  @apply selection:bg-cyan-500/30 selection:text-cyan-200;
+}
+
+@supports (height: 100dvh) {
+  .skill-layout {
+    min-height: 100dvh;
+  }
+}

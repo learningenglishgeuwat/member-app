@@ -1,0 +1,14 @@
+/* ==========================================================================
+   PRONUNCIATION THEME - STRESSING
+   ========================================================================== */
+
+.pronunciation-theme--stressing {
+  --pronun-base: #000000;
+  --pronun-glow-1: rgba(249, 115, 22, 0.26);
+  --pronun-glow-2: rgba(251, 146, 60, 0.18);
+  --pronun-selection-bg: rgba(249, 115, 22, 0.35);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 249 115 22;
+  --pronun-accent-2-rgb: 251 146 60;
+}

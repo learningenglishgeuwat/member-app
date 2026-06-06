@@ -34,7 +34,7 @@
 .stress-subtitle {
   margin-top: 0.5rem;
   color: var(--pronun-muted, #d8c8f8);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
@@ -121,7 +121,7 @@
 .stress-text {
   margin-top: 0.55rem;
   color: var(--pronun-muted, #e9defe);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .stress-word {
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--pronun-text, #e9d5ff);
   letter-spacing: 0.02em;
@@ -174,7 +174,7 @@
 
 .stress-example-chip-label {
   color: var(--pronun-muted, #d8c8f8);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -212,14 +212,14 @@
 .stress-card-note {
   margin-top: 0.35rem;
   color: var(--pronun-muted, #d8c8f8);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
 .stress-syllable-meta {
   margin-top: 0.28rem;
   color: #cbb8ff;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 
@@ -248,7 +248,7 @@
 
 .stress-sentence {
   color: var(--pronun-text, #f4edff);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
@@ -328,7 +328,7 @@
   border-radius: 0.62rem;
   padding: 0.28rem 0.68rem;
   background: rgb(var(--pronun-panel-rgb) / 0.78);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.25;
   transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
@@ -433,7 +433,7 @@
 .stress-bullets {
   margin-top: 0.7rem;
   padding-left: 1rem;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
 }
@@ -468,7 +468,7 @@
 
 .stress-bank-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.5;
   margin-bottom: 0.45rem;
@@ -476,7 +476,7 @@
 
 .stress-bank-list {
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
   padding-left: 1rem;
 }
@@ -513,13 +513,13 @@
   border-radius: 0.5rem;
   display: grid;
   place-items: center;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
 .stress-mark-label {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -527,13 +527,13 @@
 .stress-mark-note {
   margin-top: 0.2rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
 .stress-rule-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -541,7 +541,7 @@
 .stress-rule-note {
   margin-top: 0.3rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
@@ -573,7 +573,7 @@
 .stress-rule-example-sentence {
   margin: 0.1rem 0 0;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   line-height: 1.45;
   font-weight: 500;
   border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.24);
@@ -585,7 +585,7 @@
 .stress-rule-example-translation {
   margin: 0.02rem 0 0;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.79rem;
+  font-size: 0.75rem;
   line-height: 1.4;
   border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.2);
   border-radius: 0.5rem;
@@ -630,7 +630,7 @@
 
 .stress-prompt-title {
   color: var(--pronun-text, rgba(255, 255, 255, 0.96));
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -665,7 +665,7 @@
 .stress-prompt-quote {
   margin-top: 0.6rem;
   color: var(--pronun-muted, rgba(255, 255, 255, 0.78));
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
@@ -679,7 +679,7 @@
   }
 
   .stress-subtitle {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-block-title {
@@ -687,71 +687,71 @@
   }
 
   .stress-text {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-word {
-    font-size: 1.125rem;
+    font-size: 0.75rem;
   }
 
   .stress-ipa {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .stress-card-type {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .stress-card-note {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-sentence {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-note {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .stress-bullets {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-bank-title {
-    font-size: 1.125rem;
+    font-size: 0.75rem;
   }
 
   .stress-bank-list {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-mark-label {
-    font-size: 1.125rem;
+    font-size: 0.75rem;
   }
 
   .stress-mark-note {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-rule-title {
-    font-size: 1.125rem;
+    font-size: 0.75rem;
   }
 
   .stress-rule-note {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-prompt-title {
-    font-size: 1.125rem;
+    font-size: 0.75rem;
   }
 
   .stress-prompt-copy-btn {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .stress-prompt-quote {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .stress-grid,

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Orbitron } from 'next/font/google';
 import "./globals.css";
-import "./styles/scrollbar.css";
+import "./styles/base/scrollbar.css";
 import AppClientShell from "@/app/components/AppClientShell";
+import TTSInitButton from "@/app/components/TTSInitButton";
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -49,8 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${notoSans.variable} ${orbitron.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-black text-slate-200">
         <AppClientShell>{children}</AppClientShell>
+        <TTSInitButton />
       </body>
     </html>
   );

@@ -69,7 +69,7 @@ const TopicCard: React.FC<TopicCardProps> = ({ topic, isActive, onClick, style }
             )}
           </h3>
           {isActive && (
-            <p className="pronunciation-topic-card-desc text-[7px] sm:text-[9px] md:text-[10px] lg:text-xs mt-1 font-light tracking-wide animate-fade-in-up line-clamp-2 md:line-clamp-none">
+            <p className="pronunciation-topic-card-desc text-[0.75rem] sm:text-[9px] md:text-[10px] lg:text-xs mt-1 font-light tracking-wide animate-fade-in-up line-clamp-2 md:line-clamp-none">
               {topic.shortDesc}
             </p>
           )}

@@ -75,13 +75,16 @@ export const diphthongVideos: VideoCategory = {
 };
 
 // Combined all video IDs by category
-export const allVideoIds: { [category: string]: VideoCategory } = {
+export const allVideoIds = {
   vowel_lax: vowelLaxVideos,
   vowel_tense: vowelTenseVideos,
   consonant_voiced: consonantVoicedVideos,
   consonant_voiceless: consonantVoicelessVideos,
   diphthong: diphthongVideos
-};
+} as const;
+
+// Type helper for category keys
+type CategoryKey = keyof typeof allVideoIds;
 
 // Helper function to get video ID by symbol
 export function getVideoIdBySymbol(symbol: string): string | undefined {
@@ -96,12 +99,13 @@ export function getVideoIdBySymbol(symbol: string): string | undefined {
 
 // Helper function to get video ID by category and symbol
 export function getVideoIdByCategoryAndSymbol(category: string, symbol: string): string | undefined {
-  return allVideoIds[category]?.[symbol];
+  const categoryData = allVideoIds[category as CategoryKey];
+  return categoryData?.[symbol];
 }
 
 // Helper function to get all video mappings for a category
 export function getVideoMappingsByCategory(category: string): VideoMapping[] {
-  const categoryVideos = allVideoIds[category];
+  const categoryVideos = allVideoIds[category as CategoryKey];
   if (!categoryVideos) return [];
   
   return Object.entries(categoryVideos).map(([symbol, videoId]) => ({

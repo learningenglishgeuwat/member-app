@@ -392,14 +392,14 @@ const StartJourney: React.FC = () => {
 
       {isPhaseTwoPopupOpen && (
         <div
-          className="fixed inset-0 z-[190] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm"
+          className="fixed inset-0 z-[190] flex items-start sm:items-center justify-center bg-black/70 p-3 pt-12 sm:pt-3 backdrop-blur-sm overflow-y-auto"
           onClick={closePhaseTwoPopups}
           role="dialog"
           aria-modal="true"
           aria-label="Latihan Terarah"
         >
           <div
-            className="w-full max-w-3xl rounded-2xl border border-cyan-400/30 bg-black p-4 shadow-[0_0_34px_rgba(34,211,238,0.24)] sm:p-6"
+            className="w-full max-w-3xl max-h-[calc(100vh-6rem)] sm:max-h-none rounded-2xl border border-cyan-400/30 bg-black p-4 shadow-[0_0_34px_rgba(34,211,238,0.24)] sm:p-6"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-4">
@@ -482,14 +482,14 @@ const StartJourney: React.FC = () => {
 
       {isReferencePopupOpen && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm"
+          className="fixed inset-0 z-[200] flex items-start sm:items-center justify-center bg-black/70 p-3 pt-12 sm:pt-3 backdrop-blur-sm overflow-y-auto"
           onClick={() => setIsReferencePopupOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-label="Referensi Kamus"
         >
           <div
-            className="w-full max-w-md rounded-2xl border border-emerald-400/30 bg-black p-5 shadow-[0_0_34px_rgba(16,185,129,0.22)]"
+            className="w-full max-w-md max-h-[calc(100vh-6rem)] sm:max-h-none rounded-2xl border border-emerald-400/30 bg-black p-5 shadow-[0_0_34px_rgba(16,185,129,0.22)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-4 flex items-start justify-between gap-4">
@@ -528,14 +528,14 @@ const StartJourney: React.FC = () => {
 
       {isCalendarPromptOpen && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/75 p-3 backdrop-blur-sm"
+          className="fixed inset-0 z-[200] flex items-start sm:items-center justify-center bg-black/75 p-3 pt-12 sm:pt-3 backdrop-blur-sm overflow-y-auto"
           onClick={() => setIsCalendarPromptOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-label="Prompt Gemini Google Calendar"
         >
           <div
-            className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-amber-400/30 bg-black p-4 shadow-[0_0_34px_rgba(245,158,11,0.22)] sm:p-6 text-[11px] sm:text-[12px]"
+            className="max-h-[calc(100vh-6rem)] sm:max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-amber-400/30 bg-black p-4 shadow-[0_0_34px_rgba(245,158,11,0.22)] sm:p-6 text-[11px] sm:text-[12px]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-4">

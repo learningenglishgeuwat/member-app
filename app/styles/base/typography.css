@@ -1,0 +1,63 @@
+/* ==========================================================================
+   TYPOGRAPHY - Font Rules & Text Styles
+   ========================================================================== */
+
+/* IPA Label Styles */
+.ipa-label,
+.font-ipa .ipa-label,
+[data-ipa] .ipa-label {
+  font-family: var(--font-ui) !important;
+  color: var(--app-page-fg) !important;
+}
+
+/* Section Headings */
+section h2,
+section h3,
+section h4,
+section h5,
+section h6,
+.fs-topic-title,
+.fs-topic-block-title {
+  font-family: var(--font-display);
+}
+
+/* Card Titles - Orbitron Display Font */
+.orbitron-card-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Play All Buttons - Display Font */
+button[class*="play-all"],
+button[class*="playall"],
+[class*="play-all-btn"],
+[class*="playall-btn"] {
+  font-family: var(--font-display);
+}
+
+/* Mobile Typography Overrides */
+@media (max-width: 768px) {
+  /* Global font size override untuk semua elemen pada mobile */
+  * {
+    font-size: 0.75rem !important;
+  }
+
+  /* Reset heading sizes untuk mobile */
+  h1 { font-size: 0.75rem !important; }
+  h2 { font-size: 0.75rem !important; }
+  h3 { font-size: 0.75rem !important; }
+  h4 { font-size: 0.75rem !important; }
+  h5 { font-size: 0.75rem !important; }
+  h6 { font-size: 0.75rem !important; }
+
+  /* Reset paragraph, span, div, dan elemen teks lainnya */
+  p, span, div, a, button, input, textarea, label, li, td, th {
+    font-size: 0.75rem !important;
+  }
+
+  /* SAFEGUARD: Hanya huruf alphabet yang tetap besar 3.75rem */
+  .alphabet-letter {
+    font-size: 3.75rem !important;
+  }
+}

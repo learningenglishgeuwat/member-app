@@ -1,0 +1,32 @@
+/* ==========================================================================
+   CSS VARIABLES - Design Tokens
+   ========================================================================== */
+
+:root {
+  /* Font Variables */
+  --font-ipa: sans-serif;
+  --font-ui: var(--font-noto);
+
+  /* Color Variables */
+  --color-ipa: #06b6d4; /* Cyan untuk teks IPA */
+  --color-cyan-primary: #06b6d4; /* Cyan 500 - untuk UI elements */
+  --color-cyan-hover: #67e8f9; /* Cyan 300 - untuk hover states */
+
+  /* Page Colors */
+  --app-page-bg: #000000;
+  --app-page-fg: rgb(226 232 240); /* slate-200 */
+
+  /* Font Size Variables - Desktop Defaults */
+  --font-size-ui: 0.88rem;
+  --font-size-display: 1rem;
+  --font-size-ipa: 0.85rem;
+}
+
+/* Mobile Font Size Overrides */
+@media (max-width: 768px) {
+  :root {
+    --font-size-ui: 0.75rem;
+    --font-size-display: 0.75rem;
+    --font-size-ipa: 0.75rem;
+  }
+}

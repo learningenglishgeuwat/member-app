@@ -1,0 +1,14 @@
+/* ==========================================================================
+   AUTH LAYOUT - Login, Signup, Password Reset Pages
+   ========================================================================== */
+
+.auth-layout {
+  @apply min-h-screen bg-black text-slate-200 overflow-x-hidden;
+  @apply selection:bg-purple-500/30 selection:text-purple-200;
+}
+
+@supports (height: 100dvh) {
+  .auth-layout {
+    min-height: 100dvh;
+  }
+}

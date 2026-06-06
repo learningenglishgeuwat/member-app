@@ -87,7 +87,7 @@
 .vocab-kpi-table dt {
   padding: 0.7rem 0.85rem;
   color: rgba(245, 255, 247, 0.92);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   font-weight: 650;
   letter-spacing: 0.02em;
 }
@@ -96,7 +96,7 @@
   padding: 0.7rem 0.85rem;
   justify-content: flex-end;
   color: #f7fff9;
-  font-size: 0.92rem;
+  font-size: 0.75rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   border-left: 1px solid rgba(110, 255, 141, 0.18);
@@ -166,7 +166,7 @@
   display: block;
   margin-top: 0.18rem;
   color: #acefff;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .vocab-phase-head {
@@ -200,7 +200,7 @@
   border-radius: 0.56rem;
   background: rgba(12, 40, 52, 0.6);
   color: #e8ffef;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding: 0.34rem 0.66rem;
   transition: border-color 0.2s ease, background-color 0.2s ease, filter 0.2s ease;
 }
@@ -238,7 +238,7 @@
 .vocab-playing-note {
   margin: 0.6rem 0 0;
   color: #effff2;
-  font-size: 0.86rem;
+  font-size: 0.75rem;
 }
 
 .vocab-tools {
@@ -257,7 +257,7 @@
 .vocab-search-wrap span {
   display: block;
   color: #effff2;
-  font-size: 0.79rem;
+  font-size: 0.75rem;
   margin-bottom: 0.22rem;
 }
 
@@ -278,7 +278,7 @@
 .vocab-visible-note {
   margin: 0.78rem 0 0;
   color: #effff2;
-  font-size: 0.89rem;
+  font-size: 0.75rem;
 }
 
 .vocab-pagination {
@@ -292,7 +292,7 @@
 
 .vocab-pagination-status {
   color: #effff2;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 
@@ -359,7 +359,7 @@
   border: 1px solid rgba(140, 255, 164, 0.58);
   background: rgba(8, 30, 12, 0.42);
   color: #e8ffef;
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   line-height: 1;
   box-shadow: 0 0 12px rgba(57, 255, 20, 0.18);
 }
@@ -374,14 +374,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   line-height: 1;
 }
 
 .vocab-word {
   margin: 0.7rem 0 0;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -395,7 +395,7 @@
   background: rgba(7, 21, 10, 0.46);
   color: #f8fff9;
   padding: 0.2rem 0.7rem;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.4;
   white-space: normal;
@@ -433,7 +433,7 @@
 .vocab-ipa {
   margin: 0.28rem 0 0;
   color: var(--color-ipa);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   line-height: 1.45;
   font-family: var(--font-ipa);
 }
@@ -463,7 +463,7 @@
 .vocab-example-ipa {
   margin: 0.22rem 0 0;
   color: var(--color-ipa);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-style: italic;
   line-height: 1.45;
   font-family: var(--font-ipa);
@@ -472,7 +472,7 @@
 .vocab-example-translation {
   margin: 0.2rem 0 0;
   color: rgba(167, 255, 196, 0.8);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   line-height: 1.52;
 }
 
@@ -489,7 +489,7 @@
   border: 1px solid rgba(126, 255, 155, 0.72);
   background: rgba(9, 34, 15, 0.42);
   color: #f6fff8;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding: 0.28rem 0.62rem;
 }
 
@@ -539,7 +539,7 @@
 .vocab-word-carousel-hint {
   margin: 0 0 0.6rem;
   color: rgba(235, 255, 242, 0.92);
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
@@ -581,7 +581,7 @@
 .vocab-topic-carousel-hint {
   margin: 0 0 0.6rem;
   color: rgba(235, 255, 242, 0.92);
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
@@ -738,7 +738,7 @@
 .vocab-topic-chip--title {
   margin-bottom: 0;
   padding: 0.24rem 0.82rem;
-  font-size: 0.92rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -761,7 +761,7 @@
 .vocab-topic-title {
   margin: 0;
   color: #ffffff;
-  font-size: 1.05rem;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -842,7 +842,7 @@
   border: 1px solid rgba(200, 255, 187, 0.88);
   background: rgba(76, 135, 46, 0.92);
   color: #f5fff2;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   padding: 0.32rem 0.68rem;
   text-decoration: none;
   box-shadow: 0 0 0 1px rgba(110, 255, 141, 0.14);
@@ -917,7 +917,7 @@
   width: 100%;
   border-radius: 0.75rem;
   padding: 0.85rem 0.9rem;
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   font-weight: 750;
   letter-spacing: 0.02em;
   line-height: 1.1;
@@ -970,7 +970,7 @@
   .vocab-control-saved-progress.button-saved-progress {
     padding: 0.78rem 0.85rem;
     border-radius: 0.7rem;
-    font-size: 0.82rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -1010,7 +1010,7 @@
 .vocab-prompt-title {
   margin: 0;
   color: #f4fff6;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   letter-spacing: 0.02em;
 }
 
@@ -1059,7 +1059,7 @@
   border-radius: 999px;
   background: rgba(6, 24, 10, 0.58);
   color: #ebfff0;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   padding: 0.26rem 0.6rem;
   cursor: pointer;
@@ -1083,7 +1083,7 @@
 .vocab-prompt-body {
   margin: 0;
   color: #effff2;
-  font-size: 0.84rem;
+  font-size: 0.75rem;
   line-height: 1.56;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -1101,7 +1101,7 @@
 .vocab-prompt-placeholder {
   margin: 0;
   color: rgba(210, 230, 220, 0.72);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   font-style: italic;
 }
@@ -1148,7 +1148,7 @@
   border-radius: 0.45rem;
   background: rgba(8, 28, 13, 0.44);
   color: #f0fff3;
-  font-size: 0.86rem;
+  font-size: 0.75rem;
   padding: 0.25rem 0.55rem;
 }
 
@@ -1178,7 +1178,7 @@
   margin: 0;
   color: #effff2;
   line-height: 1.55;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 .vocab-practice-example-row {
@@ -1190,13 +1190,13 @@
 
 .vocab-practice-example-label {
   color: #c4fdd1;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
 .vocab-practice-example-value {
   color: #f4fff7;
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   word-break: break-word;
 }

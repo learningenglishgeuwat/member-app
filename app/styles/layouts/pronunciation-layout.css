@@ -1,0 +1,25 @@
+/* ==========================================================================
+   PRONUNCIATION LAYOUT - Base Layout for All Pronunciation Pages
+   ========================================================================== */
+
+.pronunciation-layout {
+  @apply relative w-full min-h-screen overflow-x-hidden overflow-y-visible text-white;
+  background: #000000 !important;
+  @apply selection:bg-fuchsia-500 selection:text-white;
+}
+
+.pronunciation-layout.pronunciation-theme {
+  --pronun-page-bg: #000000;
+  background: #000000 !important;
+}
+
+.pronunciation-layout.pronunciation-theme ::selection {
+  background: var(--pronun-selection-bg, rgba(217, 70, 239, 0.35));
+  color: var(--pronun-selection-fg, #ffffff);
+}
+
+@supports (height: 100dvh) {
+  .pronunciation-layout {
+    min-height: 100dvh;
+  }
+}

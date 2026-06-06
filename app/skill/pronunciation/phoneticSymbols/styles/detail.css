@@ -11,6 +11,26 @@
   overflow-x: hidden;
 }
 
+/* Guard: prevent global --font-size-ipa from shrinking the large symbol inside the circular HUD
+   Keep local sizing (Tailwind text-* classes) intact for elements inside .symbol-detail-container */
+.symbol-detail-container .font-ipa,
+.symbol-detail-container [data-ipa] {
+  font-size: inherit !important;
+}
+
+/* Stronger, explicit sizing for the hero IPA inside the circular HUD
+   Mirror Tailwind's text-6xl / md:text-8xl so the big symbol retains intended scale */
+.symbol-detail-container .symbol-detail-main h2.font-ipa[data-ipa] {
+  font-size: 3.75rem !important; /* text-6xl */
+  line-height: 1 !important;
+}
+
+@media (min-width: 768px) {
+  .symbol-detail-container .symbol-detail-main h2.font-ipa[data-ipa] {
+    font-size: 6rem !important; /* md:text-8xl */
+  }
+}
+
 /* Keep sizing predictable without wiping component-level spacing */
 .symbol-detail-container *,
 .symbol-detail-container *::before,
@@ -217,7 +237,8 @@
 }
 
 .symbol-detail-container .word-ipa {
-  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); /* 11px mobile - 12px desktop (Small Text) */
+  /* Use global IPA size variable so word examples follow --font-size-ipa (eg. 0.75rem) */
+  font-size: var(--font-size-ipa) !important;
   color: #06b6d4 !important;
   font-family: var(--font-ipa);
 }

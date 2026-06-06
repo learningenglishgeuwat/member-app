@@ -1,0 +1,14 @@
+/* ==========================================================================
+   PRONUNCIATION THEME - INTONATION
+   ========================================================================== */
+
+.pronunciation-theme--intonation {
+  --pronun-base: #000000;
+  --pronun-glow-1: rgba(236, 72, 153, 0.24);
+  --pronun-glow-2: rgba(225, 29, 72, 0.18);
+  --pronun-selection-bg: rgba(236, 72, 153, 0.35);
+  --pronun-surface-rgb: 0 0 0;
+  --pronun-panel-rgb: 0 0 0;
+  --pronun-accent-1-rgb: 236 72 153;
+  --pronun-accent-2-rgb: 225 29 72;
+}
