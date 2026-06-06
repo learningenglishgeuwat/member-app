@@ -36,6 +36,9 @@
 @import './styles/components/cards.css';
 @import './styles/components/tables.css';
 
+/* Card Components (new shared library) */
+@import './components/cards/BaseCard.css';
+
 /* Utilities */
 @import './styles/utilities/effects.css';
 @import './styles/utilities/responsive.css';
