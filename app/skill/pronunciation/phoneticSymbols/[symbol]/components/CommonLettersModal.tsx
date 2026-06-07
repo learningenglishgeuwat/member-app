@@ -207,8 +207,8 @@ export default function CommonLettersModal({
                     <div className="grid gap-4 md:grid-cols-2">
                       {category.letters.map((letter, index) => (
                         <div key={index} className={`rounded-lg p-3 border ${theme.itemWrap}`}>
-                          <div className="flex items-center mb-2">
-                            <span className={`font-bold text-lg mr-2 ${theme.ipa}`}>{letter.ipaSymbol}</span>
+                          <div className="flex flex-col mb-2">
+                            <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>{letter.ipaSymbol}</span>
                             <span className={`font-mono text-sm ${theme.letter}`}>{letter.letter}</span>
                           </div>
 
