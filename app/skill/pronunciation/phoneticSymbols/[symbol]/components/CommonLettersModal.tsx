@@ -6,7 +6,7 @@ import type { CommonLetter } from '../../data/commonLetters/CommonLetters'
 type CanonicalCategory = CommonLetter['category']
 type LegacyCategory = 'vowel' | 'tense_vowel' | 'consonant'
 type CategoryFamily = 'vowel' | 'diphthong' | 'consonant'
-type CategoryLabel = 'VOWEL' | 'TENSE VOWEL' | 'DIPHTHONG' | 'CONSONANT'
+type CategoryLabel = 'LAX VOWEL' | 'TENSE VOWEL' | 'DIPHTHONG' | 'CONSONANT'
 
 type NormalizedCommonLetter = Omit<CommonLetter, 'category'> & {
   category: CanonicalCategory
@@ -89,7 +89,7 @@ function normalizeCommonLetterCategory(category: CanonicalCategory | LegacyCateg
 }
 
 function toCategoryName(category: CanonicalCategory): CategoryLabel {
-  if (category === 'vowel_lax') return 'VOWEL'
+  if (category === 'vowel_lax') return 'LAX VOWEL'
   if (category === 'vowel_tense') return 'TENSE VOWEL'
   if (category === 'diphthong') return 'DIPHTHONG'
   return 'CONSONANT'
@@ -189,7 +189,7 @@ export default function CommonLettersModal({
                     type="button"
                     onClick={() => toggleSection(category.category)}
                     data-tour={
-                      category.category === 'VOWEL'
+                      category.category === 'LAX VOWEL'
                         ? 'common-letters-toggle-vowel'
                         : undefined
                     }
