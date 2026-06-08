@@ -1550,7 +1550,7 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         }
       />
-      <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.wav`} />
+      <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.mp3`} />
 
 
       {/* Help Popup Modal */}

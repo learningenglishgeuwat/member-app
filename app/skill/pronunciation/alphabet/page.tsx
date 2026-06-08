@@ -67,6 +67,7 @@ const AlphabetPage: React.FC = () => {
     alphabet_notes: false,
   });
   const [isClient, setIsClient] = useState(false);
+  const [isIntroOpen, setIsIntroOpen] = useState(false);
   const [isQuickSpellingOpen, setIsQuickSpellingOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isPracticeOpen, setIsPracticeOpen] = useState(false);
@@ -578,6 +579,43 @@ const AlphabetPage: React.FC = () => {
         </div>
 
         <section
+          className={`alphabet-notes-panel ${isIntroOpen ? '' : 'collapsed'}`}
+          aria-labelledby="alphabet-intro-title"
+        >
+          <button
+            type="button"
+            id="alphabet-intro-title"
+            className="alphabet-section-toggle"
+            aria-expanded={isIntroOpen}
+            aria-controls="alphabet-intro-content"
+            onClick={() => setIsIntroOpen((prev) => !prev)}
+          >
+            <span className="alphabet-notes-title">Mengenal Alphabet</span>
+            <span className="alphabet-section-toggle-icon-wrap" aria-hidden="true">
+              <ChevronRight
+                className={`alphabet-section-toggle-icon ${isIntroOpen ? 'open' : ''}`}
+              />
+            </span>
+          </button>
+
+          {isIntroOpen && (
+            <div id="alphabet-intro-content" className="alphabet-section-content">
+              <div className="alphabet-intro-text">
+                <p>
+                  Alfabet adalah kumpulan 26 huruf standar (dari A sampai Z) yang kita gunakan untuk menulis kata-kata.
+                </p>
+                <p>
+                  Namun uniknya, dalam bahasa Inggris, satu huruf bisa memiliki cara ucap yang berbeda-beda tergantung katanya. 
+                  Oleh karena itu, di halaman ini kita kuasai dulu bentuk dan nama asli hurufnya. Ini akan menjadi fondasi 
+                  penting sebelum kita belajar Simbol Fonetik atau IPA (International Phonetic Alphabet) di tahap berikutnya 
+                  yaitu Phoentic Symbol yang menjadi panduan pasti cara mengucapkan setiap suara dengan benar.
+                </p>
+              </div>
+            </div>
+          )}
+        </section>
+
+        <section
           className={`alphabet-quick-spelling-panel ${isQuickSpellingOpen ? '' : 'collapsed'}`}
           aria-labelledby="alphabet-quick-spelling-title"
         >
@@ -715,7 +753,7 @@ const AlphabetPage: React.FC = () => {
                   <p className="alphabet-practice-task-title">Mission:</p>
                 </div>
                 <p className="alphabet-practice-task-text">
-                  Eja semua huruf alfabet A-Z, lalu eja 5 nama negara berikut:
+                  Ikuti instruksi di panel recording untuk mengeja semua huruf alfabet A-Z, lalu lanjutkan dengan mengeja 5 nama negara berikut:
                 </p>
               </div>
               
@@ -864,7 +902,7 @@ const AlphabetPage: React.FC = () => {
 
       <RecordingControlsButton
         className="alphabet-recording-anchor"
-        downloadFileName="alphabet-GEUWAT-recording.wav"
+        downloadFileName="alphabet-GEUWAT-recording.mp3"
       />
     </div>
   );

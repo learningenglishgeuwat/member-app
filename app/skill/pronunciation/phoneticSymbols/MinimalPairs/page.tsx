@@ -568,7 +568,7 @@ const MinimalPairsPage: React.FC = () => {
         }
       />
 
-      <RecordingControlsButton downloadFileName={`minimal-pairs-${selectedPairId || 'practice'}-GEUWAT-recording.wav`} />
+      <RecordingControlsButton downloadFileName={`minimal-pairs-${selectedPairId || 'practice'}-GEUWAT-recording.mp3`} />
     </div>
   );
 };

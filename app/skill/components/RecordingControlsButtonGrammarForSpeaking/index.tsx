@@ -12,7 +12,7 @@ interface RecordingControlsButtonProps {
 }
 
 const RecordingControlsButtonGrammarForSpeaking: React.FC<RecordingControlsButtonProps> = ({
-  downloadFileName = 'grammar-speaking-GEUWAT-recording.wav',
+  downloadFileName = 'grammar-speaking-GEUWAT-recording.mp3',
   className = '',
   showHelp = true,
   defaultOpen = false

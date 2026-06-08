@@ -902,7 +902,7 @@ export default function GlottalPage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-glottal-middle-GEUWAT-recording.wav"
+        downloadFileName="american-t-glottal-middle-GEUWAT-recording.mp3"
       />
     </>
   );

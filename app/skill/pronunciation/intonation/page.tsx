@@ -1224,7 +1224,7 @@ export default function IntonationPage() {
 
       <RecordingControlsButton
         className="intonation-recording-anchor"
-        downloadFileName="intonation-GEUWAT-recording.wav"
+        downloadFileName="intonation-GEUWAT-recording.mp3"
       />
 
       <ControlCenter

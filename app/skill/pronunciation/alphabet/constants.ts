@@ -40,6 +40,8 @@ export const INDONESIAN_ALPHABET_NOTES: readonly string[] = [
   'Huruf R bahasa Inggris tidak digetarkan kuat seperti R bahasa Indonesia.',
   'Bedakan V dan F: V bersuara (getaran), F tidak bersuara.',
   'Di model US pada halaman ini, huruf Z dibaca /zi/ sedangkan di British biasanya /zed/.',
+  'Huruf E (/i/) sering tertukar dengan I (/aɪ/).',
+  'Huruf G (/dʒi/) sering tertukar dengan J (/dʒeɪ/).',
 ];
 
 export const QUICK_SPELLING_WORDS: readonly string[] = [

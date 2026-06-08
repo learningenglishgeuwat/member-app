@@ -599,7 +599,7 @@ export default function FinalTEndingPage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-final-before-consonant-GEUWAT-recording.wav"
+        downloadFileName="american-t-final-before-consonant-GEUWAT-recording.mp3"
       />
     </>
   );
