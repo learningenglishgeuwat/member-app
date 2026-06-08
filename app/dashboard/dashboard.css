@@ -290,7 +290,8 @@
   z-index: 1;
   object-fit: cover;
   border-radius: 50%;
-  transform: scale(1.8) translateY(7px);
+  /* Default untuk desktop/laptop */
+  transform: scale(1.5) translateY(7px);
   filter: grayscale(0.45) saturate(0.82) brightness(0.92);
   opacity: 0.94;
   transition: filter 180ms ease, opacity 180ms ease, transform 180ms ease;
@@ -299,7 +300,7 @@
 .dashboard-tour-avatar:hover .dashboard-tour-avatar-image {
   filter: none;
   opacity: 1;
-  transform: scale(1.88) translateY(7px);
+  transform: scale(1.58) translateY(7px);
 }
 
 .dashboard-tour-avatar.is-active::after {
@@ -326,5 +327,17 @@
 @keyframes dashboard-tour-avatar-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Override untuk mobile - avatar di dashboard */
+@media (max-width: 768px) {
+  .dashboard-tour-avatar-image {
+    /* Mobile membutuhkan translateY berbeda untuk posisi yang tepat */
+    transform: scale(1.8) translateY(5.5px);
+  }
+
+  .dashboard-tour-avatar:hover .dashboard-tour-avatar-image {
+    transform: scale(1.88) translateY(5.5px);
   }
 }
