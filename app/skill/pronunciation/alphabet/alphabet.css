@@ -227,6 +227,19 @@
   margin-top: 0.75rem;
 }
 
+.alphabet-intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.alphabet-intro-text p {
+  margin: 0;
+  color: #dbe6ff;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
 .alphabet-quick-spelling-title {
   font-family: var(--font-display);
   margin: 0;

@@ -843,7 +843,7 @@ export default function SilentTMiddlePage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-silent-middle-GEUWAT-recording.wav"
+        downloadFileName="american-t-silent-middle-GEUWAT-recording.mp3"
       />
     </>
   );

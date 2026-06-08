@@ -1700,7 +1700,7 @@ export default function PronunciationTextPage() {
       />
       <RecordingControlsButton
         className='text-recording-anchor'
-        downloadFileName='applied-pronunciation-text-GEUWAT-recording.wav'
+        downloadFileName='applied-pronunciation-text-GEUWAT-recording.mp3'
       />
     </div>
   );

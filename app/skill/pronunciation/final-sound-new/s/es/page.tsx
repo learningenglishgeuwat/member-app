@@ -1387,7 +1387,7 @@ export default function FinalSoundSEsPage() {
 
       <RecordingControlsButton
         className="s-es-recording-anchor"
-        downloadFileName="final-sound-s-es-GEUWAT-recording.wav"
+        downloadFileName="final-sound-s-es-GEUWAT-recording.mp3"
       />
     </div>
   );

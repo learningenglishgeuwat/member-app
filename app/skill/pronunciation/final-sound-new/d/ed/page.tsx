@@ -1371,7 +1371,7 @@ export default function FinalSoundDEdPage() {
 
       <RecordingControlsButton
         className="d-ed-recording-anchor"
-        downloadFileName="final-sound-d-ed-GEUWAT-recording.wav"
+        downloadFileName="final-sound-d-ed-GEUWAT-recording.mp3"
       />
     </div>
   );

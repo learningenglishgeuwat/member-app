@@ -623,7 +623,7 @@ export default function ClearTEndingPage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-released-ending-GEUWAT-recording.wav"
+        downloadFileName="american-t-released-ending-GEUWAT-recording.mp3"
       />
     </>
   );

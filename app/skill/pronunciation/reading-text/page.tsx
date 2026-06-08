@@ -459,7 +459,7 @@ export default function ReadingTextForPracticePage() {
 
       <RecordingControlsButton
         className="rt-recording-anchor"
-        downloadFileName="reading-text-GEUWAT-recording.wav"
+        downloadFileName="reading-text-GEUWAT-recording.mp3"
       />
     </div>
   );

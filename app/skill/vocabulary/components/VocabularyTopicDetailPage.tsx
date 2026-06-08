@@ -882,7 +882,7 @@ export default function VocabularyTopicDetailPage({
           </div>
         </div>
       </ControlCenter>
-      <RecordingControlsButton downloadFileName={`vocabulary-${topic.topicId}-GEUWAT-recording.wav`} />
+      <RecordingControlsButton downloadFileName={`vocabulary-${topic.topicId}-GEUWAT-recording.mp3`} />
     </main>
   );
 }

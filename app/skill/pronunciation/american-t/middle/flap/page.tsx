@@ -770,7 +770,7 @@ export default function FlapTPage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-flap-middle-GEUWAT-recording.wav"
+        downloadFileName="american-t-flap-middle-GEUWAT-recording.mp3"
       />
     </>
   );

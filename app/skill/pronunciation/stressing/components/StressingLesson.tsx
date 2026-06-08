@@ -629,8 +629,8 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
     : 'stressing-sentence-open-sections-v1';
   const evaluationPrompt = isWord ? WORD_STRESS_EVALUATION_PROMPT : SENTENCE_STRESS_EVALUATION_PROMPT;
   const recordingFileName = isWord
-    ? 'word-stress-GEUWAT-recording.wav'
-    : 'sentence-stress-GEUWAT-recording.wav';
+    ? 'word-stress-GEUWAT-recording.mp3'
+    : 'sentence-stress-GEUWAT-recording.mp3';
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openSections, setOpenSections] = useState<Record<SectionKey, boolean>>(

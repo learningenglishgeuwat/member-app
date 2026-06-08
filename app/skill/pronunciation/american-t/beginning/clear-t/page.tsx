@@ -689,7 +689,7 @@ export default function ClearTBeginningPage() {
       />
       <RecordingControlsButton
         className="at-recording-anchor"
-        downloadFileName="american-t-released-beginning-GEUWAT-recording.wav"
+        downloadFileName="american-t-released-beginning-GEUWAT-recording.mp3"
       />
     </>
   );
