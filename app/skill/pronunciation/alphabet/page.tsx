@@ -702,7 +702,7 @@ const AlphabetPage: React.FC = () => {
             aria-controls="alphabet-notes-content"
             onClick={() => setIsNotesOpen((prev) => !prev)}
           >
-            <span className="alphabet-notes-title">Catatan untuk Penutur Indonesia</span>
+            <span className="alphabet-notes-title">Tips taktis geuwat</span>
             <span className="alphabet-section-toggle-icon-wrap" aria-hidden="true">
               <ChevronRight
                 className={`alphabet-section-toggle-icon ${isNotesOpen ? 'open' : ''}`}
@@ -738,7 +738,7 @@ const AlphabetPage: React.FC = () => {
             aria-controls="alphabet-practice-content"
             onClick={() => setIsPracticeOpen((prev) => !prev)}
           >
-            <span className="alphabet-notes-title">Practice</span>
+            <span className="alphabet-notes-title">MISI</span>
             <span className="alphabet-section-toggle-icon-wrap" aria-hidden="true">
               <ChevronRight
                 className={`alphabet-section-toggle-icon ${isPracticeOpen ? 'open' : ''}`}

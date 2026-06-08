@@ -2204,14 +2204,14 @@
       "source": "manifest"
     },
     {
-      "id": "skill-pronunciation-phoneticSymbols-tongue-twister",
+      "id": "skill-pronunciation-tongue-twister",
       "label": "Tongue Twister",
-      "path": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+      "path": "/skill/pronunciation/tongue-twister",
       "scope": "pronunciation",
       "keywords": [
         "tongue",
         "twister",
-        "/skill/pronunciation/phoneticsymbols/tongue-twister",
+        "/skill/pronunciation/tongue-twister",
         "latihan",
         "kelincahan",
         "ucapan",
@@ -5972,7 +5972,7 @@
     {
       "topicId": "tongue-twister-practice-goal",
       "title": "Tongue Twister Practice Goal",
-      "route": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+      "route": "/skill/pronunciation/tongue-twister",
       "keywords": [
         "fungsi tongue twister",
         "latihan lidah pronunciation",

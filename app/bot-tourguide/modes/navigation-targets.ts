@@ -488,7 +488,7 @@ export const PRONUNCIATION_ROUTE_TARGETS: NavigationPronunciationTarget[] = [
     ],
   },
   {
-    path: '/skill/pronunciation/phoneticSymbols/tongue-twister',
+    path: '/skill/pronunciation/tongue-twister',
     label: 'Tongue Twister',
     triggers: ['tongue twister', 'twister', 'latihan lidah', 'tongue'],
   },
