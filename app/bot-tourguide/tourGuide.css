@@ -978,13 +978,13 @@
     font-size: 11px;
   }
 
-  .tg-hide-button,
-  .tg-send-button {
-    width: 36px;
+  .tg-hide-button {
+    width: 44px;
+    height: 30px;
   }
 
-  .tg-hide-button {
-    height: 26px;
+  .tg-send-button {
+    width: 44px;
   }
 
   .tg-form {
