@@ -9,6 +9,7 @@ export interface AssessmentOption {
   percentage: number;
   color: string;
   icon: string;
+  range: string; // Rentang nilai yang ditampilkan
 }
 
 interface ProgressModalProps {
@@ -19,34 +20,50 @@ interface ProgressModalProps {
   description?: string;
 }
 
+/**
+ * Rubrik Penilaian Progress
+ * 
+ * Status Nilai:
+ * 🟢 Sangat Bagus: 95–100 (representasi: 100%)
+ * 🔵 Bagus: 80–94 (representasi: 94%)
+ * 🟠 Perlu sedikit perbaikan: 65–79 (representasi: 79%)
+ * 🔴 Perlu Perbaikan: 0–64 (representasi: 64%)
+ * 
+ * Nilai percentage menggunakan nilai tertinggi dari rentang untuk representasi.
+ * Dokumentasi lengkap: /documentation/RUBRIK_PENILAIAN.md
+ */
 const ASSESSMENT_OPTIONS: AssessmentOption[] = [
   {
-    id: 'excellent',
-    label: 'Excellent',
-    percentage: 100,
+    id: 'sangat-bagus',
+    label: 'Sangat Bagus',
+    percentage: 100, // Highest value of 95-100
     color: 'green',
     icon: '🟢',
+    range: '95–100',
   },
   {
-    id: 'good',
-    label: 'Good',
-    percentage: 80,
+    id: 'bagus',
+    label: 'Bagus',
+    percentage: 94, // Highest value of 80-94
     color: 'blue',
     icon: '🔵',
+    range: '80–94',
   },
   {
-    id: 'enough',
-    label: 'Enough',
-    percentage: 65,
+    id: 'perlu-sedikit-perbaikan',
+    label: 'Perlu sedikit perbaikan',
+    percentage: 79, // Highest value of 65-79
     color: 'orange',
     icon: '🟠',
+    range: '65–79',
   },
   {
-    id: 'lack',
-    label: 'Lack',
-    percentage: 50,
+    id: 'perlu-perbaikan',
+    label: 'Perlu Perbaikan',
+    percentage: 64, // Highest value of 0-64
     color: 'red',
     icon: '🔴',
+    range: '0–64',
   },
 ];
 
@@ -105,7 +122,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
               <span className="progress-modal__option-icon">{option.icon}</span>
               <div className="progress-modal__option-content">
                 <span className="progress-modal__option-label">{option.label}</span>
-                <span className="progress-modal__option-percentage">{option.percentage}%</span>
+                <span className="progress-modal__option-percentage">{option.range}</span>
               </div>
             </button>
           ))}
