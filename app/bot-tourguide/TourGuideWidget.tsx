@@ -1108,7 +1108,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 onClick={() => setCollapsed(true)}
                 aria-label="Hide"
               >
-                Hide
+                <span className="hidden md:inline">Hide</span>
               </button>
             </header>
 
@@ -1192,16 +1192,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               ))}
             </div>
 
-            {activeChips.length ? (
-              <div className="tg-meta-chip-wrap" aria-label="Kategori jawaban bot">
-                <p className="tg-section-label">Kategori jawaban</p>
-                {activeChips.map((chip) => (
-                  <span key={chip.key} className={`tg-meta-chip tg-meta-chip--${chip.tone}`}>
-                    {chip.label}
-                  </span>
-                ))}
-              </div>
-            ) : null}
+            {/* Kategori jawaban tidak ditampilkan di UI */}
 
             {!isThinking && activeResult.confirmation ? (
               <div className="tg-confirm-chip-wrap" aria-label="Guide confirmation">
@@ -1296,7 +1287,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
                 className="tg-input"
               />
               <button type="submit" className="tg-send-button" aria-label="Kirim">
-                Kirim
+                <span className="hidden md:inline">Kirim</span>
               </button>
             </form>
           </aside>

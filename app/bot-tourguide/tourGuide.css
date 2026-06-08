@@ -56,7 +56,8 @@
   height: 48px;
   object-fit: cover;
   border-radius: 50%;
-  transform: scale(1.8) translateY(5px);
+  /* Default untuk desktop/laptop */
+  transform: scale(1.8) translateY(6px);
   user-select: none;
   transition: filter 180ms ease, opacity 180ms ease;
 }
@@ -185,7 +186,7 @@
 }
 
 .tg-panel-avatar-button .tg-avatar-image {
-  transform: scale(1.8) translateY(0px);
+  transform: scale(1.8) translateY(6px);
 }
 
 .tg-panel-title-wrap {
@@ -931,21 +932,30 @@
   .tg-widget-wrapper {
     right: 8px;
     top: calc(env(safe-area-inset-top, 0px) + 10px);
+    /* Kurangi max-height untuk beri ruang bottom nav (74px avatar + padding) */
+    max-height: calc(100dvh - 120px);
   }
 
+  /* Override untuk mobile - avatar di pojok kanan */
   .tg-avatar-button .tg-avatar-image {
     width: 42px;
     height: 42px;
+    /* Mobile membutuhkan translateY berbeda untuk posisi yang tepat */
+    transform: scale(1.8) translateY(5.5px);
   }
 
+  /* Override untuk mobile - avatar di panel widget yang terbuka */
   .tg-panel-avatar-button .tg-avatar-image {
     width: 34px;
     height: 34px;
+    /* Posisikan gambar di tengah lingkaran untuk panel widget yang terbuka */
+    transform: scale(1.8) translateY(4px);
   }
 
   .tg-panel {
     width: min(88vw, 320px);
-    max-height: calc(100dvh - 96px);
+    /* Sinkron dengan wrapper max-height */
+    max-height: calc(100dvh - 120px);
     padding: 8px;
   }
 
@@ -968,13 +978,13 @@
     font-size: 11px;
   }
 
-  .tg-hide-button,
-  .tg-send-button {
-    width: 36px;
+  .tg-hide-button {
+    width: 44px;
+    height: 30px;
   }
 
-  .tg-hide-button {
-    height: 26px;
+  .tg-send-button {
+    width: 44px;
   }
 
   .tg-form {
