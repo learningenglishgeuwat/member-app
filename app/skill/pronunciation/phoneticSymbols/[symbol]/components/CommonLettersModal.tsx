@@ -6,7 +6,7 @@ import type { CommonLetter } from '../../data/commonLetters/CommonLetters'
 type CanonicalCategory = CommonLetter['category']
 type LegacyCategory = 'vowel' | 'tense_vowel' | 'consonant'
 type CategoryFamily = 'vowel' | 'diphthong' | 'consonant'
-type CategoryLabel = 'LAX VOWEL' | 'TENSE VOWEL' | 'DIPHTHONG' | 'CONSONANT'
+type CategoryLabel = 'LAX VOWEL' | 'TENSE VOWEL' | 'DIPHTHONG' | 'VOICELESS CONSONANT' | 'VOICED CONSONANT'
 
 type NormalizedCommonLetter = Omit<CommonLetter, 'category'> & {
   category: CanonicalCategory
@@ -92,7 +92,8 @@ function toCategoryName(category: CanonicalCategory): CategoryLabel {
   if (category === 'vowel_lax') return 'LAX VOWEL'
   if (category === 'vowel_tense') return 'TENSE VOWEL'
   if (category === 'diphthong') return 'DIPHTHONG'
-  return 'CONSONANT'
+  if (category === 'consonant_voiceless') return 'VOICELESS CONSONANT'
+  return 'VOICED CONSONANT'
 }
 
 function toCategoryFamily(category: CanonicalCategory): CategoryFamily {
@@ -225,6 +226,14 @@ export default function CommonLettersModal({
                           {letter.pronunciationTip && (
                             <div className={`mt-2 p-2 rounded ${theme.tipWrap}`}>
                               <p className={`text-xs font-mono ${theme.tipText}`}>{letter.pronunciationTip}</p>
+                            </div>
+                          )}
+
+                          {letter.traps && letter.traps.length > 0 && (
+                            <div className={`mt-2 p-2 rounded bg-red-500/10 border border-red-400/30`}>
+                              <p className={`text-xs font-mono text-red-200`}>
+                                <strong>⚠️ Traps:</strong> {letter.traps.join(', ')}
+                              </p>
                             </div>
                           )}
                         </div>
