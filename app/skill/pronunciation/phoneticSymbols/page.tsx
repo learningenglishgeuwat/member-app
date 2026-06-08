@@ -7,6 +7,7 @@ import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import { primeBestEnglishVoice, speakWithBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { getSymbolSpeechProfile, hasSymbolSpeechProfile } from './data/symbolSpeechMap';
+import { getCommonLetterByIPA } from './data/commonLetters/CommonLetters';
 
 interface PhoneticSymbol {
   symbol: string;
@@ -76,6 +77,7 @@ const PhoneticPortal: React.FC = () => {
   const [activeSpeakingSymbol, setActiveSpeakingSymbol] = useState<string | null>(null);
   const [isPlayingAllSymbols, setIsPlayingAllSymbols] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isIntroModalOpen, setIsIntroModalOpen] = useState(false);
   const symbolSpeakResetRef = useRef<number | null>(null);
   const playAllSymbolTimeoutRef = useRef<number | null>(null);
   const playAllSymbolSessionRef = useRef(0);
@@ -195,24 +197,89 @@ const PhoneticPortal: React.FC = () => {
     stopCurrentSymbolSpeech();
   }, [stopCurrentSymbolSpeech]);
 
+  const openIntroModal = useCallback(() => {
+    setIsIntroModalOpen(true);
+  }, []);
+
+  const closeIntroModal = useCallback(() => {
+    setIsIntroModalOpen(false);
+  }, []);
+
+  const getExampleWordForSymbol = useCallback((symbol: string): string | null => {
+    // Cari data common letter berdasarkan IPA symbol
+    const ipaSymbol = `/${symbol}/`;
+    const commonLetter = getCommonLetterByIPA(ipaSymbol);
+    
+    if (!commonLetter || !commonLetter.examples || commonLetter.examples.length === 0) {
+      return null;
+    }
+
+    // Extract kata-kata dari examples
+    const allWords: string[] = [];
+    for (const example of commonLetter.examples) {
+      // Format: "pattern -> word1, word2, word3"
+      const parts = example.split('->');
+      if (parts.length === 2) {
+        const words = parts[1].split(',').map(w => w.trim());
+        allWords.push(...words);
+      }
+    }
+
+    if (allWords.length === 0) return null;
+
+    // Prioritaskan kata 1 suku kata (heuristic: tidak ada spasi dan panjang <= 5 karakter)
+    const oneSyllableWords = allWords.filter(word => {
+      const cleanWord = word.replace(/[^a-zA-Z]/g, '');
+      return cleanWord.length <= 5 && !word.includes(' ');
+    });
+
+    if (oneSyllableWords.length > 0) {
+      return oneSyllableWords[0];
+    }
+
+    // Jika tidak ada kata 1 suku kata, ambil kata terpendek (kemungkinan 2 suku kata)
+    const sortedByLength = [...allWords].sort((a, b) => {
+      const aLen = a.replace(/[^a-zA-Z]/g, '').length;
+      const bLen = b.replace(/[^a-zA-Z]/g, '').length;
+      return aLen - bLen;
+    });
+
+    return sortedByLength[0] || allWords[0];
+  }, []);
+
   const speakSymbol = useCallback(
     async (symbol: string) => {
       stopCurrentSymbolSpeech();
       setActiveSpeakingSymbol(symbol);
-      const symbolSpeechProfile = getSymbolSpeechProfile(symbol);
+      
+      // Coba dapatkan contoh kata untuk symbol ini
+      const exampleWord = getExampleWordForSymbol(symbol);
+      
       await primeBestEnglishVoice();
-      await speakWithBestEnglishVoice(symbolSpeechProfile.prompt, {
-        rate: symbolSpeechProfile.rate,
-        pitch: symbolSpeechProfile.pitch,
-        volume: symbolSpeechProfile.volume,
-      });
+      
+      if (exampleWord) {
+        // Gunakan contoh kata untuk TTS
+        await speakWithBestEnglishVoice(exampleWord, {
+          rate: 0.85,
+          pitch: 1.0,
+          volume: 1.0,
+        });
+      } else {
+        // Fallback ke speech profile lama jika tidak ada contoh kata
+        const symbolSpeechProfile = getSymbolSpeechProfile(symbol);
+        await speakWithBestEnglishVoice(symbolSpeechProfile.prompt, {
+          rate: symbolSpeechProfile.rate,
+          pitch: symbolSpeechProfile.pitch,
+          volume: symbolSpeechProfile.volume,
+        });
+      }
 
       symbolSpeakResetRef.current = window.setTimeout(() => {
         setActiveSpeakingSymbol((current) => (current === symbol ? null : current));
         symbolSpeakResetRef.current = null;
       }, 1300);
     },
-    [stopCurrentSymbolSpeech],
+    [stopCurrentSymbolSpeech, getExampleWordForSymbol],
   );
 
   const playAllSymbols = useCallback(async () => {
@@ -238,19 +305,29 @@ const PhoneticPortal: React.FC = () => {
       }
 
       const symbol = symbolPlayAllQueue[currentIndex];
-      const symbolSpeechProfile = getSymbolSpeechProfile(symbol);
       setActiveSpeakingSymbol(symbol);
-
-      await speakWithBestEnglishVoice(symbolSpeechProfile.prompt, {
-        rate: symbolSpeechProfile.rate,
-        pitch: symbolSpeechProfile.pitch,
-        volume: symbolSpeechProfile.volume,
-      });
+      
+      // Coba dapatkan contoh kata
+      const exampleWord = getExampleWordForSymbol(symbol);
+      
+      if (exampleWord) {
+        await speakWithBestEnglishVoice(exampleWord, {
+          rate: 0.85,
+          pitch: 1.0,
+          volume: 1.0,
+        });
+      } else {
+        const symbolSpeechProfile = getSymbolSpeechProfile(symbol);
+        await speakWithBestEnglishVoice(symbolSpeechProfile.prompt, {
+          rate: symbolSpeechProfile.rate,
+          pitch: symbolSpeechProfile.pitch,
+          volume: symbolSpeechProfile.volume,
+        });
+      }
 
       currentIndex += 1;
       const baseDelayMs = 1200;
-      const rateFactor = symbolSpeechProfile.rate ? 0.72 / symbolSpeechProfile.rate : 1;
-      const nextDelayMs = Math.max(900, Math.round(baseDelayMs * rateFactor));
+      const nextDelayMs = Math.max(900, baseDelayMs);
 
       playAllSymbolTimeoutRef.current = window.setTimeout(() => {
         void playNext();
@@ -258,7 +335,7 @@ const PhoneticPortal: React.FC = () => {
     };
 
     void playNext();
-  }, [symbolPlayAllQueue, stopCurrentSymbolSpeech]);
+  }, [symbolPlayAllQueue, stopCurrentSymbolSpeech, getExampleWordForSymbol]);
 
   const togglePlayAllSymbols = useCallback(() => {
     if (isPlayingAllSymbols) {
@@ -287,6 +364,25 @@ const PhoneticPortal: React.FC = () => {
       document.body.style.overflow = previousOverflow;
     };
   }, [isSymbolTableOpen, closeSymbolTable]);
+
+  useEffect(() => {
+    if (!isIntroModalOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeIntroModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isIntroModalOpen, closeIntroModal]);
 
   useEffect(() => {
     return () => {
@@ -380,6 +476,17 @@ const PhoneticPortal: React.FC = () => {
           </div>
         </div>
 
+        <div className="intro-card-wrap">
+          <button
+            type="button"
+            onClick={openIntroModal}
+            className="intro-card-btn"
+            aria-label="Mengenal Phonetic Symbol"
+          >
+            MENGENAL PHONETIC SYMBOL
+          </button>
+        </div>
+
         <div className="symbol-table-trigger-wrap">
           <button
             type="button"
@@ -407,6 +514,118 @@ const PhoneticPortal: React.FC = () => {
             RANGKUMAN
           </button>
         </div>
+
+        {isIntroModalOpen && (
+          <div
+            className="symbol-table-modal-overlay"
+            onClick={closeIntroModal}
+            role="presentation"
+          >
+            <section
+              className="intro-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mengenal Phonetic Symbol"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <header className="symbol-table-modal-header">
+                <h3 className="symbol-table-modal-title">Apa itu Simbol Fonetik?</h3>
+                <button
+                  type="button"
+                  className="symbol-table-modal-close"
+                  onClick={closeIntroModal}
+                  aria-label="Close intro modal"
+                >
+                  ×
+                </button>
+              </header>
+              <div className="intro-modal-content">
+                <div className="intro-section">
+                  <p className="intro-subtitle">Mari kita pahami fungsinya secara ilmiah agar kamu bisa belajar mandiri ke depannya.</p>
+                  
+                  <p className="intro-text">
+                    <strong>Simbol Fonetik</strong> adalah sistem karakter standar internasional dikenal sebagai <em>International Phonetic Alphabet</em> atau <strong>(IPA)</strong> yang digunakan untuk mendefinisikan dan memetakan setiap bunyi spesifik dalam bahasa manusia secara akurat.
+                  </p>
+                  
+                  <p className="intro-text">
+                    Sederhananya, jika alfabet biasa (A-Z) digunakan untuk <strong>menulis</strong>, maka <strong>Phonetic Symbol</strong> adalah alfabet khusus yang digunakan untuk <strong>mengucapkan</strong>.
+                  </p>
+                </div>
+
+                <div className="intro-section">
+                  <h4 className="intro-heading">Mengapa Kamu Wajib Menguasai Sistem Ini?</h4>
+                  
+                  <p className="intro-text">
+                    Dalam bahasa Inggris, tulisan sering kali menipu. Satu huruf yang sama bisa menghasilkan bunyi yang sangat berbeda.
+                  </p>
+                  
+                  <div className="intro-examples">
+                    <div className="intro-example-item">
+                      <span className="example-word">Cat</span>
+                      <span className="example-arrow">→</span>
+                      <span className="example-desc">huruf 'A' berbunyi /æ/ (suara 'a' lebar/tipis)</span>
+                    </div>
+                    <div className="intro-example-item">
+                      <span className="example-word">Car</span>
+                      <span className="example-arrow">→</span>
+                      <span className="example-desc">huruf 'A' berbunyi /ɑr/ (suara 'a' dalam/panjang)</span>
+                    </div>
+                    <div className="intro-example-item">
+                      <span className="example-word">Name</span>
+                      <span className="example-arrow">→</span>
+                      <span className="example-desc">huruf 'A' berbunyi /eɪ/ (suara ganda/meluncur)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="intro-section">
+                  <h4 className="intro-heading">Goal Utama Kita</h4>
+                  
+                  <p className="intro-text">
+                    <strong>Melatihmu agar bisa mandiri.</strong> Begitu kamu menguasai simbol-simbol ini, kamu bisa mandiri setiap kali menemukan kosakata baru. Cukup buka kamus digital/fisik, lihat simbol fonetik di samping katanya, dan kamu bisa langsung mengucapkannya dengan <strong>100% akurat!</strong>
+                  </p>
+                </div>
+
+                <div className="intro-section">
+                  <h4 className="intro-heading">Strategi Latihan: Tebakan Awal vs Validasi Kamus</h4>
+                  
+                  <p className="intro-text">
+                    Untuk membantumu belajar lebih cepat, di dalam setiap materi kita akan menggunakan dua pilar:
+                  </p>
+                  
+                  <div className="intro-strategy">
+                    <div className="strategy-item">
+                      <div className="strategy-title">Common Letter (Tebakan Awal)</div>
+                      <div className="strategy-desc">
+                        Kita akan mempelajari pola huruf umum yang biasanya menghasilkan bunyi tertentu. Ini modal utamamu untuk "menebak" cara baca sebuah kata baru secara intuitif.
+                      </div>
+                    </div>
+                    
+                    <div className="strategy-item">
+                      <div className="strategy-title">Phonetic Symbol (Validasi Pasti)</div>
+                      <div className="strategy-desc">
+                        Simbol fonetik di kamus adalah hakim garisnya. Ini yang akan memvalidasi apakah tebakan awalmu berdasarkan pola huruf tadi sudah benar atau merupakan pengecualian.
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="intro-formula">
+                    <div className="formula-line">
+                      <span className="formula-term">Common Letter (Pola Huruf)</span>
+                      <span className="formula-arrow">→</span>
+                      <span className="formula-result">Tebakan Intuitif</span>
+                    </div>
+                    <div className="formula-line">
+                      <span className="formula-term">Phonetic Symbol (Kamus)</span>
+                      <span className="formula-arrow">→</span>
+                      <span className="formula-result">Akurasi Mutlak (Mandiri)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
 
         {isSymbolTableOpen && (
           <div
