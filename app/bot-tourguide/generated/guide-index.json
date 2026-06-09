@@ -2204,23 +2204,6 @@
       "source": "manifest"
     },
     {
-      "id": "skill-pronunciation-tongue-twister",
-      "label": "Tongue Twister",
-      "path": "/skill/pronunciation/tongue-twister",
-      "scope": "pronunciation",
-      "keywords": [
-        "tongue",
-        "twister",
-        "/skill/pronunciation/tongue-twister",
-        "latihan",
-        "kelincahan",
-        "ucapan",
-        "pronunciation",
-        "challenge"
-      ],
-      "source": "manifest"
-    },
-    {
       "id": "skill-pronunciation-reading-text",
       "label": "Reading Text for Practice",
       "path": "/skill/pronunciation/reading-text",
@@ -2322,6 +2305,23 @@
         "origin",
         "phonetic",
         "transcription"
+      ],
+      "source": "manifest"
+    },
+    {
+      "id": "skill-pronunciation-tongue-twister",
+      "label": "Tongue Twister",
+      "path": "/skill/pronunciation/tongue-twister",
+      "scope": "pronunciation",
+      "keywords": [
+        "tongue",
+        "twister",
+        "/skill/pronunciation/tongue-twister",
+        "latihan",
+        "kelincahan",
+        "ucapan",
+        "pronunciation",
+        "challenge"
       ],
       "source": "manifest"
     },
@@ -5970,22 +5970,6 @@
       ]
     },
     {
-      "topicId": "tongue-twister-practice-goal",
-      "title": "Tongue Twister Practice Goal",
-      "route": "/skill/pronunciation/tongue-twister",
-      "keywords": [
-        "fungsi tongue twister",
-        "latihan lidah pronunciation",
-        "cara latihan tongue twister"
-      ],
-      "shortAnswer": "Tongue twister dipakai untuk melatih kejelasan artikulasi saat kecepatan bicara naik. Latihan terbaik adalah mulai pelan, jaga akurasi bunyi, lalu tingkatkan tempo bertahap.",
-      "sourceSections": [
-        {
-          "label": "Tongue Twister Drills"
-        }
-      ]
-    },
-    {
       "topicId": "reading-text-practice-overview",
       "title": "Reading Text for Pronunciation Practice",
       "route": "/skill/pronunciation/reading-text",
@@ -6091,6 +6075,22 @@
         },
         {
           "label": "Phonetic Transcription Tab"
+        }
+      ]
+    },
+    {
+      "topicId": "tongue-twister-practice-goal",
+      "title": "Tongue Twister Practice Goal",
+      "route": "/skill/pronunciation/tongue-twister",
+      "keywords": [
+        "fungsi tongue twister",
+        "latihan lidah pronunciation",
+        "cara latihan tongue twister"
+      ],
+      "shortAnswer": "Tongue twister dipakai untuk melatih kejelasan artikulasi saat kecepatan bicara naik. Latihan terbaik adalah mulai pelan, jaga akurasi bunyi, lalu tingkatkan tempo bertahap.",
+      "sourceSections": [
+        {
+          "label": "Tongue Twister Drills"
         }
       ]
     },

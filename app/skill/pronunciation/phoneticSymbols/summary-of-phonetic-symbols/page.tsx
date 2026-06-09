@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
+import { getAllWords } from '@/lib/dictionary';
 import './summary-of-phonetic-symbols.css';
 
 const highlightLetterStyle: React.CSSProperties = {
@@ -28,9 +29,9 @@ const SYMBOL_WORD_LETTERS: Record<string, string[]> = {
   'aɪ': ['igh', 'ie', 'ai', 'y', 'i'],
   'eɪ': ['ay', 'ai', 'ea', 'a'],
   'ɔɪ': ['oy', 'oi'],
-  'ɪə': ['ear', 'eer', 'ere', 'ia'],
-  'eə': ['are', 'air', 'ear', 'ere'],
-  'ʊə': ['our', 'ure', 'oor'],
+  'ɪr': ['ear', 'eer', 'ere', 'ia'],
+  'ɛr': ['are', 'air', 'ear', 'ere'],
+  'ʊr': ['our', 'ure', 'oor'],
   'oʊ': ['oa', 'ow', 'oe', 'o'],
   'aʊ': ['ou', 'ow'],
   'p': ['pp', 'p'],
@@ -56,7 +57,7 @@ const SYMBOL_WORD_LETTERS: Record<string, string[]> = {
   'ŋ': ['ng', 'n'],
   'r': ['wr', 'rr', 'r'],
   'w': ['wh', 'w', 'u'],
-  'y': ['y', 'u'],
+  'j': ['y', 'u'],
 };
 
 type TabKey = 'vowel' | 'diphthong' | 'consonant';
@@ -64,12 +65,52 @@ type SymbolExample = { word: string; ipa: string };
 type SymbolItem = { symbol: string; examples: [SymbolExample, SymbolExample, SymbolExample] };
 type SpokenWordEntry = { key: string; word: string };
 
+const IPA_SYMBOL_ALIASES: Record<string, string[]> = {
+  'ɪr': ['ɪr', 'ɪə', 'iə'],
+  'ʊr': ['ʊr', 'ʊə'],
+  'ɛr': ['ɛr', 'er', 'eə'],
+  'oʊ': ['oʊ', 'əʊ'],
+  'ɚ': ['ɚ', 'ər'],
+};
+
+function normalizeIpaSymbol(symbol: string) {
+  return symbol.trim();
+}
+
+function getIpaVariants(symbol: string) {
+  const normalized = normalizeIpaSymbol(symbol);
+  const aliases = IPA_SYMBOL_ALIASES[normalized] ?? [normalized];
+  return Array.from(new Set(aliases.map(normalizeIpaSymbol)));
+}
+
+function getDictionaryExamples(symbol: string, limit = 3): SymbolExample[] {
+  const ipaVariants = getIpaVariants(symbol);
+  const entries = getAllWords().filter((entry) =>
+    ipaVariants.some((variant) => entry.ipa_us.includes(variant)),
+  );
+  const seenWords = new Set<string>();
+
+  return entries
+    .filter((entry) => {
+      if (seenWords.has(entry.word)) return false;
+      seenWords.add(entry.word);
+      return true;
+    })
+    .slice(0, limit)
+    .map((entry) => ({ word: entry.word, ipa: entry.ipa_us.replace(/^\//, '').replace(/\/$/, '') }));
+}
+
+function selectExamplesForSymbol(symbol: string, fallbackExamples: SymbolExample[]) {
+  const examples = getDictionaryExamples(symbol, 3);
+  return examples.length ? examples : fallbackExamples;
+}
+
 const SYMBOL_DATA: Record<TabKey, string[]> = {
   vowel: ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a', '\u0251', 'i', 'u', '\u00e6', '\u0254'],
-  diphthong: ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'],
+  diphthong: ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026ar', 'ɛr', '\u028ar', 'o\u028a', 'a\u028a'],
   consonant: [
     'p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h',
-    'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y',
+    'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'j',
   ],
 };
 
@@ -137,7 +178,7 @@ const CONSONANT_GROUPS: { title: string; items: SymbolItem[] }[] = [
       { symbol: 'ŋ', examples: [{ word: 'sing', ipa: 'sɪŋ' }, { word: 'long', ipa: 'lɔŋ' }, { word: 'finger', ipa: 'ˈfɪŋgər' }] },
       { symbol: 'r', examples: [{ word: 'red', ipa: 'rɛd' }, { word: 'car', ipa: 'kɑr' }, { word: 'around', ipa: 'əˈraʊnd' }] },
       { symbol: 'w', examples: [{ word: 'we', ipa: 'wi' }, { word: 'window', ipa: 'ˈwɪndoʊ' }, { word: 'quick', ipa: 'kwɪk' }] },
-      { symbol: 'y', examples: [{ word: 'yes', ipa: 'jɛs' }, { word: 'yellow', ipa: 'ˈjɛloʊ' }, { word: 'music', ipa: 'ˈmjuzɪk' }] },
+      { symbol: 'j', examples: [{ word: 'yes', ipa: 'jɛs' }, { word: 'yellow', ipa: 'ˈjɛloʊ' }, { word: 'music', ipa: 'ˈmjuzɪk' }] },
     ],
   },
 ];
@@ -149,9 +190,9 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
       { symbol: 'aɪ', examples: [{ word: 'time', ipa: 'taɪm' }, { word: 'bike', ipa: 'baɪk' }, { word: 'light', ipa: 'laɪt' }] },
       { symbol: 'eɪ', examples: [{ word: 'day', ipa: 'deɪ' }, { word: 'name', ipa: 'neɪm' }, { word: 'play', ipa: 'pleɪ' }] },
       { symbol: 'ɔɪ', examples: [{ word: 'boy', ipa: 'bɔɪ' }, { word: 'coin', ipa: 'kɔɪn' }, { word: 'voice', ipa: 'vɔɪs' }] },
-      { symbol: 'ɪə', examples: [{ word: 'idea', ipa: 'aɪˈdɪə' }, { word: 'near', ipa: 'nɪə' }, { word: 'ear', ipa: 'ɪə' }] },
-      { symbol: 'eə', examples: [{ word: 'care', ipa: 'keə' }, { word: 'share', ipa: 'ʃeə' }, { word: 'bear', ipa: 'beə' }] },
-      { symbol: 'ʊə', examples: [{ word: 'tour', ipa: 'tʊə' }, { word: 'cure', ipa: 'kjʊə' }, { word: 'pure', ipa: 'pjʊə' }] },
+      { symbol: 'ɪr', examples: [{ word: 'idea', ipa: 'aɪˈdɪə' }, { word: 'near', ipa: 'nɪə' }, { word: 'ear', ipa: 'ɪə' }] },
+      { symbol: 'ɛr', examples: [{ word: 'care', ipa: 'keə' }, { word: 'share', ipa: 'ʃeə' }, { word: 'bear', ipa: 'beə' }] },
+      { symbol: 'ʊr', examples: [{ word: 'tour', ipa: 'tʊə' }, { word: 'cure', ipa: 'kjʊə' }, { word: 'pure', ipa: 'pjʊə' }] },
       { symbol: 'oʊ', examples: [{ word: 'go', ipa: 'goʊ' }, { word: 'home', ipa: 'hoʊm' }, { word: 'phone', ipa: 'foʊn' }] },
       { symbol: 'aʊ', examples: [{ word: 'now', ipa: 'naʊ' }, { word: 'house', ipa: 'haʊs' }, { word: 'sound', ipa: 'saʊnd' }] },
     ],
@@ -385,7 +426,9 @@ export default function SummaryOfPhoneticSymbolsPage() {
                     
                   </div>
                   <div className="sps-symbol-list">
-                    {group.items.map((item, itemIndex) => (
+                    {group.items.map((item, itemIndex) => {
+                      const examples = selectExamplesForSymbol(item.symbol, item.examples);
+                      return (
                       <div key={item.symbol} className="sps-symbol-card sps-symbol-card-with-examples">
                         <span
                           className={`sps-symbol ${
@@ -395,7 +438,7 @@ export default function SummaryOfPhoneticSymbolsPage() {
                           {item.symbol}
                         </span>
                         <ul className="sps-example-grid">
-                          {item.examples.map((example, exampleIndex) => {
+                          {examples.map((example, exampleIndex) => {
                             const exampleKey = buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex);
                             const isSpeakingExample = activeSpeakingExampleKey === exampleKey;
 
@@ -418,7 +461,8 @@ export default function SummaryOfPhoneticSymbolsPage() {
                           })}
                         </ul>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </section>
               ))}

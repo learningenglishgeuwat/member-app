@@ -75,7 +75,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'style', ipa: '/staɪl/' },
     { word: 'price', ipa: '/praɪs/' }
   ],
-  'eə': [
+  'er': [
     { word: 'air', ipa: '/ɛr/' },
     { word: 'care', ipa: '/kɛr/' },
     { word: 'share', ipa: '/ʃɛr/' },
@@ -203,7 +203,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'disjoint', ipa: '/dɪsˈʤɔɪnt/' },
     { word: 'rejoin', ipa: '/rɪˈʤɔɪn/' }
   ],
-  'ʊə': [
+  'ʊr': [
     { word: 'tour', ipa: '/tʊr/' },
     { word: 'poor', ipa: '/pʊr/' },
     { word: 'sure', ipa: '/ʃʊr/' },
@@ -235,7 +235,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'detour', ipa: '/ˈdiːtʊr/' },
     { word: 'spoor', ipa: '/spʊr/' },
   ],
-  'ɪə': [
+  'ɪr': [
     { word: 'idea', ipa: '/aɪˈdiə/' },
     { word: 'area', ipa: '/ˈɛriə/' },
     { word: 'media', ipa: '/ˈmidiə/' },

@@ -67,8 +67,11 @@ export const diphthongVideos: VideoCategory = {
   'aɪ': 'xndGoQmWYxU',
   'eɪ': 'Gk_ZufNX5jQ',
   'ɔɪ': 'TL8bvCYD0dk',
+  'ɪr': 'v_9rTF9MXyY',
   'ɪə': 'v_9rTF9MXyY',
+  'er': '0MjInT75bmU',
   'eə': '0MjInT75bmU',
+  'ʊr': '3zSOQ_wWdyc',
   'ʊə': '3zSOQ_wWdyc',
   'aʊ': 'WzlK8CnFh8c',
   'oʊ': '08MZWPOwiYw'
@@ -88,7 +91,14 @@ type CategoryKey = keyof typeof allVideoIds;
 
 // Helper function to get video ID by symbol
 export function getVideoIdBySymbol(symbol: string): string | undefined {
-  const normalizedKey = symbol.trim() === 'dʒ' ? 'ʤ' : symbol.trim() === 'tʃ' ? 'ʧ' : symbol.trim() === 'y' ? 'j' : symbol;
+  const s = symbol.trim();
+  const normalizedKey = s === 'dʒ' ? 'ʤ'
+    : s === 'tʃ' ? 'ʧ'
+    : s === 'y' ? 'j'
+    : s === 'eə' || s === 'ɛr' ? 'er'
+    : s === 'ɪə' || s === 'iə' ? 'ɪr'
+    : s === 'ʊə' ? 'ʊr'
+    : s;
   for (const category of Object.values(allVideoIds)) {
     if (category[normalizedKey]) {
       return category[normalizedKey];

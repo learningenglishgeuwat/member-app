@@ -48,6 +48,14 @@ export const WORD_HIGHLIGHT_OVERRIDES: Record<string, Record<string, string[]>> 
     'just': ["j"],     'page': ["g", "e"],     'procedure': ["d"],     'project': ["j"],     'region': ["g"],
     'religion': ["g"],     'ridge': ["dge"],     'soldier': ["d"],     'stage': ["g", "e"],     'subject': ["j"]
   },
+  'er': {
+    'air': ["air"],     'aware': ["are"],     'bare': ["are"],     'bear': ["ear"],     'care': ["are"],
+    'chair': ["air"],     'compare': ["are"],     'dare': ["are"],     'declare': ["are"],     'fair': ["air"],
+    'flare': ["are"],     'hair': ["air"],     'hardware': ["are"],     'nightmare': ["are"],     'pair': ["air"],
+    'prepare': ["are"],     'rare': ["are"],     'repair': ["air"],     'scare': ["are"],     'share': ["are"],
+    'software': ["are"],     'spare': ["are"],     'square': ["are"],     'stair': ["air"],     'tear': ["ear"],
+    'there': ["ere"],     'unfair': ["air"],     'wear': ["ear"],     'welfare': ["are"],     'where': ["ere"]
+  },
   'eə': {
     'air': ["air"],     'aware': ["are"],     'bare': ["are"],     'bear': ["ear"],     'care': ["are"],
     'chair': ["air"],     'compare': ["are"],     'dare': ["are"],     'declare': ["are"],     'fair': ["air"],
@@ -55,6 +63,13 @@ export const WORD_HIGHLIGHT_OVERRIDES: Record<string, Record<string, string[]>> 
     'prepare': ["are"],     'rare': ["are"],     'repair': ["air"],     'scare': ["are"],     'share': ["are"],
     'software': ["are"],     'spare': ["are"],     'square': ["are"],     'stair': ["air"],     'tear': ["ear"],
     'there': ["ere"],     'unfair': ["air"],     'wear': ["ear"],     'welfare': ["are"],     'where': ["ere"]
+  },
+  'ɪr': {
+    'idea': ["ea"],     'near': ["ea"],     'ear': ["ea"],     'year': ["ear"],     'fear': ["ear"],
+    'dear': ["ea"],     'clear': ["ear"],     'cheer': ["ee"],     'beer': ["ee"]
+  },
+  'ʊr': {
+    'tour': ["our"],     'cure': ["ure"],     'pure': ["ure"],     'sure': ["ure"],     'your': ["our"]
   },
   'eɪ': {
     'break': ["ea"],     'case': ["a", "e"],     'change': ["a", "e"],     'date': ["a", "e"],     'day': ["ay"],

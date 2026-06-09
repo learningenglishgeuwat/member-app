@@ -40,16 +40,16 @@ const COMMON_LETTER_SYMBOL_ALIASES: Record<string, string[]> = {
   'ɛ': ['e'],
   
   // Diphthongs & Rhotic variants
-  'eə': ['ɛr', 'ɛə'],
-  'ɛə': ['eə', 'ɛr'],
-  'ɛr': ['eə', 'ɛə'],
+  'er': ['eə', 'ɛr'],
+  'eə': ['er', 'ɛr'],
+  'ɛr': ['er', 'eə'],
   
-  'ɪə': ['ɪr', 'iə'],
   'ɪr': ['ɪə', 'iə'],
-  'iə': ['ɪə', 'ɪr'],
+  'ɪə': ['ɪr', 'iə'],
+  'iə': ['ɪr', 'ɪə'],
   
-  'ʊə': ['ʊr'],
   'ʊr': ['ʊə'],
+  'ʊə': ['ʊr'],
   
   'əʊ': ['oʊ'],
   'oʊ': ['əʊ'],
@@ -85,7 +85,7 @@ const CONSONANT_VOICELESS_SYMBOLS = ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283'
 const CONSONANT_VOICED_SYMBOLS = [
   'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y',
 ] as const;
-const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
+const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', 'ɛr', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
 
 const toTourToken = (value: string): string =>
   value

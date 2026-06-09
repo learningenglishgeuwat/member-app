@@ -57,15 +57,15 @@ const phoneticSymbols: PhoneticSymbol[] = [
   { symbol: '\u014b', category: 'consonant', subcategory: 'voiced' }, // ?
   { symbol: 'r', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'w', category: 'consonant', subcategory: 'voiced' },
-  { symbol: 'y', category: 'consonant', subcategory: 'voiced' },
+  { symbol: 'j', category: 'consonant', subcategory: 'voiced' },
 
   // Diphthongs
   { symbol: 'a\u026a', category: 'diphthong' }, // a?
   { symbol: 'e\u026a', category: 'diphthong' }, // e?
   { symbol: '\u0254\u026a', category: 'diphthong' }, // ??
-  { symbol: '\u026a\u0259', category: 'diphthong' }, // ??
-  { symbol: 'e\u0259', category: 'diphthong' }, // e?
-  { symbol: '\u028a\u0259', category: 'diphthong' }, // ??
+  { symbol: '\u026ar', category: 'diphthong' }, // ??
+  { symbol: 'ɛr', category: 'diphthong' }, // ɛr
+  { symbol: '\u028ar', category: 'diphthong' }, // ??
   { symbol: 'o\u028a', category: 'diphthong' }, // o?
   { symbol: 'a\u028a', category: 'diphthong' }, // a?
 ];

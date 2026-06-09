@@ -70,6 +70,10 @@ AI.md
 # documentation
 /documentation/
 
+# local dictionary cache
+/lib/dictionary/
+/lib/pattern\ ipa/
+
 # kiro
 .kiro
 

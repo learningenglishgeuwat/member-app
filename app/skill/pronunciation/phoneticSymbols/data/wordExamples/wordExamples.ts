@@ -77,7 +77,15 @@ export function getWordExamples(symbol: string): WordExample[] {
     'r': 'Consonant‑Voiced‑r',
     'w': 'Consonant‑Voiced‑w',
     'y': 'Consonant‑Voiced‑y',
+    'j': 'Consonant‑Voiced‑y',
     'ŋ': 'Consonant‑Voiced‑ŋ',
+    
+    // Legacy diphthong keys
+    'eə': 'er',
+    'ɛr': 'er',
+    'ɪə': 'ɪr',
+    'iə': 'ɪr',
+    'ʊə': 'ʊr',
     
     // Vowel Tense
     'i': 'Vowel‑Tense‑i',
