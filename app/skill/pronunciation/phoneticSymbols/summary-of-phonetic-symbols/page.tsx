@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { isSpeechSynthesisSupported, speakTextWithPause, stopSpeech, waitForVoices } from '@/lib/tts/speech';
-import { getAllWords } from '@/lib/dictionary';
 import './summary-of-phonetic-symbols.css';
 
 const highlightLetterStyle: React.CSSProperties = {
@@ -81,23 +80,6 @@ function getIpaVariants(symbol: string) {
   const normalized = normalizeIpaSymbol(symbol);
   const aliases = IPA_SYMBOL_ALIASES[normalized] ?? [normalized];
   return Array.from(new Set(aliases.map(normalizeIpaSymbol)));
-}
-
-function getDictionaryExamples(symbol: string, limit = 3): SymbolExample[] {
-  const ipaVariants = getIpaVariants(symbol);
-  const entries = getAllWords().filter((entry) =>
-    ipaVariants.some((variant) => entry.ipa_us.includes(variant)),
-  );
-  const seenWords = new Set<string>();
-
-  return entries
-    .filter((entry) => {
-      if (seenWords.has(entry.word)) return false;
-      seenWords.add(entry.word);
-      return true;
-    })
-    .slice(0, limit)
-    .map((entry) => ({ word: entry.word, ipa: entry.ipa_us.replace(/^\//, '').replace(/\/$/, '') }));
 }
 
 function selectExamplesForSymbol(symbol: string, fallbackExamples: SymbolExample[]) {
