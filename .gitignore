@@ -55,7 +55,11 @@ pnpm-lock.yaml
 *.temp
 
 # scripts
-/scripts
+# Keep essential scripts tracked for build/deploy.
+# Ignore only local or temporary script worktrees.
+/scripts/local/
+/scripts/tmp/
+/scripts/cache/
 
 # vercel
 .vercel
