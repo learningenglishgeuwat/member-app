@@ -63,7 +63,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'cat', b: 'cot', ipaA: 'kæt', ipaB: 'kɑt' },
       { a: 'sack', b: 'sock', ipaA: 'sæk', ipaB: 'sɑk' },
       { a: 'map', b: 'mop', ipaA: 'mæp', ipaB: 'mɑp' },
-      { a: 'mass', b: 'moss', ipaA: 'mæs', ipaB: 'mɑs' },
+      { a: 'shack', b: 'shock', ipaA: '\u0283æk', ipaB: '\u0283\u0251k' },
       { a: 'lack', b: 'lock', ipaA: 'læk', ipaB: 'lɑk' },
       { a: 'tap', b: 'top', ipaA: 'tæp', ipaB: 'tɑp' },
       { a: 'can', b: 'con', ipaA: 'kæn', ipaB: 'kɑn' },
@@ -114,7 +114,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'cup', b: 'cop', ipaA: 'kʌp', ipaB: 'kɑp' },
       { a: 'hut', b: 'hot', ipaA: 'hʌt', ipaB: 'hɑt' },
       { a: 'run', b: 'Ron', ipaA: 'rʌn', ipaB: 'rɑn' },
-      { a: 'sun', b: 'son', ipaA: 'sʌn', ipaB: 'sɑn' },
+      { a: 'nut', b: 'not', ipaA: 'n\u028ct', ipaB: 'n\u0251t' },
       { a: 'bug', b: 'bog', ipaA: 'bʌg', ipaB: 'bɑg' },
       { a: 'mud', b: 'mod', ipaA: 'mʌd', ipaB: 'mɑd' },
       { a: 'stuck', b: 'stock', ipaA: 'stʌk', ipaB: 'stɑk' },
@@ -158,7 +158,7 @@ export const vowelPairs: PartialMinimalPair[] = [
     pairLabel: AW_AH,
     videoId: '1Kjyf1D7jvE',
     words: [
-      { a: 'caught', b: 'cot', ipaA: 'kɔt', ipaB: 'kɑt', ttsLangA: 'en-GB' },
+      { a: 'caught', b: 'cot', ipaA: 'kɔt', ipaB: 'kɑt' },
       { a: 'dawn', b: 'don', ipaA: 'dɔn', ipaB: 'dɑn' },
       { a: 'walk', b: 'wok', ipaA: 'wɔk', ipaB: 'wɑk' },
       { a: 'talk', b: 'tock', ipaA: 'tɔk', ipaB: 'tɑk' },
@@ -167,7 +167,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'all', b: 'odd', ipaA: 'ɔl', ipaB: 'ɑd' },
       { a: 'stalk', b: 'stock', ipaA: 'stɔk', ipaB: 'stɑk' },
       { a: 'saw', b: 'sod', ipaA: 'sɔ', ipaB: 'sɑd' },
-      { a: 'chalk', b: 'chock', ipaA: 'ʧɔk', ipaB: 'ʧɑk' },
+      { a: 'chalk', b: 'chock', ipaA: '\u02a7\u0254k', ipaB: '\u02a7\u0251k' },
     ],
     sentences: [
       { a: 'I caught the last bus.', b: 'The cot is near the bed.' },
@@ -178,5 +178,3 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   }
 ];
-
-

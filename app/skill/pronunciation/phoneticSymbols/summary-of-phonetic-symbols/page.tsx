@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
-import { isSpeechSynthesisSupported, speakText, stopSpeech, waitForVoices } from '@/lib/tts/speech';
+import { isSpeechSynthesisSupported, speakTextWithPause, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import { getAllWords } from '@/lib/dictionary';
 import './summary-of-phonetic-symbols.css';
 
@@ -101,8 +101,8 @@ function getDictionaryExamples(symbol: string, limit = 3): SymbolExample[] {
 }
 
 function selectExamplesForSymbol(symbol: string, fallbackExamples: SymbolExample[]) {
-  const examples = getDictionaryExamples(symbol, 3);
-  return examples.length ? examples : fallbackExamples;
+  // Menggunakan fallbackExamples secara langsung agar susunan posisi Awal-Tengah-Akhir yang statis tetap terjaga
+  return fallbackExamples;
 }
 
 const SYMBOL_DATA: Record<TabKey, string[]> = {
@@ -126,22 +126,22 @@ const VOWEL_GROUPS: { title: string; items: SymbolItem[] }[] = [
   {
     title: 'LAX VOWELS',
     items: [
-      { symbol: '\u028c', examples: [{ word: 'cup', ipa: 'kʌp' }, { word: 'love', ipa: 'lʌv' }, { word: 'sun', ipa: 'sʌn' }] },
-      { symbol: '\u026a', examples: [{ word: 'sit', ipa: 'sɪt' }, { word: 'milk', ipa: 'mɪlk' }, { word: 'ship', ipa: 'ʃɪp' }] },
-      { symbol: '\u028a', examples: [{ word: 'book', ipa: 'bʊk' }, { word: 'look', ipa: 'lʊk' }, { word: 'good', ipa: 'ɡʊd' }] },
-      { symbol: '\u025b', examples: [{ word: 'bed', ipa: 'bɛd' }, { word: 'pen', ipa: 'pɛn' }, { word: 'head', ipa: 'hɛd' }] },
-      { symbol: '\u0259', examples: [{ word: 'about', ipa: 'əˈbaʊt' }, { word: 'sofa', ipa: 'ˈsoʊfə' }, { word: 'banana', ipa: 'bəˈnænə' }] },
-      { symbol: '\u025a', examples: [{ word: 'teacher', ipa: 'ˈtiːtʃɚ' }, { word: 'better', ipa: 'ˈbɛtɚ' }, { word: 'water', ipa: 'ˈwɔtɚ' }] },
+      { symbol: '\u028c', examples: [{ word: 'up', ipa: 'ʌp' }, { word: 'sun', ipa: 'sʌn' }, { word: 'cup', ipa: 'kʌp' }] },
+      { symbol: '\u026a', examples: [{ word: 'it', ipa: 'ɪt' }, { word: 'sit', ipa: 'sɪt' }, { word: 'big', ipa: 'bɪɡ' }] },
+      { symbol: '\u028a', examples: [{ word: 'put', ipa: 'pʊt' }, { word: 'book', ipa: 'bʊk' }, { word: 'good', ipa: 'ɡʊd' }] },
+      { symbol: '\u025b', examples: [{ word: 'egg', ipa: 'ɛg' }, { word: 'bed', ipa: 'bɛd' }, { word: 'red', ipa: 'rɛd' }] },
+      { symbol: '\u0259', examples: [{ word: 'about', ipa: 'əˈbaʊt' }, { word: 'pencil', ipa: 'ˈpɛnsəl' }, { word: 'sofa', ipa: 'ˈsoʊfə' }] },
+      { symbol: '\u025a', examples: [{ word: 'earth', ipa: 'ɝθ' }, { word: 'pattern', ipa: 'ˈpætɚn' }, { word: 'teacher', ipa: 'ˈtiːʧɚ' }] },
     ],
   },
   {
     title: 'TENSE VOWELS',
     items: [
-      { symbol: '\u0251', examples: [{ word: 'car', ipa: 'kɑr' }, { word: 'father', ipa: 'ˈfɑðɚ' }, { word: 'palm', ipa: 'pɑm' }] },
-      { symbol: 'i', examples: [{ word: 'see', ipa: 'siː' }, { word: 'green', ipa: 'ɡriːn' }, { word: 'team', ipa: 'tiːm' }] },
-      { symbol: 'u', examples: [{ word: 'food', ipa: 'fuːd' }, { word: 'blue', ipa: 'bluː' }, { word: 'true', ipa: 'truː' }] },
-      { symbol: '\u00e6', examples: [{ word: 'cat', ipa: 'kæt' }, { word: 'black', ipa: 'blæk' }, { word: 'apple', ipa: 'ˈæpəl' }] },
-      { symbol: '\u0254', examples: [{ word: 'law', ipa: 'lɔ' }, { word: 'call', ipa: 'kɔl' }, { word: 'talk', ipa: 'tɔk' }] },
+      { symbol: '\u0251', examples: [{ word: 'arm', ipa: 'ɑrm' }, { word: 'father', ipa: 'ˈfɑðɚ' }, { word: 'car', ipa: 'kɑr' }] },
+      { symbol: 'i', examples: [{ word: 'eat', ipa: 'it' }, { word: 'meet', ipa: 'mit' }, { word: 'see', ipa: 'si' }] },
+      { symbol: 'u', examples: [{ word: 'ooze', ipa: 'uz' }, { word: 'food', ipa: 'fud' }, { word: 'blue', ipa: 'blu' }] },
+      { symbol: '\u00e6', examples: [{ word: 'at', ipa: 'æt' }, { word: 'cat', ipa: 'kæt' }, { word: 'man', ipa: 'mæn' }] },
+      { symbol: '\u0254', examples: [{ word: 'all', ipa: 'ɔl' }, { word: 'talk', ipa: 'tɔk' }, { word: 'law', ipa: 'lɔ' }] },
     ],
   },
 ];
@@ -150,35 +150,35 @@ const CONSONANT_GROUPS: { title: string; items: SymbolItem[] }[] = [
   {
     title: 'VOICELESS CONSONANTS',
     items: [
-      { symbol: 'p', examples: [{ word: 'pen', ipa: 'pɛn' }, { word: 'map', ipa: 'mæp' }, { word: 'paper', ipa: 'ˈpeɪpər' }] },
-      { symbol: 't', examples: [{ word: 'top', ipa: 'tɑp' }, { word: 'cat', ipa: 'kæt' }, { word: 'water', ipa: 'ˈwɔtər' }] },
-      { symbol: 'k', examples: [{ word: 'cat', ipa: 'kæt' }, { word: 'back', ipa: 'bæk' }, { word: 'coffee', ipa: 'ˈkɔfi' }] },
-      { symbol: 'f', examples: [{ word: 'fish', ipa: 'fɪʃ' }, { word: 'leaf', ipa: 'lif' }, { word: 'phone', ipa: 'foʊn' }] },
-      { symbol: 'θ', examples: [{ word: 'think', ipa: 'θɪŋk' }, { word: 'bath', ipa: 'bæθ' }, { word: 'thank', ipa: 'θæŋk' }] },
-      { symbol: 's', examples: [{ word: 'sun', ipa: 'sʌn' }, { word: 'bus', ipa: 'bʌs' }, { word: 'city', ipa: 'ˈsɪti' }] },
-      { symbol: 'ʃ', examples: [{ word: 'ship', ipa: 'ʃɪp' }, { word: 'cash', ipa: 'kæʃ' }, { word: 'nation', ipa: 'ˈneɪʃən' }] },
-      { symbol: 'ʧ', examples: [{ word: 'chair', ipa: 'ʧɛr' }, { word: 'watch', ipa: 'wɑʧ' }, { word: 'teacher', ipa: 'ˈtiʧər' }] },
+      { symbol: 'p', examples: [{ word: 'pen', ipa: 'pɛn' }, { word: 'paper', ipa: 'ˈpeɪpɚ' }, { word: 'map', ipa: 'mæp' }] },
+      { symbol: 't', examples: [{ word: 'top', ipa: 'tɑp' }, { word: 'water', ipa: 'ˈwɔtɚ' }, { word: 'cat', ipa: 'kæt' }] },
+      { symbol: 'k', examples: [{ word: 'cat', ipa: 'kæt' }, { word: 'baker', ipa: 'ˈbeɪkɚ' }, { word: 'back', ipa: 'bæk' }] },
+      { symbol: 'f', examples: [{ word: 'fish', ipa: 'fɪʃ' }, { word: 'after', ipa: 'ˈæftɚ' }, { word: 'leaf', ipa: 'lif' }] },
+      { symbol: 'θ', examples: [{ word: 'think', ipa: 'θɪŋk' }, { word: 'nothing', ipa: 'ˈnʌθɪŋ' }, { word: 'bath', ipa: 'bæθ' }] },
+      { symbol: 's', examples: [{ word: 'sun', ipa: 'sʌn' }, { word: 'lesson', ipa: 'ˈlɛsən' }, { word: 'bus', ipa: 'bʌs' }] },
+      { symbol: 'ʃ', examples: [{ word: 'ship', ipa: 'ʃɪp' }, { word: 'nation', ipa: 'ˈneɪʃən' }, { word: 'cash', ipa: 'kæʃ' }] },
+      { symbol: 'ʧ', examples: [{ word: 'chair', ipa: 'ʧɛr' }, { word: 'teacher', ipa: 'ˈtiʧɚ' }, { word: 'watch', ipa: 'wɑʧ' }] },
       { symbol: 'h', examples: [{ word: 'hat', ipa: 'hæt' }, { word: 'behind', ipa: 'bɪˈhaɪnd' }, { word: 'hello', ipa: 'həˈloʊ' }] },
     ],
   },
   {
     title: 'VOICED & SONORANT CONSONANTS',
     items: [
-      { symbol: 'b', examples: [{ word: 'book', ipa: 'bʊk' }, { word: 'cab', ipa: 'kæb' }, { word: 'baby', ipa: 'ˈbeɪbi' }] },
-      { symbol: 'd', examples: [{ word: 'dog', ipa: 'dɔg' }, { word: 'red', ipa: 'rɛd' }, { word: 'ladder', ipa: 'ˈlædər' }] },
-      { symbol: 'g', examples: [{ word: 'go', ipa: 'goʊ' }, { word: 'bag', ipa: 'bæg' }, { word: 'again', ipa: 'əˈgɛn' }] },
-      { symbol: 'v', examples: [{ word: 'van', ipa: 'væn' }, { word: 'love', ipa: 'lʌv' }, { word: 'movie', ipa: 'ˈmuvi' }] },
-      { symbol: 'ð', examples: [{ word: 'this', ipa: 'ðɪs' }, { word: 'mother', ipa: 'ˈmʌðər' }, { word: 'breathe', ipa: 'brið' }] },
-      { symbol: 'z', examples: [{ word: 'zoo', ipa: 'zu' }, { word: 'busy', ipa: 'ˈbɪzi' }, { word: 'music', ipa: 'ˈmjuzɪk' }] },
-      { symbol: 'ʒ', examples: [{ word: 'vision', ipa: 'ˈvɪʒən' }, { word: 'genre', ipa: 'ˈʒɑnrə' }, { word: 'measure', ipa: 'ˈmɛʒər' }] },
-      { symbol: 'ʤ', examples: [{ word: 'job', ipa: 'ʤɑb' }, { word: 'bridge', ipa: 'brɪʤ' }, { word: 'giant', ipa: 'ˈʤaɪənt' }] },
-      { symbol: 'l', examples: [{ word: 'light', ipa: 'laɪt' }, { word: 'bell', ipa: 'bɛl' }, { word: 'yellow', ipa: 'ˈjɛloʊ' }] },
-      { symbol: 'm', examples: [{ word: 'man', ipa: 'mæn' }, { word: 'time', ipa: 'taɪm' }, { word: 'summer', ipa: 'ˈsʌmər' }] },
-      { symbol: 'n', examples: [{ word: 'nose', ipa: 'noʊz' }, { word: 'sun', ipa: 'sʌn' }, { word: 'dinner', ipa: 'ˈdɪnər' }] },
-      { symbol: 'ŋ', examples: [{ word: 'sing', ipa: 'sɪŋ' }, { word: 'long', ipa: 'lɔŋ' }, { word: 'finger', ipa: 'ˈfɪŋgər' }] },
-      { symbol: 'r', examples: [{ word: 'red', ipa: 'rɛd' }, { word: 'car', ipa: 'kɑr' }, { word: 'around', ipa: 'əˈraʊnd' }] },
-      { symbol: 'w', examples: [{ word: 'we', ipa: 'wi' }, { word: 'window', ipa: 'ˈwɪndoʊ' }, { word: 'quick', ipa: 'kwɪk' }] },
-      { symbol: 'j', examples: [{ word: 'yes', ipa: 'jɛs' }, { word: 'yellow', ipa: 'ˈjɛloʊ' }, { word: 'music', ipa: 'ˈmjuzɪk' }] },
+      { symbol: 'b', examples: [{ word: 'book', ipa: 'bʊk' }, { word: 'baby', ipa: 'ˈbeɪbi' }, { word: 'cab', ipa: 'kæb' }] },
+      { symbol: 'd', examples: [{ word: 'dog', ipa: 'dɔg' }, { word: 'ladder', ipa: 'ˈlædɚ' }, { word: 'red', ipa: 'rɛd' }] },
+      { symbol: 'g', examples: [{ word: 'go', ipa: 'goʊ' }, { word: 'again', ipa: 'əˈgɛn' }, { word: 'bag', ipa: 'bæg' }] },
+      { symbol: 'v', examples: [{ word: 'van', ipa: 'væn' }, { word: 'movie', ipa: 'ˈmuvi' }, { word: 'love', ipa: 'lʌv' }] },
+      { symbol: 'ð', examples: [{ word: 'this', ipa: 'ðɪs' }, { word: 'mother', ipa: 'ˈmʌðɚ' }, { word: 'breathe', ipa: 'brið' }] },
+      { symbol: 'z', examples: [{ word: 'zoo', ipa: 'zu' }, { word: 'easy', ipa: 'ˈizi' }, { word: 'buzz', ipa: 'bʌz' }] },
+      { symbol: 'ʒ', examples: [{ word: 'genre', ipa: 'ˈʒɑnrə' }, { word: 'vision', ipa: 'ˈvɪʒən' }, { word: 'beige', ipa: 'beɪʒ' }] },
+      { symbol: 'ʤ', examples: [{ word: 'job', ipa: 'ʤɑb' }, { word: 'danger', ipa: 'ˈdeɪnʤɚ' }, { word: 'bridge', ipa: 'brɪʤ' }] },
+      { symbol: 'l', examples: [{ word: 'light', ipa: 'laɪt' }, { word: 'yellow', ipa: 'ˈjɛloʊ' }, { word: 'bell', ipa: 'bɛl' }] },
+      { symbol: 'm', examples: [{ word: 'man', ipa: 'mæn' }, { word: 'summer', ipa: 'ˈsʌmɚ' }, { word: 'time', ipa: 'taɪm' }] },
+      { symbol: 'n', examples: [{ word: 'nose', ipa: 'noʊz' }, { word: 'dinner', ipa: 'ˈdɪnɚ' }, { word: 'sun', ipa: 'sʌn' }] },
+      { symbol: 'ŋ', examples: [{ word: 'singer', ipa: 'ˈsɪŋɚ' }, { word: 'finger', ipa: 'ˈfɪŋgɚ' }, { word: 'sing', ipa: 'sɪŋ' }] },
+      { symbol: 'r', examples: [{ word: 'red', ipa: 'rɛd' }, { word: 'around', ipa: 'əˈraʊnd' }, { word: 'car', ipa: 'kɑr' }] },
+      { symbol: 'w', examples: [{ word: 'we', ipa: 'wi' }, { word: 'away', ipa: 'əˈweɪ' }, { word: 'window', ipa: 'ˈwɪndoʊ' }] },
+      { symbol: 'j', examples: [{ word: 'yes', ipa: 'jɛs' }, { word: 'beyond', ipa: 'bɪˈjɑnd' }, { word: 'music', ipa: 'ˈmjuzɪk' }] },
     ],
   },
 ];
@@ -187,14 +187,14 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
   {
     title: 'COMMON DIPHTHONGS',
     items: [
-      { symbol: 'aɪ', examples: [{ word: 'time', ipa: 'taɪm' }, { word: 'bike', ipa: 'baɪk' }, { word: 'light', ipa: 'laɪt' }] },
-      { symbol: 'eɪ', examples: [{ word: 'day', ipa: 'deɪ' }, { word: 'name', ipa: 'neɪm' }, { word: 'play', ipa: 'pleɪ' }] },
-      { symbol: 'ɔɪ', examples: [{ word: 'boy', ipa: 'bɔɪ' }, { word: 'coin', ipa: 'kɔɪn' }, { word: 'voice', ipa: 'vɔɪs' }] },
-      { symbol: 'ɪr', examples: [{ word: 'idea', ipa: 'aɪˈdɪə' }, { word: 'near', ipa: 'nɪə' }, { word: 'ear', ipa: 'ɪə' }] },
-      { symbol: 'ɛr', examples: [{ word: 'care', ipa: 'keə' }, { word: 'share', ipa: 'ʃeə' }, { word: 'bear', ipa: 'beə' }] },
-      { symbol: 'ʊr', examples: [{ word: 'tour', ipa: 'tʊə' }, { word: 'cure', ipa: 'kjʊə' }, { word: 'pure', ipa: 'pjʊə' }] },
-      { symbol: 'oʊ', examples: [{ word: 'go', ipa: 'goʊ' }, { word: 'home', ipa: 'hoʊm' }, { word: 'phone', ipa: 'foʊn' }] },
-      { symbol: 'aʊ', examples: [{ word: 'now', ipa: 'naʊ' }, { word: 'house', ipa: 'haʊs' }, { word: 'sound', ipa: 'saʊnd' }] },
+      { symbol: 'aɪ', examples: [{ word: 'ice', ipa: 'aɪs' }, { word: 'time', ipa: 'taɪm' }, { word: 'my', ipa: 'maɪ' }] },
+      { symbol: 'eɪ', examples: [{ word: 'age', ipa: 'eɪʤ' }, { word: 'name', ipa: 'neɪm' }, { word: 'day', ipa: 'deɪ' }] },
+      { symbol: 'ɔɪ', examples: [{ word: 'oil', ipa: 'ɔɪl' }, { word: 'coin', ipa: 'kɔɪn' }, { word: 'boy', ipa: 'bɔɪ' }] },
+      { symbol: 'ɪr', examples: [{ word: 'ear', ipa: 'ɪr' }, { word: 'beard', ipa: 'bɪrd' }, { word: 'near', ipa: 'nɪr' }] },
+      { symbol: 'ɛr', examples: [{ word: 'air', ipa: 'ɛr' }, { word: 'parent', ipa: 'ˈpɛrənt' }, { word: 'care', ipa: 'kɛr' }] },
+      { symbol: 'ʊr', examples: [{ word: 'tourist', ipa: 'ˈtʊrɪst' }, { word: 'during', ipa: 'ˈdʊrɪŋ' }, { word: 'tour', ipa: 'tʊr' }] },
+      { symbol: 'oʊ', examples: [{ word: 'open', ipa: 'ˈoʊpən' }, { word: 'home', ipa: 'hoʊm' }, { word: 'go', ipa: 'goʊ' }] },
+      { symbol: 'aʊ', examples: [{ word: 'out', ipa: 'aʊt' }, { word: 'house', ipa: 'haʊs' }, { word: 'now', ipa: 'naʊ' }] },
     ],
   },
 ];
@@ -332,12 +332,11 @@ export default function SummaryOfPhoneticSymbolsPage() {
       scrollToExampleCard(exampleKey);
     }
     playGroupRef.current = null;
-    await speakText(word, {
+    await speakTextWithPause(word, {
       preferredEnglish: 'en-US',
       rate: 0.86,
       pitch: 1,
       volume: 1,
-      cancelBeforeSpeak: false,
     });
     setActiveSpeakingExampleKey(null);
   };
@@ -364,12 +363,11 @@ export default function SummaryOfPhoneticSymbolsPage() {
       if (playSessionRef.current !== sessionId || playGroupRef.current !== groupKey) break;
       setActiveSpeakingExampleKey(currentWord.key);
       scrollToExampleCard(currentWord.key);
-      await speakText(currentWord.word, {
+      await speakTextWithPause(currentWord.word, {
         preferredEnglish: 'en-US',
         rate: 0.86,
         pitch: 1,
         volume: 1,
-        cancelBeforeSpeak: false,
       });
       if (playSessionRef.current !== sessionId || playGroupRef.current !== groupKey) break;
     }

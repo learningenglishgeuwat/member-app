@@ -158,13 +158,13 @@ export const diphthongPairs: PartialMinimalPair[] = [
     pairLabel: AW_OU,
     videoId: 'TL8bvCYD0dk',
     words: [
-      { a: 'caught', b: 'coat', ipaA: 'k\u0254t', ipaB: 'ko\u028at', ttsLangA: 'en-GB' },
+      { a: 'caught', b: 'coat', ipaA: 'k\u0254t', ipaB: 'ko\u028at' },
       { a: 'talk', b: 'tone', ipaA: 't\u0254k', ipaB: 'to\u028an' },
       { a: 'law', b: 'low', ipaA: 'l\u0254', ipaB: 'lo\u028a' },
       { a: 'bawl', b: 'bowl', ipaA: 'b\u0254l', ipaB: 'bo\u028al' },
-      { a: 'naught', b: 'note', ipaA: 'n\u0254t', ipaB: 'no\u028at', ttsLangA: 'en-GB' },
-      { a: 'chalk', b: 'choke', ipaA: '\u02a7\u0254k', ipaB: '\u02a7o\u028ak', ttsLangA: 'en-GB' },
-      { a: 'stalk', b: 'stoke', ipaA: 'st\u0254k', ipaB: 'sto\u028ak', ttsLangA: 'en-GB' },
+      { a: 'naught', b: 'note', ipaA: 'n\u0254t', ipaB: 'no\u028at' },
+      { a: 'chalk', b: 'choke', ipaA: '\u02a7\u0254k', ipaB: '\u02a7o\u028ak' },
+      { a: 'stalk', b: 'stoke', ipaA: 'st\u0254k', ipaB: 'sto\u028ak' },
       { a: 'raw', b: 'row', ipaA: 'r\u0254', ipaB: 'ro\u028a' },
       { a: 'saw', b: 'sew', ipaA: 's\u0254', ipaB: 'so\u028a' },
       { a: 'thought', b: 'throat', ipaA: '\u03b8\u0254t', ipaB: '\u03b8ro\u028at' },
@@ -204,5 +204,3 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   }
 ];
-
-

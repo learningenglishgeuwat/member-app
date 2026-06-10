@@ -56,6 +56,7 @@ export {
 // Main Speech Functions
 export {
   speakText,
+  speakTextWithPause,
   speakLetter,
   speakWord,
   speakSuffix,

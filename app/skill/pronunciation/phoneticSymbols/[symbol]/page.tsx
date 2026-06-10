@@ -11,7 +11,7 @@ import ButtonSavedProgress from '../../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
 import {
   isSpeechSynthesisSupported,
-  speakText,
+  speakTextWithPause,
   stopSpeech,
   waitForVoices,
 } from '@/lib/tts/speech';
@@ -270,38 +270,6 @@ function buildAccentEvaluationPrompt(focusIpaSymbol: string): string {
 }
 
 const BETWEEN_PLAY_ALL_WORDS_MS = 220;
-
-function addWordPauseForSpeech(text: string): string {
-  const normalizedText = text.trim().replace(/\s+/g, ' ');
-  if (!normalizedText.includes(' ')) return normalizedText;
-  return normalizedText.split(' ').join(', ');
-}
-
-async function speakWithSymbolDetailVoice(text: string): Promise<void> {
-  if (!isSpeechSynthesisSupported() || !text.trim()) return;
-  const speechText = addWordPauseForSpeech(text);
-
-  await speakText(speechText, {
-    preferredEnglish: 'en-US',
-    rate: 0.86,
-    pitch: 1,
-    volume: 1,
-    cancelBeforeSpeak: false,
-  });
-}
-
-async function speakWithBritishSymbolDetailVoice(text: string): Promise<void> {
-  if (!isSpeechSynthesisSupported() || !text.trim()) return;
-  const speechText = addWordPauseForSpeech(text);
-
-  await speakText(speechText, {
-    preferredEnglish: 'en-GB',
-    rate: 0.86,
-    pitch: 1,
-    volume: 1,
-    cancelBeforeSpeak: false,
-  });
-}
 
 const SymbolDetailPage: React.FC = () => {
   const { symbol } = useParams<{
@@ -678,7 +646,12 @@ const SymbolDetailPage: React.FC = () => {
           });
         }
 
-        await speakWithSymbolDetailVoice(example.word);
+        await speakTextWithPause(example.word, {
+          preferredEnglish: 'en-US',
+          rate: 0.86,
+          pitch: 1,
+          volume: 1,
+        });
 
         if (currentSession !== playSessionRef.current) return;
         if (currentIndex < symbolData.examples.length - 1) {
@@ -726,14 +699,24 @@ const SymbolDetailPage: React.FC = () => {
         }
 
         // Play BrE
-        await speakWithBritishSymbolDetailVoice(item.word);
+        await speakTextWithPause(item.word, {
+          preferredEnglish: 'en-GB',
+          rate: 0.86,
+          pitch: 1,
+          volume: 1,
+        });
         
         if (currentSession !== playSessionRef.current) return;
         await new Promise((resolve) => window.setTimeout(resolve, 400));
         
         if (currentSession !== playSessionRef.current) return;
         // Play AmE
-        await speakWithSymbolDetailVoice(item.word);
+        await speakTextWithPause(item.word, {
+          preferredEnglish: 'en-US',
+          rate: 0.86,
+          pitch: 1,
+          volume: 1,
+        });
 
         if (currentSession !== playSessionRef.current) return;
         if (currentIndex < britishNote.items.length - 1) {
@@ -759,7 +742,12 @@ const SymbolDetailPage: React.FC = () => {
     setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
 
     void (async () => {
-      await speakWithSymbolDetailVoice(word);
+      await speakTextWithPause(word, {
+        preferredEnglish: 'en-US',
+        rate: 0.86,
+        pitch: 1,
+        volume: 1,
+      });
 
       if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);
@@ -787,7 +775,12 @@ const SymbolDetailPage: React.FC = () => {
     const currentSession = playSessionRef.current;
     void (async () => {
       // BrE button should use British voice to match the UK IPA note.
-      await speakWithBritishSymbolDetailVoice(word);
+      await speakTextWithPause(word, {
+        preferredEnglish: 'en-GB',
+        rate: 0.86,
+        pitch: 1,
+        volume: 1,
+      });
 
       if (currentSession !== playSessionRef.current) return;
       setActiveWord(null);
@@ -1212,7 +1205,12 @@ const SymbolDetailPage: React.FC = () => {
                             
                             const currentSession = playSessionRef.current;
                             void (async () => {
-                              await speakWithSymbolDetailVoice(item.word);
+                              await speakTextWithPause(item.word, {
+                                preferredEnglish: 'en-US',
+                                rate: 0.86,
+                                pitch: 1,
+                                volume: 1,
+                              });
                               if (currentSession !== playSessionRef.current) return;
                               setActiveWord(null);
                               setActiveWordIndex(null);
