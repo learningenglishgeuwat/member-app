@@ -42,7 +42,7 @@ export const consonantPairs: PartialMinimalPair[] = [
       { a: 'van', b: 'fan', ipaA: 'v\u00e6n', ipaB: 'f\u00e6n' },
       { a: 'vow', b: 'fowl', ipaA: 'va\u028a', ipaB: 'fa\u028al' },
       { a: 'vote', b: 'float', ipaA: 'vo\u028at', ipaB: 'flo\u028at' },
-      { a: 'cover', b: 'coffer', ipaA: '\u02c8k\u028cv\u025a', ipaB: '\u02c8k\u0254f\u025a', ttsLangB: 'en-GB' },
+      { a: 'cover', b: 'coffer', ipaA: '\u02c8k\u028cv\u025a', ipaB: '\u02c8k\u0254f\u025a' },
     ],
     sentences: [
       { a: 'Fill the vat now.', b: 'The soup is too fat.' },
@@ -215,7 +215,7 @@ export const consonantPairs: PartialMinimalPair[] = [
       { a: 'bang', b: 'ban', ipaA: 'b\u00e6\u014b', ipaB: 'b\u00e6n' },
       { a: 'sung', b: 'sun', ipaA: 's\u028c\u014b', ipaB: 's\u028cn' },
       { a: 'king', b: 'kin', ipaA: 'k\u026a\u014b', ipaB: 'k\u026an' },
-      { a: 'long', b: 'lawn', ipaA: 'l\u0254\u014b', ipaB: 'l\u0254n', ttsLangA: 'en-GB' },
+      { a: 'long', b: 'lawn', ipaA: 'l\u0254\u014b', ipaB: 'l\u0254n' },
       { a: 'tongue', b: 'ton', ipaA: 't\u028c\u014b', ipaB: 't\u028cn' },
       { a: 'hang', b: 'hand', ipaA: 'h\u00e6\u014b', ipaB: 'h\u00e6nd' },
     ],
@@ -228,5 +228,3 @@ export const consonantPairs: PartialMinimalPair[] = [
     ],
   }
 ];
-
-

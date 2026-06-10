@@ -226,17 +226,17 @@ const diphthongDescriptions: SymbolDescriptions = {
     category: 'diphthong',
     subcategory: 'closing'
   },
-  'eə': {
+  'er': {
     description: 'Centering diphthong ending in schwa',
     category: 'diphthong',
     subcategory: 'centering'
   },
-  'ɪə': {
+  'ɪr': {
     description: 'Centering diphthong ending in schwa',
     category: 'diphthong',
     subcategory: 'centering'
   },
-  'ʊə': {
+  'ʊr': {
     description: 'Centering diphthong ending in schwa',
     category: 'diphthong',
     subcategory: 'centering'
@@ -255,6 +255,9 @@ function normalizeSymbolKey(symbol: string): string {
   if (s === 'dʒ') return 'ʤ';
   if (s === 'tʃ') return 'ʧ';
   if (s === 'y') return 'j';
+  if (s === 'eə' || s === 'ɛr') return 'er';
+  if (s === 'ɪə' || s === 'iə') return 'ɪr';
+  if (s === 'ʊə') return 'ʊr';
   return s;
 }
 

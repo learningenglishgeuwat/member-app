@@ -54,6 +54,13 @@ pnpm-lock.yaml
 *.tmp
 *.temp
 
+# scripts
+# Keep essential scripts tracked for build/deploy.
+# Ignore only local or temporary script worktrees.
+/scripts/local/
+/scripts/tmp/
+/scripts/cache/
+
 # vercel
 .vercel
 
@@ -69,6 +76,10 @@ AI.md
 
 # documentation
 /documentation/
+
+# local dictionary cache
+/lib/dictionary/
+/lib/pattern\ ipa/
 
 # kiro
 .kiro

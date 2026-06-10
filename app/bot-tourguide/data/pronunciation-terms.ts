@@ -314,6 +314,6 @@ export const PRONUNCIATION_TERM_SEEDS: PronunciationTermSeed[] = [
     definitionId:
       'kalimat latihan dengan pola bunyi berulang untuk melatih artikulasi dan kelincahan bicara.',
     coachingTipId: 'Mulai lambat, utamakan akurasi bunyi, baru naikkan kecepatan.',
-    route: '/skill/pronunciation/phoneticSymbols/tongue-twister',
+    route: '/skill/pronunciation/tongue-twister',
   },
 ];

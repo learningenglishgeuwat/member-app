@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ReactNode } from 'react';
-import BackButton from '../../../components/BackButton';
+import BackButton from '../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
-import { Highlight } from '../../reading-text/tongueTwister/components/Highlight';
+import { Highlight } from '../reading-text/tongueTwister/components/Highlight';
 import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
@@ -213,7 +213,7 @@ export default function TongueTwisterPage() {
   return (
     <main className="tt-page">
       <div className="tt-back">
-        <BackButton to="/skill/pronunciation/phoneticSymbols" />
+        <BackButton to="/skill/pronunciation" />
       </div>
 
       <section className="tt-shell">

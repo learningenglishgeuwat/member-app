@@ -1,5 +1,5 @@
 {
-  "route": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+  "route": "/skill/pronunciation/tongue-twister",
   "label": "Tongue Twister",
   "scope": "pronunciation",
   "keywords": [
@@ -11,7 +11,7 @@
     {
       "topicId": "tongue-twister-practice-goal",
       "title": "Tongue Twister Practice Goal",
-      "route": "/skill/pronunciation/phoneticSymbols/tongue-twister",
+      "route": "/skill/pronunciation/tongue-twister",
       "keywords": [
         "fungsi tongue twister",
         "latihan lidah pronunciation",

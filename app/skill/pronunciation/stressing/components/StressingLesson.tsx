@@ -1000,7 +1000,7 @@ export default function StressingLesson({ variant }: { variant: StressingLessonV
   return (
     <div className="pronunciation-layout pronunciation-theme pronunciation-theme--stressing stress-page">
       <div className="fixed top-6 left-6 z-[100]">
-        <BackButton to="/skill/pronunciation" />
+        <BackButton to="/skill/pronunciation/stressing" />
       </div>
 
       <Sidebar

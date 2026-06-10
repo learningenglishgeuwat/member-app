@@ -127,5 +127,5 @@ export const TOPIC_ROUTES: Record<string, string> = {
   contraction: '/skill/pronunciation/contraction',
   text: '/skill/pronunciation/text',
   'reading-text': '/skill/pronunciation/reading-text',
-  'tongue-twister': '/skill/pronunciation/phoneticSymbols/tongue-twister',
+  'tongue-twister': '/skill/pronunciation/tongue-twister',
 };

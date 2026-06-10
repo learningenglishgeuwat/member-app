@@ -114,7 +114,7 @@ const ButtonSavedProgress: React.FC<ButtonSavedProgressProps> = ({
   const getText = () => {
     if (isLoading) return 'Saving...';
     if (isSaved && selectedAssessment) {
-      return `${selectedAssessment.icon} ${selectedAssessment.label}`;
+      return `${selectedAssessment.icon} ${selectedAssessment.label} (${selectedAssessment.range})`;
     }
     return 'Save Progress';
   };

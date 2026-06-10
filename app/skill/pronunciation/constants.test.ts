@@ -70,7 +70,7 @@ describe('Tongue Twister Configuration', () => {
     });
 
     it('should map tongue-twister to correct route', () => {
-      expect(TOPIC_ROUTES['tongue-twister']).toBe('/skill/pronunciation/phoneticSymbols/tongue-twister');
+      expect(TOPIC_ROUTES['tongue-twister']).toBe('/skill/pronunciation/tongue-twister');
     });
 
     it('should map linking-word to correct route', () => {

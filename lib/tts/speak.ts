@@ -169,6 +169,26 @@ export async function speakText(
   }
 }
 
+function addWordPauseForSpeech(text: string): string {
+  const normalizedText = text.trim().replace(/\s+/g, ' ');
+  if (!normalizedText.includes(' ')) return normalizedText;
+  return normalizedText.split(' ').join(', ');
+}
+
+export async function speakTextWithPause(
+  text: string,
+  options?: SpeakOptions,
+): Promise<void> {
+  if (!isSpeechSynthesisSupported()) return;
+  if (!isNonEmptyText(text)) return;
+
+  const speechText = addWordPauseForSpeech(text);
+  await speakText(speechText, {
+    ...options,
+    cancelBeforeSpeak: options?.cancelBeforeSpeak ?? false,
+  });
+}
+
 // ─────────────────────────────────────────────
 // CONVENIENCE SPEAK FUNCTIONS PER TYPE
 // ─────────────────────────────────────────────
