@@ -1,11 +1,10 @@
 ﻿import type { PartialMinimalPair } from './shared';
-import { AI_EI, AU_OU, AW_OU, E_AIR, E_EI, ER_R, I_NEAR, U_NEAR } from './constants';
 
 export const diphthongPairs: PartialMinimalPair[] = [
   {
-    id: 'diphthong-ai-ei',
+    id: 'diphthong-aɪ-eɪ',
     category: 'diphthong',
-    pairLabel: AI_EI,
+    pairLabel: 'a\u026a \u2194 e\u026a',
     videoId: 'xndGoQmWYxU',
     words: [
       { a: 'time', b: 'tame', ipaA: 'ta\u026am', ipaB: 'te\u026am' },
@@ -28,9 +27,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-au-ou',
+    id: 'diphthong-aʊ-oʊ',
     category: 'diphthong',
-    pairLabel: AU_OU,
+    pairLabel: 'a\u028a \u2194 o\u028a',
     videoId: 'WzlK8CnFh8c',
     words: [
       { a: 'loud', b: 'load', ipaA: 'la\u028ad', ipaB: 'lo\u028ad' },
@@ -53,9 +52,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-i-near',
+    id: 'diphthong-ɪ-ɪr',
     category: 'diphthong',
-    pairLabel: I_NEAR,
+    pairLabel: '\u026a \u2194 \u026ar',
     videoId: 'v_9rTF9MXyY',
     words: [
       { a: 'bit', b: 'beer', ipaA: 'b\u026at', ipaB: 'b\u026ar' },
@@ -78,9 +77,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-u-near',
+    id: 'diphthong-ʊ-ʊr',
     category: 'diphthong',
-    pairLabel: U_NEAR,
+    pairLabel: '\u028a \u2194 \u028ar',
     videoId: '3zSOQ_wWdyc',
     words: [
       { a: 'pull', b: 'poor', ipaA: 'p\u028al', ipaB: 'p\u028ar' },
@@ -103,9 +102,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-e-air',
+    id: 'diphthong-ɛ-ɛr',
     category: 'diphthong',
-    pairLabel: E_AIR,
+    pairLabel: '\u025b \u2194 \u025br',
     videoId: '08MZWPOwiYw',
     words: [
       { a: 'bet', b: 'bear', ipaA: 'b\u025bt', ipaB: 'b\u025br' },
@@ -128,9 +127,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-e-ei',
+    id: 'diphthong-ɛ-eɪ',
     category: 'diphthong',
-    pairLabel: E_EI,
+    pairLabel: '\u025b \u2194 e\u026a',
     videoId: 'Gk_ZufNX5jQ',
     words: [
       { a: 'bet', b: 'bait', ipaA: 'b\u025bt', ipaB: 'be\u026at' },
@@ -153,9 +152,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-aw-ou',
+    id: 'diphthong-ɔ-oʊ',
     category: 'diphthong',
-    pairLabel: AW_OU,
+    pairLabel: '\u0254 \u2194 o\u028a',
     videoId: 'TL8bvCYD0dk',
     words: [
       { a: 'caught', b: 'coat', ipaA: 'k\u0254t', ipaB: 'ko\u028at' },
@@ -178,9 +177,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'diphthong-er-r',
+    id: 'diphthong-ɚ-r',
     category: 'diphthong',
-    pairLabel: ER_R,
+    pairLabel: '\u025a \u2194 r (Indonesian trill)',
     notes: 'Bandingkan /\u025a/ dengan trill /r/ Indonesia.',
     videoId: 'Fa9FuZBe820',
     words: [

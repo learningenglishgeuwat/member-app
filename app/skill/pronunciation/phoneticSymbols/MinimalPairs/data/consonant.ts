@@ -1,11 +1,10 @@
 ﻿import type { PartialMinimalPair } from './shared';
-import { CH_J, DH_D, F_P, K_G, NG_N, S_SH, TH_T, V_F, Z_ZH } from './constants';
 
 export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-f-p',
     category: 'consonant',
-    pairLabel: F_P,
+    pairLabel: 'f \u2194 p',
     videoId: 'ODkqeBCL49o',
     words: [
       { a: 'fan', b: 'pan', ipaA: 'f\u00e6n', ipaB: 'p\u00e6n' },
@@ -30,7 +29,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-v-f',
     category: 'consonant',
-    pairLabel: V_F,
+    pairLabel: 'v \u2194 f',
     videoId: 'fC6BCT_KF-o',
     words: [
       { a: 'vat', b: 'fat', ipaA: 'v\u00e6t', ipaB: 'f\u00e6t' },
@@ -55,7 +54,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-th-t',
     category: 'consonant',
-    pairLabel: TH_T,
+    pairLabel: '\u03b8 \u2194 t',
     videoId: 'riRrCGw2-6I',
     words: [
       { a: 'thin', b: 'tin', ipaA: '\u03b8\u026an', ipaB: 't\u026an' },
@@ -80,7 +79,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-dh-d',
     category: 'consonant',
-    pairLabel: DH_D,
+    pairLabel: '\u00f0 \u2194 d',
     videoId: 'Sg0ssrA0Yaw',
     words: [
       { a: 'then', b: 'den', ipaA: '\u00f0\u025bn', ipaB: 'd\u025bn' },
@@ -105,7 +104,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-s-sh',
     category: 'consonant',
-    pairLabel: S_SH,
+    pairLabel: 's \u2194 \u0283',
     videoId: 'Dxc20oQ6VX8',
     words: [
       { a: 'sip', b: 'ship', ipaA: 's\u026ap', ipaB: '\u0283\u026ap' },
@@ -130,7 +129,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-z-zh',
     category: 'consonant',
-    pairLabel: Z_ZH,
+    pairLabel: 'z \u2194 \u0292',
     videoId: 'RmQncMXQdG4',
     words: [
       { a: 'seize', b: 'siege', ipaA: 'siz', ipaB: 'si\u0292' },
@@ -155,7 +154,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-ch-j',
     category: 'consonant',
-    pairLabel: CH_J,
+    pairLabel: '\u02a7 \u2194 \u02a4',
     videoId: 'XJQzE4tDW0A',
     words: [
       { a: 'cheap', b: 'jeep', ipaA: '\u02a7ip', ipaB: '\u02a4ip' },
@@ -180,7 +179,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-k-g',
     category: 'consonant',
-    pairLabel: K_G,
+    pairLabel: 'k \u2194 g',
     videoId: 'a3yi-Ge8HS8',
     words: [
       { a: 'coat', b: 'goat', ipaA: 'ko\u028at', ipaB: 'go\u028at' },
@@ -205,7 +204,7 @@ export const consonantPairs: PartialMinimalPair[] = [
   {
     id: 'consonant-ng-n',
     category: 'consonant',
-    pairLabel: NG_N,
+    pairLabel: '\u014b \u2194 n',
     videoId: 'X3dSWxLvNKc',
     words: [
       { a: 'sing', b: 'sin', ipaA: 's\u026a\u014b', ipaB: 's\u026an' },

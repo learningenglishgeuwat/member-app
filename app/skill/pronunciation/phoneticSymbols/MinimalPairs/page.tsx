@@ -21,6 +21,18 @@ const RecordingControlsButton = dynamic(() => import('../../../components/Record
 
 const stripIpaSlashes = (ipa: string) => ipa.replace(/^\/|\/$/g, '');
 
+const CANONICAL_IPA_ALIASES: Record<string, string> = {
+  'ɪə': 'ɪr',
+  'ʊə': 'ʊr',
+  'eə': 'ɛr',
+};
+
+const canonicalizeIpa = (symbol: string) => {
+  if (!symbol) return symbol;
+  const cleaned = symbol.replace(/\s+/g, '').replace(/^\/|\/$/g, '');
+  return CANONICAL_IPA_ALIASES[cleaned] ?? cleaned;
+};
+
 const COMMON_SENTENCE_IPA: Record<string, string> = {
   a: 'ə',
   about: 'əˈbaʊt',
@@ -168,7 +180,7 @@ const MinimalPairsPage: React.FC = () => {
   const renderWord = (word: string, side: 'a' | 'b') => {
     if (!showHighlight) return word;
 
-    const symbol = selectedPairSymbols[side];
+    const symbol = canonicalizeIpa(selectedPairSymbols[side]);
     const lowerWord = word.toLowerCase();
     const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[symbol];
 
@@ -201,7 +213,7 @@ const MinimalPairsPage: React.FC = () => {
   };
 
   const renderIpa = (ipa: string, side: 'a' | 'b') => {
-    const symbol = selectedPairSymbols[side];
+    const symbol = canonicalizeIpa(selectedPairSymbols[side]);
     if (!showHighlight || !symbol) return ipa;
 
     const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -346,7 +358,7 @@ const MinimalPairsPage: React.FC = () => {
 
         {!isCategoryLoading && selectedPair && (
           <>
-            {selectedPair.id === 'diphthong-er-r' && (
+            {selectedPair.id === 'diphthong-ɚ-r' && (
               <section className="minimal-card">
                 <p>
                   Pair ini pakai dua voice: sisi A memakai English (`en-US`), sisi B memakai Indonesian (`id-ID`) untuk latihan
@@ -411,7 +423,7 @@ const MinimalPairsPage: React.FC = () => {
                           speakText(
                             item.ttsB ?? item.b,
                             `word-${index}-b`,
-                            item.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                            item.ttsLangB ?? (selectedPair.id === 'diphthong-ɚ-r' ? 'id-ID' : 'en-US'),
                           )
                         }
                       >
@@ -479,7 +491,7 @@ const MinimalPairsPage: React.FC = () => {
                             speakText(
                               item.b,
                               `sentence-${index}-b`,
-                              matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                              matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-ɚ-r' ? 'id-ID' : 'en-US'),
                             );
                           }}
                         >

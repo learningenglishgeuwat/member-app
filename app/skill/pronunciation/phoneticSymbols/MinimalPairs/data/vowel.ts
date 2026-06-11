@@ -1,11 +1,10 @@
 ﻿import type { PartialMinimalPair } from './shared';
-import { AE_AH, AE_E, AW_AH, SCHWA_E, UH_AH, U_SHORT_LONG, V_I_SHORT_LONG } from './constants';
 
 export const vowelPairs: PartialMinimalPair[] = [
   {
-    id: 'vowel-i-short-vs-i-long',
+    id: 'vowel-ɪ-i',
     category: 'vowel',
-    pairLabel: V_I_SHORT_LONG,
+    pairLabel: '\u026a \u2194 i',
     videoId: 'rX96zUAApyo',
     words: [
       { a: 'sit', b: 'seat', ipaA: 's\u026at', ipaB: 'sit' },
@@ -28,9 +27,9 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'vowel-ae-e',
+    id: 'vowel-æ-ɛ',
     category: 'vowel',
-    pairLabel: AE_E,
+    pairLabel: '\u00e6 \u2194 \u025b',
     videoId: 'II9KgEF3K7E',
     words: [
       { a: 'bat', b: 'bet', ipaA: 'bæt', ipaB: 'bɛt' },
@@ -53,9 +52,9 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'vowel-ae-ah',
+    id: 'vowel-æ-ɑ',
     category: 'vowel',
-    pairLabel: AE_AH,
+    pairLabel: '\u00e6 \u2194 \u0251',
     videoId: 'rBFB2VXmAI0',
     words: [
       { a: 'cap', b: 'cop', ipaA: 'kæp', ipaB: 'kɑp' },
@@ -78,9 +77,9 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'vowel-u-short-vs-u-long',
+    id: 'vowel-ʊ-u',
     category: 'vowel',
-    pairLabel: U_SHORT_LONG,
+    pairLabel: '\u028a \u2194 u',
     videoId: 'nEhnJj_bLbM',
     words: [
       { a: 'pull', b: 'pool', ipaA: 'pʊl', ipaB: 'pul' },
@@ -88,10 +87,10 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'look', b: 'Luke', ipaA: 'lʊk', ipaB: 'luk' },
       { a: 'could', b: 'cooed', ipaA: 'kʊd', ipaB: 'kud' },
       { a: 'would', b: 'wooed', ipaA: 'wʊd', ipaB: 'wud' },
-      { a: 'foot', b: 'food', ipaA: 'fʊt', ipaB: 'fud' },
+      { a: 'soot', b: 'suit', ipaA: 'sʊt', ipaB: 'sut' }, // PERBAIKAN: Konsonan akhir sama-sama /t/
       { a: 'hood', b: "who'd", ipaA: 'hʊd', ipaB: 'hud' },
       { a: 'cook', b: 'kook', ipaA: 'kʊk', ipaB: 'kuk' },
-      { a: 'book', b: 'boo', ipaA: 'bʊk', ipaB: 'bu' },
+      { a: 'should', b: 'shooed', ipaA: '\u0283ʊd', ipaB: '\u0283ud' },
       { a: 'good', b: 'gooed', ipaA: 'gʊd', ipaB: 'gud' },
     ],
     sentences: [
@@ -103,9 +102,9 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'vowel-uh-ah',
+    id: 'vowel-ʌ-ɑ',
     category: 'vowel',
-    pairLabel: UH_AH,
+    pairLabel: '\u028c \u2194 \u0251',
     videoId: 'e6rjJiOxVCs',
     words: [
       { a: 'cut', b: 'cot', ipaA: 'kʌt', ipaB: 'kɑt' },
@@ -128,34 +127,34 @@ export const vowelPairs: PartialMinimalPair[] = [
     ],
   },
   {
-    id: 'vowel-schwa-e',
+    id: 'vowel-ə-ɛ',
     category: 'vowel',
-    pairLabel: SCHWA_E,
+    pairLabel: '\u0259 \u2194 \u025b',
     videoId: 'rqU4DTeQc5E',
     words: [
-      { a: 'about', b: 'bet', ipaA: 'əˈbaʊt', ipaB: 'bɛt' },
-      { a: 'again', b: 'get', ipaA: 'əˈgɛn', ipaB: 'gɛt' },
-      { a: 'around', b: 'red', ipaA: 'əˈraʊnd', ipaB: 'rɛd' },
-      { a: 'alone', b: 'less', ipaA: 'əˈloʊn', ipaB: 'lɛs' },
-      { a: 'away', b: 'west', ipaA: 'əˈweɪ', ipaB: 'wɛst' },
-      { a: 'ago', b: 'egg', ipaA: 'əˈgoʊ', ipaB: 'ɛg' },
-      { a: 'alive', b: 'left', ipaA: 'əˈlaɪv', ipaB: 'lɛft' },
-      { a: 'allow', b: 'led', ipaA: 'əˈlaʊ', ipaB: 'lɛd' },
-      { a: 'aside', b: 'said', ipaA: 'əˈsaɪd', ipaB: 'sɛd' },
-      { a: 'above', b: 'best', ipaA: 'əˈbʌv', ipaB: 'bɛst' },
+      { a: 'banana', b: 'bed', ipaA: 'bəˈnænə', ipaB: 'bɛd' },
+      { a: 'balloon', b: 'bell', ipaA: 'bəˈlun', ipaB: 'bɛl' },
+      { a: 'police', b: 'pen', ipaA: 'pəˈlis', ipaB: 'pɛn' },
+      { a: 'potato', b: 'pet', ipaA: 'pəˈteɪtoʊ', ipaB: 'pɛt' },
+      { a: 'today', b: 'ten', ipaA: 'təˈdeɪ', ipaB: 'tɛn' },
+      { a: 'machine', b: 'met', ipaA: 'məˈʃin', ipaB: 'mɛt' },
+      { a: 'garage', b: 'get', ipaA: 'gəˈrɑʒ', ipaB: 'gɛt' },
+      { a: 'support', b: 'set', ipaA: 'səˈpɔrt', ipaB: 'sɛt' },
+      { a: 'facade', b: 'fed', ipaA: 'fəˈsɑd', ipaB: 'fɛd' },
+      { a: 'vanilla', b: 'vest', ipaA: 'vəˈnɪlə', ipaB: 'vɛst' },
     ],
     sentences: [
-      { a: 'Tell me about your plan.', b: 'I bet your plan will work.' },
-      { a: 'Please say it again slowly.', b: 'Get ready to say it clearly.' },
-      { a: 'We walked around the block.', b: 'The red block is heavy.' },
-      { a: 'She lives alone in town.', b: 'There is less traffic today.' },
-      { a: 'They drove away early.', b: 'The west road is open.' },
+      { a: 'I ate a yellow banana.', b: 'Go to bed right now.' },
+      { a: 'Call the police quickly.', b: 'Write it down with a pen.' },
+      { a: 'I have a meeting today.', b: 'Count from one to ten.' },
+      { a: 'Fix the washing machine.', b: 'We met at the station.' },
+      { a: 'Thank you for your support.', b: 'Please set the glass down.' },
     ],
   },
   {
-    id: 'vowel-aw-ah',
+    id: 'vowel-ɔ-ɑ',
     category: 'vowel',
-    pairLabel: AW_AH,
+    pairLabel: '\u0254 \u2194 \u0251',
     videoId: '1Kjyf1D7jvE',
     words: [
       { a: 'caught', b: 'cot', ipaA: 'kɔt', ipaB: 'kɑt' },
@@ -163,10 +162,10 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'walk', b: 'wok', ipaA: 'wɔk', ipaB: 'wɑk' },
       { a: 'talk', b: 'tock', ipaA: 'tɔk', ipaB: 'tɑk' },
       { a: 'bought', b: 'bot', ipaA: 'bɔt', ipaB: 'bɑt' },
-      { a: 'law', b: 'lot', ipaA: 'lɔ', ipaB: 'lɑt' },
-      { a: 'all', b: 'odd', ipaA: 'ɔl', ipaB: 'ɑd' },
+      { a: 'law', b: 'la', ipaA: 'lɔ', ipaB: 'lɑ' },
+      { a: 'awe', b: 'ah', ipaA: 'ɔ', ipaB: 'ɑ' }, // PERBAIKAN: Hilangkan /l/ agar murni vokal setara dengan 'ah'
       { a: 'stalk', b: 'stock', ipaA: 'stɔk', ipaB: 'stɑk' },
-      { a: 'saw', b: 'sod', ipaA: 'sɔ', ipaB: 'sɑd' },
+      { a: 'wrought', b: 'rot', ipaA: 'rɔt', ipaB: 'rɑt' }, // PERBAIKAN: Berakhiran konsonan /t/ yang seragam
       { a: 'chalk', b: 'chock', ipaA: '\u02a7\u0254k', ipaB: '\u02a7\u0251k' },
     ],
     sentences: [

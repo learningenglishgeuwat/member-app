@@ -1,9 +1,15 @@
-'use client'
+ 'use client'
+
+const highlightLetterStyle: React.CSSProperties = {
+  color: '#fb923c',
+  fontWeight: 900,
+  textShadow: '0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6)',
+};
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Lightbulb, Database, HelpCircle, Book, Copy, ChevronDown } from 'lucide-react';
+import { Play, Lightbulb, Database, Book, Copy, ChevronDown } from 'lucide-react';
 import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
@@ -15,6 +21,16 @@ import {
   stopSpeech,
   waitForVoices,
 } from '@/lib/tts/speech';
+import { useSymbolPlayback } from './hooks/useSymbolPlayback';
+import { useSymbolProgress } from './hooks/useSymbolProgress';
+import { useClipboardCopy } from './hooks/useClipboardCopy';
+import { useCommonLetters } from './hooks/useCommonLetters';
+import { SymbolWordGrid } from './components/SymbolWordGrid';
+import { BritishNotePanel } from './components/BritishNotePanel';
+import { SymbolVideoSection } from './components/SymbolVideoSection';
+import { SymbolTipsPanel } from './components/SymbolTipsPanel';
+import { SymbolPromptSection } from './components/SymbolPromptSection';
+import { SymbolHelpModal } from './components/SymbolHelpModal';
 import type { WordExample } from '../data/wordExamples/wordExamples';
 import {
   getCategoryDisplayName,
@@ -25,6 +41,27 @@ import {
 } from '../data';
 import { getAllCommonLetters, type CommonLetter } from '../data/commonLetters/CommonLetters';
 import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
+import {
+  isIndexBasedOverride as hhIsIndexBasedOverride,
+  renderIndexBasedWord as hhRenderIndexBasedWord,
+  renderHighlightedWord as hhRenderHighlightedWord,
+  renderWord as hhRenderWord,
+  renderBritishNoteWord as hhRenderBritishNoteWord,
+  renderIpa as hhRenderIpa,
+} from './helpers/highlightHelpers';
+import type { BritishSymbolNote } from './components/BritishNotePanel';
+import { BRITISH_NOTE_COUNTERPARTS } from './data/symbolLookups';
+import {
+  toTourToken,
+  getBaseGroup,
+  getSymbolNavGroups,
+  formatIpaSymbolForPrompt,
+  buildAccentEvaluationPrompt,
+  getDefaultSymbolDetailData,
+  getSymbolDetailData,
+  type SymbolDetailData,
+  type SymbolDetailSectionState,
+} from './utils';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
@@ -35,144 +72,25 @@ const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal
 
 const ALL_COMMON_LETTERS = getAllCommonLetters();
 const COMMON_LETTER_SYMBOL_ALIASES: Record<string, string[]> = {
-  // E / Eh / Ash / etc.
   e: ['ɛ'],
   'ɛ': ['e'],
-  
-  // Diphthongs & Rhotic variants
   'er': ['eə', 'ɛr'],
   'eə': ['er', 'ɛr'],
   'ɛr': ['er', 'eə'],
-  
   'ɪr': ['ɪə', 'iə'],
   'ɪə': ['ɪr', 'iə'],
   'iə': ['ɪr', 'ɪə'],
-  
   'ʊr': ['ʊə'],
   'ʊə': ['ʊr'],
-  
   'əʊ': ['oʊ'],
   'oʊ': ['əʊ'],
-  
-  // Affricates
   'tʃ': ['ʧ'],
   'ʧ': ['tʃ'],
   'dʒ': ['ʤ'],
   'ʤ': ['dʒ'],
-  
-  // Glides
   y: ['j'],
   j: ['y'],
 };
-
-const BRITISH_NOTE_COUNTERPARTS: Record<string, string[]> = {
-  'ɔ': ['ɑ'],
-  'ɑ': ['ɔ'],
-  'ɚ': ['ə'],
-  'ə': ['ɚ'],
-  'ɒ': ['ɑ', 'ɔ'],
-};
-
-const highlightLetterStyle: React.CSSProperties = {
-  color: '#fb923c',
-  fontWeight: 900,
-  textShadow: '0 0 8px rgba(251,146,60,0.95), 0 0 16px rgba(251,146,60,0.6)',
-};
-
-const VOWEL_LAX_SYMBOLS = ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'] as const;
-const VOWEL_TENSE_SYMBOLS = ['\u0251', 'i', 'u', '\u00e6', '\u0254'] as const;
-const CONSONANT_VOICELESS_SYMBOLS = ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h'] as const;
-const CONSONANT_VOICED_SYMBOLS = [
-  'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'j',
-] as const;
-const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', 'ɛr', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
-
-const toTourToken = (value: string): string =>
-  value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-function getBaseGroup(category: string): 'vowel' | 'consonant' | 'diphthong' | null {
-  if (category.startsWith('vowel')) return 'vowel';
-  if (category.startsWith('consonant')) return 'consonant';
-  if (category === 'diphthong') return 'diphthong';
-  return null;
-}
-
-function getSymbolNavGroups(category: string): Array<{ title: string; symbols: readonly string[] }> {
-  const baseGroup = getBaseGroup(category);
-  if (baseGroup === 'vowel') {
-    return [
-      { title: 'Vowel Lax', symbols: VOWEL_LAX_SYMBOLS },
-      { title: 'Vowel Tense', symbols: VOWEL_TENSE_SYMBOLS },
-    ];
-  }
-  if (baseGroup === 'consonant') {
-    return [
-      { title: 'Consonant Voiceless', symbols: CONSONANT_VOICELESS_SYMBOLS },
-      { title: 'Consonant Voiced', symbols: CONSONANT_VOICED_SYMBOLS },
-    ];
-  }
-  if (baseGroup === 'diphthong') {
-    return [{ title: 'Diphthong Symbols', symbols: DIPHTHONG_SYMBOLS }];
-  }
-  return [];
-}
-
-type BritishWordNote = {
-  word: string;
-  britishIpa: string;
-  americanIpa: string;
-};
-
-type BritishSymbolNote = {
-  description: string;
-  items: BritishWordNote[];
-};
-
-type SymbolDetailSectionState = {
-  practice?: boolean;
-  tips?: boolean;
-  video?: boolean;
-  prompt?: boolean;
-};
-
-type SymbolDetailData = {
-  description: string;
-  category: string;
-  examples: WordExample[];
-  tips: string[];
-  videoId?: string;
-};
-
-function getDefaultSymbolDetailData(): SymbolDetailData {
-  return {
-    description: 'International Phonetic Alphabet Symbol',
-    category: 'Unknown',
-    examples: [],
-    tips: [],
-    videoId: undefined,
-  };
-}
-
-function getSymbolDetailData(symbol: string): SymbolDetailData {
-  if (!symbol) return getDefaultSymbolDetailData();
-
-  try {
-    return {
-      description: getSymbolDescription(symbol),
-      category: getCategoryDisplayName(symbol),
-      examples: getWordExamples(symbol),
-      tips: getPronunciationTips(symbol),
-      videoId: getVideoIdBySymbol(symbol),
-    };
-  } catch (error) {
-    console.error('Failed to resolve symbol data:', error);
-    return getDefaultSymbolDetailData();
-  }
-}
 
 const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   '\u0254': {
@@ -258,16 +176,7 @@ const BRITISH_NOTES_BY_SYMBOL: Record<string, BritishSymbolNote> = {
   },
 };
 
-function formatIpaSymbolForPrompt(symbol: string): string {
-  const trimmed = symbol.trim();
-  if (!trimmed) return '/?/';
-  const core = trimmed.replace(/^\/+|\/+$/g, '');
-  return `/${core}/`;
-}
 
-function buildAccentEvaluationPrompt(focusIpaSymbol: string): string {
-  return `Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional yang sangat kritis. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American) terutama simbol ${focusIpaSymbol}. Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif ('🟢 Sangat Bagus', '🔵 Bagus', '🟠 Perlu sedikit perbaikan', atau '🔴 Perlu Perbaikan'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki. Berikan skor keseluruhan dari 1-100 berdasarkan akurasi fonetik American Accent. Sebutkan secara terpisah daftar kata yang ada di teks namun tidak ditemukan dalam rekaman audio. Berikan status kualitatif pada hasil keseluruhan dari seluruh daftar kata baik itu dari kata yang disebutkan audio atau tidak. Berikan penilaian yang jujur. Jika jumlah kata yang diucapkan kurang dari 100% dari daftar yang diberikan, berikan penalti skor secara proporsional. (Contoh: Hanya 50% kata yang diucapkan = Skor maksimal adalah 50). Ini bobotnya:🟢 Sangat Bagus = 100%, 🔵 Bagus = 80%, 🟠 Perlu sedikit perbaikan = 65%, 🔴 Perlu Perbaikan = 50%`;
-}
 
 const BETWEEN_PLAY_ALL_WORDS_MS = 220;
 
@@ -291,21 +200,15 @@ const SymbolDetailPage: React.FC = () => {
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
-  const [showCommonLettersPopup, setShowCommonLettersPopup] = useState(false);
-  const [commonLetters, setCommonLetters] = useState<CommonLetter[] | null>(() => ALL_COMMON_LETTERS);
-  const [commonLettersLoading, setCommonLettersLoading] = useState(false);
-  const [commonLettersError, setCommonLettersError] = useState<string | null>(null);
-  const [isPromptCopied, setIsPromptCopied] = useState(false);
-  const [isWordExamplesCopied, setIsWordExamplesCopied] = useState(false);
-  const [isMissionCopied, setIsMissionCopied] = useState(false);
-  const [isPracticeOpen, setIsPracticeOpen] = useState(false);
-  const [isTipsOpen, setIsTipsOpen] = useState(false);
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [shouldAutoplayVideo, setShouldAutoplayVideo] = useState(false);
-  const [isPromptOpen, setIsPromptOpen] = useState(false);
-  const [isSectionStateHydrated, setIsSectionStateHydrated] = useState(false);
+  const {
+    commonLetters,
+    commonLettersLoading,
+    commonLettersError,
+    showCommonLettersPopup,
+    openCommonLettersModal,
+    closeCommonLettersModal,
+  } = useCommonLetters({ initialCommonLetters: ALL_COMMON_LETTERS });
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isProgressSaved, setIsProgressSaved] = useState(false); // Start with false to match server
   const [isClient, setIsClient] = useState(false);
   const symbolData = useMemo(() => getSymbolDetailData(decodedSymbol), [decodedSymbol]);
   const symbolNavGroups = useMemo(() => getSymbolNavGroups(symbolData.category), [symbolData.category]);
@@ -318,6 +221,31 @@ const SymbolDetailPage: React.FC = () => {
     () => buildAccentEvaluationPrompt(promptFocusSymbol),
     [promptFocusSymbol],
   );
+  const {
+    isProgressSaved,
+    isPracticeOpen,
+    isTipsOpen,
+    isVideoOpen,
+    shouldAutoplayVideo,
+    isPromptOpen,
+    setIsPracticeOpen,
+    setIsTipsOpen,
+    setIsVideoOpen,
+    setShouldAutoplayVideo,
+    setIsPromptOpen,
+    handleSaveProgress,
+    handleUnsaveProgress,
+  } = useSymbolProgress({ decodedSymbol });
+
+  const {
+    isPromptCopied,
+    isWordExamplesCopied,
+    isMissionCopied,
+    handleCopyMission,
+    handleCopyPrompt,
+    handleCopyWordExamples,
+  } = useClipboardCopy({ symbolData, accentEvaluationPrompt });
+
   const sectionStateStorageKey = useMemo(
     () => `phoneticSymbolSectionState:${normalizedSymbol || 'default'}`,
     [normalizedSymbol]
@@ -343,212 +271,30 @@ const SymbolDetailPage: React.FC = () => {
     setShowHighlight(true);
   }, [decodedSymbol]);
 
-  // Handle hydration
-  useEffect(() => {
-    setIsClient(true);
-    if (typeof window !== 'undefined') {
-      const savedProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
-      setIsProgressSaved(!!savedProgress[`phoneticSymbols_${decodedSymbol}`]);
-
-      const rawSectionState = localStorage.getItem(sectionStateStorageKey);
-      if (rawSectionState) {
-        try {
-          const sectionState = JSON.parse(rawSectionState) as SymbolDetailSectionState;
-          setIsPracticeOpen(!!sectionState.practice);
-          setIsTipsOpen(!!sectionState.tips);
-          setIsVideoOpen(!!sectionState.video);
-          setShouldAutoplayVideo(false);
-          setIsPromptOpen(!!sectionState.prompt);
-        } catch {
-          setIsPracticeOpen(false);
-          setIsTipsOpen(false);
-          setIsVideoOpen(false);
-          setShouldAutoplayVideo(false);
-          setIsPromptOpen(false);
-        }
-      } else {
-        setIsPracticeOpen(false);
-        setIsTipsOpen(false);
-        setIsVideoOpen(false);
-        setShouldAutoplayVideo(false);
-        setIsPromptOpen(false);
-      }
-
-      setIsSectionStateHydrated(true);
-    }
-  }, [decodedSymbol, sectionStateStorageKey]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !isSectionStateHydrated) return;
-
-    const nextSectionState: SymbolDetailSectionState = {
-      practice: isPracticeOpen,
-      tips: isTipsOpen,
-      video: isVideoOpen,
-      prompt: isPromptOpen,
-    };
-    localStorage.setItem(sectionStateStorageKey, JSON.stringify(nextSectionState));
-  }, [
-    isPracticeOpen,
-    isTipsOpen,
-    isVideoOpen,
-    isPromptOpen,
-    isSectionStateHydrated,
-    sectionStateStorageKey,
-  ]);
-
   const symbolAliasCandidates = useMemo(() => {
     const base = [decodedSymbol, ...(COMMON_LETTER_SYMBOL_ALIASES[decodedSymbol] ?? [])];
     return Array.from(new Set(base.filter(Boolean)));
   }, [decodedSymbol]);
 
-  const isIndexBasedOverride = (patterns: string[]): boolean =>
-    patterns.length > 0 && patterns.every((pattern) => /^\d+$/.test(pattern));
+  const isIndexBasedOverride = (patterns: string[]): boolean => hhIsIndexBasedOverride(patterns);
 
-  const renderIndexBasedWord = (word: string, patterns: string[]) => {
-    const targetIndices = new Set(patterns.map(Number));
+  const renderIndexBasedWord = (word: string, patterns: string[]) =>
+    hhRenderIndexBasedWord(word, patterns, highlightLetterStyle);
 
-    return (
-      <>
-        {word.split('').map((char, index) =>
-          targetIndices.has(index) ? (
-            <span key={index} className="symbol-letter-highlight" style={highlightLetterStyle}>
-              {char}
-            </span>
-          ) : (
-            <React.Fragment key={index}>{char}</React.Fragment>
-          ),
-        )}
-      </>
-    );
-  };
+  const renderHighlightedWord = (word: string, patterns: string[]) =>
+    hhRenderHighlightedWord(word, patterns, decodedSymbol, highlightLetterStyle);
 
-  const renderHighlightedWord = (word: string, patterns: string[]) => {
-    if (patterns.length === 0) return word;
-    if (isIndexBasedOverride(patterns)) return renderIndexBasedWord(word, patterns);
+  const renderWord = (word: string) => hhRenderWord(word, showHighlight, decodedSymbol, highlightLetterStyle);
 
-    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
-    const escapedPatterns = sortedPatterns.map((p) =>
-      p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'),
-    );
-    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+  const renderBritishNoteWord = (word: string) =>
+    hhRenderBritishNoteWord(word, showHighlight, decodedSymbol, highlightLetterStyle);
 
-    const parts = word.split(regex);
-    let matchedCount = 0;
-    const lowerWord = word.toLowerCase();
-    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
-    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
-    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
-    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
-    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
-    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
-    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
-    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
-    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
-    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
-    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
-    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+  const renderIpa = (ipa?: string, isBritishNoteOrAlternative = false) =>
+    hhRenderIpa(ipa, showHighlight, symbolAliasCandidates, decodedSymbol, highlightLetterStyle, isBritishNoteOrAlternative);
 
-    return (
-      <>
-        {parts.map((part, i) => {
-          if (i % 2 === 1) {
-            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
-              ? matchedCount === 1
-              : animalSecondMatch
-                ? matchedCount === 1 || matchedCount === 2
-                : bananaOneThreeMatch
-                  ? matchedCount === 0 || matchedCount === 2
-                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
-                    ? matchedCount === 0
-                    : tomorrowAlphaMatch
-                      ? matchedCount === 1
-                      : true;
-            matchedCount += 1;
-            if (shouldHighlight) {
-              return (
-                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                  {part}
-                </span>
-              );
-            }
-          }
-          return <React.Fragment key={i}>{part}</React.Fragment>;
-        })}
-      </>
-    );
-  };
-
-  const renderWord = (word: string) => {
-    if (!showHighlight) return word;
-
-    const lowerWord = word.toLowerCase();
-    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
-    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
-    // Only highlight if word has an explicit override entry — no regex fallback
-    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
-      ? symbolOverrides[lowerWord]
-      : [];
-
-    return renderHighlightedWord(word, patterns);
-  };
-
-  const renderBritishNoteWord = (word: string) => {
-    if (!showHighlight) return word;
-
-    const lowerWord = word.toLowerCase();
-    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
-    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
-    // Only highlight if word has an explicit override entry — no regex fallback
-    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
-      ? symbolOverrides[lowerWord]
-      : [];
-
-    return renderHighlightedWord(word, patterns);
-  };
-
-  const renderIpa = (ipa?: string, isBritishNoteOrAlternative = false) => {
-    if (!ipa) return '';
-    if (!showHighlight || symbolAliasCandidates.length === 0) return ipa;
-    
-    const allowedSymbols = isBritishNoteOrAlternative
-      ? [...symbolAliasCandidates, ...(BRITISH_NOTE_COUNTERPARTS[decodedSymbol] ?? [])]
-      : symbolAliasCandidates;
-
-    const escapedSymbols = allowedSymbols
-      .map(symbol => symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-      .filter(Boolean);
-    const regex = new RegExp(`(${escapedSymbols.join('|')})`, 'g');
-    
-    if (regex.test(ipa)) {
-      const parts = ipa.split(regex);
-      return (
-        <>
-          {parts.map((part, i) => {
-            if (i % 2 === 1) {
-              return (
-                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                  {part}
-                </span>
-              );
-            }
-            return <React.Fragment key={i}>{part}</React.Fragment>;
-          })}
-        </>
-      );
-    }
-    return ipa;
-  };
-
-  const wordCardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const wordExamplesRef = useRef<HTMLDivElement>(null);
-  const britishNoteItemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const playSessionRef = useRef(0);
-  const playNextTimeoutRef = useRef<number | null>(null);
-  const promptCopyTimeoutRef = useRef<number | null>(null);
-  const wordExamplesCopyTimeoutRef = useRef<number | null>(null);
-  const missionCopyTimeoutRef = useRef<number | null>(null);
   
+
   // Manual scroll to word examples
   const scrollToWordExamples = () => {
     if (wordExamplesRef.current) {
@@ -564,23 +310,26 @@ const SymbolDetailPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    void waitForVoices();
-
-    return () => {
-      playSessionRef.current += 1;
-      if (playNextTimeoutRef.current) {
-        window.clearTimeout(playNextTimeoutRef.current);
-        playNextTimeoutRef.current = null;
-      }
-      setIsPlayingAll(false);
-      setIsPlayingAllBritishNotes(false);
-      setActiveWord(null);
-      setActiveWordIndex(null);
-      stopSpeech();
-    };
-  }, []);
-
+  // Playback hook handles speech synthesis lifecycle and refs
+  const {
+    wordCardRefs,
+    britishNoteItemRefs,
+    stopPlayAllWords,
+    handlePlayAllWords,
+    handlePlayAllBritishNotes,
+    handlePlayWord,
+    handlePlayBritishNoteWord,
+    handlePlayAmericanNoteWord,
+  } = useSymbolPlayback({
+    symbolData,
+    britishNote,
+    isPlayingAll,
+    isPlayingAllBritishNotes,
+    setIsPlayingAll,
+    setIsPlayingAllBritishNotes,
+    setActiveWord,
+    setActiveWordIndex,
+  });
   // Debug: Check if data is loaded correctly
   useEffect(() => {
     console.log('Original symbol:', symbol);
@@ -591,366 +340,7 @@ const SymbolDetailPage: React.FC = () => {
   }, [symbol, decodedSymbol, symbolData]);
 
 
-  const stopPlayAllWords = () => {
-    playSessionRef.current += 1;
-    if (playNextTimeoutRef.current) {
-      window.clearTimeout(playNextTimeoutRef.current);
-      playNextTimeoutRef.current = null;
-    }
-    stopSpeech();
-    setIsPlayingAll(false);
-    setIsPlayingAllBritishNotes(false);
-    setActiveWord(null);
-    setActiveWordIndex(null);
-  };
-
-  const handlePlayAllWords = () => {
-    if (!isSpeechSynthesisSupported() || symbolData.examples.length === 0) return;
-
-    if (isPlayingAll) {
-      stopPlayAllWords();
-      return;
-    }
-
-    stopPlayAllWords();
-    const currentSession = playSessionRef.current;
-    setIsPlayingAll(true);
-
-    void (async () => {
-      for (let currentIndex = 0; currentIndex < symbolData.examples.length; currentIndex++) {
-        if (currentSession !== playSessionRef.current) return;
-
-        const example = symbolData.examples[currentIndex];
-        setActiveWord(example.word);
-        setActiveWordIndex(currentIndex);
-
-        if (wordCardRefs.current[currentIndex]) {
-          wordCardRefs.current[currentIndex]?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
-          });
-        }
-
-        await speakTextWithPause(example.word, {
-          preferredEnglish: 'en-US',
-          rate: 0.86,
-          pitch: 1,
-          volume: 1,
-        });
-
-        if (currentSession !== playSessionRef.current) return;
-        if (currentIndex < symbolData.examples.length - 1) {
-          await new Promise((resolve) => {
-            window.setTimeout(resolve, BETWEEN_PLAY_ALL_WORDS_MS);
-          });
-        }
-      }
-
-      if (currentSession === playSessionRef.current) {
-        setIsPlayingAll(false);
-        setActiveWord(null);
-        setActiveWordIndex(null);
-      }
-    })();
-  };
-
-  const handlePlayAllBritishNotes = () => {
-    if (!isSpeechSynthesisSupported() || !britishNote || britishNote.items.length === 0) return;
-
-    if (isPlayingAllBritishNotes) {
-      stopPlayAllWords();
-      return;
-    }
-
-    stopPlayAllWords();
-    const currentSession = playSessionRef.current;
-    setIsPlayingAllBritishNotes(true);
-
-    void (async () => {
-      for (let currentIndex = 0; currentIndex < britishNote.items.length; currentIndex++) {
-        if (currentSession !== playSessionRef.current) return;
-
-        const item = britishNote.items[currentIndex];
-        setActiveWord(item.word);
-        setActiveWordIndex(null);
-
-        // Scroll to current British note item
-        if (britishNoteItemRefs.current[currentIndex]) {
-          britishNoteItemRefs.current[currentIndex]?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
-          });
-        }
-
-        // Play BrE
-        await speakTextWithPause(item.word, {
-          preferredEnglish: 'en-GB',
-          rate: 0.86,
-          pitch: 1,
-          volume: 1,
-        });
-        
-        if (currentSession !== playSessionRef.current) return;
-        await new Promise((resolve) => window.setTimeout(resolve, 400));
-        
-        if (currentSession !== playSessionRef.current) return;
-        // Play AmE
-        await speakTextWithPause(item.word, {
-          preferredEnglish: 'en-US',
-          rate: 0.86,
-          pitch: 1,
-          volume: 1,
-        });
-
-        if (currentSession !== playSessionRef.current) return;
-        if (currentIndex < britishNote.items.length - 1) {
-          await new Promise((resolve) => window.setTimeout(resolve, 800));
-        }
-      }
-
-      if (currentSession === playSessionRef.current) {
-        setIsPlayingAllBritishNotes(false);
-        setActiveWord(null);
-        setActiveWordIndex(null);
-      }
-    })();
-  };
-
-  const handlePlayWord = (word: string, wordIndex?: number) => {
-    if (!isSpeechSynthesisSupported()) return;
-
-    stopPlayAllWords();
-    const currentSession = playSessionRef.current;
-    stopSpeech();
-    setActiveWord(word);
-    setActiveWordIndex(typeof wordIndex === 'number' ? wordIndex : null);
-
-    void (async () => {
-      await speakTextWithPause(word, {
-        preferredEnglish: 'en-US',
-        rate: 0.86,
-        pitch: 1,
-        volume: 1,
-      });
-
-      if (currentSession !== playSessionRef.current) return;
-      setActiveWord(null);
-      setActiveWordIndex(null);
-    })();
-  };
-
-  const handlePlayBritishNoteWord = (word: string, itemIndex?: number) => {
-    if (!isSpeechSynthesisSupported()) return;
-
-    stopPlayAllWords();
-    stopSpeech();
-    setActiveWord(word);
-    setActiveWordIndex(null);
-
-    // Scroll to the British note item if index is provided
-    if (typeof itemIndex === 'number' && britishNoteItemRefs.current[itemIndex]) {
-      britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
-      });
-    }
-
-    const currentSession = playSessionRef.current;
-    void (async () => {
-      // BrE button should use British voice to match the UK IPA note.
-      await speakTextWithPause(word, {
-        preferredEnglish: 'en-GB',
-        rate: 0.86,
-        pitch: 1,
-        volume: 1,
-      });
-
-      if (currentSession !== playSessionRef.current) return;
-      setActiveWord(null);
-      setActiveWordIndex(null);
-    })();
-  };
-
-  const handleSaveProgress = async (percentage: number) => {
-    setIsProgressSaved(true);
-    
-    // Save to localStorage for persistence with symbol-specific key (client-side only)
-    if (isClient && typeof window !== 'undefined') {
-      const currentProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
-      currentProgress[`phoneticSymbols_${decodedSymbol}`] = percentage;
-      localStorage.setItem('pronunciationProgress', JSON.stringify(currentProgress));
-      
-      // Calculate average progress for all phonetic symbols
-      const phoneticSymbolKeys = Object.keys(currentProgress).filter(key => key.startsWith('phoneticSymbols_'));
-      const phoneticSymbolProgress = phoneticSymbolKeys.map(key => currentProgress[key]);
-      const averagePhoneticProgress = phoneticSymbolProgress.length > 0 
-        ? Math.round(phoneticSymbolProgress.reduce((acc: number, curr: number) => acc + curr, 0) / phoneticSymbolProgress.length)
-        : 0;
-      
-      // Update overall pronunciation progress including all categories
-      const allProgress = Object.values(currentProgress) as number[];
-      const overallAverageProgress = allProgress.length > 0 
-        ? Math.round(allProgress.reduce((acc: number, curr: number) => acc + curr, 0) / allProgress.length)
-        : 0;
-      
-      // Save to dashboard progress
-      const dashboardProgress = JSON.parse(localStorage.getItem('dashboardProgress') || '{}') as Record<string, number>;
-      dashboardProgress.pronunciation = overallAverageProgress;
-      dashboardProgress.phoneticSymbols = averagePhoneticProgress; // Specific for phonetic symbols category
-      localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
-      
-      console.log(`Symbol /${decodedSymbol}/ progress saved: ${percentage}%`);
-      console.log(`Phonetic Symbols average progress: ${averagePhoneticProgress}%`);
-      console.log(`Overall pronunciation average: ${overallAverageProgress}%`);
-    }
-  };
-
-  const handleUnsaveProgress = async () => {
-    setIsProgressSaved(false);
-    
-    // Remove from localStorage
-    if (isClient && typeof window !== 'undefined') {
-      const currentProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
-      delete currentProgress[`phoneticSymbols_${decodedSymbol}`];
-      localStorage.setItem('pronunciationProgress', JSON.stringify(currentProgress));
-      
-      // Recalculate averages
-      const phoneticSymbolKeys = Object.keys(currentProgress).filter(key => key.startsWith('phoneticSymbols_'));
-      const phoneticSymbolProgress = phoneticSymbolKeys.map(key => currentProgress[key]);
-      const averagePhoneticProgress = phoneticSymbolProgress.length > 0 
-        ? Math.round(phoneticSymbolProgress.reduce((acc: number, curr: number) => acc + curr, 0) / phoneticSymbolProgress.length)
-        : 0;
-      
-      const allProgress = Object.values(currentProgress) as number[];
-      const overallAverageProgress = allProgress.length > 0 
-        ? Math.round(allProgress.reduce((acc: number, curr: number) => acc + curr, 0) / allProgress.length)
-        : 0;
-      
-      // Update dashboard progress
-      const dashboardProgress = JSON.parse(localStorage.getItem('dashboardProgress') || '{}') as Record<string, number>;
-      dashboardProgress.pronunciation = overallAverageProgress;
-      dashboardProgress.phoneticSymbols = averagePhoneticProgress;
-      localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
-      
-      console.log(`Symbol /${decodedSymbol}/ progress removed`);
-    }
-  };
-
-  const openCommonLettersModal = async () => {
-    setShowCommonLettersPopup(true);
-
-    if (commonLetters || commonLettersLoading) {
-      return;
-    }
-
-    setCommonLettersLoading(true);
-    setCommonLettersError(null);
-    try {
-      const commonLettersModule = await import('../data/commonLetters/CommonLetters');
-      setCommonLetters(commonLettersModule.getAllCommonLetters());
-    } catch (error) {
-      console.error('Failed to load common letters:', error);
-      setCommonLettersError('Gagal memuat data common letters. Silakan coba lagi.');
-    } finally {
-      setCommonLettersLoading(false);
-    }
-  };
-
-  const handleCopyMission = async () => {
-    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
-      return;
-    }
-
-    const words = symbolData.examples
-      .map(example => example.word?.trim())
-      .filter((word): word is string => !!word);
-
-    if (words.length === 0) {
-      return;
-    }
-
-    const textToCopy = `Kata:\n${words.join(', ')}\n\nPrompt:\n${accentEvaluationPrompt}`;
-
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-      setIsMissionCopied(true);
-      if (missionCopyTimeoutRef.current) {
-        window.clearTimeout(missionCopyTimeoutRef.current);
-      }
-      missionCopyTimeoutRef.current = window.setTimeout(() => {
-        setIsMissionCopied(false);
-      }, 1800);
-    } catch (error) {
-      console.error('Failed to copy mission:', error);
-      setIsMissionCopied(false);
-    }
-  };
-
-  const handleCopyPrompt = async () => {
-    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(accentEvaluationPrompt);
-      setIsPromptCopied(true);
-      if (promptCopyTimeoutRef.current) {
-        window.clearTimeout(promptCopyTimeoutRef.current);
-      }
-      promptCopyTimeoutRef.current = window.setTimeout(() => {
-        setIsPromptCopied(false);
-      }, 1800);
-    } catch (error) {
-      console.error('Failed to copy prompt:', error);
-      setIsPromptCopied(false);
-    }
-  };
-
-  const handleCopyWordExamples = async () => {
-    if (typeof window === 'undefined' || !navigator?.clipboard?.writeText) {
-      return;
-    }
-
-    const words = symbolData.examples
-      .map(example => example.word?.trim())
-      .filter((word): word is string => !!word);
-
-    if (words.length === 0) {
-      return;
-    }
-
-    try {
-      // Copy plain words only (no IPA), for the currently opened sound.
-      await navigator.clipboard.writeText(words.join(', '));
-      setIsWordExamplesCopied(true);
-      if (wordExamplesCopyTimeoutRef.current) {
-        window.clearTimeout(wordExamplesCopyTimeoutRef.current);
-      }
-      wordExamplesCopyTimeoutRef.current = window.setTimeout(() => {
-        setIsWordExamplesCopied(false);
-      }, 1800);
-    } catch (error) {
-      console.error('Failed to copy word examples:', error);
-      setIsWordExamplesCopied(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (promptCopyTimeoutRef.current) {
-        window.clearTimeout(promptCopyTimeoutRef.current);
-      }
-      if (wordExamplesCopyTimeoutRef.current) {
-        window.clearTimeout(wordExamplesCopyTimeoutRef.current);
-      }
-      if (missionCopyTimeoutRef.current) {
-        window.clearTimeout(missionCopyTimeoutRef.current);
-      }
-    };
-  }, []);
+  
 
   if (shouldRedirectToSummary) {
     return null;
@@ -1013,208 +403,36 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Word Grid Module */}
-        <div ref={wordExamplesRef} className="w-full scroll-mt-24 mt-12 md:mt-14">
-          <div className="word-examples-section w-full max-w-6xl mx-auto p-2 md:p-4 z-10 relative">
-             <div className="word-examples-header flex items-center justify-between mb-3 md:mb-5 border-b border-purple-500/30 pb-2">
-               <div className="flex items-center gap-2">
-                 <Database className="text-purple-400" size={16} />
-                 <h3 className="text-xs md:text-lg font-display font-bold text-purple-400 tracking-widest uppercase">
-                   <button
-                     type="button"
-                     onClick={handleCopyWordExamples}
-                     data-tour="symbol-word-examples-copy"
-                     className="inline-flex items-center gap-2 hover:text-purple-300 transition-colors"
-                     title="Salin semua Word Examples (tanpa IPA)"
-                   >
-                     <span>Word_Examples</span>
-                     <Copy size={14} className="opacity-70" />
-                     <span className="font-mono text-[10px] md:text-xs normal-case tracking-normal opacity-70">
-                       {isWordExamplesCopied ? 'Tersalin' : 'Salin'}
-                     </span>
-                   </button>
-                 </h3>
-               </div>
-               <button
-                 onClick={() => {
-                   // Scroll to video section
-                  const videoSection = document.querySelector('[data-video-section]');
-                  if (videoSection) {
-                    videoSection.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'center'
-                    });
-                  }
-                }}
-                data-tour="symbol-go-to-video"
-                className="px-2.5 py-1 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[10px] hover:bg-purple-900/20 transition-colors flex items-center gap-1"
-              >
-                <Play size={12} />
-                <span>Go to Video</span>
-              </button>
-            </div>
-            
-            {/* Word Examples Grid - controlled by CSS */}
-            <div className="word-grid w-full">
-              {symbolData.examples.map((example: WordExample, index: number) => {
-                const isActiveByIndex = activeWordIndex === index;
-                const isActiveByWord = activeWordIndex === null && example.word === activeWord;
-                const isActive = isActiveByIndex || isActiveByWord;
-                
-                return (
-                  <button
-                    key={index}
-                    ref={el => { wordCardRefs.current[index] = el; }}
-                    onClick={() => handlePlayWord(example.word, index)}
-                    onMouseEnter={() => {
-                      if (isPlayingAll) return;
-                      setActiveWord(example.word);
-                      setActiveWordIndex(index);
-                    }}
-                    onMouseLeave={() => {
-                      if (isPlayingAll) return;
-                      setActiveWord(null);
-                      setActiveWordIndex(null);
-                    }}
-                    data-tour={`symbol-word-${toTourToken(example.word)}`}
-                    className={`word-card relative group p-3 md:p-4 rounded-lg border transition-all duration-300 overflow-hidden w-full ${
-                      isActive 
-                        ? 'active is-speaking bg-purple-900/40 border-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.3)] scale-105 z-10' 
-                        : 'bg-black/40 border-purple-500/30 hover:bg-purple-900/30 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:scale-102'
-                    } backdrop-blur-sm`}
-                  >
-                    {/* Grid Pattern Background */}
-                    <div className="absolute inset-0 opacity-10 pointer-events-none">
-                      <div className="w-full h-full" style={{
-                        backgroundImage: `
-                          linear-gradient(rgba(168, 85, 247, 0.3) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(168, 85, 247, 0.3) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '8px 8px'
-                      }}></div>
-                    </div>
-                    
-                    {/* Corner Markers */}
-                    <div className={`absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 transition-all duration-300 z-10 ${
-                      isActive 
-                        ? 'border-purple-400 opacity-100' 
-                        : 'border-purple-400/50 opacity-0 group-hover:opacity-100'
-                    }`}></div>
-                    <div className={`absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 transition-all duration-300 z-10 ${
-                      isActive 
-                        ? 'border-purple-400 opacity-100' 
-                        : 'border-purple-400/50 opacity-0 group-hover:opacity-100'
-                    }`}></div>
-                    <div className={`absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 transition-all duration-300 z-10 ${
-                      isActive 
-                        ? 'border-purple-400 opacity-100' 
-                        : 'border-purple-400/50 opacity-0 group-hover:opacity-100'
-                    }`}></div>
-
-                    <div className="flex flex-col items-center justify-center h-full z-10 relative px-1">
-                      <span className="word-text font-sans font-bold text-base md:text-lg tracking-wide text-white transition-colors truncate w-full text-center">
-                        {renderWord(example.word)}
-                      </span>
-                      {showIpa && (
-                        <span className={`word-ipa text-cyan-300 text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${isActive ? 'opacity-90' : 'opacity-60'}`} data-ipa>
-                          {example.britishIpa ? (
-                            <>
-                              <span className="text-cyan-300/80">BrE {renderIpa(example.britishIpa, true)}</span>
-                              {' '}&rarr;{' '}
-                              <span className="text-cyan-300 font-bold">AmE {renderIpa(example.americanIpa || example.ipa, true)}</span>
-                            </>
-                          ) : (
-                            <>[{renderIpa(example.americanIpa || example.ipa)}]</>
-                          )}
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <SymbolWordGrid
+          examples={symbolData.examples}
+          wordCardRefs={wordCardRefs}
+          activeWord={activeWord}
+          activeWordIndex={activeWordIndex}
+          isPlayingAll={isPlayingAll}
+          showIpa={showIpa}
+          showHighlight={showHighlight}
+          isWordExamplesCopied={isWordExamplesCopied}
+          handleCopyWordExamples={handleCopyWordExamples}
+          toTourToken={toTourToken}
+          renderWord={renderWord}
+          renderIpa={renderIpa}
+          handlePlayWord={handlePlayWord}
+          setActiveWord={setActiveWord}
+          setActiveWordIndex={setActiveWordIndex}
+        />
 
         {britishNote && (
-          <div id="britishNote" className="w-full max-w-4xl mx-auto mt-2 mb-2">
-            <div 
-              className="symbol-detail-collapsible-panel bg-black/80 border border-amber-400/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(251,191,36,0.18)]"
-              style={{ '--panel-glow-rgb': '251, 191, 36' } as React.CSSProperties}
-            >
-              <div className="bg-amber-400/10 px-4 py-2 border-b border-amber-400/30 flex justify-between items-center">
-                <span className="font-display text-[10px] md:text-xs text-amber-300 tracking-wider">CATATAN (UK vs US)</span>
-              </div>
-              <div className="p-3 md:p-4 text-xs md:text-sm text-gray-200">
-                <p className="mb-3">{britishNote.description}</p>
-                <div className="space-y-2">
-                  {britishNote.items.map((item, itemIndex) => {
-                    const isItemActive = activeWord === item.word;
-                    return (
-                    <div 
-                      key={item.word} 
-                      ref={(el) => { britishNoteItemRefs.current[itemIndex] = el; }}
-                      className={`rounded-md border ${isItemActive ? 'border-amber-400 bg-amber-400/20' : 'border-amber-300/20 bg-amber-400/5'} px-3 py-2 transition-colors`}
-                    >
-                      <div className="font-semibold text-white">{renderBritishNoteWord(item.word)}</div>
-                      {showIpa && (
-                        <div className="text-cyan-300/60 font-mono text-xs">
-                          BrE <span className="text-cyan-300/80 font-medium">{renderIpa(item.britishIpa, true)}</span>
-                          {' '}&rarr; AmE <span className="text-cyan-300 font-bold">{renderIpa(item.americanIpa, true)}</span>
-                        </div>
-                      )}
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        <button
-                          onClick={() => handlePlayBritishNoteWord(item.word, itemIndex)}
-                          className="inline-flex items-center gap-1 rounded-md border border-amber-300/40 bg-amber-400/10 px-2 py-1 text-[11px] text-amber-200 hover:bg-amber-400/20 transition-colors"
-                          title={`Play BrE: ${item.word}`}
-                        >
-                          <Play size={12} />
-                          <span>BrE</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (!isSpeechSynthesisSupported()) return;
-                            stopPlayAllWords();
-                            stopSpeech();
-                            setActiveWord(item.word);
-                            setActiveWordIndex(null);
-                            
-                            // Scroll to the British note item
-                            if (britishNoteItemRefs.current[itemIndex]) {
-                              britishNoteItemRefs.current[itemIndex]?.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center',
-                                inline: 'center',
-                              });
-                            }
-                            
-                            const currentSession = playSessionRef.current;
-                            void (async () => {
-                              await speakTextWithPause(item.word, {
-                                preferredEnglish: 'en-US',
-                                rate: 0.86,
-                                pitch: 1,
-                                volume: 1,
-                              });
-                              if (currentSession !== playSessionRef.current) return;
-                              setActiveWord(null);
-                              setActiveWordIndex(null);
-                            })();
-                          }}
-                          className="inline-flex items-center gap-1 rounded-md border border-cyan-300/40 bg-cyan-400/10 px-2 py-1 text-[11px] text-cyan-200 hover:bg-cyan-400/20 transition-colors"
-                          title={`Play AmE: ${item.word}`}
-                        >
-                          <Play size={12} />
-                          <span>AmE</span>
-                        </button>
-                      </div>
-                    </div>
-                  )})}
-                </div>
-              </div>
-            </div>
-          </div>
+          <BritishNotePanel
+            britishNote={britishNote}
+            activeWord={activeWord}
+            britishNoteItemRefs={britishNoteItemRefs}
+            showIpa={showIpa}
+            showHighlight={showHighlight}
+            renderBritishNoteWord={renderBritishNoteWord}
+            renderIpa={renderIpa}
+            handlePlayBritishNoteWord={handlePlayBritishNoteWord}
+            handlePlayAmericanNoteWord={handlePlayAmericanNoteWord}
+          />
         )}
 
         {/* Save Progress Section */}
@@ -1231,126 +449,24 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Tips Section */}
-        <div className="tips-section w-full max-w-4xl mx-auto mt-6 mb-10">
-          <div 
-            className="symbol-detail-collapsible-panel bg-black/80 border border-cyber-pink/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(255,0,255,0.15)]"
-            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
-          >
-            {/* Terminal Header */}
-            <div className="bg-cyber-pink/10 px-4 py-2 flex justify-between items-center border-b border-cyber-pink/30">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PRONUNCIATION_TIPS</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsTipsOpen(prev => !prev)}
-                  className="symbol-detail-chevron-toggle text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
-                  aria-expanded={isTipsOpen}
-                  title={isTipsOpen ? 'Tutup Pronunciation Tips' : 'Buka Pronunciation Tips'}
-                >
-                  <ChevronDown
-                    size={14}
-                    className={`symbol-detail-chevron-icon ${isTipsOpen ? 'is-open' : ''}`}
-                  />
-                </button>
-                <button
-                  onClick={openCommonLettersModal}
-                  data-tour="symbol-common-letters-open"
-                  className="text-cyber-pink hover:text-cyber-pink/80 transition-colors cursor-pointer"
-                  title="Lihat huruf umum dan simbol IPA"
-                >
-                  <Book size={16} />
-                </button>
-              </div>
-            </div>
+        <SymbolTipsPanel
+          isTipsOpen={isTipsOpen}
+          setIsTipsOpen={setIsTipsOpen}
+          tips={symbolData.tips}
+          isMissionCopied={isMissionCopied}
+          handleCopyMission={handleCopyMission}
+        />
 
-            {/* Content */}
-            {isTipsOpen && (
-              <div className="p-3 md:p-5 font-mono text-[11px] md:text-sm text-gray-300 min-h-[130px]">
-                <div className="whitespace-pre-line leading-relaxed">
-                  {symbolData.tips.map((tip: string, index: number) => (
-                    <div key={index} className="flex gap-2 mb-2">
-                      <span className="text-green-400 block">{index + 1}.</span>
-                      <span>{tip}</span>
-                    </div>
-                  ))}
-                </div>
-                <span className="inline-block w-2 h-4 bg-cyber-pink animate-pulse mt-2 align-middle"></span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* YouTube Video Section */}
-        {symbolData.videoId && (
-          <div data-video-section className="w-full max-w-4xl mx-auto mt-6">
-            <div 
-              className="symbol-detail-collapsible-panel bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]"
-              style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
-            >
-              {/* Terminal Header */}
-              <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
-                <div className="flex items-center gap-2">
-                  <Play className="text-purple-400" size={16} />
-                  <span className="ml-2 font-display text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
-                  <span className="text-xs font-display text-white/60">Symbol:{' '}<span className="font-ipa" data-ipa>/{decodedSymbol}/</span></span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setIsVideoOpen((prev) => {
-                      const next = !prev;
-                      setShouldAutoplayVideo(next);
-                      return next;
-                    })
-                  }
-                  data-tour="symbol-video-section-toggle"
-                  className="symbol-detail-chevron-toggle text-purple-300 hover:text-purple-100 transition-colors"
-                  aria-expanded={isVideoOpen}
-                  title={isVideoOpen ? 'Tutup Video Tutorial' : 'Buka Video Tutorial'}
-                >
-                  <ChevronDown
-                    size={14}
-                    className={`symbol-detail-chevron-icon ${isVideoOpen ? 'is-open' : ''}`}
-                  />
-                </button>
-              </div>
-
-              {/* Video Content */}
-              {isVideoOpen && (
-                <div className="p-3 md:p-5">
-                  <div data-tour="symbol-video-embed" className="relative w-full" style={{ paddingBottom: '35%' }}>
-                    <iframe
-                      key={`${symbolData.videoId || 'no-video'}-${isVideoOpen ? 'open' : 'closed'}-${shouldAutoplayVideo ? 'autoplay' : 'manual'}`}
-                      data-tour="symbol-video-embed-frame"
-                      className="absolute top-0 left-0 w-full h-full rounded-lg border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
-                      src={videoEmbedSrc}
-                      title={`Pronunciation tutorial for /${decodedSymbol}/`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                  
-                  {/* Action Buttons */}
-                  <div className="flex justify-center mt-3">
-                    <button
-                      onClick={scrollToWordExamples}
-                      data-tour="symbol-go-to-word-examples"
-                      className="px-3 py-2 bg-purple-900/10 border border-purple-500/30 rounded text-purple-400 font-mono text-[11px] hover:bg-purple-900/20 transition-colors flex items-center gap-2"
-                    >
-                      <Database size={14} />
-                      <span>Go to Word Examples</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        <SymbolVideoSection
+          decodedSymbol={decodedSymbol}
+          videoEmbedSrc={videoEmbedSrc}
+          videoId={symbolData.videoId}
+          isVideoOpen={isVideoOpen}
+          shouldAutoplayVideo={shouldAutoplayVideo}
+          setIsVideoOpen={setIsVideoOpen}
+          setShouldAutoplayVideo={setShouldAutoplayVideo}
+          scrollToWordExamples={scrollToWordExamples}
+        />
 
         {/* Practice Section (below VIDEO_TUTORIAL) */}
         <div className="w-full max-w-4xl mx-auto mt-6">
@@ -1399,52 +515,13 @@ const SymbolDetailPage: React.FC = () => {
            </div>
          </div>
 
-        {/* Prompt Section (below PRACTICE) */}
-        <div className="w-full max-w-4xl mx-auto mt-6">
-          <div 
-            className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]"
-            style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
-          >
-            <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <HelpCircle className="text-cyber-pink" size={16} />
-                <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsPromptOpen(prev => !prev)}
-                  data-tour="symbol-prompt-section-toggle"
-                  className="symbol-detail-chevron-toggle text-cyber-pink hover:bg-cyber-pink/20 transition-colors"
-                  aria-expanded={isPromptOpen}
-                  title={isPromptOpen ? 'Tutup Prompt' : 'Buka Prompt'}
-                >
-                  <ChevronDown
-                    size={13}
-                    className={`symbol-detail-chevron-icon ${isPromptOpen ? 'is-open' : ''}`}
-                  />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCopyPrompt}
-                  data-tour="symbol-prompt-copy-button"
-                  className="inline-flex items-center gap-1.5 rounded border border-cyber-pink/40 bg-cyber-pink/10 px-2 py-1 text-[10px] md:text-xs font-mono text-cyber-pink hover:bg-cyber-pink/20 transition-colors"
-                  title="Salin prompt"
-                >
-                  <Copy size={13} />
-                  <span>{isPromptCopied ? 'Tersalin' : 'Salin Prompt'}</span>
-                </button>
-              </div>
-            </div>
-            {isPromptOpen && (
-              <div className="p-3 md:p-5">
-                <p className="text-[11px] md:text-sm text-gray-200 leading-relaxed whitespace-pre-line">
-                  &quot;{accentEvaluationPrompt}&quot;
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+        <SymbolPromptSection
+          accentEvaluationPrompt={accentEvaluationPrompt}
+          isPromptOpen={isPromptOpen}
+          setIsPromptOpen={setIsPromptOpen}
+          handleCopyPrompt={handleCopyPrompt}
+          isPromptCopied={isPromptCopied}
+        />
 
         {/* Symbol Navigation Grid (Separate Section, below video) */}
         {symbolNavGroups.length > 0 && (
@@ -1537,133 +614,11 @@ const SymbolDetailPage: React.FC = () => {
       <RecordingControlsButton downloadFileName={`phonetic-${decodedSymbol}-GEUWAT-recording.mp3`} />
 
 
-      {/* Help Popup Modal */}
-      {showHelpPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowHelpPopup(false)}
-          />
-          
-          {/* Modal Content */}
-          <div className="relative bg-[#0a0f1c] border border-cyber-cyan/40 rounded-2xl p-4 sm:p-6 max-w-[90vw] sm:max-w-md max-h-[80vh] overflow-y-auto w-full shadow-[0_0_50px_rgba(190,41,236,0.3)] mx-4 sm:mx-auto">
-            {/* Close Button */}
-            <button
-              onClick={() => setShowHelpPopup(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white hover:bg-red-500/20 p-2 rounded-lg transition-all duration-200"
-              title="Tutup popup"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            
-            {/* Header */}
-            <div className="flex items-center mb-4">
-              <HelpCircle className="text-cyber-pink mr-3" size={24} />
-              <h3 className="text-xl font-bold text-white">Instruksi Perekaman</h3>
-            </div>
-            
-            {/* Instructions */}
-            <div className="space-y-3 text-gray-300">
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">1.</span>
-                <p>Klik tombol <span className="text-cyber-pink font-semibold">REC_ON</span> untuk memulai perekaman</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">2.</span>
-                <p>Bicara dengan jelas ke mikrofon dari Mission yang ada di Practice Section di halaman.</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">3.</span>
-                <p>Klik tombol <span className="text-red-400 font-semibold">STOP</span> saat selesai</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">4.</span>
-                <p>Klik tombol <span className="text-cyber-cyan font-semibold">PLAY</span> untuk mendengarkan rekaman</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">5.</span>
-                <p>Klik tombol <span className="text-cyber-pink font-semibold">DOWNLOAD</span> untuk menyimpan audio</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">6.</span>
-                <p>Setelah selesai, unduh file audio dan simpan di pc/android Anda.</p>
-              </div>
-              <div className="flex items-start">
-                <span className="text-cyber-cyan font-bold mr-3">7.</span>
-                <p>Isi <span className="text-cyber-pink font-semibold">saved progress</span> berdasarkan hasil penilaian dari AI assistant</p>
-              </div>
-              <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
-                <p className="text-sm text-cyber-cyan mb-2">
-                  <strong>Langkah Selanjutnya:</strong> Buka halaman <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">Gemini</a> atau AI assistant lainnya
-                </p>
-                <p className="text-sm text-cyber-cyan mb-2">
-                  Upload rekaman audio Anda
-                </p>
-                <p className="text-sm text-cyber-cyan">
-                  <strong>Gunakan prompt berikut:</strong>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText('"Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini. 2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan. 3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom: - Kolom 1: Kata yang diucapkan. - Kolom 2: Status Kualitatif (\'🟢 Sangat bagus 🔵Bagus\', \'🟠 Perlu Sedikit Perbaikan\', atau \'🔴 Perlu Perbaikan\'). - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki."');
-                      // Show toast notification
-                      if (typeof window !== 'undefined') {
-                        const toast = document.createElement('div');
-                        toast.className = 'fixed top-4 right-4 bg-gradient-to-r from-gray-900 to-black border border-cyan-400/30 text-cyan-300 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.8),0_0_50px_rgba(190,41,236,0.4)] z-[60] transition-all duration-300 transform translate-x-full backdrop-blur-sm';
-                        toast.innerHTML = '<span class="flex items-center"><span class="mr-2 text-cyan-400">📋</span> Prompt berhasil disalin!</span>';
-                        document.body.appendChild(toast);
-                        
-                        // Animate in
-                        setTimeout(() => {
-                          toast.classList.remove('translate-x-full');
-                        }, 100);
-                        
-                        // Remove after 3 seconds
-                        setTimeout(() => {
-                          toast.classList.add('translate-x-full');
-                          setTimeout(() => {
-                            if (document.body.contains(toast)) {
-                              document.body.removeChild(toast);
-                            }
-                          }, 300);
-                        }, 3000);
-                      }
-                    }}
-                    className="ml-2 p-1 bg-cyber-pink/20 hover:bg-cyber-pink/30 rounded transition-colors group"
-                    title="Salin prompt"
-                  >
-                    <svg className="w-4 h-4 text-cyber-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2zm-2-6h12v8H6V6z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3H9v6h6V3z" />
-                    </svg>
-                  </button>
-                </p>
-                <div className="mt-2 p-2 bg-black/30 rounded text-xs text-gray-300 font-mono max-h-32 overflow-y-auto relative">
-                  &quot;Saya telah mengunggah rekaman audio. Saya ingin Anda bertindak sebagai penilai aksen bahasa Inggris profesional. 
-                  1. Transkripsikan semua kata yang saya ucapkan dalam rekaman ini.
-                  2. Analisis setiap kata tersebut dengan fokus pada American Accent (General American). Nilai dan beri umpan balik pada pengucapan vokal dan konsonan.
-                  3. Format Output: Sajikan hasil analisis dalam bentuk tabel dengan tiga kolom:
-                     - Kolom 1: Kata yang diucapkan.
-                     - Kolom 2: Status Kualitatif (&apos;🟢 Sangat bagus 🔵Bagus&apos;, &apos;🟠 Perlu Sedikit Perbaikan&apos;, atau &apos;🔴 Perlu Perbaikan&apos;).
-                     - Kolom 3: Umpan Balik spesifik yang menjelaskan secara singkat apa yang perlu diperbaiki.&quot;
-                </div>
-              </div>
-            </div>
-            
-            {/* Tips */}
-            <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
-              <p className="text-sm text-cyber-cyan">
-                <strong>Tip:</strong> Pastikan mikrofon Anda bekerja dengan baik dan berbicara dengan volume yang cukup.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      <SymbolHelpModal isOpen={showHelpPopup} onClose={() => setShowHelpPopup(false)} />
 
       <CommonLettersModal
         isOpen={showCommonLettersPopup}
-        onClose={() => setShowCommonLettersPopup(false)}
+        onClose={closeCommonLettersModal}
         letters={commonLetters}
         isLoading={commonLettersLoading}
         error={commonLettersError}
