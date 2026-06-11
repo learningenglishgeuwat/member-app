@@ -9,7 +9,7 @@ const highlightLetterStyle: React.CSSProperties = {
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Lightbulb, Database, Book, Copy, ChevronDown } from 'lucide-react';
+import { Play, Lightbulb, Database, Copy, ChevronDown } from 'lucide-react';
 import '../styles/detail.css';
 import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
@@ -29,6 +29,7 @@ import { SymbolWordGrid } from './components/SymbolWordGrid';
 import { BritishNotePanel } from './components/BritishNotePanel';
 import { SymbolVideoSection } from './components/SymbolVideoSection';
 import { SymbolTipsPanel } from './components/SymbolTipsPanel';
+import { CommonLettersSection } from './components/CommonLettersSection';
 import { SymbolPromptSection } from './components/SymbolPromptSection';
 import { SymbolHelpModal } from './components/SymbolHelpModal';
 import type { WordExample } from '../data/wordExamples/wordExamples';
@@ -64,9 +65,6 @@ import {
 } from './utils';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
-  ssr: false,
-});
-const CommonLettersModal = dynamic(() => import('./components/CommonLettersModal'), {
   ssr: false,
 });
 
@@ -228,11 +226,13 @@ const SymbolDetailPage: React.FC = () => {
     isVideoOpen,
     shouldAutoplayVideo,
     isPromptOpen,
+    isCommonLettersOpen,
     setIsPracticeOpen,
     setIsTipsOpen,
     setIsVideoOpen,
     setShouldAutoplayVideo,
     setIsPromptOpen,
+    setIsCommonLettersOpen,
     handleSaveProgress,
     handleUnsaveProgress,
   } = useSymbolProgress({ decodedSymbol });
@@ -453,8 +453,15 @@ const SymbolDetailPage: React.FC = () => {
           isTipsOpen={isTipsOpen}
           setIsTipsOpen={setIsTipsOpen}
           tips={symbolData.tips}
-          isMissionCopied={isMissionCopied}
-          handleCopyMission={handleCopyMission}
+        />
+
+        <CommonLettersSection
+          isOpen={isCommonLettersOpen}
+          onToggle={() => setIsCommonLettersOpen(prev => !prev)}
+          letters={commonLetters}
+          isLoading={commonLettersLoading}
+          error={commonLettersError}
+          onRetry={openCommonLettersModal}
         />
 
         <SymbolVideoSection
@@ -468,7 +475,7 @@ const SymbolDetailPage: React.FC = () => {
           scrollToWordExamples={scrollToWordExamples}
         />
 
-        {/* Practice Section (below VIDEO_TUTORIAL) */}
+        {/* Practice Section */}
         <div className="w-full max-w-4xl mx-auto mt-6">
           <div 
             className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]"
@@ -492,28 +499,28 @@ const SymbolDetailPage: React.FC = () => {
                 />
               </span>
             </button>
-             {isPracticeOpen && (
-               <div className="p-3 md:p-5 text-[11px] md:text-sm text-gray-200 leading-relaxed">
-                 <p>
-                   <strong>Mission:</strong>
-                   <br />
-                   Buka AI assistant seperti <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors">Gemini</a>, rekam ucapan untuk semua kata di Word_Examples, dan berikan prompt di bawah untuk dinilai.
-                 </p>
-                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                   <button
-                     type="button"
-                     onClick={handleCopyMission}
-                     className="inline-flex items-center gap-1.5 rounded border border-cyber-cyan/40 bg-cyber-cyan/10 px-3 py-1.5 text-[11px] md:text-sm font-mono text-cyber-cyan hover:bg-cyber-cyan/20 transition-colors"
-                     title="Salin Words dan Prompt"
-                   >
-                     <Copy size={14} />
-                     <span>{isMissionCopied ? 'Tersalin!' : 'Salin Words & Prompt'}</span>
-                   </button>
-                 </div>
-               </div>
-             )}
-           </div>
-         </div>
+            {isPracticeOpen && (
+              <div className="p-3 md:p-5 text-[11px] md:text-sm text-gray-200 leading-relaxed">
+                <p>
+                  <strong>Mission:</strong>
+                  <br />
+                  Buka AI assistant seperti <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-cyan hover:text-white underline decoration-cyber-cyan/50 underline-offset-2 transition-colors">Gemini</a>, rekam ucapan untuk semua kata di Word_Examples, dan berikan prompt di bawah untuk dinilai.
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCopyMission}
+                    className="inline-flex items-center gap-1.5 rounded border border-cyber-cyan/40 bg-cyber-cyan/10 px-3 py-1.5 text-[11px] md:text-sm font-mono text-cyber-cyan hover:bg-cyber-cyan/20 transition-colors"
+                    title="Salin Words dan Prompt"
+                  >
+                    <Copy size={14} />
+                    <span>{isMissionCopied ? 'Tersalin!' : 'Salin Words & Prompt'}</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
 
         <SymbolPromptSection
           accentEvaluationPrompt={accentEvaluationPrompt}
@@ -615,15 +622,6 @@ const SymbolDetailPage: React.FC = () => {
 
 
       <SymbolHelpModal isOpen={showHelpPopup} onClose={() => setShowHelpPopup(false)} />
-
-      <CommonLettersModal
-        isOpen={showCommonLettersPopup}
-        onClose={closeCommonLettersModal}
-        letters={commonLetters}
-        isLoading={commonLettersLoading}
-        error={commonLettersError}
-        onRetry={openCommonLettersModal}
-      />
 
     </div>
   );

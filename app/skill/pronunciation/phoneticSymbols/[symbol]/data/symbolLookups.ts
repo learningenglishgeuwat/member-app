@@ -33,7 +33,7 @@ export const CONSONANT_VOICELESS_SYMBOLS = ['p', 't', 'k', 'f', 'θ', 's', 'ʃ',
 export const CONSONANT_VOICED_SYMBOLS = [
   'b', 'd', 'g', 'v', 'ð', 'z', 'ʒ', 'dʒ', 'l', 'm', 'n', 'ŋ', 'r', 'w', 'j',
 ] as const;
-export const DIPHTHONG_SYMBOLS = ['aɪ', 'eɪ', 'ɔɪ', 'ɪə', 'eə', 'ɛr', 'ʊə', 'oʊ', 'aʊ'] as const;
+export const DIPHTHONG_SYMBOLS = ['aɪ', 'eɪ', 'ɔɪ', 'ɪr', 'ɛr', 'ʊr', 'oʊ', 'aʊ'] as const;
 
 export const BRITISH_NOTES_BY_SYMBOL: Record<string, {
   description: string;

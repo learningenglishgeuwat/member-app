@@ -15,11 +15,11 @@ export const vowelTenseExamples: SymbolWordExamples = {
     // AWAL (10)
     { word: 'eat', ipa: '/it/' },
     { word: 'easy', ipa: '/ˈizi/' },
-    { word: 'each', ipa: '/iʧ/' },
-    { word: 'eagle', ipa: '/ˈigəl/' },
+    { word: 'each', ipa: '/itʃ/' },
+    { word: 'eagle', ipa: '/ˈiɡəl/' },
     { word: 'even', ipa: '/ˈivən/' },
     { word: 'east', ipa: '/ist/' },
-    { word: 'eager', ipa: '/ˈigɚ/' },
+    { word: 'eager', ipa: '/ˈiɡɚ/' },
     { word: 'equal', ipa: '/ˈikwəl/' },
     { word: 'evening', ipa: '/ˈivnɪŋ/' },
     { word: 'eel', ipa: '/il/' },
@@ -29,7 +29,7 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'heat', ipa: '/hit/' },
     { word: 'beat', ipa: '/bit/' },
     { word: 'street', ipa: '/strit/' },
-    { word: 'green', ipa: '/grin/' },
+    { word: 'green', ipa: '/ɡrin/' },
     { word: 'clean', ipa: '/klin/' },
     { word: 'dream', ipa: '/drim/' },
     { word: 'team', ipa: '/tim/' },
@@ -50,11 +50,11 @@ export const vowelTenseExamples: SymbolWordExamples = {
     // AWAL (10)
     { word: 'ooze', ipa: '/uz/' },
     { word: 'oops', ipa: '/ups/' },
-    { word: 'goose', ipa: '/ɡuːs/' },
+    { word: 'goose', ipa: '/ɡus/' }, // Koreksi: Hapus length mark ː
     { word: 'oodles', ipa: '/ˈudəlz/' },
     { word: 'uber', ipa: '/ˈubɚ/' },
     { word: 'ouzo', ipa: '/ˈuzoʊ/' },
-    { word: 'rude', ipa: '/ruːd/' },
+    { word: 'rude', ipa: '/rud/' }, // Koreksi: Hapus length mark ː
     { word: 'umami', ipa: '/uˈmɑmi/' },
     { word: 'oozy', ipa: '/ˈuzi/' },
     { word: 'use', ipa: '/juz/' },
@@ -68,11 +68,11 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'pool', ipa: '/pul/' },
     { word: 'suit', ipa: '/sut/' },
     { word: 'fruit', ipa: '/frut/' },
-    { word: 'group', ipa: '/grup/' },
+    { word: 'group', ipa: '/ɡrup/' },
     // AKHIR (10)
     { word: 'blue', ipa: '/blu/' },
     { word: 'true', ipa: '/tru/' },
-    { word: 'glue', ipa: '/glu/' },
+    { word: 'glue', ipa: '/ɡlu/' },
     { word: 'you', ipa: '/ju/' },
     { word: 'new', ipa: '/nu/' },
     { word: 'few', ipa: '/fju/' },
@@ -90,11 +90,11 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'add', ipa: '/æd/' },
     { word: 'after', ipa: '/ˈæftɚ/' },
     { word: 'animal', ipa: '/ˈænəməl/' },
-    { word: 'angry', ipa: '/ˈæŋgri/' },
+    { word: 'angry', ipa: '/ˈæŋɡri/' },
     { word: 'arrow', ipa: '/ˈæroʊ/' },
     { word: 'action', ipa: '/ˈækʃən/' },
     { word: 'actor', ipa: '/ˈæktɚ/' },
-    { word: 'acid', ipa: '/ˈæsəd/' },
+    { word: 'acid', ipa: '/ˈæsɪd/' }, // Koreksi vokal lemah -> /ɪ/
     { word: 'album', ipa: '/ˈælbəm/' },
     { word: 'ankle', ipa: '/ˈæŋkəl/' },
     { word: 'aspect', ipa: '/ˈæspɛkt/' },
@@ -107,12 +107,12 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'can', ipa: '/kæn/' },
     { word: 'map', ipa: '/mæp/' },
     { word: 'cap', ipa: '/kæp/' },
-    { word: 'jam', ipa: '/ʤæm/' },
-    { word: 'bag', ipa: '/bæg/' },
+    { word: 'jam', ipa: '/dʒæm/' },
+    { word: 'bag', ipa: '/bæɡ/' },
     { word: 'black', ipa: '/blæk/' },
     { word: 'back', ipa: '/bæk/' },
     { word: 'class', ipa: '/klæs/' },
-    { word: 'glass', ipa: '/glæs/' },
+    { word: 'glass', ipa: '/ɡlæs/' },
     { word: 'family', ipa: '/ˈfæməli/' }
   ],
   'Vowel‑Tense‑ɔ': [
@@ -128,7 +128,7 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'audience', ipa: '/ˈɔdiəns/' },
     { word: 'off', ipa: '/ɔf/' },
     // TENGAH (10)
-    { word: 'dog', ipa: '/dɔg/' },
+    { word: 'dog', ipa: '/dɔɡ/' },
     { word: 'long', ipa: '/lɔŋ/' },
     { word: 'song', ipa: '/sɔŋ/' },
     { word: 'strong', ipa: '/strɔŋ/' },
@@ -142,7 +142,7 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'law', ipa: '/lɔ/' },
     { word: 'saw', ipa: '/sɔ/' },
     { word: 'raw', ipa: '/rɔ/' },
-    { word: 'jaw', ipa: '/ʤɔ/' },
+    { word: 'jaw', ipa: '/dʒɔ/' },
     { word: 'straw', ipa: '/strɔ/' },
     { word: 'draw', ipa: '/drɔ/' },
     { word: 'claw', ipa: '/klɔ/' },
@@ -154,14 +154,14 @@ export const vowelTenseExamples: SymbolWordExamples = {
     // AWAL (10)
     { word: 'art', ipa: '/ɑrt/' },
     { word: 'arm', ipa: '/ɑrm/' },
-    { word: 'argument', ipa: '/ˈɑrgjəmənt/' },
+    { word: 'argument', ipa: '/ˈɑrɡjəmənt/' },
     { word: 'army', ipa: '/ˈɑrmi/' },
     { word: 'artist', ipa: '/ˈɑrtɪst/' },
     { word: 'archive', ipa: '/ˈɑrkaɪv/' },
     { word: 'arctic', ipa: '/ˈɑrktɪk/' },
-    { word: 'honest', ipa: '/ˈɑnəst/' },
+    { word: 'honest', ipa: '/ˈɑnɪst/' }, // Koreksi vokal lemah -> /ɪ/
     { word: 'honor', ipa: '/ˈɑnɚ/' },
-    { word: 'olive', ipa: '/ˈɑləv/' },
+    { word: 'olive', ipa: '/ˈɑlɪv/' },  // Koreksi vokal lemah -> /ɪ/
     // TENGAH (10)
     { word: 'father', ipa: '/ˈfɑðɚ/' },
     { word: 'park', ipa: '/pɑrk/' },
@@ -172,17 +172,17 @@ export const vowelTenseExamples: SymbolWordExamples = {
     { word: 'heart', ipa: '/hɑrt/' },
     { word: 'farm', ipa: '/fɑrm/' },
     { word: 'yard', ipa: '/jɑrd/' },
-    { word: 'garden', ipa: '/ˈgɑrdən/' },
+    { word: 'garden', ipa: '/ˈɡɑrdən/' },
     // AKHIR (10)
     { word: 'car', ipa: '/kɑr/' },
     { word: 'star', ipa: '/stɑr/' },
     { word: 'bar', ipa: '/bɑr/' },
-    { word: 'jar', ipa: '/ʤɑr/' },
+    { word: 'jar', ipa: '/dʒɑr/' },
     { word: 'far', ipa: '/fɑr/' },
     { word: 'scar', ipa: '/skɑr/' },
     { word: 'bra', ipa: '/brɑ/' },
     { word: 'spa', ipa: '/spɑ/' },
     { word: 'bizarre', ipa: '/bəˈzɑr/' },
-    { word: 'guitar', ipa: '/gɪˈtɑr/' }
+    { word: 'guitar', ipa: '/ɡɪˈtɑr/' }
   ]
 };

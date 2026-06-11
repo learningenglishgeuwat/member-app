@@ -5,6 +5,7 @@ export type SymbolDetailSectionState = {
   tips: boolean;
   video: boolean;
   prompt: boolean;
+  commonLetters: boolean;
 };
 
 export interface UseSymbolProgressParams {
@@ -18,11 +19,13 @@ export interface UseSymbolProgressResult {
   isVideoOpen: boolean;
   shouldAutoplayVideo: boolean;
   isPromptOpen: boolean;
+  isCommonLettersOpen: boolean;
   setIsPracticeOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsTipsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsVideoOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setShouldAutoplayVideo: React.Dispatch<React.SetStateAction<boolean>>;
   setIsPromptOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCommonLettersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleSaveProgress: (percentage: number) => Promise<void>;
   handleUnsaveProgress: () => Promise<void>;
 }
@@ -45,6 +48,7 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [shouldAutoplayVideo, setShouldAutoplayVideo] = useState(false);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
+  const [isCommonLettersOpen, setIsCommonLettersOpen] = useState(false);
   const [isSectionStateHydrated, setIsSectionStateHydrated] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -72,12 +76,14 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
         setIsVideoOpen(!!sectionState.video);
         setShouldAutoplayVideo(false);
         setIsPromptOpen(!!sectionState.prompt);
+        setIsCommonLettersOpen(!!sectionState.commonLetters);
       } catch {
         setIsPracticeOpen(false);
         setIsTipsOpen(false);
         setIsVideoOpen(false);
         setShouldAutoplayVideo(false);
         setIsPromptOpen(false);
+        setIsCommonLettersOpen(false);
       }
     } else {
       setIsPracticeOpen(false);
@@ -85,6 +91,7 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
       setIsVideoOpen(false);
       setShouldAutoplayVideo(false);
       setIsPromptOpen(false);
+      setIsCommonLettersOpen(false);
     }
 
     setIsSectionStateHydrated(true);
@@ -98,6 +105,7 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
       tips: isTipsOpen,
       video: isVideoOpen,
       prompt: isPromptOpen,
+      commonLetters: isCommonLettersOpen,
     };
 
     localStorage.setItem(sectionStateStorageKey, JSON.stringify(nextSectionState));
@@ -106,6 +114,7 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
     isTipsOpen,
     isVideoOpen,
     isPromptOpen,
+    isCommonLettersOpen,
     isSectionStateHydrated,
     sectionStateStorageKey,
   ]);
@@ -157,11 +166,13 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
     isVideoOpen,
     shouldAutoplayVideo,
     isPromptOpen,
+    isCommonLettersOpen,
     setIsPracticeOpen,
     setIsTipsOpen,
     setIsVideoOpen,
     setShouldAutoplayVideo,
     setIsPromptOpen,
+    setIsCommonLettersOpen,
     handleSaveProgress,
     handleUnsaveProgress,
   };

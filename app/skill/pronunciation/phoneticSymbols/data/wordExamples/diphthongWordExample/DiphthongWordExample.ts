@@ -30,7 +30,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'found', ipa: '/faʊnd/' },
     { word: 'sound', ipa: '/saʊnd/' },
     { word: 'round', ipa: '/raʊnd/' },
-    { word: 'ground', ipa: '/graʊnd/' },
+    { word: 'ground', ipa: '/ˈɡraʊnd/' },
     { word: 'house', ipa: '/haʊs/' },
     { word: 'mouse', ipa: '/maʊs/' },
     { word: 'mouth', ipa: '/maʊθ/' },
@@ -44,11 +44,11 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'vow', ipa: '/vaʊ/' },
     { word: 'brow', ipa: '/braʊ/' },
     { word: 'bough', ipa: '/baʊ/' },
-    { word: 'chow', ipa: '/ʧaʊ/' }
+    { word: 'chow', ipa: '/tʃaʊ/' }
   ],
   'aɪ': [
     // AWAL (10)
-    { word: 'ice', ipa: '/aɪs/' },
+    { word: 'ice', ipa: '/aʊs/' },
     { word: 'island', ipa: '/ˈaɪlənd/' },
     { word: 'item', ipa: '/ˈaɪtəm/' },
     { word: 'idea', ipa: '/aɪˈdiə/' },
@@ -76,12 +76,12 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'fly', ipa: '/flaɪ/' },
     { word: 'sky', ipa: '/skaɪ/' },
     { word: 'buy', ipa: '/baɪ/' },
-    { word: 'guy', ipa: '/gaɪ/' },
+    { word: 'guy', ipa: '/ɡaɪ/' },
     { word: 'high', ipa: '/haɪ/' },
     { word: 'why', ipa: '/waɪ/' },
     { word: 'tie', ipa: '/taɪ/' }
   ],
-  'er': [
+  'ɛr': [ // Koreksi key: 'er' -> 'ɛr'
     // AWAL (10)
     { word: 'air', ipa: '/ɛr/' },
     { word: 'airplane', ipa: '/ˈɛrpleɪn/' },
@@ -89,7 +89,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'errand', ipa: '/ˈɛrənd/' },
     { word: 'airy', ipa: '/ˈɛri/' },
     { word: 'airman', ipa: '/ˈɛrmæn/' },
-    { word: 'airborne', ipa: '/ˈɛrbɔrn/' },
+    { word: 'airbone', ipa: '/ˈɛrbɔrn/' },
     { word: 'airtight', ipa: '/ˈɛrtaɪt/' },
     { word: 'airway', ipa: '/ˈɛrweɪ/' },
     { word: 'heir', ipa: '/ɛr/' },
@@ -109,7 +109,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'share', ipa: '/ʃɛr/' },
     { word: 'fair', ipa: '/fɛr/' },
     { word: 'pair', ipa: '/pɛr/' },
-    { word: 'chair', ipa: '/ʧɛr/' },
+    { word: 'chair', ipa: '/tʃɛr/' },
     { word: 'hair', ipa: '/hɛr/' },
     { word: 'stair', ipa: '/stɛr/' },
     { word: 'declare', ipa: '/dɪˈklɛr/' },
@@ -118,10 +118,10 @@ export const diphthongExamples: SymbolWordExamples = {
   ],
   'eɪ': [
     // AWAL (10)
-    { word: 'age', ipa: '/eɪʤ/' },
+    { word: 'age', ipa: '/eɪdʒ/' },
     { word: 'aim', ipa: '/eɪm/' },
     { word: 'able', ipa: '/ˈeɪbəl/' },
-    { word: 'agent', ipa: '/ˈeɪʤənt/' },
+    { word: 'agent', ipa: '/ˈeɪdʒənt/' },
     { word: 'apron', ipa: '/ˈeɪprən/' },
     { word: 'alien', ipa: '/ˈeɪljən/' },
     { word: 'ache', ipa: '/eɪk/' },
@@ -134,10 +134,10 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'main', ipa: '/meɪn/' },
     { word: 'name', ipa: '/neɪm/' },
     { word: 'same', ipa: '/seɪm/' },
-    { word: 'game', ipa: '/geɪm/' },
+    { word: 'game', ipa: '/ɡeɪm/' },
     { word: 'late', ipa: '/leɪt/' },
     { word: 'date', ipa: '/deɪt/' },
-    { word: 'gate', ipa: '/geɪt/' },
+    { word: 'gate', ipa: '/ɡeɪt/' },
     { word: 'state', ipa: '/steɪt/' },
     // AKHIR (10)
     { word: 'day', ipa: '/deɪ/' },
@@ -148,7 +148,7 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'lay', ipa: '/leɪ/' },
     { word: 'stay', ipa: '/steɪ/' },
     { word: 'play', ipa: '/pleɪ/' },
-    { word: 'gray', ipa: '/greɪ/' },
+    { word: 'gray', ipa: '/ɡreɪ/' },
     { word: 'away', ipa: '/əˈweɪ/' }
   ],
   'oʊ': [
@@ -172,22 +172,22 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'bone', ipa: '/boʊn/' },
     { word: 'stone', ipa: '/stoʊn/' },
     { word: 'cold', ipa: '/koʊld/' },
-    { word: 'gold', ipa: '/goʊld/' },
+    { word: 'gold', ipa: '/ɡoʊld/' },
     { word: 'most', ipa: '/moʊst/' },
     // AKHIR (10)
-    { word: 'go', ipa: '/goʊ/' },
+    { word: 'go', ipa: '/ɡoʊ/' },
     { word: 'no', ipa: '/noʊ/' },
     { word: 'so', ipa: '/soʊ/' },
     { word: 'low', ipa: '/loʊ/' },
     { word: 'show', ipa: '/ʃoʊ/' },
     { word: 'snow', ipa: '/snoʊ/' },
-    { word: 'grow', ipa: '/groʊ/' },
+    { word: 'grow', ipa: '/ɡroʊ/' },
     { word: 'throw', ipa: '/θroʊ/' },
     { word: 'know', ipa: '/noʊ/' },
     { word: 'blow', ipa: '/bloʊ/' }
   ],
   'ɔɪ': [
-    // AWAL (5) - Terbatas karena kelangkaan fonotaktik awal murni dalam bahasa Inggris
+    // AWAL (5)
     { word: 'oil', ipa: '/ɔɪl/' },
     { word: 'oyster', ipa: '/ˈɔɪstɚ/' },
     { word: 'ointment', ipa: '/ˈɔɪntmənt/' },
@@ -195,10 +195,10 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'oilfield', ipa: '/ˈɔɪlfild/' },
     // TENGAH (15)
     { word: 'coin', ipa: '/kɔɪn/' },
-    { word: 'join', ipa: '/ʤɔɪn/' },
+    { word: 'join', ipa: '/dʒɔɪn/' },
     { word: 'point', ipa: '/pɔɪnt/' },
     { word: 'voice', ipa: '/vɔɪs/' },
-    { word: 'choice', ipa: '/ʧɔɪs/' },
+    { word: 'choice', ipa: '/tʃɔɪs/' },
     { word: 'noise', ipa: '/nɔɪz/' },
     { word: 'boil', ipa: '/bɔɪl/' },
     { word: 'soil', ipa: '/sɔɪl/' },
@@ -207,45 +207,45 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'moist', ipa: '/mɔɪst/' },
     { word: 'poison', ipa: '/ˈpɔɪzən/' },
     { word: 'foist', ipa: '/fɔɪst/' },
-    { word: 'voyage', ipa: '/ˈvɔɪəʤ/' },
+    { word: 'voyage', ipa: '/ˈvɔɪədʒ/' },
     { word: 'invoice', ipa: '/ˈɪnvɔɪs/' },
     // AKHIR (10)
     { word: 'boy', ipa: '/bɔɪ/' },
     { word: 'toy', ipa: '/tɔɪ/' },
-    { word: 'joy', ipa: '/ʤɔɪ/' },
-    { word: 'enjoy', ipa: '/ɛnˈʤɔɪ/' },
+    { word: 'joy', ipa: '/dʒɔɪ/' },
+    { word: 'enjoy', ipa: '/ɛnˈdʒɔɪ/' },
     { word: 'annoy', ipa: '/əˈnɔɪ/' },
     { word: 'destroy', ipa: '/dɪˈstrɔɪ/' },
     { word: 'employ', ipa: '/ɛmˈplɔɪ/' },
     { word: 'royal', ipa: '/ˈrɔɪəl/' },
     { word: 'loyal', ipa: '/ˈlɔɪəl/' },
-    { word: 'rejoin', ipa: '/riˈʤɔɪn/' }
+    { word: 'rejoin', ipa: '/riˈdʒɔɪn/' }
   ],
   'ʊr': [
-    // TENGAH (15) - Tidak ada posisi awal murni dalam kosakata dasar GA
+    // TENGAH (15)
     { word: 'curious', ipa: '/ˈkjʊriəs/' },
     { word: 'fury', ipa: '/ˈfjʊri/' },
-    { word: 'jury', ipa: '/ˈʤʊri/' },
+    { word: 'jury', ipa: '/ˈdʒʊri/' },
     { word: 'during', ipa: '/ˈdʊrɪŋ/' },
     { word: 'tourist', ipa: '/ˈtʊrɪst/' },
     { word: 'plural', ipa: '/ˈplʊrəl/' },
     { word: 'rural', ipa: '/ˈrʊrəl/' },
     { word: 'europe', ipa: '/ˈjʊrəp/' },
-    { word: 'gourd', ipa: '/gʊrd/' },
+    { word: 'gourd', ipa: '/ɡʊrd/' },
     { word: 'yourself', ipa: '/jʊrˈsɛlf/' },
     { word: 'yours', ipa: '/jʊrz/' },
     { word: 'security', ipa: '/sɪˈkjʊrəti/' },
-    { word: 'maturity', ipa: '/məˈʧʊrəti/' },
+    { word: 'maturity', ipa: '/məˈtʃʊrəti/' },
     { word: 'purity', ipa: '/ˈpjʊrəti/' },
     { word: 'furious', ipa: '/ˈfjʊriəs/' },
     // AKHIR (15)
     { word: 'tour', ipa: '/tʊr/' },
     { word: 'poor', ipa: '/pʊr/' },
     { word: 'sure', ipa: '/ʃʊr/' },
-    { word: 'endure', ipa: '/ɪnˈdjʊr/' },
+    { word: 'endure', ipa: '/ɪnˈdʊr/' }, // Koreksi GA: Yod-dropping /dj/ -> /d/
     { word: 'secure', ipa: '/sɪˈkjʊr/' },
     { word: 'obscure', ipa: '/əbˈskjʊr/' },
-    { word: 'mature', ipa: '/məˈʧʊr/' },
+    { word: 'mature', ipa: '/məˈtʃʊr/' },
     { word: 'pure', ipa: '/pjʊr/' },
     { word: 'cure', ipa: '/kjʊr/' },
     { word: 'insure', ipa: '/ɪnˈʃʊr/' },
@@ -282,11 +282,11 @@ export const diphthongExamples: SymbolWordExamples = {
     { word: 'year', ipa: '/jɪr/' },
     { word: 'appear', ipa: '/əˈpɪr/' },
     { word: 'disappear', ipa: '/ˌdɪsəˈpɪr/' },
-    { word: 'engineer', ipa: '/ˌɛnʤəˈnɪr/' },
+    { word: 'engineer', ipa: '/ˌɛndʒəˈnɪr/' },
     { word: 'volunteer', ipa: '/ˌvɑlənˈtɪr/' },
     { word: 'sphere', ipa: '/sfɪr/' },
-    { word: 'cheer', ipa: '/ʧɪr/' },
-    { word: 'gear', ipa: '/gɪr/' },
+    { word: 'cheer', ipa: '/tʃɪr/' },
+    { word: 'gear', ipa: '/ɡɪr/' },
     { word: 'beer', ipa: '/bɪr/' },
     { word: 'deer', ipa: '/dɪr/' }
   ]
