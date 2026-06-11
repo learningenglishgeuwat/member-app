@@ -324,7 +324,7 @@ export const consonantVoicedExamples: SymbolWordExamples = {
     { word: 'backward', ipa: '/ˈbækwɚd/' },
     { word: 'halfway', ipa: '/ˈhæfˌweɪ/' }
   ],
-  'Consonant‑Voiced‑y': [
+  'Consonant‑Voiced‑j': [
     // AWAL (15)
     { word: 'yes', ipa: '/jɛs/' },
     { word: 'you', ipa: '/ju/' },

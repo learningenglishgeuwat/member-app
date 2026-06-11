@@ -50,11 +50,11 @@ export const vowelTenseExamples: SymbolWordExamples = {
     // AWAL (10)
     { word: 'ooze', ipa: '/uz/' },
     { word: 'oops', ipa: '/ups/' },
-    { word: 'oomph', ipa: '/umf/' },
+    { word: 'goose', ipa: '/ɡuːs/' },
     { word: 'oodles', ipa: '/ˈudəlz/' },
     { word: 'uber', ipa: '/ˈubɚ/' },
     { word: 'ouzo', ipa: '/ˈuzoʊ/' },
-    { word: 'umlaut', ipa: '/ˈumlaut/' },
+    { word: 'rude', ipa: '/ruːd/' },
     { word: 'umami', ipa: '/uˈmɑmi/' },
     { word: 'oozy', ipa: '/ˈuzi/' },
     { word: 'use', ipa: '/juz/' },

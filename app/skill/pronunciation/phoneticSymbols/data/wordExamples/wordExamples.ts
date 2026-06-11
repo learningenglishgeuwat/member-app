@@ -37,7 +37,7 @@ export const consonantExamples: SymbolWordExamples = {
 export const allWordExamples: SymbolWordExamples = {
   ...vowelExamples,
   ...consonantExamples,
-  ...diphthongExamples
+  ...diphthongExamples,
 };
 
 // Helper function to get word examples for a symbol
@@ -73,11 +73,12 @@ export function getWordExamples(symbol: string): WordExample[] {
     'ʤ': 'Consonant‑Voiced‑ʤ',
     'dʒ': 'Consonant‑Voiced‑ʤ',
     'l': 'Consonant‑Voiced‑l',
+    'm': 'Consonant‑Voiced‑m',
     'n': 'Consonant‑Voiced‑n',
     'r': 'Consonant‑Voiced‑r',
     'w': 'Consonant‑Voiced‑w',
-    'y': 'Consonant‑Voiced‑y',
-    'j': 'Consonant‑Voiced‑y',
+    'y': 'Consonant‑Voiced‑j',
+    'j': 'Consonant‑Voiced‑j',
     'ŋ': 'Consonant‑Voiced‑ŋ',
     
     // Legacy diphthong keys

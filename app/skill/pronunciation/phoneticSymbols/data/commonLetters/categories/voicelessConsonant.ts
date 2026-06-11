@@ -46,8 +46,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       'c -> cat, cold, class',
       '-ck -> back, black, clock',
       'ch -> chorus, character, chemistry',
-      'qu -> question, quick, equal',
-      'qu (pure) -> liquor, conquer, bouquet',
+      'qu -> question, quick, equal, liquor, conquer, bouquet',
       'cc -> account, soccer, accurate',
       '-que -> unique, antique, technique',
       'sch -> school, scheme, scholar',
@@ -116,7 +115,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
     traps: ['is', 'has', 'was', 'easy', 'sugar', 'island'],
   },
   {
-    letter: 'sh, ti, ci, si, ch, s, sc, ss, xi, sch, -cean, -sure, -tial, -cious, -tious, -tian',
+    letter: 'sh, ti, ci, si, ch, s, sc, ss, xi, sch, -ocean, -sure, -tial, -cious, -tious, -tian',
     ipaSymbol: '/\u0283/',
     description: 'Pola umum bunyi /ʃ/ (termasuk kata serapan Perancis):',
     examples: [
@@ -130,7 +129,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       'ss -> passion, mission, pressure',
       'xi -> anxious, noxious, obnoxious',
       'sch -> schwa, schnapps, schnitzel',
-      '-cean -> ocean, oceanic, oceanography',
+      '-ocean -> ocean, oceanic, oceanography',
       '-sure -> pressure, fissure, tonsure',
       '-tial -> essential, partial, potential',
       '-cious -> delicious, precious, conscious',
@@ -147,10 +146,8 @@ export const voicelessConsonantLetters: CommonLetter[] = [
     description: 'Pola umum bunyi /h/:',
     examples: [
       'h -> house, help, history',
-      'h- -> behind, perhaps, anyhow',
+      'h- -> behind, perhaps, anyhow, rehearse, reheat, behave, unhurt, unhappy, unhealthy', // Sudah diperbaiki: Semua variasi h- digabung agar tidak duplikat key
       'wh -> who, whole, whom',
-      'h- -> rehearse, reheat, behave',
-      'h- -> unhurt, unhappy, unhealthy',
     ],
     category: 'consonant_voiceless',
     pronunciationTip: 'Hembusan napas halus dari glottis, tanpa getaran.',

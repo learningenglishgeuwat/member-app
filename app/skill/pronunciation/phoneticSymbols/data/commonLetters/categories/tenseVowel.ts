@@ -62,7 +62,7 @@ export const tenseVowelLetters: CommonLetter[] = [
     ],
   },
   {
-    letter: 'o, -ock, -od, -og, -op, a, au, -ong, -ot, -ox, -ob, -omp, -off, -ost, -ond, -osh, -oss, -ol, -onk, -oth, -on, -olv',
+    letter: 'o, -ock, -od, -og, -op, a, au, -ong, -ot, -ox, -ob, -omp, -off, -oft, -ost, -ond, -osh, -oss, -ol, -onk, -oth, -on, -olv',
     ipaSymbol: '/\u0252/ BrE',
     description: 'Pola umum untuk /ɒ/ dalam aksen British (BrE) - vokal bulat pendek:',
     examples: [
@@ -78,7 +78,8 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-ox -> box, fox, pox',
       '-ob -> bob, job, rob',
       '-omp -> pomp, romp, stomp',
-      '-off -> off, soft, loft',
+      '-off -> off, scoff, doff',
+      '-oft -> soft, loft',
       '-ost -> lost, cost, frost',
       '-ond -> pond, fond, bond',
       '-osh -> gosh, posh, slosh',
@@ -159,7 +160,7 @@ export const tenseVowelLetters: CommonLetter[] = [
       'o -> do, to, who',
       'ui -> fruit, suit, recruit',
       'o_e -> lose, move, prove',
-      'ou_e -> route, troupe, crouton',
+      'ou_e -> route, troupe',
       'u -> truth, ruby, rumor',
       'oo_e -> choose, loose, goose',
       'eu -> sleuth, deuce, rheumatism',
@@ -175,7 +176,7 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-oose -> moose, noose, caboose',
       '-ooze -> ooze, snooze, booze',
       '-oup -> soup, group, croup',
-      '-oob -> boob, noob, spoonbill',
+      '-oob -> boob, noob, booby',
       '-oove -> groove, hooves, rooves',
       '-ewd -> shrewd, lewd, brewed',
       '-ude -> rude, crude, nude',
@@ -191,7 +192,7 @@ export const tenseVowelLetters: CommonLetter[] = [
     ],
   },
   {
-    letter: 'a, -adge, -ank, ai, au, -ash, -amp, -ang, -atch, -ack, -aft, -and, -ant, -act, -ax, -ag, -ap, -as, -at, -ad, -am, -ab, -an, -ath, -ance, -al, -anch, -ast, -ask, -asp, -af, -apt, -asm, -aph, -apse',
+    letter: 'a, -adge, -ank, ai, au, -ash, -amp, -ang, -atch, -ack, -aft, -and, -ant, -act, -ax, -ag, -ap, -as, -at, -ad, -am, -ab, -an, -ath, -ance, -al, -anch, -ast, -ask, -asp, -aff, -apt, -asm, -aph, -apse',
     ipaSymbol: '/\u00e6/',
     description: 'Pola utama untuk /æ/ (AmE):',
     examples: [
@@ -225,7 +226,7 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-ast -> past, last, blast',
       '-ask -> task, mask, flask',
       '-asp -> clasp, grasp, gasp',
-      '-af -> gaff, chaff, staff',
+      '-aff -> gaff, chaff, staff',
       '-apt -> apt, rapt, adapt',
       '-asm -> chasm, spasm, plasm',
       '-aph -> graph, paragraph, photograph',
@@ -240,7 +241,7 @@ export const tenseVowelLetters: CommonLetter[] = [
     ],
   },
   {
-    letter: 'aw, au, oa, or, oor, oar, our, ore, ar, a, -aught, awn, quar, o, -all, -alt, -off, -ost, -oth, -ong, -awk, -aun, -aud, -oss, -ault, -awl, -ord, -orn, -orm, -ork, -ort, -orse, -orch, -ause, -orce, -alk, -ought, -oard, -ald',
+    letter: 'aw, au, oa, or, oor, oar, our, ore, ar, a, -aught, awn, quar, o, -all, -alt, -off, -oft, -ost, -oth, -ong, -awk, -aun, -aud, -oss, -ault, -awl, -ord, -orn, -orm, -ork, -ort, -orse, -orch, -ause, -orce, -alk, -ought, -oard, -ald', // Sudah diperbaiki dari -of menjadi -oft
     ipaSymbol: '/\u0254/',
     description: 'Pola umum untuk /ɔ/ - dengan atau tanpa /r/ setelahnya:',
     examples: [
@@ -260,7 +261,8 @@ export const tenseVowelLetters: CommonLetter[] = [
       'o -> coffee, office, gone',
       '-all -> ball, call, tall',
       '-alt -> salt, malt, halt',
-      '-off -> off, soft, loft',
+      '-off -> off, scoff, doff',
+      '-oft -> soft, loft',
       '-ost -> lost, cost, frost',
       '-oth -> cloth, broth, froth',
       '-ong -> song, long, wrong',

@@ -83,7 +83,7 @@ const VOWEL_LAX_SYMBOLS = ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u
 const VOWEL_TENSE_SYMBOLS = ['\u0251', 'i', 'u', '\u00e6', '\u0254'] as const;
 const CONSONANT_VOICELESS_SYMBOLS = ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h'] as const;
 const CONSONANT_VOICED_SYMBOLS = [
-  'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y',
+  'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'j',
 ] as const;
 const DIPHTHONG_SYMBOLS = ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', 'ɛr', '\u028a\u0259', 'o\u028a', 'a\u028a'] as const;
 
@@ -331,8 +331,13 @@ const SymbolDetailPage: React.FC = () => {
   useEffect(() => {
     if (shouldRedirectToSummary) {
       router.replace('/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols');
+      return;
     }
-  }, [router, shouldRedirectToSummary]);
+
+    if (normalizedSymbol === 'y') {
+      router.replace('/skill/pronunciation/phoneticSymbols/j');
+    }
+  }, [router, shouldRedirectToSummary, normalizedSymbol]);
 
   useEffect(() => {
     setShowHighlight(true);
@@ -397,25 +402,40 @@ const SymbolDetailPage: React.FC = () => {
     return Array.from(new Set(base.filter(Boolean)));
   }, [decodedSymbol]);
 
-  const renderWord = (word: string) => {
-    if (!showHighlight) return word;
-    
-    const lowerWord = word.toLowerCase();
-    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
-    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
-    // Only highlight if word has an explicit override entry — no regex fallback
-    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
-      ? symbolOverrides[lowerWord]
-      : [];
+  const isIndexBasedOverride = (patterns: string[]): boolean =>
+    patterns.length > 0 && patterns.every((pattern) => /^\d+$/.test(pattern));
 
+  const renderIndexBasedWord = (word: string, patterns: string[]) => {
+    const targetIndices = new Set(patterns.map(Number));
+
+    return (
+      <>
+        {word.split('').map((char, index) =>
+          targetIndices.has(index) ? (
+            <span key={index} className="symbol-letter-highlight" style={highlightLetterStyle}>
+              {char}
+            </span>
+          ) : (
+            <React.Fragment key={index}>{char}</React.Fragment>
+          ),
+        )}
+      </>
+    );
+  };
+
+  const renderHighlightedWord = (word: string, patterns: string[]) => {
     if (patterns.length === 0) return word;
-    
+    if (isIndexBasedOverride(patterns)) return renderIndexBasedWord(word, patterns);
+
     const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
-    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
+    const escapedPatterns = sortedPatterns.map((p) =>
+      p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'),
+    );
     const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
-    
+
     const parts = word.split(regex);
     let matchedCount = 0;
+    const lowerWord = word.toLowerCase();
     const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
     const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
     const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
@@ -459,9 +479,9 @@ const SymbolDetailPage: React.FC = () => {
     );
   };
 
-  const renderBritishNoteWord = (word: string) => {
+  const renderWord = (word: string) => {
     if (!showHighlight) return word;
-    
+
     const lowerWord = word.toLowerCase();
     const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
     const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
@@ -470,55 +490,21 @@ const SymbolDetailPage: React.FC = () => {
       ? symbolOverrides[lowerWord]
       : [];
 
-    if (patterns.length === 0) return word;
-    
-    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
-    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
-    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
-    
-    const parts = word.split(regex);
-    let matchedCount = 0;
-    const onlyFirstOnionMatch = decodedSymbol === 'ʌ' && lowerWord === 'onion';
-    const onlyFirstMessageMatch = decodedSymbol === 'ɛ' && lowerWord === 'message';
-    const bananaOneThreeMatch = decodedSymbol === 'ə' && lowerWord === 'banana';
-    const animalSecondMatch = decodedSymbol === 'ə' && lowerWord === 'animal';
-    const attackSecondMatch = decodedSymbol === 'æ' && lowerWord === 'attack';
-    const alarmSecondMatch = decodedSymbol === 'ɑ' && lowerWord === 'alarm';
-    const tomorrowSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'tomorrow';
-    const tomorrowAlphaMatch = decodedSymbol === 'ɑ' && lowerWord === 'tomorrow';
-    const peopleSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'people';
-    const presentSchwaMatch = decodedSymbol === 'ə' && lowerWord === 'present';
-    const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
-    const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
+    return renderHighlightedWord(word, patterns);
+  };
 
-    return (
-      <>
-        {parts.map((part, i) => {
-          if (i % 2 === 1) {
-            const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
-              ? matchedCount === 1
-              : animalSecondMatch
-                ? matchedCount === 1 || matchedCount === 2
-                : bananaOneThreeMatch
-                  ? matchedCount === 0 || matchedCount === 2
-                  : onlyFirstOnionMatch || onlyFirstMessageMatch || tomorrowSchwaMatch || presentLaxMatch || welcomeLaxMatch
-                    ? matchedCount === 0
-                    : tomorrowAlphaMatch
-                      ? matchedCount === 1
-                      : true;
-            matchedCount += 1;
-            if (shouldHighlight) {
-              return (
-                <span key={i} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                  {part}
-                </span>
-              );
-            }
-          }
-          return <React.Fragment key={i}>{part}</React.Fragment>;
-        })}
-      </>
-    );
+  const renderBritishNoteWord = (word: string) => {
+    if (!showHighlight) return word;
+
+    const lowerWord = word.toLowerCase();
+    const lookupSymbol = decodedSymbol.trim() === 'ʤ' ? 'dʒ' : decodedSymbol.trim() === 'ʧ' ? 'tʃ' : decodedSymbol;
+    const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[lookupSymbol];
+    // Only highlight if word has an explicit override entry — no regex fallback
+    const patterns = (symbolOverrides && symbolOverrides[lowerWord])
+      ? symbolOverrides[lowerWord]
+      : [];
+
+    return renderHighlightedWord(word, patterns);
   };
 
   const renderIpa = (ipa?: string, isBritishNoteOrAlternative = false) => {
