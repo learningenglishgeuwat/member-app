@@ -27,13 +27,13 @@ export const SymbolVideoSection: React.FC<SymbolVideoSectionProps> = ({
   return (
     <div data-video-section className="w-full max-w-4xl mx-auto mt-6">
       <div
-        className="symbol-detail-collapsible-panel bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+        className="symbol-detail-collapsible-panel bg-black/90 border border-white/60 hover:border-purple-500 transition-colors rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:shadow-[0_0_30px_rgba(168,85,247,0.35)]"
         style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
       >
-        <div className="bg-purple-900/20 px-4 py-2 flex justify-between items-center border-b border-purple-500/30">
+        <div className="bg-white/5 px-4 py-2 flex justify-between items-center border-b border-white/40 hover:border-purple-500 transition-colors">
           <div className="flex items-center gap-2">
-            <Play className="text-purple-400" size={16} />
-            <span className="ml-2 font-display text-[10px] md:text-xs text-purple-400 tracking-wider">VIDEO_TUTORIAL</span>
+            <Play className="text-white" size={16} />
+            <span className="ml-2 font-display text-[10px] md:text-xs text-white tracking-wider">VIDEO_TUTORIAL</span>
             <span className="text-xs font-display text-white/60">Symbol:{' '}<span className="font-ipa" data-ipa>/{decodedSymbol}/</span></span>
           </div>
           <button
@@ -46,7 +46,7 @@ export const SymbolVideoSection: React.FC<SymbolVideoSectionProps> = ({
               })
             }
             data-tour="symbol-video-section-toggle"
-            className="symbol-detail-chevron-toggle text-purple-300 hover:text-purple-100 transition-colors"
+            className="symbol-detail-chevron-toggle text-white hover:text-purple-300 transition-colors"
             aria-expanded={isVideoOpen}
             title={isVideoOpen ? 'Tutup Video Tutorial' : 'Buka Video Tutorial'}
           >

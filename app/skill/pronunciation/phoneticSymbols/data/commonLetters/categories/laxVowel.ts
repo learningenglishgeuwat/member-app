@@ -7,11 +7,11 @@ export const laxVowelLetters: CommonLetter[] = [
     description: 'Pola ejaan yang sering menghasilkan bunyi /ʌ/ (AmE):',
     examples: [
       'u -> cup, luck, bus',
-      'o -> love, money, come',
+      'o -> money, son, month', 
       'ou -> country, young, enough',
       'oo -> blood, flood',
       'oe -> does',
-      'o_e -> glove, dove, shove',
+      'o_e -> love, come, glove, dove, shove', 
     ],
     category: 'vowel_lax',
     pronunciationTip: 'Rahang buka sedang, bibir netral. Bunyinya pendek dan tegas.',
@@ -68,14 +68,14 @@ export const laxVowelLetters: CommonLetter[] = [
       'eo -> leopard, jeopardy, Leonard',
       'u -> bury, burial, buried',
       'ae -> aesthetic, haemorrhage, aestivate',
-      'ei -> heifer, nonpareil', // 'leisure' resmi dihapus dari sini sesuai standar AmE
+      'ei -> heifer, nonpareil', 
     ],
     category: 'vowel_lax',
     pronunciationTip: 'Rahang sedikit terbuka, vokal pendek. AmE biasa pakai /ɛ/, BrE pakai /e/.',
     traps: ['Jangan meluncur ke /eɪ/.', 'Ini adalah bunyi yang sama dengan notasi berbeda antara kamus AmE dan BrE.'],
   },
   {
-    letter: 'a, e, o, u, -ion, -ian, -or, -ous, -al, ai, -ent, -able, i, -ence, -ate, -est, -on, -an, -ment, -ance, -some, -ness, -less, -ful, -us, -um, eo, -ible, -acy, -dom, -ot, -ace, -el, -ar, -ary',
+    letter: 'a, e, o, u, -ion, -ian, -or, -ous, -al, ai, -ent, -able, i, -ence, -ate, -est, -on, -an, -ment, -ance, -some, -ness, -less, -ful, -us, -um, eo, -ible, -acy, -dom, -ot, -ace, -el, -ar, -ary', // KOREKSI: -names sudah diganti ke -ness
     ipaSymbol: '/\u0259/',
     description: 'Schwa /ə/ sangat sering muncul pada suku kata lemah:',
     examples: [
@@ -85,7 +85,7 @@ export const laxVowelLetters: CommonLetter[] = [
       'u -> support, supply, suggest',
       '-ion -> nation, action, station',
       '-ian -> musician, magician, politician',
-      '-or -> doctor, actor, tailor', // Tetap dipertahankan di sini
+      '-or -> doctor, actor, tailor', 
       '-ous -> famous, nervous, generous',
       '-al -> final, local, normal',
       'ai -> captain, mountain, fountain',
@@ -112,20 +112,20 @@ export const laxVowelLetters: CommonLetter[] = [
       '-ot -> carrot, parrot, idiot',
       '-ace -> surface, palace, necklace',
       '-el -> travel, angel, novel',
-      '-ar -> grammar, scholar, calendar', // Tetap dipertahankan di sini
-      '-ary -> primary, library, military', // Tetap dipertahankan di sini
+      '-ar -> grammar, scholar, calendar', 
+      '-ary -> boundary, summary, binary', 
     ],
     category: 'vowel_lax',
     pronunciationTip: 'Santai, ringan, tidak ditekan. Fokus ritme kalimat, bukan artikulasi kuat.',
     traps: ['Jangan beri tekanan kuat.', 'Schwa sering hilang/mereduksi dalam speech cepat.'],
   },
   {
-    letter: '-er, -or, -ar, -ure, -ir, -ur, -ear', // '-our' dihapus dari string karena sudah di-Amerikanisasi ke '-or'
+    letter: '-er, -or, -ar, -ure, -ir, -ur, -ear', 
     ipaSymbol: '/\u025a/ or /\u025d/',
     description: 'R-colored vowel versi AmE (stressed dan unstressed) / /ɜː/ (BrE non-rhotic):',
     examples: [
       '-er -> teacher, better, under, father, her, term, serve',
-      '-or -> doctor, actor, visitor, word, work, world, worm, color, flavor, humor', // Ditambahkan versi ejaan Amerika murni di bawah pola -or
+      '-or -> doctor, actor, visitor, word, work, world, worm, color, flavor, humor', 
       '-ar -> sugar, collar, dollar',
       '-ure -> nature, picture, culture',
       '-ir -> bird, first, shirt, girl',

@@ -341,3 +341,45 @@
     transform: scale(1.88) translateY(5.5px);
   }
 }
+
+/* Start Journey: enforce pure black backgrounds while keeping colored accents */
+.start-journey,
+.start-journey .dashboard-view-panel,
+.start-journey .dashboard-view-stack {
+  background-color: #000000;
+  color: rgba(230, 238, 248, 0.98);
+}
+
+.start-journey .dashboard-widget-card,
+.start-journey .dashboard-widget-sidebar,
+.start-journey .dashboard-tour-nav-panel {
+  /* Make the card surfaces fully black but preserve accent borders */
+  background: #000000 !important;
+  border-color: rgba(var(--dashboard-widget-accent-rgb), 0.62) !important;
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(var(--dashboard-widget-accent-rgb), 0.12);
+  backdrop-filter: none;
+}
+
+.start-journey .dashboard-widget-card::before,
+.start-journey .dashboard-widget-sidebar::before,
+.start-journey .dashboard-tour-nav-panel::before {
+  /* keep subtle textures but reduce brightness so black stays dominant */
+  opacity: 0.32;
+}
+
+.start-journey .dashboard-widget-card--interactive:hover {
+  border-color: rgba(var(--dashboard-widget-accent-rgb), 0.88) !important;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(var(--dashboard-widget-accent-rgb), 0.18),
+    0 0 40px rgba(var(--dashboard-widget-accent-rgb), 0.28);
+}
+
+/* Ensure sidebar item colored borders stay visible on black */
+.start-journey .dashboard-widget-sidebar-item,
+.start-journey .dashboard-widget-sidebar-item.is-active,
+.start-journey .dashboard-widget-sidebar-item--logout {
+  border-color: rgba(var(--dashboard-widget-accent-rgb), 0.38) !important;
+}

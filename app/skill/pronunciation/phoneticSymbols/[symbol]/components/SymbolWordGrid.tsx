@@ -136,14 +136,12 @@ export const SymbolWordGrid: React.FC<SymbolWordGridProps> = ({
                   </span>
                   {showIpa && (
                     <span
-                      className={`word-ipa text-cyan-300 text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center ${
-                        isActive ? 'opacity-90' : 'opacity-60'
-                      }`}
+                      className={`word-ipa text-cyan-300 text-[10px] md:text-xs font-ipa mt-0.5 md:mt-1 truncate w-full text-center opacity-100`}
                       data-ipa
                     >
                       {example.britishIpa ? (
                         <>
-                          <span className="text-cyan-300/80">BrE {renderIpa(example.britishIpa, true)}</span>
+                          <span className="text-cyan-300">BrE {renderIpa(example.britishIpa, true)}</span>
                           {' '}&rarr;{' '}
                           <span className="text-cyan-300 font-bold">AmE {renderIpa(example.americanIpa || example.ipa, true)}</span>
                         </>

@@ -329,7 +329,7 @@ const StartJourney: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="start-journey max-w-4xl mx-auto space-y-6 sm:space-y-8">
       <header className="space-y-2">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
           INITIATE <span className="text-cyan-300">PROTOCOL</span>

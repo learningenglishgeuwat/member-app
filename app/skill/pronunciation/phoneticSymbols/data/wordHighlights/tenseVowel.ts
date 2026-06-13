@@ -17,7 +17,7 @@ export const tenseVowelManualWordHighlightOverrides: Record<string, Record<strin
   },
   'i': {
     eat: ['ea'],
-    easy: ['ea'],
+    easy: ['ea', 'y'],
     each: ['ea'],
     eagle: ['ea'],
     even: ['0'],

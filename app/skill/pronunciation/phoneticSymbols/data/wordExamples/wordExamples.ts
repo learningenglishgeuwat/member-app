@@ -41,9 +41,24 @@ export const allWordExamples: SymbolWordExamples = {
 };
 
 // Helper function to get word examples for a symbol
+// Helper function to normalize symbol key (matching symbolDescriptions normalization)
+function normalizeSymbolForExamples(symbol: string): string {
+  const s = symbol.trim();
+  if (s === 'dʒ') return 'ʤ';
+  if (s === 'tʃ') return 'ʧ';
+  if (s === 'y') return 'j';
+  if (s === 'eə' || s === 'ɛr') return 'er';
+  if (s === 'ɪə' || s === 'iə') return 'ɪr';
+  if (s === 'ʊə') return 'ʊr';
+  return s;
+}
+
 export function getWordExamples(symbol: string): WordExample[] {
+  // Normalize symbol first (convert multi-char to single char variants)
+  const normalizedSymbol = normalizeSymbolForExamples(symbol);
+  
   // First try direct lookup
-  const directExamples = allWordExamples[symbol];
+  const directExamples = allWordExamples[normalizedSymbol];
   if (directExamples) {
     return directExamples;
   }
@@ -70,8 +85,8 @@ export function getWordExamples(symbol: string): WordExample[] {
     'ð': 'Consonant‑Voiced‑ð',
     'z': 'Consonant‑Voiced‑z',
     'ʒ': 'Consonant‑Voiced‑ʒ',
-    'ʤ': 'Consonant‑Voiced‑ʤ',
-    'dʒ': 'Consonant‑Voiced‑ʤ',
+    'ʤ': 'Consonant‑Voiced‑dʒ',
+    'dʒ': 'Consonant‑Voiced‑dʒ',
     'l': 'Consonant‑Voiced‑l',
     'm': 'Consonant‑Voiced‑m',
     'n': 'Consonant‑Voiced‑n',
@@ -88,15 +103,17 @@ export function getWordExamples(symbol: string): WordExample[] {
     'iə': 'ɪr',
     'ʊə': 'ʊr',
     
-    // Vowel Tense
+    // Vowel Tense (formatted keys)
     'i': 'Vowel‑Tense‑i',
     'u': 'Vowel‑Tense‑u',
     'æ': 'Vowel‑Tense‑æ',
     'ɔ': 'Vowel‑Tense‑ɔ',
     'ɑ': 'Vowel‑Tense‑ɑ'
+    
+    // Vowel Lax use single-char keys directly (ə, ɪ, ʊ, ʌ, ɛ, ɚ)
   };
   
-  const mappedKey = symbolMappings[symbol];
+  const mappedKey = symbolMappings[normalizedSymbol];
   if (mappedKey && allWordExamples[mappedKey]) {
     return allWordExamples[mappedKey];
   }

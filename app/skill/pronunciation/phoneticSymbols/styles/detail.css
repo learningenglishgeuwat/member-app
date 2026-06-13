@@ -168,9 +168,9 @@
 
 .symbol-detail-container .word-card:hover {
   background: rgba(147, 51, 234, 0.2);
-  border-color: #06b6d4;
+  border-color: #9333ea;
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
 
 .symbol-detail-container .word-card.active {
@@ -385,12 +385,12 @@
 
 .symbol-detail-container .word-card,
 .symbol-detail-container .symbol-detail-chevron-toggle {
-  border-color: rgba(6, 182, 212, 0.38) !important;
+  border-color: rgba(168, 85, 247, 0.38) !important;
   border-radius: 14px !important;
   background: rgba(0, 0, 0, 0.96) !important;
   box-shadow:
     0 16px 32px rgba(0, 0, 0, 0.34),
-    0 0 0 1px rgba(6, 182, 212, 0.1),
+    0 0 0 1px rgba(168, 85, 247, 0.1),
     0 0 34px rgba(190, 41, 236, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(12px);
@@ -399,11 +399,11 @@
 .symbol-detail-container .word-card:hover,
 .symbol-detail-container .word-card.active,
 .symbol-detail-container .symbol-detail-chevron-toggle:hover {
-  border-color: rgba(6, 182, 212, 0.68) !important;
+  border-color: rgba(168, 85, 247, 0.68) !important;
   box-shadow:
     0 18px 34px rgba(0, 0, 0, 0.38),
-    0 0 0 1px rgba(6, 182, 212, 0.18),
-    0 0 40px rgba(6, 182, 212, 0.24),
+    0 0 0 1px rgba(168, 85, 247, 0.18),
+    0 0 40px rgba(168, 85, 247, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 

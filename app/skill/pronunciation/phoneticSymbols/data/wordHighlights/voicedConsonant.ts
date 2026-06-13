@@ -225,7 +225,10 @@ export const voicedConsonantManualWordHighlightOverrides: Record<string, Record<
     near: ['n'],
     next: ['n'],
     never: ['n'],
-    nothing: ['n'],
+    // nothing -> n-o-t-h-i-n-g. Huruf 'n' di awal (indeks 0) murni berbunyi /n/.
+    // Tetapi 'n' di belakang (indeks 5) melebur dengan 'g' menjadi bunyi /ŋ/ (ng).
+    // Wajib dikunci ke indeks ['0'] agar 'n' kedua tidak ikut menyala orange.
+    nothing: ['0'],
     money: ['n'],
   },
   'ŋ': {
@@ -245,11 +248,29 @@ export const voicedConsonantManualWordHighlightOverrides: Record<string, Record<
     ready: ['r'],
   },
   'w': {
-    work: ['w'],
-    word: ['w'],
-    world: ['w'],
-    hardware: ['w'],
-    software: ['w'],
+    // work -> w-o-r-k. Huruf 'w' (indeks 0) adalah sumber bunyi /w/.
+    // Kita kunci indeksnya agar huruf 'o' (indeks 1) tidak ikut menyala orange.
+    work: ['0'],
+
+    // word -> w-o-r-d. Kasus sama dengan 'work'.
+    // Kita kunci hanya pada huruf 'w' di indeks 0.
+    word: ['0'],
+
+    // world -> w-o-r-l-d. Kasus sama dengan 'work'.
+    // Kita kunci hanya pada huruf 'w' di indeks 0.
+    world: ['0'],
+
+    // forward -> f-o-r-w-a-r-d. Bunyi /w/ dihasilkan oleh huruf 'w' di indeks 3.
+    // Kita kunci agar huruf 'o' di indeks 1 tidak ikut tersorot.
+    forward: ['3'],
+
+    // software -> s-o-f-t-w-a-r-e. Bunyi /w/ dihasilkan oleh huruf 'w' di indeks 4.
+    // Kita kunci agar huruf 'o' di indeks 1 tidak ikut tersorot.
+    software: ['4'],
+
+    // someone -> s-o-m-e-o-n-e. Huruf 'o' pertama (indeks 1) berbunyi /ʌ/.
+    // Yang murni menghasilkan gabungan bunyi /w/ hanya 'o' kedua di indeks 4.
+    someone: ['4'],
   },
 
   'j': {

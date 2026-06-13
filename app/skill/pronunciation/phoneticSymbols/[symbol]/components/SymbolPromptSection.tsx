@@ -19,13 +19,13 @@ export const SymbolPromptSection: React.FC<SymbolPromptSectionProps> = ({
   return (
     <div className="w-full max-w-4xl mx-auto mt-6">
       <div
-        className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-pink/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(255,0,255,0.14)]"
-        style={{ '--panel-glow-rgb': '236, 72, 153' } as React.CSSProperties}
+        className="symbol-detail-collapsible-panel bg-black/85 border border-white/60 hover:border-purple-500 transition-colors rounded-lg overflow-hidden shadow-[0_0_24px_rgba(168,85,247,0.15)] hover:shadow-[0_0_24px_rgba(168,85,247,0.25)]"
+        style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
       >
-        <div className="bg-cyber-pink/10 px-4 py-2 border-b border-cyber-pink/30 flex items-center justify-between gap-3">
+        <div className="bg-white/5 px-4 py-2 border-b border-white/40 hover:border-purple-500 transition-colors flex items-center justify-between gap-3 group">
           <div className="flex items-center gap-2">
-            <HelpCircle className="text-cyber-pink" size={16} />
-            <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-pink tracking-wider">PROMPT</span>
+            <HelpCircle className="text-white" size={16} />
+            <span className="ml-2 font-display text-[10px] md:text-xs text-white tracking-wider">PROMPT</span>
           </div>
           <div className="flex items-center gap-2">
             <button

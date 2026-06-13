@@ -132,7 +132,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-ocean -> ocean, oceanic, oceanography',
       '-sure -> pressure, fissure, tonsure',
       '-tial -> essential, partial, potential',
-      '-delicious -> delicious, precious, conscious',
+      '-cious -> delicious, precious, conscious', // KOREKSI: diubah dari -delicious menjadi -cious
       '-tious -> ambitious, cautious, infectious',
       '-tian -> Martian, Venetian, Dalmatian',
     ],

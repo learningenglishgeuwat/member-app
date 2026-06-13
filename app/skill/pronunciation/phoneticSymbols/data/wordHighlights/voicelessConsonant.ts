@@ -86,29 +86,33 @@ export const voicelessConsonantManualWordHighlightOverrides: Record<string, Reco
     system: ['0', '2'], // Menyorot kedua huruf 's' di indeks 0 dan 2
   },
   'ʃ': {
-    // =========================================================================
-    // KASUS DOUBLE MATCHING (Mencegah pola 's' tunggal salah sasaran)
-    // Kata-kata ini diawali huruf 's' (bunyinya /s/), sedangkan bunyi /ʃ/ ada di tengah.
-    // Kita paksa mengunci pola ti/ci agar huruf 's' di depan tidak ikut menyala.
-    // =========================================================================
-    station: ['ti'],
-    special: ['ci'],
+    // station -> s-t-a-t-i-o-n (indeks 0 adalah 's' biasa /s/).
+    // Yang berbunyi /ʃ/ hanya 'ti' di indeks 3 dan 4.
+    station: ['3', '4'],
+
+    // tissue -> t-i-s-s-u-e. Karena ada aturan global 'ti', 
+    // sistem akan salah mengira 'ti' di depan adalah /ʃ/. Yang benar adalah 'ss' di indeks 2 dan 3.
+    tissue: ['2', '3'],
+
+    // special -> s-p-e-c-i-a-l (indeks 0 adalah 's' biasa /s/).
+    // Yang berbunyi /ʃ/ hanya 'ci' di indeks 3 dan 4.
+    special: ['3', '4'],
   },
   'ʧ': {
-    // =========================================================================
-    // 1. KASUS SUBSTRING CONFLICT (Mencegah pola 'ch' tunggal merebut posisi 'tch')
-    // =========================================================================
-    kitchen: ['tch'],
-    catch: ['tch'],
-    match: ['tch'],
-    watch: ['tch'],
+    // check -> c-h-e-c-k. 'ch' di depan (indeks 0,1) adalah /tʃ/. 
+    // Kita kunci indeksnya agar 'c' pada 'ck' di belakang (indeks 3) tidak ikut menyala.
+    check: ['0', '1'],
 
-    // =========================================================================
-    // 2. KASUS SUBSTRING CONFLICT (Mencegah pola 'tu' merebut posisi '-ture')
-    // =========================================================================
-    nature: ['tu'],
-    picture: ['tu'],
-    future: ['2', '3'],
+    // choice -> c-h-o-i-c-e. 'ch' di depan (indeks 0,1) adalah /tʃ/. 
+    // Kita kunci agar 'c' di akhir kata (indeks 4) yang berbunyi /s/ tidak ikut menyala.
+    choice: ['0', '1'],
+
+    // picture -> p-i-c-t-u-r-e. Yang berbunyi /tʃ/ adalah 'tu' (indeks 3,4).
+    // Kita kunci agar huruf 'c' di indeks 2 (berbunyi /k/) tidak ikut menyala.
+    picture: ['3', '4'],
+
+    // culture -> c-u-l-t-u-r-e. Yang berbunyi /tʃ/ adalah 'tu' (indeks 4,5).
+    // Kita kunci agar huruf 'c' di awal kata (indeks 0) yang berbunyi /k/ tidak ikut menyala.
     culture: ['ture'],
 
     // =========================================================================

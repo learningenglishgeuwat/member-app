@@ -43,31 +43,31 @@ const CATEGORY_THEME: Record<
   }
 > = {
   vowel: {
-    sectionWrap: 'border-yellow-400/35 bg-yellow-500/5',
-    sectionTitle: 'text-yellow-300',
-    itemWrap: 'bg-yellow-500/10 border-yellow-400/25',
-    ipa: 'text-yellow-300',
-    letter: 'text-yellow-100',
-    description: 'text-yellow-50/90',
-    example: 'text-yellow-100/85',
+    sectionWrap: 'border-purple-500/40 bg-black/80',
+    sectionTitle: 'text-purple-300',
+    itemWrap: 'border-purple-500/30 bg-black/80',
+    ipa: 'text-purple-300',
+    letter: 'text-white',
+    description: 'text-gray-200',
+    example: 'text-gray-200/80',
   },
   diphthong: {
-    sectionWrap: 'border-green-400/35 bg-green-500/5',
-    sectionTitle: 'text-green-300',
-    itemWrap: 'bg-green-500/10 border-green-400/25',
-    ipa: 'text-green-300',
-    letter: 'text-green-100',
-    description: 'text-green-50/90',
-    example: 'text-green-100/85',
+    sectionWrap: 'border-purple-500/40 bg-black/80',
+    sectionTitle: 'text-purple-300',
+    itemWrap: 'border-purple-500/30 bg-black/80',
+    ipa: 'text-purple-300',
+    letter: 'text-white',
+    description: 'text-gray-200',
+    example: 'text-gray-200/80',
   },
   consonant: {
-    sectionWrap: 'border-blue-400/35 bg-blue-500/5',
-    sectionTitle: 'text-blue-300',
-    itemWrap: 'bg-blue-500/10 border-blue-400/25',
-    ipa: 'text-blue-300',
-    letter: 'text-blue-100',
-    description: 'text-blue-50/90',
-    example: 'text-blue-100/85',
+    sectionWrap: 'border-purple-500/40 bg-black/80',
+    sectionTitle: 'text-purple-300',
+    itemWrap: 'border-purple-500/30 bg-black/80',
+    ipa: 'text-purple-300',
+    letter: 'text-white',
+    description: 'text-gray-200',
+    example: 'text-gray-200/80',
   },
 }
 
@@ -136,7 +136,7 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
     })
     
     return matched.length > 0 ? matched : []
-  }, [letters, symbolIPA])
+  }, [letters, symbolIPA, aliasMap])
 
   const groupedLetters = useMemo(() => {
     if (!filteredLetters?.length) return []
@@ -171,21 +171,21 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
   return (
     <div className="w-full max-w-4xl mx-auto mt-6">
       <div
-        className="symbol-detail-collapsible-panel bg-black/85 border border-cyber-cyan/40 rounded-lg overflow-hidden shadow-[0_0_24px_rgba(6,182,212,0.15)]"
-        style={{ '--panel-glow-rgb': '6, 182, 212' } as React.CSSProperties}
+        className="symbol-detail-collapsible-panel bg-black/90 border border-white/60 hover:border-purple-500 transition-colors rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:shadow-[0_0_30px_rgba(168,85,247,0.35)]"
+        style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
       >
         <button
           type="button"
           onClick={onToggle}
           data-tour="symbol-common-letters-section-toggle"
-          className="w-full bg-cyber-cyan/10 px-4 py-2 border-b border-cyber-cyan/30 flex items-center justify-between gap-2 text-left hover:bg-cyber-cyan/15 transition-colors"
+          className="w-full bg-white/5 px-4 py-2 border-b border-white/40 hover:border-purple-500 flex items-center justify-between gap-2 text-left hover:bg-white/10 transition-colors"
           aria-expanded={isOpen}
         >
           <div className="flex items-center gap-2">
-            <BookOpen className="text-cyber-cyan" size={16} />
-            <span className="ml-2 font-display text-[10px] md:text-xs text-cyber-cyan tracking-wider">COMMON_LETTERS</span>
+            <BookOpen className="text-white" size={16} />
+            <span className="ml-2 font-display text-[10px] md:text-xs text-white tracking-wider">COMMON_LETTERS</span>
           </div>
-          <span className="symbol-detail-chevron-toggle text-cyber-cyan">
+          <span className="symbol-detail-chevron-toggle text-white">
             <ChevronDown
               size={14}
               className={`symbol-detail-chevron-icon ${isOpen ? 'is-open' : ''}`}
@@ -232,7 +232,7 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
                           </h4>
                           <ChevronDown
                             size={16}
-                            className={`text-cyber-cyan transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                            className={`text-white/70 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                           />
                         </button>
 
