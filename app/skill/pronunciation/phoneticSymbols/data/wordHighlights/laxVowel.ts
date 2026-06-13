@@ -1,8 +1,25 @@
 export const laxVowelManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
+  'ʌ': {
+    // =========================================================================
+    // 1. KOREKSI SALAH HIGHLIGHT (Bukan pola 'o_e', harusnya hanya huruf 'o')
+    // =========================================================================
+    oven: ['o'],
+    money: ['o'],
+    honey: ['o'],
+    cover: ['o'],
+
+    // =========================================================================
+    // 2. FIX BUG 'o_e': Menyorot 'o' dan 'e' saja (melewati konsonan tengah)
+    // =========================================================================
+    love: ['o', 'e'],
+    come: ['o', 'e'],
+  },
   'ɪ': {
     infant: ['i'],
     insect: ['i'],
+    image: ['i', 'a'],
     impact: ['i'],
+    quick: ['i'],
     minute: ['i', 'u'],
     system: ['y'],
   },
@@ -26,9 +43,12 @@ export const laxVowelManualWordHighlightOverrides: Record<string, Record<string,
     amaze: ['0'],
     alert: ['a'],
     around: ['a'],
+    animal: ['i', '4'],
     away: ['a'],
     attack: ['a'],
+    banana: ['1', '5'],
     family: ['i'],
+    condition: ['1', 'ion'],
     problem: ['e'],
     today: ['o'],
     support: ['u'],
@@ -77,20 +97,5 @@ export const laxVowelManualWordHighlightOverrides: Record<string, Record<string,
     water: ['er'],
     later: ['er'],
   },
-  'æ': {
-    animal: ['0'],
-  },
-  'ɔ': {
-    always: ['0'],
-    also: ['a'],
-    awesome: ['aw'],
-    audio: ['au'],
-    author: ['au'],
-  },
-  'ɑ': {
-    honest: ['o'],
-    honor: ['1'],
-    olive: ['o'],
-    bizarre: ['arre'],
-  },
+
 };

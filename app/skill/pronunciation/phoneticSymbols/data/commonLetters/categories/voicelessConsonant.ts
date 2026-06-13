@@ -13,7 +13,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       'pr- -> price, present, prize',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Letupan bibir tanpa getaran suara.',
+    pronunciationTip: 'Letupan bibir (bilabial stop) tanpa getaran pita suara.',
     traps: ['psychology', 'pneumonia', 'receipt', 'coup', 'raspberry'],
   },
   {
@@ -34,7 +34,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-te -> late, bite, note',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Ujung lidah ke alveolar ridge, tanpa getaran.',
+    pronunciationTip: 'Ujung lidah menempel pada alveolar ridge tanpa getaran.',
     traps: ['listen', 'castle', 'whistle', 'often', 'ballet'],
   },
   {
@@ -56,7 +56,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-ke -> make, bike, spoke',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Letupan belakang lidah (velar), tanpa getaran.',
+    pronunciationTip: 'Letupan belakang lidah pada langit-langit lunak (velar stop), tanpa getaran.',
     traps: ['know', 'knife', 'knee', 'choir', 'chef'],
   },
   {
@@ -74,11 +74,11 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-ph -> graph, paragraph, triumph',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Gesekan gigi atas + bibir bawah, unvoiced.',
+    pronunciationTip: 'Gesekan gigi depan atas dengan bibir bawah bagian dalam (labiodental fricative), unvoiced.',
     traps: ['of', 'Stephen'],
   },
   {
-    letter: 'th, -ths, thr-, -th-',
+    letter: 'th, -th, -ths, thr-, -th-',
     ipaSymbol: '/\u03b8/',
     description: 'Pola utama untuk voiceless th (/θ/):',
     examples: [
@@ -89,7 +89,7 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       'thr- -> three, throw, throat',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Ujung lidah di antara gigi, udara keluar lembut tanpa suara.',
+    pronunciationTip: 'Ujung lidah diletakkan di antara gigi depan (dental fricative), hembuskan udara keluar dengan lembut tanpa suara.',
     traps: ['this', 'that', 'they', 'mother', 'breathe'],
   },
   {
@@ -111,13 +111,13 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-cy -> fancy, mercy, privacy',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Desis tajam tanpa getaran.',
+    pronunciationTip: 'Suara desis tajam (alveolar sibilant) tanpa melibatkan getaran pita suara.',
     traps: ['is', 'has', 'was', 'easy', 'sugar', 'island'],
   },
   {
     letter: 'sh, ti, ci, si, ch, s, sc, ss, xi, sch, -ocean, -sure, -tial, -cious, -tious, -tian',
     ipaSymbol: '/\u0283/',
-    description: 'Pola umum bunyi /ʃ/ (termasuk kata serapan Perancis):',
+    description: 'Pola umum bunyi /ʃ/ (termasuk kata serapan Prancis):',
     examples: [
       'sh -> she, shop, fish',
       'ti -> nation, action, patient',
@@ -132,12 +132,12 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       '-ocean -> ocean, oceanic, oceanography',
       '-sure -> pressure, fissure, tonsure',
       '-tial -> essential, partial, potential',
-      '-cious -> delicious, precious, conscious',
+      '-delicious -> delicious, precious, conscious',
       '-tious -> ambitious, cautious, infectious',
       '-tian -> Martian, Venetian, Dalmatian',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Desis lebih tebal dari /s/, bibir sedikit membulat.',
+    pronunciationTip: 'Desis lebih tebal dan dalam daripada /s/. Lidah ditarik sedikit lebih ke belakang (postalveolar) dengan bibir agak membulat.',
     traps: ['chair', 'choose', 'character', 'vision', 'measure'],
   },
   {
@@ -146,17 +146,17 @@ export const voicelessConsonantLetters: CommonLetter[] = [
     description: 'Pola umum bunyi /h/:',
     examples: [
       'h -> house, help, history',
-      'h- -> behind, perhaps, anyhow, rehearse, reheat, behave, unhurt, unhappy, unhealthy', // Sudah diperbaiki: Semua variasi h- digabung agar tidak duplikat key
+      'h- -> behind, perhaps, anyhow, rehearse, reheat, behave, unhurt, unhappy, unhealthy',
       'wh -> who, whole, whom',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Hembusan napas halus dari glottis, tanpa getaran.',
-    traps: ['hour', 'honest', 'honor', 'ghost', 'shepherd', 'forehead'],
+    pronunciationTip: 'Hembusan napas murni langsung dari celah pita suara (glottal fricative) tanpa hambatan lidah atau bibir.',
+    traps: ['hour', 'honest', 'honor', 'ghost', 'shepherd', 'vehicle', 'exhaust'],
   },
   {
     letter: 'ch, tch, tu, stion, -ture, c, cz, sti, -teous, -tual',
     ipaSymbol: '/\u02a7/',
-    description: 'Pola umum bunyi /ʧ/:',
+    description: 'Pola umum bunyi /tʃ/:',
     examples: [
       'ch -> chair, chicken, teach',
       'tch -> watch, catch, kitchen',
@@ -166,11 +166,11 @@ export const voicelessConsonantLetters: CommonLetter[] = [
       'c -> cello, concerto, ciao',
       'cz -> Czech, Czechia, Czechoslovakian',
       'sti -> Christian, celestial, bestial',
-      '-teous -> righteous, bounteous, beauteous',
+      '-teous -> righteous',
       '-tual -> actual, mutual, virtual',
     ],
     category: 'consonant_voiceless',
-    pronunciationTip: 'Gabungan letup + frikatif, unvoiced affricate.',
+    pronunciationTip: 'Bunyi gabungan (affricate): dimulai dengan menempelkan lidah seperti bunyi /t/, lalu dilepaskan langsung ke posisi desis /ʃ/.',
     traps: ['character', 'chemistry', 'chef', 'machine', 'czar'],
   },
 ];

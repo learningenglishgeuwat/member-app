@@ -68,7 +68,7 @@ export const laxVowelLetters: CommonLetter[] = [
       'eo -> leopard, jeopardy, Leonard',
       'u -> bury, burial, buried',
       'ae -> aesthetic, haemorrhage, aestivate',
-      'ei -> heifer, leisure, nonpareil',
+      'ei -> heifer, nonpareil', // 'leisure' resmi dihapus dari sini sesuai standar AmE
     ],
     category: 'vowel_lax',
     pronunciationTip: 'Rahang sedikit terbuka, vokal pendek. AmE biasa pakai /ɛ/, BrE pakai /e/.',
@@ -85,7 +85,7 @@ export const laxVowelLetters: CommonLetter[] = [
       'u -> support, supply, suggest',
       '-ion -> nation, action, station',
       '-ian -> musician, magician, politician',
-      '-or -> doctor, actor, tailor',
+      '-or -> doctor, actor, tailor', // Tetap dipertahankan di sini
       '-ous -> famous, nervous, generous',
       '-al -> final, local, normal',
       'ai -> captain, mountain, fountain',
@@ -112,23 +112,22 @@ export const laxVowelLetters: CommonLetter[] = [
       '-ot -> carrot, parrot, idiot',
       '-ace -> surface, palace, necklace',
       '-el -> travel, angel, novel',
-      '-ar -> grammar, scholar, calendar',
-      '-ary -> primary, library, military',
+      '-ar -> grammar, scholar, calendar', // Tetap dipertahankan di sini
+      '-ary -> primary, library, military', // Tetap dipertahankan di sini
     ],
     category: 'vowel_lax',
     pronunciationTip: 'Santai, ringan, tidak ditekan. Fokus ritme kalimat, bukan artikulasi kuat.',
     traps: ['Jangan beri tekanan kuat.', 'Schwa sering hilang/mereduksi dalam speech cepat.'],
   },
   {
-    letter: '-er, -or, -ar, -ure, -our, -ir, -ur, -ear',
+    letter: '-er, -or, -ar, -ure, -ir, -ur, -ear', // '-our' dihapus dari string karena sudah di-Amerikanisasi ke '-or'
     ipaSymbol: '/\u025a/ or /\u025d/',
     description: 'R-colored vowel versi AmE (stressed dan unstressed) / /ɜː/ (BrE non-rhotic):',
     examples: [
       '-er -> teacher, better, under, father, her, term, serve',
-      '-or -> doctor, actor, visitor, word, work, world, worm',
+      '-or -> doctor, actor, visitor, word, work, world, worm, color, flavor, humor', // Ditambahkan versi ejaan Amerika murni di bawah pola -or
       '-ar -> sugar, collar, dollar',
       '-ure -> nature, picture, culture',
-      '-our -> colour, flavour, humour',
       '-ir -> bird, first, shirt, girl',
       '-ur -> turn, nurse, burger, hurt',
       '-ear -> learn, early, earth',

@@ -23,9 +23,11 @@ interface CommonLettersSectionProps {
   isOpen: boolean
   onToggle: () => void
   letters: CommonLetter[] | null
+  symbolIPA?: string
   isLoading: boolean
   error: string | null
   onRetry: () => void
+  aliasMap?: Record<string, string[]>
 }
 
 const CATEGORY_THEME: Record<
@@ -95,16 +97,51 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
   isOpen,
   onToggle,
   letters,
+  symbolIPA,
   isLoading,
   error,
   onRetry,
+  aliasMap,
 }) => {
   const [expandedSubSections, setExpandedSubSections] = useState<Record<string, boolean>>({})
 
-  const groupedLetters = useMemo(() => {
-    if (!letters?.length) return []
+  // Filter letters based on symbol IPA (considering aliases)
+  const filteredLetters = useMemo(() => {
+    if (!letters || !symbolIPA) {
+      console.log('[CommonLettersSection] No filtering: letters=', letters, 'symbolIPA=', symbolIPA)
+      return []
+    }
+    const allowed = new Set<string>([symbolIPA])
+    if (typeof aliasMap !== 'undefined' && aliasMap?.[symbolIPA]) {
+      aliasMap[symbolIPA].forEach((a) => allowed.add(a))
+    }
 
-    const normalizedLetters: NormalizedCommonLetter[] = letters.map((letter) => ({
+    // Remove slashes from ipaSymbol in data and compare
+    const matched = letters.filter((letter) => {
+      const cleanedIpaSymbol = letter.ipaSymbol.replace(/\//g, '').trim()
+
+      if (cleanedIpaSymbol.includes(' or ')) {
+        const symbols = cleanedIpaSymbol.split(' or ').map((s) => s.trim())
+        return symbols.some((s) => allowed.has(s))
+      }
+
+      return allowed.has(cleanedIpaSymbol)
+    })
+    
+    console.log('[CommonLettersSection] Filtering:', {
+      symbolIPA,
+      totalLetters: letters.length,
+      matchedCount: matched.length,
+      sampleData: letters.slice(0, 3).map(l => ({ ipaSymbol: l.ipaSymbol, letter: l.letter })),
+    })
+    
+    return matched.length > 0 ? matched : []
+  }, [letters, symbolIPA])
+
+  const groupedLetters = useMemo(() => {
+    if (!filteredLetters?.length) return []
+
+    const normalizedLetters: NormalizedCommonLetter[] = filteredLetters.map((letter) => ({
       ...letter,
       category: normalizeCommonLetterCategory(letter.category),
     }))
@@ -122,7 +159,7 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
       category.letters.push(letter)
       return acc
     }, [])
-  }, [letters])
+  }, [filteredLetters])
 
   const toggleSubSection = (category: string) => {
     setExpandedSubSections((prev) => ({
@@ -177,31 +214,32 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
 
             {!isLoading && !error && (
               <div className="space-y-4">
-                {groupedLetters.map((category) => {
-                  const theme = CATEGORY_THEME[category.family]
-                  const isExpanded = expandedSubSections[category.category] ?? false
+                {groupedLetters.length > 0 ? (
+                  groupedLetters.map((category) => {
+                    const theme = CATEGORY_THEME[category.family]
+                    const isExpanded = expandedSubSections[category.category] ?? false
 
-                  return (
-                    <div key={category.category} className={`border rounded-lg p-4 ${theme.sectionWrap}`}>
-                      <button
-                        type="button"
-                        onClick={() => toggleSubSection(category.category)}
-                        className="w-full flex items-center justify-between text-left mb-4"
-                        aria-expanded={isExpanded}
-                      >
-                        <h4 className={`text-sm md:text-base font-bold font-mono ${theme.sectionTitle}`}>
-                          {category.category}
-                        </h4>
-                        <ChevronDown
-                          size={16}
-                          className={`text-cyber-cyan transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-                        />
-                      </button>
+                    return (
+                      <div key={category.category} className={`border rounded-lg p-4 ${theme.sectionWrap}`}>
+                        <button
+                          type="button"
+                          onClick={() => toggleSubSection(category.category)}
+                          className="w-full flex items-center justify-between text-left mb-4"
+                          aria-expanded={isExpanded}
+                        >
+                          <h4 className={`text-sm md:text-base font-bold font-mono ${theme.sectionTitle}`}>
+                            {category.category}
+                          </h4>
+                          <ChevronDown
+                            size={16}
+                            className={`text-cyber-cyan transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                          />
+                        </button>
 
-                      {isExpanded && (
-                        <div className="space-y-3">
-                          {category.letters.map((letter, idx) => (
-                            <div key={idx} className={`border rounded p-3 ${theme.itemWrap}`}>
+                        {isExpanded && (
+                          <div className="space-y-3">
+                            {category.letters.map((letter, idx) => (
+                              <div key={idx} className={`border rounded p-3 ${theme.itemWrap}`}>
                               <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-3">
                                   <span className={`text-lg md:text-xl font-bold ${theme.letter}`}>
@@ -233,7 +271,14 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
                       )}
                     </div>
                   )
-                })}
+                })
+                ) : (
+                  <div className="text-center py-6">
+                    <p className="text-gray-400 text-sm">
+                      No common letters available for this symbol category.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>

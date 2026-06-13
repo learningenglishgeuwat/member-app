@@ -459,6 +459,8 @@ const SymbolDetailPage: React.FC = () => {
           isOpen={isCommonLettersOpen}
           onToggle={() => setIsCommonLettersOpen(prev => !prev)}
           letters={commonLetters}
+          symbolIPA={decodedSymbol}
+          aliasMap={COMMON_LETTER_SYMBOL_ALIASES}
           isLoading={commonLettersLoading}
           error={commonLettersError}
           onRetry={openCommonLettersModal}

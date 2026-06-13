@@ -3,10 +3,10 @@ import type { CommonLetter } from '../types';
 export const tenseVowelLetters: CommonLetter[] = [
   {
     letter: 'o, a, al, ar, ear, ua, oi, a (setelah w), -om, -ock, -op, -od, -ox, -ob, -ot, -osh, -ond, -omp, -ol, -og, -on, -olv',
-    ipaSymbol: '/\u0251/ AmE',
-    description: 'Pola umum untuk /ɑ/ dalam aksen American (AmE) - dengan atau tanpa /r/ setelahnya:',
+    ipaSymbol: '/\u0251/',
+    description: 'Pola umum untuk /ɑ/ dalam aksen General American (AmE) - vokal belakang terbuka tidak bulat:',
     examples: [
-      'o -> hot, not, top, box (AmE)',
+      'o -> hot, not, top, box',
       'a -> father, spa, bra',
       'al -> calm, psalm, balm',
       'ar -> car, hard, start, garden, park',
@@ -30,13 +30,13 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-olv -> solve, revolve, involve',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Buka rahang lebar, bibir tidak dibulatkan. Khas AmE. Untuk pola ar: AmE adalah rhotic (bunyi /r/ jelas), BrE non-rhotic (vokal panjang tanpa /r/).',
-    traps: ['BrE menggunakan /ɒ/ untuk kata hot, not, top (lihat entri /ɒ/).', 'AmE: car → /kɑr/ (rhotic). BrE: car → /kɑː/ (non-rhotic, vokal panjang tanpa /r/).'],
+    pronunciationTip: 'Buka rahang lebar, bibir rileks/netral (tidak bulat). Untuk pola dengan "r", bunyikan rhotik /r/ dengan jelas khas AmE.',
+    traps: ['BrE menggunakan vokal bulat pendek /ɒ/ untuk kata seperti hot, top, dog.', 'AmE: car → /kɑr/ (rhotic). BrE: car → /kɑː/ (non-rhotic).'],
   },
   {
     letter: 'a, ar, au, al, -aft, -ance, -ant, -ask, -ast, -anch, -ath, -asp, -ass, -aph, -aster',
-    ipaSymbol: '/\u0251/ BrE',
-    description: 'Pola umum untuk /ɑː/ panjang dalam aksen British (BrE) - TRAP-BATH Split:',
+    ipaSymbol: '/\u0251\u02d0/ (BrE)',
+    description: 'Pola khusus /ɑː/ panjang dalam British English (TRAP-BATH Split):',
     examples: [
       'a -> bath, dance, grass, class, fast, path, ask',
       'ar -> car, hard, start, garden, park',
@@ -55,16 +55,15 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-aster -> master, plaster, disaster',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'BrE: Vokal /ɑː/ panjang dengan rahang terbuka lebar. AmE menggunakan /æ/ untuk kata bath, dance, laugh.',
+    pronunciationTip: 'Khusus aksen British: Vokal panjang dibunyikan di belakang mulut. Di AmE, mayoritas kata ini (kecuali pola al/ar) berpindah menggunakan /æ/.',
     traps: [
-      'TRAP-BATH Split: Kata bath, dance, laugh, aunt di AmE pakai /æ/ (bath → /bæθ/), tapi di BrE pakai /ɑː/ panjang (bath → /bɑːθ/).',
-      'BrE non-rhotic: car → /kɑː/ (vokal panjang tanpa /r/). AmE rhotic: car → /kɑr/.',
+      'TRAP-BATH Split: Kata bath, dance, laugh, aunt di AmE wajib pakai /æ/ (bath → /bæθ/), sedangkan BrE pakai /ɑː/ (bath → /bɑːθ/).',
     ],
   },
   {
     letter: 'o, -ock, -od, -og, -op, a, au, -ong, -ot, -ox, -ob, -omp, -off, -oft, -ost, -ond, -osh, -oss, -ol, -onk, -oth, -on, -olv',
-    ipaSymbol: '/\u0252/ BrE',
-    description: 'Pola umum untuk /ɒ/ dalam aksen British (BrE) - vokal bulat pendek:',
+    ipaSymbol: '/\u0252/ (BrE)',
+    description: 'Pola vokal bulat pendek /ɒ/ yang hanya ada dalam British English (BrE):',
     examples: [
       'o -> hot, not, top, box, dog',
       '-ock -> clock, rock, sock',
@@ -91,13 +90,13 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-olv -> solve, revolve, involve',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Rahang terbuka, bibir BULAT. Bunyi pendek. Khas BrE.',
-    traps: ['AmE menggunakan /ɑ/ untuk kata-kata ini (tanpa bibir bulat).', 'Ini adalah perbedaan paling mendasar AmE vs BrE.'],
+    pronunciationTip: 'Rahang terbuka dengan bentuk bibir membulat tegas. Bunyi ini tidak diadopsi dalam General American.',
+    traps: ['AmE menggeser bunyi kata-kata ini ke /ɑ/ (rahang terbuka lebar, bibir netral) atau ke /ɔ/.'],
   },
   {
     letter: 'ee, ea, e, ie, ei, -y, i, oe, ey, ae, -i, i_e, e_e, -ique, -es, -ese, -is, e (suku kata terbuka), ea_e, ie_e, ee_e, -eed, -eet, -ean, -eal, -eam, -eat, -eek, -eep, -eel, -east, -each, -eak, -eech, -eap, -een, -ield, -ief, -ead, -eaf, -eeth, -eem, -ede',
     ipaSymbol: '/i/',
-    description: 'Pola ejaan produktif untuk /i/:',
+    description: 'Pola ejaan produktif untuk bunyi vokal tegang /i/:',
     examples: [
       'ee -> see, bee, tree',
       'ea -> teacher, sea, tea',
@@ -108,7 +107,7 @@ export const tenseVowelLetters: CommonLetter[] = [
       'i -> ski, pizza, elite',
       'oe -> phoenix, amoeba, subpoena',
       'ey -> key, money, honey',
-      'ae -> caesar, anaemia, paediatric',
+      'ae -> caesar, anemia, pediatric', // Disesuaikan ke ejaan AmE murni
       '-i -> safari, taxi, kiwi',
       'i_e -> machine, magazine, routine',
       'e_e -> complete, scene, athlete',
@@ -144,13 +143,13 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-ede -> recede, concede, precede',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Lidah depan tinggi, bunyi tegang dan lebih panjang.',
-    traps: ['Perhatikan pengecualian ejaan seperti friend (bukan /i/).'],
+    pronunciationTip: 'Lidah depan ditarik tinggi ke langit-langit, sudut bibir melebar seperti tersenyum. Bunyi tegang.',
+    traps: ['Hati-hati dengan kata jebakan seperti friend yang menggunakan bunyi pendek /ɛ/, bukan /i/.'],
   },
   {
     letter: 'oo, u_e, ue, ew, ou, o, ui, o_e, ou_e, u, oo_e, eu, ui_e, -ooth, -oom, -ool, -oop, -oot, -ood, -oon, -oof, -oose, -ooze, -oup, -oob, -oove, -ewd, -ude, -outh, -une, -ube',
     ipaSymbol: '/u/',
-    description: 'Pola umum untuk /u/ panjang:',
+    description: 'Pola umum untuk bunyi vokal tegang /u/:',
     examples: [
       'oo -> school, zoo, too',
       'u_e -> rule, June, flute',
@@ -185,22 +184,21 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-ube -> tube, cube, lube',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Bibir bulat rapat, tahan sedikit lebih lama daripada /ʊ/.',
+    pronunciationTip: 'Bibir dibulatkan penuh dan menonjol ke depan, lidah belakang tinggi.',
     traps: [
-      'Jangan pendekkan ke /ʊ/ pada kata yang memang /u/.',
-      'Yod-dropping: BrE mempertahankan /j/ (new -> /njuː/, tune -> /tjuːn/), AmE sering membuangnya (new -> /nuː/, tune -> /tuːn/).',
+      'Yod-dropping: Dalam AmE, bunyi /j/ sering hilang setelah konsonan alveolar (new → /nuː/, tune → /tuːn/). Berbeda dengan BrE yang mempertahankan bunyi /j/ (new → /njuː/).',
     ],
   },
   {
     letter: 'a, -adge, -ank, ai, au, -ash, -amp, -ang, -atch, -ack, -aft, -and, -ant, -act, -ax, -ag, -ap, -as, -at, -ad, -am, -ab, -an, -ath, -ance, -al, -anch, -ast, -ask, -asp, -aff, -apt, -asm, -aph, -apse',
     ipaSymbol: '/\u00e6/',
-    description: 'Pola utama untuk /æ/ (AmE):',
+    description: 'Pola utama untuk bunyi /æ/ (sangat dominan di AmE):',
     examples: [
       'a -> man, black, map',
       '-adge -> badge, cadge, badger',
       '-ank -> bank, thank, tank',
-      'ai -> plaid, plaids, plaidshirt',
-      'au -> laugh, aunt, draught',
+      'ai -> plaid, plaids',
+      'au -> laugh, aunt', // Menghapus draught karena ejaan AmE adalah draft
       '-ash -> smash, flash, crash',
       '-amp -> stamp, champ, cramp',
       '-ang -> slang, clang, sprang',
@@ -233,17 +231,15 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-apse -> lapse, collapse, relapse',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Rahang turun jelas, bunyi depan. Jangan dipersempit jadi /e/.',
+    pronunciationTip: 'Turunkan rahang bawah dengan lebar, tarik sudut bibir ke samping. Posisi lidah di depan bawah.',
     traps: [
-      'Sebelum /r/ sering berubah kualitas vokalnya (mis. carry).',
-      'TRAP-BATH Split: Kata laugh, aunt, bath, dance di AmE pakai /æ/, tapi di BrE pakai /ɑː/ panjang (laugh → AmE /læf/, BrE /lɑːf/).',
-      'Dialect trap -aft: AmE pakai /æ/ (craft → /kræft/), BrE pakai /ɑː/ panjang (craft → /krɑːft/).',
+      'TRAP-BATH Split: Kata laugh, aunt, bath, dance di AmE mutlak memakai /æ/, jangan terpaku pada pelafalan BrE yang menggunakan /ɑː/.',
     ],
   },
   {
-    letter: 'aw, au, oa, or, oor, oar, our, ore, ar, a, -aught, awn, quar, o, -all, -alt, -off, -oft, -ost, -oth, -ong, -awk, -aun, -aud, -oss, -ault, -awl, -ord, -orn, -orm, -ork, -ort, -orse, -orch, -ause, -orce, -alk, -ought, -oard, -ald', // Sudah diperbaiki dari -of menjadi -oft
+    letter: 'aw, au, oa, or, oor, oar, our, ore, ar, a, -aught, awn, quar, o, -all, -alt, -off, -oft, -ost, -oth, -ong, -awk, -aun, -aud, -oss, -ault, -awl, -ord, -orn, -orm, -ork, -ort, -orse, -orch, -ause, -orce, -alk, -ought, -oard, -ald',
     ipaSymbol: '/\u0254/',
-    description: 'Pola umum untuk /ɔ/ - dengan atau tanpa /r/ setelahnya:',
+    description: 'Pola umum untuk bunyi /ɔ/ (Open O):',
     examples: [
       'aw -> saw, law, draw',
       'au -> author, autumn, audio',
@@ -287,12 +283,9 @@ export const tenseVowelLetters: CommonLetter[] = [
       '-ald -> bald, scald, piebald',
     ],
     category: 'vowel_tense',
-    pronunciationTip: 'Bibir sedikit bulat, posisi lidah belakang-menengah. Untuk pola or: AmE adalah rhotic (bunyi /r/ jelas), BrE non-rhotic (vokal panjang tanpa /r/).',
+    pronunciationTip: 'Bibir sedikit bulat lonjong, posisi lidah ditarik ke belakang-menengah. AmE bersifat rhotic, pastikan ekor /r/ terdengar jelas pada pola seperti or/ore/oor.',
     traps: [
-      'COT-CAUGHT MERGER: Mayoritas penutur AmE modern (terutama Midwest & West) tidak membedakan /ɑ/ dan /ɔ/. Kata cot dan caught terdengar sama → /kɑt/.',
-      'Jika Anda belajar dari kamus lama atau guru BrE, perbedaan ini mungkin diajarkan, tapi banyak native AmE tidak membedakannya lagi.',
-      'AmE rhotic: more → /mɔr/. BrE non-rhotic: more → /mɔː/ (vokal panjang tanpa /r/).',
-      'Berbeda dari /ʊr/ (poor, pure) yang menggunakan vokal /ʊ/, bukan /ɔ/.',
+      'COT-CAUGHT MERGER: Ingat bahwa mayoritas penutur AmE modern (Midwest & West) meleburkan bunyi /ɑ/ dan /ɔ/. Kata "cot" dan "caught" sering kali terdengar sama persis di telinga mereka (/kɑt/).',
     ],
   },
 ];

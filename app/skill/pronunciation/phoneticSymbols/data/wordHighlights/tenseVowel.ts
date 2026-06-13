@@ -1,4 +1,20 @@
 export const tenseVowelManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
+    'æ': {
+    animal: ['0'],
+  },
+  'ɔ': {
+    always: ['0'],
+    also: ['a'],
+    awesome: ['aw'],
+    audio: ['au'],
+    author: ['au'],
+  },
+  'ɑ': {
+    honest: ['o'],
+    honor: ['1'],
+    olive: ['o'],
+    bizarre: ['arre'],
+  },
   'i': {
     eat: ['ea'],
     easy: ['ea'],

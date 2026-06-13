@@ -58,14 +58,14 @@ export function getWordExamples(symbol: string): WordExample[] {
     'θ': 'Consonant‑Voiceless‑θ',
     's': 'Consonant‑Voiceless‑s',
     'ʃ': 'Consonant‑Voiceless‑ʃ',
-    'ʧ': 'Consonant‑Voiceless‑ʧ',
-    'tʃ': 'Consonant‑Voiceless‑ʧ',
+    'ʧ': 'Consonant‑Voiceless‑tʃ',
+    'tʃ': 'Consonant‑Voiceless‑tʃ',
     'h': 'Consonant‑Voiceless‑h',
     
     // Consonant Voiced (some use single chars, others formatted)
     'b': 'Consonant‑Voiced‑b',
     'd': 'Consonant‑Voiced‑d',
-    'g': 'Consonant‑Voiced‑g',
+    'g': 'Consonant‑Voiced‑ɡ',
     'v': 'Consonant‑Voiced‑v',
     'ð': 'Consonant‑Voiced‑ð',
     'z': 'Consonant‑Voiced‑z',

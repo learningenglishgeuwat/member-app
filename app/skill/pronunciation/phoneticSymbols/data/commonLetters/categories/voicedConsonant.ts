@@ -64,7 +64,7 @@ export const voicedConsonantLetters: CommonLetter[] = [
     ],
     category: 'consonant_voiced',
     pronunciationTip: 'Posisi seperti /f/, tapi voiced (ada getaran).',
-    traps: ['of'],
+    traps: [], // Menghapus 'of' dari traps karena sudah menjadi contoh valid di atas
   },
   {
     letter: 'th-, -th-, -the',
@@ -206,7 +206,7 @@ export const voicedConsonantLetters: CommonLetter[] = [
       '-il -> pencil, fossil, pupil',
       'fl- -> fly, flat, floor',
       'sl- -> sleep, slow, slip',
-      '-ol -> idol, petrol, pistol',
+      '-ol -> idol, control, pistol', // Mengganti petrol (BrE) dengan control (AmE)
       'gl- -> glass, glow, gleam',
       '-ul -> beautiful, wonderful, helpful',
     ],
@@ -215,7 +215,7 @@ export const voicedConsonantLetters: CommonLetter[] = [
     traps: [],
   },
   {
-    letter: 'r, -rr-, wr-, rh-, -re, tr-, pr-, fr-, cr-, br-, dr-, gr-, str-, shr-, thr-',
+    letter: 'r, -rr-, wr-, rh-, tr-, pr-, fr-, cr-, br-, dr-, gr-, str-, shr-, thr-',
     ipaSymbol: '/r/',
     description: 'Pola umum bunyi /r/ dalam AmE:',
     examples: [
@@ -223,8 +223,7 @@ export const voicedConsonantLetters: CommonLetter[] = [
       '-rr- -> carry, correct, arrive',
       'wr- -> write, wrong, wrap',
       'rh- -> rhyme, rhythm, rhino',
-      '-re -> centre, theatre, fibre',
-      'tr- -> tree, train, true',
+      'tr- -> tree, train, true', // Menghapus baris -re -> centre, theatre, fibre karena ejaan murni BrE
       'pr- -> price, print, proud',
       'fr- -> free, friend, from',
       'cr- -> cry, create, cross',

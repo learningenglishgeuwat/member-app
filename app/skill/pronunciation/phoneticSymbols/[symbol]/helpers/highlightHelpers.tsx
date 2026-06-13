@@ -35,9 +35,14 @@ export const renderHighlightedWord = (
   highlightLetterStyle: CSSProperties,
 ) => {
   if (patterns.length === 0) return word;
-  if (isIndexBasedOverride(patterns)) return renderIndexBasedWord(word, patterns, highlightLetterStyle);
 
-  const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
+const indexPatterns = patterns.filter((pattern) => /^\d+$/.test(pattern));
+  const stringPatterns = patterns.filter((pattern) => !/^\d+$/.test(pattern));
+
+  if (stringPatterns.length === 0) return renderIndexBasedWord(word, indexPatterns, highlightLetterStyle);
+
+  const targetIndices = new Set(indexPatterns.map(Number));
+  const sortedPatterns = [...stringPatterns].sort((a, b) => b.length - a.length);
   const escapedPatterns = sortedPatterns.map((pattern) =>
     pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'),
   );
@@ -59,9 +64,27 @@ export const renderHighlightedWord = (
   const presentLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'present';
   const welcomeLaxMatch = decodedSymbol === 'ɛ' && lowerWord === 'welcome';
 
+  const renderPartWithIndexHighlights = (part: string, startIndex: number) =>
+    part.split('').map((char, offset) => {
+      const charIndex = startIndex + offset;
+      return targetIndices.has(charIndex) ? (
+        <span key={`${startIndex}-${offset}`} className="symbol-letter-highlight" style={highlightLetterStyle}>
+          {char}
+        </span>
+      ) : (
+        <React.Fragment key={`${startIndex}-${offset}`}>{char}</React.Fragment>
+      );
+    });
+
+  let globalCharIndex = 0;
+
   return (
     <>
       {parts.map((part, index) => {
+        const partStartIndex = globalCharIndex;
+        const partLength = part.length;
+        globalCharIndex += partLength;
+
         if (index % 2 === 1) {
           const shouldHighlight = (attackSecondMatch || alarmSecondMatch || peopleSchwaMatch || presentSchwaMatch)
             ? matchedCount === 1
@@ -75,6 +98,7 @@ export const renderHighlightedWord = (
                     ? matchedCount === 1
                     : true;
           matchedCount += 1;
+
           if (shouldHighlight) {
             return (
               <span key={index} className="symbol-letter-highlight" style={highlightLetterStyle}>
@@ -82,9 +106,11 @@ export const renderHighlightedWord = (
               </span>
             );
           }
+
+          return <React.Fragment key={index}>{renderPartWithIndexHighlights(part, partStartIndex)}</React.Fragment>;
         }
 
-        return <React.Fragment key={index}>{part}</React.Fragment>;
+        return <React.Fragment key={index}>{renderPartWithIndexHighlights(part, partStartIndex)}</React.Fragment>;
       })}
     </>
   );
