@@ -1,6 +1,26 @@
 export const tenseVowelManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
     'æ': {
     animal: ['0'],
+    bat: ['a'],
+    man: ['a'],
+    sat: ['a'],
+    bag: ['a'],
+    ham: ['a'],
+    bad: ['a'],
+    pan: ['a'],
+    mat: ['a'],
+    tan: ['a'],
+    had: ['a'],
+    cap: ['a'],
+    cat: ['a'],
+    map: ['a'],
+    lack: ['a'],
+    can: ['a'],
+    sack: ['a'],
+    shack: ['a'],
+    tap: ['a'],
+    hat: ['a'],
+
   },
   'ɔ': {
     always: ['0'],
@@ -14,6 +34,9 @@ export const tenseVowelManualWordHighlightOverrides: Record<string, Record<strin
     honor: ['1'],
     olive: ['o'],
     bizarre: ['arre'],
+    sock: ['o'],
+    shock: ['o'],
+    lock: ['o'],
   },
   'i': {
     eat: ['ea'],
@@ -49,6 +72,13 @@ export const tenseVowelManualWordHighlightOverrides: Record<string, Record<strin
   },
   'i\u02d0': {
     eagle: ['0', '1'],
+    feel: ['ee'],
+    sleep: ['ee'],
+    wheel: ['ee'],
+    sheep: ['ee'],
+    feet: ['ee'],
+    reach: ['ea'],
+    lead: ['ea'],
   },
   'u': {
     // =========================================================================

@@ -20,6 +20,8 @@ const GlobalHaptic = dynamic(
   },
 )
 
+const GlobalAudio = dynamic(() => import('@/app/components/GlobalAudio'), { ssr: false })
+
 const SkillThemeSync = dynamic(() => import('@/app/components/SkillThemeSync'), {
   ssr: false,
 })
@@ -95,11 +97,13 @@ export default function AppClientShell({ children }: { children: React.ReactNode
       {children}
       {enhancementsReady ? (
         <GlobalHaptic>
-          <ScrollToHashMount />
-          <GlobalScrollToItemMount />
-          <SkillThemeSync />
-          {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
-          {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
+          <GlobalAudio>
+            <ScrollToHashMount />
+            <GlobalScrollToItemMount />
+            <SkillThemeSync />
+            {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
+            {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
+          </GlobalAudio>
         </GlobalHaptic>
       ) : null}
     </AuthProvider>

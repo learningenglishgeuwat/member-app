@@ -19,11 +19,36 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'lid', b: 'lead', ipaA: 'l\u026ad', ipaB: 'lid' },
     ],
     sentences: [
-      { a: 'I will sit here.', b: 'I will seat her.' },
-      { a: 'The ship is large.', b: 'The sheep is large.' },
-      { a: "Don't slip tonight.", b: "Don't sleep tonight." },
-      { a: 'They live nearby.', b: 'They leave nearby.' },
-      { a: 'Please fill the cup.', b: 'Please feel the cup.' },
+      { 
+        a: 'I will sit here.', 
+        b: 'I will seat her.', 
+        ipaA: 'aɪ wɪl sɪt hɪr', // FIX: Rapat sempurna per kata, bebas spasi karakter
+        ipaB: 'aɪ wɪl sit hɜr'  // FIX: Rapat sempurna per kata
+      },
+      { 
+        a: 'The ship is large.', 
+        b: 'The sheep is large.', 
+        ipaA: 'ðə ʃɪp ɪz lɑrdʒ', 
+        ipaB: 'ðə ʃip ɪz lɑrdʒ' 
+      },
+      { 
+        a: "Don't slip tonight.", 
+        b: "Don't sleep tonight.", 
+        ipaA: 'doʊnt slɪp təˈnaɪt', 
+        ipaB: 'doʊnt slip təˈnaɪt' 
+      },
+      { 
+        a: 'They live nearby.', 
+        b: 'They leave nearby.', 
+        ipaA: 'ðeɪ lɪv ˌnɪrˈbaɪ', 
+        ipaB: 'ðeɪ liv ˌnɪrˈbaɪ' 
+      },
+      { 
+        a: 'Please fill the cup.', 
+        b: 'Please feel the cup.', 
+        ipaA: 'pliz fɪl ðə kʌp', // FIX: Konsisten rapi per kata
+        ipaB: 'pliz fil ðə kʌp'  // FIX: Kata "pliz" sudah dirapatkan, tidak pecah lagi
+      },
     ],
   },
   {
@@ -44,11 +69,36 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'had', b: 'head', ipaA: 'hæd', ipaB: 'hɛd' },
     ],
     sentences: [
-      { a: 'The bat flew out at dusk.', b: 'I bet he will arrive soon.' },
-      { a: 'That was a bad call.', b: 'The bed is near the window.' },
-      { a: 'That man is my uncle.', b: 'Two men are waiting outside.' },
-      { a: 'Use the pan on low heat.', b: 'Sign with the blue pen.' },
-      { a: 'The cat sat on the rug.', b: 'Please set the glass down.' },
+      { 
+        a: 'The bat flew out at dusk.', 
+        b: 'I bet he will arrive soon.', 
+        ipaA: 'ðə bæt flu aʊt ət dʌsk', 
+        ipaB: 'aɪ bɛt hi wɪl əˈraɪv sun' 
+      },
+      { 
+        a: 'That was a bad call.', 
+        b: 'The bed is near the window.', 
+        ipaA: 'ðæt wʌz ə bæd kɔl', 
+        ipaB: 'ðə bɛd ɪz nɪr ðə ˈwɪndoʊ' 
+      },
+      { 
+        a: 'That man is my uncle.', 
+        b: 'Two men are waiting outside.', 
+        ipaA: 'ðæt mæn ɪz maɪ ˈʌŋkəl', 
+        ipaB: 'tu mɛn ɑr ˈweɪtɪŋ ˌaʊtˈsaɪd' 
+      },
+      { 
+        a: 'Use the pan on low heat.', 
+        b: 'Sign with the blue pen.', 
+        ipaA: 'juz ðə pæn ɑn loʊ hit', 
+        ipaB: 'saɪn wɪð ðə blu pɛn' 
+      },
+      { 
+        a: 'The cat sat on the rug.', 
+        b: 'Please set the glass down.', 
+        ipaA: 'ðə kæt sæt ɑn ðə rʌg', 
+        ipaB: 'pliz sɛt ðə glæs daʊn' 
+      },
     ],
   },
   {
@@ -69,11 +119,36 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'hat', b: 'hot', ipaA: 'hæt', ipaB: 'hɑt' },
     ],
     sentences: [
-      { a: 'Put on your cap now.', b: 'The cop stood by the gate.' },
-      { a: 'The bat is in the cave.', b: 'The bot replied quickly.' },
-      { a: 'My cat sleeps all day.', b: 'The cot is by the wall.' },
-      { a: 'Take this map with you.', b: 'Use a mop on the floor.' },
-      { a: 'My hat is on the chair.', b: 'This soup is too hot.' },
+      { 
+        a: 'Put on your cap now.', 
+        b: 'The cop stood by the gate.', 
+        ipaA: 'pʊt ɑn jər kæp naʊ', 
+        ipaB: 'ðə kɑp stʊd baɪ ðə geɪt' 
+      },
+      { 
+        a: 'The bat is in the cave.', 
+        b: 'The bot replied quickly.', 
+        ipaA: 'ðə bæt ɪz ɪn ðə keɪv', 
+        ipaB: 'ðə bɑt rɪˈplaɪd ˈkwɪkli' 
+      },
+      { 
+        a: 'My cat sleeps all day.', 
+        b: 'The cot is by the wall.', 
+        ipaA: 'maɪ kæt slips ɔl deɪ', 
+        ipaB: 'ðə kɑt ɪz baɪ ðə wɔl' 
+      },
+      { 
+        a: 'Take this map with you.', 
+        b: 'Use a mop on the floor.', 
+        ipaA: 'teɪk ðɪs mæp wɪð ju', 
+        ipaB: 'juz ə mɑp ɑn ðə flɔr' 
+      },
+      { 
+        a: 'My hat is on the chair.', 
+        b: 'This soup is too hot.', 
+        ipaA: 'maɪ hæt ɪz ɑn ðə tʃɛr', 
+        ipaB: 'ðɪs sup ɪz tu hɑt' 
+      },
     ],
   },
   {
@@ -87,18 +162,43 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'look', b: 'Luke', ipaA: 'lʊk', ipaB: 'luk' },
       { a: 'could', b: 'cooed', ipaA: 'kʊd', ipaB: 'kud' },
       { a: 'would', b: 'wooed', ipaA: 'wʊd', ipaB: 'wud' },
-      { a: 'soot', b: 'suit', ipaA: 'sʊt', ipaB: 'sut' }, // PERBAIKAN: Konsonan akhir sama-sama /t/
+      { a: 'soot', b: 'suit', ipaA: 'sʊt', ipaB: 'sut' },
       { a: 'hood', b: "who'd", ipaA: 'hʊd', ipaB: 'hud' },
       { a: 'cook', b: 'kook', ipaA: 'kʊk', ipaB: 'kuk' },
       { a: 'should', b: 'shooed', ipaA: '\u0283ʊd', ipaB: '\u0283ud' },
       { a: 'good', b: 'gooed', ipaA: 'gʊd', ipaB: 'gud' },
     ],
     sentences: [
-      { a: 'Pull the rope slowly.', b: 'The pool opens at noon.' },
-      { a: 'The basket is full.', b: 'Do not fool your friend.' },
-      { a: 'Look at that sign.', b: 'Luke is waiting outside.' },
-      { a: 'I could help today.', b: 'The dove cooed all day.' },
-      { a: 'We would leave early.', b: 'The pair wooed for years.' },
+      { 
+        a: 'Pull the rope slowly.', 
+        b: 'The pool opens at noon.', 
+        ipaA: 'pʊl ðə roʊp ˈsloʊli', 
+        ipaB: 'ðə pul ˈoʊpənz ət nun' 
+      },
+      { 
+        a: 'The basket is full.', 
+        b: 'Do not fool your friend.', 
+        ipaA: 'ðə ˈbæskət ɪz fʊl', 
+        ipaB: 'du nɑt ful jər frɛnd' 
+      },
+      { 
+        a: 'Look at that sign.', 
+        b: 'Luke is waiting outside.', 
+        ipaA: 'lʊk ət ðæt saɪn', 
+        ipaB: 'luk ɪz ˈweɪtɪŋ ˌaʊtˈsaɪd' 
+      },
+      { 
+        a: 'I could help today.', 
+        b: 'The dove cooed all day.', 
+        ipaA: 'aɪ kʊd hɛlp təˈdeɪ', 
+        ipaB: 'ðə dʌv kud ɔl deɪ' 
+      },
+      { 
+        a: 'We would leave early.', 
+        b: 'The pair wooed for years.', 
+        ipaA: 'wi wʊd liv ˈɜrli', 
+        ipaB: 'ðə pɛr wud fər jɪrz' 
+      },
     ],
   },
   {
@@ -119,11 +219,36 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'stuck', b: 'stock', ipaA: 'stʌk', ipaB: 'stɑk' },
     ],
     sentences: [
-      { a: 'Cut the paper cleanly.', b: 'The cot is near the bed.' },
-      { a: 'Good luck on your test.', b: 'Lock the front door now.' },
-      { a: 'The duck swam away fast.', b: 'The dock is behind the shop.' },
-      { a: 'Put the cup on the desk.', b: 'The cop stood by the gate.' },
-      { a: 'I run every morning.', b: 'Ron calls every Sunday.' },
+      { 
+        a: 'Cut the paper cleanly.', 
+        b: 'The cot is near the bed.', 
+        ipaA: 'kʌt ðə ˈpeɪpər ˈklinli', 
+        ipaB: 'ðə kɑt ɪz nɪr ðə bɛd' 
+      },
+      { 
+        a: 'Good luck on your test.', 
+        b: 'Lock the front door now.', 
+        ipaA: 'gʊd lʌk ɑn jər tɛst', 
+        ipaB: 'lɑk ðə frʌnt dɔr naʊ' 
+      },
+      { 
+        a: 'The duck swam away fast.', 
+        b: 'The dock is behind the shop.', 
+        ipaA: 'ðə dʌk swæm əˈweɪ fæst', 
+        ipaB: 'ðə dɑk ɪz bɪˈhaɪnd ðə ʃɑp' 
+      },
+      { 
+        a: 'Put the cup on the desk.', 
+        b: 'The cop stood by the gate.', 
+        ipaA: 'pʊt ðə kʌp ɑn ðə dɛsk', 
+        ipaB: 'ðə kɑp stʊd baɪ ðə geɪt' 
+      },
+      { 
+        a: 'I run every morning.', 
+        b: 'Ron calls every Sunday.', 
+        ipaA: 'aɪ rʌn ˈɛvri ˈmɔrnɪŋ', 
+        ipaB: 'rɑn kɔlz ˈɛvri ˈsʌndeɪ' 
+      },
     ],
   },
   {
@@ -144,11 +269,36 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'vanilla', b: 'vest', ipaA: 'vəˈnɪlə', ipaB: 'vɛst' },
     ],
     sentences: [
-      { a: 'I ate a yellow banana.', b: 'Go to bed right now.' },
-      { a: 'Call the police quickly.', b: 'Write it down with a pen.' },
-      { a: 'I have a meeting today.', b: 'Count from one to ten.' },
-      { a: 'Fix the washing machine.', b: 'We met at the station.' },
-      { a: 'Thank you for your support.', b: 'Please set the glass down.' },
+      { 
+        a: 'I ate a yellow banana.', 
+        b: 'Go to bed right now.', 
+        ipaA: 'aɪ eɪt ə ˈjɛloʊ bəˈnænə', 
+        ipaB: 'goʊ tə bɛd raɪt naʊ' 
+      },
+      { 
+        a: 'Call the police quickly.', 
+        b: 'Write it down with a pen.', 
+        ipaA: 'kɔl ðə pəˈlis ˈkwɪkli', 
+        ipaB: 'raɪt ɪt daʊn wɪð ə pɛn' 
+      },
+      { 
+        a: 'I have a meeting today.', 
+        b: 'Count from one to ten.', 
+        ipaA: 'aɪ hæv ə ˈmitɪŋ təˈdeɪ', 
+        ipaB: 'kaʊnt frəm wʌn tə tɛn' 
+      },
+      { 
+        a: 'Fix the washing machine.', 
+        b: 'We met at the station.', 
+        ipaA: 'fɪks ðə ˈwɑʃɪŋ məˈʃin', 
+        ipaB: 'wi mɛt ət ðə ˈsteɪʃən' 
+      },
+      { 
+        a: 'Thank you for your support.', 
+        b: 'Please set the glass down.', 
+        ipaA: 'θæŋk ju fər jər səˈpɔrt', 
+        ipaB: 'pliz sɛt ðə glæs daʊn' 
+      },
     ],
   },
   {
@@ -163,17 +313,42 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'talk', b: 'tock', ipaA: 'tɔk', ipaB: 'tɑk' },
       { a: 'bought', b: 'bot', ipaA: 'bɔt', ipaB: 'bɑt' },
       { a: 'law', b: 'la', ipaA: 'lɔ', ipaB: 'lɑ' },
-      { a: 'awe', b: 'ah', ipaA: 'ɔ', ipaB: 'ɑ' }, // PERBAIKAN: Hilangkan /l/ agar murni vokal setara dengan 'ah'
+      { a: 'awe', b: 'ah', ipaA: 'ɔ', ipaB: 'ɑ' },
       { a: 'stalk', b: 'stock', ipaA: 'stɔk', ipaB: 'stɑk' },
-      { a: 'wrought', b: 'rot', ipaA: 'rɔt', ipaB: 'rɑt' }, // PERBAIKAN: Berakhiran konsonan /t/ yang seragam
+      { a: 'wrought', b: 'rot', ipaA: 'rɔt', ipaB: 'rɑt' },
       { a: 'chalk', b: 'chock', ipaA: '\u02a7\u0254k', ipaB: '\u02a7\u0251k' },
     ],
     sentences: [
-      { a: 'I caught the last bus.', b: 'The cot is near the bed.' },
-      { a: 'Dawn arrives very early.', b: 'Don left his keys here.' },
-      { a: 'Walk to the station.', b: 'The wok is on the stove.' },
-      { a: 'Talk a little louder.', b: 'I heard a loud tock.' },
-      { a: 'She bought fresh bread.', b: 'The bot sent a quick reply.' },
+      { 
+        a: 'I caught the last bus.', 
+        b: 'The cot is near the bed.', 
+        ipaA: 'aɪ kɔt ðə læst bʌs', 
+        ipaB: 'ðə kɑt ɪz nɪr ðə bɛd' 
+      },
+      { 
+        a: 'Dawn arrives very early.', 
+        b: 'Don left his keys here.', 
+        ipaA: 'dɔn əˈraɪvz ˈvɛri ˈɜrli', 
+        ipaB: 'dɑn lɛft hɪz kiz hɪr' 
+      },
+      { 
+        a: 'Walk to the station.', 
+        b: 'The wok is on the stove.', 
+        ipaA: 'wɔk tə ðə ˈsteɪʃən', 
+        ipaB: 'ðə wɑk ɪz ɑn ðə stoʊv' 
+      },
+      { 
+        a: 'Talk a little louder.', 
+        b: 'I heard a loud tock.', 
+        ipaA: 'tɔk ə ˈlɪtəl ˈlaʊdər', 
+        ipaB: 'aɪ hɜrd ə laʊd tɑk' 
+      },
+      { 
+        a: 'She bought fresh bread.', 
+        b: 'The bot sent a quick reply.', 
+        ipaA: 'ʃi bɔt frɛʃ brɛd', 
+        ipaB: 'ðə bɑt sɛnt ə kwɪk rɪˈplaɪ' 
+      },
     ],
   }
 ];

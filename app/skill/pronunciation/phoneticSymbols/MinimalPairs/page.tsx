@@ -14,12 +14,24 @@ import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
 import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
+import {
+  isIndexBasedOverride as hhIsIndexBasedOverride,
+  renderIndexBasedWord as hhRenderIndexBasedWord,
+  renderHighlightedWord as hhRenderHighlightedWord,
+} from '../[symbol]/helpers/highlightHelpers';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
 });
 
 const stripIpaSlashes = (ipa: string) => ipa.replace(/^\/|\/$/g, '');
+
+const formatMinimalPairLabel = (label: string) =>
+  label
+    .split('↔')
+    .map((part) => part.trim())
+    .map((part) => `/${part}/`)
+    .join(' ↔ ');
 
 const CANONICAL_IPA_ALIASES: Record<string, string> = {
   'ɪə': 'ɪr',
@@ -184,32 +196,19 @@ const MinimalPairsPage: React.FC = () => {
     const lowerWord = word.toLowerCase();
     const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[symbol];
 
-    // Only highlight if word has an explicit override entry — no regex fallback
     const patterns = (symbolOverrides && symbolOverrides[lowerWord])
       ? symbolOverrides[lowerWord]
       : [];
 
     if (patterns.length === 0) return word;
 
-    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
-    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
-    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    const highlightLetterStyle: React.CSSProperties = {};
 
-    const parts = word.split(regex);
-    return (
-      <>
-        {parts.map((part, index) => {
-          if (index % 2 === 1) {
-            return (
-              <span key={index} className="minimal-letter-highlight">
-                {part}
-              </span>
-            );
-          }
-          return <React.Fragment key={index}>{part}</React.Fragment>;
-        })}
-      </>
-    );
+    if (hhIsIndexBasedOverride(patterns)) {
+      return hhRenderIndexBasedWord(word, patterns, highlightLetterStyle);
+    }
+
+    return hhRenderHighlightedWord(word, patterns, symbol, highlightLetterStyle);
   };
 
   const renderIpa = (ipa: string, side: 'a' | 'b') => {
@@ -337,7 +336,7 @@ const MinimalPairsPage: React.FC = () => {
             >
               {pairsInCategory.map((pair) => (
                 <option key={pair.id} value={pair.id}>
-                  {pair.pairLabel}
+                  {formatMinimalPairLabel(pair.pairLabel)}
                 </option>
               ))}
             </select>
@@ -368,7 +367,7 @@ const MinimalPairsPage: React.FC = () => {
             )}
             <section className="minimal-pair-info">
               <div>
-                <h2>{selectedPair.pairLabel}</h2>
+                <h2>{formatMinimalPairLabel(selectedPair.pairLabel)}</h2>
                 {selectedPair.notes && <p>{selectedPair.notes}</p>}
                 {selectedPair.isTemplateContent && (
                   <p className="minimal-draft-note">Draft content detected. You can replace sample items in `minimalPairs/data.ts`.</p>
@@ -380,7 +379,7 @@ const MinimalPairsPage: React.FC = () => {
                 onUnsave={handleUnsaveProgress}
                 size="small"
                 variant="primary"
-                topicName={`Minimal Pair ${selectedPair.pairLabel}`}
+                topicName={`Minimal Pair ${formatMinimalPairLabel(selectedPair.pairLabel)}`}
               />
             </section>
 

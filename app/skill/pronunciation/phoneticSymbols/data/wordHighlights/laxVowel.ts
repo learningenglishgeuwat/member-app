@@ -22,6 +22,7 @@ export const laxVowelManualWordHighlightOverrides: Record<string, Record<string,
     quick: ['i'],
     minute: ['i', 'u'],
     system: ['y'],
+    live: ['i'],
   },
   'ʊ': {
     cushion: ['u'],
