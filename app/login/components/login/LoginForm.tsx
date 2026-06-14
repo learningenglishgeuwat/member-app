@@ -12,6 +12,7 @@ import { GearInputRow } from './form/GearInputRow'
 import { LoginButton } from './form/LoginButton'
 import { LoginErrorPopup } from './form/LoginErrorPopup'
 import { useHaptic } from '@/lib/haptic/useHaptic'
+import { useAudio } from '@/lib/audio/useAudio'
 
 interface LoginFormProps {
   onLogin?: () => void
@@ -20,6 +21,7 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const router = useRouter()
   const { triggerHaptic } = useHaptic()
+  const { triggerCyberError } = useAudio()
   
   const [isLoading, setIsLoading] = React.useState(false)
   const [formData, setFormData] = React.useState({
@@ -81,6 +83,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       if (!result.success) {
         console.error('❌ Supabase auth error:', result.error)
         triggerHaptic('error')
+        triggerCyberError()
         
         // Handle different error types with appropriate messages
         let displayMessage = ''
@@ -156,6 +159,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       const message = err instanceof Error ? err.message : 'Terjadi kesalahan saat masuk.'
       console.error('❌ Unexpected login error:', err)
       triggerHaptic('error')
+      triggerCyberError()
       setErrorMessage(message)
       setShowErrorPopup(true)
     } finally {

@@ -4,7 +4,7 @@
   font-family: var(--font-ui);
   background: #06080f;
   color: #f4f7ff;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .minimal-grid-background {
@@ -35,8 +35,8 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: 120px 16px 120px;
-  overflow-y: auto;
-  height: 100vh;
+  overflow-y: visible;
+  min-height: 100vh;
 }
 
 .minimal-header {
@@ -340,7 +340,8 @@
   color: #f7f9ff;
 }
 
-.minimal-letter-highlight {
+.minimal-letter-highlight,
+.symbol-letter-highlight {
   display: inline !important;
   padding: 0 !important;
   margin: 0 !important;

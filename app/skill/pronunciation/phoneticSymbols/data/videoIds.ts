@@ -10,6 +10,10 @@ export interface VideoCategory {
   [symbol: string]: string;
 }
 
+// ====================================================================
+// --- OBJEK KATEGORI VIDEO (URUTAN 100% LINIER SESUAI TABEL MASTER) ---
+// ====================================================================
+
 // Video IDs for vowel lax symbols
 export const vowelLaxVideos: VideoCategory = {
   'ʌ': 'e6rjJiOxVCs',
@@ -26,8 +30,32 @@ export const vowelTenseVideos: VideoCategory = {
   'i': '9XcUY0nunfw',
   'u': 'qJiVghRtg1I',
   'æ': 'qg0IjcUZdso',
-  'ɔ': '1Kjyf1D7jvE',
+  'ɔ': '1Kjyf1D7jvE'
+};
 
+// Video IDs for diphthong symbols
+export const diphthongVideos: VideoCategory = {
+  'aɪ': 'xndGoQmWYxU',
+  'eɪ': 'Gk_ZufNX5jQ',
+  'ɔɪ': 'TL8bvCYD0dk',
+  'ɪr': 'v_9rTF9MXyY',
+  'ɛr': '0MjInT75bmU',
+  'ʊr': '3zSOQ_wWdyc',
+  'oʊ': '08MZWPOwiYw',
+  'aʊ': 'WzlK8CnFh8c'
+};
+
+// Video IDs for consonant voiceless symbols
+export const consonantVoicelessVideos: VideoCategory = {
+  'p': 'gRO8tJ6EK1M',
+  't': 'HXsyO2iWY44',
+  'k': 'VJaW7kOly1s',
+  'f': 'ODkqeBCL49o',
+  'θ': 'riRrCGw2-6I',
+  's': 'r92ZzmP_15k',
+  'ʃ': 'Dxc20oQ6VX8',
+  'ʧ': 'fXB0-xkV7Vg',
+  'h': 'OjGa6UjvRrU'
 };
 
 // Video IDs for consonant voiced symbols
@@ -46,59 +74,38 @@ export const consonantVoicedVideos: VideoCategory = {
   'ŋ': 'X3dSWxLvNKc',
   'r': 'Fa9FuZBe820',
   'w': 'vxNQEd_b3VU',
-  'y': 'RcwlhTaGVzo'
+  'j': 'RcwlhTaGVzo'
 };
 
-// Video IDs for consonant voiceless symbols
-export const consonantVoicelessVideos: VideoCategory = {
-  'p': 'gRO8tJ6EK1M',
-  't': 'HXsyO2iWY44',
-  'k': 'VJaW7kOly1s',
-  'f': 'ODkqeBCL49o',
-  'θ': 'riRrCGw2-6I',
-  's': 'r92ZzmP_15k',
-  'ʃ': 'Dxc20oQ6VX8',
-  'ʧ': 'fXB0-xkV7Vg',
-  'h': 'OjGa6UjvRrU'
-};
-
-// Video IDs for diphthong symbols
-export const diphthongVideos: VideoCategory = {
-  'aɪ': 'xndGoQmWYxU',
-  'eɪ': 'Gk_ZufNX5jQ',
-  'ɔɪ': 'TL8bvCYD0dk',
-  'ɪr': 'v_9rTF9MXyY',
-  'ɪə': 'v_9rTF9MXyY',
-  'er': '0MjInT75bmU',
-  'eə': '0MjInT75bmU',
-  'ʊr': '3zSOQ_wWdyc',
-  'ʊə': '3zSOQ_wWdyc',
-  'aʊ': 'WzlK8CnFh8c',
-  'oʊ': '08MZWPOwiYw'
-};
-
-// Combined all video IDs by category
+// Combined all video IDs by category (Strictly ordered by Master Table)
 export const allVideoIds = {
   vowel_lax: vowelLaxVideos,
   vowel_tense: vowelTenseVideos,
-  consonant_voiced: consonantVoicedVideos,
+  diphthong: diphthongVideos,
   consonant_voiceless: consonantVoicelessVideos,
-  diphthong: diphthongVideos
+  consonant_voiced: consonantVoicedVideos
 } as const;
 
 // Type helper for category keys
 type CategoryKey = keyof typeof allVideoIds;
 
+/**
+ * Menormalisasi input simbol ke master key tunggal yang valid
+ */
+function normalizeSymbolKey(symbol: string): string {
+  const s = symbol.trim();
+  if (s === 'dʒ') return 'ʤ';
+  if (s === 'tʃ') return 'ʧ';
+  if (s === 'y') return 'j';
+  if (s === 'eə' || s === 'er') return 'ɛr';
+  if (s === 'ɪə' || s === 'iə') return 'ɪr';
+  if (s === 'ʊə') return 'ʊr';
+  return s;
+}
+
 // Helper function to get video ID by symbol
 export function getVideoIdBySymbol(symbol: string): string | undefined {
-  const s = symbol.trim();
-  const normalizedKey = s === 'dʒ' ? 'ʤ'
-    : s === 'tʃ' ? 'ʧ'
-    : s === 'y' ? 'j'
-    : s === 'eə' || s === 'ɛr' ? 'er'
-    : s === 'ɪə' || s === 'iə' ? 'ɪr'
-    : s === 'ʊə' ? 'ʊr'
-    : s;
+  const normalizedKey = normalizeSymbolKey(symbol);
   for (const category of Object.values(allVideoIds)) {
     if (category[normalizedKey]) {
       return category[normalizedKey];
@@ -110,7 +117,8 @@ export function getVideoIdBySymbol(symbol: string): string | undefined {
 // Helper function to get video ID by category and symbol
 export function getVideoIdByCategoryAndSymbol(category: string, symbol: string): string | undefined {
   const categoryData = allVideoIds[category as CategoryKey];
-  return categoryData?.[symbol];
+  const normalizedKey = normalizeSymbolKey(symbol);
+  return categoryData?.[normalizedKey];
 }
 
 // Helper function to get all video mappings for a category
@@ -139,5 +147,3 @@ export function getAllVideoMappings(): VideoMapping[] {
   
   return mappings;
 }
-
-

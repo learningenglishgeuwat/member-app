@@ -209,7 +209,7 @@ export const useMinimalPairs = () => {
   const handlePlayAllWords = () => {
     if (!selectedPair) return;
     playbackSessionRef.current += 1;
-    const useIndonesianOnB = selectedPair.id === 'diphthong-er-r';
+    const useIndonesianOnB = selectedPair.id === 'diphthong-ɚ-r';
     if (isPlayingWords) {
       stopPlayback();
       return;
@@ -243,7 +243,7 @@ export const useMinimalPairs = () => {
   const handlePlayAllSentences = () => {
     if (!selectedPair) return;
     playbackSessionRef.current += 1;
-    const useIndonesianOnB = selectedPair.id === 'diphthong-er-r';
+    const useIndonesianOnB = selectedPair.id === 'diphthong-ɚ-r';
     if (isPlayingSentences) {
       stopPlayback();
       return;

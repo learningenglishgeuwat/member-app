@@ -1,9 +1,9 @@
 // Word highlight patterns generated from commonLetters category data.
 // This file now extracts target letter patterns from the examples defined in commonLetters categories.
 
-import { getAllCommonLetters } from './commonLetters/CommonLetters';
-import { allWordExamples } from './wordExamples/wordExamples';
-import { minimalPairsData } from '../MinimalPairs/data/index';
+import { getAllCommonLetters } from '../commonLetters/CommonLetters';
+import { allWordExamples } from '../wordExamples/wordExamples';
+import { minimalPairsData } from '../../MinimalPairs/data/index';
 
 export type WordHighlightOverrides = Record<string, Record<string, string[]>>;
 
@@ -24,6 +24,10 @@ const COMMON_SYMBOL_ALIASES: Record<string, string[]> = {
   '\u0259': ['\u025a'],
   e: ['\u025b'],
   '\u025b': ['e'],
+  
+  // Menghubungkan alias i biasa dengan i panjang (iː)
+  'i': ['i\u02d0'],
+  'i\u02d0': ['i'],
 };
 
 const normalizeIpaSymbols = (rawSymbol: string): string[] => {
@@ -34,19 +38,48 @@ const normalizeIpaSymbols = (rawSymbol: string): string[] => {
 const normalizePattern = (rawPattern: string): string =>
   rawPattern.trim().split(/\s*\(|\s+/)[0].trim();
 
+const parseHighlightPattern = (pattern: string) => {
+  const raw = pattern.trim();
+  const isPrefix = raw.endsWith('-') && !raw.startsWith('-');
+  const isSuffix = raw.startsWith('-') && !raw.endsWith('-');
+  const cleaned = raw.replace(/^-+|-+$/g, '').trim();
+
+  return {
+    cleaned,
+    isPrefix,
+    isSuffix,
+  };
+};
+
 const normalizeHighlightPattern = (pattern: string): string =>
-  pattern.replace(/-/g, '').trim();
+  pattern.replace(/^-+|-+$/g, '').trim();
+
+const escapeForRegex = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const patternMatchesWord = (word: string, pattern: string): boolean => {
-  const normalizedPattern = normalizeHighlightPattern(pattern);
+  const { cleaned, isPrefix, isSuffix } = parseHighlightPattern(pattern);
+  const normalizedPattern = cleaned.toLowerCase();
   if (!normalizedPattern) return false;
 
   if (normalizedPattern.includes('_')) {
-    const regex = new RegExp(normalizedPattern.replace(/_/g, '.'), 'i');
+    const regexSource = escapeForRegex(normalizedPattern).replace(/_/g, '.');
+    const anchored = `${isPrefix ? '^' : ''}${regexSource}${isSuffix ? '$' : ''}`;
+    const regex = new RegExp(anchored, 'i');
     return regex.test(word);
   }
 
-  return word.includes(normalizedPattern.toLowerCase());
+  if (isPrefix && isSuffix) {
+    return word.toLowerCase() === normalizedPattern;
+  }
+  if (isPrefix) {
+    return word.toLowerCase().startsWith(normalizedPattern);
+  }
+  if (isSuffix) {
+    return word.toLowerCase().endsWith(normalizedPattern);
+  }
+
+  return word.toLowerCase().includes(normalizedPattern);
 };
 
 const getAllSymbolPatterns = (): Record<string, string[]> => {
@@ -61,13 +94,12 @@ const getAllSymbolPatterns = (): Record<string, string[]> => {
 
       const rawPattern = example.slice(0, arrowIndex).trim();
       const pattern = normalizePattern(rawPattern);
-      const normalizedPattern = normalizeHighlightPattern(pattern);
-      if (!normalizedPattern) return;
+      if (!pattern) return;
 
       symbols.forEach((symbol) => {
         patternsBySymbol[symbol] = patternsBySymbol[symbol] ?? [];
-        if (!patternsBySymbol[symbol].includes(normalizedPattern)) {
-          patternsBySymbol[symbol].push(normalizedPattern);
+        if (!patternsBySymbol[symbol].includes(pattern)) {
+          patternsBySymbol[symbol].push(pattern);
         }
       });
     });
@@ -106,11 +138,24 @@ const getHighlightWords = (): Set<string> => {
   return words;
 };
 
+import { diphthongManualWordHighlightOverrides } from './diphthong';
+import { laxVowelManualWordHighlightOverrides } from './laxVowel';
+import { tenseVowelManualWordHighlightOverrides } from './tenseVowel';
+import { voicedConsonantManualWordHighlightOverrides } from './voicedConsonant';
+import { voicelessConsonantManualWordHighlightOverrides } from './voicelessConsonant';
+
+// Manual highlight overrides are split by category for better organization:
+// - lax vowel
+// - tense vowel
+// - diphthong
+// - voiceless consonant
+// - voiced consonant
 const MANUAL_WORD_HIGHLIGHT_OVERRIDES: WordHighlightOverrides = {
-  'oʊ': {
-    sew: ['ew'],
-    sewed: ['ew'],
-  },
+  ...laxVowelManualWordHighlightOverrides,
+  ...tenseVowelManualWordHighlightOverrides,
+  ...diphthongManualWordHighlightOverrides,
+  ...voicelessConsonantManualWordHighlightOverrides,
+  ...voicedConsonantManualWordHighlightOverrides,
 };
 
 const buildWordHighlightOverrides = (): WordHighlightOverrides => {
@@ -118,6 +163,7 @@ const buildWordHighlightOverrides = (): WordHighlightOverrides => {
   const patternsBySymbol = getAllSymbolPatterns();
   const highlightWords = getHighlightWords();
 
+  // Langkah 1: Jalankan auto-matching pattern biasa
   Object.entries(patternsBySymbol).forEach(([symbol, patterns]) => {
     highlightWords.forEach((word) => {
       const matchedPatterns = patterns.filter((pattern) => patternMatchesWord(word, pattern));
@@ -128,15 +174,7 @@ const buildWordHighlightOverrides = (): WordHighlightOverrides => {
     });
   });
 
-  Object.entries(MANUAL_WORD_HIGHLIGHT_OVERRIDES).forEach(([symbol, entries]) => {
-    overrides[symbol] = overrides[symbol] ?? {};
-    Object.entries(entries).forEach(([word, patterns]) => {
-      overrides[symbol][word] = Array.from(
-        new Set([...(overrides[symbol][word] ?? []), ...patterns]),
-      );
-    });
-  });
-
+  // Langkah 2: Gabungkan data berdasarkan ALIAS terlebih dahulu
   Object.entries(COMMON_SYMBOL_ALIASES).forEach(([alias, mappedSymbols]) => {
     overrides[alias] = overrides[alias] ?? {};
 
@@ -150,7 +188,37 @@ const buildWordHighlightOverrides = (): WordHighlightOverrides => {
     });
   });
 
+  // Langkah 3: Eksekusi MANUAL OVERRIDE di paling akhir (MENIMPA TOTAL)
+  // Ini menjamin hasil akhir mutlak bersih dan tidak tercemar auto-matching kotor
+  Object.entries(MANUAL_WORD_HIGHLIGHT_OVERRIDES).forEach(([symbol, entries]) => {
+    overrides[symbol] = overrides[symbol] ?? {};
+    Object.entries(entries).forEach(([word, patterns]) => {
+      overrides[symbol][word] = patterns; // <--- Overwrite langsung, bukan merge!
+    });
+
+    // Paksa semua alias dari simbol ini untuk ikut memakai data manual yang bersih
+    const aliases = COMMON_SYMBOL_ALIASES[symbol] ?? [];
+    aliases.forEach((aliasSymbol) => {
+      overrides[aliasSymbol] = overrides[aliasSymbol] ?? {};
+      Object.entries(entries).forEach(([word, patterns]) => {
+        overrides[aliasSymbol][word] = patterns; // <--- Overwrite aliasnya juga!
+      });
+    });
+  });
+
   return overrides;
 };
 
 export const WORD_HIGHLIGHT_OVERRIDES = buildWordHighlightOverrides();
+
+/**
+ * Fungsi untuk mengambil pola highlight kata berdasarkan Simbol IPA halaman aktif
+ * @param word Kata yang ingin di-highlight (contoh: 'eagle')
+ * @param currentIpaPageSymbol Simbol IPA dari halaman aktif (contoh: '/iː/' atau '/l/')
+ */
+export const getHighlightPatterns = (word: string, currentIpaPageSymbol: string): string[] => {
+  const normalizedWord = word.toLowerCase().trim();
+  const cleanSymbol = currentIpaPageSymbol.replace(/\//g, '').trim();
+
+  return WORD_HIGHLIGHT_OVERRIDES[cleanSymbol]?.[normalizedWord] ?? [];
+};

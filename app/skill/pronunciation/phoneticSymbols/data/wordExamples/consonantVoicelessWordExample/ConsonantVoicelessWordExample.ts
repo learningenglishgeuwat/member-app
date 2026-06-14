@@ -1,328 +1,364 @@
-// Consonantvoiceless Examples
-// Generated from Word_Example Excel files - All 30 examples per symbol
+// Consonant Voiceless Examples
+// Generated from Word_Example Excel files - All 30 examples per symbol (15-15 for h)
+// Refactored: Nested Object structure for position groups (beginning, middle, ending)
+// UI Ready: Includes 'uiNote' property for positions with limited phonetic presence.
 
 export interface WordExample {
   word: string;
   ipa: string;
 }
 
+export interface PositionGroups {
+  uiNote?: string; // Properti untuk catatan khusus visual UI/Frontend
+  beginning?: WordExample[];
+  middle?: WordExample[];
+  ending?: WordExample[];
+}
+
 export interface SymbolWordExamples {
-  [key: string]: WordExample[];
+  [key: string]: PositionGroups;
 }
 
 export const consonantVoicelessExamples: SymbolWordExamples = {
-  'Consonant‑Voiceless‑f': [
-    // AWAL (10)
-    { word: 'fan', ipa: '/fæn/' },
-    { word: 'fat', ipa: '/fæt/' },
-    { word: 'fit', ipa: '/fɪt/' },
-    { word: 'fun', ipa: '/fʌn/' },
-    { word: 'food', ipa: '/fud/' },
-    { word: 'face', ipa: '/feɪs/' },
-    { word: 'fast', ipa: '/fæst/' },
-    { word: 'fine', ipa: '/faɪn/' },
-    { word: 'fish', ipa: '/fɪʃ/' },
-    { word: 'farm', ipa: '/fɑrm/' },
-    // TENGAH (10)
-    { word: 'office', ipa: '/ˈɑfɪs/' },
-    { word: 'coffee', ipa: '/ˈkɔfi/' },
-    { word: 'football', ipa: '/ˈfʊtbɔl/' },
-    { word: 'future', ipa: '/ˈfjuʧɚ/' },
-    { word: 'deficit', ipa: '/ˈdɛfəsət/' },
-    { word: 'traffic', ipa: '/ˈtræfɪk/' },
-    { word: 'profit', ipa: '/ˈprɑfət/' },
-    { word: 'safety', ipa: '/ˈseɪfti/' },
-    { word: 'dolphin', ipa: '/ˈdɑlfən/' },
-    { word: 'perfect', ipa: '/ˈpɝfɪkt/' },
-    // AKHIR (10)
-    { word: 'safe', ipa: '/seɪf/' },
-    { word: 'life', ipa: '/laɪf/' },
-    { word: 'wife', ipa: '/waɪf/' },
-    { word: 'half', ipa: '/hæf/' },
-    { word: 'stuff', ipa: '/stʌf/' },
-    { word: 'off', ipa: '/ɔf/' },
-    { word: 'chef', ipa: '/ʃɛf/' },
-    { word: 'laugh', ipa: '/læf/' },
-    { word: 'brief', ipa: '/brif/' },
-    { word: 'rough', ipa: '/rʌf/' }
-  ],
-  'Consonant‑Voiceless‑h': [
-    // AWAL (15) - Distribusi seimbang karena tidak ada posisi akhir murni dalam bahasa Inggris
-    { word: 'hat', ipa: '/hæt/' },
-    { word: 'hot', ipa: '/hɑt/' },
-    { word: 'hit', ipa: '/hɪt/' },
-    { word: 'hop', ipa: '/hɑp/' },
-    { word: 'hug', ipa: '/hʌg/' },
-    { word: 'hill', ipa: '/hɪl/' },
-    { word: 'hand', ipa: '/hænd/' },
-    { word: 'head', ipa: '/hɛd/' },
-    { word: 'hair', ipa: '/hɛr/' },
-    { word: 'home', ipa: '/hoʊm/' },
-    { word: 'hope', ipa: '/hoʊp/' },
-    { word: 'hard', ipa: '/hɑrd/' },
-    { word: 'heart', ipa: '/hɑrt/' },
-    { word: 'help', ipa: '/hɛlp/' },
-    { word: 'happy', ipa: '/ˈhæpi/' },
-    // TENGAH (15)
-    { word: 'hello', ipa: '/həˈloʊ/' },
-    { word: 'yahoo', ipa: '/ˈjɑhu/' },
-    { word: 'ahead', ipa: '/əˈhɛd/' },
-    { word: 'behind', ipa: '/bɪˈhaɪnd/' },
-    { word: 'behave', ipa: '/bɪˈheɪv/' },
-    { word: 'anyhow', ipa: '/ˈɛniˌhaʊ/' },
-    { word: 'alcohol', ipa: '/ˈælkəhɔl/' },
-    { word: 'perhaps', ipa: '/pɚˈhæps/' },
-    { word: 'keyhole', ipa: '/ˈkihoʊl/' },
-    { word: 'loophole', ipa: '/ˈluphoʊl/' },
-    { word: 'greenhouse', ipa: '/ˈgrinˌhaʊs/' },
-    { word: 'falsehood', ipa: '/ˈfɔlshʊd/' },
-    { word: 'overhead', ipa: '/oʊvɚˈhɛd/' },
-    { word: 'neighborhood', ipa: '/ˈneɪbɚˌhʊd/' },
-    { word: 'rehearsal', ipa: '/rɪˈhɝsəl/' }
-  ],
-  'Consonant‑Voiceless‑k': [
-    // AWAL (10)
-    { word: 'cat', ipa: '/kæt/' },
-    { word: 'car', ipa: '/kɑr/' },
-    { word: 'cup', ipa: '/kʌp/' },
-    { word: 'cook', ipa: '/kʊk/' },
-    { word: 'key', ipa: '/ki/' },
-    { word: 'kid', ipa: '/kɪd/' },
-    { word: 'kind', ipa: '/kaɪnd/' },
-    { word: 'keep', ipa: '/kip/' },
-    { word: 'king', ipa: '/kɪŋ/' },
-    { word: 'cold', ipa: '/koʊld/' },
-    // TENGAH (10)
-    { word: 'ticket', ipa: '/ˈtɪkɪt/' },
-    { word: 'chicken', ipa: '/ˈʧɪkən/' },
-    { word: 'chocolate', ipa: '/ˈʧɑklət/' },
-    { word: 'market', ipa: '/ˈmɑrkət/' },
-    { word: 'pocket', ipa: '/ˈpɑkət/' },
-    { word: 'jacket', ipa: '/ˈʤækət/' },
-    { word: 'blanket', ipa: '/ˈblæŋkət/' },
-    { word: 'second', ipa: '/ˈsɛkənd/' },
-    { word: 'secret', ipa: '/ˈsikrət/' },
-    { word: 'local', ipa: '/ˈloʊkəl/' },
-    // AKHIR (10)
-    { word: 'kick', ipa: '/kɪk/' },
-    { word: 'clock', ipa: '/klɑk/' },
-    { word: 'book', ipa: '/bʊk/' },
-    { word: 'look', ipa: '/lʊk/' },
-    { word: 'took', ipa: '/tʊk/' },
-    { word: 'duck', ipa: '/dʌk/' },
-    { word: 'back', ipa: '/bæk/' },
-    { word: 'pack', ipa: '/pæk/' },
-    { word: 'sick', ipa: '/sɪk/' },
-    { word: 'week', ipa: '/wik/' }
-  ],
-  'Consonant‑Voiceless‑p': [
-    // AWAL (10)
-    { word: 'pen', ipa: '/pɛn/' },
-    { word: 'pet', ipa: '/pɛt/' },
-    { word: 'pan', ipa: '/pæn/' },
-    { word: 'pack', ipa: '/pæk/' },
-    { word: 'paper', ipa: '/ˈpeɪpɚ/' },
-    { word: 'price', ipa: '/praɪs/' },
-    { word: 'place', ipa: '/pleɪs/' },
-    { word: 'play', ipa: '/pleɪ/' },
-    { word: 'part', ipa: '/pɑrt/' },
-    { word: 'park', ipa: '/pɑrk/' },
-    // TENGAH (10)
-    { word: 'problem', ipa: '/ˈprɑbləm/' },
-    { word: 'practice', ipa: '/ˈpræktɪs/' },
-    { word: 'open', ipa: '/ˈoʊpən/' },
-    { word: 'support', ipa: '/səˈpɔrt/' },
-    { word: 'supply', ipa: '/səˈplaɪ/' },
-    { word: 'company', ipa: '/ˈkʌmpəni/' },
-    { word: 'super', ipa: '/ˈsupɚ/' },
-    { word: 'simple', ipa: '/ˈsɪmpəl/' },
-    { word: 'apple', ipa: '/ˈæpəl/' },
-    { word: 'purple', ipa: '/ˈpɝpəl/' },
-    // AKHIR (10)
-    { word: 'cup', ipa: '/kʌp/' },
-    { word: 'up', ipa: '/ʌp/' },
-    { word: 'top', ipa: '/tɑp/' },
-    { word: 'ship', ipa: '/ʃɪp/' },
-    { word: 'shop', ipa: '/ʃɑp/' },
-    { word: 'stop', ipa: '/stɑp/' },
-    { word: 'help', ipa: '/hɛlp/' },
-    { word: 'keep', ipa: '/kip/' },
-    { word: 'sleep', ipa: '/slip/' },
-    { word: 'map', ipa: '/mæp/' }
-  ],
-  'Consonant‑Voiceless‑s': [
-    // AWAL (10)
-    { word: 'see', ipa: '/si/' },
-    { word: 'say', ipa: '/seɪ/' },
-    { word: 'so', ipa: '/soʊ/' },
-    { word: 'sit', ipa: '/sɪt/' },
-    { word: 'sun', ipa: '/sʌn/' },
-    { word: 'song', ipa: '/sɔŋ/' },
-    { word: 'same', ipa: '/seɪm/' },
-    { word: 'sell', ipa: '/sɛl/' },
-    { word: 'send', ipa: '/sɛnd/' },
-    { word: 'set', ipa: '/sɛt/' },
-    // TENGAH (10)
-    { word: 'system', ipa: '/ˈsɪstəm/' },
-    { word: 'summer', ipa: '/ˈsʌmɚ/' },
-    { word: 'season', ipa: '/ˈsizən/' },
-    { word: 'lesson', ipa: '/ˈlɛsən/' },
-    { word: 'person', ipa: '/ˈpɝsən/' },
-    { word: 'muscle', ipa: '/ˈmʌsəl/' },
-    { word: 'basic', ipa: '/ˈbeɪsɪk/' },
-    { word: 'icing', ipa: '/ˈaɪsɪŋ/' },
-    { word: 'blossom', ipa: '/ˈblɑsəm/' },
-    { word: 'pencil', ipa: '/ˈpɛnsəl/' },
-    // AKHIR (10)
-    { word: 'class', ipa: '/klæs/' },
-    { word: 'glass', ipa: '/glæs/' },
-    { word: 'dress', ipa: '/drɛs/' },
-    { word: 'guess', ipa: '/gɛs/' },
-    { word: 'yes', ipa: '/jɛs/' },
-    { word: 'bus', ipa: '/bʌs/' },
-    { word: 'house', ipa: '/haʊs/' },
-    { word: 'miss', ipa: '/mɪs/' },
-    { word: 'kiss', ipa: '/kɪs/' },
-    { word: 'face', ipa: '/feɪs/' }
-  ],
-  'Consonant‑Voiceless‑t': [
-    // AWAL (10)
-    { word: 'top', ipa: '/tɑp/' },
-    { word: 'ten', ipa: '/tɛn/' },
-    { word: 'time', ipa: '/taɪm/' },
-    { word: 'take', ipa: '/teɪk/' },
-    { word: 'talk', ipa: '/tɔk/' },
-    { word: 'tell', ipa: '/tɛl/' },
-    { word: 'town', ipa: '/taʊn/' },
-    { word: 'team', ipa: '/tim/' },
-    { word: 'turn', ipa: '/tɝn/' },
-    { word: 'try', ipa: '/traɪ/' },
-    // TENGAH (10)
-    { word: 'today', ipa: '/təˈdeɪ/' },
-    { word: 'tomorrow', ipa: '/təˈmɑroʊ/' },
-    { word: 'together', ipa: '/təˈgɛðɚ/' },
-    { word: 'hotel', ipa: '/hoʊˈtɛl/' },
-    { word: 'return', ipa: '/rɪˈtɝn/' },
-    { word: 'attend', ipa: '/əˈtɛnd/' },
-    { word: 'empty', ipa: '/ˈɛmpti/' },
-    { word: 'capture', ipa: '/ˈkæpʧɚ/' },
-    { word: 'vector', ipa: '/ˈvɛktɚ/' },
-    { word: 'master', ipa: '/ˈmæstɚ/' },
-    // AKHIR (10)
-    { word: 'cat', ipa: '/kæt/' },
-    { word: 'hat', ipa: '/hæt/' },
-    { word: 'hit', ipa: '/hɪt/' },
-    { word: 'net', ipa: '/nɛt/' },
-    { word: 'boot', ipa: '/but/' },
-    { word: 'meet', ipa: '/mit/' },
-    { word: 'past', ipa: '/pæst/' },
-    { word: 'test', ipa: '/tɛst/' },
-    { word: 'fast', ipa: '/fæst/' },
-    { word: 'out', ipa: '/aʊt/' }
-  ],
-  'Consonant‑Voiceless‑ʃ': [
-    // AWAL (10)
-    { word: 'she', ipa: '/ʃi/' },
-    { word: 'shop', ipa: '/ʃɑp/' },
-    { word: 'ship', ipa: '/ʃɪp/' },
-    { word: 'shoe', ipa: '/ʃu/' },
-    { word: 'short', ipa: '/ʃɔrt/' },
-    { word: 'shirt', ipa: '/ʃɝt/' },
-    { word: 'shut', ipa: '/ʃʌt/' },
-    { word: 'shine', ipa: '/ʃaɪn/' },
-    { word: 'share', ipa: '/ʃɛr/' },
-    { word: 'shape', ipa: '/ʃeɪp/' },
-    // TENGAH (10)
-    { word: 'ocean', ipa: '/ˈoʊʃən/' },
-    { word: 'nation', ipa: '/ˈneɪʃən/' },
-    { word: 'station', ipa: '/ˈsteɪʃən/' },
-    { word: 'machine', ipa: '/məˈʃin/' },
-    { word: 'fashion', ipa: '/ˈfæʃən/' },
-    { word: 'tissue', ipa: '/ˈtɪʃu/' },
-    { word: 'mission', ipa: '/ˈmɪʃən/' },
-    { word: 'pressure', ipa: '/ˈprɛʃɚ/' },
-    { word: 'patient', ipa: '/ˈpeɪʃənt/' },
-    { word: 'special', ipa: '/ˈspɛʃəl/' },
-    // AKHIR (10)
-    { word: 'fish', ipa: '/fɪʃ/' },
-    { word: 'fresh', ipa: '/frɛʃ/' },
-    { word: 'push', ipa: '/pʊʃ/' },
-    { word: 'bush', ipa: '/bʊʃ/' },
-    { word: 'wash', ipa: '/wɑʃ/' },
-    { word: 'wish', ipa: '/wɪʃ/' },
-    { word: 'dish', ipa: '/dɪʃ/' },
-    { word: 'crash', ipa: '/kræʃ/' },
-    { word: 'cash', ipa: '/kæʃ/' },
-    { word: 'rush', ipa: '/rʌʃ/' }
-  ],
-  'Consonant‑Voiceless‑ʧ': [
-    // AWAL (10)
-    { word: 'chat', ipa: '/ʧæt/' },
-    { word: 'check', ipa: '/ʧɛk/' },
-    { word: 'cheap', ipa: '/ʧip/' },
-    { word: 'cheese', ipa: '/ʧiz/' },
-    { word: 'chair', ipa: '/ʧɛr/' },
-    { word: 'child', ipa: '/ʧaɪld/' },
-    { word: 'choice', ipa: '/ʧɔɪs/' },
-    { word: 'change', ipa: '/ʧeɪnʤ/' },
-    { word: 'chase', ipa: '/ʧeɪs/' },
-    { word: 'chop', ipa: '/ʧɑp/' },
-    // TENGAH (10)
-    { word: 'teacher', ipa: '/ˈtiʧɚ/' },
-    { word: 'kitchen', ipa: '/ˈkɪʧən/' },
-    { word: 'nature', ipa: '/ˈneɪʧɚ/' },
-    { word: 'picture', ipa: '/ˈpɪkʧɚ/' },
-    { word: 'future', ipa: '/ˈfjuʧɚ/' },
-    { word: 'culture', ipa: '/ˈkʌlʧɚ/' },
-    { word: 'matching', ipa: '/ˈmæʧɪŋ/' },
-    { word: 'fortune', ipa: '/ˈfɔrʧən/' },
-    { word: 'merchant', ipa: '/ˈmɝʧənt/' },
-    { word: 'achieve', ipa: '/əˈʧiv/' },
-    // AKHIR (10)
-    { word: 'church', ipa: '/ʧɝʧ/' },
-    { word: 'much', ipa: '/mʌʧ/' },
-    { word: 'touch', ipa: '/tʌʧ/' },
-    { word: 'rich', ipa: '/rɪʧ/' },
-    { word: 'beach', ipa: '/biʧ/' },
-    { word: 'catch', ipa: '/kæʧ/' },
-    { word: 'match', ipa: '/mæʧ/' },
-    { word: 'watch', ipa: '/wɑʃ/' },
-    { word: 'reach', ipa: '/riʧ/' },
-    { word: 'speech', ipa: '/spiʧ/' }
-  ],
-  'Consonant‑Voiceless‑θ': [
-    // AWAL (10)
-    { word: 'think', ipa: '/θɪŋk/' },
-    { word: 'thank', ipa: '/θæŋk/' },
-    { word: 'thin', ipa: '/θɪn/' },
-    { word: 'thick', ipa: '/θɪk/' },
-    { word: 'three', ipa: '/θri/' },
-    { word: 'thirty', ipa: '/ˈθɝti/' },
-    { word: 'thousand', ipa: '/ˈθaʊzənd/' },
-    { word: 'thirteen', ipa: '/θɝˈtin/' },
-    { word: 'thirsty', ipa: '/ˈθɝsti/' },
-    { word: 'theater', ipa: '/ˈθiətɚ/' },
-    // TENGAH (10)
-    { word: 'author', ipa: '/ˈɔθɚ/' },
-    { word: 'healthy', ipa: '/ˈhɛlθi/' },
-    { word: 'wealthy', ipa: '/ˈwɛlθi/' },
-    { word: 'python', ipa: '/ˈpaɪθɑn/' },
-    { word: 'anything', ipa: '/ˈɛniˌθɪŋ/' },
-    { word: 'nothing', ipa: '/ˈnʌθɪŋ/' },
-    { word: 'athlete', ipa: '/ˈæθlit/' },
-    { word: 'bathroom', ipa: '/ˈbæθrum/' },
-    { word: 'birthday', ipa: '/ˈbɝθdeɪ/' },
-    { word: 'method', ipa: '/ˈmɛθəd/' },
-    // AKHIR (10)
-    { word: 'tooth', ipa: '/tuθ/' },
-    { word: 'mouth', ipa: '/maʊθ/' },
-    { word: 'south', ipa: '/saʊθ/' },
-    { word: 'north', ipa: '/nɔrθ/' },
-    { word: 'earth', ipa: '/ɝθ/' },
-    { word: 'birth', ipa: '/bɝθ/' },
-    { word: 'worth', ipa: '/wɝθ/' },
-    { word: 'both', ipa: '/boʊθ/' },
-    { word: 'cloth', ipa: '/klɔθ/' },
-    { word: 'math', ipa: '/mæθ/' }
-  ]
+  'Consonant‑Voiceless‑p': {
+    beginning: [
+      { word: 'pack', ipa: '/pæk/' },
+      { word: 'pan', ipa: '/pæn/' },
+      { word: 'paper', ipa: '/ˈpeɪpɚ/' },
+      { word: 'park', ipa: '/pɑrk/' },
+      { word: 'part', ipa: '/pɑrt/' },
+      { word: 'pen', ipa: '/pɛn/' },
+      { word: 'pet', ipa: '/pɛt/' },
+      { word: 'place', ipa: '/pleɪs/' },
+      { word: 'play', ipa: '/pleɪ/' },
+      { word: 'price', ipa: '/praɪs/' }
+    ],
+    middle: [
+      { word: 'apple', ipa: '/ˈæpəl/' },
+      { word: 'company', ipa: '/ˈkʌmpəni/' },
+      { word: 'open', ipa: '/ˈoʊpən/' },
+      { word: 'practice', ipa: '/ˈpræktɪs/' },
+      { word: 'problem', ipa: '/ˈprɑbləm/' },
+      { word: 'purple', ipa: '/ˈpɝpəl/' },
+      { word: 'simple', ipa: '/ˈsɪmpəl/' },
+      { word: 'super', ipa: '/ˈsupɚ/' },
+      { word: 'supply', ipa: '/səˈplaɪ/' },
+      { word: 'support', ipa: '/səˈpɔrt/' }
+    ],
+    ending: [
+      { word: 'cup', ipa: '/kʌp/' },
+      { word: 'help', ipa: '/hɛlp/' },
+      { word: 'keep', ipa: '/kip/' },
+      { word: 'map', ipa: '/mæp/' },
+      { word: 'ship', ipa: '/ʃɪp/' },
+      { word: 'shop', ipa: '/ʃɑp/' },
+      { word: 'sleep', ipa: '/slip/' },
+      { word: 'stop', ipa: '/stɑp/' },
+      { word: 'top', ipa: '/tɑp/' },
+      { word: 'up', ipa: '/ʌp/' }
+    ]
+  },
+  'Consonant‑Voiceless‑t': {
+    beginning: [
+      { word: 'take', ipa: '/teɪk/' },
+      { word: 'talk', ipa: '/tɔk/' },
+      { word: 'team', ipa: '/tim/' },
+      { word: 'tell', ipa: '/tɛl/' },
+      { word: 'ten', ipa: '/tɛn/' },
+      { word: 'time', ipa: '/taɪm/' },
+      { word: 'top', ipa: '/tɑp/' },
+      { word: 'town', ipa: '/taʊn/' },
+      { word: 'try', ipa: '/traɪ/' },
+      { word: 'turn', ipa: '/tɝn/' }
+    ],
+    middle: [
+      { word: 'attend', ipa: '/əˈtɛnd/' },
+      { word: 'butter', ipa: '/ˈbʌtɚ/' },
+      { word: 'actor', ipa: '/ˈæktɚ/' },
+      { word: 'empty', ipa: '/ˈɛmpti/' },
+      { word: 'hotel', ipa: '/hoʊˈtɛl/' },
+      { word: 'master', ipa: '/ˈmæstɚ/' },
+      { word: 'matter', ipa: '/ˈmætɚ/' },
+      { word: 'return', ipa: '/rɪˈtɝn/' },
+      { word: 'together', ipa: '/təˈɡɛðɚ/' },
+      { word: 'vector', ipa: '/ˈvɛktɚ/' }
+    ],
+    ending: [
+      { word: 'boot', ipa: '/but/' },
+      { word: 'cat', ipa: '/kæt/' },
+      { word: 'fast', ipa: '/fæst/' },
+      { word: 'hat', ipa: '/hæt/' },
+      { word: 'hit', ipa: '/hɪt/' },
+      { word: 'meet', ipa: '/mit/' },
+      { word: 'net', ipa: '/nɛt/' },
+      { word: 'out', ipa: '/aʊt/' },
+      { word: 'past', ipa: '/pæst/' },
+      { word: 'test', ipa: '/tɛst/' }
+    ]
+  },
+  'Consonant‑Voiceless‑k': {
+    beginning: [
+      { word: 'car', ipa: '/kɑr/' },
+      { word: 'cat', ipa: '/kæt/' },
+      { word: 'cold', ipa: '/koʊld/' },
+      { word: 'cook', ipa: '/kʊk/' },
+      { word: 'cup', ipa: '/kʌp/' },
+      { word: 'keep', ipa: '/kip/' },
+      { word: 'key', ipa: '/ki/' },
+      { word: 'kid', ipa: '/kɪd/' },
+      { word: 'kind', ipa: '/kaɪnd/' },
+      { word: 'king', ipa: '/kɪŋ/' }
+    ],
+    middle: [
+      { word: 'blanket', ipa: '/ˈblæŋkət/' },
+      { word: 'chicken', ipa: '/ˈtʃɪkən/' },
+      { word: 'chocolate', ipa: '/ˈtʃɑklət/' },
+      { word: 'jacket', ipa: '/ˈdʒækət/' },
+      { word: 'local', ipa: '/ˈloʊkəl/' },
+      { word: 'market', ipa: '/ˈmɑrkət/' },
+      { word: 'pocket', ipa: '/ˈpɑkət/' },
+      { word: 'second', ipa: '/ˈsɛkənd/' },
+      { word: 'secret', ipa: '/ˈsikrət/' },
+      { word: 'ticket', ipa: '/ˈtɪkɪt/' }
+    ],
+    ending: [
+      { word: 'back', ipa: '/bæk/' },
+      { word: 'book', ipa: '/bʊk/' },
+      { word: 'clock', ipa: '/klɑk/' },
+      { word: 'duck', ipa: '/dʌk/' },
+      { word: 'kick', ipa: '/kɪk/' },
+      { word: 'look', ipa: '/lʊk/' },
+      { word: 'pack', ipa: '/pæk/' },
+      { word: 'sick', ipa: '/sɪk/' },
+      { word: 'took', ipa: '/tʊk/' },
+      { word: 'week', ipa: '/wik/' }
+    ]
+  },
+  'Consonant‑Voiceless‑f': {
+    beginning: [
+      { word: 'face', ipa: '/feɪs/' },
+      { word: 'fan', ipa: '/fæn/' },
+      { word: 'farm', ipa: '/fɑrm/' },
+      { word: 'fast', ipa: '/fæst/' },
+      { word: 'fat', ipa: '/fæt/' },
+      { word: 'fine', ipa: '/faɪn/' },
+      { word: 'fish', ipa: '/fɪʃ/' },
+      { word: 'fit', ipa: '/fɪt/' },
+      { word: 'food', ipa: '/fud/' },
+      { word: 'fun', ipa: '/fʌn/' }
+    ],
+    middle: [
+      { word: 'coffee', ipa: '/ˈkɔfi/' },
+      { word: 'deficit', ipa: '/ˈdɛfəsət/' },
+      { word: 'dolphin', ipa: '/ˈdɑlfən/' },
+      { word: 'football', ipa: '/ˈfʊtbɔl/' },
+      { word: 'future', ipa: '/ˈfjutʃɚ/' },
+      { word: 'office', ipa: '/ˈɑfɪs/' },
+      { word: 'perfect', ipa: '/ˈpɝfɪkt/' },
+      { word: 'profit', ipa: '/ˈprɑfət/' },
+      { word: 'safety', ipa: '/ˈseɪfti/' },
+      { word: 'traffic', ipa: '/ˈtræfɪk/' }
+    ],
+    ending: [
+      { word: 'brief', ipa: '/brif/' },
+      { word: 'chef', ipa: '/ʃɛf/' },
+      { word: 'half', ipa: '/hæf/' },
+      { word: 'laugh', ipa: '/læf/' },
+      { word: 'life', ipa: '/laɪf/' },
+      { word: 'off', ipa: '/ɔf/' },
+      { word: 'rough', ipa: '/rʌf/' },
+      { word: 'safe', ipa: '/seɪf/' },
+      { word: 'stuff', ipa: '/stʌf/' },
+      { word: 'wife', ipa: '/waɪf/' }
+    ]
+  },
+  'Consonant‑Voiceless‑θ': {
+    beginning: [
+      { word: 'thank', ipa: '/θæŋk/' },
+      { word: 'theater', ipa: '/ˈθiətɚ/' },
+      { word: 'thick', ipa: '/θɪk/' },
+      { word: 'thin', ipa: '/θɪn/' },
+      { word: 'think', ipa: '/θɪŋk/' },
+      { word: 'thirsty', ipa: '/ˈθɝsti/' },
+      { word: 'thirteen', ipa: '/θɝˈtin/' },
+      { word: 'thirty', ipa: '/ˈθɝti/' },
+      { word: 'thousand', ipa: '/ˈθaʊzənd/' },
+      { word: 'three', ipa: '/θri/' }
+    ],
+    middle: [
+      { word: 'anything', ipa: '/ˈɛniˌθɪŋ/' },
+      { word: 'athlete', ipa: '/ˈæθlit/' },
+      { word: 'author', ipa: '/ˈɔθɚ/' },
+      { word: 'bathroom', ipa: '/ˈbæθrum/' },
+      { word: 'birthday', ipa: '/ˈbɝθdeɪ/' },
+      { word: 'healthy', ipa: '/ˈhɛlθi/' },
+      { word: 'method', ipa: '/ˈmɛθəd/' },
+      { word: 'nothing', ipa: '/ˈnʌθɪŋ/' },
+      { word: 'python', ipa: '/ˈpaɪθɑn/' },
+      { word: 'wealthy', ipa: '/ˈwɛlθi/' }
+    ],
+    ending: [
+      { word: 'birth', ipa: '/bɝθ/' },
+      { word: 'both', ipa: '/boʊθ/' },
+      { word: 'cloth', ipa: '/klɔθ/' },
+      { word: 'earth', ipa: '/ɝθ/' },
+      { word: 'math', ipa: '/mæθ/' },
+      { word: 'mouth', ipa: '/maʊθ/' },
+      { word: 'north', ipa: '/nɔrθ/' },
+      { word: 'south', ipa: '/saʊθ/' },
+      { word: 'tooth', ipa: '/tuθ/' },
+      { word: 'worth', ipa: '/wɝθ/' }
+    ]
+  },
+  'Consonant‑Voiceless‑s': {
+    beginning: [
+      { word: 'same', ipa: '/seɪm/' },
+      { word: 'say', ipa: '/seɪ/' },
+      { word: 'see', ipa: '/si/' },
+      { word: 'sell', ipa: '/sɛl/' },
+      { word: 'send', ipa: '/sɛnd/' },
+      { word: 'set', ipa: '/sɛt/' },
+      { word: 'sit', ipa: '/sɪt/' },
+      { word: 'so', ipa: '/soʊ/' },
+      { word: 'song', ipa: '/sɔŋ/' },
+      { word: 'sun', ipa: '/sʌn/' }
+    ],
+    middle: [
+      { word: 'basic', ipa: '/ˈbeɪsɪk/' },
+      { word: 'blossom', ipa: '/ˈblɑsəm/' },
+      { word: 'icing', ipa: '/ˈaɪsɪŋ/' },
+      { word: 'lesson', ipa: '/ˈlɛsən/' },
+      { word: 'muscle', ipa: '/ˈmʌsəl/' },
+      { word: 'pencil', ipa: '/ˈpɛnsəl/' },
+      { word: 'person', ipa: '/ˈpɝsən/' },
+      { word: 'season', ipa: '/ˈsizən/' },
+      { word: 'summer', ipa: '/ˈsʌmɚ/' },
+      { word: 'system', ipa: '/ˈsɪstəm/' }
+    ],
+    ending: [
+      { word: 'bus', ipa: '/bʌs/' },
+      { word: 'class', ipa: '/klæs/' },
+      { word: 'dress', ipa: '/drɛs/' },
+      { word: 'face', ipa: '/feɪs/' },
+      { word: 'glass', ipa: '/ɡlæs/' },
+      { word: 'guess', ipa: '/ɡɛs/' },
+      { word: 'house', ipa: '/haʊs/' },
+      { word: 'kiss', ipa: '/kɪs/' },
+      { word: 'miss', ipa: '/mɪs/' },
+      { word: 'yes', ipa: '/jɛs/' }
+    ]
+  },
+  'Consonant‑Voiceless‑ʃ': {
+    beginning: [
+      { word: 'shape', ipa: '/ʃeɪp/' },
+      { word: 'share', ipa: '/ʃɛr/' },
+      { word: 'she', ipa: '/ʃi/' },
+      { word: 'shine', ipa: '/ʃaɪn/' },
+      { word: 'ship', ipa: '/ʃɪp/' },
+      { word: 'shirt', ipa: '/ʃɝt/' },
+      { word: 'shoe', ipa: '/ʃu/' },
+      { word: 'shop', ipa: '/ʃɑp/' },
+      { word: 'short', ipa: '/ʃɔrt/' },
+      { word: 'shut', ipa: '/ʃʌt/' }
+    ],
+    middle: [
+      { word: 'fashion', ipa: '/ˈfæʃən/' },
+      { word: 'machine', ipa: '/məˈʃin/' },
+      { word: 'mission', ipa: '/ˈmɪʃən/' },
+      { word: 'nation', ipa: '/ˈneɪʃən/' },
+      { word: 'ocean', ipa: '/ˈoʊʃən/' },
+      { word: 'patient', ipa: '/ˈpeɪʃənt/' },
+      { word: 'pressure', ipa: '/ˈprɛʃɚ/' },
+      { word: 'special', ipa: '/ˈspɛʃəl/' },
+      { word: 'station', ipa: '/ˈsteɪʃən/' },
+      { word: 'tissue', ipa: '/ˈtɪʃu/' }
+    ],
+    ending: [
+      { word: 'bush', ipa: '/bʊʃ/' },
+      { word: 'cash', ipa: '/kæʃ/' },
+      { word: 'crash', ipa: '/kræʃ/' },
+      { word: 'dish', ipa: '/dɪʃ/' },
+      { word: 'fish', ipa: '/fɪʃ/' },
+      { word: 'fresh', ipa: '/frɛʃ/' },
+      { word: 'push', ipa: '/pʊʃ/' },
+      { word: 'rush', ipa: '/rʌʃ/' },
+      { word: 'wash', ipa: '/wɑʃ/' },
+      { word: 'wish', ipa: '/wɪʃ/' }
+    ]
+  },
+  'Consonant‑Voiceless‑tʃ': {
+    beginning: [
+      { word: 'chair', ipa: '/tʃɛr/' },
+      { word: 'change', ipa: '/tʃeɪndʒ/' },
+      { word: 'chase', ipa: '/tʃeɪs/' },
+      { word: 'chat', ipa: '/tʃæt/' },
+      { word: 'cheap', ipa: '/tʃip/' },
+      { word: 'check', ipa: '/tʃɛk/' },
+      { word: 'cheese', ipa: '/tʃiz/' },
+      { word: 'child', ipa: '/tʃaɪld/' },
+      { word: 'choice', ipa: '/tʃɔɪs/' },
+      { word: 'chop', ipa: '/tʃɑp/' }
+    ],
+    middle: [
+      { word: 'achieve', ipa: '/əˈtʃiv/' },
+      { word: 'culture', ipa: '/ˈkʌltʃɚ/' },
+      { word: 'fortune', ipa: '/ˈfɔrtʃən/' },
+      { word: 'future', ipa: '/ˈfjutʃɚ/' },
+      { word: 'kitchen', ipa: '/ˈkɪtʃən/' },
+      { word: 'matching', ipa: '/ˈmætʃɪŋ/' },
+      { word: 'merchant', ipa: '/ˈmɝtʃənt/' },
+      { word: 'nature', ipa: '/ˈneɪtʃɚ/' },
+      { word: 'picture', ipa: '/ˈpɪktʃɚ/' },
+      { word: 'teacher', ipa: '/ˈtitʃɚ/' }
+    ],
+    ending: [
+      { word: 'beach', ipa: '/bitʃ/' },
+      { word: 'catch', ipa: '/kætʃ/' },
+      { word: 'church', ipa: '/tʃɝtʃ/' },
+      { word: 'match', ipa: '/mætʃ/' },
+      { word: 'much', ipa: '/mʌtʃ/' },
+      { word: 'reach', ipa: '/ritʃ/' },
+      { word: 'rich', ipa: '/rɪtʃ/' },
+      { word: 'speech', ipa: '/spitʃ/' },
+      { word: 'touch', ipa: '/tʌtʃ/' },
+      { word: 'watch', ipa: '/wɑtʃ/' }
+    ]
+  },
+  'Consonant‑Voiceless‑h': {
+    uiNote: 'Suara ini hanya berfungsi jika berada di awal kata atau di awal suku kata sebelum bunyi vokal. Secara fonetis, suara /h/ tidak pernah muncul di akhir kata baku bahasa Inggris (huruf "h" di akhir kata umumnya bisu).',
+    beginning: [
+      { word: 'hair', ipa: '/hɛr/' },
+      { word: 'hand', ipa: '/hænd/' },
+      { word: 'happy', ipa: '/ˈhæpi/' },
+      { word: 'hard', ipa: '/hɑrd/' },
+      { word: 'hat', ipa: '/hæt/' },
+      { word: 'head', ipa: '/hɛd/' },
+      { word: 'heart', ipa: '/hɑrt/' },
+      { word: 'help', ipa: '/hɛlp/' },
+      { word: 'hill', ipa: '/hɪl/' },
+      { word: 'hit', ipa: '/hɪt/' },
+      { word: 'home', ipa: '/hoʊm/' },
+      { word: 'hop', ipa: '/hɑp/' },
+      { word: 'hope', ipa: '/hoʊp/' },
+      { word: 'hot', ipa: '/hɑt/' },
+      { word: 'hug', ipa: '/hʌɡ/' }
+    ],
+    middle: [
+      { word: 'ahead', ipa: '/əˈhɛd/' },
+      { word: 'alcohol', ipa: '/ˈælkəhɔl/' },
+      { word: 'anyhow', ipa: '/ˈɛniˌhaʊ/' },
+      { word: 'behave', ipa: '/bɪˈheɪv/' },
+      { word: 'behind', ipa: '/bɪˈhaɪnd/' },
+      { word: 'falsehood', ipa: '/ˈfɔlshʊd/' },
+      { word: 'greenhouse', ipa: '/ˈɡrinˌhaʊs/' },
+      { word: 'keyhole', ipa: '/ˈkihoʊl/' },
+      { word: 'loophole', ipa: '/ˈluphoʊl/' },
+      { word: 'manhood', ipa: '/ˈmænhʊd/' },
+      { word: 'neighborhood', ipa: '/ˈneɪbɚˌhʊd/' },
+      { word: 'overhead', ipa: '/oʊvɚˈhɛd/' },
+      { word: 'perhaps', ipa: '/pɚˈhæps/' },
+      { word: 'rehearsal', ipa: '/rɪˈhɝsəl/' },
+      { word: 'yahoo', ipa: '/ˈjɑhu/' }
+    ]
+  }
 };

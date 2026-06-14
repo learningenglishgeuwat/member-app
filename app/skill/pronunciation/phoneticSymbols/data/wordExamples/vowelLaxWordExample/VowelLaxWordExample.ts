@@ -1,218 +1,246 @@
 // Vowellax Examples
 // Generated from Word_Example Excel files - All 30 examples per symbol
+// Fixed: Balanced 15-15 distribution for 2-position vowels & Sorted Alphabetically
+// Refactored: Nested Object structure for syntax efficiency
+// UI Ready: Includes 'uiNote' property for positions with limited phonetic presence.
 
 export interface WordExample {
   word: string;
   ipa: string;
 }
 
+export interface PositionGroups {
+  uiNote?: string; // Properti untuk dipanggil langsung oleh UI/Frontend
+  beginning?: WordExample[];
+  middle?: WordExample[];
+  ending?: WordExample[];
+}
+
 export interface SymbolWordExamples {
-  [key: string]: WordExample[];
+  [key: string]: PositionGroups;
 }
 
 export const vowelLaxExamples: SymbolWordExamples = {
-  'ə': [
-    // AWAL (10)
-    { word: 'about', ipa: '/əˈbaʊt/' },
-    { word: 'ago', ipa: '/əˈgoʊ/' },
-    { word: 'above', ipa: '/əˈbʌv/' },
-    { word: 'agree', ipa: '/əˈgri/' },
-    { word: 'alone', ipa: '/əˈloʊn/' },
-    { word: 'amaze', ipa: '/əˈmeɪz/' },
-    { word: 'alert', ipa: '/əˈlɜrt/' },
-    { word: 'around', ipa: '/əˈraʊnd/' },
-    { word: 'away', ipa: '/əˈweɪ/' },
-    { word: 'attack', ipa: '/əˈtæk/' },
-    // TENGAH (10)
-    { word: 'family', ipa: '/ˈfæməli/' },
-    { word: 'animal', ipa: '/ˈænəməl/' },
-    { word: 'problem', ipa: '/ˈprɑbləm/' },
-    { word: 'system', ipa: '/ˈsɪstəm/' },
-    { word: 'today', ipa: '/təˈdeɪ/' },
-    { word: 'tomorrow', ipa: '/təˈmɑroʊ/' },
-    { word: 'support', ipa: '/səˈpɔrt/' },
-    { word: 'police', ipa: '/pəˈlis/' },
-    { word: 'machine', ipa: '/məˈʃin/' },
-    { word: 'condition', ipa: '/kənˈdɪʃən/' },
-    // AKHIR (10)
-    { word: 'sofa', ipa: '/ˈsoʊfə/' },
-    { word: 'banana', ipa: '/bəˈnænə/' },
-    { word: 'data', ipa: '/ˈdeɪtə/' },
-    { word: 'camera', ipa: '/ˈkæmrə/' },
-    { word: 'pizza', ipa: '/ˈpitsə/' },
-    { word: 'china', ipa: '/ˈʧaɪnə/' },
-    { word: 'drama', ipa: '/ˈdrɑmə/' },
-    { word: 'idea', ipa: '/aɪˈdiə/' },
-    { word: 'area', ipa: '/ˈɛriə/' },
-    { word: 'comma', ipa: '/ˈkɑmə/' }
-  ],
-  'ɛ': [
-    // AWAL (15) - Distribusi seimbang karena tidak ada posisi akhir
-    { word: 'end', ipa: '/ɛnd/' },
-    { word: 'egg', ipa: '/ɛg/' },
-    { word: 'effort', ipa: '/ˈɛfɚt/' },
-    { word: 'empty', ipa: '/ˈɛmpti/' },
-    { word: 'engine', ipa: '/ˈɛnʤən/' },
-    { word: 'enter', ipa: '/ˈɛntɚ/' },
-    { word: 'extra', ipa: '/ˈɛkstrə/' },
-    { word: 'edit', ipa: '/ˈɛdət/' },
-    { word: 'error', ipa: '/ˈɛrɚ/' },
-    { word: 'echo', ipa: '/ˈɛkoʊ/' },
-    { word: 'expert', ipa: '/ˈɛkspɜrt/' },
-    { word: 'elbow', ipa: '/ˈɛlboʊ/' },
-    { word: 'envy', ipa: '/ˈɛnvi/' },
-    { word: 'energy', ipa: '/ˈɛnɚʤi/' },
-    { word: 'episode', ipa: '/ˈɛpəsoʊd/' },
-    // TENGAH (15)
-    { word: 'bed', ipa: '/bɛd/' },
-    { word: 'red', ipa: '/rɛd/' },
-    { word: 'said', ipa: '/sɛd/' },
-    { word: 'head', ipa: '/hɛd/' },
-    { word: 'bread', ipa: '/brɛd/' },
-    { word: 'pen', ipa: '/pɛn/' },
-    { word: 'ten', ipa: '/tɛn/' },
-    { word: 'men', ipa: '/mɛn/' },
-    { word: 'send', ipa: '/sɛnd/' },
-    { word: 'friend', ipa: '/frɛnd/' },
-    { word: 'get', ipa: '/gɛt/' },
-    { word: 'let', ipa: '/lɛt/' },
-    { word: 'dress', ipa: '/drɛs/' },
-    { word: 'best', ipa: '/bɛst/' },
-    { word: 'test', ipa: '/tɛst/' }
-  ],
-  'ʊ': [
-    // TENGAH (30) - Dialokasikan penuh karena tidak ada posisi awal & akhir asli bahasa Inggris
-    { word: 'book', ipa: '/bʊk/' },
-    { word: 'cook', ipa: '/kʊk/' },
-    { word: 'look', ipa: '/lʊk/' },
-    { word: 'took', ipa: '/tʊk/' },
-    { word: 'shook', ipa: '/ʃʊk/' },
-    { word: 'hook', ipa: '/hʊk/' },
-    { word: 'foot', ipa: '/fʊt/' },
-    { word: 'good', ipa: '/gʊd/' },
-    { word: 'wood', ipa: '/wʊd/' },
-    { word: 'hood', ipa: '/hʊd/' },
-    { word: 'put', ipa: '/pʊt/' },
-    { word: 'push', ipa: '/pʊʃ/' },
-    { word: 'full', ipa: '/fʊl/' },
-    { word: 'bull', ipa: '/bʊl/' },
-    { word: 'pull', ipa: '/pʊl/' },
-    { word: 'sugar', ipa: '/ˈʃʊgɚ/' },
-    { word: 'cushion', ipa: '/ˈkʊʃən/' },
-    { word: 'rookie', ipa: '/ˈrʊki/' },
-    { word: 'cookie', ipa: '/ˈkʊki/' },
-    { word: 'woman', ipa: '/ˈwʊmən/' },
-    { word: 'wolf', ipa: '/wʊlf/' },
-    { word: 'bush', ipa: '/bʊʃ/' },
-    { word: 'butcher', ipa: '/ˈbʊʧɚ/' },
-    { word: 'pudding', ipa: '/ˈpʊdɪŋ/' },
-    { word: 'wooden', ipa: '/ˈwʊdən/' },
-    { word: 'pulling', ipa: '/ˈpʊlɪŋ/' },
-    { word: 'hoodie', ipa: '/ˈhʊdi/' },
-    { word: 'stood', ipa: '/stʊd/' },
-    { word: 'could', ipa: '/kʊd/' },
-    { word: 'should', ipa: '/ʃʊd/' }
-  ],
-  'ʌ': [
-    // AWAL (10)
-    { word: 'up', ipa: '/ʌp/' },
-    { word: 'us', ipa: '/ʌs/' },
-    { word: 'ugly', ipa: '/ˈʌgli/' },
-    { word: 'uncle', ipa: '/ˈʌŋkəl/' },
-    { word: 'under', ipa: '/ˈʌndɚ/' },
-    { word: 'onion', ipa: '/ˈʌnjən/' },
-    { word: 'other', ipa: '/ˈʌðɚ/' },
-    { word: 'utter', ipa: '/ˈʌtɚ/' },
-    { word: 'oven', ipa: '/ˈʌvən/' },
-    { word: 'umbrella', ipa: '/ʌmˈbrɛlə/' },
-    // TENGAH (20) - Distribusi seimbang karena tidak ada posisi akhir
-    { word: 'cup', ipa: '/kʌp/' },
-    { word: 'but', ipa: '/bʌt/' },
-    { word: 'luck', ipa: '/lʌk/' },
-    { word: 'fun', ipa: '/fʌn/' },
-    { word: 'love', ipa: '/lʌv/' },
-    { word: 'come', ipa: '/kʌm/' },
-    { word: 'bus', ipa: '/bʌs/' },
-    { word: 'cut', ipa: '/kʌt/' },
-    { word: 'much', ipa: '/mʌʧ/' },
-    { word: 'run', ipa: '/rʌn/' },
-    { word: 'jump', ipa: '/ʤʌmp/' },
-    { word: 'shut', ipa: '/ʃʌt/' },
-    { word: 'trust', ipa: '/trʌst/' },
-    { word: 'stuff', ipa: '/stʌf/' },
-    { word: 'money', ipa: '/ˈmʌni/' },
-    { word: 'honey', ipa: '/ˈhʌni/' },
-    { word: 'cover', ipa: '/ˈkʌvɚ/' },
-    { word: 'worry', ipa: '/ˈwʌri/' },
-    { word: 'hurry', ipa: '/ˈhʌri/' },
-    { word: 'touch', ipa: '/tʌʧ/' }
-  ],
-  'ɚ': [
-    // TENGAH (15) - Distribusi seimbang karena tidak ada posisi awal (posisi awal menggunakan /ɝ/)
-    { word: 'yesterday', ipa: '/ˈjɛstɚdeɪ/' },
-    { word: 'wonderful', ipa: '/ˈwʌndɚfəl/' },
-    { word: 'butterfly', ipa: '/ˈbʌtɚflaɪ/' },
-    { word: 'leadership', ipa: '/ˈlidɚʃɪp/' },
-    { word: 'interview', ipa: '/ˈɪntɚvju/' },
-    { word: 'dangerous', ipa: '/ˈdeɪnʤɚəs/' },
-    { word: 'liberty', ipa: '/ˈlɪbɚti/' },
-    { word: 'poverty', ipa: '/ˈpɑvɚti/' },
-    { word: 'property', ipa: '/ˈprɑpɚti/' },
-    { word: 'pattern', ipa: '/ˈpætɚn/' },
-    { word: 'modern', ipa: '/ˈmɑdɚn/' },
-    { word: 'lantern', ipa: '/ˈlæntɚ/' },
-    { word: 'western', ipa: '/ˈwɛstɚn/' },
-    { word: 'eastern', ipa: '/ˈistɚn/' },
-    { word: 'northern', ipa: '/ˈnɔrðɚn/' },
-    // AKHIR (15)
-    { word: 'teacher', ipa: '/ˈtiʧɚ/' },
-    { word: 'doctor', ipa: '/ˈdɑktɚ/' },
-    { word: 'mother', ipa: '/ˈmʌðɚ/' },
-    { word: 'father', ipa: '/ˈfɑðɚ/' },
-    { word: 'brother', ipa: '/ˈbrʌðɚ/' },
-    { word: 'sister', ipa: '/ˈsɪstɚ/' },
-    { word: 'worker', ipa: '/ˈwɜrkɚ/' },
-    { word: 'player', ipa: '/ˈpleɪɚ/' },
-    { word: 'driver', ipa: '/ˈdraɪvɚ/' },
-    { word: 'computer', ipa: '/kəmˈpjutɚ/' },
-    { word: 'number', ipa: '/ˈnʌmbɚ/' },
-    { word: 'summer', ipa: '/ˈsʌmɚ/' },
-    { word: 'better', ipa: '/ˈbɛtɚ/' },
-    { word: 'letter', ipa: '/ˈlɛtɚ/' },
-    { word: 'water', ipa: '/ˈwɑtɚ/' }
-  ],
-  'ɪ': [
-    // AWAL (10)
-    { word: 'it', ipa: '/ɪt/' },
-    { word: 'is', ipa: '/ɪz/' },
-    { word: 'in', ipa: '/ɪn/' },
-    { word: 'if', ipa: '/ɪf/' },
-    { word: 'ill', ipa: '/ɪl/' },
-    { word: 'image', ipa: '/ˈɪmɪʤ/' },
-    { word: 'infant', ipa: '/ˈɪnfənt/' },
-    { word: 'insect', ipa: '/ˈɪnsɛkt/' },
-    { word: 'impact', ipa: '/ˈɪmpækt/' },
-    { word: 'ink', ipa: '/ɪŋk/' },
-    // TENGAH (20) - Distribusi seimbang karena tidak ada posisi akhir murni dalam standard GA
-    { word: 'sit', ipa: '/sɪt/' },
-    { word: 'hit', ipa: '/hɪt/' },
-    { word: 'bit', ipa: '/bɪt/' },
-    { word: 'win', ipa: '/wɪn/' },
-    { word: 'pin', ipa: '/pɪn/' },
-    { word: 'big', ipa: '/bɪg/' },
-    { word: 'kid', ipa: '/kɪd/' },
-    { word: 'ship', ipa: '/ʃɪp/' },
-    { word: 'fish', ipa: '/fɪʃ/' },
-    { word: 'milk', ipa: '/mɪlk/' },
-    { word: 'miss', ipa: '/mɪs/' },
-    { word: 'kiss', ipa: '/kɪs/' },
-    { word: 'list', ipa: '/lɪst/' },
-    { word: 'quick', ipa: '/kwɪk/' },
-    { word: 'sick', ipa: '/sɪk/' },
-    { word: 'thin', ipa: '/θɪn/' },
-    { word: 'rich', ipa: '/rɪʧ/' },
-    { word: 'finish', ipa: '/ˈfɪnɪʃ/' },
-    { word: 'minute', ipa: '/ˈmɪnɪt/' },
-    { word: 'system', ipa: '/ˈsɪstəm/' }
-  ]
+  'ʌ': {
+    uiNote: 'Suara ini tidak ditemukan di akhir kata baku, hanya muncul pada kata seruan informal seperti "huh" atau "duh".',
+    beginning: [
+      { word: 'onion', ipa: '/ˈʌnjən/' },
+      { word: 'other', ipa: '/ˈʌðɚ/' },
+      { word: 'oven', ipa: '/ˈʌvən/' },
+      { word: 'udder', ipa: '/ˈʌdɚ/' },
+      { word: 'ugly', ipa: '/ˈʌɡli/' },
+      { word: 'ulcer', ipa: '/ˈʌlsɚ/' },
+      { word: 'ultimate', ipa: '/ˈʌltəmət/' },
+      { word: 'ultra', ipa: '/ˈʌltrə/' },
+      { word: 'umbrella', ipa: '/ʌmˈbrɛlə/' },
+      { word: 'umpire', ipa: '/ˈʌmpaɪɚ/' },
+      { word: 'uncle', ipa: '/ˈʌŋkəl/' },
+      { word: 'under', ipa: '/ˈʌndɚ/' },
+      { word: 'up', ipa: '/ʌp/' },
+      { word: 'us', ipa: '/ʌs/' },
+      { word: 'utter', ipa: '/ˈʌtɚ/' }
+    ],
+    middle: [
+      { word: 'bus', ipa: '/bʌs/' },
+      { word: 'but', ipa: '/bʌt/' },
+      { word: 'come', ipa: '/kʌm/' },
+      { word: 'cup', ipa: '/kʌp/' },
+      { word: 'cut', ipa: '/kʌt/' },
+      { word: 'duck', ipa: '/dʌk/' },
+      { word: 'fun', ipa: '/fʌn/' },
+      { word: 'honey', ipa: '/ˈhʌni/' },
+      { word: 'jump', ipa: '/dʒʌmp/' },
+      { word: 'love', ipa: '/lʌv/' },
+      { word: 'luck', ipa: '/lʌk/' },
+      { word: 'much', ipa: '/mʌtʃ/' },
+      { word: 'run', ipa: '/rʌn/' },
+      { word: 'sun', ipa: '/sʌn/' },
+      { word: 'trust', ipa: '/trʌst/' }
+    ]
+  },
+  'ɪ': {
+    uiNote: 'Suara ini tidak pernah muncul di akhir kata baku dalam bahasa Inggris.',
+    beginning: [
+      { word: 'if', ipa: '/ɪf/' },
+      { word: 'ignore', ipa: '/ɪɡˈnɔr/' }, // Diperbaiki dari /ɪbˈnɔr/ ke /ɪɡˈnɔr/
+      { word: 'ill', ipa: '/ɪl/' },
+      { word: 'illness', ipa: '/ˈɪlnəs/' },
+      { word: 'image', ipa: '/ˈɪmɪdʒ/' },
+      { word: 'impact', ipa: '/ˈɪmpækt/' },
+      { word: 'in', ipa: '/ɪn/' },
+      { word: 'inch', ipa: '/ɪntʃ/' },
+      { word: 'index', ipa: '/ˈɪndɛks/' },
+      { word: 'infant', ipa: '/ˈɪnfənt/' },
+      { word: 'ink', ipa: '/ɪŋk/' },
+      { word: 'insect', ipa: '/ˈɪnsɛkt/' },
+      { word: 'instant', ipa: '/ˈɪnstənt/' },
+      { word: 'is', ipa: '/ɪz/' },
+      { word: 'it', ipa: '/ɪt/' }
+    ],
+    middle: [
+      { word: 'big', ipa: '/bɪɡ/' },
+      { word: 'bit', ipa: '/bɪt/' },
+      { word: 'fish', ipa: '/fɪʃ/' },
+      { word: 'hit', ipa: '/hɪt/' },
+      { word: 'kid', ipa: '/kɪd/' },
+      { word: 'kiss', ipa: '/kɪs/' },
+      { word: 'list', ipa: '/lɪst/' },
+      { word: 'milk', ipa: '/mɪlk/' },
+      { word: 'miss', ipa: '/mɪs/' },
+      { word: 'pin', ipa: '/pɪn/' },
+      { word: 'quick', ipa: '/kwɪk/' },
+      { word: 'rich', ipa: '/rɪtʃ/' },
+      { word: 'ship', ipa: '/ʃɪp/' },
+      { word: 'sick', ipa: '/sɪk/' },
+      { word: 'sit', ipa: '/sɪt/' }
+    ]
+  },
+  'ʊ': {
+    uiNote: 'Suara ini hampir selalu berada di tengah kata. Sangat langka di awal kata (kecuali kata serapan khusus) dan tidak ada di akhir kata baku.',
+    middle: [
+      { word: 'book', ipa: '/bʊk/' },
+      { word: 'bull', ipa: '/bʊl/' },
+      { word: 'bush', ipa: '/bʊʃ/' },
+      { word: 'butcher', ipa: '/ˈbʊtʃɚ/' },
+      { word: 'cook', ipa: '/kʊk/' },
+      { word: 'cookie', ipa: '/ˈkʊki/' },
+      { word: 'could', ipa: '/kʊd/' },
+      { word: 'cushion', ipa: '/ˈkʊʃən/' },
+      { word: 'foot', ipa: '/fʊt/' },
+      { word: 'full', ipa: '/fʊl/' },
+      { word: 'good', ipa: '/ɡʊd/' },
+      { word: 'hood', ipa: '/hʊd/' },
+      { word: 'hoodie', ipa: '/ˈhʊdi/' },
+      { word: 'hook', ipa: '/hʊk/' },
+      { word: 'look', ipa: '/lʊk/' },
+      { word: 'pudding', ipa: '/ˈpʊdɪŋ/' },
+      { word: 'pull', ipa: '/pʊl/' },
+      { word: 'pulling', ipa: '/ˈpʊlɪŋ/' },
+      { word: 'push', ipa: '/pʊʃ/' },
+      { word: 'put', ipa: '/pʊt/' },
+      { word: 'rookie', ipa: '/ˈrʊki/' },
+      { word: 'shook', ipa: '/ʃʊk/' },
+      { word: 'should', ipa: '/ʃʊd/' },
+      { word: 'stood', ipa: '/stʊd/' },
+      { word: 'sugar', ipa: '/ˈʃʊɡɚ/' },
+      { word: 'took', ipa: '/tʊk/' },
+      { word: 'wolf', ipa: '/wʊlf/' },
+      { word: 'woman', ipa: '/ˈwʊmən/' },
+      { word: 'wood', ipa: '/wʊd/' },
+      { word: 'wooden', ipa: '/ˈwʊdən/' }
+    ]
+  },
+  'ɛ': {
+    uiNote: 'Suara ini tidak ditemukan di akhir kata baku, hanya muncul pada kata seruan informal seperti "meh" atau "bleh".',
+    beginning: [
+      { word: 'echo', ipa: '/ˈɛkoʊ/' },
+      { word: 'edit', ipa: '/ˈɛdɪt/' },
+      { word: 'effort', ipa: '/ˈɛfɚt/' },
+      { word: 'egg', ipa: '/ɛɡ/' },
+      { word: 'elbow', ipa: '/ˈɛlboʊ/' },
+      { word: 'empty', ipa: '/ˈɛmpti/' },
+      { word: 'end', ipa: '/ɛnd/' },
+      { word: 'energy', ipa: '/ˈɛnɚdʒi/' },
+      { word: 'engine', ipa: '/ˈɛndʒən/' },
+      { word: 'enter', ipa: '/ˈɛntɚ/' },
+      { word: 'envy', ipa: '/ˈɛnvi/' },
+      { word: 'episode', ipa: '/ˈɛpəsoʊd/' },
+      { word: 'error', ipa: '/ˈɛrɚ/' },
+      { word: 'expert', ipa: '/ˈɛkspɝt/' },
+      { word: 'extra', ipa: '/ˈɛkstrə/' }
+    ],
+    middle: [
+      { word: 'bed', ipa: '/bɛd/' },
+      { word: 'best', ipa: '/bɛst/' },
+      { word: 'bread', ipa: '/brɛd/' },
+      { word: 'dress', ipa: '/drɛs/' },
+      { word: 'friend', ipa: '/frɛnd/' },
+      { word: 'get', ipa: '/ɡɛt/' },
+      { word: 'head', ipa: '/hɛd/' },
+      { word: 'let', ipa: '/lɛt/' },
+      { word: 'men', ipa: '/mɛn/' },
+      { word: 'pen', ipa: '/pɛn/' },
+      { word: 'red', ipa: '/rɛd/' },
+      { word: 'said', ipa: '/sɛd/' },
+      { word: 'send', ipa: '/sɛnd/' },
+      { word: 'ten', ipa: '/tɛn/' },
+      { word: 'test', ipa: '/tɛst/' }
+    ]
+  },
+  'ə': {
+    // Schwa mencakup seluruh posisi dengan distribusi seimbang, tidak memerlukan uiNote khusus posisi.
+    beginning: [
+      { word: 'about', ipa: '/əˈbaʊt/' },
+      { word: 'above', ipa: '/əˈbʌv/' },
+      { word: 'ago', ipa: '/əˈɡoʊ/' },
+      { word: 'agree', ipa: '/əˈɡri/' },
+      { word: 'alert', ipa: '/əˈlɝt/' },
+      { word: 'alone', ipa: '/əˈloʊn/' },
+      { word: 'amaze', ipa: '/əˈmeɪz/' },
+      { word: 'around', ipa: '/əˈraʊnd/' },
+      { word: 'attack', ipa: '/əˈtæk/' },
+      { word: 'away', ipa: '/əˈweɪ/' }
+    ],
+    middle: [
+      { word: 'animal', ipa: '/ˈænəməl/' },
+      { word: 'condition', ipa: '/kənˈdɪʃən/' },
+      { word: 'family', ipa: '/ˈfæməli/' },
+      { word: 'machine', ipa: '/məˈʃin/' },
+      { word: 'police', ipa: '/pəˈlis/' },
+      { word: 'problem', ipa: '/ˈprɑbləm/' },
+      { word: 'support', ipa: '/səˈpɔrt/' },
+      { word: 'system', ipa: '/ˈsɪstəm/' },
+      { word: 'today', ipa: '/təˈdeɪ/' },
+      { word: 'tomorrow', ipa: '/təˈmɑroʊ/' }
+    ],
+    ending: [
+      { word: 'area', ipa: '/ˈɛriə/' },
+      { word: 'banana', ipa: '/bəˈnænə/' },
+      { word: 'camera', ipa: '/ˈkæmrə/' },
+      { word: 'china', ipa: '/ˈtʃaɪnə/' },
+      { word: 'comma', ipa: '/ˈkɑmə/' },
+      { word: 'data', ipa: '/ˈdeɪtə/' },
+      { word: 'drama', ipa: '/ˈdrɑmə/' },
+      { word: 'idea', ipa: '/aɪˈdiə/' },
+      { word: 'pizza', ipa: '/ˈpitsə/' },
+      { word: 'sofa', ipa: '/ˈsoʊfə/' }
+    ]
+  },
+  'ɚ': {
+    uiNote: 'Suara ini tidak bisa berada di awal kata karena sifat rhotik-nya yang selalu tidak mendapat tekanan (unstressed).',
+    middle: [
+      { word: 'butterfly', ipa: '/ˈbʌtɚflaɪ/' },
+      { word: 'dangerous', ipa: '/ˈdeɪndʒɚəs/' },
+      { word: 'eastern', ipa: '/ˈistɚn/' },
+      { word: 'interview', ipa: '/ˈɪntɚvju/' },
+      { word: 'lantern', ipa: '/ˈlæntɚn/' },
+      { word: 'leadership', ipa: '/ˈlidɚʃɪp/' },
+      { word: 'liberty', ipa: '/ˈlɪbɚti/' },
+      { word: 'modern', ipa: '/ˈmɑdɚn/' },
+      { word: 'northern', ipa: '/ˈnɔrðɚn/' },
+      { word: 'pattern', ipa: '/ˈpætɚn/' },
+      { word: 'poverty', ipa: '/ˈpɑvɚti/' },
+      { word: 'property', ipa: '/ˈprɑpɚti/' },
+      { word: 'western', ipa: '/ˈwɛstɚn/' },
+      { word: 'wonderful', ipa: '/ˈwʌndɚfəl/' },
+      { word: 'yesterday', ipa: '/ˈjɛstɚdeɪ/' }
+    ],
+    ending: [
+      { word: 'better', ipa: '/ˈbɛtɚ/' },
+      { word: 'brother', ipa: '/ˈbrʌðɚ/' },
+      { word: 'computer', ipa: '/kəmˈpjutɚ/' },
+      { word: 'doctor', ipa: '/ˈdɑktɚ/' },
+      { word: 'driver', ipa: '/ˈdraɪvɚ/' },
+      { word: 'father', ipa: '/ˈfɑðɚ/' },
+      { word: 'letter', ipa: '/ˈlɛtɚ/' },
+      { word: 'mother', ipa: '/ˈmʌðɚ/' },
+      { word: 'number', ipa: '/ˈnʌmbɚ/' },
+      { word: 'player', ipa: '/ˈpleɪɚ/' },
+      { word: 'sister', ipa: '/ˈsɪstɚ/' },
+      { word: 'summer', ipa: '/ˈsʌmɚ/' },
+      { word: 'teacher', ipa: '/ˈtitʃɚ/' },
+      { word: 'water', ipa: '/ˈwɑtɚ/' },
+      { word: 'worker', ipa: '/ˈwɝkɚ/' }
+    ]
+  }
 };

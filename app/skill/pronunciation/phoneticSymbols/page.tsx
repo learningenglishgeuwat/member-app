@@ -16,58 +16,58 @@ interface PhoneticSymbol {
 }
 
 const phoneticSymbols: PhoneticSymbol[] = [
-  // Vowels - Lax
-  { symbol: '\u028c', category: 'vowel', subcategory: 'lax' }, // ?
-  { symbol: '\u026a', category: 'vowel', subcategory: 'lax' }, // ?
-  { symbol: '\u028a', category: 'vowel', subcategory: 'lax' }, // ?
-  { symbol: '\u025b', category: 'vowel', subcategory: 'lax' }, // ?
-  { symbol: '\u0259', category: 'vowel', subcategory: 'lax' }, // ?
-  { symbol: '\u025a', category: 'vowel', subcategory: 'lax' }, // ?
+  // Vowels - Lax (Urutan: ʌ, ɪ, ʊ, ɛ, ə, ɚ)
+  { symbol: '\u028c', category: 'vowel', subcategory: 'lax' }, 
+  { symbol: '\u026a', category: 'vowel', subcategory: 'lax' }, 
+  { symbol: '\u028a', category: 'vowel', subcategory: 'lax' }, 
+  { symbol: '\u025b', category: 'vowel', subcategory: 'lax' }, 
+  { symbol: '\u0259', category: 'vowel', subcategory: 'lax' }, 
+  { symbol: '\u025a', category: 'vowel', subcategory: 'lax' }, 
 
-  // Vowels - Tense
-  { symbol: '\u0251', category: 'vowel', subcategory: 'tense' }, // ?
+  // Vowels - Tense (Urutan: ɑ, i, u, æ, ɔ)
+  { symbol: '\u0251', category: 'vowel', subcategory: 'tense' }, 
   { symbol: 'i', category: 'vowel', subcategory: 'tense' },
   { symbol: 'u', category: 'vowel', subcategory: 'tense' },
-  { symbol: '\u00e6', category: 'vowel', subcategory: 'tense' }, // æ
-  { symbol: '\u0254', category: 'vowel', subcategory: 'tense' }, // ?
+  { symbol: '\u00e6', category: 'vowel', subcategory: 'tense' }, 
+  { symbol: '\u0254', category: 'vowel', subcategory: 'tense' }, 
 
-  // Consonants - Voiceless
+  // Diphthongs (Urutan: aɪ, eɪ, ɔɪ, ɪr, ɛr, ʊr, oʊ, aʊ)
+  { symbol: 'a\u026a', category: 'diphthong' }, 
+  { symbol: 'e\u026a', category: 'diphthong' }, 
+  { symbol: '\u0254\u026a', category: 'diphthong' }, 
+  { symbol: '\u026ar', category: 'diphthong' }, 
+  { symbol: '\u025br', category: 'diphthong' }, // Standardisasi ke unicode escape
+  { symbol: '\u028ar', category: 'diphthong' }, 
+  { symbol: 'o\u028a', category: 'diphthong' }, 
+  { symbol: 'a\u028a', category: 'diphthong' },
+
+  // Consonants - Voiceless (Urutan: p, t, k, f, θ, s, ʃ, ʧ, h)
   { symbol: 'p', category: 'consonant', subcategory: 'voiceless' },
   { symbol: 't', category: 'consonant', subcategory: 'voiceless' },
   { symbol: 'k', category: 'consonant', subcategory: 'voiceless' },
   { symbol: 'f', category: 'consonant', subcategory: 'voiceless' },
-  { symbol: '\u03b8', category: 'consonant', subcategory: 'voiceless' }, // ?
+  { symbol: '\u03b8', category: 'consonant', subcategory: 'voiceless' }, 
   { symbol: 's', category: 'consonant', subcategory: 'voiceless' },
-  { symbol: '\u0283', category: 'consonant', subcategory: 'voiceless' }, // ?
-  { symbol: '\u02a7', category: 'consonant', subcategory: 'voiceless' }, // ?
+  { symbol: '\u0283', category: 'consonant', subcategory: 'voiceless' }, 
+  { symbol: '\u02a7', category: 'consonant', subcategory: 'voiceless' }, 
   { symbol: 'h', category: 'consonant', subcategory: 'voiceless' },
 
-  // Consonants - Voiced
+  // Consonants - Voiced (Urutan: b, d, g, v, ð, z, ʒ, ʤ, l, m, n, ŋ, r, w, j)
   { symbol: 'b', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'd', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'g', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'v', category: 'consonant', subcategory: 'voiced' },
-  { symbol: '\u00f0', category: 'consonant', subcategory: 'voiced' }, // ð
+  { symbol: '\u00f0', category: 'consonant', subcategory: 'voiced' }, 
   { symbol: 'z', category: 'consonant', subcategory: 'voiced' },
-  { symbol: '\u0292', category: 'consonant', subcategory: 'voiced' }, // ?
-  { symbol: '\u02a4', category: 'consonant', subcategory: 'voiced' }, // ?
+  { symbol: '\u0292', category: 'consonant', subcategory: 'voiced' }, 
+  { symbol: '\u02a4', category: 'consonant', subcategory: 'voiced' }, 
   { symbol: 'l', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'm', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'n', category: 'consonant', subcategory: 'voiced' },
-  { symbol: '\u014b', category: 'consonant', subcategory: 'voiced' }, // ?
+  { symbol: '\u014b', category: 'consonant', subcategory: 'voiced' }, 
   { symbol: 'r', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'w', category: 'consonant', subcategory: 'voiced' },
   { symbol: 'j', category: 'consonant', subcategory: 'voiced' },
-
-  // Diphthongs
-  { symbol: 'a\u026a', category: 'diphthong' }, // a?
-  { symbol: 'e\u026a', category: 'diphthong' }, // e?
-  { symbol: '\u0254\u026a', category: 'diphthong' }, // ??
-  { symbol: '\u026ar', category: 'diphthong' }, // ??
-  { symbol: 'ɛr', category: 'diphthong' }, // ɛr
-  { symbol: '\u028ar', category: 'diphthong' }, // ??
-  { symbol: 'o\u028a', category: 'diphthong' }, // o?
-  { symbol: 'a\u028a', category: 'diphthong' }, // a?
 ];
 
 const PhoneticPortal: React.FC = () => {
@@ -81,9 +81,9 @@ const PhoneticPortal: React.FC = () => {
   const symbolSpeakResetRef = useRef<number | null>(null);
   const playAllSymbolTimeoutRef = useRef<number | null>(null);
   const playAllSymbolSessionRef = useRef(0);
-  // Dedupe prefetch per lifecycle halaman agar klik tidak spam request path yang sama.
   const prefetchedPathsRef = useRef<Set<string>>(new Set());
   const router = useRouter();
+
   const getSymbolDetailPath = useCallback(
     (symbol: string) => `/skill/pronunciation/phoneticSymbols/${encodeURIComponent(symbol)}`,
     [],
@@ -98,7 +98,7 @@ const PhoneticPortal: React.FC = () => {
 
       prefetchedPathsRef.current.add(normalizedPath);
       void Promise.resolve(router.prefetch(normalizedPath)).catch(() => {
-        // Ignore prefetch failures to avoid blocking navigation flow.
+        // Ignore prefetch failures
       });
     },
     [router],
@@ -206,7 +206,6 @@ const PhoneticPortal: React.FC = () => {
   }, []);
 
   const getExampleWordForSymbol = useCallback((symbol: string): string | null => {
-    // Cari data common letter berdasarkan IPA symbol
     const ipaSymbol = `/${symbol}/`;
     const commonLetter = getCommonLetterByIPA(ipaSymbol);
     
@@ -214,10 +213,8 @@ const PhoneticPortal: React.FC = () => {
       return null;
     }
 
-    // Extract kata-kata dari examples
     const allWords: string[] = [];
     for (const example of commonLetter.examples) {
-      // Format: "pattern -> word1, word2, word3"
       const parts = example.split('->');
       if (parts.length === 2) {
         const words = parts[1].split(',').map(w => w.trim());
@@ -227,7 +224,6 @@ const PhoneticPortal: React.FC = () => {
 
     if (allWords.length === 0) return null;
 
-    // Prioritaskan kata 1 suku kata (heuristic: tidak ada spasi dan panjang <= 5 karakter)
     const oneSyllableWords = allWords.filter(word => {
       const cleanWord = word.replace(/[^a-zA-Z]/g, '');
       return cleanWord.length <= 5 && !word.includes(' ');
@@ -237,7 +233,6 @@ const PhoneticPortal: React.FC = () => {
       return oneSyllableWords[0];
     }
 
-    // Jika tidak ada kata 1 suku kata, ambil kata terpendek (kemungkinan 2 suku kata)
     const sortedByLength = [...allWords].sort((a, b) => {
       const aLen = a.replace(/[^a-zA-Z]/g, '').length;
       const bLen = b.replace(/[^a-zA-Z]/g, '').length;
@@ -252,20 +247,17 @@ const PhoneticPortal: React.FC = () => {
       stopCurrentSymbolSpeech();
       setActiveSpeakingSymbol(symbol);
       
-      // Coba dapatkan contoh kata untuk symbol ini
       const exampleWord = getExampleWordForSymbol(symbol);
       
       await primeBestEnglishVoice();
       
       if (exampleWord) {
-        // Gunakan contoh kata untuk TTS
         await speakWithBestEnglishVoice(exampleWord, {
           rate: 0.85,
           pitch: 1.0,
           volume: 1.0,
         });
       } else {
-        // Fallback ke speech profile lama jika tidak ada contoh kata
         const symbolSpeechProfile = getSymbolSpeechProfile(symbol);
         await speakWithBestEnglishVoice(symbolSpeechProfile.prompt, {
           rate: symbolSpeechProfile.rate,
@@ -307,7 +299,6 @@ const PhoneticPortal: React.FC = () => {
       const symbol = symbolPlayAllQueue[currentIndex];
       setActiveSpeakingSymbol(symbol);
       
-      // Coba dapatkan contoh kata
       const exampleWord = getExampleWordForSymbol(symbol);
       
       if (exampleWord) {

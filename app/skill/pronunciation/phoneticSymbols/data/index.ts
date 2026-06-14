@@ -7,8 +7,10 @@ export {
   getWordExamples,
   getExamplesByCategory,
   getAllSymbolsWithExamples,
-  getRandomExamples
+  getRandomExamples,
+  symbolUiNotes
 } from './wordExamples/wordExamples';
+export { getUiNote } from './wordExamples/wordExamples';
 
 // Export symbol descriptions
 export * from './symbolDescriptions';

@@ -1,293 +1,328 @@
 // Diphthong Examples
 // Generated from Word_Example Excel files - All 30 examples per symbol
+// Refactored: Nested Object structure for position groups (beginning, middle, ending)
+// UI Ready: Includes 'uiNote' property for positions with limited phonetic presence.
 
 export interface WordExample {
   word: string;
   ipa: string;
 }
 
+export interface PositionGroups {
+  uiNote?: string; // Properti untuk catatan khusus visual UI/Frontend
+  beginning?: WordExample[];
+  middle?: WordExample[];
+  ending?: WordExample[];
+}
+
 export interface SymbolWordExamples {
-  [key: string]: WordExample[];
+  [key: string]: PositionGroups;
 }
 
 export const diphthongExamples: SymbolWordExamples = {
-  'aʊ': [
-    // AWAL (10)
-    { word: 'out', ipa: '/aʊt/' },
-    { word: 'outside', ipa: '/ˈaʊtsaɪd/' },
-    { word: 'hour', ipa: '/aʊɚ/' },
-    { word: 'ounce', ipa: '/aʊns/' },
-    { word: 'owl', ipa: '/aʊl/' },
-    { word: 'our', ipa: '/aʊɚ/' },
-    { word: 'ours', ipa: '/aʊɚz/' },
-    { word: 'oust', ipa: '/aʊst/' },
-    { word: 'outline', ipa: '/ˈaʊtlaɪn/' },
-    { word: 'outlook', ipa: '/ˈaʊtlʊk/' },
-    // TENGAH (10)
-    { word: 'brown', ipa: '/braʊn/' },
-    { word: 'town', ipa: '/taʊn/' },
-    { word: 'down', ipa: '/daʊn/' },
-    { word: 'found', ipa: '/faʊnd/' },
-    { word: 'sound', ipa: '/saʊnd/' },
-    { word: 'round', ipa: '/raʊnd/' },
-    { word: 'ground', ipa: '/graʊnd/' },
-    { word: 'house', ipa: '/haʊs/' },
-    { word: 'mouse', ipa: '/maʊs/' },
-    { word: 'mouth', ipa: '/maʊθ/' },
-    // AKHIR (10)
-    { word: 'now', ipa: '/naʊ/' },
-    { word: 'how', ipa: '/haʊ/' },
-    { word: 'cow', ipa: '/kaʊ/' },
-    { word: 'wow', ipa: '/waʊ/' },
-    { word: 'allow', ipa: '/əˈlaʊ/' },
-    { word: 'plow', ipa: '/plaʊ/' },
-    { word: 'vow', ipa: '/vaʊ/' },
-    { word: 'brow', ipa: '/braʊ/' },
-    { word: 'bough', ipa: '/baʊ/' },
-    { word: 'chow', ipa: '/ʧaʊ/' }
-  ],
-  'aɪ': [
-    // AWAL (10)
-    { word: 'ice', ipa: '/aɪs/' },
-    { word: 'island', ipa: '/ˈaɪlənd/' },
-    { word: 'item', ipa: '/ˈaɪtəm/' },
-    { word: 'idea', ipa: '/aɪˈdiə/' },
-    { word: 'iron', ipa: '/ˈaɪɚn/' },
-    { word: 'icon', ipa: '/ˈaɪkɑn/' },
-    { word: 'ivory', ipa: '/ˈaɪvəri/' },
-    { word: 'isolate', ipa: '/ˈaɪsəleɪt/' },
-    { word: 'iris', ipa: '/ˈaɪrɪs/' },
-    { word: 'idle', ipa: '/ˈaɪdəl/' },
-    // TENGAH (10)
-    { word: 'night', ipa: '/naɪt/' },
-    { word: 'light', ipa: '/laɪt/' },
-    { word: 'right', ipa: '/raɪt/' },
-    { word: 'fight', ipa: '/faɪt/' },
-    { word: 'tight', ipa: '/taɪt/' },
-    { word: 'time', ipa: '/taɪm/' },
-    { word: 'line', ipa: '/laɪn/' },
-    { word: 'fine', ipa: '/faɪn/' },
-    { word: 'nine', ipa: '/naɪn/' },
-    { word: 'kind', ipa: '/kaɪnd/' },
-    // AKHIR (10)
-    { word: 'my', ipa: '/maɪ/' },
-    { word: 'cry', ipa: '/kraɪ/' },
-    { word: 'try', ipa: '/traɪ/' },
-    { word: 'fly', ipa: '/flaɪ/' },
-    { word: 'sky', ipa: '/skaɪ/' },
-    { word: 'buy', ipa: '/baɪ/' },
-    { word: 'guy', ipa: '/gaɪ/' },
-    { word: 'high', ipa: '/haɪ/' },
-    { word: 'why', ipa: '/waɪ/' },
-    { word: 'tie', ipa: '/taɪ/' }
-  ],
-  'er': [
-    // AWAL (10)
-    { word: 'air', ipa: '/ɛr/' },
-    { word: 'airplane', ipa: '/ˈɛrpleɪn/' },
-    { word: 'airport', ipa: '/ˈɛrpɔrt/' },
-    { word: 'errand', ipa: '/ˈɛrənd/' },
-    { word: 'airy', ipa: '/ˈɛri/' },
-    { word: 'airman', ipa: '/ˈɛrmæn/' },
-    { word: 'airborne', ipa: '/ˈɛrbɔrn/' },
-    { word: 'airtight', ipa: '/ˈɛrtaɪt/' },
-    { word: 'airway', ipa: '/ˈɛrweɪ/' },
-    { word: 'heir', ipa: '/ɛr/' },
-    // TENGAH (10)
-    { word: 'staircase', ipa: '/ˈstɛrkeɪs/' },
-    { word: 'barely', ipa: '/ˈbɛrli/' },
-    { word: 'rarely', ipa: '/ˈrɛrli/' },
-    { word: 'careful', ipa: '/ˈkɛrfəl/' },
-    { word: 'sharing', ipa: '/ˈʃɛrɪŋ/' },
-    { word: 'scarecrow', ipa: '/ˈskɛrkroʊ/' },
-    { word: 'hardware', ipa: '/ˈhɑrdwɛr/' },
-    { word: 'software', ipa: '/ˈsɑftwɛr/' },
-    { word: 'welfare', ipa: '/ˈwɛlfɛr/' },
-    { word: 'nightmare', ipa: '/ˈnaɪtmɛr/' },
-    // AKHIR (10)
-    { word: 'care', ipa: '/kɛr/' },
-    { word: 'share', ipa: '/ʃɛr/' },
-    { word: 'fair', ipa: '/fɛr/' },
-    { word: 'pair', ipa: '/pɛr/' },
-    { word: 'chair', ipa: '/ʧɛr/' },
-    { word: 'hair', ipa: '/hɛr/' },
-    { word: 'stair', ipa: '/stɛr/' },
-    { word: 'declare', ipa: '/dɪˈklɛr/' },
-    { word: 'compare', ipa: '/kəmˈpɛr/' },
-    { word: 'prepare', ipa: '/prɪˈpɛr/' }
-  ],
-  'eɪ': [
-    // AWAL (10)
-    { word: 'age', ipa: '/eɪʤ/' },
-    { word: 'aim', ipa: '/eɪm/' },
-    { word: 'able', ipa: '/ˈeɪbəl/' },
-    { word: 'agent', ipa: '/ˈeɪʤənt/' },
-    { word: 'apron', ipa: '/ˈeɪprən/' },
-    { word: 'alien', ipa: '/ˈeɪljən/' },
-    { word: 'ache', ipa: '/eɪk/' },
-    { word: 'ape', ipa: '/eɪp/' },
-    { word: 'acorn', ipa: '/ˈeɪkɔrn/' },
-    { word: 'asia', ipa: '/ˈeɪʒə/' },
-    // TENGAH (10)
-    { word: 'rain', ipa: '/reɪn/' },
-    { word: 'train', ipa: '/treɪn/' },
-    { word: 'main', ipa: '/meɪn/' },
-    { word: 'name', ipa: '/neɪm/' },
-    { word: 'same', ipa: '/seɪm/' },
-    { word: 'game', ipa: '/geɪm/' },
-    { word: 'late', ipa: '/leɪt/' },
-    { word: 'date', ipa: '/deɪt/' },
-    { word: 'gate', ipa: '/geɪt/' },
-    { word: 'state', ipa: '/steɪt/' },
-    // AKHIR (10)
-    { word: 'day', ipa: '/deɪ/' },
-    { word: 'say', ipa: '/seɪ/' },
-    { word: 'may', ipa: '/meɪ/' },
-    { word: 'pay', ipa: '/peɪ/' },
-    { word: 'way', ipa: '/weɪ/' },
-    { word: 'lay', ipa: '/leɪ/' },
-    { word: 'stay', ipa: '/steɪ/' },
-    { word: 'play', ipa: '/pleɪ/' },
-    { word: 'gray', ipa: '/greɪ/' },
-    { word: 'away', ipa: '/əˈweɪ/' }
-  ],
-  'oʊ': [
-    // AWAL (10)
-    { word: 'old', ipa: '/oʊld/' },
-    { word: 'open', ipa: '/ˈoʊpən/' },
-    { word: 'over', ipa: '/ˈoʊvɚ/' },
-    { word: 'own', ipa: '/oʊn/' },
-    { word: 'ocean', ipa: '/ˈoʊʃən/' },
-    { word: 'oval', ipa: '/ˈoʊvəl/' },
-    { word: 'oak', ipa: '/oʊk/' },
-    { word: 'oat', ipa: '/oʊt/' },
-    { word: 'only', ipa: '/ˈoʊnli/' },
-    { word: 'oboe', ipa: '/ˈoʊboʊ/' },
-    // TENGAH (10)
-    { word: 'boat', ipa: '/boʊt/' },
-    { word: 'coat', ipa: '/koʊt/' },
-    { word: 'road', ipa: '/roʊd/' },
-    { word: 'soap', ipa: '/soʊp/' },
-    { word: 'home', ipa: '/hoʊm/' },
-    { word: 'bone', ipa: '/boʊn/' },
-    { word: 'stone', ipa: '/stoʊn/' },
-    { word: 'cold', ipa: '/koʊld/' },
-    { word: 'gold', ipa: '/goʊld/' },
-    { word: 'most', ipa: '/moʊst/' },
-    // AKHIR (10)
-    { word: 'go', ipa: '/goʊ/' },
-    { word: 'no', ipa: '/noʊ/' },
-    { word: 'so', ipa: '/soʊ/' },
-    { word: 'low', ipa: '/loʊ/' },
-    { word: 'show', ipa: '/ʃoʊ/' },
-    { word: 'snow', ipa: '/snoʊ/' },
-    { word: 'grow', ipa: '/groʊ/' },
-    { word: 'throw', ipa: '/θroʊ/' },
-    { word: 'know', ipa: '/noʊ/' },
-    { word: 'blow', ipa: '/bloʊ/' }
-  ],
-  'ɔɪ': [
-    // AWAL (5) - Terbatas karena kelangkaan fonotaktik awal murni dalam bahasa Inggris
-    { word: 'oil', ipa: '/ɔɪl/' },
-    { word: 'oyster', ipa: '/ˈɔɪstɚ/' },
-    { word: 'ointment', ipa: '/ˈɔɪntmənt/' },
-    { word: 'oily', ipa: '/ˈɔɪli/' },
-    { word: 'oilfield', ipa: '/ˈɔɪlfild/' },
-    // TENGAH (15)
-    { word: 'coin', ipa: '/kɔɪn/' },
-    { word: 'join', ipa: '/ʤɔɪn/' },
-    { word: 'point', ipa: '/pɔɪnt/' },
-    { word: 'voice', ipa: '/vɔɪs/' },
-    { word: 'choice', ipa: '/ʧɔɪs/' },
-    { word: 'noise', ipa: '/nɔɪz/' },
-    { word: 'boil', ipa: '/bɔɪl/' },
-    { word: 'soil', ipa: '/sɔɪl/' },
-    { word: 'spoiled', ipa: '/spɔɪld/' },
-    { word: 'avoid', ipa: '/əˈvɔɪd/' },
-    { word: 'moist', ipa: '/mɔɪst/' },
-    { word: 'poison', ipa: '/ˈpɔɪzən/' },
-    { word: 'foist', ipa: '/fɔɪst/' },
-    { word: 'voyage', ipa: '/ˈvɔɪəʤ/' },
-    { word: 'invoice', ipa: '/ˈɪnvɔɪs/' },
-    // AKHIR (10)
-    { word: 'boy', ipa: '/bɔɪ/' },
-    { word: 'toy', ipa: '/tɔɪ/' },
-    { word: 'joy', ipa: '/ʤɔɪ/' },
-    { word: 'enjoy', ipa: '/ɛnˈʤɔɪ/' },
-    { word: 'annoy', ipa: '/əˈnɔɪ/' },
-    { word: 'destroy', ipa: '/dɪˈstrɔɪ/' },
-    { word: 'employ', ipa: '/ɛmˈplɔɪ/' },
-    { word: 'royal', ipa: '/ˈrɔɪəl/' },
-    { word: 'loyal', ipa: '/ˈlɔɪəl/' },
-    { word: 'rejoin', ipa: '/riˈʤɔɪn/' }
-  ],
-  'ʊr': [
-    // TENGAH (15) - Tidak ada posisi awal murni dalam kosakata dasar GA
-    { word: 'curious', ipa: '/ˈkjʊriəs/' },
-    { word: 'fury', ipa: '/ˈfjʊri/' },
-    { word: 'jury', ipa: '/ˈʤʊri/' },
-    { word: 'during', ipa: '/ˈdʊrɪŋ/' },
-    { word: 'tourist', ipa: '/ˈtʊrɪst/' },
-    { word: 'plural', ipa: '/ˈplʊrəl/' },
-    { word: 'rural', ipa: '/ˈrʊrəl/' },
-    { word: 'europe', ipa: '/ˈjʊrəp/' },
-    { word: 'gourd', ipa: '/gʊrd/' },
-    { word: 'yourself', ipa: '/jʊrˈsɛlf/' },
-    { word: 'yours', ipa: '/jʊrz/' },
-    { word: 'security', ipa: '/sɪˈkjʊrəti/' },
-    { word: 'maturity', ipa: '/məˈʧʊrəti/' },
-    { word: 'purity', ipa: '/ˈpjʊrəti/' },
-    { word: 'furious', ipa: '/ˈfjʊriəs/' },
-    // AKHIR (15)
-    { word: 'tour', ipa: '/tʊr/' },
-    { word: 'poor', ipa: '/pʊr/' },
-    { word: 'sure', ipa: '/ʃʊr/' },
-    { word: 'endure', ipa: '/ɪnˈdjʊr/' },
-    { word: 'secure', ipa: '/sɪˈkjʊr/' },
-    { word: 'obscure', ipa: '/əbˈskjʊr/' },
-    { word: 'mature', ipa: '/məˈʧʊr/' },
-    { word: 'pure', ipa: '/pjʊr/' },
-    { word: 'cure', ipa: '/kjʊr/' },
-    { word: 'insure', ipa: '/ɪnˈʃʊr/' },
-    { word: 'reassure', ipa: '/ˌriəˈʃʊr/' },
-    { word: 'allure', ipa: '/əˈlʊr/' },
-    { word: 'brochure', ipa: '/broʊˈʃʊr/' },
-    { word: 'your', ipa: '/jʊr/' },
-    { word: 'lure', ipa: '/lʊr/' }
-  ],
-  'ɪr': [
-    // AWAL (5)
-    { word: 'ear', ipa: '/ɪr/' },
-    { word: 'eerie', ipa: '/ˈɪri/' },
-    { word: 'earring', ipa: '/ˈɪrɪŋ/' },
-    { word: 'earlobe', ipa: '/ˈɪrloʊb/' },
-    { word: 'earmuff', ipa: '/ˈɪrmʌf/' },
-    // TENGAH (10)
-    { word: 'material', ipa: '/məˈtɪriəl/' },
-    { word: 'serious', ipa: '/ˈsɪriəs/' },
-    { word: 'criteria', ipa: '/kraɪˈtɪriə/' },
-    { word: 'period', ipa: '/ˈpɪriəd/' },
-    { word: 'superior', ipa: '/suˈpɪriɚ/' },
-    { word: 'inferior', ipa: '/ɪnˈfɪriɚ/' },
-    { word: 'interior', ipa: '/ɪnˈtɪriɚ/' },
-    { word: 'experience', ipa: '/ɪkˈspɪriəns/' },
-    { word: 'clearing', ipa: '/ˈklɪrɪŋ/' },
-    { word: 'nearly', ipa: '/ˈnɪrli/' },
-    // AKHIR (15)
-    { word: 'career', ipa: '/kəˈrɪr/' },
-    { word: 'near', ipa: '/nɪr/' },
-    { word: 'clear', ipa: '/klɪr/' },
-    { word: 'fear', ipa: '/fɪr/' },
-    { word: 'hear', ipa: '/hɪr/' },
-    { word: 'year', ipa: '/jɪr/' },
-    { word: 'appear', ipa: '/əˈpɪr/' },
-    { word: 'disappear', ipa: '/ˌdɪsəˈpɪr/' },
-    { word: 'engineer', ipa: '/ˌɛnʤəˈnɪr/' },
-    { word: 'volunteer', ipa: '/ˌvɑlənˈtɪr/' },
-    { word: 'sphere', ipa: '/sfɪr/' },
-    { word: 'cheer', ipa: '/ʧɪr/' },
-    { word: 'gear', ipa: '/gɪr/' },
-    { word: 'beer', ipa: '/bɪr/' },
-    { word: 'deer', ipa: '/dɪr/' }
-  ]
+  'aɪ': {
+    beginning: [
+      { word: 'ice', ipa: '/aɪs/' },
+      { word: 'icon', ipa: '/ˈaɪkɑn/' },
+      { word: 'idea', ipa: '/aɪˈdiə/' },
+      { word: 'idle', ipa: '/ˈaɪdəl/' },
+      { word: 'iris', ipa: '/ˈaɪrɪs/' },
+      { word: 'iron', ipa: '/ˈaɪɚn/' },
+      { word: 'island', ipa: '/ˈaɪlənd/' },
+      { word: 'isolate', ipa: '/ˈaɪsəleɪt/' },
+      { word: 'item', ipa: '/ˈaɪtəm/' },
+      { word: 'ivory', ipa: '/ˈaɪvəri/' }
+    ],
+    middle: [
+      { word: 'fight', ipa: '/faɪt/' },
+      { word: 'fine', ipa: '/faɪn/' },
+      { word: 'kind', ipa: '/kaɪnd/' },
+      { word: 'light', ipa: '/laɪt/' },
+      { word: 'line', ipa: '/laɪn/' },
+      { word: 'night', ipa: '/naɪt/' },
+      { word: 'nine', ipa: '/naɪn/' },
+      { word: 'right', ipa: '/raɪt/' },
+      { word: 'tight', ipa: '/taɪt/' },
+      { word: 'time', ipa: '/taɪm/' }
+    ],
+    ending: [
+      { word: 'buy', ipa: '/baɪ/' },
+      { word: 'cry', ipa: '/kraɪ/' },
+      { word: 'fly', ipa: '/flaɪ/' },
+      { word: 'guy', ipa: '/ɡaɪ/' },
+      { word: 'high', ipa: '/haɪ/' },
+      { word: 'my', ipa: '/maɪ/' },
+      { word: 'sky', ipa: '/skaɪ/' },
+      { word: 'tie', ipa: '/taɪ/' },
+      { word: 'try', ipa: '/traɪ/' },
+      { word: 'why', ipa: '/waɪ/' }
+    ]
+  },
+  'eɪ': {
+    beginning: [
+      { word: 'able', ipa: '/ˈeɪbəl/' },
+      { word: 'ache', ipa: '/eɪk/' },
+      { word: 'acorn', ipa: '/ˈeɪkɔrn/' },
+      { word: 'age', ipa: '/eɪdʒ/' },
+      { word: 'agent', ipa: '/ˈeɪdʒənt/' },
+      { word: 'aim', ipa: '/eɪm/' },
+      { word: 'alien', ipa: '/ˈeɪljən/' },
+      { word: 'ape', ipa: '/eɪp/' },
+      { word: 'apron', ipa: '/ˈeɪprən/' },
+      { word: 'asia', ipa: '/ˈeɪʒə/' }
+    ],
+    middle: [
+      { word: 'date', ipa: '/deɪt/' },
+      { word: 'game', ipa: '/ɡeɪm/' },
+      { word: 'gate', ipa: '/ɡeɪt/' },
+      { word: 'late', ipa: '/leɪt/' },
+      { word: 'main', ipa: '/meɪn/' },
+      { word: 'name', ipa: '/neɪm/' },
+      { word: 'rain', ipa: '/reɪn/' },
+      { word: 'same', ipa: '/seɪm/' },
+      { word: 'state', ipa: '/steɪt/' },
+      { word: 'train', ipa: '/treɪn/' }
+    ],
+    ending: [
+      { word: 'away', ipa: '/əˈweɪ/' },
+      { word: 'day', ipa: '/deɪ/' },
+      { word: 'gray', ipa: '/ɡreɪ/' },
+      { word: 'lay', ipa: '/leɪ/' },
+      { word: 'may', ipa: '/meɪ/' },
+      { word: 'pay', ipa: '/peɪ/' },
+      { word: 'play', ipa: '/pleɪ/' },
+      { word: 'say', ipa: '/seɪ/' },
+      { word: 'stay', ipa: '/steɪ/' },
+      { word: 'way', ipa: '/weɪ/' }
+    ]
+  },
+  'ɔɪ': {
+    uiNote: 'Suara ini cukup jarang ditemukan di awal kata, umumnya hanya muncul pada kata dasar "oil" beserta turunannya.',
+    beginning: [
+      { word: 'oil', ipa: '/ɔɪl/' },
+      { word: 'oilfield', ipa: '/ˈɔɪlfild/' },
+      { word: 'oily', ipa: '/ˈɔɪli/' },
+      { word: 'ointment', ipa: '/ˈɔɪntmənt/' },
+      { word: 'oyster', ipa: '/ˈɔɪstɚ/' }
+    ],
+    middle: [
+      { word: 'avoid', ipa: '/əˈvɔɪd/' },
+      { word: 'boil', ipa: '/bɔɪl/' },
+      { word: 'choice', ipa: '/tʃɔɪs/' },
+      { word: 'coin', ipa: '/kɔɪn/' },
+      { word: 'foist', ipa: '/fɔɪst/' },
+      { word: 'invoice', ipa: '/ˈɪnvɔɪs/' },
+      { word: 'join', ipa: '/dʒɔɪn/' },
+      { word: 'loyal', ipa: '/ˈlɔɪəl/' },
+      { word: 'moist', ipa: '/mɔɪst/' },
+      { word: 'noise', ipa: '/nɔɪz/' },
+      { word: 'point', ipa: '/pɔɪnt/' },
+      { word: 'poison', ipa: '/ˈpɔɪzən/' },
+      { word: 'royal', ipa: '/ˈrɔɪəl/' },
+      { word: 'soil', ipa: '/sɔɪl/' },
+      { word: 'spoiled', ipa: '/spɔɪld/' }
+    ],
+    ending: [
+      { word: 'annoy', ipa: '/əˈnɔɪ/' },
+      { word: 'boy', ipa: '/bɔɪ/' },
+      { word: 'coy', ipa: '/kɔɪ/' },
+      { word: 'destroy', ipa: '/dɪˈstrɔɪ/' },
+      { word: 'employ', ipa: '/ɛmˈplɔɪ/' },
+      { word: 'enjoy', ipa: '/ɛnˈdʒɔɪ/' },
+      { word: 'joy', ipa: '/dʒɔɪ/' },
+      { word: 'rejoin', ipa: '/riˈdʒɔɪn/' },
+      { word: 'soy', ipa: '/sɔɪ/' },
+      { word: 'toy', ipa: '/tɔɪ/' }
+    ]
+  },
+  'ɪr': {
+    uiNote: 'Di awal kata, kombinasi suara ini sangat terbatas dan hampir selalu diwakili oleh rumpun kata "ear".',
+    beginning: [
+      { word: 'ear', ipa: '/ɪr/' },
+      { word: 'earlobe', ipa: '/ˈɪrloʊb/' },
+      { word: 'earmuff', ipa: '/ˈɪrmʌf/' },
+      { word: 'earring', ipa: '/ˈɪrɪŋ/' },
+      { word: 'eerie', ipa: '/ˈɪri/' }
+    ],
+    middle: [
+      { word: 'clearing', ipa: '/ˈklɪrɪŋ/' },
+      { word: 'criteria', ipa: '/kraɪˈtɪriə/' },
+      { word: 'experience', ipa: '/ɪkˈspɪriəns/' },
+      { word: 'inferior', ipa: '/ɪnˈfɪriɚ/' },
+      { word: 'interior', ipa: '/ɪnˈtɪriɚ/' },
+      { word: 'material', ipa: '/məˈtɪriəl/' },
+      { word: 'nearly', ipa: '/ˈnɪrli/' },
+      { word: 'period', ipa: '/ˈpɪriəd/' },
+      { word: 'serious', ipa: '/ˈsɪriəs/' },
+      { word: 'superior', ipa: '/suˈpɪriɚ/' }
+    ],
+    ending: [
+      { word: 'appear', ipa: '/əˈpɪr/' },
+      { word: 'beer', ipa: '/bɪr/' },
+      { word: 'career', ipa: '/kəˈrɪr/' },
+      { word: 'cheer', ipa: '/tʃɪr/' },
+      { word: 'clear', ipa: '/klɪr/' },
+      { word: 'deer', ipa: '/dɪr/' },
+      { word: 'disappear', ipa: '/ˌdɪsəˈpɪr/' },
+      { word: 'engineer', ipa: '/ˌɛndʒəˈnɪr/' },
+      { word: 'fear', ipa: '/fɪr/' },
+      { word: 'gear', ipa: '/ɡɪr/' },
+      { word: 'hear', ipa: '/hɪr/' },
+      { word: 'near', ipa: '/nɪr/' },
+      { word: 'sphere', ipa: '/sfɪr/' },
+      { word: 'volunteer', ipa: '/ˌvɑlənˈtɪr/' },
+      { word: 'year', ipa: '/jɪr/' }
+    ]
+  },
+  'ɛr': {
+    beginning: [
+      { word: 'air', ipa: '/ɛr/' },
+      { word: 'airborne', ipa: '/ˈɛrbɔrn/' },
+      { word: 'airman', ipa: '/ˈɛrmæn/' },
+      { word: 'airplane', ipa: '/ˈɛrpleɪn/' },
+      { word: 'airport', ipa: '/ˈɛrpɔrt/' },
+      { word: 'airtight', ipa: '/ˈɛrtaɪt/' },
+      { word: 'airway', ipa: '/ˈɛrweɪ/' },
+      { word: 'airy', ipa: '/ˈɛri/' },
+      { word: 'errand', ipa: '/ˈɛrənd/' },
+      { word: 'heir', ipa: '/ɛr/' }
+    ],
+    middle: [
+      { word: 'barely', ipa: '/ˈbɛrli/' },
+      { word: 'careful', ipa: '/ˈkɛrfəl/' },
+      { word: 'hardware', ipa: '/ˈhɑrdwɛr/' },
+      { word: 'nightmare', ipa: '/ˈnaɪtmɛr/' },
+      { word: 'rarely', ipa: '/ˈrɛrli/' },
+      { word: 'scarecrow', ipa: '/ˈskɛrkroʊ/' },
+      { word: 'sharing', ipa: '/ˈʃɛrɪŋ/' },
+      { word: 'software', ipa: '/ˈsɑftwɛr/' },
+      { word: 'staircase', ipa: '/ˈstɛrkeɪs/' },
+      { word: 'welfare', ipa: '/ˈwɛlfɛr/' }
+    ],
+    ending: [
+      { word: 'care', ipa: '/kɛr/' },
+      { word: 'chair', ipa: '/tʃɛr/' },
+      { word: 'compare', ipa: '/kəmˈpɛr/' },
+      { word: 'declare', ipa: '/dɪˈklɛr/' },
+      { word: 'fair', ipa: '/fɛr/' },
+      { word: 'hair', ipa: '/hɛr/' },
+      { word: 'pair', ipa: '/pɛr/' },
+      { word: 'prepare', ipa: '/prɪˈpɛr/' },
+      { word: 'share', ipa: '/ʃɛr/' },
+      { word: 'stair', ipa: '/stɛr/' }
+    ]
+  },
+  'ʊr': {
+    uiNote: 'Suara ini tidak ditemukan di awal kata dalam kosakata baku bahasa Inggris standar.',
+    middle: [
+      { word: 'courier', ipa: '/ˈkʊriɚ/' },
+      { word: 'curious', ipa: '/ˈkjʊriəs/' },
+      { word: 'during', ipa: '/ˈdʊrɪŋ/' },
+      { word: 'furious', ipa: '/ˈfjʊriəs/' },
+      { word: 'fury', ipa: '/ˈfjʊri/' },
+      { word: 'gourd', ipa: '/ɡʊrd/' },
+      { word: 'jury', ipa: '/ˈdʒʊri/' },
+      { word: 'maturity', ipa: '/məˈtʃʊrəti/' },
+      { word: 'plural', ipa: '/ˈplʊrəl/' },
+      { word: 'purity', ipa: '/ˈpjʊrəti/' },
+      { word: 'rural', ipa: '/ˈrʊrəl/' },
+      { word: 'security', ipa: '/sɪˈkjʊrəti/' },
+      { word: 'tourist', ipa: '/ˈtʊrɪst/' },
+      { word: 'yours', ipa: '/jʊrz/' },
+      { word: 'yourself', ipa: '/jʊrˈsɛlf/' }
+    ],
+    ending: [
+      { word: 'allure', ipa: '/əˈlʊr/' },
+      { word: 'brochure', ipa: '/broʊˈʃʊr/' },
+      { word: 'cure', ipa: '/kjʊr/' },
+      { word: 'endure', ipa: '/ɪnˈdʊr/' },
+      { word: 'insure', ipa: '/ɪnˈʃʊr/' },
+      { word: 'lure', ipa: '/lʊr/' },
+      { word: 'mature', ipa: '/məˈtʃʊr/' },
+      { word: 'obscure', ipa: '/əbˈskjʊr/' },
+      { word: 'poor', ipa: '/pʊr/' },
+      { word: 'pure', ipa: '/pjʊr/' },
+      { word: 'reassure', ipa: '/ˌriəˈʃʊr/' },
+      { word: 'secure', ipa: '/sɪˈkjʊr/' },
+      { word: 'sure', ipa: '/ʃʊr/' },
+      { word: 'tour', ipa: '/tʊr/' },
+      { word: 'your', ipa: '/jʊr/' }
+    ]
+  },
+  'oʊ': {
+    beginning: [
+      { word: 'oak', ipa: '/oʊk/' },
+      { word: 'oat', ipa: '/oʊt/' },
+      { word: 'oboe', ipa: '/ˈoʊboʊ/' },
+      { word: 'ocean', ipa: '/ˈoʊʃən/' },
+      { word: 'old', ipa: '/oʊld/' },
+      { word: 'only', ipa: '/ˈoʊnli/' },
+      { word: 'open', ipa: '/ˈoʊpən/' },
+      { word: 'oval', ipa: '/ˈoʊvəl/' },
+      { word: 'over', ipa: '/ˈoʊvɚ/' },
+      { word: 'own', ipa: '/oʊn/' }
+    ],
+    middle: [
+      { word: 'boat', ipa: '/boʊt/' },
+      { word: 'bone', ipa: '/boʊn/' },
+      { word: 'coat', ipa: '/koʊt/' },
+      { word: 'cold', ipa: '/koʊld/' },
+      { word: 'gold', ipa: '/ɡoʊld/' },
+      { word: 'home', ipa: '/hoʊm/' },
+      { word: 'most', ipa: '/moʊst/' },
+      { word: 'road', ipa: '/roʊd/' },
+      { word: 'soap', ipa: '/soʊp/' },
+      { word: 'stone', ipa: '/stoʊn/' }
+    ],
+    ending: [
+      { word: 'blow', ipa: '/bloʊ/' },
+      { word: 'go', ipa: '/ɡoʊ/' },
+      { word: 'grow', ipa: '/ɡroʊ/' },
+      { word: 'know', ipa: '/noʊ/' },
+      { word: 'low', ipa: '/loʊ/' },
+      { word: 'no', ipa: '/noʊ/' },
+      { word: 'show', ipa: '/ʃoʊ/' },
+      { word: 'snow', ipa: '/snoʊ/' },
+      { word: 'so', ipa: '/soʊ/' },
+      { word: 'throw', ipa: '/θroʊ/' }
+    ]
+  },
+  'aʊ': {
+    beginning: [
+      { word: 'hour', ipa: '/aʊɚ/' },
+      { word: 'ounce', ipa: '/aʊns/' },
+      { word: 'our', ipa: '/aʊɚ/' },
+      { word: 'ours', ipa: '/aʊɚz/' },
+      { word: 'oust', ipa: '/aʊst/' },
+      { word: 'out', ipa: '/aʊt/' },
+      { word: 'outline', ipa: '/ˈaʊtlaɪn/' },
+      { word: 'outlook', ipa: '/ˈaʊtlʊk/' },
+      { word: 'outside', ipa: '/ˈaʊtsaɪd/' },
+      { word: 'owl', ipa: '/aʊl/' }
+    ],
+    middle: [
+      { word: 'brown', ipa: '/braʊn/' },
+      { word: 'down', ipa: '/daʊn/' },
+      { word: 'found', ipa: '/faʊnd/' },
+      { word: 'ground', ipa: '/ˈɡraʊnd/' },
+      { word: 'house', ipa: '/haʊs/' },
+      { word: 'mouse', ipa: '/maʊs/' },
+      { word: 'mouth', ipa: '/maʊθ/' },
+      { word: 'round', ipa: '/raʊnd/' },
+      { word: 'sound', ipa: '/saʊnd/' },
+      { word: 'town', ipa: '/taʊn/' }
+    ],
+    ending: [
+      { word: 'allow', ipa: '/əˈlaʊ/' },
+      { word: 'bough', ipa: '/baʊ/' },
+      { word: 'brow', ipa: '/braʊ/' },
+      { word: 'chow', ipa: '/tʃaʊ/' },
+      { word: 'cow', ipa: '/kaʊ/' },
+      { word: 'how', ipa: '/haʊ/' },
+      { word: 'now', ipa: '/naʊ/' },
+      { word: 'plow', ipa: '/plaʊ/' },
+      { word: 'vow', ipa: '/vaʊ/' },
+      { word: 'wow', ipa: '/waʊ/' }
+    ]
+  }
 };

@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BarChart2, BookOpen, CalendarDays, Copy, ExternalLink, Loader, Play, Target, X, Zap } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAudio } from '@/lib/audio/useAudio'
 import { useHaptic } from '@/lib/haptic/useHaptic'
 import PronunciationRoadmapModal from '@/app/dashboard/components/TutorialContent/PronunciationRoadmapModal'
 import { saveDashboardView } from '@/app/dashboard/dashboardView'
@@ -168,6 +169,7 @@ const StartJourney: React.FC = () => {
   const [calendarNotificationMinutes, setCalendarNotificationMinutes] = useState('5')
   const [hasCopiedCalendarPrompt, setHasCopiedCalendarPrompt] = useState(false)
   const { triggerHaptic } = useHaptic()
+  const { triggerLoading, triggerLoadingStop } = useAudio()
 
   const calendarPrompt = useMemo(
     () =>
@@ -211,6 +213,7 @@ const StartJourney: React.FC = () => {
 
     setShowEmptyWarning(false)
     setLoading(true)
+    triggerLoading()
     setPlan(null)
     
     // Mock data for different goals
@@ -264,14 +267,17 @@ const StartJourney: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 1500))
     setPlan(selectedPlan)
     setLoading(false)
+    triggerLoadingStop()
     triggerHaptic('success')
   }
 
   const handleInitiate = async () => {
     setInitiating(true)
+    triggerLoading()
     triggerHaptic('success')
     // Simulate loading delay for UX
     await new Promise(resolve => setTimeout(resolve, 1000))
+    triggerLoadingStop()
     // Navigate to skills page
     localStorage.removeItem('lastSkillPath')
     router.push('/skill')
@@ -329,7 +335,7 @@ const StartJourney: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="start-journey max-w-4xl mx-auto space-y-6 sm:space-y-8">
       <header className="space-y-2">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-wider">
           INITIATE <span className="text-cyan-300">PROTOCOL</span>

@@ -14,12 +14,36 @@ import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
 import type { MinimalPairCategory, MinimalPairWord } from './types';
 import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
+import {
+  isIndexBasedOverride as hhIsIndexBasedOverride,
+  renderIndexBasedWord as hhRenderIndexBasedWord,
+  renderHighlightedWord as hhRenderHighlightedWord,
+} from '../[symbol]/helpers/highlightHelpers';
 
 const RecordingControlsButton = dynamic(() => import('../../../components/RecordingControlsButton'), {
   ssr: false,
 });
 
 const stripIpaSlashes = (ipa: string) => ipa.replace(/^\/|\/$/g, '');
+
+const formatMinimalPairLabel = (label: string) =>
+  label
+    .split('↔')
+    .map((part) => part.trim())
+    .map((part) => `/${part}/`)
+    .join(' ↔ ');
+
+const CANONICAL_IPA_ALIASES: Record<string, string> = {
+  'ɪə': 'ɪr',
+  'ʊə': 'ʊr',
+  'eə': 'ɛr',
+};
+
+const canonicalizeIpa = (symbol: string) => {
+  if (!symbol) return symbol;
+  const cleaned = symbol.replace(/\s+/g, '').replace(/^\/|\/$/g, '');
+  return CANONICAL_IPA_ALIASES[cleaned] ?? cleaned;
+};
 
 const COMMON_SENTENCE_IPA: Record<string, string> = {
   a: 'ə',
@@ -168,44 +192,91 @@ const MinimalPairsPage: React.FC = () => {
   const renderWord = (word: string, side: 'a' | 'b') => {
     if (!showHighlight) return word;
 
-    const symbol = selectedPairSymbols[side];
+    const symbol = canonicalizeIpa(selectedPairSymbols[side]);
     const lowerWord = word.toLowerCase();
     const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[symbol];
 
-    // Only highlight if word has an explicit override entry — no regex fallback
     const patterns = (symbolOverrides && symbolOverrides[lowerWord])
       ? symbolOverrides[lowerWord]
       : [];
 
     if (patterns.length === 0) return word;
 
-    const sortedPatterns = [...patterns].sort((a, b) => b.length - a.length);
-    const escapedPatterns = sortedPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.'));
-    const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
+    const highlightLetterStyle: React.CSSProperties = {};
 
-    const parts = word.split(regex);
-    return (
-      <>
-        {parts.map((part, index) => {
-          if (index % 2 === 1) {
-            return (
-              <span key={index} className="minimal-letter-highlight">
-                {part}
-              </span>
-            );
-          }
-          return <React.Fragment key={index}>{part}</React.Fragment>;
-        })}
-      </>
-    );
+    if (hhIsIndexBasedOverride(patterns)) {
+      return hhRenderIndexBasedWord(word, patterns, highlightLetterStyle);
+    }
+
+    return hhRenderHighlightedWord(word, patterns, symbol, highlightLetterStyle);
   };
 
-  const renderIpa = (ipa: string, side: 'a' | 'b') => {
-    const symbol = selectedPairSymbols[side];
+  const renderIpa = (
+    ipa: string,
+    side: 'a' | 'b',
+    sentence?: string,
+    targetWord?: string,
+  ) => {
+    const symbol = canonicalizeIpa(selectedPairSymbols[side]);
     if (!showHighlight || !symbol) return ipa;
 
-    const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapedSymbol = escapeRegex(symbol);
     const regex = new RegExp(`(${escapedSymbol})`, 'g');
+
+    if (sentence && targetWord) {
+      const sentenceWords = sentence.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g) ?? [];
+      const ipaWords = ipa.split(' ');
+      const normalizedTarget = normalizeSentenceWord(targetWord);
+
+      if (sentenceWords.length === ipaWords.length) {
+        return (
+          <>
+            {ipaWords.map((ipaWord, index) => {
+              const normalizedSentenceWord = normalizeSentenceWord(sentenceWords[index]);
+              const shouldHighlightWord = normalizedSentenceWord === normalizedTarget;
+              const wordContent = shouldHighlightWord
+                ? ipaWord.split(regex).map((part, partIndex) =>
+                    partIndex % 2 === 1 ? (
+                      <span key={partIndex} className="minimal-letter-highlight">
+                        {part}
+                      </span>
+                    ) : (
+                      <React.Fragment key={partIndex}>{part}</React.Fragment>
+                    ),
+                  )
+                : ipaWord;
+
+              return (
+                <React.Fragment key={index}>
+                  {index > 0 ? ' ' : null}
+                  {wordContent}
+                </React.Fragment>
+              );
+            })}
+          </>
+        );
+      }
+
+      const targetWordIpa = selectedPairWordIpa[normalizedTarget] ?? BASE_WORD_IPA[normalizedTarget];
+      if (targetWordIpa && ipa.includes(targetWordIpa)) {
+        const parts = ipa.split(targetWordIpa);
+        return (
+          <>
+            {parts.flatMap((part, index) =>
+              index === parts.length - 1
+                ? [<React.Fragment key={`text-${index}`}>{part}</React.Fragment>]
+                : [
+                    <React.Fragment key={`text-${index}`}>{part}</React.Fragment>,
+                    <span key={`highlight-${index}`} className="minimal-letter-highlight">
+                      {targetWordIpa}
+                    </span>,
+                  ],
+            )}
+          </>
+        );
+      }
+    }
 
     if (regex.test(ipa)) {
       const parts = ipa.split(regex);
@@ -325,7 +396,7 @@ const MinimalPairsPage: React.FC = () => {
             >
               {pairsInCategory.map((pair) => (
                 <option key={pair.id} value={pair.id}>
-                  {pair.pairLabel}
+                  {formatMinimalPairLabel(pair.pairLabel)}
                 </option>
               ))}
             </select>
@@ -346,7 +417,7 @@ const MinimalPairsPage: React.FC = () => {
 
         {!isCategoryLoading && selectedPair && (
           <>
-            {selectedPair.id === 'diphthong-er-r' && (
+            {selectedPair.id === 'diphthong-ɚ-r' && (
               <section className="minimal-card">
                 <p>
                   Pair ini pakai dua voice: sisi A memakai English (`en-US`), sisi B memakai Indonesian (`id-ID`) untuk latihan
@@ -356,7 +427,7 @@ const MinimalPairsPage: React.FC = () => {
             )}
             <section className="minimal-pair-info">
               <div>
-                <h2>{selectedPair.pairLabel}</h2>
+                <h2>{formatMinimalPairLabel(selectedPair.pairLabel)}</h2>
                 {selectedPair.notes && <p>{selectedPair.notes}</p>}
                 {selectedPair.isTemplateContent && (
                   <p className="minimal-draft-note">Draft content detected. You can replace sample items in `minimalPairs/data.ts`.</p>
@@ -368,7 +439,7 @@ const MinimalPairsPage: React.FC = () => {
                 onUnsave={handleUnsaveProgress}
                 size="small"
                 variant="primary"
-                topicName={`Minimal Pair ${selectedPair.pairLabel}`}
+                topicName={`Minimal Pair ${formatMinimalPairLabel(selectedPair.pairLabel)}`}
               />
             </section>
 
@@ -411,7 +482,7 @@ const MinimalPairsPage: React.FC = () => {
                           speakText(
                             item.ttsB ?? item.b,
                             `word-${index}-b`,
-                            item.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                            item.ttsLangB ?? (selectedPair.id === 'diphthong-ɚ-r' ? 'id-ID' : 'en-US'),
                           )
                         }
                       >
@@ -463,7 +534,7 @@ const MinimalPairsPage: React.FC = () => {
                             </span>
                             {showIpa && sentenceIpaA ? (
                               <span className="minimal-sentence-ipa" data-ipa>
-                                /{renderIpa(sentenceIpaA, 'a')}/
+                                /{renderIpa(sentenceIpaA, 'a', item.a, matchedA?.a)}/
                               </span>
                             ) : null}
                           </span>
@@ -479,7 +550,7 @@ const MinimalPairsPage: React.FC = () => {
                             speakText(
                               item.b,
                               `sentence-${index}-b`,
-                              matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-er-r' ? 'id-ID' : 'en-US'),
+                              matchedB?.ttsLangB ?? (selectedPair.id === 'diphthong-ɚ-r' ? 'id-ID' : 'en-US'),
                             );
                           }}
                         >
@@ -489,7 +560,7 @@ const MinimalPairsPage: React.FC = () => {
                             </span>
                             {showIpa && sentenceIpaB ? (
                               <span className="minimal-sentence-ipa" data-ipa>
-                                /{renderIpa(sentenceIpaB, 'b')}/
+                                /{renderIpa(sentenceIpaB, 'b', item.b, matchedB?.b)}/
                               </span>
                             ) : null}
                           </span>

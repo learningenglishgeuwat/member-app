@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Cpu, Loader2, Lock, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAudio } from '@/lib/audio/useAudio';
 import './styles/neon.css';
 import BackButton from './components/BackButton';
 import Sidebar from './components/skillSidebar/SkillSidebar';
@@ -113,7 +114,7 @@ function SkillMenuContent() {
   const activeConfig = SKILLS.find(s => s.type === activeSkill)!;
   const activeColor = getColorConfig(activeConfig.color);
   const isExecuteReady = !loading && !accessDenied && !accessGranted && activeConfig.available;
-
+  const { triggerLoading, triggerLoadingStop } = useAudio()
   const clearPendingNavigationTimers = useCallback(() => {
     if (initDelayTimerRef.current) {
       window.clearTimeout(initDelayTimerRef.current);
@@ -139,12 +140,14 @@ function SkillMenuContent() {
     clearPendingNavigationTimers();
 
     setLoading(true);
+    triggerLoading()
     setAccessDenied(false);
     setAccessGranted(false);
 
     // Keep UX delay 2.5s, then switch to ACCESS GRANTED and navigate immediately.
     initDelayTimerRef.current = window.setTimeout(() => {
       setLoading(false);
+      triggerLoadingStop()
       setAccessGranted(true);
 
       navigateTimerRef.current = window.setTimeout(() => {

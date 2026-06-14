@@ -86,6 +86,7 @@ export async function speakText(
         isResolved = true;
         didSpeak = true;
         if (timeoutId) clearTimeout(timeoutId);
+        try { (window as any).__ttsPlaying = false } catch {}
         resolve();
       };
       utterance.onerror = (event) => {
@@ -96,6 +97,7 @@ export async function speakText(
         if (event.error !== 'interrupted' && event.error !== 'canceled') {
           console.error('[TTS] SpeechSynthesisErrorEvent:', event.error, '| text:', text);
         }
+        try { (window as any).__ttsPlaying = false } catch {}
         resolve();
       };
       
@@ -103,6 +105,7 @@ export async function speakText(
       utterance.onstart = () => {
         didSpeak = true;
         console.log('[TTS] Speech started:', text.substring(0, 30));
+        try { (window as any).__ttsPlaying = true } catch {}
       };
       
       synth.speak(utterance);
@@ -153,6 +156,10 @@ export async function speakText(
           };
           retryUtterance.onstart = () => {
             console.log('[TTS] Retry speech started successfully');
+            try { (window as any).__ttsPlaying = true } catch {}
+          };
+          retryUtterance.onend = () => {
+            try { (window as any).__ttsPlaying = false } catch {}
           };
           synth.speak(retryUtterance);
         }),
