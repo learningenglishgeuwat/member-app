@@ -5,6 +5,7 @@ import {
   getSymbolDescription,
   getVideoIdBySymbol,
   getWordExamples,
+  getUiNote,
 } from '../data';
 import {
   VOWEL_LAX_SYMBOLS,
@@ -27,6 +28,7 @@ export type SymbolDetailData = {
   examples: WordExample[];
   tips: string[];
   videoId?: string;
+  uiNote?: string;
 };
 
 export const toTourToken = (value: string): string =>
@@ -83,6 +85,7 @@ export function getSymbolDetailData(symbol: string): SymbolDetailData {
       examples: getWordExamples(symbol),
       tips: getPronunciationTips(symbol),
       videoId: getVideoIdBySymbol(symbol),
+      uiNote: getUiNote(symbol),
     };
   } catch (error) {
     console.error('Failed to resolve symbol data:', error);

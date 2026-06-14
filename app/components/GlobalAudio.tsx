@@ -9,13 +9,46 @@ export default function GlobalAudio({ children }: { children?: React.ReactNode }
   useEffect(() => {
     let touchStartX: number | null = null
     let touchStartY: number | null = null
+    let suppressNextTap = false
+    const INTERACTIVE_SELECTOR = 'button, a, [role="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], select, .cursor-pointer'
+
+    const getEventPath = (event: unknown): HTMLElement[] => {
+      if (event && typeof event === 'object') {
+        if ('composedPath' in event && typeof (event as any).composedPath === 'function') {
+          return (event as any).composedPath().filter((item: EventTarget): item is HTMLElement => item instanceof HTMLElement)
+        }
+        const target = (event as any).target as HTMLElement | null
+        return target ? [target] : []
+      }
+      return []
+    }
+
+    const isAudioSuppressed = (element: HTMLElement | null) =>
+      Boolean(element?.closest('[data-no-audio], .no-audio'))
+
+    const isPathAudioSuppressed = (event: Event) =>
+      getEventPath(event).some((node) => node.matches('[data-no-audio], .no-audio'))
+
+    const handlePointerDown = (e: PointerEvent) => {
+      suppressNextTap = isPathAudioSuppressed(e)
+    }
 
     const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null
+      if (suppressNextTap) {
+        suppressNextTap = false
+        return
+      }
+
+      const target = getEventPath(e)[0]
       if (!target) return
 
-      const isClickable = target.closest('button, a, [role="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], select, .cursor-pointer')
-      if (isClickable) triggerTap()
+      const el = target.closest(INTERACTIVE_SELECTOR) as HTMLElement | null
+      if (!el) return
+
+      // If this element or any ancestor requests audio suppression, do not trigger global tap
+      if (isAudioSuppressed(el)) return
+
+      triggerTap()
     }
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -30,6 +63,7 @@ export default function GlobalAudio({ children }: { children?: React.ReactNode }
       if (!t || touchStartX === null || touchStartY === null) {
         touchStartX = null
         touchStartY = null
+        suppressNextTap = false
         return
       }
       const dx = Math.abs(t.clientX - touchStartX)
@@ -40,11 +74,17 @@ export default function GlobalAudio({ children }: { children?: React.ReactNode }
       // Treat as tap if movement is small
       const THRESHOLD = 16
       if (dx <= THRESHOLD && dy <= THRESHOLD) {
-        const el = document.elementFromPoint(t.clientX, t.clientY) as HTMLElement | null
-        if (!el) return
-        const isClickable = el.closest('button, a, [role="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], select, .cursor-pointer')
-        if (isClickable) triggerTap()
+        const target = getEventPath(e)[0] || (document.elementFromPoint(t.clientX, t.clientY) as HTMLElement | null)
+        if (!target) return
+        const clickable = target.closest(INTERACTIVE_SELECTOR) as HTMLElement | null
+        if (!clickable) return
+
+        // Suppress global audio for elements that opt-out
+        if (isAudioSuppressed(clickable)) return
+
+        triggerTap()
       }
+      suppressNextTap = false
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -116,6 +156,7 @@ export default function GlobalAudio({ children }: { children?: React.ReactNode }
     //   triggerNeonHover()
     // }
 
+    document.addEventListener('pointerdown', handlePointerDown, { capture: true, passive: true })
     document.addEventListener('click', handleClick, { capture: true, passive: true })
     document.addEventListener('touchstart', handleTouchStart, { capture: true, passive: true })
     document.addEventListener('touchend', handleTouchEnd, { capture: true, passive: true })
@@ -125,7 +166,10 @@ export default function GlobalAudio({ children }: { children?: React.ReactNode }
     document.addEventListener('app:audio:laser', handleCustom as EventListener)
 
     return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, { capture: true } as EventListenerOptions)
       document.removeEventListener('click', handleClick, { capture: true } as EventListenerOptions)
+      document.removeEventListener('touchstart', handleTouchStart, { capture: true } as EventListenerOptions)
+      document.removeEventListener('touchend', handleTouchEnd, { capture: true } as EventListenerOptions)
       document.removeEventListener('keydown', handleKeyDown, { capture: true } as EventListenerOptions)
       document.removeEventListener('app:audio:success', handleCustom as EventListener)
       document.removeEventListener('app:audio:error', handleCustom as EventListener)

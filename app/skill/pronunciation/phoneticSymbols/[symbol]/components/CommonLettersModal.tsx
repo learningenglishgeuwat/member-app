@@ -209,19 +209,28 @@ export default function CommonLettersModal({
                       {category.letters.map((letter, index) => (
                         <div key={index} className={`rounded-lg p-3 border ${theme.itemWrap}`}>
                           <div className="flex flex-col mb-2">
-                            <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>{letter.ipaSymbol}</span>
+                            <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>
+                              /{letter.ipaSymbol}/
+                            </span>
                             <span className={`font-mono text-sm ${theme.letter}`}>{letter.letter}</span>
                           </div>
 
                           {letter.description && <p className={`text-xs mb-2 ${theme.description}`}>{letter.description}</p>}
 
-                          <div className="space-y-1">
-                            {letter.examples.map((example, exampleIndex) => (
-                              <div key={exampleIndex} className={`text-xs font-mono ${theme.example}`}>
-                                {example}
+                          {letter.examples && letter.examples.length > 0 && (
+                            <div className="mt-2">
+                              <div className={`text-xs font-mono mb-1 ${theme.example}`}>
+                                <strong>Examples:</strong>
                               </div>
-                            ))}
-                          </div>
+                              <div className="space-y-1">
+                                {letter.examples.map((example, exampleIndex) => (
+                                  <div key={exampleIndex} className={`text-xs font-mono ${theme.example}`}>
+                                    {example}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
 
                           {letter.pronunciationTip && (
                             <div className={`mt-2 p-2 rounded ${theme.tipWrap}`}>

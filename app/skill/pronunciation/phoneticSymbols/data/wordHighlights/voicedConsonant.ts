@@ -1,288 +1,311 @@
+import type { CommonLetter } from '../types';
+
 export const voicedConsonantManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
-    'b': {
+  'b': {
     // =========================================================================
-    // 1. KASUS MULTIPLE SOUNDS (Dua bunyi /b/ dalam satu kata)
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /b/
     // =========================================================================
-    baby: ['0', '2'],
-
-    // =========================================================================
-    // 2. MEMPERBAIKI BOCORNYA POLA '-be' DAN 'bu-'
-    // Mencegah 'e' atau 'u' ikut menyala di posisi depan/tengah halaman /b/
-    // =========================================================================
-    bed: ['b'],
-    bus: ['b'],
-    number: ['3'], // Mengunci 'b' saja, mencegah 'e' menyala
-
-    // =========================================================================
-    // 3. MEMPERBAIKI BOCORNYA POLA 'bl-'
-    // Mencegah huruf 'l' atau 'e' ikut menyala saat posisi cluster di tengah/akhir
-    // =========================================================================
-    problem: ['3'],
-    public: ['2'],
-    table: ['2'],
+    baby: ['0', '2'], // KASUS MULTIPLE SOUNDS (Dua bunyi /b/ dalam satu kata)
+    bed: ['b'],       // Mencegah 'e' atau 'u' ikut menyala akibat bocornya pola '-be' / 'bu-'
+    bus: ['b'],       
+    number: ['3'],    // Mengunci 'b' saja, mencegah 'e' menyala
+    problem: ['3'],   // Mencegah 'l' atau 'e' ikut menyala pada posisi cluster tengah/akhir
+    public: ['2'],    
+    table: ['2'],     
   },
   'd': {
     // =========================================================================
-    // 1. KASUS MULTIPLE SOUNDS (Dua bunyi /d/ dalam satu kata)
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /d/
     // =========================================================================
-    dad: ['0', '2'],
-    did: ['0', '2'],
-    decide: ['0', '4', '5'],
-
-    // =========================================================================
-    // 2. MEMPERBAIKI BOCORNYA POLA '-de'
-    // Mencegah huruf 'e' ikut menyala pada kata yang memiliki kombinasi 'de'
-    // di posisi awal/tengah kata (bukan akhiran kata).
-    // =========================================================================
-    dear: ['d'],
+    bade: ['d'],
+    breed: ['d'],
+    dad: ['0', '2'],      // KASUS MULTIPLE SOUNDS
     deal: ['d'],
+    dear: ['d'],
+    decide: ['0', '4', '5'], // KASUS MULTIPLE SOUNDS
     deep: ['d'],
-    under: ['2'],   // Mengunci 'd' di indeks 2
-    order: ['2'],   // Mengunci 'd' di indeks 2
-    leader: ['3'],  // Mengunci 'd' di indeks 3
-    reading: ['3'], // Mengunci 'd' di indeks 3
+    dem: ['d'],
+    den: ['d'],
     design: ['d'],
     detail: ['d'],
+    did: ['0', '2'],      // KASUS MULTIPLE SOUNDS
+    leader: ['3'],        // Mengunci 'd' di indeks 3, mencegah 'e' menyala akibat pola '-de'
+    order: ['2'],         // Mengunci 'd' di indeks 2
+    reading: ['3'],       // Mengunci 'd' di indeks 3
+    red: ['d'],
+    under: ['2'],         // Mengunci 'd' di indeks 2
   },
-  
   'g': {
     // =========================================================================
-    // 1. MEMPERBAIKI BOCORNYA POLA '-gue' & 'gu-'
-    // Mencegah huruf 'u' atau 'e' ikut menyala pada kata yang memiliki 'gu'/'ge'
-    // di posisi awal atau tengah (bukan di akhir kata).
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /g/
     // =========================================================================
+    eager: ['2'],     // Mengunci 'g' di indeks 2, mencegah 'e' menyala dari pola '-gue' / 'gu-'
+    finger: ['3'],    // Mengunci 'g' di indeks 3 dari pola '-nger' agar 'e' tidak ikut
     get: ['g'],
     give: ['g'],
-    together: ['2'], // Mengunci 'g' di indeks 2 agar 'e' tidak ikut menyala
-    finger: ['3'],   // Mengunci 'g' di indeks 3 dari pola '-nger' agar 'e' tidak ikut
-    eager: ['2'],    // Mengunci 'g' di indeks 2
-    tiger: ['2'],    // Mengunci 'g' di indeks 2
-    regular: ['2'],  // Mengunci 'g' di indeks 2, mencegah konflik 'gu-' di tengah
-
-    // =========================================================================
-    // 2. KASUS CLUSTER CONFLICT (Mencegah huruf 'r' atau 'l' ikut menyala)
-    // =========================================================================
-    great: ['gr'],
-    green: ['gr'],
-    glass: ['gl'],
-    ugly: ['1'],     // Mengunci 'g' di indeks 1, mencegah 'l' menyala akibat pola 'gl-'
+    glass: ['gl'],    // CLUSTER CONFLICT
+    great: ['gr'],    // CLUSTER CONFLICT
+    green: ['gr'],    // CLUSTER CONFLICT
+    guard: ['g'],     // Mengunci 'g' di indeks 1, mencegah 'l' menyala akibat pola 'gl-'
+    regular: ['2'],   // Mengunci 'g' di indeks 2, mencegah konflik 'gu-' di tengah
+    tiger: ['2'],     // Mengunci 'g' di indeks 2
+    together: ['2'],  // Mengunci 'g' di indeks 2 agar 'e' tidak ikut menyala
+    ugly: ['1'],
   },
   'v': {
-    very: ['v'],
-    river: ['v'],
-    silver: ['v'],
-    over: ['v'],
-    ever: ['v'],
-    never: ['v'],
-    seven: ['v'],
-    travel: ['v'],
+    cover: ['v'],
     even: ['v'],
+    ever: ['v'],
     level: ['v'],
+    never: ['v'],
+    over: ['v'],
+    river: ['v'],
+    five: ['v'],
+    seven: ['v'],
+    silver: ['v'],
+    travel: ['v'],
+    veal: ['v'],
+    very: ['v'],
+    vest: ['v'],
   },
   'ð': {
-    these: ['th'],
+    another: ['th'],
+    brother: ['th'],
+    father: ['th'],
+    gather: ['th'],
+    mother: ['th'],
+    other: ['th'],
+    rather: ['th'],
+    their: ['th'],
+    them: ['th'],
     then: ['th'],
     there: ['th'],
+    these: ['th'],
+    that: ['th'],
+    this: ['th'],
+    those: ['th'],
+    though: ['th'],
+    bathe: ['the'],
     they: ['th'],
-    them: ['th'],
-    their: ['th'],
-    other: ['th'],
-    another: ['th'],
-    mother: ['th'],
-    father: ['th'],
-    brother: ['th'],
     together: ['th'],
+    bequath: ['th'],
+    breathe: ['the'],
+    clothe: ['the'],
+    loathe: ['the'],
     weather: ['th'],
     whether: ['th'],
-    rather: ['th'],
-    gather: ['th'],
+    scythe: ['the'],
+    soothe: ['the'],
+    teethe: ['the'],
+    wreathe: ['the'],
+    lathe: ['the'],
+    smooth: ['th'],
+
   },
   'z': {
-    zoo: ['z'],
-    zero: ['z'],
-    zip: ['z'],
-    zone: ['z'],
-    zebra: ['z'],
-    zeal: ['z'],
-    zoom: ['z'],
-    zinc: ['z'],
-    zigzag: ['0', '3'],
-    zodiac: ['z'],
+    because: ['se'],
     busy: ['s'],
-    easy: ['s'],
-    lazy: ['z'],
-    crazy: ['z'],
-    dozen: ['z'],
     cousin: ['s'],
-    season: ['3'],
-    music: ['s'],
+    crazy: ['z'],
     desert: ['s'],
+    does: ['es'],
+    dozen: ['z'],
+    easy: ['s'],
     frozen: ['z'],
-    size: ['ze'],
-    prize: ['ze'],
-    rise: ['se'],
-    wise: ['se'],
+    is: ['s'],
+    lazy: ['z'],
+    music: ['s'],
     noise: ['se'],
     please: ['se'],
-    because: ['se'],
-    does: ['es'],
+    prize: ['ze'],
+    rise: ['se'],
+    season: ['3'],
+    seize: ['ze'],
+    size: ['ze'],
     was: ['s'],
-    is: ['s'],
+    wise: ['se'],
+    zeal: ['z'],
+    zebra: ['z'],
+    zero: ['z'],
+    zigzag: ['0', '3'],
+    zinc: ['z'],
+    zip: ['z'],
+    zodiac: ['z'],
+    zone: ['z'],
+    zoo: ['z'],
+    zoom: ['z'],
   },
   'ʒ': {
-    measure: ['s'],
-    pleasure: ['s'],
-    treasure: ['s'],
-    leisure: ['s'],
-    vision: ['si'],
-    decision: ['si'],
-    television: ['si'],
-    occasion: ['si'],
-    collision: ['si'],
-    division: ['si'],
-    revision: ['si'],
-    provision: ['si'],
-    confusion: ['si'],
-    illusion: ['si'],
-    conclusion: ['si'],
-    invasion: ['si'],
-    erosion: ['si'],
-    explosion: ['si'],
-    precision: ['si'],
-    version: ['si'],
-    massage: ['ge'],
-    garage: ['ge'],
-    mirage: ['ge'],
     beige: ['ge'],
-    rouge: ['ge'],
-    prestige: ['ge'],
-    collage: ['ge'],
-    espionage: ['ge'],
     camouflage: ['ge'],
+    collage: ['ge'],
+    collision: ['si'],
+    conclusion: ['si'],
+    confusion: ['si'],
+    decision: ['si'],
+    division: ['si'],
+    erosion: ['si'],
+    espionage: ['ge'],
+    explosion: ['si'],
+    garage: ['ge'],
+    illusion: ['si'],
+    invasion: ['si'],
+    leisure: ['s'],
+    massage: ['ge'],
+    measure: ['s'],
+    mirage: ['ge'],
+    occasion: ['si'],
+    pleasure: ['s'],
+    precision: ['si'],
+    provision: ['si'],
+    revision: ['si'],
+    rouge: ['ge'],
     sabotage: ['ge'],
+    seizure: ['z'],
+    siege: ['ge'],
+    television: ['si'],
+    treasure: ['s'],
+    version: ['si'],
+    vision: ['si'],
+    prestige: ['ge'],
   },
   'ʤ': {
+    adjust: ['dj'],
+    age: ['ge'],
+    badge: ['dge'],
+    bridge: ['dge'],
+    change: ['ge'],
+    college: ['ge'],
+    danger: ['g'],
+    edge: ['dge'],
+    education: ['d'],
+    engine: ['gi'],
+    gin: ['g'],
+    huge: ['ge'],
+    january: ['j'],
     job: ['j'],
+    join: ['j'],
     joke: ['j'],
     joy: ['j'],
-    join: ['j'],
-    juice: ['j'],
     judge: ['j', 'dge'],
-    jungle: ['j'],
-    january: ['j'],
-    june: ['j'],
+    juice: ['j'],
     july: ['j'],
-    engine: ['gi'],
+    june: ['j'],
+    jungle: ['j'],
+    large: ['ge'],
+    major: ['j'],
+    manager: ['g'],
+    page: ['ge'],
+    project: ['j'],
     region: ['gi'],
     religion: ['gi'],
-    education: ['d'],
-    adjust: ['dj'],
-    project: ['j'],
-    subject: ['j'],
-    danger: ['g'],
-    manager: ['g'],
-    major: ['j'],
-    large: ['ge'],
-    change: ['ge'],
-    page: ['ge'],
-    age: ['ge'],
     stage: ['ge'],
-    bridge: ['dge'],
-    edge: ['dge'],
-    huge: ['ge'],
-    college: ['ge'],
-    badge: ['dge'],
+    subject: ['j'],
   },
   'l': {
-    let: ['l'],
-    level: ['l', 'el'],
-    yellow: ['ll'],
-    color: ['l'],
-    valley: ['ll'],
-    million: ['ll'],
-    public: ['l'],
-    believe: ['l'],
-    dollar: ['ll'],
-    meal: ['l'],
-    mail: ['l'],
     ball: ['ll'],
+    believe: ['l'],
     call: ['ll'],
+    color: ['l'],
+    cool: ['l'],
+    dollar: ['ll'],
     fall: ['ll'],
     full: ['ll'],
-    cool: ['l'],
+    let: ['l'],
+    level: ['l', 'el'],
+    mail: ['l'],
+    meal: ['l'],
+    million: ['ll'],
+    public: ['l'],
     school: ['l'],
     tool: ['l'],
+    valley: ['ll'],
     wall: ['ll'],
+    little: ['l', 'e'], // KASUS MULTIPLE SOUNDS (Dua bunyi /l/ dalam satu kata)
+    yellow: ['ll'],
   },
   'm': {
-    moment: ['m', 'm'],
-    member: ['m', 'm'],
-    memory: ['m', 'm'],
+    member: ['m'],
+    memory: ['m'],
+    moment: ['m'],
+    company: ['m'],
+    simple: ['m'],
   },
   'n': {
-    new: ['n'],
-    need: ['n'],
-    near: ['n'],
-    next: ['n'],
-    never: ['n'],
-    // nothing -> n-o-t-h-i-n-g. Huruf 'n' di awal (indeks 0) murni berbunyi /n/.
-    // Tetapi 'n' di belakang (indeks 5) melebur dengan 'g' menjadi bunyi /ŋ/ (ng).
-    // Wajib dikunci ke indeks ['0'] agar 'n' kedua tidak ikut menyala orange.
-    nothing: ['0'],
     money: ['n'],
+    near: ['n'],
+    need: ['n'],
+    never: ['n'],
+    new: ['n'],
+    next: ['n'],
+    // nothing: Huruf 'n' di awal murni /n/, sedangkan 'n' di belakang melebur menjadi /ŋ/.
+    // Dikunci ke indeks ['0'] agar 'n' kedua tidak salah menyala.
+    nothing: ['0'],
   },
   'ŋ': {
     finger: ['ng'],
     longer: ['ng'],
+    singer: ['ng'],
     stronger: ['ng'],
+    angry: ['ng'],
+    beginning: ['ng'],
+    ending: ['ng'],
+    evening: ['ng'],
+    hungry: ['ng'],
+    language: ['ng'],
+    morning: ['ng'],
+    single: ['ng'],
+    working: ['ng'],
+    talking: ['ng'],
+    bang: ['ng'],
+    bring: ['ng'],
+    hang: ['ng'],
+    king: ['ng'],
+    long: ['ng'],
+    ring: ['ng'],
+    sing: ['ng'],
+    song: ['ng'],
+    spring: ['ng'],
+    string: ['ng'],
+    strong: ['ng'],
+    thing: ['ng'],
+    wing: ['ng'],
+    wrong: ['ng'],
+    young: ['ng'],
+
   },
   'r': {
-    red: ['r'],
-    read: ['r'],
-    reach: ['r'],
     area: ['r'],
-    direction: ['r'],
-    parent: ['r'],
-    library: ['r', 'r'],
     direct: ['r'],
+    direction: ['r'],
+    library: ['r', 'r'],
+    parent: ['r'],
+    reach: ['r'],
+    read: ['r'],
     ready: ['r'],
+    red: ['r'],
   },
   'w': {
-    // work -> w-o-r-k. Huruf 'w' (indeks 0) adalah sumber bunyi /w/.
-    // Kita kunci indeksnya agar huruf 'o' (indeks 1) tidak ikut menyala orange.
-    work: ['0'],
-
-    // word -> w-o-r-d. Kasus sama dengan 'work'.
-    // Kita kunci hanya pada huruf 'w' di indeks 0.
-    word: ['0'],
-
-    // world -> w-o-r-l-d. Kasus sama dengan 'work'.
-    // Kita kunci hanya pada huruf 'w' di indeks 0.
-    world: ['0'],
-
-    // forward -> f-o-r-w-a-r-d. Bunyi /w/ dihasilkan oleh huruf 'w' di indeks 3.
-    // Kita kunci agar huruf 'o' di indeks 1 tidak ikut tersorot.
+    // Kasus mengunci indeks 'w' (0) agar huruf 'o' setelahnya tidak ikut tersorot salah warna
     forward: ['3'],
-
-    // software -> s-o-f-t-w-a-r-e. Bunyi /w/ dihasilkan oleh huruf 'w' di indeks 4.
-    // Kita kunci agar huruf 'o' di indeks 1 tidak ikut tersorot.
     software: ['4'],
-
-    // someone -> s-o-m-e-o-n-e. Huruf 'o' pertama (indeks 1) berbunyi /ʌ/.
-    // Yang murni menghasilkan gabungan bunyi /w/ hanya 'o' kedua di indeks 4.
-    someone: ['4'],
+    someone: ['4'], // Murni menghasilkan /w/ hanya pada 'o' kedua di indeks 4
+    window: ['0'],
+    word: ['0'],
+    work: ['0'],
+    world: ['0'],
+    language: ['gu'],
   },
-
   'j': {
-    you: ['y'],
-    young: ['y'],
-    yesterday: ['0'], // Menggunakan angka karena ada dua huruf 'y'
-    youth: ['y'],
-    your: ['y'],
+    beautiful: ['eau'],
+    future: ['1'], // Menggunakan indeks angka karena ada dua huruf 'u'
     million: ['io'],
     onion: ['io'],
-    beautiful: ['eau'],
-    future: ['1'], // Menggunakan angka karena ada dua huruf 'u'
     senior: ['io'],
+    yesterday: ['0'], // Menggunakan indeks angka karena ada dua huruf 'y'
+    you: ['y'],
+    young: ['y'],
+    your: ['y'],
+    youth: ['y'],
   },
 };

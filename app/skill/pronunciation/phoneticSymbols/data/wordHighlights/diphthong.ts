@@ -1,125 +1,180 @@
-export const diphthongManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
+import type { CommonLetter } from '../types';
 
+export const diphthongManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
   'aɪ': {
-    ice: ['i', 'e'],
-    time: ['i', 'e'],
-    line: ['i', 'e'],
-    fine: ['i', 'e'],
-    nine: ['i', 'e'],
-    ivory: ['0'],
-    isolate: ['0'],
-    iris: ['0'],
-    night: ['igh'],
-    light: ['igh'],
-    right: ['igh'],
-    fight: ['igh'],
-    tight: ['igh'],
-    high: ['igh'],
     buy: ['uy'],
+    dime: ['i', 'e'],
+    fight: ['igh'],
+    file: ['i', 'e'],
+    fine: ['i', 'e'],
     guy: ['uy'],
+    high: ['igh'],
+    ice: ['i', 'e'],
+    iris: ['0'],
+    isolate: ['0'],
+    ivory: ['0'],
+    kite: ['i', 'e'],
+    light: ['igh'],
+    line: ['i', 'e'],
+    mile: ['i', 'e'],
+    night: ['igh'],
+    nine: ['i', 'e'],
+    ride: ['i', 'e'],
+    right: ['igh'],
     tie: ['ie'],
+    tide: ['i', 'e'],
+    tight: ['igh'],
+    time: ['i', 'e'],
   },
   'eɪ': {
+    ache: ['a', 'e'],
     age: ['a', 'e'],
     ape: ['a', 'e'],
-    name: ['a', 'e'],
-    same: ['a', 'e'],
-    game: ['a', 'e'],
-    late: ['a', 'e'],
-    date: ['a', 'e'],
-    gate: ['a', 'e'],
-    state: ['a', 'e'],
-    ache: ['a', 'e'],
     asia: ['0'],
     away: ['ay'],
+    bade: ['a', 'e'],
+    dame: ['a', 'e'],
+    date: ['a', 'e'],
+    game: ['a', 'e'],
+    gate: ['a', 'e'],
+    kate: ['a', 'e'],
+    lace: ['a', 'e'],
+    lane: ['a', 'e'],
+    late: ['a', 'e'],
+    mate: ['a', 'e'],
+    name: ['a', 'e'],
+    same: ['a', 'e'],
+    state: ['a', 'e'],
+    tame: ['a', 'e'],
+    trade: ['a', 'e'],
   },
   'ɪr': {
-    // =========================================================================
-    // 1. FALSE NEGATIVE (Tidak ada di pola ejaanmu, wajib di-override manual)
-    // =========================================================================
-    // Kata ini menggunakan kombinasi huruf 'eri' untuk bunyi /ɪr/.
+    beer: ['eer'],
+    sphere: ['ere'],
+    career: ['eer'],
+    deer: ['eer'],
+    volunteer: ['eer'],
+    eerie: ['eer'],
+    cheer: ['eer'],
+    engineer: ['eer'],
     experience: ['eri'],
-
-    // =========================================================================
-    // 2. KASUS DOUBLE MATCHING (Mengunci suffix agar tidak pecah/terebut pola 'io' dan 'ia')
-    // =========================================================================
-    material: ['ial'],   // Mengunci 'ial' supaya tidak salah terkena pola 'ia' tunggal
-    serious: ['ious'],   // Mengunci 'ious' supaya tidak salah terkena pola 'io' tunggal
-    superior: ['ior'],   // Mengunci 'ior' supaya tidak salah terkena pola 'io' tunggal
-    inferior: ['ior'],   // Sama seperti superior
-    interior: ['ior'],   // Sama seperti superior
+    inferior: ['ior'],
+    interior: ['ior'],
+    material: ['ial'],
+    serious: ['ious'],
+    superior: ['ior'],
   },
   'ɛr': {
-    // =========================================================================
-    // 1. FALSE NEGATIVE (Tidak ada di pola ejaanmu, wajib di-override manual)
-    // =========================================================================
-    // Kata ini menggunakan huruf 'er' di depan, sedangkan di polamu hanya ada 'ar'.
     errand: ['er'],
-
-    // =========================================================================
-    // 2. KASUS DOUBLE MATCHING (Mencegah pola 'ar' biasa salah sasaran)
-    // =========================================================================
-    // Kata ini memiliki 'ar' di kata "hard" (bunyinya /ɑ/) dan 'are' di kata "ware" (bunyinya /ɛr/).
-    // Jika dilepas ke auto-matching, 'ar' depan akan ikut menyala. Kita paksa hanya 'are' di akhir yang aktif.
     hardware: ['are'],
+    prepare: ['are'],
+    declare: ['are'],
+    welfare: ['are'],
+    barely: ['are'],
+    scarecrow: ['are'],
+    nightmare: ['are'],
+    software: ['are'],
+    care: ['are'],
+    careful: ['are'],
+    rarely: ['are'],
+    compare: ['are'],
+    share: ['are'],
   },
-    'eə': {
-    // =========================================================================
-    // 1. FALSE NEGATIVE (Tidak ada di pola ejaanmu, wajib di-override manual)
-    // =========================================================================
-    // Kata ini menggunakan huruf 'er' di depan, sedangkan di polamu hanya ada 'ar'.
+  'eə': {
     errand: ['er'],
-
-    // =========================================================================
-    // 2. KASUS DOUBLE MATCHING (Mencegah pola 'ar' biasa salah sasaran)
-    // =========================================================================
-    // Kata ini memiliki 'ar' di kata "hard" (bunyinya /ɑ/) dan 'are' di kata "ware" (bunyinya /ɛr/).
-    // Jika dilepas ke auto-matching, 'ar' depan akan ikut menyala. Kita paksa hanya 'are' di akhir yang aktif.
     hardware: ['are'],
+    prepare: ['are'],
+    declare: ['are'],
+    welfare: ['are'],
+    barely: ['are'],
+    scarecrow: ['are'],
+    nightmare: ['are'],
+    software: ['are'],
+    care: ['are'],
+    careful: ['are'],
+    rarely: ['are'],
+    compare: ['are'],
+    share: ['are'],
+
   },
   'ʊr': {
+    gourd: ['our'],
     tour: ['our'],
     tourist: ['our'],
-    gourd: ['our'],
     your: ['our'],
     yours: ['our'],
     yourself: ['our'],
+    poor: ['oor'],
+    cure: ['ure'],
+    pure: ['ure'],
+    allure: ['ure'],
+    brochure: ['ure'],
+    endure: ['ure'],
+    insure: ['ure'],
+    lure: ['ure'],
+    mature: ['ure'],
+    obscure: ['ure'],
+    reassure: ['ure'],
+    secure: ['ure'],
+    sure: ['ure'],
+
   },
   'ʊə': {
+    gourd: ['our'],
     tour: ['our'],
     tourist: ['our'],
-    gourd: ['our'],
     your: ['our'],
     yours: ['our'],
     yourself: ['our'],
+    poor: ['oor'],
+    cure: ['ure'],
+    pure: ['ure'],
+    allure: ['ure'],
+    brochure: ['ure'],
+    endure: ['ure'],
+    insure: ['ure'],
+    lure: ['ure'],
+    mature: ['ure'],
+    obscure: ['ure'],
+    reassure: ['ure'],
+    secure: ['ure'],
+    sure: ['ure'],
+    
   },
   'oʊ': {
-    // =========================================================================
-    // 1. FIX BUG 'o_e': Menyorot huruf 'o' dan 'e' saja, melewati konsonan tengah.
-    // =========================================================================
-    home: ['o', 'e'],
     bone: ['o', 'e'],
-    stone: ['o', 'e'],
-
-    // =========================================================================
-    // 2. KASUS DOUBLE SOUND (Kata ini memiliki dua bunyi /oʊ/ sekaligus)
-    // =========================================================================
-    // Menyorot 'o' pertama (index 0) dan 'oe' di akhir (index 2 & 3) secara presisi.
+    boned: ['o', 'e'],
+    crone: ['o', 'e'],
+    dote: ['o', 'e'],
+    home: ['o', 'e'],
+    hose: ['o', 'e'],
     oboe: ['0', '2', '3'],
+    open: ['o'],
     sew: ['ew'],
     sewed: ['ew'],
+    stone: ['o', 'e'],
+    tone: ['o', 'e'],
+    ocean: ['0'],
+
   },
   'aʊ': {
-    // =========================================================================
-    // 1. FALSE NEGATIVE (Pola '-ow' biasanya mencari di akhir kata, sedangkan 'owl' di awal)
-    // =========================================================================
-    owl: ['ow'],
-
-    // =========================================================================
-    // 2. KASUS SUBSTRING CONFLICT (Mencegah pola 'ou' tunggal memotong huruf 'r' pada 'our')
-    // =========================================================================
+    crown: ['ow'],
     hour: ['our'],
-    our: ['our'],
+    our: ['ou'],
     ours: ['our'],
+    owl: ['ow'],
+    town: ['ow'],
+    brown: ['ow'],
+    down: ['ow'],
+    allow: ['ow'],
+    brow: ['ow'],
+    chow: ['ow'],
+    cow: ['ow'],
+    how: ['ow'],
+    now: ['ow'],
+    plow: ['ow'],
+    vow: ['ow'],
+    wow: ['ow'],
+
   },
 };

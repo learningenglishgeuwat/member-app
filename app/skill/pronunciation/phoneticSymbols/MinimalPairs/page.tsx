@@ -211,12 +211,72 @@ const MinimalPairsPage: React.FC = () => {
     return hhRenderHighlightedWord(word, patterns, symbol, highlightLetterStyle);
   };
 
-  const renderIpa = (ipa: string, side: 'a' | 'b') => {
+  const renderIpa = (
+    ipa: string,
+    side: 'a' | 'b',
+    sentence?: string,
+    targetWord?: string,
+  ) => {
     const symbol = canonicalizeIpa(selectedPairSymbols[side]);
     if (!showHighlight || !symbol) return ipa;
 
-    const escapedSymbol = symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapedSymbol = escapeRegex(symbol);
     const regex = new RegExp(`(${escapedSymbol})`, 'g');
+
+    if (sentence && targetWord) {
+      const sentenceWords = sentence.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g) ?? [];
+      const ipaWords = ipa.split(' ');
+      const normalizedTarget = normalizeSentenceWord(targetWord);
+
+      if (sentenceWords.length === ipaWords.length) {
+        return (
+          <>
+            {ipaWords.map((ipaWord, index) => {
+              const normalizedSentenceWord = normalizeSentenceWord(sentenceWords[index]);
+              const shouldHighlightWord = normalizedSentenceWord === normalizedTarget;
+              const wordContent = shouldHighlightWord
+                ? ipaWord.split(regex).map((part, partIndex) =>
+                    partIndex % 2 === 1 ? (
+                      <span key={partIndex} className="minimal-letter-highlight">
+                        {part}
+                      </span>
+                    ) : (
+                      <React.Fragment key={partIndex}>{part}</React.Fragment>
+                    ),
+                  )
+                : ipaWord;
+
+              return (
+                <React.Fragment key={index}>
+                  {index > 0 ? ' ' : null}
+                  {wordContent}
+                </React.Fragment>
+              );
+            })}
+          </>
+        );
+      }
+
+      const targetWordIpa = selectedPairWordIpa[normalizedTarget] ?? BASE_WORD_IPA[normalizedTarget];
+      if (targetWordIpa && ipa.includes(targetWordIpa)) {
+        const parts = ipa.split(targetWordIpa);
+        return (
+          <>
+            {parts.flatMap((part, index) =>
+              index === parts.length - 1
+                ? [<React.Fragment key={`text-${index}`}>{part}</React.Fragment>]
+                : [
+                    <React.Fragment key={`text-${index}`}>{part}</React.Fragment>,
+                    <span key={`highlight-${index}`} className="minimal-letter-highlight">
+                      {targetWordIpa}
+                    </span>,
+                  ],
+            )}
+          </>
+        );
+      }
+    }
 
     if (regex.test(ipa)) {
       const parts = ipa.split(regex);
@@ -474,7 +534,7 @@ const MinimalPairsPage: React.FC = () => {
                             </span>
                             {showIpa && sentenceIpaA ? (
                               <span className="minimal-sentence-ipa" data-ipa>
-                                /{renderIpa(sentenceIpaA, 'a')}/
+                                /{renderIpa(sentenceIpaA, 'a', item.a, matchedA?.a)}/
                               </span>
                             ) : null}
                           </span>
@@ -500,7 +560,7 @@ const MinimalPairsPage: React.FC = () => {
                             </span>
                             {showIpa && sentenceIpaB ? (
                               <span className="minimal-sentence-ipa" data-ipa>
-                                /{renderIpa(sentenceIpaB, 'b')}/
+                                /{renderIpa(sentenceIpaB, 'b', item.b, matchedB?.b)}/
                               </span>
                             ) : null}
                           </span>

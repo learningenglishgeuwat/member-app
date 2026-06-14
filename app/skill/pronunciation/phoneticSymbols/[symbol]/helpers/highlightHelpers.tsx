@@ -48,6 +48,31 @@ const indexPatterns = patterns.filter((pattern) => /^\d+$/.test(pattern));
   );
   const regex = new RegExp(`(${escapedPatterns.join('|')})`, 'ig');
 
+  const getMatchedPattern = (part: string): string | undefined =>
+    sortedPatterns.find((pattern) =>
+      new RegExp(`^${pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/_/g, '.')}$`, 'i').test(part),
+    );
+
+  const renderMatchedSubstring = (part: string, matchedPattern: string | undefined) => {
+    if (!matchedPattern || !matchedPattern.includes('_')) {
+      return (
+        <span className="symbol-letter-highlight" style={highlightLetterStyle}>
+          {part}
+        </span>
+      );
+    }
+
+    return part.split('').map((char, index) =>
+      matchedPattern[index] !== '_' ? (
+        <span key={`${part}-${index}`} className="symbol-letter-highlight" style={highlightLetterStyle}>
+          {char}
+        </span>
+      ) : (
+        <React.Fragment key={`${part}-${index}`}>{char}</React.Fragment>
+      ),
+    );
+  };
+
   const parts = word.split(regex);
   let matchedCount = 0;
   const lowerWord = word.toLowerCase();
@@ -100,11 +125,8 @@ const indexPatterns = patterns.filter((pattern) => /^\d+$/.test(pattern));
           matchedCount += 1;
 
           if (shouldHighlight) {
-            return (
-              <span key={index} className="symbol-letter-highlight" style={highlightLetterStyle}>
-                {part}
-              </span>
-            );
+            const matchedPattern = getMatchedPattern(part);
+            return <React.Fragment key={index}>{renderMatchedSubstring(part, matchedPattern)}</React.Fragment>;
           }
 
           return <React.Fragment key={index}>{renderPartWithIndexHighlights(part, partStartIndex)}</React.Fragment>;

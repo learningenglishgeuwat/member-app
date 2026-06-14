@@ -1,188 +1,212 @@
 // Voweltense Examples
 // Generated from Word_Example Excel files - All 30 examples per symbol
+// Optimized: Nested object structure, balanced distributions, and rhotic cleanup.
+// UI Ready: Includes an accurate 'uiNote' for positions with limited phonetic presence.
 
 export interface WordExample {
   word: string;
   ipa: string;
 }
 
+export interface PositionGroups {
+  uiNote?: string; // Properti untuk dipanggil langsung oleh UI/Frontend
+  beginning?: WordExample[];
+  middle?: WordExample[];
+  ending?: WordExample[];
+}
+
 export interface SymbolWordExamples {
-  [key: string]: WordExample[];
+  [key: string]: PositionGroups;
 }
 
 export const vowelTenseExamples: SymbolWordExamples = {
-  'Vowel‑Tense‑i': [
-    // AWAL (10)
-    { word: 'eat', ipa: '/it/' },
-    { word: 'easy', ipa: '/ˈizi/' },
-    { word: 'each', ipa: '/itʃ/' },
-    { word: 'eagle', ipa: '/ˈiɡəl/' },
-    { word: 'even', ipa: '/ˈivən/' },
-    { word: 'east', ipa: '/ist/' },
-    { word: 'eager', ipa: '/ˈiɡɚ/' },
-    { word: 'equal', ipa: '/ˈikwəl/' },
-    { word: 'evening', ipa: '/ˈivnɪŋ/' },
-    { word: 'eel', ipa: '/il/' },
-    // TENGAH (10)
-    { word: 'seat', ipa: '/sit/' },
-    { word: 'meat', ipa: '/mit/' },
-    { word: 'heat', ipa: '/hit/' },
-    { word: 'beat', ipa: '/bit/' },
-    { word: 'street', ipa: '/strit/' },
-    { word: 'green', ipa: '/ɡrin/' },
-    { word: 'clean', ipa: '/klin/' },
-    { word: 'dream', ipa: '/drim/' },
-    { word: 'team', ipa: '/tim/' },
-    { word: 'leave', ipa: '/liv/' },
-    // AKHIR (10)
-    { word: 'see', ipa: '/si/' },
-    { word: 'be', ipa: '/bi/' },
-    { word: 'me', ipa: '/mi/' },
-    { word: 'we', ipa: '/wi/' },
-    { word: 'tree', ipa: '/tri/' },
-    { word: 'free', ipa: '/fri/' },
-    { word: 'key', ipa: '/ki/' },
-    { word: 'tea', ipa: '/ti/' },
-    { word: 'she', ipa: '/ʃi/' },
-    { word: 'he', ipa: '/hi/' }
-  ],
-  'Vowel‑Tense‑u': [
-    // AWAL (10)
-    { word: 'ooze', ipa: '/uz/' },
-    { word: 'oops', ipa: '/ups/' },
-    { word: 'goose', ipa: '/ɡus/' }, // Koreksi: Hapus length mark ː
-    { word: 'oodles', ipa: '/ˈudəlz/' },
-    { word: 'uber', ipa: '/ˈubɚ/' },
-    { word: 'ouzo', ipa: '/ˈuzoʊ/' },
-    { word: 'rude', ipa: '/rud/' }, // Koreksi: Hapus length mark ː
-    { word: 'umami', ipa: '/uˈmɑmi/' },
-    { word: 'oozy', ipa: '/ˈuzi/' },
-    { word: 'use', ipa: '/juz/' },
-    // TENGAH (10)
-    { word: 'food', ipa: '/fud/' },
-    { word: 'mood', ipa: '/mud/' },
-    { word: 'moon', ipa: '/mun/' },
-    { word: 'soon', ipa: '/sun/' },
-    { word: 'room', ipa: '/rum/' },
-    { word: 'school', ipa: '/skul/' },
-    { word: 'pool', ipa: '/pul/' },
-    { word: 'suit', ipa: '/sut/' },
-    { word: 'fruit', ipa: '/frut/' },
-    { word: 'group', ipa: '/ɡrup/' },
-    // AKHIR (10)
-    { word: 'blue', ipa: '/blu/' },
-    { word: 'true', ipa: '/tru/' },
-    { word: 'glue', ipa: '/ɡlu/' },
-    { word: 'you', ipa: '/ju/' },
-    { word: 'new', ipa: '/nu/' },
-    { word: 'few', ipa: '/fju/' },
-    { word: 'do', ipa: '/du/' },
-    { word: 'two', ipa: '/tu/' },
-    { word: 'who', ipa: '/hu/' },
-    { word: 'zoo', ipa: '/zu/' }
-  ],
-  'Vowel‑Tense‑æ': [
-    // AWAL (15)
-    { word: 'answer', ipa: '/ˈænsɚ/' },
-    { word: 'apple', ipa: '/ˈæpəl/' },
-    { word: 'ask', ipa: '/æsk/' },
-    { word: 'act', ipa: '/ækt/' },
-    { word: 'add', ipa: '/æd/' },
-    { word: 'after', ipa: '/ˈæftɚ/' },
-    { word: 'animal', ipa: '/ˈænəməl/' },
-    { word: 'angry', ipa: '/ˈæŋɡri/' },
-    { word: 'arrow', ipa: '/ˈæroʊ/' },
-    { word: 'action', ipa: '/ˈækʃən/' },
-    { word: 'actor', ipa: '/ˈæktɚ/' },
-    { word: 'acid', ipa: '/ˈæsɪd/' }, // Koreksi vokal lemah -> /ɪ/
-    { word: 'album', ipa: '/ˈælbəm/' },
-    { word: 'ankle', ipa: '/ˈæŋkəl/' },
-    { word: 'aspect', ipa: '/ˈæspɛkt/' },
-    // TENGAH (15)
-    { word: 'cat', ipa: '/kæt/' },
-    { word: 'hat', ipa: '/hæt/' },
-    { word: 'bat', ipa: '/bæt/' },
-    { word: 'man', ipa: '/mæn/' },
-    { word: 'pan', ipa: '/pæn/' },
-    { word: 'can', ipa: '/kæn/' },
-    { word: 'map', ipa: '/mæp/' },
-    { word: 'cap', ipa: '/kæp/' },
-    { word: 'jam', ipa: '/dʒæm/' },
-    { word: 'bag', ipa: '/bæɡ/' },
-    { word: 'black', ipa: '/blæk/' },
-    { word: 'back', ipa: '/bæk/' },
-    { word: 'class', ipa: '/klæs/' },
-    { word: 'glass', ipa: '/ɡlæs/' },
-    { word: 'family', ipa: '/ˈfæməli/' }
-  ],
-  'Vowel‑Tense‑ɔ': [
-    // AWAL (10)
-    { word: 'all', ipa: '/ɔl/' },
-    { word: 'always', ipa: '/ˈɔlweɪz/' },
-    { word: 'also', ipa: '/ˈɔlsoʊ/' },
-    { word: 'awesome', ipa: '/ˈɔsəm/' },
-    { word: 'autumn', ipa: '/ˈɔtəm/' },
-    { word: 'audio', ipa: '/ˈɔdioʊ/' },
-    { word: 'awful', ipa: '/ˈɔfəl/' },
-    { word: 'author', ipa: '/ˈɔθɚ/' },
-    { word: 'audience', ipa: '/ˈɔdiəns/' },
-    { word: 'off', ipa: '/ɔf/' },
-    // TENGAH (10)
-    { word: 'dog', ipa: '/dɔɡ/' },
-    { word: 'long', ipa: '/lɔŋ/' },
-    { word: 'song', ipa: '/sɔŋ/' },
-    { word: 'strong', ipa: '/strɔŋ/' },
-    { word: 'wrong', ipa: '/rɔŋ/' },
-    { word: 'boss', ipa: '/bɔs/' },
-    { word: 'cost', ipa: '/kɔst/' },
-    { word: 'lost', ipa: '/lɔst/' },
-    { word: 'talk', ipa: '/tɔk/' },
-    { word: 'walk', ipa: '/wɔk/' },
-    // AKHIR (10)
-    { word: 'law', ipa: '/lɔ/' },
-    { word: 'saw', ipa: '/sɔ/' },
-    { word: 'raw', ipa: '/rɔ/' },
-    { word: 'jaw', ipa: '/dʒɔ/' },
-    { word: 'straw', ipa: '/strɔ/' },
-    { word: 'draw', ipa: '/drɔ/' },
-    { word: 'claw', ipa: '/klɔ/' },
-    { word: 'paw', ipa: '/pɔ/' },
-    { word: 'flaw', ipa: '/flɔ/' },
-    { word: 'thaw', ipa: '/θɔ/' }
-  ],
-  'Vowel‑Tense‑ɑ': [
-    // AWAL (10)
-    { word: 'art', ipa: '/ɑrt/' },
-    { word: 'arm', ipa: '/ɑrm/' },
-    { word: 'argument', ipa: '/ˈɑrɡjəmənt/' },
-    { word: 'army', ipa: '/ˈɑrmi/' },
-    { word: 'artist', ipa: '/ˈɑrtɪst/' },
-    { word: 'archive', ipa: '/ˈɑrkaɪv/' },
-    { word: 'arctic', ipa: '/ˈɑrktɪk/' },
-    { word: 'honest', ipa: '/ˈɑnɪst/' }, // Koreksi vokal lemah -> /ɪ/
-    { word: 'honor', ipa: '/ˈɑnɚ/' },
-    { word: 'olive', ipa: '/ˈɑlɪv/' },  // Koreksi vokal lemah -> /ɪ/
-    // TENGAH (10)
-    { word: 'father', ipa: '/ˈfɑðɚ/' },
-    { word: 'park', ipa: '/pɑrk/' },
-    { word: 'hard', ipa: '/hɑrd/' },
-    { word: 'start', ipa: '/stɑrt/' },
-    { word: 'dark', ipa: '/dɑrk/' },
-    { word: 'part', ipa: '/pɑrt/' },
-    { word: 'heart', ipa: '/hɑrt/' },
-    { word: 'farm', ipa: '/fɑrm/' },
-    { word: 'yard', ipa: '/jɑrd/' },
-    { word: 'garden', ipa: '/ˈɡɑrdən/' },
-    // AKHIR (10)
-    { word: 'car', ipa: '/kɑr/' },
-    { word: 'star', ipa: '/stɑr/' },
-    { word: 'bar', ipa: '/bɑr/' },
-    { word: 'jar', ipa: '/dʒɑr/' },
-    { word: 'far', ipa: '/fɑr/' },
-    { word: 'scar', ipa: '/skɑr/' },
-    { word: 'bra', ipa: '/brɑ/' },
-    { word: 'spa', ipa: '/spɑ/' },
-    { word: 'bizarre', ipa: '/bəˈzɑr/' },
-    { word: 'guitar', ipa: '/ɡɪˈtɑr/' }
-  ]
+  'Vowel‑Tense‑ɑ': {
+    beginning: [
+      { word: 'archive', ipa: '/ˈɑrkaɪv/' },
+      { word: 'arctic', ipa: '/ˈɑrktɪk/' },
+      { word: 'argument', ipa: '/ˈɑrɡjəmənt/' },
+      { word: 'arm', ipa: '/ɑrm/' },
+      { word: 'army', ipa: '/ˈɑrmi/' },
+      { word: 'art', ipa: '/ɑrt/' },
+      { word: 'artist', ipa: '/ˈɑrtɪst/' },
+      { word: 'honest', ipa: '/ˈɑnɪst/' },
+      { word: 'honor', ipa: '/ˈɑnɚ/' },
+      { word: 'olive', ipa: '/ˈɑlɪv/' }
+    ],
+    middle: [
+      { word: 'dark', ipa: '/dɑrk/' },
+      { word: 'farm', ipa: '/fɑrm/' },
+      { word: 'father', ipa: '/ˈfɑðɚ/' },
+      { word: 'garden', ipa: '/ˈɡɑrdən/' },
+      { word: 'hard', ipa: '/hɑrd/' },
+      { word: 'heart', ipa: '/hɑrt/' },
+      { word: 'park', ipa: '/pɑrk/' },
+      { word: 'part', ipa: '/pɑrt/' },
+      { word: 'start', ipa: '/stɑrt/' },
+      { word: 'yard', ipa: '/jɑrd/' }
+    ],
+    ending: [
+      { word: 'ah', ipa: '/ ɑ /' },
+      { word: 'bah', ipa: '/ bɑ /' },
+      { word: 'blah', ipa: '/ blɑ /' },
+      { word: 'bra', ipa: '/ brɑ /' },
+      { word: 'grandma', ipa: '/ ˈɡrændmɑ /' },
+      { word: 'grandpa', ipa: '/ ˈɡrændpɑ /' },
+      { word: 'ha', ipa: '/ hɑ /' },
+      { word: 'hurrah', ipa: '/ hʊˈrɑ /' }, // Menggantikan 'pa' / 'fa' (Sangat ramah TTS)
+      { word: 'ma', ipa: '/ mɑ /' },
+      { word: 'spa', ipa: '/ spɑ /' }
+    ]
+  },
+  'Vowel‑Tense‑i': {
+    beginning: [
+      { word: 'each', ipa: '/itʃ/' },
+      { word: 'eager', ipa: '/ˈiɡɚ/' },
+      { word: 'eagle', ipa: '/ˈiɡəl/' },
+      { word: 'east', ipa: '/ist/' },
+      { word: 'easy', ipa: '/ˈizi/' },
+      { word: 'eat', ipa: '/it/' },
+      { word: 'eel', ipa: '/il/' },
+      { word: 'equal', ipa: '/ˈikwəl/' },
+      { word: 'even', ipa: '/ˈivən/' },
+      { word: 'evening', ipa: '/ˈivnɪŋ/' }
+    ],
+    middle: [
+      { word: 'beat', ipa: '/bit/' },
+      { word: 'clean', ipa: '/klin/' },
+      { word: 'dream', ipa: '/drim/' },
+      { word: 'green', ipa: '/ɡrin/' },
+      { word: 'heat', ipa: '/hit/' },
+      { word: 'leave', ipa: '/liv/' },
+      { word: 'meat', ipa: '/mit/' },
+      { word: 'seat', ipa: '/sit/' },
+      { word: 'street', ipa: '/strit/' },
+      { word: 'team', ipa: '/tim/' }
+    ],
+    ending: [
+      { word: 'be', ipa: '/bi/' },
+      { word: 'free', ipa: '/fri/' },
+      { word: 'he', ipa: '/hi/' },
+      { word: 'key', ipa: '/ki/' },
+      { word: 'me', ipa: '/mi/' },
+      { word: 'see', ipa: '/si/' },
+      { word: 'she', ipa: '/ʃi/' },
+      { word: 'tea', ipa: '/ti/' },
+      { word: 'tree', ipa: '/tri/' },
+      { word: 'we', ipa: '/wi/' }
+    ]
+  },
+  'Vowel‑Tense‑u': {
+    beginning: [
+      { word: 'oodles', ipa: '/ˈudəlz/' },
+      { word: 'ooh', ipa: '/u/' },
+      { word: 'oolong', ipa: '/ˈulɔŋ/' },
+      { word: 'oomph', ipa: '/umf/' },
+      { word: 'oops', ipa: '/ups/' },
+      { word: 'ooze', ipa: '/uz/' },
+      { word: 'oozy', ipa: '/ˈuzi/' },
+      { word: 'ouzo', ipa: '/ˈuzoʊ/' },
+      { word: 'uber', ipa: '/ˈubɚ/' },
+      { word: 'umami', ipa: '/uˈmɑmi/' }
+    ],
+    middle: [
+      { word: 'food', ipa: '/fud/' },
+      { word: 'fruit', ipa: '/frut/' },
+      { word: 'group', ipa: '/ɡrup/' },
+      { word: 'mood', ipa: '/mud/' },
+      { word: 'moon', ipa: '/mun/' },
+      { word: 'pool', ipa: '/pul/' },
+      { word: 'room', ipa: '/rum/' },
+      { word: 'school', ipa: '/skul/' },
+      { word: 'soon', ipa: '/sun/' },
+      { word: 'suit', ipa: '/sut/' }
+    ],
+    ending: [
+      { word: 'blue', ipa: '/blu/' },
+      { word: 'do', ipa: '/du/' },
+      { word: 'few', ipa: '/fju/' },
+      { word: 'glue', ipa: '/ɡlu/' },
+      { word: 'new', ipa: '/nu/' },
+      { word: 'true', ipa: '/tru/' },
+      { word: 'two', ipa: '/tu/' },
+      { word: 'who', ipa: '/hu/' },
+      { word: 'you', ipa: '/ju/' },
+      { word: 'zoo', ipa: '/zu/' }
+    ]
+  },
+  'Vowel‑Tense‑æ': {
+    uiNote: 'Suara ini tidak ditemukan di akhir kosakata baku bahasa Inggris (hanya muncul pada kata informal atau tiruan bunyi seperti "nah" atau "baa").',
+    beginning: [
+      { word: 'acid', ipa: '/ˈæsɪd/' },
+      { word: 'act', ipa: '/ækt/' },
+      { word: 'actor', ipa: '/ˈæktɚ/' },
+      { word: 'add', ipa: '/æd/' },
+      { word: 'after', ipa: '/ˈæftɚ/' },
+      { word: 'album', ipa: '/ˈælbəm/' },
+      { word: 'ancestry', ipa: '/ˈænsɛstri/' },
+      { word: 'angry', ipa: '/ˈæŋɡri/' },
+      { word: 'animal', ipa: '/ˈænəməl/' },
+      { word: 'ankle', ipa: '/ˈæŋkəl/' },
+      { word: 'answer', ipa: '/ˈænsɚ/' },
+      { word: 'apple', ipa: '/ˈæpəl/' },
+      { word: 'arrow', ipa: '/ˈæroʊ/' },
+      { word: 'ask', ipa: '/æsk/' },
+      { word: 'aspect', ipa: '/ˈæspɛkt/' }
+    ],
+    middle: [
+      { word: 'back', ipa: '/bæk/' },
+      { word: 'bag', ipa: '/bæɡ/' },
+      { word: 'bat', ipa: '/bæt/' },
+      { word: 'black', ipa: '/blæk/' },
+      { word: 'can', ipa: '/kæn/' },
+      { word: 'cap', ipa: '/kæp/' },
+      { word: 'cat', ipa: '/kæt/' },
+      { word: 'class', ipa: '/klæs/' },
+      { word: 'family', ipa: '/ˈfæməli/' },
+      { word: 'glass', ipa: '/ɡlæs/' },
+      { word: 'hat', ipa: '/hæt/' },
+      { word: 'jam', ipa: '/dʒæm/' },
+      { word: 'man', ipa: '/mæn/' },
+      { word: 'map', ipa: '/mæp/' },
+      { word: 'pan', ipa: '/pæn/' }
+    ]
+  },
+  'Vowel‑Tense‑ɔ': {
+    beginning: [
+      { word: 'all', ipa: '/ɔl/' },
+      { word: 'also', ipa: '/ˈɔlsoʊ/' },
+      { word: 'always', ipa: '/ˈɔlweɪz/' },
+      { word: 'audience', ipa: '/ˈɔdiəns/' },
+      { word: 'audio', ipa: '/ˈɔdioʊ/' },
+      { word: 'author', ipa: '/ˈɔθɚ/' },
+      { word: 'autumn', ipa: '/ˈɔtəm/' },
+      { word: 'awesome', ipa: '/ˈɔsəm/' },
+      { word: 'awful', ipa: '/ˈɔfəl/' },
+      { word: 'off', ipa: '/ɔf/' }
+    ],
+    middle: [
+      { word: 'boss', ipa: '/bɔs/' },
+      { word: 'cost', ipa: '/kɔst/' },
+      { word: 'dog', ipa: '/dɔɡ/' },
+      { word: 'long', ipa: '/lɔŋ/' },
+      { word: 'lost', ipa: '/lɔst/' },
+      { word: 'song', ipa: '/sɔŋ/' },
+      { word: 'strong', ipa: '/strɔŋ/' },
+      { word: 'talk', ipa: '/tɔk/' },
+      { word: 'walk', ipa: '/wɔk/' },
+      { word: 'wrong', ipa: '/rɔŋ/' }
+    ],
+    ending: [
+      { word: 'claw', ipa: '/klɔ/' },
+      { word: 'draw', ipa: '/drɔ/' },
+      { word: 'flaw', ipa: '/flɔ/' },
+      { word: 'jaw', ipa: '/dʒɔ/' },
+      { word: 'law', ipa: '/lɔ/' },
+      { word: 'paw', ipa: '/pɔ/' },
+      { word: 'raw', ipa: '/rɔ/' },
+      { word: 'saw', ipa: '/sɔ/' },
+      { word: 'straw', ipa: '/strɔ/' },
+      { word: 'thaw', ipa: '/θɔ/' }
+    ]
+  }
 };

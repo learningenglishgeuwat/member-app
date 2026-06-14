@@ -38,19 +38,48 @@ const normalizeIpaSymbols = (rawSymbol: string): string[] => {
 const normalizePattern = (rawPattern: string): string =>
   rawPattern.trim().split(/\s*\(|\s+/)[0].trim();
 
+const parseHighlightPattern = (pattern: string) => {
+  const raw = pattern.trim();
+  const isPrefix = raw.endsWith('-') && !raw.startsWith('-');
+  const isSuffix = raw.startsWith('-') && !raw.endsWith('-');
+  const cleaned = raw.replace(/^-+|-+$/g, '').trim();
+
+  return {
+    cleaned,
+    isPrefix,
+    isSuffix,
+  };
+};
+
 const normalizeHighlightPattern = (pattern: string): string =>
-  pattern.replace(/-/g, '').trim();
+  pattern.replace(/^-+|-+$/g, '').trim();
+
+const escapeForRegex = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const patternMatchesWord = (word: string, pattern: string): boolean => {
-  const normalizedPattern = normalizeHighlightPattern(pattern);
+  const { cleaned, isPrefix, isSuffix } = parseHighlightPattern(pattern);
+  const normalizedPattern = cleaned.toLowerCase();
   if (!normalizedPattern) return false;
 
   if (normalizedPattern.includes('_')) {
-    const regex = new RegExp(normalizedPattern.replace(/_/g, '.'), 'i');
+    const regexSource = escapeForRegex(normalizedPattern).replace(/_/g, '.');
+    const anchored = `${isPrefix ? '^' : ''}${regexSource}${isSuffix ? '$' : ''}`;
+    const regex = new RegExp(anchored, 'i');
     return regex.test(word);
   }
 
-  return word.includes(normalizedPattern.toLowerCase());
+  if (isPrefix && isSuffix) {
+    return word.toLowerCase() === normalizedPattern;
+  }
+  if (isPrefix) {
+    return word.toLowerCase().startsWith(normalizedPattern);
+  }
+  if (isSuffix) {
+    return word.toLowerCase().endsWith(normalizedPattern);
+  }
+
+  return word.toLowerCase().includes(normalizedPattern);
 };
 
 const getAllSymbolPatterns = (): Record<string, string[]> => {
@@ -65,13 +94,12 @@ const getAllSymbolPatterns = (): Record<string, string[]> => {
 
       const rawPattern = example.slice(0, arrowIndex).trim();
       const pattern = normalizePattern(rawPattern);
-      const normalizedPattern = normalizeHighlightPattern(pattern);
-      if (!normalizedPattern) return;
+      if (!pattern) return;
 
       symbols.forEach((symbol) => {
         patternsBySymbol[symbol] = patternsBySymbol[symbol] ?? [];
-        if (!patternsBySymbol[symbol].includes(normalizedPattern)) {
-          patternsBySymbol[symbol].push(normalizedPattern);
+        if (!patternsBySymbol[symbol].includes(pattern)) {
+          patternsBySymbol[symbol].push(pattern);
         }
       });
     });

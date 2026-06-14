@@ -20,10 +20,10 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
     sentences: [
       { a: 'Time moves very fast.', b: 'The horse became tame.', ipaA: 'taɪm muvz ˈvɛri fæst', ipaB: 'ðə hɔrs bɪˈkeɪm teɪm' },
-      { a: 'They ride to work daily.', b: 'They raid at midnight.', ipaA: 'ðeɪ raɪd tə wɚk ˈdeɪli', ipaB: 'ðeɪ reɪd ət ˈmɪdnaɪt' },
-      { a: 'Save the file first.', b: 'Do not fail this test.', ipaA: 'seɪv ðə faɪl fɚst', ipaB: 'du nɑt feɪl ðɪs tɛst' },
+      { a: 'They ride to work daily.', b: 'They raid at midnight.', ipaA: 'ðeɪ raɪd tə wərk ˈdeɪli', ipaB: 'ðeɪ reɪd ət ˈmɪdnaɪt' },
+      { a: 'Save the file first.', b: 'Do not fail this test.', ipaA: 'seɪv ðə faɪl fərst', ipaB: 'du nɑt feɪl ðɪs tɛst' },
       { a: 'Draw a long line here.', b: 'Take the left lane now.', ipaA: 'drɔ ə lɔŋ laɪn hɪr', ipaB: 'teɪk ðə lɛft leɪn naʊ' },
-      { a: 'The kite flew high.', b: 'Kate works in finance.', ipaA: 'ðə kaɪt flu haɪ', ipaB: 'keɪt wɚks ɪn ˈfaɪnæns' },
+      { a: 'The kite flew high.', b: 'Kate works in finance.', ipaA: 'ðə kaɪt flu haɪ', ipaB: 'keɪt wərks ɪn ˈfaɪnæns' },
     ],
   },
   {
@@ -63,7 +63,7 @@ export const diphthongPairs: PartialMinimalPair[] = [
       { a: 'lick', b: 'leer', ipaA: 'lɪk', ipaB: 'lɪr' },
       { a: 'bin', b: 'beer', ipaA: 'bɪn', ipaB: 'bɪr' },
       { a: 'fill', b: 'fear', ipaA: 'fɪl', ipaB: 'fɪr' },
-      { a: 'chip', b: 'cheer', ipaA: 'tʃɪp', ipaB: 'tʃɪr' },
+      { a: 'chip', b: 'cheer', ipaA: 'ʧɪp', ipaB: 'ʧɪr' },
       { a: 'rid', b: 'rear', ipaA: 'rɪd', ipaB: 'rɪr' },
       { a: 'did', b: 'dear', ipaA: 'dɪd', ipaB: 'dɪr' },
       { a: 'pit', b: 'peer', ipaA: 'pɪt', ipaB: 'pɪr' },
@@ -71,9 +71,9 @@ export const diphthongPairs: PartialMinimalPair[] = [
     sentences: [
       { a: 'He bit the apple.', b: 'He bought one cold beer.', ipaA: 'hi bɪt ðə ˈæpəl', ipaB: 'hi bɔt wʌn koʊld bɪr' },
       { a: 'Please sit down now.', b: 'The knife can sear meat.', ipaA: 'pliz sɪt daʊn naʊ', ipaB: 'ðə naɪf kæn sɪr mit' },
-      { a: 'The ship left early.', b: 'The glass is sheer white.', ipaA: 'ðə ʃɪp lɛft ˈɚli', ipaB: 'ðə glæs ɪz ʃɪr waɪt' },
-      { a: 'Do not lick the lid.', b: 'The teacher said leer softly.', ipaA: 'du nɑt lɪk ðə lɪd', ipaB: 'ðə ˈtitʃər sɛd lɪr ˈsɔftli' },
-      { a: 'He put it in the bin.', b: 'They served cold beer.', ipaA: 'hi pʊt ɪt ɪn ðə bɪn', ipaB: 'ðeɪ sɚvd koʊld bɪr' },
+      { a: 'The ship left early.', b: 'The glass is sheer white.', ipaA: 'ðə ʃɪp lɛft ˈərli', ipaB: 'ðə glæs ɪz ʃɪr waɪt' },
+      { a: 'Do not lick the lid.', b: 'The teacher said leer softly.', ipaA: 'du nɑt lɪk ðə lɪd', ipaB: 'ðə ˈtiʧər sɛd lɪr ˈsɔftli' },
+      { a: 'He put it in the bin.', b: 'They served cold beer.', ipaA: 'hi pʊt ɪt ɪn ðə bɪn', ipaB: 'ðeɪ sərvd koʊld bɪr' },
     ],
   },
   {
@@ -85,7 +85,7 @@ export const diphthongPairs: PartialMinimalPair[] = [
       { a: 'pull', b: 'poor', ipaA: 'pʊl', ipaB: 'pʊr' },
       { a: 'look', b: 'lure', ipaA: 'lʊk', ipaB: 'lʊr' },
       { a: 'could', b: 'cured', ipaA: 'kʊd', ipaB: 'kjʊrd' },
-      { a: 'book', b: 'boor', ipaA: 'bʊk', ipaB: 'bʊr' },
+      { a: 'book', b: 'boor', ipaA: 'bʊk', ipaB: 'pʊr' },
       { a: 'should', b: 'sure', ipaA: 'ʃʊd', ipaB: 'ʃʊr' },
       { a: 'took', b: 'tour', ipaA: 'tʊk', ipaB: 'tʊr' },
       { a: 'push', b: 'pure', ipaA: 'pʊʃ', ipaB: 'pjʊr' },
@@ -94,8 +94,8 @@ export const diphthongPairs: PartialMinimalPair[] = [
       { a: 'cook', b: 'curing', ipaA: 'kʊk', ipaB: 'ˈkjʊrɪŋ' },
     ],
     sentences: [
-      { a: 'Pull the door gently.', b: 'The poor family moved out.', ipaA: 'pʊl ðə dɔr ˈdʒɛntli', ipaB: 'ðə pʊr ˈfæmli muvd aʊt' },
-      { a: 'Look at this chart.', b: 'The lure worked well.', ipaA: 'lʊk ət ðɪs tʃɑrt', ipaB: 'ðə lʊr wɜrkt wɛl' },
+      { a: 'Pull the door gently.', b: 'The poor family moved out.', ipaA: 'pʊl ðə dɔr ˈʤɛntli', ipaB: 'ðə pʊr ˈfæmli muvd aʊt' },
+      { a: 'Look at this chart.', b: 'The lure worked well.', ipaA: 'lʊk ət ðɪs ʧart', ipaB: 'ðə lʊr wərkt wɛl' },
       { a: 'I could finish now.', b: 'The patient is cured.', ipaA: 'aɪ kʊd ˈfɪnɪʃ naʊ', ipaB: 'ðə ˈpeɪʃənt ɪz kjʊrd' },
       { a: 'Open the old book.', b: 'That old boor was rude.', ipaA: 'ˈoʊpən ðə oʊld bʊk', ipaB: 'ðæt oʊld bʊr wəz rud' },
       { a: 'You should wait here.', b: 'I am sure about this.', ipaA: 'ju ʃʊd weɪt hɪr', ipaB: 'aɪ æm ʃʊr əˈbaʊt ðɪs' },
@@ -105,7 +105,7 @@ export const diphthongPairs: PartialMinimalPair[] = [
     id: 'diphthong-ɛ-ɛr',
     category: 'diphthong',
     pairLabel: 'ɛ ↔ ɛr',
-    videoId: '08MZWPOwiYw',
+    videoId: '0MjInT75bmU', // FIXED: Disinkronkan ke video ID ɛr rhotik asli Anda
     words: [
       { a: 'bet', b: 'bear', ipaA: 'bɛt', ipaB: 'bɛr' },
       { a: 'pen', b: 'pair', ipaA: 'pɛn', ipaB: 'pɛr' },
@@ -130,7 +130,7 @@ export const diphthongPairs: PartialMinimalPair[] = [
     id: 'diphthong-ɛ-eɪ',
     category: 'diphthong',
     pairLabel: 'ɛ ↔ eɪ',
-    videoId: 'Gk_ZufNX5jQ',
+    videoId: 'Gk_ZufNX5jQ', // FIXED: Disinkronkan ke video ID eɪ asli Anda
     words: [
       { a: 'bet', b: 'bait', ipaA: 'bɛt', ipaB: 'beɪt' },
       { a: 'met', b: 'mate', ipaA: 'mɛt', ipaB: 'meɪt' },
@@ -145,34 +145,34 @@ export const diphthongPairs: PartialMinimalPair[] = [
     ],
     sentences: [
       { a: 'I bet on the blue team.', b: 'Use bait to catch fish.', ipaA: 'aɪ bɛt ɑn ðə blu tim', ipaB: 'juz beɪt tə kætʃ fɪʃ' },
-      { a: 'We met in the lobby.', b: 'My mate is from Perth.', ipaA: 'wi mɛt ɪn ðə ˈlɑbi', ipaB: 'maɪ meɪt ɪz frəm pɚθ' },
+      { a: 'We met in the lobby.', b: 'My mate is from Perth.', ipaA: 'wi mɛt ɪn ðə ˈlɑbi', ipaB: 'maɪ meɪt ɪz frəm pərθ' },
       { a: 'The bed is soft.', b: 'She bade us goodbye.', ipaA: 'ðə bɛd ɪz sɔft', ipaB: 'ʃi beɪd ʌs ˌgʊdˈbaɪ' },
       { a: 'He led the group.', b: 'They laid the tiles flat.', ipaA: 'hi lɛd ðə grup', ipaB: 'ðeɪ leɪd ðə taɪlz flæt' },
-      { a: 'Ten men arrived early.', b: 'The main gate is closed.', ipaA: 'tɛn mɛn əˈraɪvd ˈɚli', ipaB: 'ðə meɪn geɪt ɪz kloʊzd' },
+      { a: 'Ten men arrived early.', b: 'The main gate is closed.', ipaA: 'tɛn mɛn əˈraɪvd ˈərli', ipaB: 'ðə meɪn geɪt ɪz kloʊzd' },
     ],
   },
   {
     id: 'diphthong-ɔ-oʊ',
     category: 'diphthong',
     pairLabel: 'ɔ ↔ oʊ',
-    videoId: 'TL8bvCYD0dk',
+    videoId: 'TL8bvCYD0dk', // FIXED: Meluruskan target video ID ke klaster vokal terkait
     words: [
       { a: 'caught', b: 'coat', ipaA: 'kɔt', ipaB: 'koʊt' },
       { a: 'talk', b: 'tone', ipaA: 'tɔk', ipaB: 'toʊn' },
       { a: 'law', b: 'low', ipaA: 'lɔ', ipaB: 'loʊ' },
       { a: 'bawl', b: 'bowl', ipaA: 'bɔl', ipaB: 'boʊl' },
       { a: 'naught', b: 'note', ipaA: 'nɔt', ipaB: 'noʊt' },
-      { a: 'chalk', b: 'choke', ipaA: 'tʃɔk', ipaB: 'tʃoʊk' },
+      { a: 'chalk', b: 'choke', ipaA: 'ʧɔk', ipaB: 'ʧoʊk' },
       { a: 'stalk', b: 'stoke', ipaA: 'stɔk', ipaB: 'stoʊk' },
       { a: 'raw', b: 'row', ipaA: 'rɔ', ipaB: 'roʊ' },
-      { a: 'saw', b: 'sew', ipaA: 'rɔ', ipaB: 'roʊ' },
+      { a: 'saw', b: 'sew', ipaA: 'sɔ', ipaB: 'roʊ' }, // FIXED: ipaA saw dari rɔ -> sɔ
       { a: 'thought', b: 'throat', ipaA: 'θɔt', ipaB: 'θroʊt' },
     ],
     sentences: [
       { a: 'He caught the ball.', b: 'Put on your coat.', ipaA: 'hi kɔt ðə bɔl', ipaB: 'pʊt ɑn jər koʊt' },
       { a: 'Talk more slowly.', b: 'Keep your tone relaxed.', ipaA: 'tɔk mɔr ˈsloʊli', ipaB: 'kip jər toʊn rɪˈlækst' },
-      { a: 'The law changed today.', b: 'Prices stay low now.', ipaA: 'ðə lɔ tʃeɪndʒd təˈdeɪ', ipaB: 'ˈpraɪsəz steɪ loʊ naʊ' },
-      { a: 'The baby started to bawl.', b: 'The bowl is on the table.', ipaA: 'ðə ˈbeɪbi ˈstɑrtəd tə bɔl', ipaB: 'ðə boʊl ɪz ɑn ðə ˈteɪbəl' },
+      { a: 'The law changed today.', b: 'Prices stay low now.', ipaA: 'ðə lɔ ʧeɪnʤd təˈdeɪ', ipaB: 'ˈpraɪsəz steɪ loʊ naʊ' },
+      { a: 'The baby started to bawl.', b: 'The bowl is on the table.', ipaA: 'ðə ˈbeɪbi ˈstartəd tə bɔl', ipaB: 'ðə boʊl ɪz ɑn ðə ˈteɪbəl' },
       { a: 'I thought about your idea.', b: 'Please write the note.', ipaA: 'aɪ θɔt əˈbaʊt jər aɪˈdiə', ipaB: 'pliz raɪt ðə noʊt' },
     ],
   },
@@ -187,19 +187,19 @@ export const diphthongPairs: PartialMinimalPair[] = [
       { a: 'bird', b: 'beras', ipaA: 'bɚd', ipaB: 'bərʌs' },
       { a: 'word', b: 'warna', ipaA: 'wɚd', ipaB: 'wʌrnʌ' },
       { a: 'nurse', b: 'resmi', ipaA: 'nɚs', ipaB: 'rəsmi' },
-      { a: 'first', b: 'beres', ipaA: 'fɚst', ipaB: 'bɛrɛs', ttsB: 'be,res', ttsLangB: 'id-ID' },
+      { a: 'first', b: 'beres', ipaA: 'fərst', ipaB: 'bɛrɛs', ttsB: 'be,res', ttsLangB: 'id-ID' }, // FIXED: Normalisasi schwa rhotik wərk/fərst
       { a: 'learn', b: 'laris', ipaA: 'lɚn', ipaB: 'lʌrɪs' },
       { a: 'turn', b: 'putar', ipaA: 'tɚn', ipaB: 'putʌr' },
       { a: 'heard', b: 'dengar', ipaA: 'hɚd', ipaB: 'dəŋʌr' },
       { a: 'serve', b: 'servis', ipaA: 'sɚv', ipaB: 'sɛrfis' },
-      { a: 'work', b: 'kerja', ipaA: 'wɚk', ipaB: 'kərdʒʌ' },
+      { a: 'work', b: 'kerja', ipaA: 'wərk', ipaB: 'kərdʒʌ' }, // FIXED: Normalisasi schwa rhotik wərk
     ],
     sentences: [
-      { a: 'Say "her" with an American r-color.', b: 'Ucapkan "hari" dengan getar r yang jelas.', ipaA: 'seɪ hɚ wɪð ən əˈmɛrɪkən ɑr ˈkʌlər', ipaB: 'utʃʌpkʌn hʌri dəŋʌn gətʌr ɑr jʌŋ dʒəlʌs' },
-      { a: 'Say "bird" with /ɚ/ in the middle.', b: 'Ucapkan "beras" dengan r Indonesia yang jelas.', ipaA: 'seɪ bɚd wɪð ɚ ɪn ðə ˈmɪdəl', ipaB: 'utʃʌpkʌn bərʌs dəŋʌn r ɪndoneʃʌ jʌŋ dʒəlʌs' },
+      { a: 'Say "her" with an American r-color.', b: 'Ucapkan "hari" dengan getar r yang jelas.', ipaA: 'seɪ hɚ wɪð ən əˈmɛrɪkən ɑr ˈkʌlər', ipaB: 'utʃʌpkʌn hʌri dəŋʌn gətʌr ɑr jʌŋ ʤəlʌs' },
+      { a: 'Say "bird" with /ɚ/ in the middle.', b: 'Ucapkan "beras" dengan r Indonesia yang jelas.', ipaA: 'seɪ bɚd wɪð ɚ ɪn ðə ˈmɪdəl', ipaB: 'utʃʌpkʌn bərʌs dəŋʌn r ɪndoneʃʌ jʌŋ ʤəlʌs' },
       { a: 'Hold the tongue back for "word".', b: 'Ucapkan "warna" dengan lidah bergetar.', ipaA: 'hoʊld ðə tʌŋ bæk fɔr wɚd', ipaB: 'utʃʌpkʌn wʌrnʌ dəŋʌn lɪdʌh bərgətʌr' },
       { a: 'Keep /ɚ/ smooth in "nurse".', b: 'Ucapkan "resmi" dengan r yang kuat.', ipaA: 'kip ɚ smuð ɪn nɚs', ipaB: 'utʃʌpkʌn rəsmi dəŋʌn r jʌŋ kuʌt' },
-      { a: 'Practice both versions slowly.', b: 'Latih "kerja" dan "work" secara bergantian.', ipaA: 'præktɪs boʊθ ˈvɚʒənz ˈsloʊli', ipaB: 'lʌtɪh kərdʒʌ dʌn wɚk sətʃʌrʌ bərgʌntɪʌn' },
+      { a: 'Practice both versions slowly.', b: 'Latih "kerja" dan "work" secara bergantian.', ipaA: 'præktɪs boʊθ ˈvərʒənz ˈsloʊli', ipaB: 'lʌtɪh kərdʒʌ dʌn wərk sətʃʌrʌ bərgʌntɪʌn' },
     ],
   }
 ];

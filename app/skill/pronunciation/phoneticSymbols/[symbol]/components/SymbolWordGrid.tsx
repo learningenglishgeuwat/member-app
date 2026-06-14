@@ -1,9 +1,12 @@
 import React from 'react';
 import { Play, Database, Copy } from 'lucide-react';
 import type { WordExample } from '../../data/wordExamples/wordExamples';
+import { symbolPositionMap } from '../../data/wordExamples/wordExamples';
 
 interface SymbolWordGridProps {
   examples: WordExample[];
+  symbolKey?: string;
+  uiNote?: string | undefined;
   wordCardRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
   activeWord: string | null;
   activeWordIndex: number | null;
@@ -20,8 +23,52 @@ interface SymbolWordGridProps {
   setActiveWordIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
+function normalizePosition(position?: WordExample['position']): 'B' | 'M' | 'E' | null {
+  if (!position) return null;
+  if (position === 'B' || position === 'M' || position === 'E') return position;
+  if (position === 'beginning') return 'B';
+  if (position === 'middle') return 'M';
+  if (position === 'ending') return 'E';
+  return null;
+}
+
+function getPositionBadge(
+  letter: 'B' | 'M' | 'E'
+): { letter: string; label: string; color: string } {
+  const label = letter === 'B' ? 'Beginning' : letter === 'M' ? 'Middle' : 'Ending';
+  const color =
+    letter === 'B'
+      ? 'bg-black text-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.25)] border border-emerald-400/20'
+      : letter === 'M'
+      ? 'bg-black text-amber-300 shadow-[0_0_18px_rgba(245,158,11,0.25)] border border-amber-300/20'
+      : 'bg-black text-red-500 shadow-[0_0_18px_rgba(239,68,68,0.25)] border border-red-500/20';
+
+  return { letter, label, color };
+}
+
+// Helper to get position for an index using metadata
+function getPositionForIndex(
+  index: number,
+  symbolKey: string
+): { letter: string; label: string; color: string } | null {
+  // First check if symbol has explicit position metadata
+  const ranges = symbolPositionMap[symbolKey];
+  if (!ranges) return null;
+
+  // Find which range this index falls into
+  for (const range of ranges) {
+    if (index >= range.start && index < range.end) {
+      return getPositionBadge(range.position);
+    }
+  }
+
+  return null;
+}
+
 export const SymbolWordGrid: React.FC<SymbolWordGridProps> = ({
   examples,
+  symbolKey,
+  uiNote,
   wordCardRefs,
   activeWord,
   activeWordIndex,
@@ -37,9 +84,17 @@ export const SymbolWordGrid: React.FC<SymbolWordGridProps> = ({
   setActiveWord,
   setActiveWordIndex,
 }) => {
+  function getPositionFromExample(
+    position?: WordExample['position']
+  ): { letter: string; label: string; color: string } | null {
+    const normalized = normalizePosition(position);
+    return normalized ? getPositionBadge(normalized) : null;
+  }
+
   return (
-    <div className="w-full scroll-mt-24 mt-12 md:mt-14">
-      <div className="word-examples-section w-full max-w-6xl mx-auto p-2 md:p-4 z-10 relative">
+    <>
+      <div className="w-full scroll-mt-24 mt-12 md:mt-14">
+        <div data-no-audio className="word-examples-section w-full max-w-6xl mx-auto p-2 md:p-4 z-10 relative">
         <div className="word-examples-header flex items-center justify-between mb-3 md:mb-5 border-b border-purple-500/30 pb-2">
           <div className="flex items-center gap-2">
             <Database className="text-purple-400" size={16} />
@@ -83,8 +138,13 @@ export const SymbolWordGrid: React.FC<SymbolWordGridProps> = ({
             const isActiveByWord = activeWordIndex === null && example.word === activeWord;
             const isActive = isActiveByIndex || isActiveByWord;
 
+            const positionData =
+              getPositionFromExample(example.position) ||
+              (symbolKey ? getPositionForIndex(index, symbolKey) : null);
+
             return (
               <button
+                data-no-audio
                 key={index}
                 ref={(el) => {
                   wordCardRefs.current[index] = el;
@@ -151,11 +211,38 @@ export const SymbolWordGrid: React.FC<SymbolWordGridProps> = ({
                     </span>
                   )}
                 </div>
+
+                {/* Position chip (top-left) - only show if position exists */}
+                {positionData && (
+                  <div className="absolute top-2 left-2 z-20">
+                    <div
+                      className={`relative flex items-center justify-center rounded-full w-6 h-6 md:w-7 md:h-7 font-bold text-[11px] ${positionData.color}`}
+                      title={positionData.label}
+                      aria-hidden="true"
+                    >
+                      <span className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white/90"></span>
+                      <span className="absolute top-1 right-1 w-1 h-1 rounded-full bg-white/90"></span>
+                      <span className="absolute bottom-1 left-1 w-1 h-1 rounded-full bg-white/90"></span>
+                      <span className="absolute bottom-1 right-1 w-1 h-1 rounded-full bg-white/90"></span>
+                      <span className="absolute inset-0 rounded-full border border-white/10"></span>
+                      <span className="relative z-10">{positionData.letter}</span>
+                    </div>
+                  </div>
+                )}
+
               </button>
             );
           })}
         </div>
+        </div>
       </div>
-    </div>
+      {uiNote && (
+        <div className="w-full flex justify-center mt-6 px-2 md:px-4">
+          <div className="max-w-3xl w-full mx-auto rounded-md bg-black/70 border border-white/10 p-2 text-[12px] text-purple-200 text-center">
+            {uiNote}
+          </div>
+        </div>
+      )}
+    </>
   );
 };

@@ -4,6 +4,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import BackButton from '../../../components/BackButton';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
 import { isSpeechSynthesisSupported, speakTextWithPause, stopSpeech, waitForVoices } from '@/lib/tts/speech';
+import { WORD_HIGHLIGHT_OVERRIDES } from '../data/wordHighlights';
+import {
+  isIndexBasedOverride,
+  renderIndexBasedWord,
+  renderHighlightedWord,
+} from '../[symbol]/helpers/highlightHelpers';
 import './summary-of-phonetic-symbols.css';
 
 const highlightLetterStyle: React.CSSProperties = {
@@ -64,35 +70,16 @@ type SymbolExample = { word: string; ipa: string };
 type SymbolItem = { symbol: string; examples: [SymbolExample, SymbolExample, SymbolExample] };
 type SpokenWordEntry = { key: string; word: string };
 
-const IPA_SYMBOL_ALIASES: Record<string, string[]> = {
-  'ɪr': ['ɪr', 'ɪə', 'iə'],
-  'ʊr': ['ʊr', 'ʊə'],
-  'ɛr': ['ɛr', 'er', 'eə'],
-  'oʊ': ['oʊ', 'əʊ'],
-  'ɚ': ['ɚ', 'ər'],
-};
-
-function normalizeIpaSymbol(symbol: string) {
-  return symbol.trim();
-}
-
-function getIpaVariants(symbol: string) {
-  const normalized = normalizeIpaSymbol(symbol);
-  const aliases = IPA_SYMBOL_ALIASES[normalized] ?? [normalized];
-  return Array.from(new Set(aliases.map(normalizeIpaSymbol)));
-}
-
 function selectExamplesForSymbol(symbol: string, fallbackExamples: SymbolExample[]) {
-  // Menggunakan fallbackExamples secara langsung agar susunan posisi Awal-Tengah-Akhir yang statis tetap terjaga
   return fallbackExamples;
 }
 
 const SYMBOL_DATA: Record<TabKey, string[]> = {
-  vowel: ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a', '\u0251', 'i', 'u', '\u00e6', '\u0254'],
-  diphthong: ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026ar', 'ɛr', '\u028ar', 'o\u028a', 'a\u028a'],
+  vowel: ['ʌ', 'ɪ', 'ʊ', 'ɛ', 'ə', 'ɚ', 'ɑ', 'i', 'u', 'æ', 'ɔ'],
+  diphthong: ['aɪ', 'eɪ', 'ɔɪ', 'ɪr', 'ɛr', 'ʊr', 'oʊ', 'aʊ'],
   consonant: [
-    'p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h',
-    'b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'j',
+    'p', 't', 'k', 'f', 'θ', 's', 'ʃ', 'ʧ', 'h',
+    'b', 'd', 'g', 'v', 'ð', 'z', 'ʒ', 'ʤ', 'l', 'm', 'n', 'ŋ', 'r', 'w', 'j',
   ],
 };
 
@@ -108,22 +95,22 @@ const VOWEL_GROUPS: { title: string; items: SymbolItem[] }[] = [
   {
     title: 'LAX VOWELS',
     items: [
-      { symbol: '\u028c', examples: [{ word: 'up', ipa: 'ʌp' }, { word: 'sun', ipa: 'sʌn' }, { word: 'cup', ipa: 'kʌp' }] },
-      { symbol: '\u026a', examples: [{ word: 'it', ipa: 'ɪt' }, { word: 'sit', ipa: 'sɪt' }, { word: 'big', ipa: 'bɪɡ' }] },
-      { symbol: '\u028a', examples: [{ word: 'put', ipa: 'pʊt' }, { word: 'book', ipa: 'bʊk' }, { word: 'good', ipa: 'ɡʊd' }] },
-      { symbol: '\u025b', examples: [{ word: 'egg', ipa: 'ɛg' }, { word: 'bed', ipa: 'bɛd' }, { word: 'red', ipa: 'rɛd' }] },
-      { symbol: '\u0259', examples: [{ word: 'about', ipa: 'əˈbaʊt' }, { word: 'pencil', ipa: 'ˈpɛnsəl' }, { word: 'sofa', ipa: 'ˈsoʊfə' }] },
-      { symbol: '\u025a', examples: [{ word: 'earth', ipa: 'ɝθ' }, { word: 'pattern', ipa: 'ˈpætɚn' }, { word: 'teacher', ipa: 'ˈtiːʧɚ' }] },
+      { symbol: 'ʌ', examples: [{ word: 'up', ipa: 'ʌp' }, { word: 'sun', ipa: 'sʌn' }, { word: 'cup', ipa: 'kʌp' }] },
+      { symbol: 'ɪ', examples: [{ word: 'it', ipa: 'ɪt' }, { word: 'sit', ipa: 'sɪt' }, { word: 'big', ipa: 'bɪɡ' }] },
+      { symbol: 'ʊ', examples: [{ word: 'put', ipa: 'pʊt' }, { word: 'book', ipa: 'bʊk' }, { word: 'good', ipa: 'ɡʊd' }] },
+      { symbol: 'ɛ', examples: [{ word: 'egg', ipa: 'ɛg' }, { word: 'bed', ipa: 'bɛd' }, { word: 'red', ipa: 'rɛd' }] },
+      { symbol: 'ə', examples: [{ word: 'about', ipa: 'əˈbaʊt' }, { word: 'pencil', ipa: 'ˈpɛnsəl' }, { word: 'sofa', ipa: 'ˈsoʊfə' }] },
+      { symbol: 'ɚ', examples: [{ word: 'earth', ipa: 'ɝθ' }, { word: 'pattern', ipa: 'ˈpætɚn' }, { word: 'teacher', ipa: 'ˈtiːʧɚ' }] },
     ],
   },
   {
     title: 'TENSE VOWELS',
     items: [
-      { symbol: '\u0251', examples: [{ word: 'arm', ipa: 'ɑrm' }, { word: 'father', ipa: 'ˈfɑðɚ' }, { word: 'car', ipa: 'kɑr' }] },
+      { symbol: 'ɑ', examples: [{ word: 'arm', ipa: 'ɑrm' }, { word: 'father', ipa: 'ˈfɑðɚ' }, { word: 'car', ipa: 'kɑr' }] },
       { symbol: 'i', examples: [{ word: 'eat', ipa: 'it' }, { word: 'meet', ipa: 'mit' }, { word: 'see', ipa: 'si' }] },
       { symbol: 'u', examples: [{ word: 'ooze', ipa: 'uz' }, { word: 'food', ipa: 'fud' }, { word: 'blue', ipa: 'blu' }] },
-      { symbol: '\u00e6', examples: [{ word: 'at', ipa: 'æt' }, { word: 'cat', ipa: 'kæt' }, { word: 'man', ipa: 'mæn' }] },
-      { symbol: '\u0254', examples: [{ word: 'all', ipa: 'ɔl' }, { word: 'talk', ipa: 'tɔk' }, { word: 'law', ipa: 'lɔ' }] },
+      { symbol: 'æ', examples: [{ word: 'at', ipa: 'æt' }, { word: 'cat', ipa: 'kæt' }, { word: 'man', ipa: 'mæn' }] },
+      { symbol: 'ɔ', examples: [{ word: 'all', ipa: 'ɔl' }, { word: 'talk', ipa: 'tɔk' }, { word: 'law', ipa: 'lɔ' }] },
     ],
   },
 ];
@@ -183,13 +170,29 @@ const DIPHTHONG_GROUPS: { title: string; items: SymbolItem[] }[] = [
 
 function renderWordHighlight(word: string, symbol: string, showHighlight: boolean): React.ReactNode {
   if (!showHighlight) return word;
-  const patterns = SYMBOL_WORD_LETTERS[symbol];
-  if (!patterns || patterns.length === 0) return word;
-  const sorted = [...patterns].sort((a, b) => b.length - a.length);
-  const escaped = sorted.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  const normalizedSymbol = symbol.trim();
+  const symbolOverrides = WORD_HIGHLIGHT_OVERRIDES[normalizedSymbol];
+  const patterns = (symbolOverrides && symbolOverrides[word.toLowerCase()])
+    ? symbolOverrides[word.toLowerCase()]
+    : [];
+
+  if (patterns.length > 0) {
+    if (isIndexBasedOverride(patterns)) {
+      return renderIndexBasedWord(word, patterns, highlightLetterStyle);
+    }
+    return renderHighlightedWord(word, patterns, normalizedSymbol, highlightLetterStyle);
+  }
+
+  const fallbackPatterns = SYMBOL_WORD_LETTERS[symbol];
+  if (!fallbackPatterns || fallbackPatterns.length === 0) return word;
+
+  const sorted = [...fallbackPatterns].sort((a, b) => b.length - a.length);
+  const escaped = sorted.map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const regex = new RegExp(`(${escaped.join('|')})`, 'i');
   const parts = word.split(regex);
   if (parts.length <= 1) return word;
+
   let highlighted = false;
   return (
     <>
@@ -395,52 +398,52 @@ export default function SummaryOfPhoneticSymbolsPage() {
         {activeTab === 'vowel' || activeTab === 'consonant' || activeTab === 'diphthong' ? (
           <div className="sps-panel" role="tabpanel" aria-label={`${TAB_LABELS[activeTab]} symbols`}>
             <div className={`sps-vowel-columns ${activeTab === 'diphthong' ? 'is-single' : ''}`}>
-              {(activeTab === 'vowel'
-                ? VOWEL_GROUPS
-                : activeTab === 'consonant'
-                  ? CONSONANT_GROUPS
-                  : DIPHTHONG_GROUPS).map((group) => (
+              {activeGroups.map((group) => (
                 <section key={group.title} className="sps-vowel-column">
                   <div className="sps-column-head">
                     <h2 className="sps-column-title">{group.title}</h2>
-                    
                   </div>
                   <div className="sps-symbol-list">
                     {group.items.map((item, itemIndex) => {
                       const examples = selectExamplesForSymbol(item.symbol, item.examples);
                       return (
-                      <div key={item.symbol} className="sps-symbol-card sps-symbol-card-with-examples">
-                        <span
-                          className={`sps-symbol ${
-                            activeTab === 'consonant' && POP_SOUND_SYMBOLS.has(item.symbol) ? 'is-pop-sound' : ''
-                          }`}
-                        >
-                          {item.symbol}
-                        </span>
-                        <ul className="sps-example-grid">
-                          {examples.map((example, exampleIndex) => {
-                            const exampleKey = buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex);
-                            const isSpeakingExample = activeSpeakingExampleKey === exampleKey;
+                        <div key={item.symbol} className="sps-symbol-card sps-symbol-card-with-examples">
+                          <span
+                            className={`sps-symbol ${
+                              activeTab === 'consonant' && POP_SOUND_SYMBOLS.has(item.symbol) ? 'is-pop-sound' : ''
+                            }`}
+                          >
+                            {item.symbol}
+                          </span>
+                          <ul className="sps-example-grid">
+                            {examples.map((example, exampleIndex) => {
+                              const exampleKey = buildExampleKey(activeTab, group.title, item.symbol, itemIndex, exampleIndex);
+                              const isSpeakingExample = activeSpeakingExampleKey === exampleKey;
 
-                            return (
-                            <li key={`${item.symbol}-${example.word}-${exampleIndex}`}>
-                              <button
-                                type="button"
-                                className={`sps-example-card ${isSpeakingExample ? 'is-speaking' : ''}`}
-                                onClick={() => void speakWord(example.word, exampleKey)}
-                                ref={(node) => {
-                                  exampleCardRefs.current[exampleKey] = node;
-                                }}
-                                aria-label={`Play pronunciation for ${example.word}`}
-                              >
-                                <span className="sps-word">{renderWordHighlight(example.word, item.symbol, showHighlight)}</span>
-                                <span className="sps-ipa">/{renderIpaHighlight(example.ipa, item.symbol, showHighlight)}/</span>
-                              </button>
-                            </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
+                              return (
+                                <li key={`${item.symbol}-${example.word}-${exampleIndex}`}>
+                                  <button
+                                    type="button"
+                                    className={`sps-example-card ${isSpeakingExample ? 'is-speaking' : ''}`}
+                                    onClick={() => void speakWord(example.word, exampleKey)}
+                                    ref={(node) => {
+                                      exampleCardRefs.current[exampleKey] = node;
+                                    }}
+                                    aria-label={`Play pronunciation for ${example.word}`}
+                                  >
+                                    <span className="sps-word">{renderWordHighlight(example.word, item.symbol, showHighlight)}</span>
+                                    {/* Perbaikan: Mengintegrasikan state showIpa di sini */}
+                                    {showIpa && (
+                                      <span className="sps-ipa">
+                                        /{renderIpaHighlight(example.ipa, item.symbol, showHighlight)}/
+                                      </span>
+                                    )}
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
                       );
                     })}
                   </div>

@@ -240,33 +240,51 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
                           <div className="space-y-3">
                             {category.letters.map((letter, idx) => (
                               <div key={idx} className={`border rounded p-3 ${theme.itemWrap}`}>
-                              <div className="flex items-center justify-between mb-2">
-                                <div className="flex items-center gap-3">
-                                  <span className={`text-lg md:text-xl font-bold ${theme.letter}`}>
-                                    {letter.letter}
-                                  </span>
-                                  <span className={`text-sm md:text-base font-mono ${theme.ipa}`}>
+                                <div className="flex flex-col mb-2">
+                                  <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>
                                     /{letter.ipaSymbol}/
                                   </span>
+                                  <span className={`font-mono text-sm ${theme.letter}`}>
+                                    {letter.letter}
+                                  </span>
                                 </div>
+
+                                {letter.description && (
+                                  <p className={`text-[11px] md:text-sm mb-2 ${theme.description}`}>
+                                    {letter.description}
+                                  </p>
+                                )}
+
+                                {letter.examples && letter.examples.length > 0 && (
+                                  <div className="mt-2">
+                                    <div className={`text-[11px] font-mono mb-1 ${theme.example}`}>
+                                      <strong>Examples:</strong>
+                                    </div>
+                                    <div className="space-y-1">
+                                      {letter.examples.map((ex, exIdx) => (
+                                        <div key={exIdx} className={`text-[10px] font-mono ${theme.example}`}>
+                                          {ex}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {letter.pronunciationTip && (
+                                  <p className={`text-[10px] md:text-xs font-mono mt-2 ${theme.example}`}>
+                                    <strong>Tip:</strong> {letter.pronunciationTip}
+                                  </p>
+                                )}
+
+                                {letter.traps && letter.traps.length > 0 && (
+                                  <div className={`mt-2 p-2 rounded bg-red-500/10 border border-red-400/30`}>
+                                    <p className={`text-xs font-mono text-red-200`}>
+                                      <strong>⚠️ Traps:</strong> {letter.traps.join(', ')}
+                                    </p>
+                                  </div>
+                                )}
                               </div>
-                              {letter.description && (
-                                <p className={`text-[11px] md:text-sm mb-2 ${theme.description}`}>
-                                  {letter.description}
-                                </p>
-                              )}
-                              {letter.pronunciationTip && (
-                                <p className={`text-[10px] md:text-xs font-mono mb-2 ${theme.example}`}>
-                                  <strong>Tip:</strong> {letter.pronunciationTip}
-                                </p>
-                              )}
-                              {letter.examples && letter.examples.length > 0 && (
-                                <p className={`text-[10px] md:text-xs font-mono ${theme.example}`}>
-                                  <strong>Examples:</strong> {letter.examples.join(', ')}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                            ))}
                         </div>
                       )}
                     </div>

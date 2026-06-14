@@ -405,6 +405,8 @@ const SymbolDetailPage: React.FC = () => {
 
         <SymbolWordGrid
           examples={symbolData.examples}
+          symbolKey={decodedSymbol}
+          uiNote={symbolData.uiNote}
           wordCardRefs={wordCardRefs}
           activeWord={activeWord}
           activeWordIndex={activeWordIndex}

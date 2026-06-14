@@ -11,4 +11,13 @@ describe('highlightHelpers.renderHighlightedWord', () => {
     expect(markup).toContain('c<span class="symbol-letter-highlight" style="color:red">o</span>nd');
     expect(markup).toContain('<span class="symbol-letter-highlight" style="color:red">ion</span>');
   });
+
+  it('renders o_e pattern by highlighting only o and e', () => {
+    const markup = renderToStaticMarkup(
+      <>{renderHighlightedWord('love', ['o_e'], 'o', { color: 'orange' } as React.CSSProperties)}</>
+    );
+
+    expect(markup).toContain('l<span class="symbol-letter-highlight" style="color:orange">o</span>v<span class="symbol-letter-highlight" style="color:orange">e</span>');
+    expect(markup).not.toContain('<span class="symbol-letter-highlight" style="color:orange">ove</span>');
+  });
 });

@@ -4,26 +4,26 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-ɪ-i',
     category: 'vowel',
-    pairLabel: '\u026a \u2194 i',
+    pairLabel: 'ɪ ↔ i',
     videoId: 'rX96zUAApyo',
     words: [
-      { a: 'sit', b: 'seat', ipaA: 's\u026at', ipaB: 'sit' },
-      { a: 'ship', b: 'sheep', ipaA: '\u0283\u026ap', ipaB: '\u0283ip' },
-      { a: 'bit', b: 'beat', ipaA: 'b\u026at', ipaB: 'bit' },
-      { a: 'live', b: 'leave', ipaA: 'l\u026av', ipaB: 'liv', ttsA: 'to live', ttsB: 'leave' },
-      { a: 'fill', b: 'feel', ipaA: 'f\u026al', ipaB: 'fil' },
-      { a: 'fit', b: 'feet', ipaA: 'f\u026at', ipaB: 'fit' },
-      { a: 'slip', b: 'sleep', ipaA: 'sl\u026ap', ipaB: 'slip' },
-      { a: 'rich', b: 'reach', ipaA: 'r\u026a\u02a7', ipaB: 'ri\u02a7' },
-      { a: 'will', b: 'wheel', ipaA: 'w\u026al', ipaB: 'wil' },
-      { a: 'lid', b: 'lead', ipaA: 'l\u026ad', ipaB: 'lid' },
+      { a: 'sit', b: 'seat', ipaA: 'sɪt', ipaB: 'sit' },
+      { a: 'ship', b: 'sheep', ipaA: 'ʃɪp', ipaB: 'ʃip' },
+      { a: 'bit', b: 'beat', ipaA: 'bɪt', ipaB: 'bit' },
+      { a: 'live', b: 'leave', ipaA: 'lɪv', ipaB: 'liv', ttsA: 'to live', ttsB: 'leave' },
+      { a: 'fill', b: 'feel', ipaA: 'fɪl', ipaB: 'fil' },
+      { a: 'fit', b: 'feet', ipaA: 'fɪt', ipaB: 'fit' },
+      { a: 'slip', b: 'sleep', ipaA: 'slɪp', ipaB: 'slip' },
+      { a: 'rich', b: 'reach', ipaA: 'rɪʧ', ipaB: 'riʧ' },
+      { a: 'will', b: 'wheel', ipaA: 'wɪl', ipaB: 'wil' },
+      { a: 'lid', b: 'lead', ipaA: 'lɪd', ipaB: 'lid' },
     ],
     sentences: [
       { 
         a: 'I will sit here.', 
         b: 'I will seat her.', 
-        ipaA: 'aɪ wɪl sɪt hɪr', // FIX: Rapat sempurna per kata, bebas spasi karakter
-        ipaB: 'aɪ wɪl sit hɜr'  // FIX: Rapat sempurna per kata
+        ipaA: 'aɪ wɪl sɪt hɪr', 
+        ipaB: 'aɪ wɪl sit hɜr' 
       },
       { 
         a: 'The ship is large.', 
@@ -46,15 +46,15 @@ export const vowelPairs: PartialMinimalPair[] = [
       { 
         a: 'Please fill the cup.', 
         b: 'Please feel the cup.', 
-        ipaA: 'pliz fɪl ðə kʌp', // FIX: Konsisten rapi per kata
-        ipaB: 'pliz fil ðə kʌp'  // FIX: Kata "pliz" sudah dirapatkan, tidak pecah lagi
+        ipaA: 'pliz fɪl ðə kʌp', 
+        ipaB: 'pliz fil ðə kʌp' 
       },
     ],
   },
   {
     id: 'vowel-æ-ɛ',
     category: 'vowel',
-    pairLabel: '\u00e6 \u2194 \u025b',
+    pairLabel: 'æ ↔ ɛ',
     videoId: 'II9KgEF3K7E',
     words: [
       { a: 'bat', b: 'bet', ipaA: 'bæt', ipaB: 'bɛt' },
@@ -104,7 +104,7 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-æ-ɑ',
     category: 'vowel',
-    pairLabel: '\u00e6 \u2194 \u0251',
+    pairLabel: 'æ ↔ ɑ',
     videoId: 'rBFB2VXmAI0',
     words: [
       { a: 'cap', b: 'cop', ipaA: 'kæp', ipaB: 'kɑp' },
@@ -112,7 +112,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'cat', b: 'cot', ipaA: 'kæt', ipaB: 'kɑt' },
       { a: 'sack', b: 'sock', ipaA: 'sæk', ipaB: 'sɑk' },
       { a: 'map', b: 'mop', ipaA: 'mæp', ipaB: 'mɑp' },
-      { a: 'shack', b: 'shock', ipaA: '\u0283æk', ipaB: '\u0283\u0251k' },
+      { a: 'shack', b: 'shock', ipaA: 'ʃæk', ipaB: 'ʃɑk' },
       { a: 'lack', b: 'lock', ipaA: 'læk', ipaB: 'lɑk' },
       { a: 'tap', b: 'top', ipaA: 'tæp', ipaB: 'tɑp' },
       { a: 'can', b: 'con', ipaA: 'kæn', ipaB: 'kɑn' },
@@ -154,8 +154,8 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-ʊ-u',
     category: 'vowel',
-    pairLabel: '\u028a \u2194 u',
-    videoId: 'nEhnJj_bLbM',
+    pairLabel: 'ʊ ↔ u',
+    videoId: 'uDKUXJYxLTE', // FIXED: Disesuaikan dengan ID trek vokal ʊ lax yang valid
     words: [
       { a: 'pull', b: 'pool', ipaA: 'pʊl', ipaB: 'pul' },
       { a: 'full', b: 'fool', ipaA: 'fʊl', ipaB: 'ful' },
@@ -165,7 +165,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'soot', b: 'suit', ipaA: 'sʊt', ipaB: 'sut' },
       { a: 'hood', b: "who'd", ipaA: 'hʊd', ipaB: 'hud' },
       { a: 'cook', b: 'kook', ipaA: 'kʊk', ipaB: 'kuk' },
-      { a: 'should', b: 'shooed', ipaA: '\u0283ʊd', ipaB: '\u0283ud' },
+      { a: 'should', b: 'shooed', ipaA: 'ʃʊd', ipaB: 'ʃud' },
       { a: 'good', b: 'gooed', ipaA: 'gʊd', ipaB: 'gud' },
     ],
     sentences: [
@@ -204,7 +204,7 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-ʌ-ɑ',
     category: 'vowel',
-    pairLabel: '\u028c \u2194 \u0251',
+    pairLabel: 'ʌ ↔ ɑ',
     videoId: 'e6rjJiOxVCs',
     words: [
       { a: 'cut', b: 'cot', ipaA: 'kʌt', ipaB: 'kɑt' },
@@ -213,7 +213,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'cup', b: 'cop', ipaA: 'kʌp', ipaB: 'kɑp' },
       { a: 'hut', b: 'hot', ipaA: 'hʌt', ipaB: 'hɑt' },
       { a: 'run', b: 'Ron', ipaA: 'rʌn', ipaB: 'rɑn' },
-      { a: 'nut', b: 'not', ipaA: 'n\u028ct', ipaB: 'n\u0251t' },
+      { a: 'nut', b: 'not', ipaA: 'nʌt', ipaB: 'nɑt' },
       { a: 'bug', b: 'bog', ipaA: 'bʌg', ipaB: 'bɑg' },
       { a: 'mud', b: 'mod', ipaA: 'mʌd', ipaB: 'mɑd' },
       { a: 'stuck', b: 'stock', ipaA: 'stʌk', ipaB: 'stɑk' },
@@ -254,7 +254,7 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-ə-ɛ',
     category: 'vowel',
-    pairLabel: '\u0259 \u2194 \u025b',
+    pairLabel: 'ə ↔ ɛ',
     videoId: 'rqU4DTeQc5E',
     words: [
       { a: 'banana', b: 'bed', ipaA: 'bəˈnænə', ipaB: 'bɛd' },
@@ -304,7 +304,7 @@ export const vowelPairs: PartialMinimalPair[] = [
   {
     id: 'vowel-ɔ-ɑ',
     category: 'vowel',
-    pairLabel: '\u0254 \u2194 \u0251',
+    pairLabel: 'ɔ ↔ ɑ',
     videoId: '1Kjyf1D7jvE',
     words: [
       { a: 'caught', b: 'cot', ipaA: 'kɔt', ipaB: 'kɑt' },
@@ -316,7 +316,7 @@ export const vowelPairs: PartialMinimalPair[] = [
       { a: 'awe', b: 'ah', ipaA: 'ɔ', ipaB: 'ɑ' },
       { a: 'stalk', b: 'stock', ipaA: 'stɔk', ipaB: 'stɑk' },
       { a: 'wrought', b: 'rot', ipaA: 'rɔt', ipaB: 'rɑt' },
-      { a: 'chalk', b: 'chock', ipaA: '\u02a7\u0254k', ipaB: '\u02a7\u0251k' },
+      { a: 'chalk', b: 'chock', ipaA: 'ʧɔk', ipaB: 'ʧɑk' },
     ],
     sentences: [
       { 

@@ -1,134 +1,129 @@
+import type { CommonLetter } from '../types';
+
 export const voicelessConsonantManualWordHighlightOverrides: Record<string, Record<string, string[]>> = {
-
-    'p': {
-    // Memperbaiki kebocoran pola '-pe' agar tidak ikut menyalakan huruf 'e'
-    pen: ['p'],
-    pet: ['p'],
-    open: ['p'],
-    super: ['p'],
+  'p': {
+    // =========================================================================
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /p/
+    // =========================================================================
+    open: ['p'],      // Memperbaiki kebocoran pola '-pe' agar tidak ikut menyalakan huruf 'e'
     paper: ['p'],
-
-    // Memperbaiki kebocoran pola 'pr-' agar tidak ikut menyalakan huruf 'r'
+    peer: ['p'],
+    pen: ['p'],
+    perry: ['p'],
+    pet: ['p'],
+    practice: ['pr'], // Memperbaiki kebocoran pola 'pr-' agar tidak ikut menyalakan huruf 'r'
     price: ['pr'],
     problem: ['pr'],
-    practice: ['pr'],
+    super: ['p'],
   },
   't': {
-    // Memperbaiki bocornya pola '-te' (menghapus 'e' yang ikut menyala di depan/tengah)
-    ten: ['t'],
-    tell: ['t'],
-    team: ['t'],
-    hotel: ['t'],
-
-    // Memperbaiki bocornya pola 'tr-' dan 'th-' (mengunci agar 'r' dan 'h' tidak ikut menyala)
-    try: ['tr'],
-    together: ['0'], // Menggunakan indeks 0 agar hanya 't' depan yang menyala, bukan 'th' di tengah
-
-    // Memperbaiki bocornya pola 'pt' dan 'st' (menghapus 'p' dan 's' dari highlight)
+    // =========================================================================
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /t/
+    // =========================================================================
+    capture: ['t'],   // Memperbaiki bocornya pola 'pt' dan 'st'
     empty: ['t'],
-    capture: ['t'],
+    fast: ['st'],
+    hotel: ['t'],     // Memperbaiki bocornya pola '-te'
     master: ['st'],
     past: ['st'],
-    fast: ['st'],
-
-    // Kata 'test' terkena bocor ganda ('te' di depan dan 'st' di belakang)
-    test: ['t', 'st'],
+    taught: ['t'],
+    team: ['t'],
+    tell: ['t'],
+    ten: ['t'],
+    test: ['t', 'st'], // Terkena bocor ganda ('te' di depan dan 'st' di belakang)
+    together: ['0'],   // Menggunakan indeks 0 agar hanya 't' depan yang menyala, bukan 'th' di tengah
+    tread: ['t'],      // Menyorot 'tr' di depan dan 'd' di belakang, melewati 'ea' di tengah
+    tree: ['t'],
+    true: ['t'],
+    try: ['tr'],
+    water: ['t'],
   },
-
   'k': {
     // =========================================================================
-    // 1. KASUS FALSE POSITIVE (Mencegah pola 'ch' salah sasaran menyalakan /tʃ/)
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /k/
     // =========================================================================
-    // Huruf 'ch' di depan berbunyi /tʃ/, hanya huruf 'ck' atau 'c' tengah yang berbunyi /k/
-    chicken: ['ck'],
+    blanket: ['k'],   // Memperbaiki kebocoran pola '-ke'
+    chicken: ['ck'],  // Mencegah pola 'ch' salah sasaran menyalakan /tʃ/
     chocolate: ['3'], // Mengunci hanya 'c' kedua di indeks 3, bukan 'ch' di depan
-
-    // =========================================================================
-    // 2. MEMPERBAIKI BOCORNYA POLA '-ke'
-    // =========================================================================
-    // Mencegah huruf 'e' ikut menyala di kata-kata yang mengandung 'ke' di depan/tengah
-    key: ['k'],
     keep: ['k'],
+    key: ['k'],
     market: ['k'],
-    blanket: ['k'],
     ticket: ['ck'],
   },
   'f': {
     // =========================================================================
-    // MEMPERBAIKI BOCORNYA POLA '-fe'
-    // Mencegah huruf 'e' ikut menyala pada kata yang memiliki kombinasi 'fe' 
-    // di posisi depan atau tengah (bukan di akhir kata).
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /f/
     // =========================================================================
-    safety: ['f'],
-    perfect: ['f'],
+    after: ['f'],
+    coffee: ['ff'],   // Mengunci 'ff' agar tidak rusak/terpotong oleh bocoran pola 'fe' tengah
+    fear: ['f'],
+    feel: ['f'],
+    ferry: ['f'],
+    fest: ['f'],
+    perfect: ['f'],   // Memperbaiki bocornya pola '-fe' di posisi depan atau tengah
+    safety: ['fe'],
+    laugh: ['gh'],
+    half: ['f'],
+    wife: ['fe'],
+    rough: ['gh'],
+    safe: ['fe'],
 
-    // Mengunci 'ff' agar tidak rusak/terpotong oleh bocoran pola 'fe' tengah
-    coffee: ['ff'],
+
+
+   // KASUS KHUSUS: 'gh' di akhir kata berbunyi /f/, jadi kita kunci 'gh' agar tidak ikut menyala dari pola 'g...h'
   },
   'θ': {
     // =========================================================================
     // KASUS CLUSTER CONFLICT
     // Mencegah huruf 'r' ikut menyala akibat terpicu oleh pola 'thr-'.
-    // Kita paksa hanya kombinasi huruf 'th' saja yang aktif menyala.
     // =========================================================================
-    three: ['th'],
     bathroom: ['th'],
+    thread: ['th'],
+    three: ['th'],
+    through: ['th'],
   },
   's': {
-    // Memperbaiki bocornya pola '-se' pada kata yang diawali dengan huruf 'se'
-    see: ['s'],
+    // =========================================================================
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /s/
+    // =========================================================================
+    sack: ['s'],
+    season: ['0'],    // Hanya 's' pertama yang berbunyi /s/ (indeks 0), karena 's' kedua berbunyi /z/
+    see: ['s'],       // Memperbaiki bocornya pola '-se' pada kata yang diawali dengan huruf 'se'
     sell: ['s'],
     send: ['s'],
     set: ['s'],
-    season: ['0'], // Hanya 's' pertama yang berbunyi /s/ (indeks 0), karena 's' kedua berbunyi /z/
+    sock: ['s'],
+    basic: ['s'],
+    class : ['s'],
+    face: ['ce'],
+    house: ['se'],      // Memperbaiki bocornya pola '-se' pada kata yang diawali dengan huruf 'ha'
 
-    // Memperbaiki pola 'st' agar tidak ikut menyalakan huruf 't' yang tidak bisu
-    system: ['0', '2'], // Menyorot kedua huruf 's' di indeks 0 dan 2
+    system: ['0', '2'], // Menyorot kedua huruf 's' di indeks 0 dan 2 (mencegah t menyala dari 'st')
   },
   'ʃ': {
-    // station -> s-t-a-t-i-o-n (indeks 0 adalah 's' biasa /s/).
-    // Yang berbunyi /ʃ/ hanya 'ti' di indeks 3 dan 4.
-    station: ['3', '4'],
-
-    // tissue -> t-i-s-s-u-e. Karena ada aturan global 'ti', 
-    // sistem akan salah mengira 'ti' di depan adalah /ʃ/. Yang benar adalah 'ss' di indeks 2 dan 3.
-    tissue: ['2', '3'],
-
-    // special -> s-p-e-c-i-a-l (indeks 0 adalah 's' biasa /s/).
-    // Yang berbunyi /ʃ/ hanya 'ci' di indeks 3 dan 4.
-    special: ['3', '4'],
+    ocean: ['c', 'e'], // Memperbaiki kebocoran pola '-ce' agar tidak ikut menyalakan 'c' di kata seperti 'ocean'
+    // =========================================================================
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /ʃ/
+    // =========================================================================
+    special: ['3', '4'], // Yang berbunyi /ʃ/ hanya 'ci' di indeks 3 dan 4
+    station: ['3', '4'], // Yang berbunyi /ʃ/ hanya 'ti' di indeks 3 and 4
+    tissue: ['2', '3'],  // Mengunci 'ss' di indeks 2 dan 3 agar sistem tidak salah mengira 'ti' di depan
   },
   'ʧ': {
-    // check -> c-h-e-c-k. 'ch' di depan (indeks 0,1) adalah /tʃ/. 
-    // Kita kunci indeksnya agar 'c' pada 'ck' di belakang (indeks 3) tidak ikut menyala.
-    check: ['0', '1'],
-
-    // choice -> c-h-o-i-c-e. 'ch' di depan (indeks 0,1) adalah /tʃ/. 
-    // Kita kunci agar 'c' di akhir kata (indeks 4) yang berbunyi /s/ tidak ikut menyala.
-    choice: ['0', '1'],
-
-    // picture -> p-i-c-t-u-r-e. Yang berbunyi /tʃ/ adalah 'tu' (indeks 3,4).
-    // Kita kunci agar huruf 'c' di indeks 2 (berbunyi /k/) tidak ikut menyala.
-    picture: ['3', '4'],
-
-    // culture -> c-u-l-t-u-r-e. Yang berbunyi /tʃ/ adalah 'tu' (indeks 4,5).
-    // Kita kunci agar huruf 'c' di awal kata (indeks 0) yang berbunyi /k/ tidak ikut menyala.
-    culture: ['ture'],
-
+    catch: ['tch'],   // Mengunci 'c' di depan agar 't' pada 'tch' di belakang tidak ikut menyala
     // =========================================================================
-    // 3. KASUS MULTIPLE SOUNDS (Kata dengan dua bunyi /ʧ/ sekaligus)
+    // KOREKSI DAN OPTIMALISASI POLA BUNYI /tʃ/
     // =========================================================================
-    church: ['0', '1', '4', '5'],
+    check: ['0', '1'],   // Mengunci 'ch' di depan agar 'c' pada 'ck' di belakang tidak ikut menyala
+    choice: ['0', '1'],  // Mengunci 'ch' di depan agar 'c' di akhir kata (/s/) tidak ikut menyala
+    church: ['0', '1', '4', '5'], // KASUS MULTIPLE SOUNDS (Dua bunyi /tʃ/ sekaligus)
+    culture: ['ture'],   // Mengunci agar huruf 'c' di awal kata (/k/) tidak ikut menyala
+    picture: ['3', '4'], // Yang berbunyi /tʃ/ adalah 'tu' (indeks 3,4), mencegah 'c' (/k/) menyala
   },
   'h': {
     // =========================================================================
     // KASUS SILENT LETTER & MULTIPLE H
-    // Kata 'neighborhood' memiliki dua huruf 'h'. Huruf 'h' pertama di dalam 'gh' 
-    // bersifat bisu (silent), sedangkan 'h' kedua pada 'hood' berbunyi /h/.
-    // Kita kunci menggunakan indeks agar hanya 'h' kedua yang menyala.
     // =========================================================================
-    neighborhood: ['8'],
+    neighborhood: ['8'], // Huruf 'h' pertama pada 'gh' bisu. Hanya mengunci 'h' kedua pada 'hood'.
   },
-}
-  
-
+};

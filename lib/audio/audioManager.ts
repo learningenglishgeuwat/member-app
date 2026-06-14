@@ -83,6 +83,12 @@ class AudioManager {
   }
 
   async playTap() {
+    // Avoid playing UI tap sound while speech synthesis is active (prevents overlap with TTS)
+    if (typeof window !== 'undefined') {
+      if ('speechSynthesis' in window && window.speechSynthesis.speaking) return
+      if ((window as any).__ttsPlaying) return
+    }
+    if (!this.enabled) return
     await this.resume()
     const ctx = this.ctx!
     const now = ctx.currentTime
@@ -117,6 +123,7 @@ class AudioManager {
   }
 
   async playKeypress() {
+    if (!this.enabled) return
     await this.resume()
     const ctx = this.ctx!
     const now = ctx.currentTime
@@ -299,6 +306,11 @@ class AudioManager {
   }
 
   async playLaserClick() {
+    if (typeof window !== 'undefined') {
+      if ('speechSynthesis' in window && window.speechSynthesis.speaking) return
+      if ((window as any).__ttsPlaying) return
+    }
+    if (!this.enabled) return
     await this.resume()
     // use original softer triangle tap sound for keypress (swapped)
     this.playTone({ type: 'triangle', frequency: 1100, duration: 0.05, attack: 0.002, decay: 0.04, gain: 0.02, filterType: 'highpass', filterFreq: 900 })
