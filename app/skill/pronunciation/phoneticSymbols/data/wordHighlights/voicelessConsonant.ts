@@ -37,6 +37,12 @@ export const voicelessConsonantManualWordHighlightOverrides: Record<string, Reco
     true: ['t'],
     try: ['tr'],
     water: ['t'],
+    bitter: ['t'],
+    pity: ['t'],
+    writer: ['t'],
+    metal: ['t'],
+    party: ['t'],
+    later: ['t'],
   },
   'k': {
     // =========================================================================
