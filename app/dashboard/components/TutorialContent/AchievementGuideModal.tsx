@@ -40,33 +40,31 @@ const AchievementGuideModal: React.FC<AchievementGuideModalProps> = ({ isOpen, o
 
         <div className="space-y-3 sm:space-y-4 text-slate-200 text-xs sm:text-sm">
           <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
-            <div className="font-semibold text-white mb-2">Yang bisa kamu lihat:</div>
+            <div className="font-semibold text-white mb-2">Apa yang akan kamu pelajari:</div>
             <div className="space-y-2 text-slate-300">
-              <div>1. Tier kamu saat ini (Rookie/Pro/Legend)</div>
-              <div>2. Syarat upgrade tier dan jumlah referral</div>
-              <div>3. Bonus referral dan cashback per tier</div>
-              <div>4. Saldo referral dan akses penarikan</div>
+              <div>1. Memahami struktur Achievement CPU Pronunciation dan apa arti setiap kategori.</div>
+              <div>2. Mengetahui area latihan mana yang perlu ditingkatkan untuk membuka setiap badge.</div>
+              <div>3. Menetapkan target: setiap kategori butuh minimal 80% untuk unlock.</div>
+              <div>4. Menggunakan fitur halaman untuk melacak progress dan membuat rencana belajar lebih efektif.</div>
             </div>
           </div>
 
           <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
-            <div className="font-semibold text-white mb-2">Tips cepat:</div>
+            <div className="font-semibold text-white mb-2">Strategi belajar cepat:</div>
             <div className="space-y-2 text-slate-300">
-              <div>1. Pastikan status akun aktif untuk mendapatkan benefit</div>
-              <div>2. Cek progress referral secara berkala</div>
-              <div>3. Gunakan referral code agar progres tercatat</div>
+              <div>1. Fokus dulu pada satu kategori yang paling rendah progresnya, lalu kembangkan secara bertahap.</div>
+              <div>2. Gunakan roadmap latihan sebagai panduan harian agar tiap sesi lebih terarah.</div>
+              <div>3. Evaluasi kembali progress dan sesuaikan target mingguan untuk hasil lebih stabil.</div>
             </div>
           </div>
 
           <div className="bg-black/60 border border-slate-700/50 rounded-xl p-3 sm:p-4">
-            <div className="font-semibold text-white mb-2">Tutorial withdrawal:</div>
+            <div className="font-semibold text-white mb-2">Langkah praktis:</div>
             <div className="space-y-2 text-slate-300">
-              <div>1. Klik kartu “Current Balance” (ikon petir)</div>
-              <div>2. Isi amount minimal Rp 50.000 (kelipatan 50.000)</div>
-              <div>3. Pilih Wallet Type (GoPay/Dana)</div>
-              <div>4. Klik tombol “Withdraw”</div>
-              <div>5. Status akan menjadi Pending sampai disetujui admin</div>
-              <div>Catatan: Ada biaya admin Rp 5.000 per penarikan</div>
+              <div>1. Klik CPU chip untuk langsung menuju View Progress dan lihat detail tugas.</div>
+              <div>2. Jika chip belum unlock, gunakan itu sebagai sinyal untuk memperkuat topik terkait.</div>
+              <div>3. Kerjakan latihan pengucapan dan roadmap secara konsisten setiap hari.</div>
+              <div>4. Review kembali hasil latihan dan terus tingkatkan sampai badge terbuka.</div>
             </div>
           </div>
         </div>

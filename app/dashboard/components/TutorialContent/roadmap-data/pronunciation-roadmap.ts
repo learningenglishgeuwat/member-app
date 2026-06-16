@@ -50,6 +50,20 @@ export const PRONUNCIATION_ROADMAP_ITEMS: ReadonlyArray<PronunciationRoadmapItem
     estimatedDays: 10,
   },
   {
+    id: 'linking-word',
+    title: 'Linking Word',
+    href: '/skill/pronunciation/linking-word',
+    focus: 'Latihan menghubungkan kata dan menjaga aliran speech.',
+    estimatedDays: 6,
+  },
+  {
+    id: 'contraction',
+    title: 'Contraction',
+    href: '/skill/pronunciation/contraction',
+    focus: 'Pola pemendekan kata untuk pengucapan natural.',
+    estimatedDays: 6,
+  },
+  {
     id: 'text-practice',
     title: 'Text Practice',
     href: '/skill/pronunciation/text',
@@ -63,11 +77,18 @@ export const PRONUNCIATION_ROADMAP_ITEMS: ReadonlyArray<PronunciationRoadmapItem
     focus: 'Latihan membaca paragraf untuk flow dan clarity.',
     estimatedDays: 4,
   },
+  {
+    id: 'tongue-twister',
+    title: 'Tongue Twister',
+    href: '/skill/pronunciation/tongue-twister',
+    focus: 'Kecepatan dan kelincahan artikulasi lewat kalimat menantang.',
+    estimatedDays: 5,
+  },
 ];
 
-export const PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS = PRONUNCIATION_ROADMAP_ITEMS.filter(
-  (item) => item.id !== 'text-practice' && item.id !== 'reading-text',
-).map((item) => item.id);
+export const PRONUNCIATION_ROADMAP_CHECKLIST_ENABLED_IDS = PRONUNCIATION_ROADMAP_ITEMS.map(
+  (item) => item.id,
+);
 
 export const PRONUNCIATION_ROADMAP_TOTAL_DAYS = PRONUNCIATION_ROADMAP_ITEMS.reduce(
   (sum, item) => sum + item.estimatedDays,
