@@ -83,7 +83,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     { id: 'dashboard', label: 'Start Journey', icon: Compass, locked: false },
     { id: 'notifications', label: 'Notifications', icon: Bell, locked: false },
     { id: 'progress', label: 'Progress', icon: BarChart2, locked: false },
-    { id: 'achievements', label: 'Achievements', icon: Trophy, locked: true },
+    { id: 'achievements', label: 'Achievements', icon: Trophy, locked: false },
     { id: 'settings', label: 'Settings', icon: Settings, locked: false },
     { id: 'device-approve', label: 'Approve Device', icon: CheckCircle, locked: false },
     { id: 'help-support', label: 'Help & Support', icon: HelpCircle, locked: false },

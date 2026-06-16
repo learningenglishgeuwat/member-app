@@ -9,7 +9,6 @@ import { AME_VS_BRE_BRITISH_NOTES } from './data/ameVsBreData';
 import { ControlCenter, IpaVisibilityToggle, PlayStopButton } from '@/app/components';
 import { isSpeechSynthesisSupported, speakTextWithPause, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import { renderIpa, renderWord } from '../[symbol]/helpers/highlightHelpers';
-import '../styles/portal.css';
 import './styles/ameVsBre.css';
 
 const highlightLetterStyle: CSSProperties = {
@@ -150,10 +149,10 @@ const AMeVsBrEPage: React.FC = () => {
   }, [stopExamplePlayback]);
 
   return (
-    <div className="pronunciation-layout futuristic-portal-container">
-      <div className="cyber-grid" />
-      <div className="cyber-particles" />
-      <div className="glow-overlay" />
+    <div className="pronunciation-layout ame-vs-bre-page">
+      <div className="ame-vs-bre-grid-background" />
+      <div className="ame-vs-bre-particles" />
+      <div className="ame-vs-bre-glow-overlay" />
 
       <div className="fixed top-6 left-6 z-[100]">
         <BackButton to="/skill/pronunciation/phoneticSymbols" />
@@ -166,11 +165,11 @@ const AMeVsBrEPage: React.FC = () => {
         onMenuButtonClick={() => setSidebarOpen(true)}
       />
 
-      <main className="futuristic-portal-main flex items-center justify-center">
-        <div className="w-full max-w-6xl mx-auto px-4 pb-10">
-          <div className="portal-title">
-            <h1 className="title-text">AmE VS BrE</h1>
-            <div className="title-underline" />
+      <main className="ame-vs-bre-main scrollbar-hide">
+        <div className="ame-vs-bre-inner">
+          <div className="ame-vs-bre-title">
+            <h1 className="ame-vs-bre-title-text">AmE VS BrE</h1>
+            <div className="ame-vs-bre-title-underline" />
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-black/60 p-6 shadow-[0_25px_80px_rgba(37,99,235,0.16)] backdrop-blur-sm">

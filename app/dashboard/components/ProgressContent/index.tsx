@@ -119,6 +119,18 @@ const parseCsvRows = (text: string): string[][] => {
   return rows;
 };
 
+const PHONETIC_SYMBOL_CANONICAL_LABELS: Record<string, string> = {
+  'ɪə': 'ɪr',
+  'iə': 'ɪr',
+  'eə': 'ɛr',
+  'er': 'ɛr',
+  'ʊə': 'ʊr',
+};
+
+const getPhoneticProgressKey = (symbol: string) => `phoneticSymbols_${PHONETIC_SYMBOL_CANONICAL_LABELS[symbol] ?? symbol}`;
+const getPhoneticTopicProgress = (topicProgress: Record<string, number>, symbol: string) =>
+  topicProgress[getPhoneticProgressKey(symbol)] ?? topicProgress[`phoneticSymbols_${symbol}`] ?? 0;
+
 const PHONETIC_SYMBOL_GROUPS: Array<{ id: string; title: string; symbols: string[] }> = [
   {
     id: 'vowel-lax',
@@ -366,7 +378,7 @@ const ProgressContent: React.FC = () => {
   // Helper function to calculate phonetic symbols average
   const calculatePhoneticAverage = (topicProgress: Record<string, number>) => {
     const allSymbols = PHONETIC_SYMBOL_GROUPS.flatMap((group) => group.symbols);
-    const phoneticSymbolProgress = allSymbols.map((symbol) => toPercent(topicProgress[`phoneticSymbols_${symbol}`]));
+    const phoneticSymbolProgress = allSymbols.map((symbol) => toPercent(getPhoneticTopicProgress(topicProgress, symbol)));
     return phoneticSymbolProgress.length > 0
       ? Math.round(phoneticSymbolProgress.reduce((acc, curr) => acc + curr, 0) / phoneticSymbolProgress.length)
       : 0;
@@ -439,8 +451,8 @@ const ProgressContent: React.FC = () => {
         labelVariant: 'symbol',
         items: group.symbols.map((symbol) => ({
           id: `phoneticSymbols_${symbol}`,
-          label: symbol,
-          percentage: toPercent(topicProgress[`phoneticSymbols_${symbol}`]),
+          label: PHONETIC_SYMBOL_CANONICAL_LABELS[symbol] ?? symbol,
+          percentage: toPercent(getPhoneticTopicProgress(topicProgress, symbol)),
           href: `/skill/pronunciation/phoneticSymbols/${encodeURIComponent(symbol)}`,
         })),
       })),
@@ -590,6 +602,10 @@ const ProgressContent: React.FC = () => {
       })),
     };
 
+    const linkingWordProgress = toPercent(topicProgress['linkingWord']);
+    const contractionProgress = toPercent(topicProgress['contraction']);
+    const tongueTwisterProgress = toPercent(topicProgress['tongueTwister']);
+
     const practiceByRoadmapId: Record<string, number> = {
       alphabet: topicProgress['alphabet'] || 0,
       'phonetic-symbols': averagePhoneticProgress,
@@ -597,6 +613,9 @@ const ProgressContent: React.FC = () => {
       intonation: topicProgress['intonation'] || 0,
       'final-sound': finalSoundPracticeAverage,
       'american-t': americanTPracticeAverage,
+      'linking-word': linkingWordProgress,
+      contraction: contractionProgress,
+      'tongue-twister': 0,
       'text-practice': textPracticeProgress,
       'reading-text': readingTextProgress,
     };
@@ -608,8 +627,11 @@ const ProgressContent: React.FC = () => {
       intonation: { percentage: isTopicLessonDone('intonation') ? 100 : 0 },
       'final-sound': { percentage: finalSoundLessonPercentage, popup: finalSoundLessonPopup },
       'american-t': { percentage: americanTLessonPercentage, popup: americanTLessonPopup },
-      'text-practice': { percentage: 0 },
-      'reading-text': { percentage: 0 },
+      'linking-word': { percentage: isTopicLessonDone('linking-word') ? 100 : 0 },
+      contraction: { percentage: isTopicLessonDone('contraction') ? 100 : 0 },
+      'tongue-twister': { percentage: isTopicLessonDone('tongue-twister') ? 100 : 0 },
+      'text-practice': { percentage: isTopicLessonDone('text-practice') ? 100 : 0 },
+      'reading-text': { percentage: isTopicLessonDone('reading-text') ? 100 : 0 },
     };
 
     const roadmapTopics: Array<{ id: string; name: string }> = [
@@ -619,8 +641,11 @@ const ProgressContent: React.FC = () => {
       { id: 'intonation', name: 'Intonation' },
       { id: 'final-sound', name: 'Final Sound' },
       { id: 'american-t', name: 'American /t/' },
+      { id: 'linking-word', name: 'Linking Word' },
+      { id: 'contraction', name: 'Contraction' },
       { id: 'text-practice', name: 'Text Practice' },
       { id: 'reading-text', name: 'Reading Text' },
+      { id: 'tongue-twister', name: 'Tongue Twister' },
     ];
 
     const practiceHrefByRoadmapId: Record<string, string> = {
@@ -630,6 +655,9 @@ const ProgressContent: React.FC = () => {
       intonation: '/skill/pronunciation/intonation',
       'final-sound': '/skill/pronunciation/final-sound-new',
       'american-t': '/skill/pronunciation/american-t',
+      'linking-word': '/skill/pronunciation/linking-word',
+      contraction: '/skill/pronunciation/contraction',
+      'tongue-twister': '/skill/pronunciation/tongue-twister',
       'text-practice': '/skill/pronunciation/text',
       'reading-text': '/skill/pronunciation/reading-text',
     };
@@ -638,8 +666,8 @@ const ProgressContent: React.FC = () => {
       const practicePercentage = practiceByRoadmapId[topic.id] ?? 0;
       const lessonPercentage = lessonByRoadmapId[topic.id]?.percentage ?? 0;
       const combinedPercentage =
-        topic.id === 'text-practice' || topic.id === 'reading-text'
-          ? practicePercentage
+        topic.id === 'text-practice' || topic.id === 'reading-text' || topic.id === 'tongue-twister'
+          ? lessonPercentage
           : Math.round((practicePercentage + lessonPercentage) / 2);
       return {
         id: topic.id,
@@ -902,11 +930,73 @@ const ProgressContent: React.FC = () => {
     percentage: 0,
   };
 
-  const strongestPronunciationTopic = pronunciationSummaryTopics.length > 0
-    ? pronunciationSummaryTopics.reduce((prev, curr) => (curr.percentage > prev.percentage ? curr : prev))
+  const getPhoneticCategoryProgress = (): DashboardTopicProgress[] => {
+    const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {});
+    const lessonChecklist = readLocalStorageObject<Record<string, boolean>>(
+      PRONUNCIATION_ROADMAP_CHECKLIST_KEY,
+      {}
+    );
+    const isLessonDetailDone = (topicId: string, itemId: string) =>
+      lessonChecklist[topicId] === true || lessonChecklist[`${ROADMAP_LESSON_DETAIL_PREFIX}${itemId}`] === true;
+
+    const getCategorySymbolIds = (groupIds: string[]) =>
+      PHONETIC_SYMBOL_GROUPS.filter((group) => groupIds.includes(group.id)).flatMap((group) =>
+        group.symbols.map((symbol) => `phoneticSymbols_${symbol}`),
+      );
+
+    const calculateAverage = (ids: string[]) => {
+      const values = ids
+        .map((id) => toPercent(topicProgress[id]))
+        .filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+      return values.length ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length) : 0;
+    };
+
+    const calculateLessonPercentage = (ids: string[]) => {
+      if (ids.length === 0) return 0;
+      const doneCount = ids.filter((itemId) => isLessonDetailDone('phonetic-symbols', itemId)).length;
+      return Math.round((doneCount / ids.length) * 100);
+    };
+
+    const vowelIds = getCategorySymbolIds(['vowel-lax', 'vowel-tense']);
+    const diphthongIds = getCategorySymbolIds(['diphthong']);
+    const consonantIds = getCategorySymbolIds(['consonant-voiceless', 'consonant-voiced']);
+
+    const categories = [
+      {
+        id: 'vowel',
+        name: 'Vowel',
+        practicePercentage: calculateAverage(vowelIds),
+        lessonPercentage: calculateLessonPercentage(vowelIds),
+      },
+      {
+        id: 'diphthong',
+        name: 'Diphthong',
+        practicePercentage: calculateAverage(diphthongIds),
+        lessonPercentage: calculateLessonPercentage(diphthongIds),
+      },
+      {
+        id: 'consonant',
+        name: 'Consonant',
+        practicePercentage: calculateAverage(consonantIds),
+        lessonPercentage: calculateLessonPercentage(consonantIds),
+      },
+    ];
+
+    return categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      percentage: Math.round((category.practicePercentage + category.lessonPercentage) / 2),
+      practicePercentage: category.practicePercentage,
+      lessonPercentage: category.lessonPercentage,
+    }));
+  };
+
+  const phoneticCategoryTopics = getPhoneticCategoryProgress();
+  const strongestPronunciationTopic = phoneticCategoryTopics.length > 0
+    ? phoneticCategoryTopics.reduce((prev, curr) => (curr.percentage > prev.percentage ? curr : prev))
     : fallbackTopic;
-  const weakestPronunciationTopic = pronunciationSummaryTopics.length > 0
-    ? pronunciationSummaryTopics.reduce((prev, curr) => (curr.percentage < prev.percentage ? curr : prev))
+  const weakestPronunciationTopic = phoneticCategoryTopics.length > 0
+    ? phoneticCategoryTopics.reduce((prev, curr) => (curr.percentage < prev.percentage ? curr : prev))
     : fallbackTopic;
 
   const handleTopicClick = (skillId: string, topicName: string) => {
@@ -1090,42 +1180,81 @@ const ProgressContent: React.FC = () => {
                                   <div className="bg-slate-800/30 rounded-lg p-2 md:p-3">
                                     {skill.id === 'pronunciation' ? (
                                       <div className="space-y-2">
-                                        <div className="flex items-center gap-2 md:gap-3">
-                                          {topic.practicePopup &&
-                                          getPracticePopupItemCount(topic.practicePopup) > 1 ? (
-                                            <button
-                                              type="button"
-                                              onClick={() => openPopup(topic.practicePopup)}
-                                              className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] text-left underline underline-offset-2 decoration-slate-600/60 hover:text-cyan-200 hover:decoration-cyan-300/80 transition-colors"
-                                              aria-haspopup="dialog"
-                                              title="Show details"
-                                            >
-                                              Practice Progress
-                                            </button>
-                                          ) : topic.practiceHref ? (
-                                            <Link
-                                              href={topic.practiceHref}
-                                              className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] inline-block text-left underline underline-offset-2 decoration-slate-600/60 hover:text-cyan-200 hover:decoration-cyan-300/80 transition-colors"
-                                              title="Open practice page"
-                                            >
-                                              Practice Progress
-                                            </Link>
-                                          ) : (
-                                            <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
-                                              Practice Progress
+                                        {topic.id !== 'tongue-twister' && topic.id !== 'text-practice' && topic.id !== 'reading-text' && (
+                                          <div className="flex items-center gap-2 md:gap-3">
+                                            {topic.practicePopup &&
+                                            getPracticePopupItemCount(topic.practicePopup) > 1 ? (
+                                              <button
+                                                type="button"
+                                                onClick={() => openPopup(topic.practicePopup)}
+                                                className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] text-left underline underline-offset-2 decoration-slate-600/60 hover:text-cyan-200 hover:decoration-cyan-300/80 transition-colors"
+                                                aria-haspopup="dialog"
+                                                title="Show details"
+                                              >
+                                                Practice Progress
+                                              </button>
+                                            ) : topic.practiceHref ? (
+                                              <Link
+                                                href={topic.practiceHref}
+                                                className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] inline-block text-left underline underline-offset-2 decoration-slate-600/60 hover:text-cyan-200 hover:decoration-cyan-300/80 transition-colors"
+                                                title="Open practice page"
+                                              >
+                                                Practice Progress
+                                              </Link>
+                                            ) : (
+                                              <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                                Practice Progress
+                                              </div>
+                                            )}
+                                            <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                              <div
+                                                className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
+                                                style={{ width: `${topic.practicePercentage ?? topic.percentage}%` }}
+                                              />
                                             </div>
-                                          )}
-                                          <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
-                                            <div
-                                              className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full transition-all duration-700"
-                                              style={{ width: `${topic.practicePercentage ?? topic.percentage}%` }}
-                                            />
+                                            <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">
+                                              {topic.practicePercentage ?? topic.percentage}%
+                                            </div>
                                           </div>
-                                          <div className="text-[10px] sm:text-xs text-cyan-300 font-bold">
-                                            {topic.practicePercentage ?? topic.percentage}%
+                                        )}
+                                        {topic.id !== 'text-practice' && topic.id !== 'reading-text' && topic.id !== 'tongue-twister' && (
+                                          <div className="flex items-center gap-2 md:gap-3">
+                                            {topic.lessonPopup &&
+                                            getPracticePopupItemCount(topic.lessonPopup) > 1 ? (
+                                              <button
+                                                type="button"
+                                                onClick={() => openPopup(topic.lessonPopup)}
+                                                className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] text-left underline underline-offset-2 decoration-slate-600/60 hover:text-emerald-200 hover:decoration-emerald-300/80 transition-colors"
+                                                aria-haspopup="dialog"
+                                                title="Show details"
+                                              >
+                                                Lesson Progress
+                                              </button>
+                                            ) : topic.practiceHref ? (
+                                              <Link
+                                                href={topic.practiceHref}
+                                                className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px] inline-block text-left underline underline-offset-2 decoration-slate-600/60 hover:text-emerald-200 hover:decoration-emerald-300/80 transition-colors"
+                                                title="Open lesson page"
+                                              >
+                                                Lesson Progress
+                                              </Link>
+                                            ) : (
+                                              <div className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider min-w-[92px]">
+                                                Lesson Progress
+                                              </div>
+                                            )}
+                                            <div className="flex-1 bg-slate-700/50 rounded-full h-2 md:h-3 relative overflow-hidden">
+                                              <div
+                                                className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all duration-700"
+                                                style={{ width: `${topic.lessonPercentage ?? 0}%` }}
+                                              />
+                                            </div>
+                                            <div className="text-[10px] sm:text-xs text-emerald-300 font-bold">
+                                              {topic.lessonPercentage ?? 0}%
+                                            </div>
                                           </div>
-                                        </div>
-                                        {topic.id !== 'text-practice' && topic.id !== 'reading-text' && (
+                                        )}
+                                        {(topic.id === 'tongue-twister' || topic.id === 'text-practice' || topic.id === 'reading-text') && (
                                           <div className="flex items-center gap-2 md:gap-3">
                                             {topic.lessonPopup &&
                                             getPracticePopupItemCount(topic.lessonPopup) > 1 ? (

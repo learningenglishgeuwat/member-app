@@ -1,5 +1,90 @@
 .ame-vs-bre-page {
   position: relative;
+  min-height: 100dvh;
+  background: #000000;
+  overflow: visible;
+  color: #ffffff;
+}
+
+.ame-vs-bre-grid-background,
+.ame-vs-bre-particles,
+.ame-vs-bre-glow-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ame-vs-bre-grid-background {
+  background:
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.ame-vs-bre-glow-overlay {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.03) 0%, transparent 70%);
+}
+
+.ame-vs-bre-particles::before,
+.ame-vs-bre-particles::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.8), transparent);
+  border-radius: 50%;
+}
+
+.ame-vs-bre-particles::before {
+  top: 20%;
+  left: 10%;
+}
+
+.ame-vs-bre-particles::after {
+  top: 60%;
+  right: 15%;
+}
+
+.ame-vs-bre-main {
+  position: relative;
+  z-index: 10;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 6rem 1rem 4rem;
+  min-height: 100vh;
+}
+
+.ame-vs-bre-inner {
+  width: 100%;
+}
+
+.ame-vs-bre-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ame-vs-bre-title-text {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ame-vs-bre-title-underline {
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, #00ffff, transparent);
+  margin: 0.75rem auto 0;
 }
 
 .ame-vs-bre-tabbar {

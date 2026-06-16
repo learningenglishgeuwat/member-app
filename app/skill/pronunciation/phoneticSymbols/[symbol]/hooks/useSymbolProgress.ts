@@ -38,6 +38,22 @@ const getStorageKey = (decodedSymbol: string) => {
   return `phoneticSymbolSectionState:${normalizedSymbol || 'default'}`;
 };
 
+const normalizePhoneticSymbol = (symbol: string) => {
+  const normalized = symbol.trim().toLowerCase();
+  if (normalized === 'dʒ') return 'ʤ';
+  if (normalized === 'tʃ') return 'ʧ';
+  if (normalized === 'y') return 'j';
+  if (normalized === 'eə' || normalized === 'er') return 'ɛr';
+  if (normalized === 'ɪə' || normalized === 'iə') return 'ɪr';
+  if (normalized === 'ʊə') return 'ʊr';
+  return normalized;
+};
+
+const getProgressStorageKey = (decodedSymbol: string) => {
+  const normalizedSymbol = normalizePhoneticSymbol(decodedSymbol);
+  return `phoneticSymbols_${normalizedSymbol}`;
+};
+
 const calculateAverage = (values: number[]) =>
   values.length > 0 ? Math.round(values.reduce((acc, value) => acc + value, 0) / values.length) : 0;
 
@@ -65,7 +81,8 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
     }
 
     const savedProgress = JSON.parse(localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}') as Record<string, number>;
-    setIsProgressSaved(!!savedProgress[`phoneticSymbols_${decodedSymbol}`]);
+    const progressKey = getProgressStorageKey(decodedSymbol);
+    setIsProgressSaved(!!savedProgress[progressKey]);
 
     const rawSectionState = localStorage.getItem(sectionStateStorageKey);
     if (rawSectionState) {
@@ -139,7 +156,8 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
     if (typeof window === 'undefined' || !isClient) return;
 
     const currentProgress = JSON.parse(localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}') as Record<string, number>;
-    currentProgress[`phoneticSymbols_${decodedSymbol}`] = percentage;
+    const progressKey = getProgressStorageKey(decodedSymbol);
+    currentProgress[progressKey] = percentage;
     localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(currentProgress));
 
     syncDashboardProgress(currentProgress);
@@ -152,7 +170,8 @@ export const useSymbolProgress = ({ decodedSymbol }: UseSymbolProgressParams): U
     if (typeof window === 'undefined' || !isClient) return;
 
     const currentProgress = JSON.parse(localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}') as Record<string, number>;
-    delete currentProgress[`phoneticSymbols_${decodedSymbol}`];
+    const progressKey = getProgressStorageKey(decodedSymbol);
+    delete currentProgress[progressKey];
     localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(currentProgress));
 
     syncDashboardProgress(currentProgress);

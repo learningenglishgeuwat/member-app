@@ -470,10 +470,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                     {item.estimatedDays} hari ({item.estimatedDays * 30} menit)
                   </td>
                   <td className="px-3 sm:px-4 py-3">
-                    {item.id === 'text-practice' ? (
-                      <span className="text-slate-500">-</span>
-                    ) : (
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                         <label className="inline-flex items-center gap-2 cursor-pointer">
                           <input
                             type="checkbox"
@@ -492,8 +489,7 @@ const PronunciationRoadmapModal: React.FC<PronunciationRoadmapModalProps> = ({
                             (lihat detail)
                           </button>
                         ) : null}
-                      </div>
-                    )}
+                    </div>
                   </td>
                 </tr>
               ))}

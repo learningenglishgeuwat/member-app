@@ -2,11 +2,12 @@
 
 /* eslint-disable react/no-unescaped-entities, react/jsx-no-comment-textnodes, @typescript-eslint/no-explicit-any */
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { Volume2 } from "lucide-react";
 import BackButton from "../../components/BackButton";
 import Sidebar from "../../components/skillSidebar/SkillSidebar";
 import { IpaVisibilityToggle, HighlightVisibilityToggle, ControlCenter, PlayStopButton } from "@/app/components";
+import ButtonSavedProgress from "../../components/buttonSavedProgress/ButtonSavedProgress";
 import { speakText, stopSpeech, waitForVoices } from "@/lib/tts/speech";
 import "./contraction.css";
 
@@ -64,6 +65,59 @@ export default function ContractionPage() {
   const [activePillGroup, setActivePillGroup] = useState<string | null>(null);
   const [activeSequence, setActiveSequence] = useState<string | null>(null);
   const [activePillId, setActivePillId] = useState<string | null>(null);
+  const [savedProgress, setSavedProgress] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Handle hydration
+  useLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
+      setSavedProgress(currentProgress.contraction != null);
+      setIsClient(true);
+    }
+  }, []);
+
+  const handleSaveProgress = async (percentage: number) => {
+    if (typeof window === 'undefined') return;
+    const pronunciationProgress = JSON.parse(
+      window.localStorage.getItem('pronunciationProgress') || '{}',
+    ) as Record<string, number>;
+    pronunciationProgress.contraction = percentage;
+    window.localStorage.setItem('pronunciationProgress', JSON.stringify(pronunciationProgress));
+
+    const dashboardProgress = JSON.parse(
+      window.localStorage.getItem('dashboardProgress') || '{}',
+    ) as Record<string, number>;
+    const allProgress = Object.values(pronunciationProgress);
+    dashboardProgress.pronunciation = Math.round(
+      allProgress.reduce((sum, val) => sum + val, 0) / allProgress.length,
+    );
+    window.localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
+    setSavedProgress(true);
+  };
+
+  const handleUnsaveProgress = async () => {
+    if (typeof window === 'undefined') return;
+    const pronunciationProgress = JSON.parse(
+      window.localStorage.getItem('pronunciationProgress') || '{}',
+    ) as Record<string, number>;
+    delete pronunciationProgress.contraction;
+    window.localStorage.setItem('pronunciationProgress', JSON.stringify(pronunciationProgress));
+
+    const dashboardProgress = JSON.parse(
+      window.localStorage.getItem('dashboardProgress') || '{}',
+    ) as Record<string, number>;
+    if (Object.keys(pronunciationProgress).length > 0) {
+      const allProgress = Object.values(pronunciationProgress);
+      dashboardProgress.pronunciation = Math.round(
+        allProgress.reduce((sum, val) => sum + val, 0) / allProgress.length,
+      );
+    } else {
+      delete dashboardProgress.pronunciation;
+    }
+    window.localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
+    setSavedProgress(false);
+  };
 
   // Helper dictionary arrays
   const tabs = [
@@ -812,6 +866,20 @@ export default function ContractionPage() {
           </button>
         ))}
       </nav>
+
+      {/* SAVE PROGRESS BUTTON */}
+      <div className="flex justify-center py-4 px-3">
+        {isClient && (
+          <ButtonSavedProgress
+            isSaved={savedProgress}
+            onSave={(percentage) => handleSaveProgress(percentage)}
+            onUnsave={handleUnsaveProgress}
+            size="small"
+            variant="primary"
+            topicName="Contraction"
+          />
+        )}
+      </div>
 
       {/* MAIN */}
       <main className="main-content relative">

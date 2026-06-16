@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { ChevronDown, Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-import ButtonSavedProgress from '../../components/buttonSavedProgress';
+
 import { ControlCenter, HighlightVisibilityToggle, IpaVisibilityToggle, PlayStopButton } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
@@ -1443,16 +1443,7 @@ export default function PronunciationTextPage() {
                     Phonetic Transcription
                   </button>
                 </div>
-                <div className='text-pronunciation-tab-progress'>
-                  <ButtonSavedProgress
-                    isSaved={savedProgressByTab[activeTab]}
-                    onSave={(percentage) => handleSaveProgressByTab(activeTab, percentage)}
-                    onUnsave={() => handleUnsaveProgressByTab(activeTab)}
-                    size='small'
-                    variant='outline'
-                    topicName={activeProgressTopicName}
-                  />
-                </div>
+
               </div>
             </div>
 

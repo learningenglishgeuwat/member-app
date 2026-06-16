@@ -1,553 +1,328 @@
-'use client'
+﻿'use client'
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Zap, ScanBarcode, User, Crown, Star, Trophy } from 'lucide-react';
-import { useAuth } from '@/contexts/MemberAuthContext';
-import {
-  getReferralStats,
-  submitWithdrawal,
-  getTierConfig,
-  getCachedTierConfigSnapshot,
-  getLatestWithdrawRequest,
-  type ReferralStats,
-  type WithdrawRequestRow,
-} from '@/lib/memberStats';
-import { getActiveSpecialOfferReferralCommission } from '@/lib/specialOffer';
-import type { Tier, TierEnum } from '@/types/database';
+import { Cpu, Lock } from 'lucide-react'
+import { saveDashboardView } from '../../dashboardView'
 
-const AchievementsContent: React.FC = () => {
-  const SPECIAL_OFFER_FALLBACK_REFERRAL_PCT = 7;
-  const { user } = useAuth();
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [withdrawSubmitting, setWithdrawSubmitting] = useState(false);
-  const [withdrawStatusMessage, setWithdrawStatusMessage] = useState<string | null>(null);
-  const [latestWithdrawRequest, setLatestWithdrawRequest] = useState<WithdrawRequestRow | null>(null);
-  const [withdrawStatusLoading, setWithdrawStatusLoading] = useState(false);
-  const [withdrawForm, setWithdrawForm] = useState<{
-    walletType: 'gopay' | 'dana';
-    amount: string;
-  }>({
-    walletType: 'gopay',
-    amount: ''
-  });
-  const [referralStats, setReferralStats] = useState<ReferralStats>({
-    totalReferrals: 0,
-    totalEarnings: 0
-  });
-  const [tierConfig, setTierConfig] = useState<Tier[]>(() => getCachedTierConfigSnapshot() ?? []);
-  const [tierLoading, setTierLoading] = useState(() => (getCachedTierConfigSnapshot()?.length ?? 0) === 0);
-  const [tierLoadError, setTierLoadError] = useState<string | null>(null);
-  const [specialOfferReferralPct, setSpecialOfferReferralPct] = useState<number>(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
-  const [specialOfferEligible, setSpecialOfferEligible] = useState(true);
-  const [specialOfferLoading, setSpecialOfferLoading] = useState(false);
-  const isMountedRef = useRef(true);
+type AchievementCode = 'A' | 'LV' | 'TV' | 'D' | 'VlC' | 'VC' | 'S' | 'I' | 'FS' | 'AT' | 'LW' | 'C'
 
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
+type AchievementItem = {
+  code: AchievementCode
+  label: string
+  border: string
+  glow: string
+  core: string
+  glowColor: string
+}
 
-  const loadReferralStats = useCallback(async () => {
-    if (!user?.id) return;
+type AchievementProgressMap = Record<AchievementCode, number>
+
+const ACHIEVEMENT_ITEMS: AchievementItem[] = [
+  { code: 'A', label: 'Alphabet', border: 'border-blue-500/40', glow: 'shadow-blue-500/40', core: 'from-blue-600 to-blue-400', glowColor: '59, 130, 246' },
+  
+  // === 5 VARIASI WARNA UNGU BERBEDA UNTUK VOWEL & CONSONANT ===
+  { code: 'LV', label: 'Lax Vowel', border: 'border-violet-500/40', glow: 'shadow-violet-500/40', core: 'from-violet-600 to-violet-400', glowColor: '139, 92, 246' },
+  { code: 'TV', label: 'Tense Vowel', border: 'border-fuchsia-500/40', glow: 'shadow-fuchsia-500/40', core: 'from-fuchsia-600 to-fuchsia-400', glowColor: '217, 70, 239' },
+  { code: 'D', label: 'Diphthong', border: 'border-purple-500/40', glow: 'shadow-purple-500/40', core: 'from-purple-600 to-purple-400', glowColor: '168, 85, 247' },
+  { code: 'VlC', label: 'Voiceless Consonant', border: 'border-purple-600/40', glow: 'shadow-purple-600/40', core: 'from-purple-700 to-purple-500', glowColor: '147, 51, 234' },
+  { code: 'VC', label: 'Voiced Consonant', border: 'border-purple-800/40', glow: 'shadow-purple-800/40', core: 'from-purple-900 to-purple-700', glowColor: '107, 33, 168' },
+  
+  { code: 'S', label: 'Stressing', border: 'border-orange-500/40', glow: 'shadow-orange-500/40', core: 'from-orange-600 to-orange-400', glowColor: '249, 115, 22' },
+  { code: 'I', label: 'Intonation', border: 'border-pink-500/40', glow: 'shadow-pink-500/40', core: 'from-pink-600 to-pink-400', glowColor: '236, 72, 153' },
+  { code: 'FS', label: 'Final Sound', border: 'border-lime-400/40', glow: 'shadow-lime-400/40', core: 'from-lime-500 to-lime-400', glowColor: '163, 230, 53' },
+  { code: 'AT', label: 'American T', border: 'border-[#0b4aa6]/40', glow: 'shadow-blue-500/40', core: 'from-[#0b4aa6] to-[#6fb7ff]', glowColor: '11, 74, 166' },
+  { code: 'LW', label: 'Linking Word', border: 'border-cyan-500/40', glow: 'shadow-cyan-500/40', core: 'from-cyan-600 to-cyan-400', glowColor: '6, 182, 212' },
+  { code: 'C', label: 'Contraction', border: 'border-cyan-400/40', glow: 'shadow-cyan-400/40', core: 'from-cyan-500 to-cyan-300', glowColor: '34, 211, 238' },
+]
+
+const UNLOCK_THRESHOLD = 80
+const PRONUNCIATION_ROADMAP_CHECKLIST_KEY = 'dashboard-pronunciation-roadmap-checklist-v1'
+
+const PHONETIC_SYMBOL_GROUPS = [
+  {
+    id: 'vowel-lax',
+    symbols: ['\u028c', '\u026a', '\u028a', '\u025b', '\u0259', '\u025a'],
+  },
+  {
+    id: 'vowel-tense',
+    symbols: ['\u0251', 'i', 'u', '\u00e6', '\u0254'],
+  },
+  {
+    id: 'diphthong',
+    symbols: ['a\u026a', 'e\u026a', '\u0254\u026a', '\u026a\u0259', 'e\u0259', '\u028a\u0259', 'o\u028a', 'a\u028a'],
+  },
+  {
+    id: 'consonant-voiceless',
+    symbols: ['p', 't', 'k', 'f', '\u03b8', 's', '\u0283', '\u02a7', 'h'],
+  },
+  {
+    id: 'consonant-voiced',
+    symbols: ['b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y'],
+  },
+]
+
+const PHONETIC_SYMBOL_CANONICAL_LABELS: Record<string, string> = {
+  'ɪə': 'ɪr',
+  'iə': 'ɪr',
+  'eə': 'ɛr',
+  'er': 'ɛr',
+  'ʊə': 'ʊr',
+}
+
+const toPercent = (value: unknown): number => {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return 0
+  return Math.min(100, Math.max(0, Math.round(value)))
+}
+
+const getPhoneticSymbolProgressKey = (symbol: string) =>
+  `phoneticSymbols_${PHONETIC_SYMBOL_CANONICAL_LABELS[symbol] ?? symbol}`
+
+const getPhoneticSymbolProgress = (topicProgress: Record<string, number>, symbol: string) =>
+  toPercent(topicProgress[getPhoneticSymbolProgressKey(symbol)] ?? topicProgress[`phoneticSymbols_${symbol}`] ?? 0)
+
+const AchievementsContent = () => {
+  const cpuPins = Array.from({ length: 6 });
+
+  const readLocalStorageObject = <T,>(key: string, fallback: T): T => {
     try {
-      const stats = await getReferralStats(user.id);
-      if (!isMountedRef.current) return;
-      setReferralStats(stats);
-    } catch (error) {
-      console.error('Error loading referral stats:', error);
-      if (!isMountedRef.current) return;
-      setReferralStats({
-        totalReferrals: 0,
-        totalEarnings: 0
-      });
+      const raw = window.localStorage.getItem(key)
+      if (!raw) return fallback
+      return JSON.parse(raw) as T
+    } catch {
+      return fallback
     }
-  }, [user?.id]);
+  }
 
-  const loadTierConfig = useCallback(async (options?: { silent?: boolean }) => {
-    const silent = options?.silent === true;
-    if (!silent) {
-      setTierLoading(true);
+  const toPercent = (value: unknown): number => {
+    if (typeof value !== 'number' || !Number.isFinite(value)) return 0
+    return Math.min(100, Math.max(0, Math.round(value)))
+  }
+
+  const readSavedAssessmentPercent = (
+    savedAssessments: Record<string, { percentage?: unknown }>,
+    topicName: string,
+  ): number => toPercent(savedAssessments[topicName]?.percentage)
+
+  const getPhoneticCategoryAverage = (
+    topicProgress: Record<string, number>,
+    groupIds: string[],
+  ) => {
+    const progressValues = PHONETIC_SYMBOL_GROUPS.filter((group) => groupIds.includes(group.id))
+      .flatMap((group) => group.symbols)
+      .map((symbol) => getPhoneticSymbolProgress(topicProgress, symbol))
+
+    return progressValues.length
+      ? Math.round(progressValues.reduce((sum, value) => sum + value, 0) / progressValues.length)
+      : 0
+  }
+
+  const achievementProgress: AchievementProgressMap = (() => {
+    const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {})
+    const savedAssessments = readLocalStorageObject<Record<string, { percentage?: unknown }>>(
+      'savedAssessments',
+      {},
+    )
+    const lessonChecklist = readLocalStorageObject<Record<string, boolean>>(
+      PRONUNCIATION_ROADMAP_CHECKLIST_KEY,
+      {},
+    )
+
+    const isLessonTopicDone = (topicId: string) => lessonChecklist[topicId] === true
+
+    const alphabetPractice = topicProgress['alphabet'] || 0
+    const alphabetLesson = isLessonTopicDone('alphabet') ? 100 : 0
+    const alphabetProgress = Math.round((alphabetPractice + alphabetLesson) / 2)
+
+    const stressingWordProgress =
+      toPercent(topicProgress['stressingWord']) || readSavedAssessmentPercent(savedAssessments, 'Word Stress')
+    const stressingSentenceProgress =
+      toPercent(topicProgress['stressingSentence']) || readSavedAssessmentPercent(savedAssessments, 'Sentence Stress')
+    const stressingProgress = Math.round((stressingWordProgress + stressingSentenceProgress) / 2)
+
+    const intonationProgress = topicProgress['intonation'] || 0
+
+    const finalSoundSEsProgress =
+      toPercent(topicProgress['finalSoundSEs']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Final Sound S/ES')
+    const finalSoundDEdProgress =
+      toPercent(topicProgress['finalSoundDEd']) ||
+      readSavedAssessmentPercent(savedAssessments, 'Final Sound D/ED')
+    const finalSoundProgress = Math.round((finalSoundSEsProgress + finalSoundDEdProgress) / 2)
+
+    const AMERICAN_T_PROGRESS_KEYS = [
+      { key: 'americanTReleasedBeginning', assessment: 'Released /t/ Beginning' },
+      { key: 'americanTFlap', assessment: 'Flap T' },
+      { key: 'americanTGlottalStop', assessment: 'Glottal Stop' },
+      { key: 'americanTSilent', assessment: 'Silent /t/' },
+      { key: 'americanTReleasedEnding', assessment: 'Released /t/ Ending' },
+      { key: 'americanTFinalTBeforeConsonant', assessment: 'Final T Before Consonant' },
+    ]
+
+    const americanTValues = AMERICAN_T_PROGRESS_KEYS.map(({ key, assessment }) =>
+      toPercent(topicProgress[key]) || readSavedAssessmentPercent(savedAssessments, assessment),
+    )
+    const americanTProgress = americanTValues.length
+      ? Math.round(americanTValues.reduce((sum, value) => sum + value, 0) / americanTValues.length)
+      : 0
+
+    const linkingWordProgress = topicProgress['linkingWord'] || 0
+    const contractionProgress = topicProgress['contraction'] || 0
+
+    return {
+      A: alphabetProgress,
+      LV: getPhoneticCategoryAverage(topicProgress, ['vowel-lax']),
+      TV: getPhoneticCategoryAverage(topicProgress, ['vowel-tense']),
+      D: getPhoneticCategoryAverage(topicProgress, ['diphthong']),
+      VlC: getPhoneticCategoryAverage(topicProgress, ['consonant-voiceless']),
+      VC: getPhoneticCategoryAverage(topicProgress, ['consonant-voiced']),
+      S: stressingProgress,
+      I: intonationProgress,
+      FS: finalSoundProgress,
+      AT: americanTProgress,
+      LW: linkingWordProgress,
+      C: contractionProgress,
     }
-    setTierLoadError(null);
-    try {
-      const tiers = await getTierConfig({ forceRefresh: silent });
-      if (!isMountedRef.current) return;
-      if (tiers && tiers.length > 0) {
-        setTierConfig(tiers);
-        return;
-      }
-      setTierConfig([]);
-      setTierLoadError('Tier benefits belum tersedia saat ini.');
-    } catch (error) {
-      console.error('Error loading tier config:', error);
-      if (!isMountedRef.current) return;
-      if (!silent) {
-        setTierConfig([]);
-      }
-      if (tierConfig.length === 0) {
-        setTierLoadError('Gagal memuat tier benefits. Coba lagi.');
-      }
-    } finally {
-      if (!isMountedRef.current) return;
-      if (!silent) {
-        setTierLoading(false);
-      }
-    }
-  }, [tierConfig.length]);
+  })()
 
-  const loadSpecialOffer = useCallback(async () => {
-    if (!user?.tier) return;
-    setSpecialOfferLoading(true);
-    try {
-      const specialOffer = await getActiveSpecialOfferReferralCommission(user.tier as TierEnum);
-      if (!isMountedRef.current) return;
+  const openProgressView = () => {
+    saveDashboardView('progress')
+    window.dispatchEvent(
+      new CustomEvent('geuwat:dashboard-view', {
+        detail: { viewId: 'progress' },
+      }),
+    )
+  }
 
-      setSpecialOfferEligible(specialOffer.isEligible);
-      if (specialOffer.referralCommissionPct !== null) {
-        setSpecialOfferReferralPct(specialOffer.referralCommissionPct);
-      } else {
-        setSpecialOfferReferralPct(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
-      }
-    } catch (error) {
-      console.error('Error loading special offer:', error);
-      if (!isMountedRef.current) return;
-      setSpecialOfferEligible(true);
-      setSpecialOfferReferralPct(SPECIAL_OFFER_FALLBACK_REFERRAL_PCT);
-    } finally {
-      if (!isMountedRef.current) return;
-      setSpecialOfferLoading(false);
-    }
-  }, [user?.tier]);
-
-  // Load data when component mounts
-  useEffect(() => {
-    if (!user?.id) return;
-    loadReferralStats();
-  }, [user?.id, loadReferralStats]);
-
-  useEffect(() => {
-    if (tierConfig.length > 0) {
-      loadTierConfig({ silent: true });
-      return;
-    }
-    loadTierConfig();
-  }, [loadTierConfig, tierConfig.length]);
-
-  useEffect(() => {
-    void loadSpecialOffer();
-  }, [loadSpecialOffer]);
-
-  const formatPercent = (value: number) => {
-    if (Number.isInteger(value)) return `${value}`;
-    return value.toFixed(2).replace(/\.?0+$/, '');
-  };
-
-  const getTierIcon = (tier: string, isCurrentTier: boolean = false) => {
-    const iconColor = isCurrentTier ? 'text-white' : 'text-slate-400';
-    
-    switch (tier) {
-      case 'Rookie':
-        return <Star className={`w-10 h-10 ${iconColor}`} />;
-      case 'Pro':
-        return <Trophy className={`w-10 h-10 ${iconColor}`} />;
-      case 'Legend':
-        return <Crown className={`w-10 h-10 ${iconColor}`} />;
-      default:
-        return <Star className={`w-10 h-10 ${iconColor}`} />;
-    }
-  };
-
-  const tierColors = {
-    Rookie: 'from-green-500 to-emerald-600',
-    Pro: 'from-purple-500 to-purple-600',
-    Legend: 'from-amber-500 to-amber-600'
-  };
-
-  const handleCopyReferralCode = () => {
-    navigator.clipboard.writeText(user?.referral_code || '');
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  };
-
-  const handleWithdrawClick = () => {
-    setShowWithdrawModal(true);
-  };
-
-  const loadLatestWithdrawStatus = useCallback(async () => {
-    if (!user?.id) return;
-    setWithdrawStatusLoading(true);
-    const latest = await getLatestWithdrawRequest(user.id);
-    setLatestWithdrawRequest(latest);
-    setWithdrawStatusLoading(false);
-  }, [user?.id]);
-
-  useEffect(() => {
-    if (showWithdrawModal) {
-      loadLatestWithdrawStatus();
-    }
-  }, [showWithdrawModal, loadLatestWithdrawStatus]);
-
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value === '' || /^\d+$/.test(value)) {
-      setWithdrawForm({ ...withdrawForm, amount: value });
-    }
-  };
-
-  const handleWithdrawSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setWithdrawSubmitting(true);
-      const result = await submitWithdrawal(user?.id || '', {
-        amount: parseInt(withdrawForm.amount),
-        walletType: withdrawForm.walletType,
-        whatsappNumber: user?.whatsapp || '',
-        email: user?.email || ''
-      });
-
-      if (result.success) {
-        setWithdrawStatusMessage('Request submitted. Status: Pending approval.');
-        setLatestWithdrawRequest({
-          id: 'pending',
-          user_id: user?.id || '',
-          amount: parseInt(withdrawForm.amount),
-          status: 'pending',
-          created_at: new Date().toISOString()
-        });
-        setShowWithdrawModal(false);
-        setWithdrawForm({
-          walletType: 'gopay',
-          amount: ''
-        });
-        // Refresh referral stats after withdrawal
-        loadReferralStats();
-      } else {
-        alert(`Error: ${result.error}`);
-      }
-    } catch (error) {
-      console.error('Withdrawal error:', error);
-      alert('Failed to submit withdrawal. Please try again.');
-    } finally {
-      setWithdrawSubmitting(false);
-    }
-  };
-
-  const isFormValid = () => {
-    if (latestWithdrawRequest?.status === 'pending') return false;
-    if (!withdrawForm.amount) return false;
-    const amount = parseInt(withdrawForm.amount);
-    if (!Number.isFinite(amount)) return false;
-    return (
-      amount >= 50000 &&
-      amount % 50000 === 0 &&
-      amount <= parseInt(user?.balance || '0')
-    );
-  };
-
-  const getWithdrawStatusBadge = () => {
-    if (withdrawStatusLoading) {
-      return (
-        <span className="px-2 py-1 rounded-full text-xs font-medium border text-slate-300 bg-slate-800/60 border-slate-600/40">
-          Loading...
-        </span>
-      );
-    }
-    if (!latestWithdrawRequest) return null;
-    const status = latestWithdrawRequest.status;
-    const color =
-      status === 'pending'
-        ? 'text-yellow-300 bg-yellow-500/10 border-yellow-500/30'
-        : status === 'approved'
-          ? 'text-green-300 bg-green-500/10 border-green-500/30'
-          : status === 'paid'
-            ? 'text-cyan-300 bg-cyan-500/10 border-cyan-500/30'
-            : 'text-red-300 bg-red-500/10 border-red-500/30';
-    const label =
-      status === 'pending'
-        ? 'Pending'
-        : status === 'approved'
-          ? 'Approved'
-          : status === 'paid'
-            ? 'Paid'
-            : 'Rejected';
-    return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${color}`}>
-        {label}
-      </span>
-    );
-  };
+  // Check if all CPUs are unlocked (all >= 80% progress)
+  const allCpusUnlocked = Object.values(achievementProgress).every((progress) => progress >= UNLOCK_THRESHOLD)
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Member Status Card */}
-      <div className="bg-gradient-to-r from-purple-900/40 to-slate-900/40 border border-purple-500/20 rounded-2xl p-4 sm:p-5 md:p-8 backdrop-blur-md">
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
-          {/* Current Tier */}
-          <div className="text-center">
-            <div 
-              className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br ${tierColors[user?.tier as keyof typeof tierColors]} flex items-center justify-center text-white mb-2 sm:mb-3 md:mb-4 mx-auto shadow-[0_0_20px_rgba(139,92,246,0.3)] border border-white/20 backdrop-blur-sm relative overflow-hidden`}>
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/20"></div>
-              <div className="relative z-10">{getTierIcon(user?.tier || 'Rookie')}</div>
-            </div>
-            <h2 className="text-base sm:text-lg md:text-2xl font-display font-bold text-white mb-1">{user?.tier || 'Rookie'}</h2>
-            <p className="text-[11px] sm:text-xs md:text-sm text-purple-300">Current Tier</p>
+    <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 animate-fade-in">
+      <div className="bg-slate-950/75 border border-white/10 rounded-[2rem] p-6 sm:p-10 shadow-[0_0_50px_rgba(124,58,237,0.18)] backdrop-blur-2xl">
+        
+        {/* Header Area */}
+        <div className="flex flex-col items-center text-center gap-6">
+          <div className={`flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-[2rem] transition-all duration-500 ${allCpusUnlocked ? 'bg-gradient-to-br from-purple-600 via-fuchsia-600 to-cyan-500 shadow-[0_0_30px_rgba(124,58,237,0.35)]' : 'bg-slate-800 shadow-[0_0_20px_rgba(30,41,59,0.4)]'}`}>
+            <Cpu className={`w-16 h-16 ${allCpusUnlocked ? 'text-white' : 'text-slate-600'}`} />
           </div>
 
-          {/* Balance */}
-          <div className="text-center">
-            <div 
-              className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white mb-2 sm:mb-3 md:mb-4 mx-auto shadow-[0_0_20px_rgba(6,182,212,0.3)] border border-white/20 backdrop-blur-sm relative overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              onClick={handleWithdrawClick}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/20" />
-              <div className="relative z-10"><Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" /></div>
-            </div>
-            <h2 className="text-base sm:text-lg md:text-2xl font-display font-bold text-white mb-1">Rp {parseInt(user?.balance || '0').toLocaleString('id-ID')}</h2>
-            <p className="text-[11px] sm:text-xs md:text-sm text-cyan-300">Current Balance</p>
-            {withdrawStatusMessage && (
-              <p className="text-[9px] sm:text-[10px] md:text-xs text-amber-300 mt-1">{withdrawStatusMessage}</p>
-            )}
-          </div>
-
-          {/* Referral Code */}
-          <div className="text-center">
-            <div 
-              className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white mb-2 sm:mb-3 md:mb-4 mx-auto shadow-[0_0_20px_rgba(34,197,94,0.3)] border border-white/20 backdrop-blur-sm relative overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              onClick={handleCopyReferralCode}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/20" />
-              <div className="relative z-10"><ScanBarcode className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" /></div>
-            </div>
-            <h2 className="text-sm sm:text-base md:text-xl font-display font-bold text-white mb-1">{user?.referral_code || ''}</h2>
-            <p className="text-[11px] sm:text-xs md:text-sm text-green-300">
-              {copiedCode ? '✅ Copied!' : 'Referral Code'}
+          <div className="space-y-3">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-cyan-200 font-semibold">Pronunciation Achievement</p>
+            <h1 className="text-3xl sm:text-4xl font-display font-bold text-white">CPU Pronunciation</h1>
+            <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-400">
+              Selesaikan misi untuk mengaktifkan
             </p>
           </div>
         </div>
-      </div>
 
-      {/* Referral Statistics */}
-      <h3 className="text-lg sm:text-xl font-bold text-white border-b border-slate-800 pb-3 sm:pb-4 font-display">REFERRAL STATISTICS</h3>
-      
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-4 sm:gap-6">
-        <div className="bg-black/50 border border-green-500/20 p-3 sm:p-4 rounded-xl backdrop-blur-sm max-w-xs sm:max-w-sm mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3">
-            <User className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
-            <span className="text-green-300 font-semibold text-xs sm:text-sm">Total Referrals</span>
-          </div>
-          <div className="text-xl sm:text-2xl font-bold text-white">{referralStats.totalReferrals}</div>
-          <p className="text-slate-400 text-[11px] sm:text-xs mt-1">People joined with your code</p>
-        </div>
-      </div>
+        {/* Grid Container Utama */}
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-14 justify-items-center">
+          {ACHIEVEMENT_ITEMS.map((item) => {
+            const progressValue = achievementProgress[item.code] ?? 0
+            const isUnlocked = progressValue >= UNLOCK_THRESHOLD
+            const displayLabel = isUnlocked ? 'Unlocked' : `Unlock at ${UNLOCK_THRESHOLD}% progress`
+            const chipStyle = isUnlocked
+              ? ({ '--rgb-neon': item.glowColor } as React.CSSProperties)
+              : ({ '--rgb-neon': '148, 163, 184' } as React.CSSProperties)
+            const chipBorderClass = isUnlocked ? item.border : 'border-slate-700/60'
+            const chipInnerClass = isUnlocked
+              ? `w-11 h-11 rounded-lg bg-gradient-to-br ${item.core} ${item.glow} shadow-[0_0_15px_var(--tw-shadow-color)] animate-pulse flex items-center justify-center text-white text-base font-mono font-black tracking-tighter`
+              : 'w-11 h-11 rounded-lg bg-slate-700 shadow-none flex items-center justify-center text-slate-300 text-base font-mono font-black tracking-tighter'
 
-      {/* Tier Benefits */}
-      <div className="bg-black/50 border border-cyan-500/20 p-4 sm:p-5 md:p-6 rounded-xl backdrop-blur-sm">
-        <h3 className="text-base sm:text-lg font-bold text-cyan-300 mb-3 sm:mb-4 md:mb-6 font-display">TIER BENEFITS</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-          {tierLoading && tierConfig.length === 0 ? (
-            <div className="col-span-full text-center text-slate-400 py-8">
-              Loading tier benefits...
-            </div>
-          ) : tierConfig.length > 0 ? (
-            (['Rookie', 'Pro', 'Legend'] as const).map((tierName) => {
-              const tierData = tierConfig.find(t => t.tier_name === tierName);
-              
-              if (!tierData) {
-                return null;
-              }
-            
             return (
-              <div key={tierName} className={`p-3 md:p-4 rounded-lg border ${
-                tierName === user?.tier 
-                  ? 'border-green-500/50 bg-green-900/20' 
-                  : 'border-slate-600/50 bg-black/50'
-              }`}>
-                <div className="flex items-center justify-between mb-2 md:mb-3">
-                  <div className="flex items-center gap-2">
-                    {getTierIcon(tierName, tierName === user?.tier)}
-                    <h4 className={`font-bold text-xs sm:text-sm md:text-base ${
-                      tierName === user?.tier ? 'text-green-400' : 'text-slate-400'
-                    }`}>{tierName}</h4>
-                  </div>
-                  <div className={`text-[11px] sm:text-xs md:text-sm font-mono ${
-                    tierName === user?.tier ? 'text-green-400' : 'text-slate-400'
-                  }`}>
-                    {tierName === user?.tier ? 'Current' : 'Available'}
-                  </div>
-                </div>
-                <div className="text-[11px] sm:text-xs text-slate-400 mb-2 md:mb-3 italic">
-                  Get {tierData.min_referrals} referrals to unlock
-                </div>
-                <ul className="text-[11px] sm:text-xs md:text-sm text-slate-300 space-y-1">
-                  <li>• {tierData.referral_bonus_percentage}% referral commission</li>
-                  {parseInt(tierData.cashback_percentage) > 0 && (
-                    <li>• {tierData.cashback_percentage}% cashback on learning packages (subscription only)</li>
-                  )}
-                </ul>
-              </div>
-            );
-          })
-          ) : (
-            <div className="col-span-full text-center text-slate-400 py-8 space-y-3">
-              <p>{tierLoadError || 'Tier benefits belum tersedia.'}</p>
+              /* CONTAINER CHIP CPU FISIK */
               <button
+                key={item.code}
                 type="button"
-                onClick={() => {
-                  void loadTierConfig();
-                }}
-                className="inline-flex items-center justify-center rounded-full border border-cyan-500/40 px-4 py-2 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/10"
+                onClick={openProgressView}
+                className={`relative w-44 h-44 flex items-center justify-center group transition-all duration-300 hover:scale-105 focus:outline-none ${isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed'} `}
+                style={chipStyle}
               >
-                Coba Muat Ulang
+                {!isUnlocked && (
+                  <div className="absolute inset-0 rounded-3xl bg-slate-950/80 z-20 flex items-center justify-center pointer-events-none">
+                    <Lock className="w-6 h-6 text-slate-200" />
+                  </div>
+                )}
+
+                {/* === KAKI-KAKI PIN PROSESOR === */}
+                <div className="absolute -top-3 left-6 right-6 flex justify-between px-1 h-3 w-[calc(100%-48px)]">
+                  {cpuPins.map((_, i) => (
+                    <div key={`top-${i}`} className="w-1.5 h-full bg-gradient-to-t from-slate-600 to-[rgba(var(--rgb-neon),0.25)] rounded-t-sm border-x border-t border-white/5 transition-all duration-300 group-hover:to-[rgba(var(--rgb-neon),0.9)]" />
+                  ))}
+                </div>
+
+                <div className="absolute -bottom-3 left-6 right-6 flex justify-between px-1 h-3 w-[calc(100%-48px)]">
+                  {cpuPins.map((_, i) => (
+                    <div key={`bottom-${i}`} className="w-1.5 h-full bg-gradient-to-b from-slate-600 to-[rgba(var(--rgb-neon),0.25)] rounded-b-sm border-x border-b border-white/5 transition-all duration-300 group-hover:to-[rgba(var(--rgb-neon),0.9)]" />
+                  ))}
+                </div>
+
+                <div className="absolute -left-3 top-6 bottom-6 flex flex-col justify-between py-1 w-3 h-[calc(100%-48px)]">
+                  {cpuPins.map((_, i) => (
+                    <div key={`left-${i}`} className="h-1.5 w-full bg-gradient-to-l from-slate-600 to-[rgba(var(--rgb-neon),0.25)] rounded-l-sm border-y border-l border-white/5 transition-all duration-300 group-hover:to-[rgba(var(--rgb-neon),0.9)]" />
+                  ))}
+                </div>
+
+                <div className="absolute -right-3 top-6 bottom-6 flex flex-col justify-between py-1 w-3 h-[calc(100%-48px)]">
+                  {cpuPins.map((_, i) => (
+                    <div key={`right-${i}`} className="h-1.5 w-full bg-gradient-to-r from-slate-600 to-[rgba(var(--rgb-neon),0.25)] rounded-r-sm border-y border-r border-white/5 transition-all duration-300 group-hover:to-[rgba(var(--rgb-neon),0.9)]" />
+                  ))}
+                </div>
+
+                {/* === KOTAK BODI UTAMA CPU === */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-br from-slate-900 to-neutral-950 rounded-2xl flex flex-col items-center justify-between p-3.5 z-10 overflow-hidden transition-all duration-300"
+                  style={{
+                    border: '1px solid rgba(var(--rgb-neon), 0.25)',
+                    boxShadow: '0 0 15px rgba(var(--rgb-neon), 0.15), inset 0 0 10px rgba(var(--rgb-neon), 0.05)',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isUnlocked) return
+                    e.currentTarget.style.border = '1px solid rgba(var(--rgb-neon), 0.6)';
+                    e.currentTarget.style.boxShadow = '0 0 30px rgba(var(--rgb-neon), 0.55), inset 0 0 15px rgba(var(--rgb-neon), 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isUnlocked) return
+                    e.currentTarget.style.border = '1px solid rgba(var(--rgb-neon), 0.25)';
+                    e.currentTarget.style.boxShadow = '0 0 15px rgba(var(--rgb-neon), 0.15), inset 0 0 10px rgba(var(--rgb-neon), 0.05)';
+                  }}
+                >
+
+                  {/* Garis Sirkuit Pojok Chip */}
+                  <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-slate-700/50 rounded-tl-xl pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-slate-700/50 rounded-tr-xl pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-slate-700/50 rounded-bl-xl pointer-events-none" />
+                  <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-slate-700/50 rounded-br-xl pointer-events-none" />
+
+                  {/* === PLAT LOGAM INTEGRATED HEAT SPREADER (IHS) === */}
+                  <div className={`relative w-[85%] h-[60%] rounded-xl bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900 border-2 ${chipBorderClass} flex items-center justify-center p-1 transition-all duration-300 ${isUnlocked ? 'group-hover:border-opacity-100' : ''}`}>
+                    
+                    {/* === INTI SILIKON / KOTAK BERWARNA PALING KECIL === */}
+                    <div className={chipInnerClass}>
+                      {item.code}
+                    </div>
+                  </div>
+
+                  {/* === TEKS LABEL KATEGORI DI BAWAH CHIP === */}
+                  <div className="w-full text-center z-20 pb-0.5">
+                    <span 
+                      className="block text-[11px] font-bold truncate px-1 max-w-full leading-tight transition-colors duration-300 group-hover:text-white"
+                      style={{ color: isUnlocked ? 'rgba(var(--rgb-neon), 0.85)' : 'rgba(148, 163, 184, 0.7)' }}
+                    >
+                      {item.label}
+                    </span>
+                    <span className="block text-[10px] text-slate-400 mt-1" aria-hidden="true">
+                      {displayLabel}
+                    </span>
+                  </div>
+                </div>
               </button>
-            </div>
-          )}
+            )
+          })}
         </div>
 
-        <div className="mt-4 sm:mt-5 md:mt-6 rounded-lg border border-amber-400/40 bg-amber-500/10 p-4 text-center">
-          <div className="flex items-center justify-center gap-2">
-            <h4 className="text-sm sm:text-base font-bold text-amber-200 font-display">Special Offer</h4>
-          </div>
-          <p className="mt-2 text-xs sm:text-sm text-amber-100 text-center">
-            {specialOfferLoading
-              ? 'Loading offer...'
-              : specialOfferEligible
-                ? `• ${formatPercent(specialOfferReferralPct)}% referral commission`
-                : 'Special Offer belum tersedia untuk tier kamu'}
-          </p>
-        </div>
       </div>
-
-      {/* Withdraw Modal */}
-      {showWithdrawModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
-          <div className="bg-black/95 border border-purple-500/30 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto backdrop-blur-xl">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-display font-bold text-white mb-4 sm:mb-6">WITHDRAWAL FORM</h3>
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[11px] sm:text-xs text-slate-400">Latest Request Status</span>
-              {getWithdrawStatusBadge()}
-            </div>
-            {latestWithdrawRequest?.status === 'pending' && (
-              <div className="mb-4 text-[11px] sm:text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
-                You already have a pending request. Please wait until it is approved or rejected.
-              </div>
-            )}
-            
-            <form onSubmit={handleWithdrawSubmit} className="space-y-6">
-              {/* User Info Display (Non-editable) */}
-              <div className="space-y-4">
-                <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                  <label className="text-xs sm:text-sm font-medium text-slate-300 block mb-2">WhatsApp Number</label>
-                  <div className="text-sm sm:text-base text-white font-medium">{user?.whatsapp || 'No WhatsApp number'}</div>
-                </div>
-                
-                <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                  <label className="text-xs sm:text-sm font-medium text-slate-300 block mb-2">Email Address</label>
-                  <div className="text-sm sm:text-base text-white font-medium">{user?.email || 'No email'}</div>
-                </div>
-              </div>
-
-              {/* Amount */}
-              <div className="space-y-2">
-                <label className="text-xs sm:text-sm font-medium text-slate-300">Withdrawal Amount</label>
-                <input
-                  type="number"
-                  value={withdrawForm.amount}
-                  onChange={handleAmountChange}
-                  placeholder="Enter amount (min. Rp 50.000)"
-                  className="w-full bg-black/60 border border-slate-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
-                  min="50000"
-                  step="50000"
-                />
-              </div>
-
-              {/* Admin Fee Note */}
-              <div className="bg-amber-900/20 border border-amber-500/30 p-4 rounded-lg">
-                <div className="flex items-start gap-2">
-                  <div className="w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs text-white font-bold">!</span>
-                  </div>
-                  <div>
-                    <p className="text-amber-300 text-xs sm:text-sm font-medium">Admin Fee</p>
-                    <p className="text-amber-200 text-[11px] sm:text-xs mt-1">
-                      Each withdrawal is subject to an admin fee of Rp 5,000. 
-                      The amount you will receive is the total withdrawal minus the admin fee.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Summary */}
-              {withdrawForm.amount && parseInt(withdrawForm.amount) >= 50000 && (
-                <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-slate-400">Withdrawal Amount:</span>
-                      <span className="text-white">Rp {parseInt(withdrawForm.amount).toLocaleString('id-ID')}</span>
-                    </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-slate-400">Admin Fee:</span>
-                      <span className="text-amber-400">Rp 5.000</span>
-                    </div>
-                    <div className="border-t border-slate-600 pt-2">
-                      <div className="flex justify-between font-medium text-xs sm:text-sm">
-                        <span className="text-white">Amount Received:</span>
-                        <span className="text-green-400">Rp {(parseInt(withdrawForm.amount) - 5000).toLocaleString('id-ID')}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Wallet Type */}
-              <div className="space-y-2">
-                <label className="text-xs sm:text-sm font-medium text-slate-300">Wallet Type</label>
-                <select
-                  value={withdrawForm.walletType}
-                  onChange={(e) => setWithdrawForm({ ...withdrawForm, walletType: e.target.value as 'gopay' | 'dana' })}
-                  className="w-full bg-black/60 border border-slate-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
-                >
-                  <option value="gopay">GoPay</option>
-                  <option value="dana">Dana</option>
-                </select>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500">*Multiples of 50,000</p>
-
-              {/* Balance Info */}
-              <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
-                <p className="text-xs sm:text-sm text-purple-300">
-                  Available Balance: <span className="font-bold text-white">Rp {parseInt(user?.balance || '0').toLocaleString('id-ID')}</span>
-                </p>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex gap-4">
-                <button
-                  type="button"
-                  onClick={() => setShowWithdrawModal(false)}
-                  className="flex-1 bg-slate-700 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:bg-slate-600 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={!isFormValid() || withdrawSubmitting}
-                  className={`flex-1 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-colors ${
-                    !isFormValid() || withdrawSubmitting
-                      ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
-                      : 'bg-purple-600 text-white hover:bg-purple-500'
-                  }`}
-                >
-                  {withdrawSubmitting ? 'Submitting...' : 'Withdraw'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
-  );
-};
+  )
+}
 
-export default AchievementsContent;
+export default AchievementsContent

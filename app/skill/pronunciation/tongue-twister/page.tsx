@@ -22,6 +22,8 @@ export default function TongueTwisterPage() {
   const speakSessionRef = useRef(0);
   const lockedPeterVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
+
+
   const focusOptions = useMemo(() => {
     const unique = new Set<string>(TONGUE_TWISTERS.map((item) => item.focus).filter(Boolean));
     return Array.from(unique).sort((a, b) => a.localeCompare(b));
