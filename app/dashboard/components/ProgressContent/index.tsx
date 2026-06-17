@@ -822,6 +822,10 @@ const ProgressContent: React.FC = () => {
       SPEAKING_GOAL_COMPLETION_KEY,
       {},
     );
+    const lessonChecklist = readLocalStorageObject<Record<string, boolean>>(
+      PRONUNCIATION_ROADMAP_CHECKLIST_KEY,
+      {}
+    );
     
     // Get progress from each individual topic
     const alphabetProgress = topicProgress['alphabet'] || 0;
@@ -850,29 +854,33 @@ const ProgressContent: React.FC = () => {
       americanTItemProgress.length > 0
         ? Math.round(americanTItemProgress.reduce((sum, entry) => sum + entry.percentage, 0) / americanTItemProgress.length)
         : 0;
-    const textPracticeProgress = toPercent(topicProgress['textPractice'] ?? topicProgress['text']);
-    const readingTextProgress =
-      toPercent(topicProgress['readingTextPractice']) ||
-      readSavedAssessmentPercent(savedAssessments, 'Reading Text for Practice');
+    // Text Practice, Reading Text, Tongue Twister come from lesson checkbox only
+    const textPracticeProgress = lessonChecklist['text-practice'] ? 100 : 0;
+    const readingTextProgress = lessonChecklist['reading-text'] ? 100 : 0;
     
     // Calculate phonetic symbols average using helper function
     const averagePhoneticProgress = calculatePhoneticAverage(topicProgress);
-    
-    // Calculate pronunciation average from all roadmap topics.
-    // Include topics with 0% so the bar reflects full roadmap completion (each topic max 100%).
-    const allTopicProgress = [
+    const linkingWordProgress = topicProgress['linkingWord'] || 0;
+    const contractionProgress = topicProgress['contraction'] || 0;
+    const tongueTwisterProgress = lessonChecklist['tongue-twister'] ? 100 : 0;
+
+    // Calculate pronunciation average from specific roadmap topics
+    const roadmapValues = [
       alphabetProgress,
-      stressingProgress, 
+      averagePhoneticProgress,
+      stressingProgress,
       intonationProgress,
       finalSoundProgress,
       americanTProgress,
+      linkingWordProgress,
+      contractionProgress,
       textPracticeProgress,
       readingTextProgress,
-      averagePhoneticProgress
+      tongueTwisterProgress,
     ];
-    
-    const pronunciationAverage = allTopicProgress.length > 0 
-      ? Math.round(allTopicProgress.reduce((acc, curr) => acc + curr, 0) / allTopicProgress.length)
+
+    const pronunciationAverage = roadmapValues.length
+      ? Math.round(roadmapValues.reduce((acc, curr) => acc + (typeof curr === 'number' && Number.isFinite(curr) ? curr : 0), 0) / roadmapValues.length)
       : 0;
     const vocabularyTopicProgress = VOCABULARY_TOPICS.map((topic) => {
       const value = vocabularyProgress[topic.topicId];
