@@ -13,7 +13,7 @@ import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
-import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import { IpaVisibilityToggle, ControlCenter, PlayStopButton, GestureTrackerWrapper } from '@/app/components';
 import { useHaptic } from '@/lib/haptic/useHaptic';
 import {
   isSpeechSynthesisSupported,
@@ -99,6 +99,20 @@ const AlphabetPage: React.FC = () => {
         setSavedProgressByTab(nextSavedState);
       }, 0);
     }
+  }, []);
+
+  // Listen to global gesture toggle events
+  useEffect(() => {
+    const handleGestureToggle = (event: any) => {
+      // Sync with global gesture state
+      // Additional gesture handling specific to alphabet page can be added here
+    };
+
+    window.addEventListener('gesture:toggle', handleGestureToggle);
+
+    return () => {
+      window.removeEventListener('gesture:toggle', handleGestureToggle);
+    };
   }, []);
 
   useEffect(() => {
@@ -591,7 +605,16 @@ const AlphabetPage: React.FC = () => {
   }, [currentPlayingPracticeCountry]);
 
   return (
-    <div className="pronunciation-layout pronunciation-theme pronunciation-theme--alphabet alphabet-container">
+    <GestureTrackerWrapper 
+      showToggleButton={false}
+      onSwipeLeft={() => {
+        // Handle swipe left navigation if needed
+      }}
+      onSwipeRight={() => {
+        // Handle swipe right navigation if needed
+      }}
+    >
+      <div className="pronunciation-layout pronunciation-theme pronunciation-theme--alphabet alphabet-container">
       {/* Back Button */}
       <div className="back-button-fixed">
         <BackButton to="/skill/pronunciation" />
@@ -973,6 +996,7 @@ const AlphabetPage: React.FC = () => {
         downloadFileName="alphabet-GEUWAT-recording.mp3"
       />
     </div>
+    </GestureTrackerWrapper>
   );
 };
 
