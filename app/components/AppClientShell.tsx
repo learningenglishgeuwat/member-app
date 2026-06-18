@@ -34,6 +34,10 @@ const GlobalScrollToItemMount = dynamic(() => import('@/app/components/GlobalScr
   ssr: false,
 })
 
+const MediaPipeProvider = dynamic(() => import('@/app/components/MediaPipeProvider'), {
+  ssr: false,
+})
+
 const PUBLIC_PATHS = new Set(['/login', '/device-pairing', '/forgot-password', '/reset-password'])
 const ENHANCEMENT_DELAY_MS = 800
 
@@ -101,6 +105,7 @@ export default function AppClientShell({ children }: { children: React.ReactNode
             <ScrollToHashMount />
             <GlobalScrollToItemMount />
             <SkillThemeSync />
+            <MediaPipeProvider />
             {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
             {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
           </GlobalAudio>

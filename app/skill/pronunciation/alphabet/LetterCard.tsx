@@ -7,6 +7,7 @@ import { IpaText } from '@/app/components/IpaText';
 interface LetterCardProps {
   letter: string;
   ipa: string;
+  isActive?: boolean;
   isPlaying: boolean;
   onPlay: () => void;
   showIpa?: boolean;
@@ -15,6 +16,7 @@ interface LetterCardProps {
 export const LetterCard: React.FC<LetterCardProps> = ({ 
   letter, 
   ipa,
+  isActive = false,
   isPlaying, 
   onPlay,
   showIpa = true
@@ -28,22 +30,34 @@ export const LetterCard: React.FC<LetterCardProps> = ({
     onPlay();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    handleClick();
+  };
+
   useEffect(() => {
-    if (isPlaying && cardRef.current) {
+    if ((isPlaying || isActive) && cardRef.current) {
       cardRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
         inline: 'center'
       });
     }
-  }, [isPlaying]);
+  }, [isActive, isPlaying]);
 
   return (
     <div 
       ref={cardRef}
+      role="button"
+      tabIndex={0}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      aria-current={isActive ? 'true' : undefined}
+      data-gesture-clickable="true"
       data-tour={`alphabet-letter-${letter.toLowerCase()}`}
-      className={`alphabet-letter-card ${isPlaying ? 'playing' : ''}`}
+      className={`alphabet-letter-card ${isActive ? 'gesture-active' : ''} ${isPlaying ? 'playing' : ''}`}
     >
       {/* Background Grid */}
       <div className="bg-grid"></div>

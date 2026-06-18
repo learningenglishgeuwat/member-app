@@ -9,6 +9,7 @@ type IpaVisibilityToggleProps = {
   activeDotClass?: string;
   className?: string;
   disabled?: boolean;
+  gestureTarget?: 'ipa' | 'none';
 };
 
 function cx(...values: Array<string | false | null | undefined>) {
@@ -24,11 +25,16 @@ export function IpaVisibilityToggle({
   activeDotClass = 'bg-[#00f0ff] shadow-[0_0_3px_#00f0ff]',
   className = '',
   disabled = false,
+  gestureTarget,
 }: IpaVisibilityToggleProps) {
   const displayLabel = label ?? (checked ? 'Sembunyikan IPA' : 'Tampilkan IPA');
+  const isIpaGestureTarget =
+    gestureTarget === 'ipa' ||
+    (gestureTarget !== 'none' && /\b(ipa|phonetic|phonetics)\b/i.test(displayLabel));
 
   return (
     <label
+      data-control-center-ipa-toggle-label={isIpaGestureTarget ? displayLabel : undefined}
       className={cx(
         'inline-flex items-center gap-1 group',
         disabled ? 'cursor-not-allowed opacity-55' : 'cursor-pointer',
@@ -51,6 +57,7 @@ export function IpaVisibilityToggle({
           className="sr-only peer"
           checked={checked}
           disabled={disabled}
+          data-control-center-ipa-toggle={isIpaGestureTarget ? 'true' : undefined}
           onChange={(event) => onChange(event.target.checked)}
         />
         <span

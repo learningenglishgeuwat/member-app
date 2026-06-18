@@ -76,6 +76,7 @@ export function PlayStopButton({
     ? 'w-2 h-2 sm:w-2.5 sm:h-2.5'
     : 'w-2.5 h-2.5 sm:w-3 sm:h-3';
   const navigator = useSectionNavigator()
+  const resolvedSectionId = sectionId ?? label.toLowerCase().replace(/[^a-z0-9-_]/gi, '')
 
   const handleClick = () => {
     if (disabled) return
@@ -83,8 +84,6 @@ export function PlayStopButton({
     if (navigator?.closeControlCenter) {
       navigator.closeControlCenter()
     }
-
-    const resolvedSectionId = sectionId ?? label.toLowerCase().replace(/[^a-z0-9-_]/gi, '')
 
     if (resolvedSectionId && navigator?.openSection) {
       try {
@@ -117,6 +116,11 @@ export function PlayStopButton({
       onClick={handleClick}
       disabled={disabled}
       data-tour={dataTour}
+      data-control-center-playstop="true"
+      data-control-center-play-label={label}
+      data-control-center-section-id={resolvedSectionId || undefined}
+      data-control-center-target-path={targetPath || undefined}
+      data-control-center-scroll-item-key={scrollItemKey || undefined}
       className={[
         'w-full border px-1 py-0.5 sm:px-2 sm:py-1',
         'font-mono text-[7px] sm:text-[8.5px] uppercase',
