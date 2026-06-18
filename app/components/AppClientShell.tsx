@@ -22,6 +22,10 @@ const GlobalHaptic = dynamic(
 
 const GlobalAudio = dynamic(() => import('@/app/components/GlobalAudio'), { ssr: false })
 
+const GlobalGestureWrapper = dynamic(() => import('@/app/components/GlobalGestureWrapper').then((mod) => mod.GlobalGestureWrapper), {
+  ssr: false,
+})
+
 const SkillThemeSync = dynamic(() => import('@/app/components/SkillThemeSync'), {
   ssr: false,
 })
@@ -98,11 +102,13 @@ export default function AppClientShell({ children }: { children: React.ReactNode
       {enhancementsReady ? (
         <GlobalHaptic>
           <GlobalAudio>
-            <ScrollToHashMount />
-            <GlobalScrollToItemMount />
-            <SkillThemeSync />
-            {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
-            {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
+            <GlobalGestureWrapper>
+              <ScrollToHashMount />
+              <GlobalScrollToItemMount />
+              <SkillThemeSync />
+              {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
+              {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
+            </GlobalGestureWrapper>
           </GlobalAudio>
         </GlobalHaptic>
       ) : null}
