@@ -2,13 +2,10 @@
 
 import Link from '../../components/HoverPrefetchLink'
 import { usePathname } from 'next/navigation'
-import { Gamepad2, Volume2, VolumeX } from 'lucide-react'
-import { useState } from 'react'
-import { audioManager } from '../../../lib/audio/audioManager'
+import { Gamepad2 } from 'lucide-react'
 
 export default function SkillGameButton() {
   const pathname = usePathname()
-  const [sfxEnabled, setSfxEnabled] = useState<boolean>(!!audioManager.enabled)
 
   if (
     pathname?.startsWith('/dashboard') ||
@@ -19,21 +16,8 @@ export default function SkillGameButton() {
     return null
   }
 
-  const toggleSfx = async () => {
-    if (sfxEnabled) {
-      audioManager.disable()
-      setSfxEnabled(false)
-    } else {
-      audioManager.enable()
-      try { await audioManager.resume() } catch {}
-      // play a small confirmation tap
-      try { audioManager.playTap() } catch {}
-      setSfxEnabled(true)
-    }
-  }
-
   return (
-    <div className="fixed left-0 top-1/2 z-[90] -translate-y-1/2 translate-y-8">
+    <div className="fixed left-0 top-[calc(50%_+_2rem)] z-[90] -translate-y-1/2">
       <Link prefetch={false}
         href="/skill/game-links"
         aria-label="Open Games Links"

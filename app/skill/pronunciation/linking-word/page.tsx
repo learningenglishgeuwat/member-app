@@ -1,10 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Volume2, Play } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import { IpaVisibilityToggle, ControlCenter, PlayStopButton, HighlightVisibilityToggle } from '@/app/components';
+import ButtonSavedProgress from '../../components/buttonSavedProgress/ButtonSavedProgress';
 import {
   isSpeechSynthesisSupported,
   speakText,
@@ -126,9 +127,62 @@ export default function LinkingWordPage() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [showMore, setShowMore] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [savedProgress, setSavedProgress] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const playbackSessionId = useRef(0);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // Handle hydration
+  useLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentProgress = JSON.parse(localStorage.getItem('pronunciationProgress') || '{}') as Record<string, number>;
+      setSavedProgress(currentProgress.linkingWord != null);
+      setIsClient(true);
+    }
+  }, []);
+
+  const handleSaveProgress = async (percentage: number) => {
+    if (typeof window === 'undefined') return;
+    const pronunciationProgress = JSON.parse(
+      window.localStorage.getItem('pronunciationProgress') || '{}',
+    ) as Record<string, number>;
+    pronunciationProgress.linkingWord = percentage;
+    window.localStorage.setItem('pronunciationProgress', JSON.stringify(pronunciationProgress));
+
+    const dashboardProgress = JSON.parse(
+      window.localStorage.getItem('dashboardProgress') || '{}',
+    ) as Record<string, number>;
+    const allProgress = Object.values(pronunciationProgress);
+    dashboardProgress.pronunciation = Math.round(
+      allProgress.reduce((sum, val) => sum + val, 0) / allProgress.length,
+    );
+    window.localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
+    setSavedProgress(true);
+  };
+
+  const handleUnsaveProgress = async () => {
+    if (typeof window === 'undefined') return;
+    const pronunciationProgress = JSON.parse(
+      window.localStorage.getItem('pronunciationProgress') || '{}',
+    ) as Record<string, number>;
+    delete pronunciationProgress.linkingWord;
+    window.localStorage.setItem('pronunciationProgress', JSON.stringify(pronunciationProgress));
+
+    const dashboardProgress = JSON.parse(
+      window.localStorage.getItem('dashboardProgress') || '{}',
+    ) as Record<string, number>;
+    if (Object.keys(pronunciationProgress).length > 0) {
+      const allProgress = Object.values(pronunciationProgress);
+      dashboardProgress.pronunciation = Math.round(
+        allProgress.reduce((sum, val) => sum + val, 0) / allProgress.length,
+      );
+    } else {
+      delete dashboardProgress.pronunciation;
+    }
+    window.localStorage.setItem('dashboardProgress', JSON.stringify(dashboardProgress));
+    setSavedProgress(false);
+  };
 
   const currentCategory = categories[activeTab];
   const subCategories = useMemo(() => {
@@ -321,13 +375,27 @@ export default function LinkingWordPage() {
           <h1 className="font-sans text-3xl sm:text-5xl font-bold tracking-normal text-cyan-200 mb-4 uppercase">
             LINKING WORD
           </h1>
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="bg-cyan-300/15 border border-cyan-300 text-cyan-200 px-2 py-1 font-mono text-xs sm:text-sm rounded uppercase tracking-widest">
-              LINGUISTIC TERM
-            </span>
-            <span className="text-white/65 font-mono text-xs sm:text-sm">
-              {currentCategory.linguisticTerm}
-            </span>
+          <div className="flex flex-col gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="bg-cyan-300/15 border border-cyan-300 text-cyan-200 px-2 py-1 font-mono text-xs sm:text-sm rounded uppercase tracking-widest">
+                LINGUISTIC TERM
+              </span>
+              <span className="text-white/65 font-mono text-xs sm:text-sm">
+                {currentCategory.linguisticTerm}
+              </span>
+            </div>
+            <div className="flex justify-center">
+              {isClient && (
+                <ButtonSavedProgress
+                  isSaved={savedProgress}
+                  onSave={(percentage) => handleSaveProgress(percentage)}
+                  onUnsave={handleUnsaveProgress}
+                  size="small"
+                  variant="primary"
+                  topicName="Linking Word"
+                />
+              )}
+            </div>
           </div>
 
           {subCategories.length > 0 && (

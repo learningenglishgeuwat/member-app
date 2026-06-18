@@ -399,6 +399,12 @@ const PhoneticPortal: React.FC = () => {
     router.push(path);
   };
 
+  const handleAmEVsBrEClick = () => {
+    const path = '/skill/pronunciation/phoneticSymbols/ame-vs-bre';
+    prefetchPath(path);
+    router.push(path);
+  };
+
   const getSymbolsByCategory = (category: string, subcategory?: string) =>
     phoneticSymbols.filter((symbol) => symbol.category === category && (!subcategory || symbol.subcategory === subcategory));
 
@@ -503,6 +509,13 @@ const PhoneticPortal: React.FC = () => {
             className="common-mistakes-btn"
           >
             RANGKUMAN
+          </button>
+          <button
+            type="button"
+            onClick={handleAmEVsBrEClick}
+            className="common-mistakes-btn"
+          >
+            AmE VS BrE
           </button>
         </div>
 

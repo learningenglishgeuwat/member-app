@@ -50,12 +50,12 @@ const TutorialContent: React.FC = () => {
     {
       id: 2,
       title: "Achievement Content Overview",
-      description: "Pahami halaman Achievements dan bagaimana tier serta referral bekerja",
+      description: "Pelajari halaman Achievements saat ini, cara unlock CPU, dan navigasi ke Progress View.",
       duration: "15 min",
       difficulty: "Beginner",
       type: "interactive",
-      completed: true,
-      locked: true,
+      completed: false,
+      locked: false,
       icon: Trophy
     },
     {

@@ -2167,6 +2167,19 @@
       "source": "manifest"
     },
     {
+      "id": "skill-pronunciation-phoneticSymbols-ame-vs-bre",
+      "label": "Ame Vs Bre",
+      "path": "/skill/pronunciation/phoneticSymbols/ame-vs-bre",
+      "scope": "pronunciation",
+      "keywords": [
+        "ame",
+        "vs",
+        "bre",
+        "/skill/pronunciation/phoneticsymbols/ame-vs-bre"
+      ],
+      "source": "route-scan"
+    },
+    {
       "id": "skill-pronunciation-phoneticSymbols-MinimalPairs",
       "label": "Minimal Pairs",
       "path": "/skill/pronunciation/phoneticSymbols/MinimalPairs",

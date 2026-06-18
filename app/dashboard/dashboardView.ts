@@ -14,7 +14,7 @@ export const VIEW_IDS = [
 export type ViewId = (typeof VIEW_IDS)[number]
 
 const VALID_VIEWS = new Set<ViewId>(VIEW_IDS)
-const LOCKED_VIEWS = new Set<ViewId>(['achievements'])
+const LOCKED_VIEWS = new Set<ViewId>([])
 
 export const START_JOURNEY_VIEW_ID: ViewId = 'dashboard'
 export const NOTIFICATIONS_VIEW_ID: ViewId = 'notifications'

@@ -1,0 +1,284 @@
+.ame-vs-bre-page {
+  position: relative;
+  min-height: 100dvh;
+  background: #000000;
+  overflow: visible;
+  color: #ffffff;
+}
+
+.ame-vs-bre-grid-background,
+.ame-vs-bre-particles,
+.ame-vs-bre-glow-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ame-vs-bre-grid-background {
+  background:
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.ame-vs-bre-glow-overlay {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.03) 0%, transparent 70%);
+}
+
+.ame-vs-bre-particles::before,
+.ame-vs-bre-particles::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.8), transparent);
+  border-radius: 50%;
+}
+
+.ame-vs-bre-particles::before {
+  top: 20%;
+  left: 10%;
+}
+
+.ame-vs-bre-particles::after {
+  top: 60%;
+  right: 15%;
+}
+
+.ame-vs-bre-main {
+  position: relative;
+  z-index: 10;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 6rem 1rem 4rem;
+  min-height: 100vh;
+}
+
+.ame-vs-bre-inner {
+  width: 100%;
+}
+
+.ame-vs-bre-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ame-vs-bre-title-text {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ame-vs-bre-title-underline {
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, #00ffff, transparent);
+  margin: 0.75rem auto 0;
+}
+
+.ame-vs-bre-tabbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  z-index: 10;
+}
+
+.ame-vs-bre-tabbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.75rem;
+  height: 1px;
+  background: rgba(148, 163, 184, 0.18);
+  pointer-events: none;
+}
+
+.ame-vs-bre-tabbutton {
+  position: relative;
+  z-index: 20;
+  border-radius: 9999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: #000000;
+  color: #e2e8f0;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  text-transform: none;
+  backdrop-filter: blur(12px);
+}
+
+.ame-vs-bre-tabbutton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 60px rgba(56, 189, 248, 0.12);
+}
+
+.ame-vs-bre-tabbutton.active {
+  background: rgba(14, 116, 144, 0.28);
+  color: #cffafe;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.ame-vs-bre-note-panel {
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #000000;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(24px);
+}
+
+.ame-vs-bre-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: rgba(56, 189, 248, 0.1);
+  color: #a5f3fc;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  padding: 0.45rem 0.9rem;
+}
+
+.ame-vs-bre-card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .ame-vs-bre-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .ame-vs-bre-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ame-vs-bre-word-card {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(56, 189, 248, 0.08);
+  background: #000000;
+  padding: 0.75rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.ame-vs-bre-word-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.12), 0 0 24px rgba(168, 85, 247, 0.08);
+  background: rgba(30, 41, 59, 0.98);
+}
+
+.ame-vs-bre-word-card.active-card {
+  box-shadow: 0 0 30px rgba(251, 146, 60, 0.45), 0 0 80px rgba(251, 146, 60, 0.2);
+  background: rgba(251, 146, 60, 0.12);
+  border-color: rgba(251, 146, 60, 0.4);
+}
+
+.ame-vs-bre-word-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.ame-vs-bre-word-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.ame-vs-bre-word-title.amebvre-highlighted {
+  color: #fb923c;
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.35);
+}
+
+.ame-vs-bre-ipa-box-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ame-vs-bre-ipa-text-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ame-vs-bre-ipa-play-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #bae6fd;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ame-vs-bre-ipa-play-button:hover {
+  transform: translateY(-1px);
+  background: rgba(56, 189, 248, 0.22);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+.ame-vs-bre-word-divider {
+  margin-top: 0.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0), #9333ea, #06b6d4, rgba(148, 163, 184, 0));
+}
+
+.ame-vs-bre-pronunciation-group {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.ame-vs-bre-ipa-block {
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.5rem;
+}
+
+.ame-vs-bre-ipa-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.ame-vs-bre-ipa-value {
+  margin-top: 0.15rem;
+  color: var(--color-ipa);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.ame-vs-bre-ipa-value.amebvre-highlighted {
+  color: #fb923c;
+  text-shadow: 0 0 6px rgba(251, 146, 60, 0.35);
+}

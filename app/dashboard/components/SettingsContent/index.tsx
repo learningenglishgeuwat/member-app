@@ -18,6 +18,20 @@ const PHONETIC_SYMBOL_GROUPS: Array<{ id: string; symbols: string[] }> = [
   { id: 'consonant-voiced', symbols: ['b', 'd', 'g', 'v', '\u00f0', 'z', '\u0292', '\u02a4', 'l', 'm', 'n', '\u014b', 'r', 'w', 'y'] },
 ];
 
+const PHONETIC_SYMBOL_CANONICAL_LABELS: Record<string, string> = {
+  'ɪə': 'ɪr',
+  'iə': 'ɪr',
+  'eə': 'ɛr',
+  'er': 'ɛr',
+  'ʊə': 'ʊr',
+};
+
+const getPhoneticSymbolProgressKey = (symbol: string) =>
+  `phoneticSymbols_${PHONETIC_SYMBOL_CANONICAL_LABELS[symbol] ?? symbol}`;
+
+const getPhoneticSymbolProgressValue = (topicProgress: Record<string, number>, symbol: string) =>
+  topicProgress[getPhoneticSymbolProgressKey(symbol)] ?? topicProgress[`phoneticSymbols_${symbol}`] ?? 0;
+
 const toPercent = (value: unknown): number => {
   if (typeof value !== 'number' || !Number.isFinite(value)) return 0;
   return Math.min(100, Math.max(0, Math.round(value)));
@@ -60,7 +74,7 @@ const SettingsContent: React.FC = () => {
     const calculate = () => {
       const topicProgress = readLocalStorageObject<Record<string, number>>('pronunciationProgress', {});
       const allSymbols = PHONETIC_SYMBOL_GROUPS.flatMap((group) => group.symbols);
-      const values = allSymbols.map((symbol) => toPercent(topicProgress[`phoneticSymbols_${symbol}`]));
+      const values = allSymbols.map((symbol) => toPercent(getPhoneticSymbolProgressValue(topicProgress, symbol)));
       const avg = values.length > 0 ? Math.round(values.reduce((acc, curr) => acc + curr, 0) / values.length) : 0;
       setPhoneticSymbolsProgress(avg);
     };
@@ -262,79 +276,6 @@ const SettingsContent: React.FC = () => {
             </div>
           </div>
           
-          {/* GEUWAT Tower Hero */}
-          <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-black/40 border border-purple-500/20 rounded-lg">
-            <h3 className="text-sm sm:text-base font-semibold text-white mb-3 text-center font-display leading-snug">
-              <span className="block">Hidupkan Hero</span>
-              <span className="block text-purple-200">Untuk Mengikuti GEUWAT Tower</span>
-            </h3>
-
-            {(() => {
-              const tier =
-                phoneticSymbolsProgress >= 70 ? 'active' : phoneticSymbolsProgress >= 26 ? 'shadow' : 'locked';
-              const isShadow = tier !== 'active';
-              const showLock = tier === 'locked';
-              const imageClassName = isShadow
-                ? 'object-contain w-full h-full opacity-90 [filter:brightness(0)_contrast(1.05)_drop-shadow(0_18px_20px_rgba(0,0,0,0.75))]'
-                : 'object-contain w-full h-full drop-shadow-[0_18px_20px_rgba(0,0,0,0.35)]';
-
-              return (
-                <div className="rounded-xl border border-slate-700/40 bg-black/30 overflow-hidden">
-                  <div className="relative w-full aspect-[16/9] flex items-center justify-center p-4">
-                    <Image
-                      src="/ChibiLogin.webp?v=20260528"
-                      alt="GEUWAT Tower Hero"
-                      width={720}
-                      height={405}
-                      className={imageClassName}
-                      unoptimized
-                    />
-                    {isShadow ? (
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/35" />
-                    ) : null}
-                    {showLock ? (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-2 rounded-2xl border border-slate-700/60 bg-black/70 px-4 py-3">
-                          <Lock className="w-6 h-6 text-slate-200" />
-                          <div className="text-[11px] sm:text-xs text-slate-200 font-semibold text-center">
-                            Locked
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-              );
-            })()}
-
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="bg-slate-800/45 border border-slate-700/40 rounded-lg p-3 text-center">
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400">
-                  Phonetic Symbols
-                </div>
-                <div className="mt-1 text-sm sm:text-base font-mono font-bold text-cyan-300">
-                  {phoneticSymbolsProgress}%
-                </div>
-              </div>
-              <div className="bg-slate-800/45 border border-slate-700/40 rounded-lg p-3 text-center">
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400">
-                  Target
-                </div>
-                <div className="mt-1 text-sm sm:text-base font-mono font-bold text-purple-200">
-                  70%
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowHeroHelpModal(true)}
-              className="mt-3 text-xs sm:text-sm text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors block mx-auto"
-            >
-              How to activate?
-            </button>
-          </div>
-
           {/* Admin Contact Section */}
           <div className="mt-5 sm:mt-6 p-3 sm:p-4 bg-blue-900/20 border border-blue-500/20 rounded-lg">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3 flex items-center gap-2">

@@ -284,6 +284,8 @@ export const voicedConsonantManualWordHighlightOverrides: Record<string, Record<
     read: ['r'],
     ready: ['r'],
     red: ['r'],
+    bark: ['r'],
+    term: ['r'],
   },
   'w': {
     // Kasus mengunci indeks 'w' (0) agar huruf 'o' setelahnya tidak ikut tersorot salah warna

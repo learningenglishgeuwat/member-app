@@ -22,10 +22,6 @@ const GlobalHaptic = dynamic(
 
 const GlobalAudio = dynamic(() => import('@/app/components/GlobalAudio'), { ssr: false })
 
-const GlobalGestureWrapper = dynamic(() => import('@/app/components/GlobalGestureWrapper').then((mod) => mod.GlobalGestureWrapper), {
-  ssr: false,
-})
-
 const SkillThemeSync = dynamic(() => import('@/app/components/SkillThemeSync'), {
   ssr: false,
 })
@@ -35,6 +31,10 @@ const ScrollToHashMount = dynamic(() => import('@/app/components/ScrollToHashMou
 })
 
 const GlobalScrollToItemMount = dynamic(() => import('@/app/components/GlobalScrollToItemMount'), {
+  ssr: false,
+})
+
+const MediaPipeProvider = dynamic(() => import('@/app/components/MediaPipeProvider'), {
   ssr: false,
 })
 
@@ -102,13 +102,12 @@ export default function AppClientShell({ children }: { children: React.ReactNode
       {enhancementsReady ? (
         <GlobalHaptic>
           <GlobalAudio>
-            <GlobalGestureWrapper>
-              <ScrollToHashMount />
-              <GlobalScrollToItemMount />
-              <SkillThemeSync />
-              {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
-              {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
-            </GlobalGestureWrapper>
+            <ScrollToHashMount />
+            <GlobalScrollToItemMount />
+            <SkillThemeSync />
+            <MediaPipeProvider />
+            {shouldRenderMobileBottomNav(pathname) ? <MobileBottomNav /> : null}
+            {shouldRenderTourGuide(pathname) ? <TourGuideMount /> : null}
           </GlobalAudio>
         </GlobalHaptic>
       ) : null}

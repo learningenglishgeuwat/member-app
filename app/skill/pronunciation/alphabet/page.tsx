@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import {
   ALPHABET_DATA,
@@ -8,7 +8,7 @@ import {
   QUICK_SPELLING_WORDS,
 } from './constants';
 import { LetterCard } from './LetterCard';
-import { ChevronRight, Copy, Play, Volume2 } from 'lucide-react';
+import { ChevronRight, Copy, Volume2 } from 'lucide-react';
 import './alphabet.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
@@ -57,6 +57,7 @@ const ALPHABET_EVALUATION_PROMPT =
 const AlphabetPage: React.FC = () => {
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isPlayingPracticeAll, setIsPlayingPracticeAll] = useState(false);
+  const [activeAlphabetIndex, setActiveAlphabetIndex] = useState(0);
   const [currentPlayingLetter, setCurrentPlayingLetter] = useState<string | null>(null);
   const [currentPlayingPracticeCountry, setCurrentPlayingPracticeCountry] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -79,6 +80,7 @@ const AlphabetPage: React.FC = () => {
   
   const isPlayingRef = useRef(false);
   const isPlayingPracticeRef = useRef(false);
+  const activeAlphabetIndexRef = useRef(0);
   const practiceSectionRef = useRef<HTMLElement | null>(null);
   const promptCopyTimeoutRef = useRef<number | null>(null);
 
@@ -122,19 +124,23 @@ const AlphabetPage: React.FC = () => {
     };
   }, []);
 
-  const stopAlphabetPlayAll = () => {
+  useEffect(() => {
+    activeAlphabetIndexRef.current = activeAlphabetIndex;
+  }, [activeAlphabetIndex]);
+
+  const stopAlphabetPlayAll = useCallback(() => {
     isPlayingRef.current = false;
     setIsPlayingAll(false);
     setCurrentPlayingLetter(null);
-  };
+  }, []);
 
-  const stopPracticeCountriesPlayAll = () => {
+  const stopPracticeCountriesPlayAll = useCallback(() => {
     isPlayingPracticeRef.current = false;
     setIsPlayingPracticeAll(false);
     setCurrentPlayingPracticeCountry(null);
-  };
+  }, []);
 
-  const speakEnglishText = async (
+  const speakEnglishText = useCallback(async (
     text: string,
     rate = 0.82,
     cancelBeforeSpeak = true,
@@ -164,9 +170,14 @@ const AlphabetPage: React.FC = () => {
     }
 
     return true;
-  };
+  }, []);
 
-  const handlePlayLetter = async (letter: string) => {
+  const handlePlayLetter = useCallback(async (letter: string) => {
+    const letterIndex = ALPHABET_DATA.findIndex((item) => item.letter === letter);
+    if (letterIndex >= 0) {
+      setActiveAlphabetIndex(letterIndex);
+    }
+
     if (isPlayingPracticeRef.current) {
       stopPracticeCountriesPlayAll();
     }
@@ -188,7 +199,62 @@ const AlphabetPage: React.FC = () => {
       console.error("Failed to play audio", error);
       setCurrentPlayingLetter(null);
     }
-  };
+  }, [speakEnglishText, stopAlphabetPlayAll, stopPracticeCountriesPlayAll]);
+
+  const actionPrevAlphabet = useCallback(() => {
+    if (isPlayingRef.current) {
+      stopAlphabetPlayAll();
+      stopSpeech();
+    }
+
+    if (isPlayingPracticeRef.current) {
+      stopPracticeCountriesPlayAll();
+      stopSpeech();
+    }
+
+    triggerHaptic('tap');
+    setActiveAlphabetIndex((prev) => (prev === 0 ? ALPHABET_DATA.length - 1 : prev - 1));
+  }, [stopAlphabetPlayAll, stopPracticeCountriesPlayAll, triggerHaptic]);
+
+  const actionNextAlphabet = useCallback(() => {
+    if (isPlayingRef.current) {
+      stopAlphabetPlayAll();
+      stopSpeech();
+    }
+
+    if (isPlayingPracticeRef.current) {
+      stopPracticeCountriesPlayAll();
+      stopSpeech();
+    }
+
+    triggerHaptic('tap');
+    setActiveAlphabetIndex((prev) => (prev === ALPHABET_DATA.length - 1 ? 0 : prev + 1));
+  }, [stopAlphabetPlayAll, stopPracticeCountriesPlayAll, triggerHaptic]);
+
+  const actionPlayActiveAlphabet = useCallback(() => {
+    const activeLetter = ALPHABET_DATA[activeAlphabetIndexRef.current]?.letter;
+    if (activeLetter) {
+      void handlePlayLetter(activeLetter);
+    }
+  }, [handlePlayLetter]);
+
+  useEffect(() => {
+    window.addEventListener('app:gesture:alphabet-prev', actionPrevAlphabet);
+    window.addEventListener('app:gesture:alphabet-next', actionNextAlphabet);
+    window.addEventListener('app:gesture:alphabet-audio', actionPlayActiveAlphabet);
+    window.addEventListener('actionPrevAlphabet', actionPrevAlphabet);
+    window.addEventListener('actionNextAlphabet', actionNextAlphabet);
+    window.addEventListener('actionPlayAlphabetAudio', actionPlayActiveAlphabet);
+
+    return () => {
+      window.removeEventListener('app:gesture:alphabet-prev', actionPrevAlphabet);
+      window.removeEventListener('app:gesture:alphabet-next', actionNextAlphabet);
+      window.removeEventListener('app:gesture:alphabet-audio', actionPlayActiveAlphabet);
+      window.removeEventListener('actionPrevAlphabet', actionPrevAlphabet);
+      window.removeEventListener('actionNextAlphabet', actionNextAlphabet);
+      window.removeEventListener('actionPlayAlphabetAudio', actionPlayActiveAlphabet);
+    };
+  }, [actionNextAlphabet, actionPlayActiveAlphabet, actionPrevAlphabet]);
 
   const handlePlayAll = async () => {
     triggerHaptic('tap');
@@ -207,9 +273,10 @@ const AlphabetPage: React.FC = () => {
     isPlayingRef.current = true;
     setIsPlayingAll(true);
 
-    for (const item of ALPHABET_DATA) {
+    for (const [index, item] of ALPHABET_DATA.entries()) {
       if (!isPlayingRef.current) break;
 
+      setActiveAlphabetIndex(index);
       setCurrentPlayingLetter(item.letter);
       try {
         const didSpeak = await speakEnglishText(item.letter, 0.8, false, false);
@@ -589,11 +656,12 @@ const AlphabetPage: React.FC = () => {
 
         {/* Alphabet Grid */}
         <div id="alphabet-grid-section" className="alphabet-grid">
-          {ALPHABET_DATA.map((item) => (
+          {ALPHABET_DATA.map((item, index) => (
             <LetterCard
               key={item.letter}
               letter={item.letter}
               ipa={item.ipa}
+              isActive={activeAlphabetIndex === index}
               isPlaying={currentPlayingLetter === item.letter}
               onPlay={() => handlePlayLetter(item.letter)}
               showIpa={showIpa}

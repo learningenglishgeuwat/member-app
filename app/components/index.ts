@@ -15,7 +15,7 @@ export { default as ControlCenter } from './ControlCenter/ControlCenter'
 export { PlayStopButton } from './PlayStopButton'
 
 // Gesture Tracking Components
-export { MediaPipeProvider } from './MediaPipeProvider'
+export { default as MediaPipeProvider } from './MediaPipeProvider'
 export { GestureTrackerWrapper } from './GestureTrackerWrapper'
 export { GlobalGestureToggle } from './GlobalGestureToggle'
 export { GlobalGestureWrapper } from './GlobalGestureWrapper'

@@ -243,6 +243,23 @@ const Page: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNav, selectedTopic, isTopicLocked, handleStartLearning]);
 
+  useEffect(() => {
+    const handlePrevTopic = () => handleNav('left');
+    const handleNextTopic = () => handleNav('right');
+
+    window.addEventListener('app:gesture:pronunciation-topic-prev', handlePrevTopic);
+    window.addEventListener('app:gesture:pronunciation-topic-next', handleNextTopic);
+    window.addEventListener('actionPrevPronunciationTopic', handlePrevTopic);
+    window.addEventListener('actionNextPronunciationTopic', handleNextTopic);
+
+    return () => {
+      window.removeEventListener('app:gesture:pronunciation-topic-prev', handlePrevTopic);
+      window.removeEventListener('app:gesture:pronunciation-topic-next', handleNextTopic);
+      window.removeEventListener('actionPrevPronunciationTopic', handlePrevTopic);
+      window.removeEventListener('actionNextPronunciationTopic', handleNextTopic);
+    };
+  }, [handleNav]);
+
   return (
     <div className="pronunciation-layout pronunciation-theme">
       <Background topic={selectedTopic} />

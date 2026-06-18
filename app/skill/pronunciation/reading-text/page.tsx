@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-import ButtonSavedProgress from '../../components/buttonSavedProgress';
+
 import { ControlCenter } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
@@ -55,18 +55,6 @@ export default function ReadingTextForPracticePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string>(READING_TEXT_MATERIALS[0]?.id ?? '');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isProgressSaved, setIsProgressSaved] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    try {
-      const current = JSON.parse(
-        window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
-      ) as Record<string, number>;
-      const value = current[READING_TEXT_PROGRESS_ID];
-      return typeof value === 'number' && Number.isFinite(value) && value > 0;
-    } catch {
-      return false;
-    }
-  });
   const [activeTab, setActiveTab] = useState<TabKey>('origin');
   const [activeSpeechMode, setActiveSpeechMode] = useState<'all' | 'single' | null>(null);
   const [activeParagraphKey, setActiveParagraphKey] = useState<string | null>(null);
@@ -248,40 +236,6 @@ export default function ReadingTextForPracticePage() {
     };
   }, [stopAllSpeech]);
 
-  const handleSaveProgress = useCallback(async (percentage: number) => {
-    if (typeof window === 'undefined') return;
-    setIsProgressSaved(true);
-
-    const pronunciationProgress = JSON.parse(
-      window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
-    ) as Record<string, number>;
-    pronunciationProgress[READING_TEXT_PROGRESS_ID] = percentage;
-    window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
-
-    const dashboardProgress = JSON.parse(
-      window.localStorage.getItem(DASHBOARD_PROGRESS_KEY) || '{}',
-    ) as Record<string, number>;
-    dashboardProgress.pronunciation = calcPronunciationAverage(pronunciationProgress);
-    window.localStorage.setItem(DASHBOARD_PROGRESS_KEY, JSON.stringify(dashboardProgress));
-  }, []);
-
-  const handleUnsaveProgress = useCallback(async () => {
-    if (typeof window === 'undefined') return;
-    setIsProgressSaved(false);
-
-    const pronunciationProgress = JSON.parse(
-      window.localStorage.getItem(PRONUNCIATION_PROGRESS_KEY) || '{}',
-    ) as Record<string, number>;
-    delete pronunciationProgress[READING_TEXT_PROGRESS_ID];
-    window.localStorage.setItem(PRONUNCIATION_PROGRESS_KEY, JSON.stringify(pronunciationProgress));
-
-    const dashboardProgress = JSON.parse(
-      window.localStorage.getItem(DASHBOARD_PROGRESS_KEY) || '{}',
-    ) as Record<string, number>;
-    dashboardProgress.pronunciation = calcPronunciationAverage(pronunciationProgress);
-    window.localStorage.setItem(DASHBOARD_PROGRESS_KEY, JSON.stringify(dashboardProgress));
-  }, []);
-
   return (
     <div className="pronunciation-layout pronunciation-theme pronunciation-theme--reading-text rt-page">
       <div className="fixed top-6 left-6 z-[100]">
@@ -301,16 +255,7 @@ export default function ReadingTextForPracticePage() {
           <p className="rt-subtitle">
             Pilih teks, lalu baca perlahan dengan fokus pada clarity, rhythm, dan konsistensi bunyi.
           </p>
-          <div className="rt-progress-actions">
-            <ButtonSavedProgress
-              isSaved={isProgressSaved}
-              onSave={handleSaveProgress}
-              onUnsave={handleUnsaveProgress}
-              size="small"
-              variant="primary"
-              topicName="Reading Text for Practice"
-            />
-          </div>
+
         </header>
 
         <label className="rt-label" htmlFor="rt-select">

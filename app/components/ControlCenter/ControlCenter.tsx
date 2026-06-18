@@ -69,6 +69,7 @@ export function ControlCenter({
   return (
     <SectionNavigatorContext.Provider value={{ openSection, closeControlCenter }}>
       <div
+      data-control-center-root="true"
       className={cx(
         'fixed right-0 top-1/2 -translate-y-1/2 z-[100] transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)]',
         isOpen ? 'translate-x-0' : 'translate-x-full'
