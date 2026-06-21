@@ -217,6 +217,9 @@ export function useHandGestureTracking({
   const poseHoldFramesRef = useRef<{ pose: string; count: number }>({ pose: 'none', count: 0 })
   const activeGestureRef = useRef<HandGestureName>('none')
   const onGestureRef = useRef(onGesture)
+  const lastDetectionTimeRef = useRef(0)
+  const performanceHistoryRef = useRef<number[]>([])
+  const currentThrottleRef = useRef<number>(0) // 0 = as fast as possible
 
   const [state, setState] = useState<HandGestureTrackingState>({
     status: 'idle',
@@ -498,9 +501,41 @@ export function useHandGestureTracking({
 
       const timestamp = performance.now()
 
+      // Adaptive Performance: Gunakan throttle (FPS limit) hanya jika perangkat terdeteksi nge-lag
+      if (currentThrottleRef.current > 0 && timestamp - lastDetectionTimeRef.current < currentThrottleRef.current) {
+        rafRef.current = window.requestAnimationFrame(processFrame)
+        return
+      }
+      lastDetectionTimeRef.current = timestamp
+
       if (video.currentTime !== lastVideoTimeRef.current) {
         lastVideoTimeRef.current = video.currentTime
+        
+        const t0 = performance.now()
         const result = landmarker.detectForVideo(video, timestamp)
+        const t1 = performance.now()
+
+        // --- ADAPTIVE FPS LOGIC ---
+        // Catat waktu yang dibutuhkan AI untuk memproses 1 frame
+        const inferenceTime = t1 - t0
+        const history = performanceHistoryRef.current
+        history.push(inferenceTime)
+        if (history.length > 20) history.shift() // simpan 20 frame terakhir
+
+        if (history.length === 20) {
+          const avg = history.reduce((a, b) => a + b, 0) / 20
+          if (avg > 45) {
+            // Perangkat sangat kepayahan -> Batasi ke ~15 FPS (66ms) agar tidak nge-hang
+            currentThrottleRef.current = 66
+          } else if (avg > 25) {
+            // Perangkat mulai berat -> Batasi ke ~24 FPS (41ms)
+            currentThrottleRef.current = 41
+          } else if (avg < 15) {
+            // Perangkat kuat -> Gas full speed tanpa batas FPS
+            currentThrottleRef.current = 0
+          }
+        }
+        // --------------------------
         const landmarks = result.landmarks[0]
 
         const handedness = result.handednesses?.[0]?.[0]?.categoryName
