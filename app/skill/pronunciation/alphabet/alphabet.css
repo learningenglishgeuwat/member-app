@@ -1012,3 +1012,8 @@
   pointer-events: none;
   z-index: 3;
 }
+
+/* Make alphabet container transparent when camera full page is active */
+body.is-camera-full-page .alphabet-container {
+  background: transparent !important;
+}

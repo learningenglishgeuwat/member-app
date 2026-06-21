@@ -318,16 +318,52 @@
   padding-right: 2px; /* Visual center adjustment in half-circle shape when rotated -90deg */
 }
 
-.tg-mode-select-outer {
+.tg-mode-picker-menu {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  -webkit-appearance: none;
-  border-radius: 44px 0 0 44px;
+  left: 40px; /* Position to the right of the button, overlaying the panel */
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 10, 30, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--tg-accent-rgb), 0.4);
+  border-radius: var(--tg-radius-md);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(var(--tg-accent-rgb), 0.2);
+  z-index: 1300;
+  white-space: nowrap;
+  animation: fadeInMenu 150ms ease-out forwards;
 }
+
+@keyframes fadeInMenu {
+  from { opacity: 0; transform: translateY(-50%) scale(0.95); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+.tg-mode-picker-option {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: var(--tg-radius-sm);
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.tg-mode-picker-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tg-mode-picker-option.is-selected {
+  background: rgba(var(--tg-accent-rgb), 0.4);
+  color: #fff;
+}
+
 
 .tg-flashcard-picker {
   margin-bottom: 10px;
@@ -1070,4 +1106,34 @@
   .tg-mode-select-outer {
     border-radius: 36px 0 0 36px;
   }
+}
+
+/* -------------------------------------------------------------
+ * TRANSPARENCY WHEN CAMERA FULL PAGE ACTIVE
+ * ------------------------------------------------------------- */
+body.is-camera-full-page .tg-panel,
+body.is-camera-full-page .tg-mode-outer-circle {
+  background:
+    linear-gradient(165deg, rgba(18, 13, 35, 0.4), rgba(10, 7, 27, 0.5)),
+    radial-gradient(circle at 18% 12%, rgba(var(--tg-accent-rgb), 0.1), transparent 58%);
+  backdrop-filter: blur(14px);
+}
+
+body.is-camera-full-page .tg-form,
+body.is-camera-full-page .tg-meta-chip-wrap,
+body.is-camera-full-page .tg-confirm-chip-wrap,
+body.is-camera-full-page .tg-source-list,
+body.is-camera-full-page .tg-action-list,
+body.is-camera-full-page .tg-suggestion-wrap {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+body.is-camera-full-page .tg-input,
+body.is-camera-full-page .tg-flashcard-select {
+  background: rgba(10, 6, 24, 0.45);
+}
+
+body.is-camera-full-page .tg-reply {
+  background: rgba(0, 0, 0, 0.35);
 }

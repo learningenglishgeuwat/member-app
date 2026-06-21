@@ -10,6 +10,7 @@ interface GestureTrackerWrapperProps {
   onSwipeLeft?: () => void
   onSwipeRight?: () => void
   onPinch?: () => void
+  onPeaceSign?: () => void
   onThumbsUp?: () => void
   onFistDrag?: (direction: 'up' | 'down') => void
   onCursorMove?: (x: number, y: number) => void
@@ -21,6 +22,7 @@ export const GestureTrackerWrapper = ({
   onSwipeLeft,
   onSwipeRight,
   onPinch,
+  onPeaceSign,
   onThumbsUp,
   onFistDrag,
   onCursorMove,
@@ -34,12 +36,20 @@ export const GestureTrackerWrapper = ({
       if (event.type === 'swipe-left') onSwipeLeft?.()
       if (event.type === 'swipe-right') onSwipeRight?.()
       if (event.type === 'pinch') onPinch?.()
-      if (event.type === 'thumbs-up') onThumbsUp?.()
-      if (event.type === 'fist-scroll' && typeof event.deltaY === 'number') {
+      if (event.type === 'peace-sign') {
+        onPeaceSign?.()
+        onThumbsUp?.()
+      }
+      if (event.type === 'palm-scroll' && typeof event.deltaY === 'number') {
         onFistDrag?.(event.deltaY < 0 ? 'up' : 'down')
       }
+      if (event.type === 'fist-zoom' && typeof event.deltaY === 'number') {
+        const zoomEvent = new CustomEvent('app:gesture:zoom', { detail: event })
+        window.dispatchEvent(zoomEvent)
+        document.dispatchEvent(zoomEvent)
+      }
     },
-    [onFistDrag, onPinch, onSwipeLeft, onSwipeRight, onThumbsUp],
+    [onFistDrag, onPeaceSign, onPinch, onSwipeLeft, onSwipeRight, onThumbsUp],
   )
 
   const { error, cursor, videoRef } = useHandGestureTracking({

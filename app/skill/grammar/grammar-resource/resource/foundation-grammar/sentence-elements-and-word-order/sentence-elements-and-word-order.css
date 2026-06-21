@@ -5,7 +5,7 @@
   background:
     radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
     radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
-    #020617;
+    black;
 }
 
 .sewo-shell {
@@ -186,4 +186,5 @@
     padding: 1.2rem;
   }
 }
+
 

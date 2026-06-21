@@ -8,6 +8,7 @@ import Sidebar from '../../components/skillSidebar/SkillSidebar';
 import { primeBestEnglishVoice, speakWithBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { getSymbolSpeechProfile, hasSymbolSpeechProfile } from './data/symbolSpeechMap';
 import { getCommonLetterByIPA } from './data/commonLetters/CommonLetters';
+import { ACUAN_SUARA_GROUPS } from './data/acuanSuaraData';
 
 interface PhoneticSymbol {
   symbol: string;
@@ -74,6 +75,7 @@ const PhoneticPortal: React.FC = () => {
   const [activePortal, setActivePortal] = useState<string | null>(null);
   const [spinningCard, setSpinningCard] = useState<string | null>(null);
   const [isSymbolTableOpen, setIsSymbolTableOpen] = useState(false);
+  const [isAcuanSuaraOpen, setIsAcuanSuaraOpen] = useState(false);
   const [activeSpeakingSymbol, setActiveSpeakingSymbol] = useState<string | null>(null);
   const [isPlayingAllSymbols, setIsPlayingAllSymbols] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -203,6 +205,14 @@ const PhoneticPortal: React.FC = () => {
 
   const closeIntroModal = useCallback(() => {
     setIsIntroModalOpen(false);
+  }, []);
+
+  const openAcuanSuara = useCallback(() => {
+    setIsAcuanSuaraOpen(true);
+  }, []);
+
+  const closeAcuanSuara = useCallback(() => {
+    setIsAcuanSuaraOpen(false);
   }, []);
 
   const getExampleWordForSymbol = useCallback((symbol: string): string | null => {
@@ -519,6 +529,17 @@ const PhoneticPortal: React.FC = () => {
           </button>
         </div>
 
+        <div className="acuan-suara-wrap">
+          <button
+            type="button"
+            onClick={openAcuanSuara}
+            className="acuan-suara-btn"
+            aria-label="Open Sound Reference Guide"
+          >
+            ACUAN SUARA
+          </button>
+        </div>
+
         {isIntroModalOpen && (
           <div
             className="symbol-table-modal-overlay"
@@ -792,6 +813,60 @@ const PhoneticPortal: React.FC = () => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {isAcuanSuaraOpen && (
+          <div
+            className="symbol-table-modal-overlay"
+            onClick={closeAcuanSuara}
+            role="presentation"
+          >
+            <section
+              className="symbol-table-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Acuan Suara - Sound Reference"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <header className="symbol-table-modal-header">
+                <h3 className="symbol-table-modal-title">ACUAN SUARA</h3>
+                <button
+                  type="button"
+                  className="symbol-table-modal-close"
+                  onClick={closeAcuanSuara}
+                  aria-label="Close sound reference modal"
+                >
+                  ×
+                </button>
+              </header>
+              <div className="acuan-suara-modal-content">
+                {ACUAN_SUARA_GROUPS.map((group, groupIndex) => (
+                  <div key={groupIndex} className="acuan-suara-table-group">
+                    <h4 className="acuan-suara-group-title">{group.title}</h4>
+                    <p className="acuan-suara-group-subtitle">{group.subtitle}</p>
+                    <table className="acuan-suara-table">
+                      <thead>
+                        <tr>
+                          <th>Simbol Fonetik</th>
+                          <th>Acuan Suara</th>
+                          <th>Contoh Kata (Formal)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {group.items.map((item, itemIndex) => (
+                          <tr key={itemIndex}>
+                            <td className="acuan-suara-symbol">{item.symbol}</td>
+                            <td>{item.acuanSuara}</td>
+                            <td>{item.contohKata}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         )}
       </main>

@@ -11,6 +11,11 @@
   overflow-x: hidden;
 }
 
+body.is-camera-full-page .symbol-detail-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* Guard: prevent global --font-size-ipa from shrinking the large symbol inside the circular HUD
    Keep local sizing (Tailwind text-* classes) intact for elements inside .symbol-detail-container */
 .symbol-detail-container .font-ipa,

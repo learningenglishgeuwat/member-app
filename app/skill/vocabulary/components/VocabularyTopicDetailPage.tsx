@@ -410,6 +410,41 @@ export default function VocabularyTopicDetailPage({
     [effectivePage, stopPlayback, totalPages],
   );
 
+  useEffect(() => {
+    const handleNext = () => {
+      goToPage(effectivePage + 1);
+    };
+    const handlePrev = () => {
+      goToPage(effectivePage - 1);
+    };
+
+    window.addEventListener('app:gesture:navigate-next', handleNext);
+    window.addEventListener('app:gesture:navigate-prev', handlePrev);
+
+    return () => {
+      window.removeEventListener('app:gesture:navigate-next', handleNext);
+      window.removeEventListener('app:gesture:navigate-prev', handlePrev);
+    };
+  }, [effectivePage, goToPage]);
+
+  const wheelTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 20) {
+      if (wheelTimeout.current) return;
+      
+      if (e.deltaX > 0) {
+        goToPage(effectivePage + 1);
+      } else {
+        goToPage(effectivePage - 1);
+      }
+      
+      wheelTimeout.current = setTimeout(() => {
+        wheelTimeout.current = null;
+      }, 500);
+    }
+  }, [effectivePage, goToPage]);
+
   const playSingle = useCallback(async (item: VocabularyItem, kind: 'word' | 'example') => {
     const token = playTokenRef.current + 1;
     playTokenRef.current = token;
@@ -638,7 +673,7 @@ export default function VocabularyTopicDetailPage({
   };
 
   return (
-    <main className={`vocab-page ${isColorTopic ? 'vocab-page-color-topic' : ''}`}>
+    <main className={`vocab-page ${isColorTopic ? 'vocab-page-color-topic' : ''}`} onWheel={handleWheel}>
       <div className="fixed left-4 top-6 z-50">
         <BackButton to="/skill/vocabulary" />
       </div>
@@ -835,7 +870,7 @@ export default function VocabularyTopicDetailPage({
       <ControlCenter>
         <div className="flex flex-col gap-3 sm:gap-6">
           <div className="flex flex-col gap-1.5 sm:gap-2">
-             <span className="font-mono text-[9px] sm:text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">VISIBILITY</span>
+             <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-cyan-400/80 block uppercase">VISIBILITY</span>
              <IpaVisibilityToggle checked={showTranslation} onChange={setShowTranslation} className="w-full flex justify-between mb-1 sm:mb-2 text-[10px] sm:text-xs" label="Translation" />
              <IpaVisibilityToggle checked={showIpa} onChange={setShowIpa} className="w-full flex justify-between text-[10px] sm:text-xs" />
           </div>

@@ -292,6 +292,7 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
   const [collapsed, setCollapsed] = useState(true);
   const [mode, setMode] = useState<GuideMode>('navigation');
   const [pendingMode, setPendingMode] = useState<GuideMode>('navigation');
+  const [isModePickerOpen, setIsModePickerOpen] = useState(false);
   const [isTutorialPageTransition, setIsTutorialPageTransition] = useState(false);
   const [isTutorialRoutePending, setIsTutorialRoutePending] = useState(false);
   const [query, setQuery] = useState('');
@@ -1058,27 +1059,32 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
       ) : (
         <div className="tg-widget-wrapper">
           <div className="tg-mode-outer-container">
-            <div className="tg-mode-outer-circle" title="Pilih Mode Belajar">
+            <div 
+              className={`tg-mode-outer-circle ${isModePickerOpen ? 'is-open' : ''}`} 
+              title="Pilih Mode Belajar"
+              onClick={() => setIsModePickerOpen((prev) => !prev)}
+            >
               <span className="tg-mode-outer-text">MODE</span>
-              <select
-                id="tg-mode-select-outer"
-                name="tgModeOuter"
-                className="tg-mode-select-outer"
-                value={mode}
-                onChange={(event) => {
-                  const val = event.target.value as GuideMode;
-                  handleModeChange(val);
-                  setPendingMode(val);
-                }}
-                aria-label="Pilih Mode Belajar"
-              >
-                {availableModes.map((item) => (
-                  <option key={item} value={item}>
-                    {MODE_LABELS[item]}
-                  </option>
-                ))}
-              </select>
             </div>
+
+            {isModePickerOpen && (
+              <div className="tg-mode-picker-menu" onClick={(e) => e.stopPropagation()}>
+                {availableModes.map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    className={`tg-mode-picker-option ${mode === item ? 'is-selected' : ''}`}
+                    onClick={() => {
+                      handleModeChange(item);
+                      setPendingMode(item);
+                      setIsModePickerOpen(false);
+                    }}
+                  >
+                    {MODE_LABELS[item]}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <aside className="tg-panel" role="dialog" aria-label="Tour Guide Widget">

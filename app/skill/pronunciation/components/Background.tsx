@@ -7,9 +7,9 @@ interface BackgroundProps {
 
 const Background: React.FC<BackgroundProps> = ({ topic }) => {
   return (
-    <div className="fixed inset-0 -z-10 bg-black overflow-hidden">
+    <div className="fixed inset-0 -z-10 bg-black overflow-hidden pronunciation-background">
       {/* Base Dark Gradient - Pure Black */}
-      <div className="absolute inset-0 bg-black z-0"></div>
+      <div className="absolute inset-0 bg-black z-0 pronunciation-background-inner"></div>
       
       {/* Dynamic Image Layer - Removed for pure black background */}
       {/* <div 

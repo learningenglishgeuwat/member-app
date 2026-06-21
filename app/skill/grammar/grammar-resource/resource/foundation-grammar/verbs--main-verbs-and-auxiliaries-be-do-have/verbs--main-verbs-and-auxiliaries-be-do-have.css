@@ -4,7 +4,7 @@
   background:
     radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
     radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
-    #020617;
+    black;
 }
 
 .vb-shell {
@@ -217,7 +217,7 @@
   overflow: hidden;
   border: 1px solid rgba(34, 211, 238, 0.35);
   border-radius: 0.9rem;
-  background: #020617;
+  background: black;
   box-shadow: 0 24px 70px rgba(2, 6, 23, 0.55);
 }
 
@@ -267,5 +267,6 @@
   }
 
 }
+
 
 
