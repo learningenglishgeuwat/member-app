@@ -2,10 +2,12 @@
   min-height: 100vh;
   padding: 1.5rem;
   color: #e2e8f0;
-  background:
-    radial-gradient(1200px 620px at 12% -10%, rgba(34, 211, 238, 0.12), transparent 58%),
-    radial-gradient(1000px 520px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
-    #020617;
+  background: #000000;
+}
+
+body.is-camera-full-page .std-page {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .std-shell {
@@ -175,3 +177,4 @@
     height: 0.45rem;
   }
 }
+

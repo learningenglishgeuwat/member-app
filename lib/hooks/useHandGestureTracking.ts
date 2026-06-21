@@ -8,19 +8,22 @@ const WASM_ASSET_URL = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${M
 const HAND_LANDMARKER_MODEL_URL =
   'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task'
 
-const CURSOR_LERP_ALPHA = 0.26
-const CURSOR_SLOW_SPEED_THRESHOLD = 1.3
-const SWIPE_SPEED_THRESHOLD = 1.3
-const SWIPE_AXIS_DOMINANCE = 1.35
+const CURSOR_LERP_ALPHA_FAST = 0.38
+const CURSOR_LERP_ALPHA_SLOW = 0.05
+const CURSOR_SLOW_SPEED_THRESHOLD = 0.8
+const SWIPE_SPEED_THRESHOLD = 0.75
+const SWIPE_AXIS_DOMINANCE = 1.2
 const SWIPE_COOLDOWN_MS = 700
 const SWIPE_CURSOR_FREEZE_MS = 320
 const PINCH_DISTANCE_THRESHOLD = 0.035
 const PINCH_RELEASE_DISTANCE = 0.052
 const PINCH_COOLDOWN_MS = 520
-const THUMBS_UP_COOLDOWN_MS = 1300
+const PEACE_SIGN_COOLDOWN_MS = 950
 const PINKY_POINT_COOLDOWN_MS = 950
-const FIST_SCROLL_GAIN = 2.15
-const FIST_SCROLL_MIN_DELTA = 2
+const JOYSTICK_DEADZONE_TOP = 0.35
+const JOYSTICK_DEADZONE_BOTTOM = 0.65
+const JOYSTICK_MAX_SPEED = 35
+const FIST_ZOOM_MIN_DELTA = 1.2
 
 export type HandGestureName =
   | 'none'
@@ -28,8 +31,9 @@ export type HandGestureName =
   | 'swipe-left'
   | 'swipe-right'
   | 'pinch'
-  | 'fist-scroll'
-  | 'thumbs-up'
+  | 'fist-zoom'
+  | 'palm-scroll'
+  | 'peace-sign'
   | 'pinky-point'
 
 export type HandGestureStatus = 'idle' | 'loading' | 'camera' | 'running' | 'error'
@@ -109,23 +113,21 @@ const areIndexMiddleRingFolded = (landmarks: NormalizedLandmark[]) =>
   isFingerFolded(landmarks, 12, 10) &&
   isFingerFolded(landmarks, 16, 14)
 
-const isThumbsUpPose = (landmarks: NormalizedLandmark[]) => {
-  if (!areMainFingersFolded(landmarks)) return false
+const areRingPinkyFolded = (landmarks: NormalizedLandmark[]) =>
+  isFingerFolded(landmarks, 16, 14) &&
+  isFingerFolded(landmarks, 20, 18)
 
-  const thumbTip = landmarks[4]
-  const thumbIp = landmarks[3]
-  const thumbMcp = landmarks[2]
-  const highestOtherPoint = landmarks.reduce((minY, point, index) => {
-    if (index === 4) return minY
-    return Math.min(minY, point.y)
-  }, 1)
+const areMainFingersExtended = (landmarks: NormalizedLandmark[]) =>
+  isFingerExtended(landmarks, 8, 6) &&
+  isFingerExtended(landmarks, 12, 10) &&
+  isFingerExtended(landmarks, 16, 14) &&
+  isFingerExtended(landmarks, 20, 18)
 
-  return (
-    thumbTip.y < thumbIp.y - 0.006 &&
-    thumbIp.y <= thumbMcp.y + 0.035 &&
-    thumbTip.y < highestOtherPoint + 0.02
-  )
-}
+const isPeaceSignPose = (landmarks: NormalizedLandmark[]) =>
+  isFingerExtended(landmarks, 8, 6) &&
+  isFingerExtended(landmarks, 12, 10) &&
+  areRingPinkyFolded(landmarks) &&
+  distance2d(landmarks[8], landmarks[12]) > 0.025
 
 const isPinkyPointPose = (landmarks: NormalizedLandmark[]) => {
   if (!areIndexMiddleRingFolded(landmarks)) return false
@@ -142,19 +144,51 @@ const isPinkyPointPose = (landmarks: NormalizedLandmark[]) => {
   )
 }
 
-const getPalmY = (landmarks: NormalizedLandmark[]) =>
-  (landmarks[0].y + landmarks[5].y + landmarks[9].y + landmarks[13].y + landmarks[17].y) / 5
+const getPalmY = (landmarks: NormalizedLandmark[]) => {
+  const rawY = (landmarks[0].y + landmarks[5].y + landmarks[9].y + landmarks[13].y + landmarks[17].y) / 5
+  return Math.max(0, Math.min(1, (rawY - ACTIVE_AREA.yMin) / (ACTIVE_AREA.yMax - ACTIVE_AREA.yMin)))
+}
 
 const getIndexPoint = (landmarks: NormalizedLandmark[]): HandGesturePoint => ({
   x: 1 - landmarks[8].x,
   y: landmarks[8].y,
 })
 
-const normalizedToViewport = (point: HandGesturePoint): HandGesturePoint => {
+const ACTIVE_AREA = {
+  width: 0.40,
+  yMin: 0.25,
+  yMax: 0.60,
+}
+
+const normalizedToViewport = (point: HandGesturePoint, handedness?: string): HandGesturePoint => {
   const { width, height } = getViewportSize()
+  
+  // Base offset
+  let xMin = 0.30
+  
+  // MediaPipe considers physical right hand as "Left" when mirrored, 
+  // but to be safe we just check both.
+  // Physical right hand usually has point.x > 0.5 (mirrored image).
+  if (handedness === 'Right' || handedness === 'Left') {
+    if (handedness === 'Right') {
+       // User's physical right hand: naturally rests on the right side of their body
+       // In mirrored coordinates (point.x = 1 - landmark.x), point.x is around 0.65
+       // Center of 0.45 to 0.85 is 0.65
+       xMin = 0.45
+    } else {
+       // User's physical left hand: naturally rests on the left side of their body
+       // In mirrored coordinates, point.x is around 0.35
+       // Center of 0.15 to 0.55 is 0.35
+       xMin = 0.15
+    }
+  }
+
+  const mappedX = (point.x - xMin) / ACTIVE_AREA.width
+  const mappedY = (point.y - ACTIVE_AREA.yMin) / (ACTIVE_AREA.yMax - ACTIVE_AREA.yMin)
+
   return {
-    x: Math.min(Math.max(point.x * width, 0), width),
-    y: Math.min(Math.max(point.y * height, 0), height),
+    x: Math.min(Math.max(mappedX * width, 0), width - 1),
+    y: Math.min(Math.max(mappedY * height, 0), height - 1),
   }
 }
 
@@ -169,15 +203,18 @@ export function useHandGestureTracking({
   const previousIndexRef = useRef<TimedPoint | null>(null)
   const previousCursorRef = useRef<HandGesturePoint | null>(null)
   const previousFistYRef = useRef<number | null>(null)
+  const previousPalmYRef = useRef<number | null>(null)
+  const pointerPositionRef = useRef<HandGesturePoint>({ x: 0.5, y: 0.5 })
   const lastVideoTimeRef = useRef(-1)
   const lastSwipeAtRef = useRef(0)
   const cursorFreezeUntilRef = useRef(0)
   const pinchDownRef = useRef(false)
   const lastPinchAtRef = useRef(0)
-  const thumbsUpDownRef = useRef(false)
-  const lastThumbsUpAtRef = useRef(0)
+  const peaceSignDownRef = useRef(false)
+  const lastPeaceSignAtRef = useRef(0)
   const pinkyPointDownRef = useRef(false)
   const lastPinkyPointAtRef = useRef(0)
+  const poseHoldFramesRef = useRef<{ pose: string; count: number }>({ pose: 'none', count: 0 })
   const activeGestureRef = useRef<HandGestureName>('none')
   const onGestureRef = useRef(onGesture)
 
@@ -223,9 +260,11 @@ export function useHandGestureTracking({
     previousIndexRef.current = null
     previousCursorRef.current = null
     previousFistYRef.current = null
+    previousPalmYRef.current = null
     pinchDownRef.current = false
-    thumbsUpDownRef.current = false
+    peaceSignDownRef.current = false
     pinkyPointDownRef.current = false
+    poseHoldFramesRef.current = { pose: 'none', count: 0 }
     activeGestureRef.current = 'none'
     lastVideoTimeRef.current = -1
   }, [])
@@ -246,9 +285,9 @@ export function useHandGestureTracking({
 
     let cancelled = false
 
-    const processLandmarks = (landmarks: NormalizedLandmark[], timestamp: number) => {
+    const processLandmarks = (landmarks: NormalizedLandmark[], timestamp: number, handedness?: string) => {
       const indexPoint = getIndexPoint(landmarks)
-      const viewportPoint = normalizedToViewport(indexPoint)
+      const viewportPoint = normalizedToViewport(indexPoint, handedness)
       const previousIndex = previousIndexRef.current
       const deltaSeconds =
         previousIndex && timestamp > previousIndex.time
@@ -261,13 +300,15 @@ export function useHandGestureTracking({
           }
         : { x: 0, y: 0 }
       const speed = Math.hypot(velocity.x, velocity.y)
-      const isCursorFrozen = timestamp < cursorFreezeUntilRef.current
+      const pinchDistance = distance2d(landmarks[4], landmarks[8])
+      const isPrePinching = pinchDistance < 0.065
+      const isCursorFrozen = timestamp < cursorFreezeUntilRef.current || isPrePinching
 
       previousIndexRef.current = { ...indexPoint, time: timestamp }
 
       if (!isCursorFrozen) {
         const previousCursor = previousCursorRef.current
-        const alpha = speed <= CURSOR_SLOW_SPEED_THRESHOLD ? CURSOR_LERP_ALPHA : CURSOR_LERP_ALPHA * 0.55
+        const alpha = speed <= CURSOR_SLOW_SPEED_THRESHOLD ? CURSOR_LERP_ALPHA_SLOW : CURSOR_LERP_ALPHA_FAST
         const nextCursor = previousCursor
           ? {
               x: lerp(previousCursor.x, viewportPoint.x, alpha),
@@ -307,23 +348,65 @@ export function useHandGestureTracking({
         timestamp,
       }
 
-      const thumbsUpPose = isThumbsUpPose(landmarks)
-      if (thumbsUpPose) {
-        previousFistYRef.current = null
-        updateActiveGesture('thumbs-up')
+      const peaceSignPose = isPeaceSignPose(landmarks)
+      const pinkyPointPose = isPinkyPointPose(landmarks)
+      const fistPose = areMainFingersFolded(landmarks)
+      const openPalmPose = areMainFingersExtended(landmarks)
+      const isPinching = pinchDistance < PINCH_DISTANCE_THRESHOLD
+      const canSwipe =
+        timestamp - lastSwipeAtRef.current > SWIPE_COOLDOWN_MS &&
+        Math.abs(velocity.x) > SWIPE_SPEED_THRESHOLD &&
+        Math.abs(velocity.x) > Math.abs(velocity.y) * SWIPE_AXIS_DOMINANCE
 
-        if (!thumbsUpDownRef.current && timestamp - lastThumbsUpAtRef.current > THUMBS_UP_COOLDOWN_MS) {
-          thumbsUpDownRef.current = true
-          lastThumbsUpAtRef.current = timestamp
-          emitGesture({ ...commonEvent, type: 'thumbs-up' })
+      let detectedPose = 'cursor'
+
+      if (peaceSignPose) {
+        detectedPose = 'peace-sign'
+      } else if (pinkyPointPose) {
+        detectedPose = 'pinky-point'
+      } else if (fistPose) {
+        detectedPose = 'fist-zoom'
+      } else if (isPinching) {
+        detectedPose = 'pinch'
+      } else if (canSwipe) {
+        detectedPose = 'swipe'
+      } else if (openPalmPose) {
+        detectedPose = 'palm-scroll'
+      }
+
+      if (['peace-sign', 'pinky-point', 'fist-zoom', 'palm-scroll'].includes(detectedPose)) {
+        if (poseHoldFramesRef.current.pose === detectedPose) {
+          poseHoldFramesRef.current.count++
+        } else {
+          poseHoldFramesRef.current = { pose: detectedPose, count: 1 }
+        }
+
+        if (poseHoldFramesRef.current.count < 4) {
+          detectedPose = 'cursor'
+        }
+      } else {
+        poseHoldFramesRef.current = { pose: detectedPose, count: 0 }
+      }
+
+      if (detectedPose !== 'peace-sign') peaceSignDownRef.current = false
+      if (detectedPose !== 'pinky-point') pinkyPointDownRef.current = false
+      if (detectedPose !== 'fist-zoom') previousFistYRef.current = null
+      if (detectedPose !== 'palm-scroll') previousPalmYRef.current = null
+      if (detectedPose !== 'pinch' && pinchDistance > PINCH_RELEASE_DISTANCE) pinchDownRef.current = false
+
+      if (detectedPose === 'peace-sign') {
+        pinchDownRef.current = false
+        updateActiveGesture('peace-sign')
+
+        if (!peaceSignDownRef.current && timestamp - lastPeaceSignAtRef.current > PEACE_SIGN_COOLDOWN_MS) {
+          peaceSignDownRef.current = true
+          lastPeaceSignAtRef.current = timestamp
+          emitGesture({ ...commonEvent, type: 'peace-sign' })
         }
         return
       }
-      thumbsUpDownRef.current = false
 
-      const pinkyPointPose = isPinkyPointPose(landmarks)
-      if (pinkyPointPose) {
-        previousFistYRef.current = null
+      if (detectedPose === 'pinky-point') {
         pinchDownRef.current = false
         updateActiveGesture('pinky-point')
 
@@ -334,33 +417,26 @@ export function useHandGestureTracking({
         }
         return
       }
-      pinkyPointDownRef.current = false
 
-      const fistPose = areMainFingersFolded(landmarks)
-      if (fistPose) {
-        updateActiveGesture('fist-scroll')
+      if (detectedPose === 'fist-zoom') {
+        updateActiveGesture('fist-zoom')
         const palmY = getPalmY(landmarks)
         const previousFistY = previousFistYRef.current
 
         if (previousFistY !== null) {
-          const deltaY = (palmY - previousFistY) * getViewportSize().height * FIST_SCROLL_GAIN
-          if (Math.abs(deltaY) >= FIST_SCROLL_MIN_DELTA) {
-            emitGesture({ ...commonEvent, type: 'fist-scroll', deltaY })
+          const deltaY = (palmY - previousFistY) * getViewportSize().height
+          if (Math.abs(deltaY) >= FIST_ZOOM_MIN_DELTA) {
+            emitGesture({ ...commonEvent, type: 'fist-zoom', deltaY })
+            previousFistYRef.current = palmY
           }
+        } else {
+          previousFistYRef.current = palmY
         }
-
-        previousFistYRef.current = palmY
         pinchDownRef.current = false
         return
       }
-      previousFistYRef.current = null
 
-      const canSwipe =
-        timestamp - lastSwipeAtRef.current > SWIPE_COOLDOWN_MS &&
-        Math.abs(velocity.x) > SWIPE_SPEED_THRESHOLD &&
-        Math.abs(velocity.x) > Math.abs(velocity.y) * SWIPE_AXIS_DOMINANCE
-
-      if (canSwipe) {
+      if (detectedPose === 'swipe') {
         const type = velocity.x > 0 ? 'swipe-right' : 'swipe-left'
         lastSwipeAtRef.current = timestamp
         cursorFreezeUntilRef.current = timestamp + SWIPE_CURSOR_FREEZE_MS
@@ -369,11 +445,8 @@ export function useHandGestureTracking({
         return
       }
 
-      const pinchDistance = distance2d(landmarks[4], landmarks[8])
-      const isPinching = pinchDistance < PINCH_DISTANCE_THRESHOLD
-      if (isPinching) {
+      if (detectedPose === 'pinch') {
         updateActiveGesture('pinch')
-
         if (!pinchDownRef.current && timestamp - lastPinchAtRef.current > PINCH_COOLDOWN_MS) {
           pinchDownRef.current = true
           lastPinchAtRef.current = timestamp
@@ -382,8 +455,31 @@ export function useHandGestureTracking({
         return
       }
 
-      if (pinchDistance > PINCH_RELEASE_DISTANCE) {
-        pinchDownRef.current = false
+      if (detectedPose === 'palm-scroll') {
+        updateActiveGesture('palm-scroll')
+        const palmY = getPalmY(landmarks)
+        let deltaY = 0
+
+        if (palmY < JOYSTICK_DEADZONE_TOP) {
+          // Hand is in the upper zone -> Scroll UP
+          const intensity = Math.pow((JOYSTICK_DEADZONE_TOP - palmY) / JOYSTICK_DEADZONE_TOP, 1.5)
+          deltaY = -JOYSTICK_MAX_SPEED * intensity
+        } else if (palmY > JOYSTICK_DEADZONE_BOTTOM) {
+          // Hand is in the lower zone -> Scroll DOWN
+          const intensity = Math.pow((palmY - JOYSTICK_DEADZONE_BOTTOM) / (1 - JOYSTICK_DEADZONE_BOTTOM), 1.5)
+          deltaY = JOYSTICK_MAX_SPEED * intensity
+        }
+
+        if (deltaY !== 0) {
+          emitGesture({
+            ...commonEvent,
+            type: 'palm-scroll',
+            deltaY,
+          })
+        }
+        
+        previousPalmYRef.current = palmY
+        return
       }
 
       updateActiveGesture('cursor')
@@ -407,13 +503,15 @@ export function useHandGestureTracking({
         const result = landmarker.detectForVideo(video, timestamp)
         const landmarks = result.landmarks[0]
 
+        const handedness = result.handednesses?.[0]?.[0]?.categoryName
         if (landmarks?.length) {
-          processLandmarks(landmarks, timestamp)
+          processLandmarks(landmarks, timestamp, handedness)
         } else {
           previousIndexRef.current = null
           previousFistYRef.current = null
+          previousPalmYRef.current = null
           pinchDownRef.current = false
-          thumbsUpDownRef.current = false
+          peaceSignDownRef.current = false
           pinkyPointDownRef.current = false
           updateActiveGesture('none')
           setState((prev) => ({

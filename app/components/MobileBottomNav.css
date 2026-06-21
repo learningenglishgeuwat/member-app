@@ -156,3 +156,19 @@
     transform: rotate(360deg);
   }
 }
+
+/* -------------------------------------------------------------
+ * TRANSPARENCY WHEN CAMERA FULL PAGE ACTIVE
+ * ------------------------------------------------------------- */
+body.is-camera-full-page .geuwat-mobile-nav-panel {
+  background:
+    linear-gradient(165deg, rgba(18, 13, 35, 0.4), rgba(2, 8, 23, 0.5)),
+    radial-gradient(circle at 18% 12%, rgba(var(--geuwat-mobile-accent-rgb), 0.1), transparent 58%);
+  backdrop-filter: blur(14px);
+}
+
+body.is-camera-full-page .geuwat-mobile-avatar::before {
+  background:
+    linear-gradient(165deg, rgba(2, 8, 23, 0.4), rgba(8, 15, 32, 0.5)),
+    radial-gradient(circle at 35% 18%, rgba(var(--geuwat-mobile-accent-rgb), 0.15), transparent 55%);
+}

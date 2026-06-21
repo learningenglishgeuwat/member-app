@@ -573,7 +573,7 @@ export default function SpeakingGoalDetailPage({
 
       </div>
 
-      <ControlCenter defaultOpen={true}>
+      <ControlCenter defaultOpen={false}>
         <div className="flex flex-col gap-3">
           <PlayStopButton
             isActive={isKeySentencePlaying}

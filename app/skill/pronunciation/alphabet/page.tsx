@@ -239,16 +239,12 @@ const AlphabetPage: React.FC = () => {
   }, [handlePlayLetter]);
 
   useEffect(() => {
-    window.addEventListener('app:gesture:alphabet-prev', actionPrevAlphabet);
-    window.addEventListener('app:gesture:alphabet-next', actionNextAlphabet);
     window.addEventListener('app:gesture:alphabet-audio', actionPlayActiveAlphabet);
     window.addEventListener('actionPrevAlphabet', actionPrevAlphabet);
     window.addEventListener('actionNextAlphabet', actionNextAlphabet);
     window.addEventListener('actionPlayAlphabetAudio', actionPlayActiveAlphabet);
 
     return () => {
-      window.removeEventListener('app:gesture:alphabet-prev', actionPrevAlphabet);
-      window.removeEventListener('app:gesture:alphabet-next', actionNextAlphabet);
       window.removeEventListener('app:gesture:alphabet-audio', actionPlayActiveAlphabet);
       window.removeEventListener('actionPrevAlphabet', actionPrevAlphabet);
       window.removeEventListener('actionNextAlphabet', actionNextAlphabet);

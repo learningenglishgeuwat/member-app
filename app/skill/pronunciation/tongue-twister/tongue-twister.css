@@ -11,6 +11,10 @@
 }
 
 .tt-back {
+  position: sticky;
+  top: 1.25rem;
+  z-index: 50;
+  width: fit-content;
   margin-bottom: 1.7rem;
 }
 
@@ -275,4 +279,9 @@
   .tt-page {
     padding: 1.35rem 0.8rem;
   }
+}
+
+/* Transparent background when camera is full page */
+body.is-camera-full-page .tt-page {
+  background: transparent !important;
 }

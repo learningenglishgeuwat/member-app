@@ -2,10 +2,12 @@
   min-height: 100vh;
   padding: 1.5rem;
   color: #e2e8f0;
-  background:
-    radial-gradient(900px 500px at 10% -20%, rgba(34, 211, 238, 0.12), transparent 60%),
-    radial-gradient(900px 500px at 100% 120%, rgba(16, 185, 129, 0.1), transparent 55%),
-    #020617;
+  background: #000000;
+}
+
+body.is-camera-full-page .grammar-page {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .grammar-page .grammar-shell {

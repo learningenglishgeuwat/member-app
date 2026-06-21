@@ -169,6 +169,43 @@ export default function VocabularyPage() {
     return () => media.removeEventListener('change', update);
   }, []);
 
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(totalTopicPages, prev + 1));
+    setCarouselIndex(0);
+  };
+  const handlePrev = () => {
+    setCurrentPage((prev) => Math.max(1, prev - 1));
+    setCarouselIndex(0);
+  };
+
+  const wheelTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 20) {
+      if (wheelTimeout.current) return;
+      
+      if (e.deltaX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+      
+      wheelTimeout.current = setTimeout(() => {
+        wheelTimeout.current = null;
+      }, 500);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('app:gesture:navigate-next', handleNext);
+    window.addEventListener('app:gesture:navigate-prev', handlePrev);
+
+    return () => {
+      window.removeEventListener('app:gesture:navigate-next', handleNext);
+      window.removeEventListener('app:gesture:navigate-prev', handlePrev);
+    };
+  }, [totalTopicPages]);
+
   const carouselItems = useMemo(
     () =>
       filteredTopics.map((topic) => {
@@ -190,7 +227,7 @@ export default function VocabularyPage() {
   );
 
   return (
-    <main className="vocab-page">
+    <main className="vocab-page" onWheel={handleWheel}>
       <div className="fixed left-4 top-6 z-50">
         <BackButton to="/skill" />
       </div>

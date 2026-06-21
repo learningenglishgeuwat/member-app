@@ -6,6 +6,7 @@ interface GestureState {
   enabled: boolean
   showCursor: boolean
   hapticFeedback: boolean
+  clickMethod: 'pinch' | 'peace' | 'dwell'
 }
 
 export const useGestureState = () => {
@@ -13,6 +14,7 @@ export const useGestureState = () => {
     enabled: false,
     showCursor: false,
     hapticFeedback: true,
+    clickMethod: 'dwell',
   })
 
   const handleToggle = useCallback((event: CustomEvent) => {
@@ -36,11 +38,19 @@ export const useGestureState = () => {
     }))
   }, [])
 
+  const handleClickMethod = useCallback((event: CustomEvent) => {
+    setState((prev) => ({
+      ...prev,
+      clickMethod: event.detail.method,
+    }))
+  }, [])
+
   const handleReset = useCallback(() => {
     setState({
       enabled: false,
       showCursor: false,
       hapticFeedback: true,
+      clickMethod: 'dwell',
     })
   }, [])
 
@@ -48,15 +58,17 @@ export const useGestureState = () => {
     window.addEventListener('gesture:toggle', handleToggle as EventListener)
     window.addEventListener('gesture:showCursor', handleShowCursor as EventListener)
     window.addEventListener('gesture:hapticFeedback', handleHapticFeedback as EventListener)
+    window.addEventListener('gesture:clickMethod', handleClickMethod as EventListener)
     window.addEventListener('gesture:reset', handleReset as EventListener)
 
     return () => {
       window.removeEventListener('gesture:toggle', handleToggle as EventListener)
       window.removeEventListener('gesture:showCursor', handleShowCursor as EventListener)
       window.removeEventListener('gesture:hapticFeedback', handleHapticFeedback as EventListener)
+      window.removeEventListener('gesture:clickMethod', handleClickMethod as EventListener)
       window.removeEventListener('gesture:reset', handleReset as EventListener)
     }
-  }, [handleToggle, handleShowCursor, handleHapticFeedback, handleReset])
+  }, [handleToggle, handleShowCursor, handleHapticFeedback, handleClickMethod, handleReset])
 
   return state
 }

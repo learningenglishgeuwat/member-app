@@ -108,7 +108,7 @@ export default function MobileBottomNav() {
       <button
         type="button"
         onClick={toggleNavVisibility}
-        className={`fixed left-1/2 z-[90] -translate-x-1/2 bg-[#101314] border border-b-0 border-white/10 p-1.5 rounded-t-md text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
+        className={`fixed left-1/2 z-[90] -translate-x-1/2 bg-[#101314]/50 backdrop-blur-md border border-b-0 border-white/10 p-1.5 rounded-t-md text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
           isNavVisible
             ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
             : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'

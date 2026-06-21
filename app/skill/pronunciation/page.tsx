@@ -260,6 +260,14 @@ const Page: React.FC = () => {
     };
   }, [handleNav]);
 
+  // Clean up browser state when entering the pronunciation menu
+  useEffect(() => {
+    document.body.style.removeProperty('zoom');
+    document.body.style.removeProperty('transform');
+    document.documentElement.style.removeProperty('zoom');
+    document.documentElement.style.removeProperty('transform');
+  }, []);
+
   return (
     <div className="pronunciation-layout pronunciation-theme">
       <Background topic={selectedTopic} />
@@ -376,13 +384,13 @@ const Page: React.FC = () => {
               onClick={handleStartLearning}
               disabled={isTopicLocked}
               data-tour="pronunciation-execute-button"
-              className={`relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r ${selectedTopic.color} text-white rounded-lg font-semibold text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${
+              className={`relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r ${selectedTopic.color} text-white rounded-xl font-semibold text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${
                 isTopicLocked 
                   ? 'opacity-50 cursor-not-allowed' 
-                  : 'animate-[pulse_1s_ease-in-out_infinite]'
-              }`}
+                  : 'animate-[pulse_1.5s_ease-in-out_infinite]'
+              } before:absolute before:inset-[-20px] before:content-['']`}
            >
-              <Cpu className="w-7 h-7 sm:w-8 sm:h-8 text-white/70" />
+              <Cpu className="w-10 h-10 sm:w-12 sm:h-12 text-white/90" />
             </button>
             
             <div className="text-center text-[10px] text-slate-500 font-mono hidden sm:block opacity-60">

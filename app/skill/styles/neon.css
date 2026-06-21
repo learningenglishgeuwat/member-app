@@ -184,3 +184,13 @@
     transform: translateY(-1px);
   }
 }
+
+/* Transparent background when camera is full page */
+body.is-camera-full-page .skill-layout > .fixed.inset-0.z-0 {
+  background: transparent !important;
+  display: none !important;
+}
+
+body.is-camera-full-page main {
+  background: transparent !important;
+}

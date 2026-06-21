@@ -285,8 +285,22 @@ export default function VocabularyFlashcardViewer({
       }
     };
 
+    const handleNext = () => {
+      if (canGoNext) goNext();
+    };
+
+    const handlePrev = () => {
+      if (canGoPrevious) goPrevious();
+    };
+
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    window.addEventListener('app:gesture:navigate-next', handleNext);
+    window.addEventListener('app:gesture:navigate-prev', handlePrev);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('app:gesture:navigate-next', handleNext);
+      window.removeEventListener('app:gesture:navigate-prev', handlePrev);
+    };
   }, [canGoNext, canGoPrevious, goNext, goPrevious, isSessionReady, resumePromptOpen]);
 
   const handlePlayCurrentWord = useCallback(async () => {

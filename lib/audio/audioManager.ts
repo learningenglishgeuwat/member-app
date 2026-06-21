@@ -4,7 +4,7 @@ class AudioManager {
 
   init() {
     if (this.ctx) return
-    const Ctx = (window.AudioContext || (window as any).webkitAudioContext) as typeof AudioContext
+    const Ctx = (window.AudioContext || (window as Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext) as typeof AudioContext
     this.ctx = new Ctx()
   }
 
@@ -86,7 +86,7 @@ class AudioManager {
     // Avoid playing UI tap sound while speech synthesis is active (prevents overlap with TTS)
     if (typeof window !== 'undefined') {
       if ('speechSynthesis' in window && window.speechSynthesis.speaking) return
-      if ((window as any).__ttsPlaying) return
+      if ((window as Window & typeof globalThis & { __ttsPlaying?: boolean }).__ttsPlaying) return
     }
     if (!this.enabled) return
     await this.resume()
@@ -94,7 +94,6 @@ class AudioManager {
     const now = ctx.currentTime
 
     try {
-      // eslint-disable-next-line no-console
       console.debug('audioManager: playTap()')
     } catch {}
 
@@ -128,7 +127,6 @@ class AudioManager {
     const ctx = this.ctx!
     const now = ctx.currentTime
     try {
-      // eslint-disable-next-line no-console
       console.debug('audioManager: playKeypress()')
     } catch {}
     // Thinner, shorter typing blip:
@@ -204,7 +202,7 @@ class AudioManager {
 
     source.start(now)
 
-    this.loadingOsc = source as any
+    this.loadingOsc = source
     this.loadingGain = gainNode
     this.loadingFilter = filterNode
 
@@ -308,7 +306,7 @@ class AudioManager {
   async playLaserClick() {
     if (typeof window !== 'undefined') {
       if ('speechSynthesis' in window && window.speechSynthesis.speaking) return
-      if ((window as any).__ttsPlaying) return
+      if ((window as Window & typeof globalThis & { __ttsPlaying?: boolean }).__ttsPlaying) return
     }
     if (!this.enabled) return
     await this.resume()

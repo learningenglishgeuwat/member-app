@@ -3,6 +3,7 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface BackButtonProps {
   to?: string;
@@ -53,11 +54,8 @@ const BackButton: React.FC<BackButtonProps> = ({
     }
   };
 
-  return (
-    <button 
-      onClick={handleClick}
-      className={`flex items-center gap-3 text-cyber-cyan hover:text-cyber-cyan/80 transition-all duration-300 group relative ${className}`}
-    >
+  const content = (
+    <>
       <div className="relative">
         <div className="absolute inset-0 bg-cyber-cyan/20 rounded-full blur-md group-hover:bg-cyber-cyan/40 transition-colors"></div>
         <div className="relative w-10 h-10 rounded-full border border-cyber-cyan/60 flex items-center justify-center bg-black/50 group-hover:border-cyber-cyan group-hover:shadow-[0_0_20px_rgba(190,41,236,0.6)] transition-all duration-300">
@@ -65,6 +63,17 @@ const BackButton: React.FC<BackButtonProps> = ({
         </div>
       </div>
       <span className="font-mono text-sm uppercase tracking-wider">Back</span>
+    </>
+  );
+
+  const buttonClasses = `flex items-center gap-3 text-cyber-cyan hover:text-cyber-cyan/80 transition-all duration-300 group relative ${className}`;
+
+  return (
+    <button 
+      onClick={handleClick}
+      className={buttonClasses}
+    >
+      {content}
     </button>
   );
 };

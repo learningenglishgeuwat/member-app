@@ -160,6 +160,30 @@ export default function VocabularyWordCarousel({
     scrollToIndex(resolveWrappedIndex(index));
   };
 
+  const scrollToIndexWrappedStable = useRef(scrollToIndexWrapped);
+  useEffect(() => {
+    scrollToIndexWrappedStable.current = scrollToIndexWrapped;
+  });
+
+  useEffect(() => {
+    const handleNext = () => {
+      if (items.length <= 1) return;
+      scrollToIndexWrappedStable.current(currentIndexRef.current + 1);
+    };
+    const handlePrev = () => {
+      if (items.length <= 1) return;
+      scrollToIndexWrappedStable.current(currentIndexRef.current - 1);
+    };
+
+    window.addEventListener('app:gesture:navigate-next', handleNext);
+    window.addEventListener('app:gesture:navigate-prev', handlePrev);
+
+    return () => {
+      window.removeEventListener('app:gesture:navigate-next', handleNext);
+      window.removeEventListener('app:gesture:navigate-prev', handlePrev);
+    };
+  }, [items.length]);
+
   return (
     <section className="vocab-word-carousel" aria-label={ariaLabel}>
       {hint ? <p className="vocab-word-carousel-hint">{hint}</p> : null}

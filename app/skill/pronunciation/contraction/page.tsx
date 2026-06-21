@@ -724,24 +724,28 @@ export default function ContractionPage() {
                     label="'S = IS, HAS"
                     onClick={() => void playPillGroup('patternIs', patternIs.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'patternAre'}
                     label="'RE = ARE"
                     onClick={() => void playPillGroup('patternAre', patternAre.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'patternAm'}
                     label="'M = AM"
                     onClick={() => void playPillGroup('patternAm', patternAm.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activeSequence === 'sec1'}
                     label="SENTENCES"
                     onClick={() => playSequence('sec1', sec1Examples.map((item: any, idx: number) => ({ id: `sec1-${idx}`, texts: [item.en, item.contract, item.after] })))}
                     size="sm"
+                    sectionId=""
                   />
                 </>
               )}
@@ -752,24 +756,28 @@ export default function ContractionPage() {
                     label="'LL = WILL"
                     onClick={() => void playPillGroup('patternWill', patternWill.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'patternHave'}
                     label="'VE = HAVE"
                     onClick={() => void playPillGroup('patternHave', patternHave.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'patternWould'}
                     label="'D = WOULD, HAD"
                     onClick={() => void playPillGroup('patternWould', patternWould.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activeSequence === 'sec2'}
                     label="SENTENCES"
                     onClick={() => playSequence('sec2', sec2Examples.map((item: any, idx: number) => ({ id: `sec2-${idx}`, texts: [item.en, item.contract, item.after] })))}
                     size="sm"
+                    sectionId=""
                   />
                 </>
               )}
@@ -780,30 +788,35 @@ export default function ContractionPage() {
                     label="N'T PRESENT"
                     onClick={() => void playPillGroup('negPresent', negPresent.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'negPast'}
                     label="N'T PAST"
                     onClick={() => void playPillGroup('negPast', negPast.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'negModal'}
                     label="N'T MODAL"
                     onClick={() => void playPillGroup('negModal', negModal.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activePillGroup === 'negHave'}
                     label="N'T HAVE"
                     onClick={() => void playPillGroup('negHave', negHave.map(i => i.word))}
                     size="sm"
+                    sectionId=""
                   />
                   <PlayStopButton
                     isActive={activeSequence === 'sec3'}
                     label="SENTENCES"
                     onClick={() => playSequence('sec3', sec3Examples.map((item: any, idx: number) => ({ id: `sec3-${idx}`, texts: [item.en, item.contract, item.after] })))}
                     size="sm"
+                    sectionId=""
                   />
                 </>
               )}
