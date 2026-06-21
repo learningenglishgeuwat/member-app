@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AlertTriangle, Camera, Hand, LoaderCircle, Settings, ZoomIn, ZoomOut, Gamepad2, Info, ChevronRight, ChevronLeft } from 'lucide-react'
 import GlobalSfxButton from './GlobalSfxButton'
