@@ -248,6 +248,7 @@ export default function MediaPipeProvider() {
 
   return (
     <div data-hand-gesture-root>
+      <style dangerouslySetInnerHTML={{ __html: `body { zoom: ${zoomLevel}; }` }} />
       <div
         className={`fixed left-0 top-1/2 -translate-y-1/2 z-[130] transition-transform duration-300 ease-in-out flex shadow-[0_0_20px_rgba(0,0,0,0.8)] ${
           showControlPanel ? 'translate-x-0' : '-translate-x-full'
