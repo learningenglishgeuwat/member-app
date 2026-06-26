@@ -29,11 +29,13 @@
   line-height: 0;
   cursor: pointer;
   border-radius: 999px;
-  transition: transform 140ms ease, box-shadow 160ms ease;
+  transition:
+    transform 140ms ease,
+    box-shadow 160ms ease;
 }
 
 .tg-avatar-button::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -7px;
   border-radius: 999px;
@@ -59,7 +61,9 @@
   /* Default untuk desktop/laptop */
   transform: scale(1.8) translateY(6px);
   user-select: none;
-  transition: filter 180ms ease, opacity 180ms ease;
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease;
 }
 
 .tg-avatar-image--idle {
@@ -74,7 +78,7 @@
 
 .tg-avatar-button.is-navigating::after,
 .tg-panel-avatar-button.is-navigating::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -4px;
   border-radius: 999px;
@@ -105,7 +109,11 @@
   border-radius: var(--tg-radius-lg);
   background:
     linear-gradient(165deg, rgba(18, 13, 35, 0.96), rgba(10, 7, 27, 0.98)),
-    radial-gradient(circle at 18% 12%, rgba(var(--tg-accent-rgb), 0.16), transparent 58%);
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(var(--tg-accent-rgb), 0.16),
+      transparent 58%
+    );
   box-shadow:
     0 18px 34px rgba(0, 0, 0, 0.45),
     0 0 0 1px rgba(var(--tg-accent-rgb), 0.14),
@@ -117,7 +125,7 @@
 }
 
 .tg-panel::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -129,18 +137,26 @@
       transparent 2px,
       transparent 6px
     ),
-    radial-gradient(circle at 30% 20%, rgba(var(--tg-accent-rgb), 0.09), transparent 55%);
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(var(--tg-accent-rgb), 0.09),
+      transparent 55%
+    );
   opacity: 0.35;
   pointer-events: none;
   z-index: -1;
 }
 
 .tg-panel::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   border-radius: calc(var(--tg-radius-lg) + 2px);
-  background: radial-gradient(circle at 20% 10%, rgba(var(--tg-accent-rgb), 0.28), transparent 60%);
+  background: radial-gradient(
+    circle at 20% 10%,
+    rgba(var(--tg-accent-rgb), 0.28),
+    transparent 60%
+  );
   filter: blur(12px);
   opacity: 0.8;
   pointer-events: none;
@@ -169,7 +185,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  transition: transform 140ms ease, box-shadow 160ms ease;
+  transition:
+    transform 140ms ease,
+    box-shadow 160ms ease;
 }
 
 .tg-panel-avatar-button:hover {
@@ -227,7 +245,7 @@
 }
 
 .tg-hide-button::before {
-  content: '⦸';
+  content: "⦸";
   display: inline-block;
   font-size: 14px;
   letter-spacing: 0;
@@ -252,7 +270,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 200ms ease, transform 200ms ease, left 140ms ease;
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease,
+    left 140ms ease;
 }
 
 .tg-mode-outer-container:hover {
@@ -274,7 +295,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: width 140ms ease, border-color 140ms ease, box-shadow 160ms ease;
+  transition:
+    width 140ms ease,
+    border-color 140ms ease,
+    box-shadow 160ms ease;
 }
 
 .tg-mode-outer-container:hover .tg-mode-outer-circle {
@@ -282,7 +306,7 @@
 }
 
 .tg-mode-outer-circle::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -6px 0 -6px -6px; /* Outer ring matches top, left, bottom spacing */
   border-radius: 50px 0 0 50px;
@@ -290,7 +314,9 @@
   border-right: none;
   opacity: 0.82;
   pointer-events: none;
-  transition: inset 180ms ease, opacity 180ms ease;
+  transition:
+    inset 180ms ease,
+    opacity 180ms ease;
 }
 
 .tg-mode-outer-container:hover .tg-mode-outer-circle::before {
@@ -311,7 +337,9 @@
   color: #fff;
   letter-spacing: 0.1em;
   text-shadow: 0 0 8px rgba(var(--tg-accent-rgb), 0.62);
-  transform: rotate(-90deg); /* Rotates the entire word 90 degrees counterclockwise */
+  transform: rotate(
+    -90deg
+  ); /* Rotates the entire word 90 degrees counterclockwise */
   white-space: nowrap;
   user-select: none;
   pointer-events: none;
@@ -331,15 +359,23 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(var(--tg-accent-rgb), 0.2);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(var(--tg-accent-rgb), 0.2);
   z-index: 1300;
   white-space: nowrap;
   animation: fadeInMenu 150ms ease-out forwards;
 }
 
 @keyframes fadeInMenu {
-  from { opacity: 0; transform: translateY(-50%) scale(0.95); }
-  to { opacity: 1; transform: translateY(-50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
 }
 
 .tg-mode-picker-option {
@@ -352,7 +388,9 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  transition: background 150ms ease, color 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
 }
 
 .tg-mode-picker-option:hover {
@@ -363,7 +401,6 @@
   background: rgba(var(--tg-accent-rgb), 0.4);
   color: #fff;
 }
-
 
 .tg-flashcard-picker {
   margin-bottom: 10px;
@@ -384,6 +421,68 @@
   gap: 4px;
 }
 
+.tg-flashcard-custom-select {
+  width: 100%;
+  min-width: 0;
+}
+
+.tg-flashcard-custom-select .custom-select-container {
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+
+.tg-flashcard-custom-select .custom-select-label {
+  font-size: 11px;
+  color: var(--tg-text-muted);
+}
+
+.tg-flashcard-custom-select .custom-select-trigger {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(var(--tg-accent-rgb), 0.28);
+  border-radius: var(--tg-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--tg-text-main);
+  font-size: 12px;
+  min-width: 0;
+}
+
+.tg-flashcard-custom-select .custom-select-trigger:hover {
+  border-color: rgba(var(--tg-accent-rgb), 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tg-flashcard-custom-select .custom-select-trigger.is-open {
+  border-color: rgba(var(--tg-accent-rgb), 0.72);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.tg-flashcard-custom-select .custom-select-menu {
+  background: rgba(10, 5, 26, 0.75);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(var(--tg-accent-rgb), 0.3);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.tg-flashcard-custom-select .custom-select-option {
+  font-size: 12px;
+  padding: 0.45rem 0.65rem;
+}
+
+.tg-flashcard-custom-select .custom-select-option.is-selected {
+  background: rgba(var(--tg-accent-rgb), 0.35);
+}
+
 .tg-flashcard-select {
   width: 100%;
   min-width: 0;
@@ -394,7 +493,9 @@
   font-size: 12px;
   font-weight: 600;
   padding: 8px 10px;
-  transition: border-color 140ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 140ms ease,
+    box-shadow 160ms ease;
 }
 
 .tg-flashcard-select:focus {
@@ -454,7 +555,9 @@
   padding: 9px 10px;
   font-size: 12px;
   outline: none;
-  transition: border-color 140ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 140ms ease,
+    box-shadow 160ms ease;
 }
 
 .tg-input:focus {
@@ -483,7 +586,7 @@
 }
 
 .tg-send-button::before {
-  content: '➤';
+  content: "➤";
   display: inline-block;
   font-size: 16px;
   transform: translateY(-0.5px);
@@ -511,7 +614,7 @@
 }
 
 .tg-reply::before {
-  content: '“';
+  content: "“";
   position: absolute;
   left: 10px;
   top: 6px;
@@ -535,7 +638,7 @@
 }
 
 .tg-reply.is-thinking::after {
-  content: '...';
+  content: "...";
   display: inline-block;
   margin-left: 4px;
   animation: tg-thinking-dots 1s ease-in-out infinite;
@@ -637,7 +740,7 @@
 }
 
 .tg-meta-chip--nav-weak::before {
-  content: '✦';
+  content: "✦";
   margin-right: 8px;
   opacity: 0.88;
   transform: translateY(-0.5px);
@@ -807,6 +910,8 @@
   inset: 0;
   z-index: 1400;
   background: rgba(5, 3, 12, 0.74);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -820,7 +925,11 @@
   border-radius: var(--tg-radius-lg);
   background:
     linear-gradient(165deg, rgba(22, 11, 45, 0.96), rgba(11, 7, 27, 0.97)),
-    radial-gradient(circle at 18% 16%, rgba(var(--tg-accent-rgb), 0.2), transparent 52%);
+    radial-gradient(
+      circle at 18% 16%,
+      rgba(var(--tg-accent-rgb), 0.2),
+      transparent 52%
+    );
   box-shadow:
     0 24px 56px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -828,6 +937,21 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* Simulation when camera full page is active:
+   - overlay tetap blur (memblur kamera di belakang)
+   - shell tetap transparan (kamera terlihat menembus, sudah di-blur oleh overlay) */
+body.is-camera-full-page .tg-sim-overlay {
+  background: rgba(5, 3, 12, 0.45) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+body.is-camera-full-page .tg-sim-shell {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 .tg-sim-header {
@@ -1066,7 +1190,6 @@
   }
 }
 
-
 /* Responsive style for external mode switcher on mobile (Half-Circle Shape) */
 @media (max-width: 768px) {
   .tg-mode-outer-container {
@@ -1112,10 +1235,15 @@
  * TRANSPARENCY WHEN CAMERA FULL PAGE ACTIVE
  * ------------------------------------------------------------- */
 body.is-camera-full-page .tg-panel,
-body.is-camera-full-page .tg-mode-outer-circle {
+body.is-camera-full-page .tg-mode-outer-circle,
+body.is-camera-full-page .tg-mode-picker-menu {
   background:
     linear-gradient(165deg, rgba(18, 13, 35, 0.4), rgba(10, 7, 27, 0.5)),
-    radial-gradient(circle at 18% 12%, rgba(var(--tg-accent-rgb), 0.1), transparent 58%);
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(var(--tg-accent-rgb), 0.1),
+      transparent 58%
+    );
   backdrop-filter: blur(14px);
 }
 

@@ -24,6 +24,12 @@
   --body: var(--font-ui);
 }
 
+body.is-camera-full-page .contraction-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .contraction-page, .contraction-page *, .contraction-page *::before, .contraction-page *::after {
   box-sizing: border-box;
 }

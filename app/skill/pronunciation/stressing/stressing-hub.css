@@ -125,7 +125,4 @@
   background: rgba(17, 10, 7, 0.55);
 }
 
-/* Transparent background when camera is full page */
-body.is-camera-full-page .sh-page {
-  background: transparent !important;
-}
+

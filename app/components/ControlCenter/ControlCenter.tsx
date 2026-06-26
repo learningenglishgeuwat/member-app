@@ -4,6 +4,7 @@ import React, { useState, createContext, useContext } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Gauge, ChevronDown } from 'lucide-react';
 import { getGlobalPlaybackSpeed, setGlobalPlaybackSpeed } from '@/lib/tts/speech';
+import './ControlCenter.css';
 
 interface ControlCenterProps {
   children?: React.ReactNode;

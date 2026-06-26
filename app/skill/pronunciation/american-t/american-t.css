@@ -3,6 +3,12 @@
   font-family: var(--font-ui);
 }
 
+body.is-camera-full-page .at-topic-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .at-recording-anchor {
   right: max(1.5rem, env(safe-area-inset-right));
   bottom: max(1.5rem, env(safe-area-inset-bottom));
@@ -520,6 +526,33 @@
 .at-play-chip-btn--after {
   border-color: rgba(34, 211, 238, 0.5);
   color: #67e8f9;
+}
+
+/* Button "with T" (careful speech) — amber */
+.at-play-chip-btn--witht {
+  border-color: rgba(251, 146, 60, 0.55);
+  color: #fb923c;
+  gap: 0.15rem;
+}
+
+.at-play-chip-btn--witht:hover {
+  border-color: rgba(251, 146, 60, 0.85);
+  color: #fdba74;
+}
+
+.at-play-chip-label-t {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* Wrapper for two TTS buttons side by side */
+.at-example-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
 }
 
 .at-play-chip-icon {

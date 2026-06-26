@@ -6,6 +6,12 @@
   padding: 1.5rem;
 }
 
+body.is-camera-full-page .fsn-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .fsn-shell {
   width: 100%;
   max-width: 96rem;

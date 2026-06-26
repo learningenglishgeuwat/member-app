@@ -6,6 +6,12 @@
   padding: 1.5rem;
 }
 
+body.is-camera-full-page .at-hub-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .at-hub-shell {
   width: 100%;
   max-width: 76rem;

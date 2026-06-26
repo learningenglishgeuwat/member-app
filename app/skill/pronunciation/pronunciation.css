@@ -103,14 +103,3 @@
     --orbit-step: 100px;
   }
 }
-
-/* Make pronunciation background transparent when camera full page is active */
-body.is-camera-full-page .pronunciation-background,
-body.is-camera-full-page .pronunciation-background-inner {
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-body.is-camera-full-page .pronunciation-layout .bg-black {
-  background-color: transparent !important;
-}

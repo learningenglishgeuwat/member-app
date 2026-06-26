@@ -6,48 +6,50 @@
    GLOSSY SWEEP & PREMIUM HOVER LIFT EFFECTS
    ========================================================================== */
 
-.pronunciation-layout.pronunciation-theme :where(
-  .alphabet-quick-spelling-panel,
-  .alphabet-notes-panel,
-  .minimal-card,
-  .stress-block,
-  .stress-prompt-card,
-  .text-pronunciation-practice,
-  .text-pronunciation-prompt,
-  .fs-topic-block
-) {
+.pronunciation-layout.pronunciation-theme
+  :where(
+    .alphabet-quick-spelling-panel,
+    .alphabet-notes-panel,
+    .minimal-card,
+    .stress-block,
+    .stress-prompt-card,
+    .text-pronunciation-practice,
+    .text-pronunciation-prompt,
+    .fs-topic-block
+  ) {
   position: relative;
   overflow: hidden; /* Clips sweep inside rounded borders */
   border: 1px solid rgb(var(--pronun-accent-1-rgb) / 0.38) !important;
-  transition: 
+  transition:
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Glossy Sweep Pseudo-Element */
-.pronunciation-layout.pronunciation-theme :where(
-  .alphabet-quick-spelling-panel,
-  .alphabet-notes-panel,
-  .minimal-card,
-  .stress-block,
-  .stress-prompt-card,
-  .text-pronunciation-practice,
-  .text-pronunciation-prompt,
-  .fs-topic-block
-)::before {
-  content: '';
+.pronunciation-layout.pronunciation-theme
+  :where(
+    .alphabet-quick-spelling-panel,
+    .alphabet-notes-panel,
+    .minimal-card,
+    .stress-block,
+    .stress-prompt-card,
+    .text-pronunciation-practice,
+    .text-pronunciation-prompt,
+    .fs-topic-block
+  )::before {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    90deg, 
-    transparent, 
-    rgb(var(--pronun-accent-2-rgb) / 0.15), 
-    rgba(255, 255, 255, 0.32), 
-    rgb(var(--pronun-accent-2-rgb) / 0.15), 
+    90deg,
+    transparent,
+    rgb(var(--pronun-accent-2-rgb) / 0.15),
+    rgba(255, 255, 255, 0.32),
+    rgb(var(--pronun-accent-2-rgb) / 0.15),
     transparent
   );
   transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -56,41 +58,140 @@
 }
 
 /* Sweep movement on hover */
-.pronunciation-layout.pronunciation-theme :where(
-  .alphabet-quick-spelling-panel,
-  .alphabet-notes-panel,
-  .minimal-card,
-  .stress-block,
-  .stress-prompt-card,
-  .text-pronunciation-practice,
-  .text-pronunciation-prompt,
-  .fs-topic-block
-):hover::before {
+.pronunciation-layout.pronunciation-theme
+  :where(
+    .alphabet-quick-spelling-panel,
+    .alphabet-notes-panel,
+    .minimal-card,
+    .stress-block,
+    .stress-prompt-card,
+    .text-pronunciation-practice,
+    .text-pronunciation-prompt,
+    .fs-topic-block
+  ):hover::before {
   left: 100%;
 }
 
 /* Premium Hover Transitions, Border Glows, Box Shadows, and Inset Highlights */
-.pronunciation-layout.pronunciation-theme :where(
-  .alphabet-quick-spelling-panel,
-  .alphabet-notes-panel,
-  .minimal-card,
-  .stress-block,
-  .stress-prompt-card,
-  .text-pronunciation-practice,
-  .text-pronunciation-prompt,
-  .fs-topic-block
-):hover {
+.pronunciation-layout.pronunciation-theme
+  :where(
+    .alphabet-quick-spelling-panel,
+    .alphabet-notes-panel,
+    .minimal-card,
+    .stress-block,
+    .stress-prompt-card,
+    .text-pronunciation-practice,
+    .text-pronunciation-prompt,
+    .fs-topic-block
+  ):hover {
   transform: translateY(-3px);
   border-color: rgb(var(--pronun-accent-2-rgb) / 0.85) !important;
-  box-shadow: 
+  box-shadow:
     0 16px 32px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgb(var(--pronun-accent-2-rgb) / 0.3) !important;
 }
 
 /* ==========================================================================
    OPTIMASI SPEK KENTANG: MATIKAN BACKDROP BLUR SECARA GLOBAL
+   (Kecuali untuk elemen modal/popup overlay — lihat exception di bawah)
    ========================================================================== */
 [class*="backdrop-blur"] {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* ==========================================================================
+   EXCEPTION: AKTIFKAN BLUR KHUSUS UNTUK MODAL / POPUP OVERLAY
+   Popup perlu blur di belakangnya agar teks lebih mudah dibaca.
+   Gunakan class .modal-overlay pada elemen backdrop popup manapun.
+   ========================================================================== */
+
+/* Class khusus yang bisa ditambahkan ke elemen overlay modal mana saja */
+.modal-overlay,
+.modal-overlay[class*="backdrop-blur"] {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Deteksi otomatis berdasarkan pola umum modal Tailwind di seluruh app:
+   elemen fixed + inset-0 yang juga punya backdrop-blur */
+.fixed.inset-0[class*="backdrop-blur"] {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Overlay modal dengan background gelap semi-transparan (pola paling umum) */
+.fixed.inset-0[class*="bg-black"][class*="backdrop-blur"] {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* ==========================================================================
+   GLOBAL TRANSPARENCY FOR CAMERA FULL PAGE MODE
+   ========================================================================== */
+/* Halaman background transparan */
+body.is-camera-full-page [class*="page"],
+body.is-camera-full-page [class*="background"],
+body.is-camera-full-page [class*="container"],
+body.is-camera-full-page [class*="layout"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Background card transparan */
+body.is-camera-full-page [class*="card"],
+body.is-camera-full-page [class*="panel"],
+body.is-camera-full-page [class*="dropdown"],
+body.is-camera-full-page [class*="select"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Popup/Modal transparency levels when camera full page is active */
+body.is-camera-full-page .bg-black {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+body.is-camera-full-page .bg-black\/70 {
+  background: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.is-camera-full-page .bg-black\/90 {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(14px);
+}
+
+body.is-camera-full-page .bg-black\/50 {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px);
+}
+
+body.is-camera-full-page .bg-black\/40 {
+  background: rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* ==========================================================================
+   EXCEPTION CAMERA FULL PAGE: JAGA POPUP / MODAL TETAP JELAS
+   Saat kamera aktif, overlay popup tidak boleh ikut transparan.
+   ========================================================================== */
+
+/* Override: modal overlay fixed tetap punya blur & gelap meski camera aktif */
+body.is-camera-full-page .fixed.inset-0[class*="backdrop-blur"],
+body.is-camera-full-page .modal-overlay,
+body.is-camera-full-page .symbol-panel-overlay,
+body.is-camera-full-page .symbol-table-modal-overlay,
+body.is-camera-full-page .tg-sim-overlay {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Jaga background overlay modal tetap cukup gelap di mode camera */
+body.is-camera-full-page .fixed.inset-0[class*="bg-black"][class*="backdrop-blur"] {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Catatan: panel popup seperti .symbol-panel dan .tg-sim-shell dibiarkan
+   transparan di camera mode — blur sudah disediakan oleh overlay di belakangnya. */

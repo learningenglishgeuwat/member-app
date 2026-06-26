@@ -26,6 +26,25 @@
   color: var(--vf-text-main);
 }
 
+/* Transparency when camera full page is active */
+body.is-camera-full-page .vf-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .vf-shell {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .vf-page,
+body.is-camera-full-page .vf-page * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .vf-shell {
   width: min(1120px, 100%);
   max-height: min(92vh, 900px);
@@ -301,6 +320,22 @@
     0 0 16px rgba(255, 139, 74, 0.28);
 }
 
+/* Styling chip pada sisi Indonesia (front) — tema ungu/biru */
+.vf-card-face--front .vf-face-kicker,
+.vf-card-face--front .vf-vocab-chip--word {
+  position: relative;
+  z-index: 1;
+}
+
+.vf-card-face--front .vf-vocab-chip--word {
+  border-color: rgba(168, 140, 230, 0.82);
+  background: linear-gradient(160deg, rgba(30, 14, 65, 0.88), rgba(12, 10, 35, 0.92));
+  box-shadow:
+    0 0 0 1px rgba(148, 108, 220, 0.36),
+    0 0 16px rgba(120, 80, 210, 0.24);
+  color: #f0eaff;
+}
+
 .vf-card-face--back .vf-face-ipa {
   text-shadow:
     0 0 10px rgba(255, 170, 108, 0.24),
@@ -357,7 +392,7 @@
 }
 
 .vf-vocab-chip--word {
-  font-size: clamp(1rem, 2.7vw, 1.25rem);
+  font-size: clamp(1.5rem, 4.2vw, 2.7rem);
   font-weight: 600;
 }
 
@@ -393,7 +428,7 @@
 
 .vf-face-ipa {
   font-family: var(--font-ipa);
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   color: var(--color-ipa);
   text-align: center;
 }
@@ -407,7 +442,9 @@
 .vf-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(8, 7, 20, 0.78);
+  background: rgba(8, 7, 20, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;

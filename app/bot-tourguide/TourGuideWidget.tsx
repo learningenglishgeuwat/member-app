@@ -30,6 +30,7 @@ import type {
   TutorialDeviceProfile,
 } from './types';
 import React from 'react';
+import CustomSelect from '@/app/components/CustomSelect/CustomSelect';
 import './tourGuide.css';
 
 const TypewriterText = React.memo(({ text, isThinking }: { text: string; isThinking: boolean }) => {
@@ -1120,22 +1121,16 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
 
             {mode === 'flashcard' ? (
               <div className="tg-flashcard-picker" aria-label="Pilih target flashcard">
-                <label className="tg-flashcard-picker-wrap">
-                  <span className="tg-mode-select-label">Flashcard</span>
-                  <select
-                    id="tg-flashcard-select"
-                    name="tgFlashcardPath"
-                    className="tg-flashcard-select"
-                    value={selectedFlashcardPath}
-                    onChange={(event) => setSelectedFlashcardPath(event.target.value)}
-                  >
-                    {FLASHCARD_QUICK_OPTIONS.map((option) => (
-                      <option key={option.path} value={option.path}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <CustomSelect
+                  label="Flashcard"
+                  options={FLASHCARD_QUICK_OPTIONS.map((option) => ({
+                    value: option.path,
+                    label: option.label,
+                  }))}
+                  value={selectedFlashcardPath}
+                  onChange={setSelectedFlashcardPath}
+                  className="tg-flashcard-custom-select"
+                />
                 <button
                   type="button"
                   className="tg-flashcard-open-button"
@@ -1146,25 +1141,16 @@ export default function TourGuideWidget({ currentPath }: TourGuideWidgetProps) {
               </div>
             ) : mode === 'simulation' ? (
               <div className="tg-flashcard-picker" aria-label="Pilih simulasi">
-                <label className="tg-flashcard-picker-wrap">
-                  <span className="tg-mode-select-label">Simulasi</span>
-                  <select
-                    id="tg-simulation-select"
-                    name="tgSimulationTopic"
-                    className="tg-flashcard-select"
-                    value={selectedSimulationTopic}
-                    onChange={(event) =>
-                      setSelectedSimulationTopic(event.target.value as GuideSimulationTopic)
-                    }
-                    disabled={!SIMULATION_QUICK_OPTIONS.length}
-                  >
-                    {SIMULATION_QUICK_OPTIONS.map((option) => (
-                      <option key={option.topicId} value={option.topicId}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <CustomSelect
+                  label="Simulasi"
+                  options={SIMULATION_QUICK_OPTIONS.map((option) => ({
+                    value: option.topicId,
+                    label: option.label,
+                  }))}
+                  value={selectedSimulationTopic}
+                  onChange={(value) => setSelectedSimulationTopic(value as GuideSimulationTopic)}
+                  className="tg-flashcard-custom-select"
+                />
                 <button
                   type="button"
                   className="tg-flashcard-open-button"

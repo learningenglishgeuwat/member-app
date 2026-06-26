@@ -1,6 +1,6 @@
 .sps-page {
   min-height: 100vh;
-  padding: 2.5rem 1.5rem;
+  padding: 0 1.5rem 2.5rem;
   font-family: var(--font-ui);
   background: #000000;
   color: #f1e8ff;
@@ -8,10 +8,20 @@
 
 body.is-camera-full-page .sps-page {
   background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 .sps-back {
-  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0.75rem 0;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(182, 82, 255, 0.15);
 }
 
 .sps-shell {

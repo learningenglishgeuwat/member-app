@@ -3,6 +3,12 @@
   font-family: var(--font-ui);
 }
 
+body.is-camera-full-page .intonation-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .intonation-page .fs-topic-title,
 .intonation-page .fs-topic-block-title {
   font-family: var(--font-display);

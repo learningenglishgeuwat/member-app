@@ -1,0 +1,110 @@
+/* -------------------------------------------------------------
+ * TRANSPARENCY WHEN CAMERA FULL PAGE ACTIVE
+ * ------------------------------------------------------------- */
+body.is-camera-full-page [data-control-center-root="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page [data-control-center-root="true"] > div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page [data-control-center-root="true"] > button {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page [data-control-center-root="true"] * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Override Tailwind background classes specifically */
+body.is-camera-full-page [data-control-center-root="true"] [class*="bg-"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Override inline styles */
+body.is-camera-full-page [data-control-center-root="true"] [style*="background"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Override select options */
+body.is-camera-full-page [data-control-center-root="true"] option {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Override all possible background properties */
+body.is-camera-full-page [data-control-center-root="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-clip: initial !important;
+  background-origin: initial !important;
+  background-position: initial !important;
+  background-repeat: initial !important;
+  background-size: initial !important;
+  background-attachment: initial !important;
+}
+
+body.is-camera-full-page [data-control-center-root="true"] * {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-clip: initial !important;
+  background-origin: initial !important;
+  background-position: initial !important;
+  background-repeat: initial !important;
+  background-size: initial !important;
+  background-attachment: initial !important;
+}
+
+/* PlayStopButton transparency */
+body.is-camera-full-page button[data-control-center-playstop="true"] {
+  background: transparent !important;
+}
+
+/* IpaVisibilityToggle transparency */
+body.is-camera-full-page input[type="checkbox"].peer:not(:checked) + span.bg-\[\#1a1f24\] {
+  background: transparent !important;
+}
+
+/* MediaPipeProvider control panel transparency */
+body.is-camera-full-page [data-hand-gesture-root] > div > div.bg-\[\#101314\] {
+  background: transparent !important;
+}
+
+body.is-camera-full-page [data-hand-gesture-root] > div > div.bg-\[\#101314\]\/30 {
+  background: transparent !important;
+}
+
+/* MediaPipeProvider settings modal transparency */
+body.is-camera-full-page [data-hand-gesture-root] .bg-black\/85 {
+  background: transparent !important;
+}
+
+body.is-camera-full-page [data-hand-gesture-root] .bg-black\/30 {
+  background: transparent !important;
+}
+
+/* MediaPipeProvider guide modal transparency */
+body.is-camera-full-page [data-hand-gesture-root] .bg-\[\#070b19\]\/90 {
+  background: transparent !important;
+}
+
+body.is-camera-full-page [data-hand-gesture-root] .bg-\[\#070b19\]\/40 {
+  background: transparent !important;
+}
+
+/* GlobalSfxButton transparency */
+body.is-camera-full-page button.bg-\[\#1a1f24\] {
+  background: transparent !important;
+}

@@ -766,8 +766,3 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
-/* Transparent background when camera is full page */
-body.is-camera-full-page .stress-page {
-  background: transparent !important;
-}
