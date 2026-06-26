@@ -910,6 +910,8 @@
   inset: 0;
   z-index: 1400;
   background: rgba(5, 3, 12, 0.74);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -937,21 +939,17 @@
   overflow: hidden;
 }
 
-/* Simulation transparency when camera full page is active */
+/* Simulation when camera full page is active:
+   - overlay tetap blur (memblur kamera di belakang)
+   - shell tetap transparan (kamera terlihat menembus, sudah di-blur oleh overlay) */
 body.is-camera-full-page .tg-sim-overlay {
-  background: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
+  background: rgba(5, 3, 12, 0.45) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
 }
 
 body.is-camera-full-page .tg-sim-shell {
   background: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-body.is-camera-full-page .tg-sim-overlay,
-body.is-camera-full-page .tg-sim-overlay * {
   background-color: transparent !important;
   background-image: none !important;
 }

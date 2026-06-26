@@ -714,7 +714,12 @@ const PhoneticPortal: React.FC = () => {
         )}
 
         {activePortal && (
-          <div className="symbol-panel">
+          <div
+            className="symbol-panel-overlay"
+            onClick={() => setActivePortal(null)}
+            role="presentation"
+          >
+          <div className="symbol-panel" onClick={(e) => e.stopPropagation()}>
             <div className="panel-header">
               <h3 className="panel-title">
                 {activePortal === 'vowel' && 'VOWEL SYMBOLS'}
@@ -814,6 +819,7 @@ const PhoneticPortal: React.FC = () => {
               )}
             </div>
           </div>
+          </div>
         )}
 
         {isAcuanSuaraOpen && (
@@ -850,7 +856,7 @@ const PhoneticPortal: React.FC = () => {
                         <tr>
                           <th>Simbol Fonetik</th>
                           <th>Acuan Suara</th>
-                          <th>Contoh Kata (Formal)</th>
+                          <th>Contoh Kata</th>
                         </tr>
                       </thead>
                       <tbody>

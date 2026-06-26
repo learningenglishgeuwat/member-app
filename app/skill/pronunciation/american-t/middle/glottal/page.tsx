@@ -373,13 +373,24 @@ export default function GlottalPage() {
 
     for (const [index, item] of GLOTTAL_STOP_EXAMPLES.entries()) {
       if (examplesPlayAllTokenRef.current !== token) break;
-      setActiveTtsCardKey(`examples-${item.word}`);
+
+      // 1. Play Before (released /t/) — amber
+      setActiveTtsCardKey(`examples-before-${item.word}`);
       scrollItemIntoView(examplesItemRefs.current[index] ?? null);
       await sleep(120);
       if (examplesPlayAllTokenRef.current !== token) break;
+      await speakReleasedTWord(item.word);
+      if (examplesPlayAllTokenRef.current !== token) break;
+      await sleep(280);
+
+      // 2. Play After (glottal /ʔ/) — cyan
+      if (examplesPlayAllTokenRef.current !== token) break;
+      setActiveTtsCardKey(`examples-${item.word}`);
+      await sleep(80);
+      if (examplesPlayAllTokenRef.current !== token) break;
       await speakGlottalWithAlternateVoice(item.word);
       if (examplesPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(160);
     }
 
     if (examplesPlayAllTokenRef.current === token) {
@@ -401,10 +412,18 @@ export default function GlottalPage() {
       setActiveTtsCardKey(`word-bank-${word}`);
       scrollItemIntoView(wordBankItemRefs.current[index] ?? null);
       await sleep(120);
+
+      // 1. Play Before (released /t/) — amber
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await speakReleasedTWord(word);
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await sleep(280);
+
+      // 2. Play After (glottal /ʔ/) — cyan
       if (wordBankPlayAllTokenRef.current !== token) break;
       await speakGlottalWithAlternateVoice(word);
       if (wordBankPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(160);
     }
 
     if (wordBankPlayAllTokenRef.current === token) {
@@ -576,38 +595,107 @@ export default function GlottalPage() {
                 {GLOTTAL_STOP_EXAMPLES.map((item, index) => (
                   <article
                     key={item.word}
-                    className={`at-example-card ${activeTtsCardKey === `examples-${item.word}` ? 'is-speaking' : ''}`}
+                    className={`at-example-card ${
+                      activeTtsCardKey === `examples-${item.word}` ||
+                      activeTtsCardKey === `examples-before-${item.word}`
+                        ? 'is-speaking'
+                        : ''
+                    }`}
                     ref={(node) => {
                       examplesItemRefs.current[index] = node;
                     }}
                   >
                     <div className="at-example-head">
                       <h3>{renderGlottalTTextHighlight(item.word)}</h3>
-                      <button
-                        type="button"
-                        className="fs-topic-mini-btn at-play-chip-btn"
-                        aria-label={`Putar ${item.word}`}
-                        title="Putar"
-                        onClick={() => void playSingleCardTts(item.word, `examples-${item.word}`)}
-                      >
-                        <span className="at-play-chip-icon" aria-hidden="true" />
-                        <span className="at-visually-hidden">Putar</span>
-                      </button>
                     </div>
                     {showIpa ? (
                       <>
-                        <p className="at-ipa">
-                          <span className="at-ipa-label">General IPA: </span>
-                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
-                        </p>
-                        {item.spoken ? (
-                          <p className="at-ipa">
-                            <span className="at-ipa-label">Natural speech: </span>
-                            {renderAmericanTIpaSymbolHighlight(formatIpaForDisplay(item.spoken), ['ʔ'])}
+                        <div className="at-glottal-bank-ipa-line">
+                          <p className="at-ipa at-glottal-bank-ipa-row at-glottal-bank-ipa-text">
+                            <span className="at-ipa-label">General IPA: </span>
+                            {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                           </p>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar before ${item.word}`}
+                            title="Before (released /t/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-before-${item.word}`,
+                                'before',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar Before</span>
+                          </button>
+                        </div>
+                        {item.spoken ? (
+                          <div className="at-glottal-bank-ipa-line">
+                            <p className="at-ipa at-glottal-bank-ipa-row at-glottal-bank-ipa-text">
+                              <span className="at-ipa-label">Natural speech: </span>
+                              {renderAmericanTIpaSymbolHighlight(formatIpaForDisplay(item.spoken), ['ʔ'])}
+                            </p>
+                            <button
+                              type="button"
+                              className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                              aria-label={`Putar after ${item.word}`}
+                              title="After (glottal /ʔ/)"
+                              onClick={() =>
+                                void playSingleCardTts(
+                                  item.word,
+                                  `examples-${item.word}`,
+                                  'after',
+                                )
+                              }
+                            >
+                              <span className="at-play-chip-icon" aria-hidden="true" />
+                              <span className="at-visually-hidden">Putar After</span>
+                            </button>
+                          </div>
                         ) : null}
                       </>
-                    ) : null}
+                    ) : (
+                      <div className="at-glottal-bank-ipa-line">
+                        <span />
+                        <div className="at-example-btn-group">
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar before ${item.word}`}
+                            title="Before (released /t/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-before-${item.word}`,
+                                'before',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar Before</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                            aria-label={`Putar after ${item.word}`}
+                            title="After (glottal /ʔ/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-${item.word}`,
+                                'after',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar After</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     <p className="at-note">{item.note}</p>
                   </article>
                 ))}

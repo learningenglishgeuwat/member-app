@@ -249,13 +249,24 @@ export default function FlapTPage() {
 
     for (const [index, item] of FLAP_T_EXAMPLES.entries()) {
       if (examplesPlayAllTokenRef.current !== token) break;
-      setActiveTtsCardKey(`examples-${item.word}`);
+
+      // 1. Play BrE (released /t/) — amber
+      setActiveTtsCardKey(`examples-released-${item.word}`);
       scrollItemIntoView(examplesItemRefs.current[index] ?? null);
       await sleep(120);
       if (examplesPlayAllTokenRef.current !== token) break;
-      await speakWordForPlayAll(item.word);
+      await speakWordByVariant(item.word, 'released');
       if (examplesPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(280);
+
+      // 2. Play AmE (flap /d/) — cyan
+      if (examplesPlayAllTokenRef.current !== token) break;
+      setActiveTtsCardKey(`examples-${item.word}`);
+      await sleep(80);
+      if (examplesPlayAllTokenRef.current !== token) break;
+      await speakWordByVariant(item.word, 'flap');
+      if (examplesPlayAllTokenRef.current !== token) break;
+      await sleep(160);
     }
 
     if (examplesPlayAllTokenRef.current === token) {
@@ -277,10 +288,18 @@ export default function FlapTPage() {
       setActiveTtsCardKey(`word-bank-${word}`);
       scrollItemIntoView(wordBankItemRefs.current[index] ?? null);
       await sleep(120);
+
+      // 1. Play BrE (released /t/) — amber
       if (wordBankPlayAllTokenRef.current !== token) break;
-      await speakWordForPlayAll(word);
+      await speakWordByVariant(word, 'released');
       if (wordBankPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(280);
+
+      // 2. Play AmE (flap /d/) — cyan
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await speakWordByVariant(word, 'flap');
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await sleep(160);
     }
 
     if (wordBankPlayAllTokenRef.current === token) {
@@ -446,38 +465,107 @@ export default function FlapTPage() {
                 {FLAP_T_EXAMPLES.map((item, index) => (
                   <article
                     key={item.word}
-                    className={`at-example-card ${activeTtsCardKey === `examples-${item.word}` ? 'is-speaking' : ''}`}
+                    className={`at-example-card ${
+                      activeTtsCardKey === `examples-${item.word}` ||
+                      activeTtsCardKey === `examples-released-${item.word}`
+                        ? 'is-speaking'
+                        : ''
+                    }`}
                     ref={(node) => {
                       examplesItemRefs.current[index] = node;
                     }}
                   >
                     <div className="at-example-head">
                       <h3>{renderAmericanTTextHighlight(item.word)}</h3>
-                      <button
-                        type="button"
-                        className="fs-topic-mini-btn at-play-chip-btn"
-                        aria-label={`Putar ${item.word}`}
-                        title="Putar"
-                        onClick={() => void playSingleCardTts(item.word, `examples-${item.word}`)}
-                      >
-                        <span className="at-play-chip-icon" aria-hidden="true" />
-                        <span className="at-visually-hidden">Putar</span>
-                      </button>
                     </div>
                     {showIpa ? (
                       <>
-                        <p className="at-ipa">
-                          <span className="at-ipa-label">BrE (released /t/): </span>
-                          {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
-                        </p>
-                        {item.spoken ? (
-                          <p className="at-ipa">
-                            <span className="at-ipa-label">AmE (flap /d/): </span>
-                            {renderFlapIpaForLearnerHighlight(item.spoken)}
+                        <div className="at-silent-bank-ipa-line">
+                          <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
+                            <span className="at-ipa-label">BrE (released /t/): </span>
+                            {renderGeneralIpaWithTHighlight(formatIpaForDisplay(item.ipa))}
                           </p>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar BrE ${item.word}`}
+                            title="BrE (released /t/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-released-${item.word}`,
+                                'released',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar BrE</span>
+                          </button>
+                        </div>
+                        {item.spoken ? (
+                          <div className="at-silent-bank-ipa-line">
+                            <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
+                              <span className="at-ipa-label">AmE (flap /d/): </span>
+                              {renderFlapIpaForLearnerHighlight(item.spoken)}
+                            </p>
+                            <button
+                              type="button"
+                              className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                              aria-label={`Putar AmE ${item.word}`}
+                              title="AmE (flap /d/)"
+                              onClick={() =>
+                                void playSingleCardTts(
+                                  item.word,
+                                  `examples-${item.word}`,
+                                  'flap',
+                                )
+                              }
+                            >
+                              <span className="at-play-chip-icon" aria-hidden="true" />
+                              <span className="at-visually-hidden">Putar AmE</span>
+                            </button>
+                          </div>
                         ) : null}
                       </>
-                    ) : null}
+                    ) : (
+                      <div className="at-silent-bank-ipa-line">
+                        <span />
+                        <div className="at-example-btn-group">
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar BrE ${item.word}`}
+                            title="BrE (released /t/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-released-${item.word}`,
+                                'released',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar BrE</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                            aria-label={`Putar AmE ${item.word}`}
+                            title="AmE (flap /d/)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-${item.word}`,
+                                'flap',
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar AmE</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     <p className="at-note">{item.note}</p>
                   </article>
                 ))}

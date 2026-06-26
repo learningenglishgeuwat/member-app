@@ -311,13 +311,24 @@ export default function SilentTMiddlePage() {
 
     for (const [index, item] of SILENT_T_EXAMPLES.entries()) {
       if (examplesPlayAllTokenRef.current !== token) break;
-      setActiveTtsCardKey(`examples-${item.word}`);
+
+      // 1. Play dengan T (careful speech) — amber
+      setActiveTtsCardKey(`examples-witht-${item.word}`);
       scrollItemIntoView(examplesItemRefs.current[index] ?? null);
       await sleep(120);
       if (examplesPlayAllTokenRef.current !== token) break;
+      await speakWordForPlayAll(item.word);
+      if (examplesPlayAllTokenRef.current !== token) break;
+      await sleep(280);
+
+      // 2. Play natural / silent T — cyan
+      if (examplesPlayAllTokenRef.current !== token) break;
+      setActiveTtsCardKey(`examples-${item.word}`);
+      await sleep(80);
+      if (examplesPlayAllTokenRef.current !== token) break;
       await speakWordForPlayAll(getSilentTSpeechText(item.word));
       if (examplesPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(160);
     }
 
     if (examplesPlayAllTokenRef.current === token) {
@@ -339,10 +350,18 @@ export default function SilentTMiddlePage() {
       setActiveTtsCardKey(`word-bank-${word}`);
       scrollItemIntoView(wordBankItemRefs.current[index] ?? null);
       await sleep(120);
+
+      // 1. Play dengan T (careful speech) — Before
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await speakWordForPlayAll(word);
+      if (wordBankPlayAllTokenRef.current !== token) break;
+      await sleep(280);
+
+      // 2. Play natural / silent T — After
       if (wordBankPlayAllTokenRef.current !== token) break;
       await speakWordForPlayAll(getSilentTSpeechText(word));
       if (wordBankPlayAllTokenRef.current !== token) break;
-      await sleep(140);
+      await sleep(160);
     }
 
     if (wordBankPlayAllTokenRef.current === token) {
@@ -502,42 +521,102 @@ export default function SilentTMiddlePage() {
                 {SILENT_T_EXAMPLES.map((item, index) => (
                   <article
                     key={item.word}
-                    className={`at-example-card ${activeTtsCardKey === `examples-${item.word}` ? 'is-speaking' : ''}`}
+                    className={`at-example-card ${
+                      activeTtsCardKey === `examples-${item.word}` ||
+                      activeTtsCardKey === `examples-witht-${item.word}`
+                        ? 'is-speaking'
+                        : ''
+                    }`}
                     ref={(node) => {
                       examplesItemRefs.current[index] = node;
                     }}
                   >
                     <div className="at-example-head">
                       <h3>{renderSilentTTextHighlight(item.word)}</h3>
-                      <button
-                        type="button"
-                        className="fs-topic-mini-btn at-play-chip-btn"
-                        aria-label={`Putar ${item.word}`}
-                        title="Putar"
-                        onClick={() =>
-                          void playSingleCardTts(
-                            getSilentTSpeechText(item.word),
-                            `examples-${item.word}`,
-                          )
-                        }
-                      >
-                        <span className="at-play-chip-icon" aria-hidden="true" />
-                        <span className="at-visually-hidden">Putar</span>
-                      </button>
                     </div>
                     {showIpa ? (
                       <>
-                        <p className="at-ipa">
-                          {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
-                        </p>
-                        {item.spoken ? (
-                          <p className="at-ipa">
-                            <span className="at-ipa-label">Natural speech: </span>
-                            {formatIpaForDisplay(item.spoken)}
+                        <div className="at-silent-bank-ipa-line">
+                          <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
+                            {renderSilentTIpaHighlight(formatIpaForDisplay(item.ipa))}
                           </p>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar ${item.word} dengan T`}
+                            title="Dengan T (careful speech)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-witht-${item.word}`,
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar dengan T</span>
+                          </button>
+                        </div>
+                        {item.spoken ? (
+                          <div className="at-silent-bank-ipa-line">
+                            <p className="at-ipa at-silent-bank-ipa-row at-silent-bank-ipa-text">
+                              <span className="at-ipa-label">Natural speech: </span>
+                              {formatIpaForDisplay(item.spoken)}
+                            </p>
+                            <button
+                              type="button"
+                              className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                              aria-label={`Putar ${item.word} natural`}
+                              title="Natural speech (silent t)"
+                              onClick={() =>
+                                void playSingleCardTts(
+                                  getSilentTSpeechText(item.word),
+                                  `examples-${item.word}`,
+                                )
+                              }
+                            >
+                              <span className="at-play-chip-icon" aria-hidden="true" />
+                              <span className="at-visually-hidden">Putar natural</span>
+                            </button>
+                          </div>
                         ) : null}
                       </>
-                    ) : null}
+                    ) : (
+                      <div className="at-silent-bank-ipa-line">
+                        <span />
+                        <div className="at-example-btn-group">
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--before"
+                            aria-label={`Putar ${item.word} dengan T`}
+                            title="Dengan T (careful speech)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                item.word,
+                                `examples-witht-${item.word}`,
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar dengan T</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="fs-topic-mini-btn at-play-chip-btn at-play-chip-btn--after"
+                            aria-label={`Putar ${item.word} natural`}
+                            title="Natural speech (silent t)"
+                            onClick={() =>
+                              void playSingleCardTts(
+                                getSilentTSpeechText(item.word),
+                                `examples-${item.word}`,
+                              )
+                            }
+                          >
+                            <span className="at-play-chip-icon" aria-hidden="true" />
+                            <span className="at-visually-hidden">Putar natural</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     <p className="at-note">{item.note}</p>
                   </article>
                 ))}

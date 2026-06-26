@@ -143,7 +143,6 @@ export default function TongueTwisterPage() {
         handleStopSpeak();
         setSelectedId(nextId);
       }
-      setDropdownOpen(false);
     },
     [handleStopSpeak, selectedId],
   );
@@ -154,7 +153,6 @@ export default function TongueTwisterPage() {
         handleStopSpeak();
         setSelectedFocus(nextFocus);
       }
-      setFocusDropdownOpen(false);
     },
     [handleStopSpeak, selectedFocus],
   );

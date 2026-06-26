@@ -446,18 +446,17 @@ export default function VocabularyFlashcardViewer({
             <span className={`vf-card-inner ${isFlipped ? 'is-flipped' : ''}`}>
               <span className="vf-card-face vf-card-face--front">
                 <span className="vf-face-kicker">Indonesia</span>
-                <span className="vf-face-main">{currentCard.meaning}</span>
                 <button
                   type="button"
-                  className={`vf-vocab-chip vf-vocab-chip--icon-only ${isSpeaking ? 'is-speaking' : ''}`}
+                  className={`vf-vocab-chip vf-vocab-chip--word ${isSpeaking ? 'is-speaking' : ''}`}
                   onClick={(event) => {
                     event.stopPropagation();
                     void handlePlayCurrentWord();
                   }}
-                  aria-label="Putar pengucapan kata English"
+                  aria-label={`Putar pengucapan ${currentCard.meaning}`}
                   title="Putar"
                 >
-                  <span className="vf-vocab-chip-icon" aria-hidden="true" />
+                  <span>{currentCard.meaning}</span>
                 </button>
                 <span className="vf-face-note">Tap kartu untuk lihat English + IPA</span>
               </span>

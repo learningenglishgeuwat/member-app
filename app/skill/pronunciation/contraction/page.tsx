@@ -592,7 +592,7 @@ export default function ContractionPage() {
     {
       word: "Imma",
       full: "I'm going to",
-      ipa: "/ˈɪmə/",
+      ipa: "/ˈaɪmə/",
       id: "aku mau / aku akan",
     },
   ];
@@ -633,8 +633,8 @@ export default function ContractionPage() {
       formalTarget: "I'm going to",
       contract: "Imma",
       informal: "Imma do it now",
-      ipaContract: "/ˈɪmə/",
-      ipa: "/ˈɪmə duː ɪt naʊ/",
+      ipaContract: "/ˈaɪmə/",
+      ipa: "/ˈaɪmə duː ɪt naʊ/",
       ipaEn: "/aɪm ˈɡoʊɪŋ tuː duː ɪt naʊ/",
       ipaEnTarget: "aɪm ˈɡoʊɪŋ tuː",
     },
