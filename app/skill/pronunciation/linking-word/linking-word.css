@@ -6,6 +6,12 @@
   min-height: 100vh;
 }
 
+body.is-camera-full-page .linking-word-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 /* Scrollbar hide for mobile navigation */
 .no-scrollbar-mobile::-webkit-scrollbar {
   display: none;

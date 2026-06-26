@@ -6,6 +6,12 @@
   padding: 1.5rem;
 }
 
+body.is-camera-full-page .fs-topic-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .fs-topic-shell {
   width: 100%;
   max-width: 72rem;

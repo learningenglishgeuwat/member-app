@@ -14,6 +14,19 @@
 body.is-camera-full-page .symbol-detail-container {
   background: transparent !important;
   background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .symbol-detail-container,
+body.is-camera-full-page .symbol-detail-container * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Override Tailwind background classes */
+body.is-camera-full-page .symbol-detail-container [class*="bg-"] {
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 /* Guard: prevent global --font-size-ipa from shrinking the large symbol inside the circular HUD
@@ -459,10 +472,30 @@ body.is-camera-full-page .symbol-detail-container {
 .symbol-detail-container .symbol-detail-collapsible-panel:hover {
   transform: translateY(-3px);
   border-color: rgb(var(--panel-glow-rgb, 255, 255, 255)) !important;
-  box-shadow: 
+  box-shadow:
     0 22px 45px rgba(0, 0, 0, 0.48),
     0 0 0 1px rgba(var(--panel-glow-rgb, 255, 255, 255), 0.3),
     0 0 45px rgba(var(--panel-glow-rgb, 255, 255, 255), 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 0 15px rgba(var(--panel-glow-rgb, 255, 255, 255), 0.15) !important;
+}
+
+/* ==========================================================================
+   TRANSPARENCY WHEN CAMERA FULL PAGE ACTIVE - OVERRIDE ALL
+   ========================================================================== */
+body.is-camera-full-page .symbol-detail-container {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .symbol-detail-container,
+body.is-camera-full-page .symbol-detail-container * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .symbol-detail-container [class*="bg-"] {
+  background-color: transparent !important;
+  background-image: none !important;
 }

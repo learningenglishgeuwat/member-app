@@ -94,3 +94,48 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* ==========================================================================
+   GLOBAL TRANSPARENCY FOR CAMERA FULL PAGE MODE
+   ========================================================================== */
+/* Halaman background transparan */
+body.is-camera-full-page [class*="page"],
+body.is-camera-full-page [class*="background"],
+body.is-camera-full-page [class*="container"],
+body.is-camera-full-page [class*="layout"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Background card transparan */
+body.is-camera-full-page [class*="card"],
+body.is-camera-full-page [class*="panel"],
+body.is-camera-full-page [class*="dropdown"],
+body.is-camera-full-page [class*="select"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Popup/Modal transparency levels when camera full page is active */
+body.is-camera-full-page .bg-black {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+body.is-camera-full-page .bg-black\/70 {
+  background: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.is-camera-full-page .bg-black\/90 {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(14px);
+}
+
+body.is-camera-full-page .bg-black\/50 {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px);
+}
+
+body.is-camera-full-page .bg-black\/40 {
+  background: rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(4px);
+}

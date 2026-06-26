@@ -7,6 +7,12 @@
   position: relative;
 }
 
+body.is-camera-full-page .text-pronunciation-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .text-pronunciation-layout .back-button-fixed {
   position: fixed !important;
   top: max(1rem, env(safe-area-inset-top)) !important;

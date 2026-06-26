@@ -22,12 +22,6 @@
   background-color: #000000;
 }
 
-body.is-camera-full-page .futuristic-portal-container,
-body.is-camera-full-page .pronunciation-layout.futuristic-portal-container {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
 /* Reset only within the portal container */
 .futuristic-portal-container * {
   margin: 0;

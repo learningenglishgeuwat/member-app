@@ -6,6 +6,12 @@
   padding: 1.5rem;
 }
 
+body.is-camera-full-page .rt-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .rt-shell {
   width: 100%;
   max-width: 78rem;
@@ -49,88 +55,47 @@
   font-family: var(--font-display);
 }
 
-.rt-dropdown {
-  position: relative;
+/* ── CustomSelect wrapper untuk reading text ──────────────────────────────── */
+.rt-select-wrap {
   max-width: 44rem;
-}
-
-.rt-select {
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.8rem 0.9rem;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.rt-custom-select {
+  width: 100%;
+}
+
+.rt-custom-select .custom-select-container {
+  width: 100%;
+}
+
+.rt-custom-select .custom-select-trigger {
+  width: 100%;
+  min-width: 0;
+  padding: 0.75rem 0.9rem;
+  border-color: rgba(100, 116, 139, 0.4);
   border-radius: 0.85rem;
-  border: 1px solid rgba(100, 116, 139, 0.4);
-  background: rgba(0, 0, 0, 0.75);
-  color: inherit;
-  cursor: pointer;
-  box-shadow:
-    inset 0 1px 0 rgba(224, 231, 255, 0.08),
-    0 14px 28px rgba(0, 0, 0, 0.35);
-}
-
-.rt-select:hover {
-  border-color: rgba(100, 116, 139, 0.6);
-}
-
-.rt-select-text {
+  font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  text-align: left;
   font-family: var(--font-display);
 }
 
-.rt-caret {
-  width: 0.6rem;
-  height: 0.6rem;
-  border-right: 2px solid rgba(224, 231, 255, 0.75);
-  border-bottom: 2px solid rgba(224, 231, 255, 0.75);
-  transform: rotate(45deg);
-  transition: transform 160ms ease;
-  flex: 0 0 auto;
+.rt-custom-select .custom-select-trigger:hover {
+  border-color: rgba(100, 116, 139, 0.65);
 }
 
-.rt-caret.is-open {
-  transform: rotate(225deg);
+.rt-custom-select .custom-select-trigger.is-open {
+  border-color: rgba(6, 182, 212, 0.55);
 }
 
-.rt-dropdown-list {
-  position: absolute;
-  z-index: 50;
-  top: calc(100% + 0.55rem);
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
-  border-radius: 0.85rem;
-  border: 1px solid rgba(100, 116, 139, 0.35);
-  background: rgba(0, 0, 0, 0.95);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
-  max-height: min(18rem, 52vh);
-  overflow: auto;
+.rt-custom-select .custom-select-option.is-selected {
+  background: rgba(71, 85, 105, 0.28);
+  color: #fff;
 }
 
-.rt-dropdown-item {
-  width: 100%;
-  text-align: left;
-  padding: 0.7rem 0.75rem;
-  border-radius: 0.7rem;
-  border: 0;
-  background: transparent;
-  color: rgba(224, 231, 255, 0.9);
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.rt-dropdown-item:hover {
-  background: rgba(71, 85, 105, 0.16);
-}
-
-.rt-dropdown-item.is-active {
-  background: rgba(71, 85, 105, 0.25);
-  color: #ffffff;
-}
 
 .rt-card {
   margin-top: 0.9rem;

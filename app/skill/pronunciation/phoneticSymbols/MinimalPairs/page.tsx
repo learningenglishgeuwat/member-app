@@ -9,6 +9,7 @@ import BackButton from '../../../components/BackButton';
 import Sidebar from '../../../components/skillSidebar/SkillSidebar';
 import ButtonSavedProgress from '../../../components/buttonSavedProgress';
 import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/components';
+import CustomSelect from '../../components/CustomSelect';
 import { categoryLabelMap, minimalPairCategories } from './data/index';
 import { allWordExamples } from '../data/wordExamples/wordExamples';
 import { useMinimalPairs } from './hooks/useMinimalPairs';
@@ -369,38 +370,32 @@ const MinimalPairsPage: React.FC = () => {
         </header>
 
         <section className="minimal-controls">
-          <label className="minimal-control">
+          <div className="minimal-control">
             <span>Category</span>
-            <select
-              id="minimal-pairs-category"
-              name="minimalPairsCategory"
+            <CustomSelect
               value={selectedCategory}
-              onChange={(event) => handleCategoryChange(event.target.value as MinimalPairCategory)}
-            >
-              {minimalPairCategories.map((category) => (
-                <option key={category} value={category}>
-                  {categoryLabelMap[category]}
-                </option>
-              ))}
-            </select>
-          </label>
+              onChange={(val) => handleCategoryChange(val as MinimalPairCategory)}
+              options={minimalPairCategories.map((category) => ({
+                value: category,
+                label: categoryLabelMap[category],
+              }))}
+              placeholder="Pilih kategori..."
+            />
+          </div>
 
-          <label className="minimal-control">
+          <div className="minimal-control">
             <span>Pair</span>
-            <select
-              id="minimal-pairs-pair"
-              name="minimalPairsPair"
+            <CustomSelect
               value={selectedPairId}
-              onChange={(event) => handlePairChange(event.target.value)}
+              onChange={(val) => handlePairChange(val)}
+              options={pairsInCategory.map((pair) => ({
+                value: pair.id,
+                label: formatMinimalPairLabel(pair.pairLabel),
+              }))}
               disabled={isCategoryLoading}
-            >
-              {pairsInCategory.map((pair) => (
-                <option key={pair.id} value={pair.id}>
-                  {formatMinimalPairLabel(pair.pairLabel)}
-                </option>
-              ))}
-            </select>
-          </label>
+              placeholder="Pilih pair..."
+            />
+          </div>
 
           </section>
 

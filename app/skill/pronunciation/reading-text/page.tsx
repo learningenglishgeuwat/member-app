@@ -5,11 +5,11 @@ import dynamic from 'next/dynamic';
 import { Play, Square } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
-
 import { ControlCenter } from '@/app/components';
 import { primeBestEnglishVoice } from '../final-sound-new/tts-utils';
 import { createUtterance, stopSpeech } from '@/lib/tts/speech';
 import { READING_TEXT_MATERIALS, type ReadingTextMaterial } from './data/readingTexts';
+import CustomSelect from '@/app/components/CustomSelect/CustomSelect';
 import './reading-text.css';
 
 const RecordingControlsButton = dynamic(() => import('../../components/RecordingControlsButton'), {
@@ -54,12 +54,10 @@ const stripInlineCodeMarkers = (text: string) => text.replace(/\$([^$]+)\$/g, '$
 export default function ReadingTextForPracticePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string>(READING_TEXT_MATERIALS[0]?.id ?? '');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>('origin');
   const [activeSpeechMode, setActiveSpeechMode] = useState<'all' | 'single' | null>(null);
   const [activeParagraphKey, setActiveParagraphKey] = useState<string | null>(null);
   
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const speechTokenRef = useRef(0);
 
   const selectedMaterial = useMemo<ReadingTextMaterial>(() => {
@@ -208,27 +206,7 @@ export default function ReadingTextForPracticePage() {
   const handleSelect = useCallback((nextId: string) => {
     stopAllSpeech();
     setSelectedId(nextId);
-    setDropdownOpen(false);
   }, [stopAllSpeech]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const outside = dropdownRef.current ? !dropdownRef.current.contains(target) : true;
-      if (outside) setDropdownOpen(false);
-    };
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setDropdownOpen(false);
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscape);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -258,37 +236,14 @@ export default function ReadingTextForPracticePage() {
 
         </header>
 
-        <label className="rt-label" htmlFor="rt-select">
-          Pilih Text
-        </label>
-        <div className="rt-dropdown" ref={dropdownRef}>
-          <button
-            id="rt-select"
-            type="button"
-            className="rt-select"
-            aria-haspopup="listbox"
-            aria-expanded={dropdownOpen}
-            onClick={() => setDropdownOpen((prev) => !prev)}
-          >
-            <span className="rt-select-text">{selectedMaterial?.title ?? 'Select'}</span>
-            <span className={`rt-caret ${dropdownOpen ? 'is-open' : ''}`} aria-hidden="true" />
-          </button>
-
-          {dropdownOpen ? (
-            <ul className="rt-dropdown-list" role="listbox" aria-labelledby="rt-select">
-              {READING_TEXT_MATERIALS.map((item) => (
-                <li key={item.id} role="option" aria-selected={item.id === selectedId}>
-                  <button
-                    type="button"
-                    className={`rt-dropdown-item ${item.id === selectedId ? 'is-active' : ''}`}
-                    onClick={() => handleSelect(item.id)}
-                  >
-                    {item.title}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+        <div className="rt-select-wrap">
+          <label className="rt-label">Pilih Text</label>
+          <CustomSelect
+            value={selectedId}
+            onChange={handleSelect}
+            options={READING_TEXT_MATERIALS.map((item) => ({ value: item.id, label: item.title }))}
+            className="rt-custom-select"
+          />
         </div>
 
         <article className="rt-card" aria-label="Reading text">

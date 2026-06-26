@@ -3,6 +3,12 @@
   font-family: var(--font-ui);
 }
 
+body.is-camera-full-page .at-topic-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .at-recording-anchor {
   right: max(1.5rem, env(safe-area-inset-right));
   bottom: max(1.5rem, env(safe-area-inset-bottom));

@@ -26,6 +26,25 @@
   color: var(--vf-text-main);
 }
 
+/* Transparency when camera full page is active */
+body.is-camera-full-page .vf-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .vf-shell {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.is-camera-full-page .vf-page,
+body.is-camera-full-page .vf-page * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 .vf-shell {
   width: min(1120px, 100%);
   max-height: min(92vh, 900px);

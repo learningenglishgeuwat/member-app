@@ -8,6 +8,8 @@
 
 body.is-camera-full-page .sps-page {
   background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 .sps-back {

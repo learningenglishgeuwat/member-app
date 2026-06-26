@@ -7,18 +7,15 @@ import { ControlCenter, PlayStopButton, IpaVisibilityToggle } from '@/app/compon
 import { TONGUE_TWISTERS } from './data/tongueTwisters';
 import { createUtterance, isSpeechSynthesisSupported, stopSpeech, waitForVoices } from '@/lib/tts/speech';
 import { Highlight } from '../reading-text/tongueTwister/components/Highlight';
+import CustomSelect from '@/app/components/CustomSelect/CustomSelect';
 import './tongue-twister.css';
 
 export default function TongueTwisterPage() {
   const [selectedFocus, setSelectedFocus] = useState<string>('all');
   const [selectedId, setSelectedId] = useState<string>(TONGUE_TWISTERS[0].id);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [focusDropdownOpen, setFocusDropdownOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const focusDropdownRef = useRef<HTMLDivElement | null>(null);
   const speakSessionRef = useRef(0);
   const lockedPeterVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
@@ -63,30 +60,14 @@ export default function TongueTwisterPage() {
   );
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const outsideTwister = dropdownRef.current ? !dropdownRef.current.contains(target) : true;
-      const outsideFocus = focusDropdownRef.current ? !focusDropdownRef.current.contains(target) : true;
-      if (outsideTwister) {
-        setDropdownOpen(false);
-      }
-      if (outsideFocus) {
-        setFocusDropdownOpen(false);
-      }
-    };
-
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setDropdownOpen(false);
-        setFocusDropdownOpen(false);
+        // CustomSelect handles its own Escape
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
     void waitForVoices();
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
       stopSpeech();
     };
@@ -228,84 +209,29 @@ export default function TongueTwisterPage() {
           </p>
         </header>
 
-        <label className="tt-label" htmlFor="tt-focus-select">
-          Focus Sound
-        </label>
-        <div className="tt-dropdown" ref={focusDropdownRef}>
-          <button
-            id="tt-focus-select"
-            type="button"
-            className="tt-select"
-            aria-haspopup="listbox"
-            aria-expanded={focusDropdownOpen}
-            onClick={() => {
-              setFocusDropdownOpen((prev) => !prev);
-              setDropdownOpen(false);
-            }}
-          >
-            <span className="tt-select-text">
-              {selectedFocus === 'all' ? 'All Focus Sounds' : selectedFocus}
-            </span>
-            <span className={`tt-caret ${focusDropdownOpen ? 'is-open' : ''}`} aria-hidden="true" />
-          </button>
+        <div className="tt-selects-row">
+          <div className="tt-select-group">
+            <label className="tt-label">Focus Sound</label>
+            <CustomSelect
+              value={selectedFocus}
+              onChange={(val) => handleSelectFocus(val)}
+              options={[
+                { value: 'all', label: 'All Focus Sounds' },
+                ...focusOptions.map((f) => ({ value: f, label: f })),
+              ]}
+              className="tt-custom-select"
+            />
+          </div>
 
-          {focusDropdownOpen ? (
-            <ul className="tt-dropdown-list" role="listbox" aria-labelledby="tt-focus-select">
-              <li role="option" aria-selected={selectedFocus === 'all'}>
-                <button
-                  type="button"
-                  className={`tt-dropdown-item ${selectedFocus === 'all' ? 'is-active' : ''}`}
-                  onClick={() => handleSelectFocus('all')}
-                >
-                  All Focus Sounds
-                </button>
-              </li>
-              {focusOptions.map((focus) => (
-                <li key={focus} role="option" aria-selected={focus === selectedFocus}>
-                  <button
-                    type="button"
-                    className={`tt-dropdown-item ${focus === selectedFocus ? 'is-active' : ''}`}
-                    onClick={() => handleSelectFocus(focus)}
-                  >
-                    {focus}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-
-        <label className="tt-label" htmlFor="tt-select">
-          Pilih Tongue Twister
-        </label>
-        <div className="tt-dropdown" ref={dropdownRef}>
-          <button
-            id="tt-select"
-            type="button"
-            className="tt-select"
-            aria-haspopup="listbox"
-            aria-expanded={dropdownOpen}
-            onClick={() => setDropdownOpen((prev) => !prev)}
-          >
-            <span className="tt-select-text">{activeTwister.label}</span>
-            <span className={`tt-caret ${dropdownOpen ? 'is-open' : ''}`} aria-hidden="true" />
-          </button>
-
-          {dropdownOpen ? (
-            <ul className="tt-dropdown-list" role="listbox" aria-labelledby="tt-select">
-              {filteredTwisters.map((item) => (
-                <li key={item.id} role="option" aria-selected={item.id === selectedId}>
-                  <button
-                    type="button"
-                    className={`tt-dropdown-item ${item.id === selectedId ? 'is-active' : ''}`}
-                    onClick={() => handleSelectTwister(item.id)}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          <div className="tt-select-group">
+            <label className="tt-label">Pilih Tongue Twister</label>
+            <CustomSelect
+              value={selectedId}
+              onChange={(val) => handleSelectTwister(val)}
+              options={filteredTwisters.map((item) => ({ value: item.id, label: item.label }))}
+              className="tt-custom-select"
+            />
+          </div>
         </div>
 
         <article className="tt-card">

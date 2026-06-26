@@ -9,11 +9,6 @@
   background: #000000;
 }
 
-body.is-camera-full-page .grammar-resource-page {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
 .grammar-resource-page::-webkit-scrollbar,
 .grammar-resource-page *::-webkit-scrollbar {
   width: 0;
