@@ -260,7 +260,7 @@ body.is-camera-full-page .contraction-page {
 /* ─── PATTERN GRID ──────────────────────────────── */
 .contraction-page .pattern-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -515,7 +515,7 @@ body.is-camera-full-page .contraction-page {
 /* ─── INFORMAL SPECIAL ──────────────────────────── */
 .contraction-page .informal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -636,6 +636,6 @@ body.is-camera-full-page .contraction-page {
   .contraction-page .hero { padding: 2rem 1rem 1.5rem; }
   .contraction-page .ex-table td { padding: 8px 6px; }
   .contraction-page .td-ipa { display: none; }
-  .contraction-page .pattern-grid { grid-template-columns: 1fr 1fr; }
-  .contraction-page .neg-cols { grid-template-columns: 1fr 1fr; }
+  .contraction-page .pattern-grid { grid-template-columns: 1fr; }
+  .contraction-page .neg-cols { grid-template-columns: 1fr; }
 }

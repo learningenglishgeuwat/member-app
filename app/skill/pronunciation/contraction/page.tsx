@@ -36,12 +36,16 @@ const Highlight = ({ text, target, active = true }: { text?: string; target?: st
 };
 
 type PatternItem = {
+  before?: string;
+  beforeIpa?: string;
   word: string;
   ipa: string;
   suffix?: string;
 };
 
 type NegativeItem = {
+  before?: string;
+  beforeIpa?: string;
   word: string;
   ipa: string;
   ipaContract?: string;
@@ -51,6 +55,7 @@ type InformalWord = {
   word: string;
   full: string;
   ipa: string;
+  ipaFull?: string;
   id: string;
   ipaContract?: string;
 };
@@ -217,7 +222,7 @@ export default function ContractionPage() {
   };
 
   // ── PLAY PILL GROUP (Play All for pattern pills) ────────────
-  const playPillGroup = async (groupId: string, words: string[]) => {
+  const playPillGroup = async (groupId: string, items: { id: string; before?: string; word: string }[]) => {
     playIdRef.current += 1;
     setActiveSequence(null);
 
@@ -239,21 +244,32 @@ export default function ContractionPage() {
     stopSpeech();
     await new Promise((r) => setTimeout(r, 100));
 
-    for (let i = 0; i < words.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       if (playIdRef.current !== currentId) return;
-      const pillId = `pill-${groupId}-${i}`;
+      const pillId = items[i].id;
       setActivePillId(pillId);
       setTimeout(() => {
         const el = document.getElementById(pillId);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 50);
-      await speakText(words[i], {
+
+      if (items[i].before) {
+        await speakText(items[i].before || "", {
+          preferredEnglish: 'en-US',
+          contentType: 'sentence', // treat as a standard phrase
+          cancelBeforeSpeak: true,
+        });
+        if (playIdRef.current !== currentId) return;
+        await new Promise((r) => setTimeout(r, 400));
+      }
+
+      await speakText(items[i].word, {
         preferredEnglish: 'en-US',
         contentType: 'contraction',
         cancelBeforeSpeak: true,
       });
       if (playIdRef.current !== currentId) return;
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 600));
     }
 
     if (playIdRef.current === currentId) {
@@ -275,51 +291,51 @@ export default function ContractionPage() {
   }, []);
 
   const patternWill: PatternItem[] = [
-    { word: "I'll", ipa: "/aɪl/" },
-    { word: "You'll", ipa: "/juːl/" },
-    { word: "They'll", ipa: "/ðeɪl/" },
-    { word: "She'll", ipa: "/ʃiːl/" },
-    { word: "What'll", ipa: "/ˈwɑːtəl/" },
-    { word: "This'll", ipa: "/ˈðɪsəl/" },
-    { word: "That'll", ipa: "/ˈðætəl/" },
+    { before: "I will", beforeIpa: "/aɪ wɪl/", word: "I'll", ipa: "/aɪl/" },
+    { before: "You will", beforeIpa: "/ju wɪl/", word: "You'll", ipa: "/juːl/" },
+    { before: "They will", beforeIpa: "/ðeɪ wɪl/", word: "They'll", ipa: "/ðeɪl/" },
+    { before: "She will", beforeIpa: "/ʃi wɪl/", word: "She'll", ipa: "/ʃiːl/" },
+    { before: "What will", beforeIpa: "/wɑt wɪl/", word: "What'll", ipa: "/ˈwɑːtəl/" },
+    { before: "This will", beforeIpa: "/ðɪs wɪl/", word: "This'll", ipa: "/ˈðɪsəl/" },
+    { before: "That will", beforeIpa: "/ðæt wɪl/", word: "That'll", ipa: "/ˈðætəl/" },
   ];
 
   const patternHave: PatternItem[] = [
-    { word: "I've", ipa: "/aɪv/" },
-    { word: "They've", ipa: "/ðeɪv/" },
-    { word: "She's", suffix: "(has)", ipa: "/ʃiːz/" },
-    { word: "It's", suffix: "(has)", ipa: "/ɪts/" },
-    { word: "What've", ipa: "/ˈwɑːtəv/" },
+    { before: "I have", beforeIpa: "/aɪ hæv/", word: "I've", ipa: "/aɪv/" },
+    { before: "They have", beforeIpa: "/ðeɪ hæv/", word: "They've", ipa: "/ðeɪv/" },
+    { before: "She has", beforeIpa: "/ʃi hæz/", word: "She's", suffix: "(has)", ipa: "/ʃiːz/" },
+    { before: "It has", beforeIpa: "/ɪt hæz/", word: "It's", suffix: "(has)", ipa: "/ɪts/" },
+    { before: "What have", beforeIpa: "/wɑt hæv/", word: "What've", ipa: "/ˈwɑːtəv/" },
   ];
 
   const patternWould: PatternItem[] = [
-    { word: "I'd", suffix: "(would)", ipa: "/aɪd/" },
-    { word: "I'd", suffix: "(had)", ipa: "/aɪd/" },
-    { word: "She'd", suffix: "(would)", ipa: "/ʃiːd/" },
-    { word: "She'd", suffix: "(had)", ipa: "/ʃiːd/" },
+    { before: "I would", beforeIpa: "/aɪ wʊd/", word: "I'd", suffix: "(would)", ipa: "/aɪd/" },
+    { before: "I had", beforeIpa: "/aɪ hæd/", word: "I'd", suffix: "(had)", ipa: "/aɪd/" },
+    { before: "She would", beforeIpa: "/ʃi wʊd/", word: "She'd", suffix: "(would)", ipa: "/ʃiːd/" },
+    { before: "She had", beforeIpa: "/ʃi hæd/", word: "She'd", suffix: "(had)", ipa: "/ʃiːd/" },
   ];
 
   const patternIs: PatternItem[] = [
-    { word: "She's", ipa: "/ʃiːz/" },
-    { word: "He's", ipa: "/hiːz/" },
-    { word: "It's", ipa: "/ɪts/" },
-    { word: "What's", ipa: "/wɑts/" },
-    { word: "How's", ipa: "/haʊz/" },
-    { word: "When's", ipa: "/wɛnz/" },
-    { word: "That's", ipa: "/ðæts/" },
+    { before: "She is", beforeIpa: "/ʃi ɪz/", word: "She's", ipa: "/ʃiːz/" },
+    { before: "He is", beforeIpa: "/hi ɪz/", word: "He's", ipa: "/hiːz/" },
+    { before: "It is", beforeIpa: "/ɪt ɪz/", word: "It's", ipa: "/ɪts/" },
+    { before: "What is", beforeIpa: "/wɑt ɪz/", word: "What's", ipa: "/wɑts/" },
+    { before: "How is", beforeIpa: "/haʊ ɪz/", word: "How's", ipa: "/haʊz/" },
+    { before: "When is", beforeIpa: "/wɛn ɪz/", word: "When's", ipa: "/wɛnz/" },
+    { before: "That is", beforeIpa: "/ðæt ɪz/", word: "That's", ipa: "/ðæts/" },
   ];
 
   const patternAre: PatternItem[] = [
-    { word: "You're", ipa: "/jʊr/" },
-    { word: "They're", ipa: "/ðɛr/" },
-    { word: "We're", ipa: "/wɪr/" },
-    { word: "What're", ipa: "/ˈwɑtər/" },
-    { word: "When're", ipa: "/ˈwɛnər/" },
-    { word: "Where're", ipa: "/ˈwɛrər/" },
-    { word: "How're", ipa: "/ˈhaʊ.ər/" },
+    { before: "You are", beforeIpa: "/ju ɑr/", word: "You're", ipa: "/jʊr/" },
+    { before: "They are", beforeIpa: "/ðeɪ ɑr/", word: "They're", ipa: "/ðɛr/" },
+    { before: "We are", beforeIpa: "/wi ɑr/", word: "We're", ipa: "/wɪr/" },
+    { before: "What are", beforeIpa: "/wɑt ɑr/", word: "What're", ipa: "/ˈwɑtər/" },
+    { before: "When are", beforeIpa: "/wɛn ɑr/", word: "When're", ipa: "/ˈwɛnər/" },
+    { before: "Where are", beforeIpa: "/wɛr ɑr/", word: "Where're", ipa: "/ˈwɛrər/" },
+    { before: "How are", beforeIpa: "/haʊ ɑr/", word: "How're", ipa: "/ˈhaʊ.ər/" },
   ];
 
-  const patternAm: PatternItem[] = [{ word: "I'm", ipa: "/aɪm/" }];
+  const patternAm: PatternItem[] = [{ before: "I am", beforeIpa: "/aɪ æm/", word: "I'm", ipa: "/aɪm/" }];
 
   const sec1Examples = [
     {
@@ -561,37 +577,41 @@ export default function ContractionPage() {
   ];
 
   const informalWords: InformalWord[] = [
-    { word: "Gimme", full: "give me", ipa: "/ˈɡɪmi/", id: "kasih aku" },
-    { word: "Lemme", full: "let me", ipa: "/ˈlɛmi/", id: "biarkan aku" },
-    { word: "Wanna", full: "want to", ipa: "/ˈwɑːnə/", id: "mau / ingin" },
-    { word: "Gonna", full: "going to", ipa: "/ˈɡʌnə/", id: "akan / mau" },
-    { word: "Tryna", full: "trying to", ipa: "/ˈtraɪnə/", id: "mencoba untuk" },
-    { word: "Hafta", full: "have to", ipa: "/ˈhæftə/", id: "harus" },
-    { word: "Hasta", full: "has to", ipa: "/ˈhæstə/", id: "harus (dia)" },
-    { word: "Y'all", full: "you all", ipa: "/jɔːl/", id: "kalian semua" },
+    { word: "Gimme", full: "give me", ipaFull: "/ɡɪv mi/", ipa: "/ˈɡɪmi/", id: "kasih aku" },
+    { word: "Lemme", full: "let me", ipaFull: "/lɛt mi/", ipa: "/ˈlɛmi/", id: "biarkan aku" },
+    { word: "Wanna", full: "want to", ipaFull: "/wɑnt tʊ/", ipa: "/ˈwɑːnə/", id: "mau / ingin" },
+    { word: "Gonna", full: "going to", ipaFull: "/ˈɡoʊɪŋ tʊ/", ipa: "/ˈɡʌnə/", id: "akan / mau" },
+    { word: "Tryna", full: "trying to", ipaFull: "/ˈtraɪɪŋ tʊ/", ipa: "/ˈtraɪnə/", id: "mencoba untuk" },
+    { word: "Hafta", full: "have to", ipaFull: "/hæv tʊ/", ipa: "/ˈhæftə/", id: "harus" },
+    { word: "Hasta", full: "has to", ipaFull: "/hæz tʊ/", ipa: "/ˈhæstə/", id: "harus (dia)" },
+    { word: "Y'all", full: "you all", ipaFull: "/juː ɔːl/", ipa: "/jɔːl/", id: "kalian semua" },
     {
       word: "Woulda",
       full: "would have",
+      ipaFull: "/wʊd hæv/",
       ipa: "/ˈwʊdə/",
       id: "seharusnya sudah",
     },
     {
       word: "Shoulda",
       full: "should have",
+      ipaFull: "/ʃʊd hæv/",
       ipa: "/ˈʃʊdə/",
       id: "seharusnya sudah",
     },
     {
       word: "Coulda",
       full: "could have",
+      ipaFull: "/kʊd hæv/",
       ipa: "/ˈkʊdə/",
       id: "bisa saja sudah",
     },
-    { word: "Dunno", full: "don't know", ipa: "/dəˈnoʊ/", id: "nggak tahu" },
-    { word: "D'yu", full: "do you", ipa: "/djuː/", id: "apakah kamu" },
+    { word: "Dunno", full: "don't know", ipaFull: "/doʊnt noʊ/", ipa: "/dəˈnoʊ/", id: "nggak tahu" },
+    { word: "D'yu", full: "do you", ipaFull: "/duː juː/", ipa: "/djuː/", id: "apakah kamu" },
     {
       word: "Imma",
       full: "I'm going to",
+      ipaFull: "/aɪm ˈɡoʊɪŋ tʊ/",
       ipa: "/ˈaɪmə/",
       id: "aku mau / aku akan",
     },
@@ -622,9 +642,9 @@ export default function ContractionPage() {
       formal: "I don't know the answer",
       formalTarget: "don't know the answer",
       contract: "dunno",
-      informal: "I dunno",
+      informal: "I dunno the answer",
       ipaContract: "/dəˈnoʊ/",
-      ipa: "/aɪ dəˈnoʊ/",
+      ipa: "/aɪ dəˈnoʊ ði ˈænsər/",
       ipaEn: "/aɪ doʊnt noʊ ði ˈænsər/",
       ipaEnTarget: "doʊnt noʊ ði ˈænsər",
     },
@@ -671,29 +691,94 @@ export default function ContractionPage() {
   ];
 
   const negPresent: NegativeItem[] = [
-    { word: "Don't", ipa: "/doʊnt/" },
-    { word: "Doesn't", ipa: "/ˈdʌzənt/" },
-    { word: "Isn't", ipa: "/ˈɪzənt/" },
-    { word: "Aren't", ipa: "/ɑːrnt/" },
-    { word: "Can't", ipa: "/kænt/" },
+    { before: "do not", beforeIpa: "/du nɑt/", word: "Don't", ipa: "/doʊnt/" },
+    { before: "does not", beforeIpa: "/dʌz nɑt/", word: "Doesn't", ipa: "/ˈdʌzənt/" },
+    { before: "is not", beforeIpa: "/ɪz nɑt/", word: "Isn't", ipa: "/ˈɪzənt/" },
+    { before: "are not", beforeIpa: "/ɑr nɑt/", word: "Aren't", ipa: "/ɑːrnt/" },
+    { before: "can not", beforeIpa: "/kæn nɑt/", word: "Can't", ipa: "/kænt/" },
   ];
   const negPast: NegativeItem[] = [
-    { word: "Didn't", ipa: "/ˈdɪdənt/" },
-    { word: "Wasn't", ipa: "/ˈwɑːzənt/" },
-    { word: "Weren't", ipa: "/wɚrnt/" },
-    { word: "Hadn't", ipa: "/ˈhædənt/" },
+    { before: "did not", beforeIpa: "/dɪd nɑt/", word: "Didn't", ipa: "/ˈdɪdənt/" },
+    { before: "was not", beforeIpa: "/wɑz nɑt/", word: "Wasn't", ipa: "/ˈwɑːzənt/" },
+    { before: "were not", beforeIpa: "/wɝ nɑt/", word: "Weren't", ipa: "/wɚrnt/" },
+    { before: "had not", beforeIpa: "/hæd nɑt/", word: "Hadn't", ipa: "/ˈhædənt/" },
   ];
   const negModal: NegativeItem[] = [
-    { word: "Won't", ipa: "/woʊnt/" },
-    { word: "Wouldn't", ipa: "/ˈwʊdənt/" },
-    { word: "Couldn't", ipa: "/ˈkʊdənt/" },
-    { word: "Shouldn't", ipa: "/ˈʃʊdənt/" },
-    { word: "Mustn't", ipa: "/ˈmʌsənt/" },
+    { before: "will not", beforeIpa: "/wɪl nɑt/", word: "Won't", ipa: "/woʊnt/" },
+    { before: "would not", beforeIpa: "/wʊd nɑt/", word: "Wouldn't", ipa: "/ˈwʊdənt/" },
+    { before: "could not", beforeIpa: "/kʊd nɑt/", word: "Couldn't", ipa: "/ˈkʊdənt/" },
+    { before: "should not", beforeIpa: "/ʃʊd nɑt/", word: "Shouldn't", ipa: "/ˈʃʊdənt/" },
+    { before: "must not", beforeIpa: "/mʌst nɑt/", word: "Mustn't", ipa: "/ˈmʌsənt/" },
   ];
   const negHave: NegativeItem[] = [
-    { word: "Haven't", ipa: "/ˈhævənt/" },
-    { word: "Hasn't", ipa: "/ˈhæzənt/" },
+    { before: "have not", beforeIpa: "/hæv nɑt/", word: "Haven't", ipa: "/ˈhævənt/" },
+    { before: "has not", beforeIpa: "/hæz nɑt/", word: "Hasn't", ipa: "/ˈhæzənt/" },
   ];
+
+  const renderPatternList = (items: (PatternItem | NegativeItem)[], prefixId: string) => (
+    <div className="flex flex-col gap-3 mt-3 w-full md:max-w-xl">
+      {items.map((item, i) => {
+        const id = `pill-${prefixId}-${i}`;
+        const isActive = activePillId === id;
+        return (
+          <div
+            key={i}
+            id={id}
+            className={`flex flex-col p-3 rounded-xl border transition-all ${
+              isActive 
+                ? 'bg-[#fb923c]/10 border-[#fb923c]/40 shadow-[0_0_15px_rgba(251,146,60,0.1)]' 
+                : 'bg-black/20 border-white/10 hover:border-white/20'
+            }`}
+          >
+            {/* Before (Original) */}
+            <div className="flex flex-col mb-2 pb-2 border-b border-white/10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-white/70 font-medium text-sm">{item.before}</span>
+                  <span className="text-[9px] uppercase font-bold text-white/30 bg-white/5 px-1.5 py-0.5 rounded">Before</span>
+                </div>
+                <button
+                  onClick={() => speak(item.before || "")}
+                  className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                    isActive ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                  }`}
+                  aria-label={`Play ${item.before}`}
+                >
+                  <Volume2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              {showIpa && item.beforeIpa && (
+                <span className="text-[#00f5ff] opacity-80 font-mono text-[11px] mt-0.5">{item.beforeIpa}</span>
+              )}
+            </div>
+
+            {/* After (Contraction) */}
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-[#fb923c] font-bold text-base">{item.word}</span>
+                    {('suffix' in item && item.suffix) && <span className="text-white/40 text-xs ml-1">{item.suffix}</span>}
+                  </div>
+                  <span className="text-[9px] uppercase font-bold text-[#fb923c]/60 bg-[#fb923c]/10 px-1.5 py-0.5 rounded">After</span>
+                </div>
+                <button
+                  onClick={() => speak(item.word)}
+                  className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                    isActive ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                  }`}
+                  aria-label={`Play ${item.word}`}
+                >
+                  <Volume2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              {showIpa && <span className="text-[#00f5ff] font-mono text-sm">{item.ipa}</span>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="contraction-page min-h-screen">
@@ -720,23 +805,13 @@ export default function ContractionPage() {
               {activeTab === 1 && (
                 <>
                   <PlayStopButton
-                    isActive={activePillGroup === 'patternIs'}
-                    label="'S = IS, HAS"
-                    onClick={() => void playPillGroup('patternIs', patternIs.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'patternAre'}
-                    label="'RE = ARE"
-                    onClick={() => void playPillGroup('patternAre', patternAre.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'patternAm'}
-                    label="'M = AM"
-                    onClick={() => void playPillGroup('patternAm', patternAm.map(i => i.word))}
+                    isActive={activePillGroup === 'allToBe'}
+                    label="ALL TO BE"
+                    onClick={() => void playPillGroup('allToBe', [
+                      ...patternIs.map((i, idx) => ({ id: `pill-patternIs-${idx}`, before: i.before, word: i.word })),
+                      ...patternAre.map((i, idx) => ({ id: `pill-patternAre-${idx}`, before: i.before, word: i.word })),
+                      ...patternAm.map((i, idx) => ({ id: `pill-patternAm-${idx}`, before: i.before, word: i.word }))
+                    ])}
                     size="sm"
                     sectionId=""
                   />
@@ -752,23 +827,13 @@ export default function ContractionPage() {
               {activeTab === 2 && (
                 <>
                   <PlayStopButton
-                    isActive={activePillGroup === 'patternWill'}
-                    label="'LL = WILL"
-                    onClick={() => void playPillGroup('patternWill', patternWill.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'patternHave'}
-                    label="'VE = HAVE"
-                    onClick={() => void playPillGroup('patternHave', patternHave.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'patternWould'}
-                    label="'D = WOULD, HAD"
-                    onClick={() => void playPillGroup('patternWould', patternWould.map(i => i.word))}
+                    isActive={activePillGroup === 'allWillHaveWould'}
+                    label="ALL (WILL, HAVE, WOULD)"
+                    onClick={() => void playPillGroup('allWillHaveWould', [
+                      ...patternWill.map((i, idx) => ({ id: `pill-patternWill-${idx}`, before: i.before, word: i.word })),
+                      ...patternHave.map((i, idx) => ({ id: `pill-patternHave-${idx}`, before: i.before, word: i.word })),
+                      ...patternWould.map((i, idx) => ({ id: `pill-patternWould-${idx}`, before: i.before, word: i.word }))
+                    ])}
                     size="sm"
                     sectionId=""
                   />
@@ -784,30 +849,14 @@ export default function ContractionPage() {
               {activeTab === 3 && (
                 <>
                   <PlayStopButton
-                    isActive={activePillGroup === 'negPresent'}
-                    label="N'T PRESENT"
-                    onClick={() => void playPillGroup('negPresent', negPresent.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'negPast'}
-                    label="N'T PAST"
-                    onClick={() => void playPillGroup('negPast', negPast.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'negModal'}
-                    label="N'T MODAL"
-                    onClick={() => void playPillGroup('negModal', negModal.map(i => i.word))}
-                    size="sm"
-                    sectionId=""
-                  />
-                  <PlayStopButton
-                    isActive={activePillGroup === 'negHave'}
-                    label="N'T HAVE"
-                    onClick={() => void playPillGroup('negHave', negHave.map(i => i.word))}
+                    isActive={activePillGroup === 'allNegatives'}
+                    label="ALL NEGATIVES"
+                    onClick={() => void playPillGroup('allNegatives', [
+                      ...negPresent.map((i, idx) => ({ id: `pill-negPresent-${idx}`, before: i.before, word: i.word })),
+                      ...negPast.map((i, idx) => ({ id: `pill-negPast-${idx}`, before: i.before, word: i.word })),
+                      ...negModal.map((i, idx) => ({ id: `pill-negModal-${idx}`, before: i.before, word: i.word })),
+                      ...negHave.map((i, idx) => ({ id: `pill-negHave-${idx}`, before: i.before, word: i.word }))
+                    ])}
                     size="sm"
                     sectionId=""
                   />
@@ -825,7 +874,7 @@ export default function ContractionPage() {
                   <PlayStopButton
                     isActive={activePillGroup === 'informalWords'}
                     label="WORDS"
-                    onClick={() => void playPillGroup('informalWords', informalWords.map(i => i.word))}
+                    onClick={() => void playPillGroup('informalWords', informalWords.map((i, idx) => ({ id: `pill-informalWords-${idx}`, before: i.full, word: i.word })))}
                     size="sm"
                   />
                   <PlayStopButton
@@ -851,17 +900,11 @@ export default function ContractionPage() {
       {/* HERO */}
       <header className="hero">
         <div className="hero-glow"></div>
-        <div className="hero-tag">// ENG PHONETICS MODULE_13 //</div>
         <h1 className="hero-title">
           CON<span>TRAC</span>TIONS
         </h1>
         <div className="hero-ipa">/kənˈtrækʃənz/</div>
-        <div className="hero-ipa-label">General American English · IPA</div>
-        <p className="hero-desc">
-          Bentuk pendek dari satu kata atau kelompok kata dengan menghilangkan
-          huruf dan bunyi di tengah, diganti dengan apostrof ({" "}
-          <strong style={{ color: "var(--cyan)" }}>'</strong> ).
-        </p>
+
       </header>
 
       {/* NAV */}
@@ -904,7 +947,7 @@ export default function ContractionPage() {
               <div className="sec-title">Definisi & Konsep Dasar</div>
               <div className="sec-ipa-row">
                 <span className="ipa-chip">/ˌdɛfɪˈnɪʃən/</span>
-                <span className="ipa-dialect">General American</span>
+
               </div>
               <div className="sec-subtitle">
                 Memahami apa itu kontraksi dan bagaimana cara kerjanya dalam
@@ -913,82 +956,122 @@ export default function ContractionPage() {
             </div>
           </div>
 
-          <div className="def-block">
-            <p className="def-text">
-              A <span className="highlight">contraction</span> is a{" "}
-              <span className="highlight">shortened version</span> of the
-              written and spoken forms of a word, syllable, or word group,
-              created by{" "}
-              <span className="highlight">
-                omission of internal letters and sounds
-              </span>
-              . Ditandai dengan tanda apostrof{" "}
-              <span className="highlight">( ' )</span> sebagai pengganti huruf
-              yang dihilangkan.
-            </p>
-          </div>
 
-          <div className="ipa-legend">
-            <div className="ipa-legend-title">
-              Simbol IPA yang sering muncul
+
+          <div className="mt-8 mb-6 p-4 sm:p-6 bg-black/40 border border-[#00f5ff]/20 rounded-xl max-w-4xl">
+            <h2 className="text-xl font-bold text-[#00f5ff] mb-4 border-b border-[#00f5ff]/20 pb-2">
+              ABBREVIATION (Pemendekan Kata)
+            </h2>
+            
+            <div className="mb-6">
+              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                Ini adalah istilah umum untuk semua bentuk kata atau frasa yang dipendekkan. Apapun jenis pemendekannya, bahasa Inggris menyebutnya sebagai <span className="text-[#00f5ff] font-medium">abbreviation</span>.
+              </p>
+              <p className="text-white/80 text-sm sm:text-base mt-2">Di bawah Abbreviation, terbagi menjadi 4 kategori utama:</p>
             </div>
-            <div className="ipa-grid">
-              <div className="ipa-item">
-                <span className="ipa-sym">ə</span>
-                <div>
-                  <div className="ipa-desc">schwa — bunyi "e" lemah</div>
-                  <div className="ipa-ex">I'm /aɪm/ → /əm/</div>
+
+            <div className="grid gap-4 md:grid-cols-2 mb-6">
+              <div className="bg-[#00f5ff]/5 p-4 rounded-lg border border-[#00f5ff]/10">
+                <h4 className="font-bold text-[#fb923c] mb-2 flex items-center gap-2">
+                  <span className="bg-[#fb923c]/20 text-[#fb923c] w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">A</span>
+                  Initialism (Singkatan Huruf)
+                </h4>
+                <div className="text-sm text-white/70 space-y-2">
+                  <p><strong className="text-white/90">Konsep:</strong> Mengambil huruf pertama dari serangkaian kata, dan cara membacanya <strong className="text-white">dieja per huruf</strong>.</p>
+                  <p><strong className="text-white/90">Padanan di Indonesia:</strong> Singkatan (seperti KTP, PP, DPR).</p>
+                  <div>
+                    <strong className="text-white/90">Contoh Inggris:</strong>
+                    <ul className="list-disc pl-5 mt-1 text-white/60 space-y-1">
+                      <li>FBI (dibaca F-B-I, bukan "Febi")</li>
+                      <li>VIP (dibaca V-I-P)</li>
+                      <li>ATM (dibaca A-T-M)</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">ɪ</span>
-                <div>
-                  <div className="ipa-desc">short "i" — "i" pendek</div>
-                  <div className="ipa-ex">it's /ɪts/</div>
+
+              <div className="bg-[#00f5ff]/5 p-4 rounded-lg border border-[#00f5ff]/10">
+                <h4 className="font-bold text-[#fb923c] mb-2 flex items-center gap-2">
+                  <span className="bg-[#fb923c]/20 text-[#fb923c] w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">B</span>
+                  Acronym (Akronim)
+                </h4>
+                <div className="text-sm text-white/70 space-y-2">
+                  <p><strong className="text-white/90">Konsep:</strong> Mengambil huruf pertama dari serangkaian kata, tapi cara membacanya <strong className="text-white">digabung menjadi satu kata baru yang utuh</strong>.</p>
+                  <p><strong className="text-white/90">Padanan di Indonesia:</strong> Akronim (seperti Pemkab, Sinetron).</p>
+                  <div>
+                    <strong className="text-white/90">Contoh Inggris:</strong>
+                    <ul className="list-disc pl-5 mt-1 text-white/60 space-y-1">
+                      <li>NASA (dibaca "Nasa", bukan N-A-S-A)</li>
+                      <li>FOMO (Fear Of Missing Out - dibaca "Fomo")</li>
+                      <li>SCUBA (Self-Contained Underwater Breathing Apparatus - dibaca "Skuba")</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">æ</span>
-                <div>
-                  <div className="ipa-desc">short "a" — "a" terbuka</div>
-                  <div className="ipa-ex">can't /kænt/</div>
+
+              <div className="bg-[#00b8c4]/15 p-4 rounded-lg border border-[#00b8c4]/40 relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-[#00b8c4] text-black text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">Fokus Kita</div>
+                <h4 className="font-bold text-[#00f5ff] mb-2 flex items-center gap-2">
+                  <span className="bg-[#00f5ff]/20 text-[#00f5ff] w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">C</span>
+                  Contraction (Peleburan Lisan)
+                </h4>
+                <div className="text-sm text-white/80 space-y-2">
+                  <p><strong className="text-white">Konsep:</strong> Menggabungkan dua kata atau memendekkan satu kata dengan membuang (melesapkan) huruf/bunyi tertentu di tengah. Dalam teks formal ditandai dengan apostrof ( ' ). Tujuannya murni untuk <strong className="text-[#00f5ff]">mempercepat dan memuluskan aliran bicara</strong> (spoken English).</p>
+                  <p><strong className="text-white">Padanan di Indonesia:</strong> Bahasa lisan sehari-hari (tidak ada → tiada, bagaimana → gimana).</p>
+                  <div>
+                    <strong className="text-white">Contoh Inggris:</strong>
+                    <ul className="list-disc pl-5 mt-1 text-white/70 space-y-1">
+                      <li>Do not → Don't</li>
+                      <li>Going to → Gonna</li>
+                      <li>Let me → Lemme</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">ʌ</span>
-                <div>
-                  <div className="ipa-desc">"u" terbuka</div>
-                  <div className="ipa-ex">won't /woʊnt/</div>
+
+              <div className="bg-[#00f5ff]/5 p-4 rounded-lg border border-[#00f5ff]/10">
+                <h4 className="font-bold text-[#fb923c] mb-2 flex items-center gap-2">
+                  <span className="bg-[#fb923c]/20 text-[#fb923c] w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">D</span>
+                  Clipping (Pemotongan)
+                </h4>
+                <div className="text-sm text-white/70 space-y-2">
+                  <p><strong className="text-white/90">Konsep:</strong> Memotong bagian depan, belakang, atau tengah dari satu kata yang panjang agar lebih ringkas digunakan sehari-hari, <strong className="text-white">tanpa mengubah maknanya</strong>.</p>
+                  <div>
+                    <strong className="text-white/90">Contoh Inggris:</strong>
+                    <ul className="list-disc pl-5 mt-1 text-white/60 space-y-1">
+                      <li>Advertisement dipotong menjadi Ad</li>
+                      <li>Influenza dipotong menjadi Flu</li>
+                      <li>Application dipotong menjadi App</li>
+                      <li>Gymnasium dipotong menjadi Gym</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">ŋ</span>
-                <div>
-                  <div className="ipa-desc">nasal "ng"</div>
-                  <div className="ipa-ex">going /ˈɡoʊɪŋ/</div>
-                </div>
-              </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">ð</span>
-                <div>
-                  <div className="ipa-desc">voiced "th"</div>
-                  <div className="ipa-ex">they're /ðɛr/</div>
-                </div>
-              </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">aɪ</span>
-                <div>
-                  <div className="ipa-desc">diftong "ai"</div>
-                  <div className="ipa-ex">I'd /aɪd/</div>
-                </div>
-              </div>
-              <div className="ipa-item">
-                <span className="ipa-sym">oʊ</span>
-                <div>
-                  <div className="ipa-desc">diftong "ou"</div>
-                  <div className="ipa-ex">don't /doʊnt/</div>
-                </div>
-              </div>
+            </div>
+
+            <div className="bg-white/5 p-4 rounded-lg border-l-4 border-[#00f5ff]">
+              <h4 className="font-bold text-white mb-2">Kesimpulan Workflow</h4>
+              <p className="text-sm text-white/80 mb-3">
+                <strong>Abbreviation</strong> adalah "rumah besar"nya. Saat Anda masuk ke dalam rumah tersebut, Anda bisa memilih cara memendekkan kata sesuai kebutuhan:
+              </p>
+              <ul className="text-sm text-white/70 space-y-2 pl-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#fb923c] font-bold mt-0.5">▶</span>
+                  <span>Mau dieja per huruf? Gunakan <strong className="text-white">Initialism</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#fb923c] font-bold mt-0.5">▶</span>
+                  <span>Mau dibaca jadi kata baru? Gunakan <strong className="text-white">Acronym</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#fb923c] font-bold mt-0.5">▶</span>
+                  <span>Mau memotong kata yang terlalu panjang? Gunakan <strong className="text-white">Clipping</strong>.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#00f5ff] font-bold mt-0.5">▶</span>
+                  <span>Mau bicara lebih cepat layaknya native speaker? Gunakan <strong className="text-white">Contraction</strong>.</span>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -1013,14 +1096,14 @@ export default function ContractionPage() {
           <div className="sec-header">
             <div className="sec-num">01</div>
             <div className="sec-info">
-              <div className="sec-title">Kontraksi "To Be"</div>
+              <div className="sec-title">Bentuk Pendek "To Be"</div>
               <div className="sec-ipa-row">
                 <span className="ipa-chip">/tuː biː/</span>
                 <span className="ipa-chip">/ɪz/ · /ɑːr/ · /æm/</span>
-                <span className="ipa-dialect">General American</span>
+
               </div>
               <div className="sec-subtitle">
-                Kata kerja is / are / am dipersingkat ke 's / 're / 'm —
+                Kata kerja is / are / am dipersingkat ke 's / 're / 'm <br />
                 kategori paling sering dipakai sehari-hari.
               </div>
             </div>
@@ -1036,55 +1119,19 @@ export default function ContractionPage() {
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'s = is — orang ke-3 tunggal</div>
               </div>
-              <div className="pill-wrap">
-                {patternIs.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternIs-${i}`}
-                    className={`pill${activePillId === `pill-patternIs-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>{item.word}</span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternIs, 'patternIs')}
             </div>
             <div className="pattern-cell">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'re = are — jamak / you</div>
               </div>
-              <div className="pill-wrap">
-                {patternAre.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternAre-${i}`}
-                    className={`pill${activePillId === `pill-patternAre-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>{item.word}</span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternAre, 'patternAre')}
             </div>
             <div className="pattern-cell">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'m = am — hanya I</div>
               </div>
-              <div className="pill-wrap">
-                {patternAm.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternAm-${i}`}
-                    className={`pill${activePillId === `pill-patternAm-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>{item.word}</span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternAm, 'patternAm')}
             </div>
           </div>
 
@@ -1114,15 +1161,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec1-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.en}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1140,15 +1189,17 @@ export default function ContractionPage() {
                         </span>
                         <button
                           onClick={() => speak(item.contract)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec1-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.contract}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1161,15 +1212,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec1-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.after}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
@@ -1208,15 +1261,15 @@ export default function ContractionPage() {
           <div className="sec-header">
             <div className="sec-num">02</div>
             <div className="sec-info">
-              <div className="sec-title">Kata Kerja Bantu</div>
+              <div className="sec-title">Bentuk Pendek Kata Kerja Bantu</div>
               <div className="sec-ipa-row">
                 <span className="ipa-chip">
                   /wɪl/ · /hæv/ · /hæz/ · /hæd/ · /wʊd/
                 </span>
-                <span className="ipa-dialect">General American</span>
+
               </div>
               <div className="sec-subtitle">
-                Pemendekan will, have, has, had, would — mengekspresikan waktu
+                Pemendekan will, have, has, had, would <br /> mengekspresikan waktu
                 dan pengalaman.
               </div>
             </div>
@@ -1232,61 +1285,19 @@ export default function ContractionPage() {
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'ll = will (masa depan)</div>
               </div>
-              <div className="pill-wrap">
-                {patternWill.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternWill-${i}`}
-                    className={`pill${activePillId === `pill-patternWill-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>
-                      {item.word} {item.suffix}
-                    </span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternWill, 'patternWill')}
             </div>
             <div className="pattern-cell">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'ve / 's = have / has</div>
               </div>
-              <div className="pill-wrap">
-                {patternHave.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternHave-${i}`}
-                    className={`pill${activePillId === `pill-patternHave-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>
-                      {item.word} {item.suffix}
-                    </span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternHave, 'patternHave')}
             </div>
             <div className="pattern-cell">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-label" style={{marginBottom: 0}}>'d = would atau had</div>
               </div>
-              <div className="pill-wrap">
-                {patternWould.map((item, i) => (
-                  <button
-                    key={i}
-                    id={`pill-patternWould-${i}`}
-                    className={`pill${activePillId === `pill-patternWould-${i}` ? ' ring-2 ring-[#00f5ff]/80 bg-[#00f5ff]/10' : ''}`}
-                    onClick={() => speak(item.word)}
-                  >
-                    <span>
-                      {item.word} {item.suffix}
-                    </span>
-                    {showIpa && <span className="pill-ipa">{item.ipa}</span>}
-                  </button>
-                ))}
-              </div>
+              {renderPatternList(patternWould, 'patternWould')}
             </div>
           </div>
 
@@ -1316,15 +1327,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec2-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.en}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1342,15 +1355,17 @@ export default function ContractionPage() {
                         </span>
                         <button
                           onClick={() => speak(item.contract)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec2-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.contract}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1363,15 +1378,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec2-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.after}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
@@ -1413,13 +1430,13 @@ export default function ContractionPage() {
           <div className="sec-header">
             <div className="sec-num">03</div>
             <div className="sec-info">
-              <div className="sec-title">Kontraksi Negatif (not)</div>
+              <div className="sec-title">Bentuk Pendek Negatif (not)</div>
               <div className="sec-ipa-row">
                 <span className="ipa-chip">/nɑːt/ → /nt/</span>
-                <span className="ipa-dialect">General American</span>
+
               </div>
               <div className="sec-subtitle">
-                Semua bentuk n't — penyangkalan, larangan, dan ketidakmampuan.
+                Semua bentuk n't <br /> penyangkalan, larangan, dan ketidakmampuan.
               </div>
             </div>
           </div>
@@ -1432,139 +1449,19 @@ export default function ContractionPage() {
           <div className="neg-cols">
             <div className="neg-group">
               <div className="neg-group-title">Present</div>
-              {negPresent.map((item, i) => (
-                <div
-                  key={item.word}
-                  id={`pill-negPresent-${i}`}
-                  className={`neg-item${activePillId === `pill-negPresent-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
-                >
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="neg-word">{item.word}</span>
-                      <button
-                        onClick={() => speak(item.word)}
-                        className="text-[#00b8c4] hover:text-[#00f5ff] cursor-pointer block"
-                      >
-                        <Volume2 size={16} />
-                      </button>
-                    </div>
-                    {showIpa && (
-                      <div className="font-ipa text-[0.75rem]">
-                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
-                          text={item.ipa}
-                          target={
-                            item.ipaContract
-                              ? item.ipaContract.replace(/\//g, "")
-                              : undefined
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {renderPatternList(negPresent, 'negPresent')}
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Past</div>
-              {negPast.map((item, i) => (
-                <div
-                  key={item.word}
-                  id={`pill-negPast-${i}`}
-                  className={`neg-item${activePillId === `pill-negPast-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
-                >
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="neg-word">{item.word}</span>
-                      <button
-                        onClick={() => speak(item.word)}
-                        className="text-[#00b8c4] hover:text-[#00f5ff] cursor-pointer block"
-                      >
-                        <Volume2 size={16} />
-                      </button>
-                    </div>
-                    {showIpa && (
-                      <div className="font-ipa text-[0.75rem]">
-                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
-                          text={item.ipa}
-                          target={
-                            item.ipaContract
-                              ? item.ipaContract.replace(/\//g, "")
-                              : undefined
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {renderPatternList(negPast, 'negPast')}
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Modal</div>
-              {negModal.map((item, i) => (
-                <div
-                  key={item.word}
-                  id={`pill-negModal-${i}`}
-                  className={`neg-item${activePillId === `pill-negModal-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
-                >
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="neg-word">{item.word}</span>
-                      <button
-                        onClick={() => speak(item.word)}
-                        className="text-[#00b8c4] hover:text-[#00f5ff] cursor-pointer block"
-                      >
-                        <Volume2 size={16} />
-                      </button>
-                    </div>
-                    {showIpa && (
-                      <div className="font-ipa text-[0.75rem]">
-                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
-                          text={item.ipa}
-                          target={
-                            item.ipaContract
-                              ? item.ipaContract.replace(/\//g, "")
-                              : undefined
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {renderPatternList(negModal, 'negModal')}
             </div>
             <div className="neg-group">
               <div className="neg-group-title">Have / Has</div>
-              {negHave.map((item, i) => (
-                <div
-                  key={item.word}
-                  id={`pill-negHave-${i}`}
-                  className={`neg-item${activePillId === `pill-negHave-${i}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10 rounded' : ''}`}
-                >
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="neg-word">{item.word}</span>
-                      <button
-                        onClick={() => speak(item.word)}
-                        className="text-[#00b8c4] hover:text-[#00f5ff] cursor-pointer block"
-                      >
-                        <Volume2 size={16} />
-                      </button>
-                    </div>
-                    {showIpa && (
-                      <div className="font-ipa text-[0.75rem]">
-                        <Highlight active={isHighlightEnabled && highlightTargetEnabled}
-                          text={item.ipa}
-                          target={
-                            item.ipaContract
-                              ? item.ipaContract.replace(/\//g, "")
-                              : undefined
-                          }
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {renderPatternList(negHave, 'negHave')}
             </div>
           </div>
 
@@ -1594,15 +1491,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.en} target={item.enTarget} />
                         <button
                           onClick={() => speak(item.en)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec3-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.en}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1620,15 +1519,17 @@ export default function ContractionPage() {
                         </span>
                         <button
                           onClick={() => speak(item.contract)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec3-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.contract}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1641,15 +1542,17 @@ export default function ContractionPage() {
                         <Highlight active={isHighlightEnabled && highlightTargetEnabled} text={item.after} target={item.contract} />
                         <button
                           onClick={() => speak(item.after)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `sec3-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.after}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
@@ -1714,10 +1617,10 @@ export default function ContractionPage() {
           <div className="sec-header">
             <div className="sec-num">04</div>
             <div className="sec-info">
-              <div className="sec-title">Kontraksi Informal / Spoken</div>
+              <div className="sec-title">Bentuk Pendek Informal / Spoken</div>
               <div className="sec-ipa-row">
                 <span className="ipa-chip">/ˈɪnfɔːrməl/ /ˈspoʊkən/</span>
-                <span className="ipa-dialect">General American</span>
+
               </div>
               <div className="sec-subtitle">
                 Hanya dalam bahasa lisan sehari-hari. Sering muncul di film,
@@ -1732,38 +1635,76 @@ export default function ContractionPage() {
             </span>
           </div>
 
-          <div className="informal-grid">
-            {informalWords.map((item, idx) => (
-              <div
-                key={idx}
-                id={`pill-informal-${idx}`}
-                className={`informal-cell group${activePillId === `pill-informal-${idx}` ? ' ring-2 ring-[#00f5ff]/60 bg-[#00f5ff]/10' : ''}`}
-              >
-                <div className="flex justify-between items-start">
-                  <div className="inf-word">{item.word}</div>
-                  <button
-                    onClick={() => speak(item.word)}
-                    className="p-1 rounded-full text-[#00b8c4] hover:text-[#00f5ff] hover:bg-[rgba(0,245,255,0.1)] transition-colors cursor-pointer block"
-                  >
-                    <Volume2 size={18} />
-                  </button>
-                </div>
-                <div className="inf-arrow">→</div>
-                <div className="inf-full">{item.full}</div>
-                {showIpa && (
-                  <div className="inf-ipa border-0 pt-0 mt-0">
-                    <Highlight active={isHighlightEnabled && highlightTargetEnabled}
-                      text={item.ipa}
-                      target={
-                        item.ipaContract
-                          ? item.ipaContract.replace(/\//g, "")
-                          : undefined
-                      }
-                    />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
+            {informalWords.map((item, idx) => {
+              const isActive = activePillId === `pill-informalWords-${idx}`;
+              return (
+                <div
+                  key={idx}
+                  id={`pill-informalWords-${idx}`}
+                  className={`flex flex-col gap-4 p-4 rounded-xl border transition-all duration-300 ${
+                    isActive 
+                      ? 'border-[#00f5ff]/40 bg-[#00f5ff]/10 shadow-[0_0_15px_rgba(0,245,255,0.15)]' 
+                      : 'border-white/10 bg-[#1a1a24]/80 hover:bg-[#1a1a24] hover:border-white/20'
+                  }`}
+                >
+                  {/* Before */}
+                  <div className="flex items-center justify-between gap-2 w-full">
+                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                      <span className="font-medium text-[1.1rem] text-white">
+                        {item.full}
+                      </span>
+                      {showIpa && item.ipaFull && (
+                        <span className="font-ipa text-[0.9rem] text-[#00f5ff] opacity-80">
+                          {item.ipaFull}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex shrink-0">
+                      <div className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/10 text-white/70 font-medium">Before</div>
+                    </div>
+                    <div className="flex shrink-0">
+                      <button
+                        onClick={() => speak(item.full)}
+                        className={`p-1.5 rounded-full transition-colors ${
+                          isActive ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                        }`}
+                        title={`Play "${item.full}"`}
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
+                  {/* After */}
+                  <div className="flex items-center justify-between gap-2 w-full">
+                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                      <span className="font-bold text-[1.1rem] text-[#fb923c]">
+                        {item.word}
+                      </span>
+                      {showIpa && (
+                        <span className="font-ipa text-[0.9rem] text-[#00f5ff]">
+                          {item.ipa}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex shrink-0">
+                      <div className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#fb923c]/20 text-[#fb923c] font-medium">After</div>
+                    </div>
+                    <div className="flex shrink-0">
+                      <button
+                        onClick={() => speak(item.word)}
+                        className={`p-1.5 rounded-full transition-colors ${
+                          isActive ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                        }`}
+                        title={`Play "${item.word}"`}
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* informalSentences Play All moved to ControlCenter */}
@@ -1795,15 +1736,17 @@ export default function ContractionPage() {
                         />
                         <button
                           onClick={() => speak(item.formal)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `inf-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.formal}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipaEn}
                               target={item.ipaEnTarget}
@@ -1821,15 +1764,17 @@ export default function ContractionPage() {
                         </span>
                         <button
                           onClick={() => speak(item.contract)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `inf-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.contract}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             {item.ipaContract}
                           </span>
                         </div>
@@ -1845,15 +1790,17 @@ export default function ContractionPage() {
                         />
                         <button
                           onClick={() => speak(item.informal)}
-                          className="text-[#00b8c4] hover:text-[#00f5ff] transition-colors cursor-pointer shrink-0"
+                          className={`p-1.5 rounded-full transition-colors shrink-0 ${
+                            activeRowId === `inf-${idx}` ? 'bg-[#00f5ff]/10 text-[#00f5ff]' : 'bg-white/5 text-white hover:bg-[#00f5ff]/10 hover:text-[#00f5ff]'
+                          }`}
                           title={`Play "${item.informal}"`}
                         >
-                          <Volume2 size={16} />
+                          <Volume2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       {showIpa && (
                         <div className="flex items-center gap-2 opacity-90 mt-1">
-                          <span className="font-ipa text-[0.85rem]">
+                          <span className="font-ipa text-[0.85rem] text-[#00f5ff]">
                             <Highlight active={isHighlightEnabled && highlightTargetEnabled}
                               text={item.ipa}
                               target={
@@ -1889,14 +1836,6 @@ export default function ContractionPage() {
           </div>
         </section>
       </main>
-
-      {/* FOOTER */}
-      <footer className="footer">
-        <span style={{ color: "var(--cyan)" }}>
-          // CONTRACTIONS MODULE_13 //
-        </span>{" "}
-        · General American English · IPA Transcription
-      </footer>
     </div>
   );
 }

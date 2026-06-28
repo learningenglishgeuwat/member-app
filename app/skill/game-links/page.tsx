@@ -12,6 +12,7 @@ type GameItem = {
   description: string
   url: string
   metric: string
+  image?: string
 }
 
 const GAME_LINKS: GameItem[] = [
@@ -21,6 +22,7 @@ const GAME_LINKS: GameItem[] = [
     description: 'Latihan mengeja kata dalam bahasa Inggris.',
     url: 'https://geuwat-spellingbeeexercise.netlify.app/',
     metric: '226 M',
+    image: '/game-link/Spelling Bee Exercise.webp'
   },
   {
     id: 'spelling-bee-competition',
@@ -28,6 +30,7 @@ const GAME_LINKS: GameItem[] = [
     description: 'Mode kompetisi untuk latihan spelling bee.',
     url: 'https://spelling-bee-olive.vercel.app',
     metric: '226 M',
+    image: '/game-link/Spelling Bee Competition.webp'
   },
   {
     id: 'cat-slave-vocab',
@@ -35,6 +38,7 @@ const GAME_LINKS: GameItem[] = [
     description: 'Latihan vocabulary dengan gameplay Cat\'s Slave.',
     url: 'https://cat-slave-vocab.netlify.app/',
     metric: '226 M',
+    image: '/game-link/Cats Slave Vocabulary.webp'
   },
   {
     id: 'phonetic-symbol-quiz',
@@ -42,6 +46,7 @@ const GAME_LINKS: GameItem[] = [
     description: 'Latihan tebak simbol bunyi (IPA).',
     url: 'https://geuwat-phonetic-symbol-quiz.netlify.app',
     metric: '226 M',
+    image: '/game-link/Phonetic Symbol Quiz.webp'
   },
   {
     id: 'final-sound-quiz',
@@ -49,6 +54,7 @@ const GAME_LINKS: GameItem[] = [
     description: 'Latihan bunyi akhir kata untuk -s/-es dan -d/-ed.',
     url: 'https://geuwat-final-sound-quiz-app.vercel.app/',
     metric: '226 M',
+    image: '/game-link/Final Sound Quiz.webp'
   },
   {
     id: 'coming-soon',
@@ -94,6 +100,13 @@ export default function SkillGameLinksPage() {
           <section className="game-hud-stage mt-6">
             <div className="game-hud-target">
               <div className="game-hud-target-box" data-tour="game-target-box">
+                {selectedGame.image && (
+                  <img
+                    src={selectedGame.image}
+                    alt={selectedGame.name}
+                    className="game-hud-target-image"
+                  />
+                )}
                 <span className="game-hud-target-line game-hud-target-line--h" />
                 <span className="game-hud-target-line game-hud-target-line--v" />
                 <span className="game-hud-frame-corner game-hud-frame-corner--tl" />
@@ -108,21 +121,7 @@ export default function SkillGameLinksPage() {
                 <span className="game-hud-frame-bracket game-hud-frame-bracket--right" />
                 <span className="game-hud-crosshair" />
 
-                <div className="game-hud-target-metrics">
-                  <span className="game-hud-target-metric game-hud-target-metric--left">
-                    S 12.3
-                  </span>
-                  <span className="game-hud-target-metric game-hud-target-metric--right">
-                    {selectedGame.metric}
-                  </span>
-                </div>
-
                 <div className="game-hud-target-content">
-                  <p className="game-hud-target-subtitle">
-                    {selectedGame.url ? 'ACTIVE GAME' : 'COMING SOON'}
-                  </p>
-                  <h2 className="game-hud-target-title">{selectedGame.name}</h2>
-                  <p className="game-hud-target-description">{selectedGame.description}</p>
                   {selectedGame.url ? (
                     <Link prefetch={false}
                       href={selectedGame.url}
@@ -139,6 +138,16 @@ export default function SkillGameLinksPage() {
                     </button>
                   )}
                 </div>
+
+                <div className="game-hud-target-metrics">
+                  <span className="game-hud-target-metric game-hud-target-metric--left">
+                    S 12.3
+                  </span>
+                  <span className="game-hud-target-metric game-hud-target-metric--right">
+                    {selectedGame.metric}
+                  </span>
+                </div>
+
               </div>
             </div>
 
