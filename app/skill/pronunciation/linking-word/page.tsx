@@ -29,6 +29,7 @@ type LinkingWordCategory = {
   category: string;
   fullCategory?: string;
   linguisticTerm?: string;
+  shortExplanation?: string;
   explanation?: string;
   items: LinkingWordItem[];
   extraItems?: LinkingWordItem[];
@@ -106,16 +107,181 @@ const AFTER_SPEECH_TEXT_BY_PHRASE: Record<string, string> = {
   "Won't you": 'Wontchu',
   'Get you': 'Getchu',
   'Let you': 'Letchu',
-  'Hurt you': 'Hurtchu',
+  'Hurt you': 'Her chew',
   'Guess you': 'Geshu',
   'Pass your': 'Pashur',
   'As you': 'Azhu',
   'Because you': 'Becauzhu',
-  'Use your': 'yoozhur',
+  'Use your': 'Yoo zher',
+  'Say it': 'Say yitt',
+  'Try it': 'Try yitt',
+  'Free up': 'Free yup',
+  'Boy and': 'Boy yand',
+  'Key issue': 'Key yissue',
+  'Tea is': 'Tea yiz',
+  'Pay up': 'Pay yup',
+  'Who is': 'Who wiz',
+  'Know it': 'Know wit',
+  'How old': 'How wold',
+  'Now and': 'Noww and',
+  'New apple': 'New wapple',
+  'Blue eyes': 'Blue wize',
+  'So am': 'So wam',
+  'Shoe is': 'Shoe wiz',
+  'Did your': 'Didjer',
+  'Made you': 'Made joo',
+  'Send you': 'Sendjoo',
+  'Behind you': 'Behindjoo',
+  'Hold you': 'Holdjoo',
+  'Sold you': 'Soldjoo',
+  'Around you': 'Aroundjoo',
+  'Found you': 'Foundjoo',
+  'Mind you': 'Mindjoo',
+  'Feed you': 'Feed joo',
+  'About you': 'Aboutchu',
+  'But you': 'But chew',
+  'Put you': 'Put chew',
+  'Met you': 'Metchu',
+  'Hit you': 'Hitchu',
+  'Set your': 'Setcher',
+  'Shoot you': 'Shoo chew',
+  'Forgot you': 'Forgotchu',
+  'Want you': 'Wantchu',
+  'At your': 'Atcher',
+  'Kiss your': 'Kish ur',
+  'Miss your': 'Misher',
+  'This year': 'Thish ear',
+  'Unless you': 'Unleshu',
+  'Cross your': 'Crosher',
+  'Dress you': 'Dreshu',
+  'Press your': 'Presher',
+  'Case you': 'Kayshu',
+  'Force you': 'Forshu',
+  'Face your': 'Faysher',
+  'Practice your': 'Practisher',
+  'Promise you': 'Promishu',
+  'Less you': 'Leshu',
+  'Was your': 'Wuz zher',
+  'Has your': 'Haz zher',
+  'Does your': 'Duh zher',
+  'Choose your': 'Choo zher',
+  'Lose your': 'Loo zher',
+  'Please you': 'Pleazhu',
+  'Tease you': 'Teazhu',
+  'Surprise you': 'Surprizhu',
+  'Confuse you': 'Confuzhu',
+  'These years': 'Thee zheers',
+  'Those years': 'Tho zheers',
+  'Always your': 'All way zher',
 };
 
 function buildAfterPhaseText(item: LinkingWordItem): string {
   return AFTER_SPEECH_TEXT_BY_PHRASE[item.text] ?? item.text;
+}
+
+function getHighlightedIpaBefore(item: LinkingWordItem, categoryName: string): string {
+  const ipaBefore = item.ipaBefore;
+  if (!ipaBefore) return '';
+  const digraphs = ['tʃ', 'dʒ', 'aɪ', 'eɪ', 'aʊ', 'oʊ', 'ɔɪ', 'ɪə', 'eə', 'ʊə', 'ɜr', 'ɑr', 'ɔr', 'ɪr', 'ɛr', 'ʊr'];
+  const stressMarks = ['ˈ', 'ˌ'];
+
+  const inner = ipaBefore.replace(/\//g, '');
+  const words = inner.split(' ');
+  if (words.length <= 1) return ipaBefore;
+
+  const hOpen = "<span class='text-fuchsia-500 font-bold'>";
+  const hClose = "</span>";
+  const undertie = "<span class='text-cyan-200'>‿</span>";
+
+  const resultWords = words.map(w => w);
+  const spaceChars = new Array(words.length - 1).fill(' ');
+
+  for (let i = 0; i < words.length; i++) {
+    let word = words[i];
+    let prefix = '';
+    let suffix = '';
+    
+    // Check space BEFORE this word (space index i-1)
+    if (i > 0) {
+      let shouldHighlightSpaceBefore = true;
+      if (categoryName === 'ASSIMILATION') {
+        let rWord = word;
+        if (stressMarks.includes(rWord[0])) rWord = rWord.slice(1);
+        if (!rWord.startsWith('j')) shouldHighlightSpaceBefore = false;
+      }
+      
+      if (shouldHighlightSpaceBefore) {
+        let stress = '';
+        if (stressMarks.includes(word[0])) {
+          stress = word[0];
+          word = word.slice(1);
+        }
+        
+        let rightSound = '';
+        let rightIndex = 1;
+        for (const d of digraphs) {
+          if (word.startsWith(d)) {
+            rightSound = d;
+            rightIndex = d.length;
+            break;
+          }
+        }
+        if (!rightSound && word.length > 0) {
+          rightSound = word.slice(0, 1);
+          rightIndex = 1;
+        }
+        if (rightSound) {
+          prefix = stress + hOpen + rightSound + hClose;
+          word = word.slice(rightIndex);
+        }
+      }
+    }
+    
+    // Check space AFTER this word (space index i)
+    if (i < words.length - 1) {
+      let nextWord = words[i+1];
+      let shouldHighlightSpaceAfter = true;
+      if (categoryName === 'ASSIMILATION') {
+        let rWord = nextWord;
+        if (stressMarks.includes(rWord[0])) rWord = rWord.slice(1);
+        if (!rWord.startsWith('j')) shouldHighlightSpaceAfter = false;
+      }
+      
+      if (shouldHighlightSpaceAfter) {
+        spaceChars[i] = undertie;
+        
+        let leftSound = '';
+        let leftIndex = word.length - 1;
+        for (const d of digraphs) {
+          if (word.endsWith(d)) {
+            leftSound = d;
+            leftIndex = word.length - d.length;
+            break;
+          }
+        }
+        if (!leftSound && word.length > 0) {
+          leftSound = word.slice(-1);
+          leftIndex = word.length - 1;
+        }
+        if (leftSound) {
+          suffix = hOpen + leftSound + hClose;
+          word = word.slice(0, leftIndex);
+        }
+      }
+    }
+    
+    resultWords[i] = prefix + word + suffix;
+  }
+
+  let finalString = "";
+  for (let i = 0; i < resultWords.length; i++) {
+    finalString += resultWords[i];
+    if (i < resultWords.length - 1) {
+      finalString += spaceChars[i];
+    }
+  }
+
+  return "/" + finalString + "/";
 }
 
 export default function LinkingWordPage() {
@@ -124,6 +290,7 @@ export default function LinkingWordPage() {
   const [activeSubTab, setActiveSubTab] = useState('All');
   const [showIpa, setShowIpa] = useState(true);
   const [highlightZone, setHighlightZone] = useState(true);
+  const [showSoundLink, setShowSoundLink] = useState(true);
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [showMore, setShowMore] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -359,6 +526,12 @@ export default function LinkingWordPage() {
               onChange={setHighlightZone}
               color="orange"
             />
+            <HighlightVisibilityToggle
+              label="Show Sound Link"
+              checked={showSoundLink}
+              onChange={setShowSoundLink}
+              color="magenta"
+            />
           </div>
         }
         bottomControls={
@@ -415,6 +588,11 @@ export default function LinkingWordPage() {
             </div>
           )}
 
+          {currentCategory.shortExplanation && (
+            <p className="text-orange-400 font-bold mb-2 text-sm sm:text-base">
+              {currentCategory.shortExplanation}
+            </p>
+          )}
           {currentCategory.explanation && (
             <p className="text-white/65 max-w-3xl border-l-2 border-white/20 pl-4 text-sm sm:text-lg">
               {currentCategory.explanation}
@@ -429,6 +607,8 @@ export default function LinkingWordPage() {
               <PhraseCard
                 key={`item-${index}`}
                 item={item}
+                categoryName={currentCategory.category}
+                showSoundLink={showSoundLink}
                 onCardRef={(node) => {
                   cardRefs.current[String(index)] = node;
                 }}
@@ -473,6 +653,8 @@ export default function LinkingWordPage() {
                       <PhraseCard
                         key={id}
                         item={item}
+                        categoryName={currentCategory.category}
+                        showSoundLink={showSoundLink}
                         onCardRef={(node) => {
                           cardRefs.current[String(id)] = node;
                         }}
@@ -522,6 +704,8 @@ function SubTabButton({
 
 function PhraseCard({
   item,
+  categoryName,
+  showSoundLink,
   onCardRef,
   isPlayingBefore,
   isPlayingAfter,
@@ -532,6 +716,8 @@ function PhraseCard({
   onPlayAfter,
 }: {
   item: LinkingWordItem;
+  categoryName: string;
+  showSoundLink: boolean;
   onCardRef: (node: HTMLDivElement | null) => void;
   isPlayingBefore: boolean;
   isPlayingAfter: boolean;
@@ -591,9 +777,10 @@ function PhraseCard({
                   Before
                 </span>
                 <div className="flex items-center gap-1 bg-black/30 border border-white/15 rounded pl-2 pr-1 py-0.5 sm:pl-2.5 sm:py-1">
-                  <span className="font-sans text-[11px] sm:text-sm mr-1 text-cyan-200">
-                    {item.ipaBefore}
-                  </span>
+                  <span 
+                    className="font-sans text-[11px] sm:text-sm mr-1 text-cyan-200"
+                    dangerouslySetInnerHTML={{ __html: (showSoundLink ? getHighlightedIpaBefore(item, categoryName) : (item.ipaBefore || '')).replace(/[ˈˌ']/g, '') }}
+                  />
                   <button
                     onClick={onPlayBefore}
                     className={cx(
@@ -622,7 +809,7 @@ function PhraseCard({
                   <span
                     className="font-sans text-sm sm:text-lg mr-2 text-cyan-200"
                     dangerouslySetInnerHTML={{
-                      __html: highlightZone && item.highlightedIpa ? item.highlightedIpa : item.ipa,
+                      __html: (highlightZone && item.highlightedIpa ? item.highlightedIpa : (item.ipa || '')).replace(/[ˈˌ']/g, ''),
                     }}
                   />
                   <button
