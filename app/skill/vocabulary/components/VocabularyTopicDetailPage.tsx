@@ -598,7 +598,7 @@ export default function VocabularyTopicDetailPage({
   }, [stopPlayback]);
 
   useEffect(() => {
-    if (!playingItemId || isMobile) return;
+    if (!playingItemId) return;
     const target = cardRefs.current[playingItemId];
     if (!target) return;
     target.scrollIntoView({
@@ -824,6 +824,7 @@ export default function VocabularyTopicDetailPage({
               hint="Swipe untuk pindah kata, atau tap tombol untuk play / detail."
               initialItemId={restoredWordId}
               activeItemId={playingItemId}
+              isPlaying={isPlayAllRunning}
               onIndexChange={(index) => {
                 setCarouselIndex(index);
                 const currentItemId = pagedWords[index]?.id;

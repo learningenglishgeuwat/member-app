@@ -566,6 +566,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.vocab-word-carousel-track.is-playing {
+  scroll-snap-type: none;
+}
+
 .vocab-word-carousel-track::-webkit-scrollbar {
   display: none;
 }

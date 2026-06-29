@@ -16,6 +16,7 @@ type Props = {
   initialItemId?: string | null;
   activeItemId?: string | null;
   onIndexChange?: (index: number) => void;
+  isPlaying?: boolean;
 };
 
 export default function VocabularyWordCarousel({
@@ -25,6 +26,7 @@ export default function VocabularyWordCarousel({
   initialItemId,
   activeItemId,
   onIndexChange,
+  isPlaying,
 }: Props) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const dragStateRef = useRef({
@@ -88,15 +90,23 @@ export default function VocabularyWordCarousel({
     if (dragStateRef.current.pointerDown) return;
     const nextIndex = items.findIndex((item) => item.id === activeItemId);
     if (nextIndex < 0) return;
-    if (nextIndex === currentIndexRef.current) return;
 
     const track = trackRef.current;
     const target = itemRefs.current[nextIndex];
     if (!track || !target) return;
-    track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
-    window.requestAnimationFrame(() => {
-      setCurrentIndex(nextIndex);
-    });
+
+    // Use instant scroll first to ensure position, then smooth if needed
+    const isAlreadyVisible = (
+      target.offsetLeft >= track.scrollLeft &&
+      target.offsetLeft < track.scrollLeft + track.clientWidth
+    );
+
+    if (!isAlreadyVisible || nextIndex !== currentIndexRef.current) {
+      track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+      window.requestAnimationFrame(() => {
+        setCurrentIndex(nextIndex);
+      });
+    }
   }, [activeItemId, items]);
 
   useEffect(() => {
@@ -212,7 +222,7 @@ export default function VocabularyWordCarousel({
 
         <div
           ref={trackRef}
-          className="vocab-word-carousel-track"
+          className={`vocab-word-carousel-track ${isPlaying ? 'is-playing' : ''}`}
           role="list"
           onScroll={() => {
             if (scrollEndTimerRef.current) {
