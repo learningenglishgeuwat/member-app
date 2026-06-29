@@ -8,15 +8,15 @@ const WASM_ASSET_URL = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${M
 const HAND_LANDMARKER_MODEL_URL =
   'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task'
 
-const CURSOR_LERP_ALPHA_FAST = 0.38
-const CURSOR_LERP_ALPHA_SLOW = 0.05
-const CURSOR_SLOW_SPEED_THRESHOLD = 0.8
+const CURSOR_BASE_ALPHA = 0.15
+const CURSOR_SPEED_MULTIPLIER = 0.12
+const CURSOR_MAX_ALPHA = 0.55
 const SWIPE_SPEED_THRESHOLD = 0.75
 const SWIPE_AXIS_DOMINANCE = 1.2
 const SWIPE_COOLDOWN_MS = 700
 const SWIPE_CURSOR_FREEZE_MS = 320
-const PINCH_DISTANCE_THRESHOLD = 0.035
-const PINCH_RELEASE_DISTANCE = 0.052
+const PINCH_DISTANCE_THRESHOLD = 0.050
+const PINCH_RELEASE_DISTANCE = 0.075
 const PINCH_COOLDOWN_MS = 520
 const PEACE_SIGN_COOLDOWN_MS = 950
 const PINKY_POINT_COOLDOWN_MS = 950
@@ -144,6 +144,12 @@ const isPinkyPointPose = (landmarks: NormalizedLandmark[]) => {
   )
 }
 
+const ACTIVE_AREA = {
+  width: 0.40,
+  yMin: 0.25,
+  yMax: 0.60,
+}
+
 const getPalmY = (landmarks: NormalizedLandmark[]) => {
   const rawY = (landmarks[0].y + landmarks[5].y + landmarks[9].y + landmarks[13].y + landmarks[17].y) / 5
   return Math.max(0, Math.min(1, (rawY - ACTIVE_AREA.yMin) / (ACTIVE_AREA.yMax - ACTIVE_AREA.yMin)))
@@ -153,12 +159,6 @@ const getIndexPoint = (landmarks: NormalizedLandmark[]): HandGesturePoint => ({
   x: 1 - landmarks[8].x,
   y: landmarks[8].y,
 })
-
-const ACTIVE_AREA = {
-  width: 0.40,
-  yMin: 0.25,
-  yMax: 0.60,
-}
 
 const normalizedToViewport = (point: HandGesturePoint, handedness?: string): HandGesturePoint => {
   const { width, height } = getViewportSize()
@@ -192,6 +192,50 @@ const normalizedToViewport = (point: HandGesturePoint, handedness?: string): Han
   }
 }
 
+const getAvailableVideoStream = async (): Promise<MediaStream> => {
+  try {
+    // Attempt 1: Ideal constraints
+    return await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        facingMode: 'user',
+        width: { ideal: 640 },
+        height: { ideal: 480 },
+      },
+    })
+  } catch (err) {
+    // Attempt 2: Just facingMode
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: { facingMode: 'user' },
+      })
+    } catch (err2) {
+      // Attempt 3: Try all available video inputs one by one
+      const devices = await navigator.mediaDevices.enumerateDevices()
+      const videoDevices = devices.filter(d => d.kind === 'videoinput')
+      
+      if (videoDevices.length === 0) {
+        throw new Error('Requested device not found') // trigger specific catch message
+      }
+
+      for (const device of videoDevices) {
+        try {
+          return await navigator.mediaDevices.getUserMedia({
+            audio: false,
+            video: { deviceId: { exact: device.deviceId } }
+          })
+        } catch (deviceErr) {
+          console.warn(`Failed to start camera ${device.label || device.deviceId}:`, deviceErr)
+          continue
+        }
+      }
+      
+      throw new Error('Could not start video source') // trigger specific catch message
+    }
+  }
+}
+
 export function useHandGestureTracking({
   enabled,
   onGesture,
@@ -220,6 +264,7 @@ export function useHandGestureTracking({
   const lastDetectionTimeRef = useRef(0)
   const performanceHistoryRef = useRef<number[]>([])
   const currentThrottleRef = useRef<number>(0) // 0 = as fast as possible
+  const landmarksRef = useRef<NormalizedLandmark[] | null>(null)
 
   const [state, setState] = useState<HandGestureTrackingState>({
     status: 'idle',
@@ -304,14 +349,32 @@ export function useHandGestureTracking({
         : { x: 0, y: 0 }
       const speed = Math.hypot(velocity.x, velocity.y)
       const pinchDistance = distance2d(landmarks[4], landmarks[8])
-      const isPrePinching = pinchDistance < 0.065
-      const isCursorFrozen = timestamp < cursorFreezeUntilRef.current || isPrePinching
+      // Removed overly aggressive isPrePinching freeze which caused random stuttering
+      const isCursorFrozen = timestamp < cursorFreezeUntilRef.current
 
       previousIndexRef.current = { ...indexPoint, time: timestamp }
 
+      landmarksRef.current = landmarks
+
       if (!isCursorFrozen) {
         const previousCursor = previousCursorRef.current
-        const alpha = speed <= CURSOR_SLOW_SPEED_THRESHOLD ? CURSOR_LERP_ALPHA_SLOW : CURSOR_LERP_ALPHA_FAST
+        
+        // Smooth dynamic LERP to eliminate "stop-and-go" stuttering
+        let alpha = Math.min(
+          Math.max(CURSOR_BASE_ALPHA + speed * CURSOR_SPEED_MULTIPLIER, CURSOR_BASE_ALPHA),
+          CURSOR_MAX_ALPHA
+        )
+        
+        // Dynamic Pre-Pinch Stabilization:
+        // As the user closes their fingers to pinch, their hand naturally shifts.
+        // We progressively reduce the alpha (up to 90% slower) to make the cursor "heavy" and anchor it in place
+        // right before the click, preventing it from sliding off the button.
+        if (pinchDistance < 0.09) {
+          const progress = Math.max(0, (pinchDistance - PINCH_DISTANCE_THRESHOLD) / (0.09 - PINCH_DISTANCE_THRESHOLD))
+          const pinchStabilization = 0.1 + 0.9 * progress
+          alpha *= pinchStabilization
+        }
+        
         const nextCursor = previousCursor
           ? {
               x: lerp(previousCursor.x, viewportPoint.x, alpha),
@@ -320,27 +383,37 @@ export function useHandGestureTracking({
           : viewportPoint
 
         previousCursorRef.current = nextCursor
-        setState((prev) => ({
-          ...prev,
-          cursor: {
-            ...nextCursor,
-            visible: true,
-            frozen: false,
-          },
-          handPresent: true,
-          landmarks,
-        }))
+        setState((prev) => {
+          if (prev.cursor.visible && !prev.cursor.frozen && prev.handPresent) {
+            return prev
+          }
+          return {
+            ...prev,
+            cursor: {
+              ...nextCursor,
+              visible: true,
+              frozen: false,
+            },
+            handPresent: true,
+            landmarks,
+          }
+        })
       } else {
-        setState((prev) => ({
-          ...prev,
-          cursor: {
-            ...prev.cursor,
-            visible: true,
-            frozen: true,
-          },
-          handPresent: true,
-          landmarks,
-        }))
+        setState((prev) => {
+          if (prev.cursor.visible && prev.cursor.frozen && prev.handPresent) {
+            return prev
+          }
+          return {
+            ...prev,
+            cursor: {
+              ...prev.cursor,
+              visible: true,
+              frozen: true,
+            },
+            handPresent: true,
+            landmarks,
+          }
+        })
       }
 
       const currentCursor = previousCursorRef.current ?? viewportPoint
@@ -453,6 +526,7 @@ export function useHandGestureTracking({
         if (!pinchDownRef.current && timestamp - lastPinchAtRef.current > PINCH_COOLDOWN_MS) {
           pinchDownRef.current = true
           lastPinchAtRef.current = timestamp
+          cursorFreezeUntilRef.current = timestamp + 350
           emitGesture({ ...commonEvent, type: 'pinch' })
         }
         return
@@ -549,16 +623,20 @@ export function useHandGestureTracking({
           peaceSignDownRef.current = false
           pinkyPointDownRef.current = false
           updateActiveGesture('none')
-          setState((prev) => ({
-            ...prev,
-            cursor: {
-              ...prev.cursor,
-              visible: false,
-              frozen: false,
-            },
-            handPresent: false,
-            landmarks: null,
-          }))
+          landmarksRef.current = null
+          setState((prev) => {
+            if (!prev.cursor.visible && !prev.cursor.frozen && !prev.handPresent) return prev;
+            return {
+              ...prev,
+              cursor: {
+                ...prev.cursor,
+                visible: false,
+                frozen: false,
+              },
+              handPresent: false,
+              landmarks: null,
+            }
+          })
         }
       }
 
@@ -579,14 +657,7 @@ export function useHandGestureTracking({
 
         const [{ FilesetResolver, HandLandmarker }, stream] = await Promise.all([
           import('@mediapipe/tasks-vision'),
-          navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-              facingMode: 'user',
-              width: { ideal: 640 },
-              height: { ideal: 480 },
-            },
-          }),
+          getAvailableVideoStream(),
         ])
 
         if (cancelled) {
@@ -629,10 +700,19 @@ export function useHandGestureTracking({
       } catch (error) {
         if (cancelled) return
 
-        const message =
+        let message =
           error instanceof Error
             ? error.message
             : 'Gagal mengaktifkan hand gesture.'
+
+        const lowerMsg = message.toLowerCase()
+        if (lowerMsg.includes('could not start video source') || lowerMsg.includes('notreadableerror') || lowerMsg.includes('trackstarterror')) {
+          message = 'Kamera sedang digunakan oleh aplikasi lain (misal Zoom/Meet) atau bermasalah. Mohon tutup aplikasi tersebut dan coba lagi.'
+        } else if (lowerMsg.includes('permission denied') || lowerMsg.includes('notallowederror')) {
+          message = 'Izin kamera ditolak. Mohon izinkan akses kamera di browser Anda.'
+        } else if (lowerMsg.includes('requested device not found') || lowerMsg.includes('notfounderror')) {
+          message = 'Kamera tidak ditemukan. Pastikan kamera terhubung dengan benar.'
+        }
 
         stopCamera()
         setState((prev) => ({
@@ -658,5 +738,7 @@ export function useHandGestureTracking({
   return {
     ...state,
     videoRef,
+    cursorRef: previousCursorRef,
+    landmarksRef,
   }
 }

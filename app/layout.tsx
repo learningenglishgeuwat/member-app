@@ -4,6 +4,7 @@ import "./globals.css";
 import "./styles/base/scrollbar.css";
 import AppClientShell from "@/app/components/AppClientShell";
 import TTSInitButton from "@/app/components/TTSInitButton";
+import { AudioAccentProvider } from "@/app/contexts/AudioAccentContext";
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -51,7 +52,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${notoSans.variable} ${orbitron.variable}`}>
       <body className="font-sans antialiased bg-black text-slate-200">
-        <AppClientShell>{children}</AppClientShell>
+        <AudioAccentProvider>
+          <AppClientShell>{children}</AppClientShell>
+        </AudioAccentProvider>
         <TTSInitButton />
       </body>
     </html>

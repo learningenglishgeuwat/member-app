@@ -7,8 +7,10 @@ import Background from './components/Background';
 import TopicCard from './components/TopicCard';
 import BackButton from '../components/BackButton';
 import Sidebar from '../components/skillSidebar/SkillSidebar';
-import { Info, ChevronLeft, ChevronRight, Cpu } from 'lucide-react';
+import { Info, ChevronLeft, ChevronRight, Cpu, Lock, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useHaptic } from '@/lib/haptic/useHaptic';
+import { useAudio } from '@/lib/audio/useAudio';
 
 type TopicDetailTheme = {
   detailBorderLeft: string;
@@ -114,8 +116,35 @@ const DEFAULT_DETAIL_THEME: TopicDetailTheme = {
 };
 
 const Page: React.FC = () => {
+  const { triggerHaptic } = useHaptic();
+  const { triggerTap } = useAudio();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // Load initial index from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('pronunciationMenuLastIndex');
+      if (saved !== null) {
+        const index = parseInt(saved, 10);
+        if (!isNaN(index) && index >= 0 && index < TOPICS.length && !LOCKED_TOPIC_IDS.includes(TOPICS[index].id)) {
+          setSelectedIndex(index);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  // Save index to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('pronunciationMenuLastIndex', selectedIndex.toString());
+    } catch (e) {
+      // ignore
+    }
+  }, [selectedIndex]);
+
   const router = useRouter();
   
   // Ref for carousel container to handle scrolling
@@ -141,6 +170,7 @@ const Page: React.FC = () => {
   }, [router]);
 
   const handleNav = useCallback((direction: 'left' | 'right') => {
+    triggerTap();
     setSelectedIndex(prev => {
       let newIndex = prev;
       
@@ -215,11 +245,12 @@ const Page: React.FC = () => {
     // Reset
     touchStartX.current = 0;
     touchEndX.current = 0;
-  }, [handleNav]);
+  }, [handleNav, triggerHaptic, triggerTap]);
 
   const handleStartLearning = useCallback(() => {
     // Check if topic is locked before navigation.
     if (!isTopicLocked) {
+      triggerHaptic('tap');
       navigateToTopic(selectedTopic.id);
     } else {
       // Optional: Show feedback for locked topics
@@ -387,7 +418,7 @@ const Page: React.FC = () => {
               className={`relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r ${selectedTopic.color} text-white rounded-xl font-semibold text-sm transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.35)] overflow-hidden ${
                 isTopicLocked 
                   ? 'opacity-50 cursor-not-allowed' 
-                  : 'animate-[pulse_1.5s_ease-in-out_infinite]'
+                  : ''
               } before:absolute before:inset-[-20px] before:content-['']`}
            >
               <Cpu className="w-10 h-10 sm:w-12 sm:h-12 text-white/90" />

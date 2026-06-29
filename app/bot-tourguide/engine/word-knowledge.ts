@@ -1,4 +1,3 @@
-import { getVocabularyExampleTranslation } from '../../skill/vocabulary/topic/data/example-meta';
 import { VOCABULARY_TOPIC_MAP } from '../../skill/vocabulary/topic/data/topics';
 import { VOCABULARY_WORDS } from '../../skill/vocabulary/topic/data/words';
 import { PRONUNCIATION_TERM_SEEDS } from '../data/pronunciation-terms';
@@ -90,7 +89,7 @@ const buildVocabularyEntries = () => {
       meaningId: item.meaningId,
       ipa: item.ipa,
       exampleEn: item.exampleEn,
-      exampleTranslation: getVocabularyExampleTranslation(item.exampleEn),
+      exampleTranslation: item.translation ?? '',
       route: `${TOPIC_ROUTE_BASE}/${item.topicId}`,
     };
     addEntryToIndexes(entry);

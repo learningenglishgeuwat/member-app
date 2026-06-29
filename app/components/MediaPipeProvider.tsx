@@ -165,7 +165,7 @@ export default function MediaPipeProvider() {
     }
   }, [pathname])
 
-  const { status, error, cursor, activeGesture, videoRef, landmarks } = useHandGestureTracking({
+  const { status, error, cursor, activeGesture, videoRef, cursorRef: hookCursorRef, landmarksRef } = useHandGestureTracking({
     enabled,
     onGesture: handleGesture,
   })
@@ -195,6 +195,11 @@ export default function MediaPipeProvider() {
     activeGestureRef.current = activeGesture
   }, [activeGesture])
 
+  const zoomLevelRef = useRef(zoomLevel)
+  useEffect(() => {
+    zoomLevelRef.current = zoomLevel
+  }, [zoomLevel])
+
   useEffect(() => {
     if (previewCamera && enabled) {
       document.body.classList.add('is-camera-full-page')
@@ -208,31 +213,45 @@ export default function MediaPipeProvider() {
   }, [previewCamera, enabled])
 
   useEffect(() => {
-    const canvas = landmarkCanvasRef.current
-    if (!canvas) return
-
-    if (!enabled || !showLandmarks) {
-      canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
-      return
-    }
-
-    drawHandLandmarks(canvas, videoRef.current, landmarks, zoomLevel)
-  }, [enabled, landmarks, showLandmarks, videoRef, zoomLevel])
-
-  useEffect(() => {
     if (!enabled) {
       const t = setTimeout(() => setIsHoveringClickable(false), 0)
+      const canvas = landmarkCanvasRef.current
+      if (canvas) {
+        canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
+      }
       return () => clearTimeout(t)
     }
 
     const tick = () => {
-      const currentCursor = cursorRef.current
+      const currentCursorPos = hookCursorRef?.current
+      const isVisible = cursorRef.current.visible
+      const currentZoom = zoomLevelRef.current
+      
       let hoveredTarget: HTMLElement | null = null
-      if (currentCursor.visible) {
-        hoveredTarget = getClickableElementAtPoint(currentCursor.x, currentCursor.y)
+      if (currentCursorPos && isVisible) {
+        hoveredTarget = getClickableElementAtPoint(currentCursorPos.x, currentCursorPos.y)
       }
       const isClickable = !!(hoveredTarget && document.contains(hoveredTarget))
       setIsHoveringClickable(isClickable)
+
+      // Update Cursor position directly in DOM
+      const cursorEl = document.getElementById('hand-cursor')
+      if (cursorEl && currentCursorPos && isVisible) {
+        cursorEl.style.left = `${currentCursorPos.x / currentZoom}px`
+        cursorEl.style.top = `${currentCursorPos.y / currentZoom}px`
+      }
+
+      // Draw Landmarks directly in canvas
+      const canvas = landmarkCanvasRef.current
+      if (canvas && showLandmarks) {
+        if (landmarksRef?.current && videoRef.current) {
+          drawHandLandmarks(canvas, videoRef.current, landmarksRef.current, currentZoom)
+        } else {
+          canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
+        }
+      } else if (canvas) {
+        canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
+      }
 
       window.requestAnimationFrame(tick)
     }
@@ -242,7 +261,7 @@ export default function MediaPipeProvider() {
     return () => {
       window.cancelAnimationFrame(rafId)
     }
-  }, [enabled])
+  }, [enabled, showLandmarks, hookCursorRef, landmarksRef, videoRef])
 
   if (!pathname || isPublicPath(pathname)) return null
 
@@ -313,7 +332,7 @@ export default function MediaPipeProvider() {
         {/* Toggle Tab */}
         <button
           onClick={() => setShowControlPanel(!showControlPanel)}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-full border border-l-0 border-white/10 p-1 sm:p-1.5 rounded-r-md transition-colors shadow-[4px_0_10px_rgba(0,0,0,0.3)] ${
+          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-full border border-l-0 border-white/10 p-2 sm:p-3 rounded-r-lg transition-colors shadow-[4px_0_10px_rgba(0,0,0,0.3)] ${
             previewCamera && enabled ? 'bg-[#101314]/30 backdrop-blur-md' : 'bg-[#101314]'
           }`}
           style={{ color: '#22d3ee' }}
@@ -321,7 +340,7 @@ export default function MediaPipeProvider() {
           onMouseLeave={(e) => { e.currentTarget.style.color = '#22d3ee'; }}
           aria-label={showControlPanel ? 'Close Control Panel' : 'Open Control Panel'}
         >
-          {showControlPanel ? <ChevronLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
+          {showControlPanel ? <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" /> : <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />}
         </button>
       </div>
 
@@ -417,11 +436,10 @@ export default function MediaPipeProvider() {
             .filter(Boolean)
             .join(' ')}
           style={{
-            left: `${cursor.x / zoomLevel}px`,
-            top: `${cursor.y / zoomLevel}px`,
             transform: `translate(-50%, -50%) scale(${1 / zoomLevel})`,
             zIndex: 999999,
           }}
+          id="hand-cursor"
         >
           <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/90 shadow-[0_0_8px_rgba(255,255,255,0.85)]" />
           <span className="absolute inset-[-7px] rounded-full border border-cyan-200/20" />

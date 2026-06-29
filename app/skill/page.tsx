@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Cpu, Loader2, Lock, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAudio } from '@/lib/audio/useAudio';
+import { useHaptic } from '@/lib/haptic/useHaptic';
 import './styles/neon.css';
 import BackButton from './components/BackButton';
 import Sidebar from './components/skillSidebar/SkillSidebar';
@@ -115,6 +116,7 @@ function SkillMenuContent() {
   const activeColor = getColorConfig(activeConfig.color);
   const isExecuteReady = !loading && !accessDenied && !accessGranted && activeConfig.available;
   const { triggerLoading, triggerLoadingStop } = useAudio()
+  const { triggerHaptic } = useHaptic();
   const clearPendingNavigationTimers = useCallback(() => {
     if (initDelayTimerRef.current) {
       window.clearTimeout(initDelayTimerRef.current);
@@ -140,20 +142,14 @@ function SkillMenuContent() {
     clearPendingNavigationTimers();
 
     setLoading(true);
-    triggerLoading()
     setAccessDenied(false);
     setAccessGranted(false);
 
-    // Keep UX delay 2.5s, then switch to ACCESS GRANTED and navigate immediately.
-    initDelayTimerRef.current = window.setTimeout(() => {
-      setLoading(false);
-      triggerLoadingStop()
-      setAccessGranted(true);
-
-      navigateTimerRef.current = window.setTimeout(() => {
-        router.push(destination);
-      }, 80);
-    }, 2500);
+    // Instant navigation for better UX
+    setLoading(false);
+    setAccessGranted(true);
+    triggerHaptic('tap');
+    router.push(destination);
   };
 
   const handleSkillClick = (skill: SkillConfig) => {

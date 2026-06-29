@@ -1684,7 +1684,6 @@ export default function PronunciationTextPage() {
               isActive={activeSpeechGroup === 'main'}
               label="TEXT"
               onClick={toggleMainPlayAll}
-              size="sm"
             />
           </div>
         }

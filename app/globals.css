@@ -6,36 +6,36 @@
 /* All @import must be at the top before any rules */
 
 /* Base Styles */
-@import './styles/base/variables.css';
-@import './styles/base/typography.css';
+@import "./styles/base/variables.css";
+@import "./styles/base/typography.css";
 
 /* Layouts */
-@import './styles/layouts/auth-layout.css';
-@import './styles/layouts/dashboard-layout.css';
-@import './styles/layouts/skill-layout.css';
-@import './styles/layouts/pronunciation-layout.css';
+@import "./styles/layouts/auth-layout.css";
+@import "./styles/layouts/dashboard-layout.css";
+@import "./styles/layouts/skill-layout.css";
+@import "./styles/layouts/pronunciation-layout.css";
 
 /* Pronunciation Themes */
-@import './styles/themes/pronunciation/_base.css';
-@import './styles/themes/pronunciation/alphabet.css';
-@import './styles/themes/pronunciation/stressing.css';
-@import './styles/themes/pronunciation/intonation.css';
-@import './styles/themes/pronunciation/final-sound.css';
-@import './styles/themes/pronunciation/american-t.css';
-@import './styles/themes/pronunciation/text.css';
-@import './styles/themes/pronunciation/reading-text.css';
+@import "./styles/themes/pronunciation/_base.css";
+@import "./styles/themes/pronunciation/alphabet.css";
+@import "./styles/themes/pronunciation/stressing.css";
+@import "./styles/themes/pronunciation/intonation.css";
+@import "./styles/themes/pronunciation/final-sound.css";
+@import "./styles/themes/pronunciation/american-t.css";
+@import "./styles/themes/pronunciation/text.css";
+@import "./styles/themes/pronunciation/reading-text.css";
 
 /* Components */
-@import './styles/components/buttons.css';
-@import './styles/components/cards.css';
-@import './styles/components/tables.css';
+@import "./styles/components/buttons.css";
+@import "./styles/components/cards.css";
+@import "./styles/components/tables.css";
 
 /* Card Components (new shared library) */
-@import './components/cards/BaseCard.css';
+@import "./components/cards/BaseCard.css";
 
 /* Utilities */
-@import './styles/utilities/effects.css';
-@import './styles/utilities/responsive.css';
+@import "./styles/utilities/effects.css";
+@import "./styles/utilities/responsive.css";
 
 /* Tailwind Directives - Must be after @import */
 @tailwind base;

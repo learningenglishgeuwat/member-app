@@ -98,6 +98,70 @@ export default function MobileBottomNav() {
     setIsNavVisible(!isNavVisible)
   }
 
+  React.useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScrollDirection = () => {
+      const scrollY = window.scrollY;
+
+      if (Math.abs(scrollY - lastScrollY) < 10) {
+        ticking = false;
+        return;
+      }
+      
+      if (scrollY < 50) {
+        setIsNavVisible(true);
+      } else {
+        setIsNavVisible(scrollY < lastScrollY);
+      }
+      
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollDirection);
+        ticking = true;
+      }
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    
+    const onTouchMove = (e: TouchEvent) => {
+      // If we are at the top of the page, always show
+      if (window.scrollY < 50) return;
+      
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const touchY = e.touches[0].clientY;
+          const diff = touchStartY - touchY;
+          // Diff > 0 means finger moved up (scrolling down)
+          if (Math.abs(diff) > 20) {
+            setIsNavVisible(diff < 0);
+            touchStartY = touchY;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+    };
+  }, []);
+
   if (!shouldRender) return null
 
   return (
@@ -108,7 +172,7 @@ export default function MobileBottomNav() {
       <button
         type="button"
         onClick={toggleNavVisibility}
-        className={`fixed left-1/2 z-[90] -translate-x-1/2 bg-[#101314]/50 backdrop-blur-md border border-b-0 border-white/10 p-1.5 rounded-t-md text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
+        className={`fixed left-1/2 z-[90] -translate-x-1/2 bg-[#101314]/50 backdrop-blur-md border border-b-0 border-white/10 p-2 sm:p-3 rounded-t-lg text-cyan-400 hover:text-cyan-300 transition-all duration-300 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] group ${
           isNavVisible
             ? 'bottom-[calc(env(safe-area-inset-bottom,0px)+94px)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+110px)]'
             : 'bottom-[calc(env(safe-area-inset-bottom,0px)+8px)]'
@@ -117,9 +181,9 @@ export default function MobileBottomNav() {
       >
         <div className="relative">
           {isNavVisible ? (
-            <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
+            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 transition-colors" />
           ) : (
-            <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
+            <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 transition-colors" />
           )}
         </div>
       </button>

@@ -291,6 +291,11 @@
   outline-offset: 2px;
 }
 
+.futuristic-portal-container .symbol-table-trigger-btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.05s;
+}
+
 .futuristic-portal-container .common-mistakes-wrap {
   display: flex;
   flex-direction: column;
@@ -336,6 +341,11 @@
 .futuristic-portal-container .common-mistakes-btn:focus-visible {
   outline: 2px solid rgba(175, 145, 255, 0.9);
   outline-offset: 2px;
+}
+
+.futuristic-portal-container .common-mistakes-btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.05s;
 }
 
 /* ========================================
@@ -387,6 +397,11 @@
 .futuristic-portal-container .acuan-suara-btn:focus-visible {
   outline: 2px solid rgba(175, 145, 255, 0.9);
   outline-offset: 2px;
+}
+
+.futuristic-portal-container .acuan-suara-btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.05s;
 }
 
 .futuristic-portal-container .acuan-suara-modal-content {
@@ -480,6 +495,7 @@
   padding: 16px;
   background: rgba(4, 4, 10, 0.72);
   backdrop-filter: blur(8px);
+  animation: overlayFadeIn 0.25s ease forwards;
 }
 
 .futuristic-portal-container .symbol-table-modal {
@@ -921,7 +937,7 @@
 .futuristic-portal-container .icon-text {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--color-ipa);
+  color: #ffffff;
   z-index: 10;
   font-family: var(--font-ipa);
   position: relative;
@@ -1040,9 +1056,6 @@
   max-height: 80vh;
   overflow-y: auto;
   z-index: 100;
-  opacity: 0;
-  visibility: hidden;
-  animation: panelMaterialize 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Symbol Panel Grid Lines */
@@ -1584,6 +1597,11 @@
   outline-offset: 2px;
 }
 
+.futuristic-portal-container .intro-card-btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.05s;
+}
+
 /* Intro Modal */
 .futuristic-portal-container .intro-modal {
   width: min(860px, 96vw);
@@ -1811,17 +1829,6 @@
 
   .futuristic-portal-container .example-arrow {
     display: none;
-  }
-
-  .futuristic-portal-container .formula-line {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .futuristic-portal-container .formula-arrow {
-    transform: rotate(90deg);
-    font-size: 1.25rem;
   }
 }
 

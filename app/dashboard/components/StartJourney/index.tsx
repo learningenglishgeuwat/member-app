@@ -213,7 +213,6 @@ const StartJourney: React.FC = () => {
 
     setShowEmptyWarning(false)
     setLoading(true)
-    triggerLoading()
     setPlan(null)
     
     // Mock data for different goals
@@ -263,21 +262,14 @@ const StartJourney: React.FC = () => {
       motivation: 'Klik READY pada setiap phase untuk mengunci misi dan memulai perjalananmu.',
     }
 
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500))
     setPlan(selectedPlan)
     setLoading(false)
-    triggerLoadingStop()
-    triggerHaptic('success')
+    triggerHaptic('tap')
   }
 
   const handleInitiate = async () => {
     setInitiating(true)
-    triggerLoading()
-    triggerHaptic('success')
-    // Simulate loading delay for UX
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    triggerLoadingStop()
+    triggerHaptic('tap')
     // Navigate to skills page
     localStorage.removeItem('lastSkillPath')
     router.push('/skill')

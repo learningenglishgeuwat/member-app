@@ -113,6 +113,7 @@ const SymbolDetailPage: React.FC = () => {
   const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isPlayingAllBritishNotes, setIsPlayingAllBritishNotes] = useState(false);
+  const [isPlayingAllCommonLetters, setIsPlayingAllCommonLetters] = useState(false);
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showIpa, setShowIpa] = useState(true);
   const [showHighlight, setShowHighlight] = useState(true);
@@ -194,6 +195,36 @@ const SymbolDetailPage: React.FC = () => {
     return Array.from(new Set(base.filter(Boolean)));
   }, [decodedSymbol]);
 
+  const filteredCommonLetters = useMemo(() => {
+    if (!commonLetters || !decodedSymbol) return [];
+    
+    const allowed = new Set<string>(symbolAliasCandidates);
+
+    return commonLetters.filter((letter) => {
+      const cleanedIpaSymbol = letter.ipaSymbol.replace(/\//g, '').trim();
+      if (cleanedIpaSymbol.includes(' or ')) {
+        const symbols = cleanedIpaSymbol.split(' or ').map((s) => s.trim());
+        return symbols.some((s) => allowed.has(s));
+      }
+      return allowed.has(cleanedIpaSymbol);
+    });
+  }, [commonLetters, decodedSymbol, symbolAliasCandidates]);
+
+  const commonLettersExamples = useMemo(() => {
+    const words: string[] = [];
+    filteredCommonLetters.forEach((letter) => {
+      letter.examples.forEach((ex) => {
+        const parts = ex.split('->');
+        if (parts.length === 2) {
+          words.push(parts[1].trim());
+        } else {
+          words.push(ex);
+        }
+      });
+    });
+    return words;
+  }, [filteredCommonLetters]);
+
   const isIndexBasedOverride = (patterns: string[]): boolean => hhIsIndexBasedOverride(patterns);
 
   const renderIndexBasedWord = (word: string, patterns: string[]) =>
@@ -235,16 +266,20 @@ const SymbolDetailPage: React.FC = () => {
     stopPlayAllWords,
     handlePlayAllWords,
     handlePlayAllBritishNotes,
+    handlePlayAllCommonLetters,
     handlePlayWord,
     handlePlayBritishNoteWord,
     handlePlayAmericanNoteWord,
   } = useSymbolPlayback({
     symbolData,
     britishNote,
+    commonLettersExamples,
     isPlayingAll,
     isPlayingAllBritishNotes,
+    isPlayingAllCommonLetters,
     setIsPlayingAll,
     setIsPlayingAllBritishNotes,
+    setIsPlayingAllCommonLetters,
     setActiveWord,
     setActiveWordIndex,
   });
@@ -321,25 +356,27 @@ const SymbolDetailPage: React.FC = () => {
           </div>
         </div>
 
-        <SymbolWordGrid
-          examples={symbolData.examples}
-          symbolKey={decodedSymbol}
-          uiNote={symbolData.uiNote}
-          wordCardRefs={wordCardRefs}
-          activeWord={activeWord}
-          activeWordIndex={activeWordIndex}
-          isPlayingAll={isPlayingAll}
-          showIpa={showIpa}
-          showHighlight={showHighlight}
-          isWordExamplesCopied={isWordExamplesCopied}
-          handleCopyWordExamples={handleCopyWordExamples}
-          toTourToken={toTourToken}
-          renderWord={renderWord}
-          renderIpa={renderIpa}
-          handlePlayWord={handlePlayWord}
-          setActiveWord={setActiveWord}
-          setActiveWordIndex={setActiveWordIndex}
-        />
+        <div id="wordExamples">
+          <SymbolWordGrid
+            examples={symbolData.examples}
+            symbolKey={decodedSymbol}
+            uiNote={symbolData.uiNote}
+            wordCardRefs={wordCardRefs}
+            activeWord={activeWord}
+            activeWordIndex={activeWordIndex}
+            isPlayingAll={isPlayingAll}
+            showIpa={showIpa}
+            showHighlight={showHighlight}
+            isWordExamplesCopied={isWordExamplesCopied}
+            handleCopyWordExamples={handleCopyWordExamples}
+            toTourToken={toTourToken}
+            renderWord={renderWord}
+            renderIpa={renderIpa}
+            handlePlayWord={handlePlayWord}
+            setActiveWord={setActiveWord}
+            setActiveWordIndex={setActiveWordIndex}
+          />
+        </div>
 
         {britishNote && (
           <BritishNotePanel
@@ -525,8 +562,25 @@ const SymbolDetailPage: React.FC = () => {
             <PlayStopButton
               isActive={isPlayingAll}
               label="WORD EXAMPLES"
+              sectionId="wordExamples"
               onClick={handlePlayAllWords}
               disabled={symbolData.examples.length === 0}
+            />
+            <PlayStopButton
+              isActive={isPlayingAllCommonLetters}
+              label="COMMON LETTERS"
+              sectionId="commonLetters"
+              onClick={() => {
+                if (!isCommonLettersOpen && !isPlayingAllCommonLetters) {
+                  setIsCommonLettersOpen(true);
+                  setTimeout(() => {
+                    handlePlayAllCommonLetters();
+                  }, 300);
+                } else {
+                  handlePlayAllCommonLetters();
+                }
+              }}
+              disabled={commonLettersExamples.length === 0}
             />
             {britishNote && (
               <PlayStopButton

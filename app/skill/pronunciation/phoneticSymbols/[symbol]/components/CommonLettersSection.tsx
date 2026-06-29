@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
-import { ChevronDown, BookOpen } from 'lucide-react'
+import { ChevronDown, BookOpen, Volume2 } from 'lucide-react'
 import type { CommonLetter } from '../../data/commonLetters/CommonLetters'
+import { speakWithBestEnglishVoice } from '../../../final-sound-new/tts-utils'
 
 type CanonicalCategory = CommonLetter['category']
 type LegacyCategory = 'vowel' | 'tense_vowel' | 'consonant'
@@ -103,8 +104,6 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
   onRetry,
   aliasMap,
 }) => {
-  const [expandedSubSections, setExpandedSubSections] = useState<Record<string, boolean>>({})
-
   // Filter letters based on symbol IPA (considering aliases)
   const filteredLetters = useMemo(() => {
     if (!letters || !symbolIPA) {
@@ -161,15 +160,8 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
     }, [])
   }, [filteredLetters])
 
-  const toggleSubSection = (category: string) => {
-    setExpandedSubSections((prev) => ({
-      ...prev,
-      [category]: !(prev[category] ?? false),
-    }))
-  }
-
   return (
-    <div className="w-full max-w-4xl mx-auto mt-6">
+    <div id="commonLetters" className="w-full max-w-4xl mx-auto mt-6">
       <div
         className="symbol-detail-collapsible-panel bg-black/90 border border-white/60 hover:border-purple-500 transition-colors rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:shadow-[0_0_30px_rgba(168,85,247,0.35)]"
         style={{ '--panel-glow-rgb': '168, 85, 247' } as React.CSSProperties}
@@ -217,79 +209,107 @@ export const CommonLettersSection: React.FC<CommonLettersSectionProps> = ({
                 {groupedLetters.length > 0 ? (
                   groupedLetters.map((category) => {
                     const theme = CATEGORY_THEME[category.family]
-                    const isExpanded = expandedSubSections[category.category] ?? false
 
                     return (
                       <div key={category.category} className={`border rounded-lg p-4 ${theme.sectionWrap}`}>
-                        <button
-                          type="button"
-                          onClick={() => toggleSubSection(category.category)}
-                          className="w-full flex items-center justify-between text-left mb-4"
-                          aria-expanded={isExpanded}
-                        >
+                        <div className="w-full flex items-center justify-between text-left mb-4">
                           <h4 className={`text-sm md:text-base font-bold font-mono ${theme.sectionTitle}`}>
                             {category.category}
                           </h4>
-                          <ChevronDown
-                            size={16}
-                            className={`text-white/70 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-                          />
-                        </button>
-
-                        {isExpanded && (
-                          <div className="space-y-3">
-                            {category.letters.map((letter, idx) => (
-                              <div key={idx} className={`border rounded p-3 ${theme.itemWrap}`}>
-                                <div className="flex flex-col mb-2">
-                                  <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>
-                                    /{letter.ipaSymbol}/
-                                  </span>
-                                  <span className={`font-mono text-sm ${theme.letter}`}>
-                                    {letter.letter}
-                                  </span>
-                                </div>
-
-                                {letter.description && (
-                                  <p className={`text-[11px] md:text-sm mb-2 ${theme.description}`}>
-                                    {letter.description}
-                                  </p>
-                                )}
-
-                                {letter.examples && letter.examples.length > 0 && (
-                                  <div className="mt-2">
-                                    <div className={`text-[11px] font-mono mb-1 ${theme.example}`}>
-                                      <strong>Examples:</strong>
-                                    </div>
-                                    <div className="space-y-1">
-                                      {letter.examples.map((ex, exIdx) => (
-                                        <div key={exIdx} className={`text-[10px] font-mono ${theme.example}`}>
-                                          {ex}
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-
-                                {letter.pronunciationTip && (
-                                  <p className={`text-[10px] md:text-xs font-mono mt-2 ${theme.example}`}>
-                                    <strong>Tip:</strong> {letter.pronunciationTip}
-                                  </p>
-                                )}
-
-                                {letter.traps && letter.traps.length > 0 && (
-                                  <div className={`mt-2 p-2 rounded bg-red-500/10 border border-red-400/30`}>
-                                    <p className={`text-xs font-mono text-red-200`}>
-                                      <strong>⚠️ Traps:</strong> {letter.traps.join(', ')}
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
                         </div>
-                      )}
-                    </div>
-                  )
-                })
+
+                        <div className="space-y-3">
+                          {category.letters.map((letter, idx) => (
+                            <div key={idx} className={`border rounded p-3 ${theme.itemWrap}`}>
+                              <div className="flex flex-col mb-2">
+                                <span className={`font-bold text-lg mb-1 ${theme.ipa}`}>
+                                  /{letter.ipaSymbol}/
+                                </span>
+                                <span className={`font-mono text-sm ${theme.letter}`}>
+                                  {letter.letter}
+                                </span>
+                              </div>
+
+                              {letter.description && (
+                                <p className={`text-[11px] md:text-sm mb-2 ${theme.description}`}>
+                                  {letter.description}
+                                </p>
+                              )}
+
+                              {letter.examples && letter.examples.length > 0 && (
+                                <div className="mt-2">
+                                  <div className={`text-[11px] font-mono mb-1 ${theme.example}`}>
+                                    <strong>Examples:</strong>
+                                  </div>
+                                  <div className="space-y-1">
+                                    {letter.examples.map((ex, exIdx) => {
+                                      const parts = ex.split('->');
+                                      if (parts.length === 2) {
+                                        return (
+                                          <div key={exIdx} className="common-letter-example-card flex items-center gap-3 p-2.5 rounded-md bg-white/5 border border-white/10 hover:border-purple-500/30 transition-colors">
+                                            <span className="text-xs md:text-sm font-bold font-mono text-purple-300 min-w-[32px] whitespace-nowrap">
+                                              {parts[0].trim()}
+                                            </span>
+                                            <span className="text-white/20 text-xs">→</span>
+                                            <span className="text-[11px] md:text-xs text-gray-200 leading-relaxed font-mono flex-1">
+                                              {parts[1].trim()}
+                                            </span>
+                                            <button
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                speakWithBestEnglishVoice(parts[1].trim());
+                                              }}
+                                              className="p-1.5 rounded-full bg-white/5 hover:bg-cyan-500/20 text-white/50 hover:text-cyan-400 transition-colors ml-auto flex-shrink-0"
+                                              aria-label="Play example pronunciation"
+                                            >
+                                              <Volume2 size={14} />
+                                            </button>
+                                          </div>
+                                        );
+                                      }
+                                      return (
+                                        <div key={exIdx} className="common-letter-example-card flex items-center gap-2 p-2.5 rounded-md bg-white/5 border border-white/10">
+                                          <span className="text-[11px] md:text-xs text-gray-200 font-mono flex-1">
+                                            {ex}
+                                          </span>
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              speakWithBestEnglishVoice(ex);
+                                            }}
+                                            className="p-1.5 rounded-full bg-white/5 hover:bg-cyan-500/20 text-white/50 hover:text-cyan-400 transition-colors ml-auto flex-shrink-0"
+                                            aria-label="Play example pronunciation"
+                                          >
+                                            <Volume2 size={14} />
+                                          </button>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+
+                              {letter.pronunciationTip && (
+                                <p className={`text-[10px] md:text-xs font-mono mt-2 ${theme.example}`}>
+                                  <strong>Tip:</strong> {letter.pronunciationTip}
+                                </p>
+                              )}
+
+                              {letter.traps && letter.traps.length > 0 && (
+                                <div className={`mt-2 p-2 rounded bg-red-500/10 border border-red-400/30`}>
+                                  <p className={`text-xs font-mono text-red-200`}>
+                                    <strong>⚠️ Traps:</strong> {letter.traps.join(', ')}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  })
                 ) : (
                   <div className="text-center py-6">
                     <p className="text-gray-400 text-sm">
