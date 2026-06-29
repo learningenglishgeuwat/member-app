@@ -824,6 +824,7 @@ export default function VocabularyTopicDetailPage({
               hint="Swipe untuk pindah kata, atau tap tombol untuk play / detail."
               initialItemId={restoredWordId}
               activeItemId={playingItemId}
+              isPlaying={isPlayAllRunning}
               onIndexChange={(index) => {
                 setCarouselIndex(index);
                 const currentItemId = pagedWords[index]?.id;
