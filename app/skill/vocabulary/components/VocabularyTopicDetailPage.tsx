@@ -598,7 +598,7 @@ export default function VocabularyTopicDetailPage({
   }, [stopPlayback]);
 
   useEffect(() => {
-    if (!playingItemId || isMobile) return;
+    if (!playingItemId) return;
     const target = cardRefs.current[playingItemId];
     if (!target) return;
     target.scrollIntoView({
