@@ -1,4 +1,4 @@
-﻿import type { VocabularyItem } from '../types';
+import type { VocabularyItem } from '../types';
 
 export const VOCAB_TOPIC_COLOR_WORDS: VocabularyItem[] = [
   { id: 'color-w01', topicId: 'color', word: 'red', ipa: '/rɛd/', ipaUk: '/red/', meaningId: 'merah', exampleEn: 'The apple is red.', exampleEnUs: '/ðə ˈæpəl ɪz rɛd/', exampleEnUk: '/ðə ˈæpəl ɪz red/', translation: 'Apel itu berwarna merah.' },

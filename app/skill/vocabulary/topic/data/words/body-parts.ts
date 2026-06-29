@@ -1,4 +1,4 @@
-﻿import type { VocabularyItem } from '../types';
+import type { VocabularyItem } from '../types';
 
 export const VOCAB_TOPIC_BODY_PARTS_WORDS: VocabularyItem[] = [
   { id: 'body-parts-w01', topicId: 'body-parts', word: 'head', ipa: '/hɛd/', ipaUk: '/hɛd/', meaningId: 'kepala', exampleEn: 'My head hurts.', exampleEnUs: '/maɪ hɛd hɜrts/', exampleEnUk: '/maɪ hɛd hɜːts/', translation: 'Kepala saya sakit.' },
