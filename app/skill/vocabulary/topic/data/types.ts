@@ -38,9 +38,13 @@ export type VocabularyItem = {
   topicId: VocabularyTopicId;
   word: string;
   ipa: string;
+  ipaUk?: string;
   icon?: string;
   meaningId: string;
   exampleEn: string;
+  exampleEnUs?: string;
+  exampleEnUk?: string;
+  translation?: string;
 };
 
 export type VocabularyTopicMeta = {

@@ -20,10 +20,13 @@ export interface BritishNoteData {
 export interface UseSymbolPlaybackParams {
   symbolData: { examples: WordExample[] };
   britishNote: BritishNoteData | null;
+  commonLettersExamples: string[];
   isPlayingAll: boolean;
   isPlayingAllBritishNotes: boolean;
+  isPlayingAllCommonLetters: boolean;
   setIsPlayingAll: (value: boolean) => void;
   setIsPlayingAllBritishNotes: (value: boolean) => void;
+  setIsPlayingAllCommonLetters: (value: boolean) => void;
   setActiveWord: (value: string | null) => void;
   setActiveWordIndex: (value: number | null) => void;
 }
@@ -33,10 +36,13 @@ const BETWEEN_PLAY_ALL_WORDS_MS = 220;
 export const useSymbolPlayback = ({
   symbolData,
   britishNote,
+  commonLettersExamples,
   isPlayingAll,
   isPlayingAllBritishNotes,
+  isPlayingAllCommonLetters,
   setIsPlayingAll,
   setIsPlayingAllBritishNotes,
+  setIsPlayingAllCommonLetters,
   setActiveWord,
   setActiveWordIndex,
 }: UseSymbolPlaybackParams) => {
@@ -56,11 +62,12 @@ export const useSymbolPlayback = ({
       }
       setIsPlayingAll(false);
       setIsPlayingAllBritishNotes(false);
+      setIsPlayingAllCommonLetters(false);
       setActiveWord(null);
       setActiveWordIndex(null);
       stopSpeech();
     };
-  }, [setActiveWord, setActiveWordIndex, setIsPlayingAll, setIsPlayingAllBritishNotes]);
+  }, [setActiveWord, setActiveWordIndex, setIsPlayingAll, setIsPlayingAllBritishNotes, setIsPlayingAllCommonLetters]);
 
   const stopPlayAllWords = () => {
     playSessionRef.current += 1;
@@ -71,6 +78,7 @@ export const useSymbolPlayback = ({
     stopSpeech();
     setIsPlayingAll(false);
     setIsPlayingAllBritishNotes(false);
+    setIsPlayingAllCommonLetters(false);
     setActiveWord(null);
     setActiveWordIndex(null);
   };
@@ -198,6 +206,68 @@ export const useSymbolPlayback = ({
     })();
   };
 
+  const handlePlayAllCommonLetters = () => {
+    if (!isSpeechSynthesisSupported() || commonLettersExamples.length === 0) return;
+
+    if (isPlayingAllCommonLetters) {
+      stopPlayAllWords();
+      return;
+    }
+
+    stopPlayAllWords();
+    const currentSession = playSessionRef.current;
+    setIsPlayingAllCommonLetters(true);
+
+    void (async () => {
+      for (let currentIndex = 0; currentIndex < commonLettersExamples.length; currentIndex++) {
+        if (currentSession !== playSessionRef.current) return;
+
+        const word = commonLettersExamples[currentIndex];
+        
+        const cards = document.querySelectorAll('.common-letter-example-card');
+        if (cards[currentIndex]) {
+          const el = cards[currentIndex] as HTMLElement;
+          el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+          
+          // Temporary highlight
+          const originalBg = el.style.backgroundColor;
+          const originalBorder = el.style.borderColor;
+          el.style.backgroundColor = 'rgba(168, 85, 247, 0.2)';
+          el.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+          
+          setTimeout(() => {
+            el.style.backgroundColor = originalBg;
+            el.style.borderColor = originalBorder;
+          }, 800);
+        }
+
+        await speakTextWithPause(word, {
+          preferredEnglish: 'en-US',
+          rate: 0.86,
+          pitch: 1,
+          volume: 1,
+        });
+
+        if (currentSession !== playSessionRef.current) return;
+
+        await new Promise<void>((resolve) => {
+          playNextTimeoutRef.current = window.setTimeout(() => {
+            playNextTimeoutRef.current = null;
+            resolve();
+          }, BETWEEN_PLAY_ALL_WORDS_MS);
+        });
+      }
+
+      if (currentSession === playSessionRef.current) {
+        setIsPlayingAllCommonLetters(false);
+      }
+    })();
+  };
+
   const handlePlayWord = (word: string, wordIndex?: number) => {
     if (!isSpeechSynthesisSupported()) return;
 
@@ -289,6 +359,7 @@ export const useSymbolPlayback = ({
     stopPlayAllWords,
     handlePlayAllWords,
     handlePlayAllBritishNotes,
+    handlePlayAllCommonLetters,
     handlePlayWord,
     handlePlayBritishNoteWord,
     handlePlayAmericanNoteWord,

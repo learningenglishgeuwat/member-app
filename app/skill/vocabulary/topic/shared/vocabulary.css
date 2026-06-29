@@ -438,6 +438,12 @@
   font-family: var(--font-ipa);
 }
 
+.vocab-ipa--uk {
+  margin-top: 0.15rem;
+  opacity: 0.85;
+  font-size: 0.72rem;
+}
+
 .vocab-meaning {
   margin: 0.45rem 0 0;
   color: #f7fff9;
@@ -467,6 +473,12 @@
   font-style: italic;
   line-height: 1.45;
   font-family: var(--font-ipa);
+}
+
+.vocab-example-ipa--uk {
+  margin-top: 0.15rem;
+  opacity: 0.85;
+  font-size: 0.72rem;
 }
 
 .vocab-example-translation {

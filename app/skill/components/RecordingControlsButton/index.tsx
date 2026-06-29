@@ -455,14 +455,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
                 <span className="text-cyber-cyan font-bold w-5 text-right">7.</span>
                 <p className="flex-1">Isi <span className="text-cyber-pink font-semibold">saved progress</span> berdasarkan hasil penilaian dari AI assistant</p>
               </div>
-              <div className="mt-4 p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
-                <p className="text-sm text-purple-300 mb-2">
-                  <strong>💡 ALTERNATIF (Jika Upload Gagal):</strong>
-                </p>
-                <p className="text-sm text-purple-200">
-                  Gunakan voice input Gemini langsung: Klik mic icon di Gemini, baca Mission, lalu minta evaluasi.
-                </p>
-              </div>
+
               <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
                 <p className="text-sm text-cyber-cyan mb-2">
                   <strong>Langkah dengan File Upload:</strong> Buka <a data-tour="recording-gemini-link" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-cyber-pink/80 underline transition-colors">Gemini</a>
@@ -476,17 +469,7 @@ const RecordingControlsButton: React.FC<RecordingControlsButtonProps> = ({
               </div>
             </div>
             
-            <div className="mt-4 p-3 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-lg">
-              <p className="text-sm text-cyber-cyan mb-2">
-                <strong>Format Audio:</strong> WebM/OGG dengan Opus codec + Duration Metadata (Fixed untuk Gemini)
-              </p>
-              <p className="text-sm text-cyber-cyan mb-2">
-                <strong>⚠️ PENTING:</strong> Record minimal 5-10 detik dan BICARA dengan volume NORMAL (jangan diam/bisik)
-              </p>
-              <p className="text-sm text-cyber-cyan">
-                <strong>Tip:</strong> File otomatis diperbaiki untuk compatibility dengan Gemini. Check console (F12) untuk verify.
-              </p>
-            </div>
+
           </div>
         </div>
       )}

@@ -7,11 +7,10 @@ import { Check, Copy } from 'lucide-react';
 import BackButton from '../../components/BackButton';
 import ButtonSavedProgress from '../../components/buttonSavedProgress';
 import { IpaVisibilityToggle, ControlCenter, PlayStopButton } from '@/app/components';
+import AudioAccentSelect from '@/app/components/AudioAccentSelect';
+import { useAudioAccent } from '@/app/contexts/AudioAccentContext';
 import type { VocabularyItem, VocabularyTopicMeta } from '../topic/data/types';
-import {
-  getVocabularyExampleIpa,
-  getVocabularyExampleTranslation,
-} from '../topic/data/example-meta';
+
 import {
   primeVocabularyVoice,
   speakVocabularyText,
@@ -281,6 +280,7 @@ export default function VocabularyTopicDetailPage({
   const [playingItemId, setPlayingItemId] = useState<string | null>(null);
   const [isPlayAllRunning, setIsPlayAllRunning] = useState(false);
   const [playMode, setPlayMode] = useState<DetailPlayMode>(null);
+  const { accent } = useAudioAccent();
 
   useKpiValueColumn(kpiRef);
 
@@ -339,7 +339,7 @@ export default function VocabularyTopicDetailPage({
     }
 
     return topicWords.filter((item) => {
-      const exampleTranslation = getVocabularyExampleTranslation(item.exampleEn) ?? '';
+      const exampleTranslation = item.translation ?? '';
       const haystack = `${item.word} ${item.meaningId} ${item.exampleEn} ${exampleTranslation}`.toLowerCase();
       return haystack.includes(normalized);
     });
@@ -453,12 +453,12 @@ export default function VocabularyTopicDetailPage({
     setPlayMode(null);
     setPlayingItemId(item.id);
 
-    await speakVocabularyText(kind === 'word' ? item.word : item.exampleEn);
+    await speakVocabularyText(kind === 'word' ? item.word : item.exampleEn, { preferredEnglish: accent });
 
     if (playTokenRef.current === token) {
       setPlayingItemId(null);
     }
-  }, []);
+  }, [accent]);
 
   const playAllWords = useCallback(async () => {
     if (!visibleWords.length) return;
@@ -483,7 +483,7 @@ export default function VocabularyTopicDetailPage({
       for (const item of items) {
         if (playTokenRef.current !== token) break;
         setPlayingItemId(item.id);
-        await speakVocabularyText(item.word);
+        await speakVocabularyText(item.word, { preferredEnglish: accent });
       }
     }
 
@@ -492,7 +492,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length, accent]);
 
   const playAllWordThenExample = useCallback(async () => {
     if (!visibleWords.length) return;
@@ -517,9 +517,9 @@ export default function VocabularyTopicDetailPage({
       for (const item of items) {
         if (playTokenRef.current !== token) break;
         setPlayingItemId(item.id);
-        await speakVocabularyText(item.word);
+        await speakVocabularyText(item.word, { preferredEnglish: accent });
         if (playTokenRef.current !== token) break;
-        await speakVocabularyText(item.exampleEn);
+        await speakVocabularyText(item.exampleEn, { preferredEnglish: accent });
       }
     }
 
@@ -528,7 +528,7 @@ export default function VocabularyTopicDetailPage({
       setIsPlayAllRunning(false);
       setPlayMode(null);
     }
-  }, [effectivePage, pageWords, totalPages, visibleWords.length]);
+  }, [effectivePage, pageWords, totalPages, visibleWords.length, accent]);
 
   const handleSaveProgress = useCallback(
     async (percentage: number) => {
@@ -598,7 +598,7 @@ export default function VocabularyTopicDetailPage({
   }, [stopPlayback]);
 
   useEffect(() => {
-    if (!playingItemId || isMobile) return;
+    if (!playingItemId) return;
     const target = cardRefs.current[playingItemId];
     if (!target) return;
     target.scrollIntoView({
@@ -609,11 +609,16 @@ export default function VocabularyTopicDetailPage({
   }, [isMobile, playingItemId]);
 
   const renderWordCard = (item: VocabularyItem) => {
-    const exampleIpa = getVocabularyExampleIpa(item.exampleEn);
-    const exampleTranslation = getVocabularyExampleTranslation(item.exampleEn);
+    const exampleIpa = item.exampleEnUs ? decodeEscapedUnicode(item.exampleEnUs) : '';
+    const exampleIpaUk = item.exampleEnUk ? decodeEscapedUnicode(item.exampleEnUk) : '';
+    const exampleTranslation = item.translation ?? '';
     const bodyPartIconPath = getBodyPartIconPath(item.icon);
     const cardinalNumberValue = showCardinalNumber ? parseCardinalWordToNumber(item.word) : null;
     const wordIpa = decodeEscapedUnicode(item.ipa);
+    const wordIpaUk = item.ipaUk ? decodeEscapedUnicode(item.ipaUk) : null;
+    const isUkAccent = accent === 'en-GB';
+    const displayIpa = isUkAccent ? wordIpaUk : wordIpa;
+    const showUkIpa = isUkAccent && wordIpaUk;
 
     return (
       <article
@@ -644,11 +649,13 @@ export default function VocabularyTopicDetailPage({
             <span className="vocab-highlight">{item.word}</span>
           </span>
         </h2>
-        {showIpa ? <p className="vocab-ipa">{wordIpa}</p> : null}
+        {showIpa && displayIpa ? <p className="vocab-ipa">{displayIpa}</p> : null}
         {showTranslation ? <p className="vocab-meaning">{item.meaningId}</p> : null}
         <span className="vocab-example-divider" aria-hidden="true" />
         <p className="vocab-example">{renderHighlightedText(item.exampleEn, item.word)}</p>
-        {showIpa && exampleIpa ? <p className="vocab-example-ipa">{exampleIpa}</p> : null}
+        {showIpa && (isUkAccent ? exampleIpaUk : exampleIpa) ? (
+          <p className="vocab-example-ipa">{isUkAccent ? exampleIpaUk : exampleIpa}</p>
+        ) : null}
         {showTranslation && exampleTranslation ? (
           <p className="vocab-example-translation">{exampleTranslation}</p>
         ) : null}
@@ -665,7 +672,7 @@ export default function VocabularyTopicDetailPage({
             className="vocab-play-btn"
             onClick={() => void playSingle(item, 'example')}
           >
-            Play Example
+            Play Sentence
           </button>
         </div>
       </article>
@@ -790,6 +797,10 @@ export default function VocabularyTopicDetailPage({
           </label>
         </section>
 
+        <div className="mt-3 sm:mt-4 flex justify-center">
+          <AudioAccentSelect />
+        </div>
+
         <p className="vocab-visible-note">
           {isMobile ? (
             <>
@@ -898,7 +909,7 @@ export default function VocabularyTopicDetailPage({
             />
             <PlayStopButton
               isActive={!!(isPlayAllRunning && playMode === 'word-example')}
-              label="W -> EX"
+              label="W -> SENT"
               onClick={() => {
                 if (isPlayAllRunning && playMode === 'word-example') {
                   stopPlayback();

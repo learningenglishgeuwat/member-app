@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useHaptic } from '@/lib/haptic/useHaptic';
+import { useAudio } from '@/lib/audio/useAudio';
 import './styles/portal.css';
 import BackButton from '../../components/BackButton';
 import Sidebar from '../../components/skillSidebar/SkillSidebar';
@@ -85,6 +87,8 @@ const PhoneticPortal: React.FC = () => {
   const playAllSymbolSessionRef = useRef(0);
   const prefetchedPathsRef = useRef<Set<string>>(new Set());
   const router = useRouter();
+  const { triggerHaptic } = useHaptic();
+  const { triggerTap } = useAudio();
 
   const getSymbolDetailPath = useCallback(
     (symbol: string) => `/skill/pronunciation/phoneticSymbols/${encodeURIComponent(symbol)}`,
@@ -156,17 +160,13 @@ const PhoneticPortal: React.FC = () => {
   }, []);
 
   const togglePortal = (portalId: string) => {
+    triggerHaptic('tap');
+    triggerTap();
     if (activePortal === portalId) {
       setActivePortal(null);
-      setSpinningCard(null);
       return;
     }
-
-    setSpinningCard(portalId);
-    window.setTimeout(() => {
-      setActivePortal(portalId);
-      setSpinningCard(null);
-    }, 3000);
+    setActivePortal(portalId);
   };
 
   const stopCurrentSymbolSpeech = useCallback(() => {
@@ -392,18 +392,21 @@ const PhoneticPortal: React.FC = () => {
   }, [stopCurrentSymbolSpeech]);
 
   const handleSymbolClick = (symbol: PhoneticSymbol) => {
+    triggerHaptic('tap');
     const path = getSymbolDetailPath(symbol.symbol);
     prefetchPath(path);
     router.push(path);
   };
 
   const handleMinimalPairsClick = () => {
+    triggerHaptic('tap');
     const path = '/skill/pronunciation/phoneticSymbols/MinimalPairs';
     prefetchPath(path);
     router.push(path);
   };
 
   const handleSummaryClick = () => {
+    triggerHaptic('tap');
     const path = '/skill/pronunciation/phoneticSymbols/summary-of-phonetic-symbols';
     prefetchPath(path);
     router.push(path);
